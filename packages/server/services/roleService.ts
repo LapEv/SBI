@@ -2,33 +2,31 @@ import type { Request, Response } from 'express'
 import { roleRepos } from '../db'
 
 export class roleService {
-  setRole = (_req: Request, res: Response) => {
+  newRole = (_req: Request, res: Response) => {
     roleRepos
-      .update(_req.body.id, { ..._req.body })
-      .then(resp => {
-        if (resp[0] === 0) {
-          roleRepos.create(_req.body)
-        }
-        res.status(200).json('set role ok')
+      .create(_req.body)
+      .then(role => {
+        res.status(200).json(`set role ok, ${role}`)
       })
       .catch(err =>
-        res
-          .status(500)
-          .json({ error: ['db error: unable to set role', err.status] })
+        res.status(500).json({ error: ['db error: unable to set role', err] })
       )
-  }
-  getRole = (_req: Request, res: Response) => {
-    roleRepos
-      .findAll({
-        where: { id: _req.query.id },
-      })
-      .then(role => res.status(200).json(role))
-      .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
   getRoles = (_req: Request, res: Response) => {
     roleRepos
       .findAll({})
       .then(roles => res.status(200).json(roles))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
+  }
+  deleteRole = (_req: Request, res: Response) => {
+    const { role } = _req.body
+    roleRepos
+      .destroy({
+        where: { role: role },
+      })
+      .then(result =>
+        res.status(200).json(`Role=${role} id:${result} deleted!`)
+      )
+      .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
 }

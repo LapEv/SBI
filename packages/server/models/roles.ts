@@ -8,10 +8,10 @@ export interface Roles {
 
 export const roles: ModelAttributes<Model, Roles> = {
   id: {
-    type: DataType.INTEGER,
+    type: DataType.STRING,
+    defaultValue: DataType.UUIDV4,
     allowNull: false,
     primaryKey: true,
-    unique: true,
   },
   role: {
     type: DataType.STRING,

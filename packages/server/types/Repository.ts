@@ -3,6 +3,7 @@ import type {
   WhereAttributeHashValue,
   FindOptions,
   WhereOptions,
+  DestroyOptions,
 } from 'sequelize'
 import type { Model, ModelCtor } from 'sequelize-typescript'
 import type { MakeNullishOptional } from 'sequelize/types/utils'
@@ -59,6 +60,12 @@ export class Repository<T extends Model<T>> {
     id: WhereAttributeHashValue<Attributes<T>['id']> | undefined
   ): Promise<number> {
     return this.model.destroy({ where: { id } })
+  }
+
+  public async destroy(
+    options: DestroyOptions<Attributes<T>['role']>
+  ): Promise<number> {
+    return this.model.destroy(options)
   }
 
   public async createOrDestroy(

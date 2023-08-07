@@ -6,9 +6,9 @@ export const roleRouter = (apiRouter: Router) => {
 
   const router: Router = Router()
 
-  router.post('/role', service.setRole)
-  router.get('/role', service.getRole)
-  router.get('/roles', service.getRoles)
+  router.post('/newRole', service.newRole)
+  router.get('/getRoles', service.getRoles)
+  router.delete('/deleteRole', service.deleteRole)
 
   apiRouter.use('/role', router)
 }

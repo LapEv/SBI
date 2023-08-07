@@ -3,21 +3,24 @@ import { DataType, Model } from 'sequelize-typescript'
 
 export interface User {
   id: number
-  login: string
+  username: string
+  password: string
   firstName: string
   lastName: string
   email: string
   role: string
+  post: string
+  avatar: string
 }
 
 export const users: ModelAttributes<Model, User> = {
   id: {
-    type: DataType.INTEGER,
+    type: DataType.STRING,
+    defaultValue: DataType.UUIDV4,
     allowNull: false,
     primaryKey: true,
-    unique: true,
   },
-  login: {
+  username: {
     type: DataType.STRING,
     allowNull: false,
     unique: true,
@@ -37,5 +40,17 @@ export const users: ModelAttributes<Model, User> = {
   role: {
     type: DataType.STRING,
     allowNull: false,
+  },
+  password: {
+    type: DataType.STRING,
+    allowNull: false,
+  },
+  post: {
+    type: DataType.STRING,
+    allowNull: false,
+  },
+  avatar: {
+    type: DataType.STRING,
+    allowNull: true,
   },
 }

@@ -6,9 +6,10 @@ export const userRouter = (apiRouter: Router) => {
 
   const router: Router = Router()
 
-  router.post('/user', service.setUser)
-  router.get('/user', service.getUser)
-  router.get('/users', service.getUsers)
+  router.post('/setUser', service.setUser)
+  router.get('/getUser', service.getUser)
+  router.get('/getUsers', service.getUsers)
+  router.delete('/deleteUser', service.deleteUser)
 
   apiRouter.use('/user', router)
 }

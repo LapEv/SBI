@@ -20,8 +20,8 @@ export const sequelize = new Sequelize(sequelizeOptions)
 export const Roles = sequelize.define('Roles', roles, {})
 export const Users = sequelize.define('Users', users, {})
 
-Users.hasMany(Roles, { foreignKey: 'id' })
-Roles.belongsTo(Users, { foreignKey: 'id', targetKey: 'id' })
+Roles.hasMany(Users)
+Users.belongsTo(Roles)
 
 export const userRepos = new Repository(Users as ModelCtor)
 export const roleRepos = new Repository(Roles as ModelCtor)
@@ -30,7 +30,7 @@ export async function dbConnect() {
   try {
     await sequelize.authenticate()
     await sequelize.sync()
-    console.log('Connection has been established successfully!')
+    console.log('Connection has been established successfully! ')
 
     // const themes = await themeRepos.getAll()
     // themeData.map(async data => {

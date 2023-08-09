@@ -1,14 +1,27 @@
 import type { Request, Response } from 'express'
 import { userRepos } from '../db'
+import { validationResult } from 'express-validator'
+const { APInotifications } = require('../const')
+import bcrypt from 'bcryptjs'
 
 export class userService {
   setUser = (_req: Request, res: Response) => {
+    const errValidation = validationResult(_req)
+    if (!errValidation.isEmpty()) {
+      return res.status(400).json({
+        message: `${APInotifications.auth.errorRegistration.ENG}: ${errValidation.errors[0].msg}`,
+        errValidation,
+      })
+    }
     const id = _req.body.id ?? 0
+    const { password } = _req.body
+    const hashPassword = bcrypt.hashSync(password, 7)
+    const newUser = { password: hashPassword, ..._req.body }
     userRepos
-      .update(id, { ..._req.body })
+      .update(id, { ...newUser })
       .then(resp => {
         if (resp[0] === 0) {
-          userRepos.create(_req.body)
+          userRepos.create(newUser)
         }
         res.status(200).json('set user ok')
       })

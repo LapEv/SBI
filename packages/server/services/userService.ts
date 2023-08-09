@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express'
 import { userRepos } from '../db'
 import { validationResult } from 'express-validator'
-const { APInotifications } = require('../const')
+// const { APInotifications } = require('../const')
 import bcrypt from 'bcryptjs'
 
 export class userService {
@@ -9,7 +9,7 @@ export class userService {
     const errValidation = validationResult(_req)
     if (!errValidation.isEmpty()) {
       return res.status(400).json({
-        message: `${APInotifications.auth.errorRegistration.ENG}: ${errValidation.errors[0].msg}`,
+        // message: `${APInotifications.auth.errorRegistration.ENG}: ${errValidation.errors[0].msg}`,
         errValidation,
       })
     }

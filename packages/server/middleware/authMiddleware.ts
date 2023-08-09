@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express'
 import jwt, { Secret, JwtPayload } from 'jsonwebtoken'
-const { APInotifications } = require('../const')
+import { apiConst } from '../const'
 const { SECRET_KEY } = process.env
 
 export interface CustomRequest extends Request {
@@ -16,14 +16,16 @@ export const authMiddleware = async (
     next()
   }
   try {
-    let token = req.header('Authorization')?.replace('Bearer ', '')
+    const token = req.header('Authorization')?.replace('Bearer ', '')
     if (!token) {
-      return res.status(401).json({ message: APInotifications.auth.notLogged })
+      return res
+        .status(401)
+        .json({ message: apiConst.APInotifications.auth.notLogged })
     }
     const decoded = jwt.verify(token, SECRET_KEY as Secret)
     ;(req as CustomRequest).token = decoded
     next()
   } catch (e) {
-    res.status(401).json({ message: APInotifications.auth.notLogged })
+    res.status(401).json({ message: apiConst.APInotifications.auth.notLogged })
   }
 }

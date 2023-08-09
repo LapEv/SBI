@@ -1,4 +1,4 @@
-module.exports = {
+export const apiConst = {
   AppConstants: {
     appName: 'SBI_DB',
   },

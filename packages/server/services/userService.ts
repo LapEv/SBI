@@ -4,6 +4,9 @@ import { Result, validationResult } from 'express-validator'
 import bcrypt from 'bcryptjs'
 import { auth } from '../data/auth'
 import jwt from 'jsonwebtoken'
+import {User} from '../models/users'
+import { ModelAttributes } from 'sequelize'
+import { Model } from 'sequelize-typescript'
 
 const generateAccessToken = (
   id: string,
@@ -41,13 +44,20 @@ export class userService {
         res.status(500).json({ error: ['db error: unable to set user', err] })
       )
   }
-  getUser = (_req: Request, res: Response) => {
+  login = (_req: Request, res: Response) => {
+    const { username, password } = _req.body;
     userRepos
       .findAll({
-        where: { id: _req.query.id },
+        where: { username: username },
       })
-      .then(users => res.status(200).json(users))
-      .catch(err => res.status(500).json({ error: ['db error', err] }))
+      .then((user: ModelAttributes<Model, User>{}) => {
+        const validPassword = bcrypt.compareSync(
+          password,
+          user?.password
+        );
+        
+        res.status(200).json(user)})
+      .catch(err => res.status(400).json({ message: `auth.notification.userNotFound, ${err}`}))
   }
   check = (_req: Request, res: Response) => {
     try {

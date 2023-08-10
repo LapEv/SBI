@@ -9,8 +9,8 @@ export interface User {
   lastName: string
   email: string
   role: string
-  post: string
-  avatar: string
+  post?: string
+  avatar?: string
 }
 
 export const users: ModelAttributes<Model, User> = {

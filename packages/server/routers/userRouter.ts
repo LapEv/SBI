@@ -19,7 +19,8 @@ export const userRouter = (apiRouter: Router) => {
     ],
     service.setUser
   )
-  router.get('/getUser', service.check)
+  router.post('/login', service.login)
+  router.get('/check', service.check)
   router.get('/getUsers', service.getUsers)
   router.delete('/deleteUser', service.deleteUser)
 

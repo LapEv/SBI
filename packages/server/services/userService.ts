@@ -1,22 +1,34 @@
 import type { Request, Response } from 'express'
 import { userRepos } from '../db'
-import { validationResult } from 'express-validator'
-// const { APInotifications } = require('../const')
+import { Result, validationResult } from 'express-validator'
 import bcrypt from 'bcryptjs'
+import { auth } from '../data/auth'
+import jwt from 'jsonwebtoken'
 
+const generateAccessToken = (
+  id: string,
+  roles: string,
+  username: string
+): string => {
+  const payload = { id, roles, username }
+  return jwt.sign(payload, process.env.SECRET_KEY as string, {
+    expiresIn: '24h',
+  })
+}
 export class userService {
   setUser = (_req: Request, res: Response) => {
-    const errValidation = validationResult(_req)
+    const errValidation: Result = validationResult(_req)
     if (!errValidation.isEmpty()) {
+      const errors = errValidation.array()
       return res.status(400).json({
-        // message: `${APInotifications.auth.errorRegistration.ENG}: ${errValidation.errors[0].msg}`,
+        message: `${auth.notification.errorRegistration.ENG}: ${errors[0].msg}`,
         errValidation,
       })
     }
     const id = _req.body.id ?? 0
     const { password } = _req.body
     const hashPassword = bcrypt.hashSync(password, 7)
-    const newUser = { password: hashPassword, ..._req.body }
+    const newUser = { ..._req.body, password: hashPassword }
     userRepos
       .update(id, { ...newUser })
       .then(resp => {
@@ -36,6 +48,22 @@ export class userService {
       })
       .then(users => res.status(200).json(users))
       .catch(err => res.status(500).json({ error: ['db error', err] }))
+  }
+  check = (_req: Request, res: Response) => {
+    try {
+      const token = generateAccessToken(
+        _req.body.id,
+        _req.body.roles,
+        _req.body.username
+      )
+      return res.json({ token })
+    } catch (err) {
+      if (err instanceof Error) {
+        return res.status(400).json({ message: `${err.message}` })
+      } else {
+        return res.status(400).json({ message: `Unexpected error ${err}` })
+      }
+    }
   }
   getUsers = (_req: Request, res: Response) => {
     userRepos

@@ -63,7 +63,7 @@ export class Repository<T extends Model<T>> {
   }
 
   public async destroy(
-    options: DestroyOptions<Attributes<T>['role']>
+    options: DestroyOptions<Attributes<T>>
   ): Promise<number> {
     return this.model.destroy(options)
   }

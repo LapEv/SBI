@@ -1,13 +1,25 @@
 import { Router } from 'express'
 import { userService } from '../services/userService'
+import { check } from 'express-validator'
+import { auth } from '../data/auth'
 
 export const userRouter = (apiRouter: Router) => {
   const service = new userService()
 
   const router: Router = Router()
 
-  router.post('/setUser', service.setUser)
-  router.get('/getUser', service.getUser)
+  router.post(
+    '/setUser',
+    [
+      check(auth.username, auth.emptyUsername).notEmpty(),
+      check(auth.password, auth.checkPassword()).isLength({
+        min: auth.passwordMinLength,
+        max: auth.passwordMaxLength,
+      }),
+    ],
+    service.setUser
+  )
+  router.get('/getUser', service.check)
   router.get('/getUsers', service.getUsers)
   router.delete('/deleteUser', service.deleteUser)
 

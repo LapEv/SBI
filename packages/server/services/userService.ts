@@ -42,18 +42,24 @@ export class userService {
       )
   }
   login = (_req: Request, res: Response) => {
-    const { username } = _req.body
+    const { username, password } = _req.body
     userRepos
       .findAll({
         where: { username: username },
       })
       .then(user => {
-        // const validPassword = bcrypt.compareSync(
-        //   password,
-        //   user?.password
-        // );
-
-        res.status(200).json(user)
+        const validPassword = bcrypt.compareSync(password, user[0].password)
+        if (!validPassword) {
+          return res
+            .status(400)
+            .json({ message: auth.notification.invalidPassword })
+        }
+        const token = generateAccessToken(
+          user[0].id,
+          user[0].role,
+          user[0].username
+        )
+        return res.json({ token })
       })
       .catch(err =>
         res

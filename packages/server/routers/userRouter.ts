@@ -2,6 +2,8 @@ import { Router } from 'express'
 import { userService } from '../services/userService'
 import { check } from 'express-validator'
 import { auth } from '../data/auth'
+import { authMiddleware } from '../middleware/authMiddleware'
+const roleMiddleware = require('../middleware/roleMiddleware')
 
 export const userRouter = (apiRouter: Router) => {
   const service = new userService()
@@ -20,8 +22,12 @@ export const userRouter = (apiRouter: Router) => {
     service.setUser
   )
   router.post('/login', service.login)
-  router.get('/check', service.check)
-  router.get('/getUsers', service.getUsers)
+  router.get('/check', authMiddleware, service.check)
+  router.get(
+    '/getUsers',
+    roleMiddleware(['ADMIN', 'SUPERADMIN']),
+    service.getUsers
+  )
   router.delete('/deleteUser', service.deleteUser)
 
   apiRouter.use('/user', router)

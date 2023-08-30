@@ -38,7 +38,7 @@ export const users: ModelAttributes<Model, User> = {
     allowNull: false,
   },
   role: {
-    type: DataType.STRING,
+    type: DataType.ARRAY(DataType.STRING),
     allowNull: false,
   },
   password: {

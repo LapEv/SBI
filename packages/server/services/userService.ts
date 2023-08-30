@@ -68,16 +68,18 @@ export class userService {
       )
   }
   check = (_req: Request, res: Response) => {
+    const { username, id, roles } = _req.body
+    console.log('username = ', username)
+    console.log('id = ', id)
+    console.log('role = ', roles)
     try {
-      const token = generateAccessToken(
-        _req.body.id,
-        _req.body.roles,
-        _req.body.username
-      )
+      const token = generateAccessToken(id, roles, username)
       return res.json({ token })
     } catch (err) {
       if (err instanceof Error) {
-        return res.status(400).json({ message: `${err.message}` })
+        return res
+          .status(400)
+          .json({ message: `Unexpected error message ${err.message}` })
       } else {
         return res.status(400).json({ message: `Unexpected error ${err}` })
       }

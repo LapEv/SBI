@@ -1,5 +1,4 @@
-import { Request } from 'express'
-import { JwtPayload, Secret } from 'jsonwebtoken'
+import { JwtPayload } from 'jsonwebtoken'
 
 declare global {
   namespace Express {

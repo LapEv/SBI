@@ -32,12 +32,14 @@ export class roleService {
       .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
   getAllRolesGroup = () => {
-    roleRepos
+    roleGroupRepos
       .findAll({})
-      .then(roleGroup => roleGroup)
+      .then(roleGroup => console.log('roleGroup = ', roleGroup))
+      /* eslint-disable */
       .catch(err => {
         error: `db error, ${err.status}`
       })
+    /* eslint-enable */
   }
 
   newRole = (_req: Request, res: Response) => {
@@ -70,9 +72,11 @@ export class roleService {
   getAllRoles = () => {
     roleRepos
       .findAll({})
-      .then(roles => roles)
+      .then(roles => roles.map(value => value.role))
+      /* eslint-disable */
       .catch(err => {
         error: `db error, ${err.status}`
       })
+    /* eslint-enable */
   }
 }

@@ -17,7 +17,7 @@ describe('Button component', () => {
   })
 
   it('should render a button with the given variant', () => {
-    const { getByRole } = render(<Button variant='outlined' />)
+    const { getByRole } = render(<Button variant="outlined" />)
     expect(getByRole('button')).toHaveClass('MuiButton-outlined')
   })
 
@@ -25,5 +25,4 @@ describe('Button component', () => {
     const { getByRole } = render(<Button sx={{ backgroundColor: 'red' }} />)
     expect(getByRole('button')).toHaveStyle('background-color: red')
   })
-
 })

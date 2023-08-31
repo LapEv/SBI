@@ -7,7 +7,7 @@ describe('LinkButton', () => {
     const text = 'Click me!'
     const { getByText } = render(
       <BrowserRouter>
-        <LinkButton to='/'>{text}</LinkButton>
+        <LinkButton to="/">{text}</LinkButton>
       </BrowserRouter>
     )
     expect(getByText(text)).toBeInTheDocument()
@@ -16,8 +16,9 @@ describe('LinkButton', () => {
   it('should render a link with the given variant', () => {
     const { getByRole } = render(
       <BrowserRouter>
-        <LinkButton to='/' variant='outlined' />
-      </BrowserRouter>)
+        <LinkButton to="/" variant="outlined" />
+      </BrowserRouter>
+    )
 
     expect(getByRole('link')).toHaveClass('MuiButton-outlined')
   })
@@ -25,10 +26,9 @@ describe('LinkButton', () => {
   it('should render a link with the given style', () => {
     const { getByRole } = render(
       <BrowserRouter>
-        <LinkButton to='/' sx={{ backgroundColor: 'red' }} />
+        <LinkButton to="/" sx={{ backgroundColor: 'red' }} />
       </BrowserRouter>
     )
     expect(getByRole('link')).toHaveStyle('background-color: red')
   })
-
 })

@@ -4,6 +4,8 @@ const { SECRET_KEY } = process.env
 
 module.exports = function (roles: []) {
   return function (_req: Request, res: Response, next: NextFunction) {
+    console.log('roles = ', roles)
+
     if (_req.method === 'OPTIONS') {
       next()
     }

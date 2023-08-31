@@ -1,7 +1,45 @@
 import type { Request, Response } from 'express'
-import { roleRepos } from '../db'
+import { roleRepos, roleGroupRepos } from '../db'
 
 export class roleService {
+  newRoleGroup = (_req: Request, res: Response) => {
+    roleGroupRepos
+      .create(_req.body)
+      .then(roleGroup => {
+        res.status(200).json(`set roleGroup ok, ${roleGroup}`)
+      })
+      .catch(err =>
+        res
+          .status(500)
+          .json({ error: ['db error: unable to set roleGroup', err] })
+      )
+  }
+  getRolesGroup = (_req: Request, res: Response) => {
+    roleGroupRepos
+      .findAll({})
+      .then(roleGroup => res.status(200).json(roleGroup))
+      .catch(err => res.status(500).json({ error: ['db error', err.status] }))
+  }
+  deleteRoleGroup = (_req: Request, res: Response) => {
+    const { group } = _req.body
+    roleGroupRepos
+      .destroy({
+        where: { group },
+      })
+      .then(result =>
+        res.status(200).json(`Role=${group} id:${result} deleted!`)
+      )
+      .catch(err => res.status(500).json({ error: ['db error', err] }))
+  }
+  getAllRolesGroup = () => {
+    roleRepos
+      .findAll({})
+      .then(roleGroup => roleGroup)
+      .catch(err => {
+        error: `db error, ${err.status}`
+      })
+  }
+
   newRole = (_req: Request, res: Response) => {
     roleRepos
       .create(_req.body)
@@ -28,5 +66,13 @@ export class roleService {
         res.status(200).json(`Role=${role} id:${result} deleted!`)
       )
       .catch(err => res.status(500).json({ error: ['db error', err] }))
+  }
+  getAllRoles = () => {
+    roleRepos
+      .findAll({})
+      .then(roles => roles)
+      .catch(err => {
+        error: `db error, ${err.status}`
+      })
   }
 }

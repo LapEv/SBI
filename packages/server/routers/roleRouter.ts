@@ -6,6 +6,10 @@ export const roleRouter = (apiRouter: Router) => {
 
   const router: Router = Router()
 
+  router.post('/newRoleGroup', service.newRoleGroup)
+  router.get('/getRolesGroup', service.getRolesGroup)
+  router.delete('/deleteRoleGroup', service.deleteRoleGroup)
+
   router.post('/newRole', service.newRole)
   router.get('/getRoles', service.getRoles)
   router.delete('/deleteRole', service.deleteRole)

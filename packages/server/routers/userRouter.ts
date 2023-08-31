@@ -5,7 +5,7 @@ import { auth } from '../data/auth'
 import { authMiddleware } from '../middleware/authMiddleware'
 const roleMiddleware = require('../middleware/roleMiddleware')
 
-export const userRouter = (apiRouter: Router) => {
+export const userRouter = (roles: any, apiRouter: Router) => {
   const service = new userService()
 
   const router: Router = Router()
@@ -25,10 +25,14 @@ export const userRouter = (apiRouter: Router) => {
   router.get('/check', authMiddleware, service.check)
   router.get(
     '/getUsers',
-    roleMiddleware(['ADMIN', 'SUPERADMIN']),
+    roleMiddleware([roles?.role, 'SUPERADMIN']),
     service.getUsers
   )
-  router.delete('/deleteUser', service.deleteUser)
+  router.post(
+    '/deleteUser',
+    roleMiddleware(['ADMIN', 'SUPERADMIN']),
+    service.deleteUser
+  )
 
   apiRouter.use('/user', router)
 }

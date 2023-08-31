@@ -8,9 +8,10 @@ export interface User {
   firstName: string
   lastName: string
   email: string
-  role: string
+  roleGroup: string
   post?: string
   avatar?: string
+  active: boolean
 }
 
 export const users: ModelAttributes<Model, User> = {
@@ -37,7 +38,7 @@ export const users: ModelAttributes<Model, User> = {
     type: DataType.STRING,
     allowNull: false,
   },
-  role: {
+  roleGroup: {
     type: DataType.ARRAY(DataType.STRING),
     allowNull: false,
   },
@@ -51,6 +52,10 @@ export const users: ModelAttributes<Model, User> = {
   },
   avatar: {
     type: DataType.STRING,
+    allowNull: true,
+  },
+  active: {
+    type: DataType.BOOLEAN,
     allowNull: true,
   },
 }

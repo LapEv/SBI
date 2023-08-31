@@ -1,7 +1,7 @@
 import { ModelCtor, Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import { Repository } from './types/Repository'
 import { users } from './models/users'
-import { roles } from './models/roles'
+import { roles, rolesGroup } from './models/roles'
 
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
   process.env
@@ -18,12 +18,17 @@ const sequelizeOptions: SequelizeOptions = {
 export const sequelize = new Sequelize(sequelizeOptions)
 
 export const Roles = sequelize.define('Roles', roles, {})
+export const RolesGroup = sequelize.define('RolesGroup', rolesGroup, {})
 export const Users = sequelize.define('Users', users, {})
 
-Roles.hasMany(Users)
-Users.belongsTo(Roles)
+Roles.hasMany(RolesGroup)
+RolesGroup.belongsTo(Roles)
+
+RolesGroup.hasMany(Users)
+Users.belongsTo(RolesGroup)
 
 export const userRepos = new Repository(Users as ModelCtor)
+export const roleGroupRepos = new Repository(RolesGroup as ModelCtor)
 export const roleRepos = new Repository(Roles as ModelCtor)
 
 export async function dbConnect() {

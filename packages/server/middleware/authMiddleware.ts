@@ -16,9 +16,7 @@ export const authMiddleware = async (
     if (!token) {
       return res.status(401).json({ message: auth.notification.notLogged })
     }
-    const decoded = jwt.verify(token, SECRET_KEY as Secret)
-    console.log('decoded = ', decoded)
-    req.body = decoded
+    req.body = jwt.verify(token, SECRET_KEY as Secret)
     next()
   } catch (e) {
     res.status(401).json({ message: auth.notification.notLogged })

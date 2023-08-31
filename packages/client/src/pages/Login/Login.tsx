@@ -59,7 +59,7 @@ export function LoginPage() {
           flexDirection: 'column',
           alignItems: 'center',
         }}>
-        <Typography sx={{ fontWeight: 700, fontSize: 96 }}>2048</Typography>
+        <Typography sx={{ fontWeight: 700, fontSize: 96 }}>SBI</Typography>
         <Box
           component="form"
           onSubmit={handleSubmit(submitForm)}

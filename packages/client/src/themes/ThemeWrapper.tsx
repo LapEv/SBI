@@ -2,7 +2,7 @@ import { createContext, useMemo, useState } from 'react'
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
 import { ThemeConfig } from './themeConfig'
 import App from '../App'
-// import { useAuth } from 'hooks/useAuth'
+import { useAuth } from 'hooks/useAuth'
 const defaultTheme =
   (localStorage.getItem('theme') as 'light' | 'dark') ?? 'light'
 // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -14,7 +14,7 @@ export const ColorModeContext = createContext({
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 export default function ToggleColorMode() {
   const [mode, setMode] = useState<'light' | 'dark'>(defaultTheme)
-  // const [{ user }, { changeThemeOnServer }] = useAuth()
+  const [{ user }, { changeThemeOnServer }] = useAuth()
 
   const colorMode = useMemo(
     () => ({
@@ -22,12 +22,12 @@ export default function ToggleColorMode() {
         setMode(prevMode => {
           const theme = prevMode === 'light' ? 'dark' : 'light'
           localStorage.setItem('theme', theme)
-          // if (id) {
-          //   changeThemeOnServer({
-          //     id: id,
-          //     theme: prevMode === 'light' ? 'dark' : 'light',
-          //   })
-          // }
+          if (id) {
+            changeThemeOnServer({
+              id: id,
+              theme: prevMode === 'light' ? 'dark' : 'light',
+            })
+          }
           return theme
         })
       },

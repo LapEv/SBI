@@ -56,7 +56,7 @@ export const NavBar = () => {
             fontWeight: 'bold',
             fontSize: '2.375rem',
           }}>
-          2048
+          SBI
         </Typography>
         {menuData.map(value => (
           <NavItem key={value.text} {...value} />

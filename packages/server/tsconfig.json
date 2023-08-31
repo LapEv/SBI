@@ -21,7 +21,8 @@
     "types": ["node", "jest"],
     "baseUrl": ".",
     "paths": {
-      "*": ["types/*"]
+      "*": ["types/*"],
+      "/*": ["./*"]
     },
     // "typeRoots": ["./types", "./node_modules/@types"],
     "skipLibCheck": true,

@@ -14,6 +14,11 @@ export const DrawerHeader: FC<SideBarProps> = ({ open, toggleDrawer }) => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
+    backgroundColor: theme.palette.background.default,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
     padding: theme.spacing(0, 1),
     ...theme.mixins.toolbar,
   }))

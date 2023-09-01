@@ -31,13 +31,13 @@ export const MapPasswordInputFields = [
 
 export const MapProfileInputFields = [
   {
-    name: 'first_name',
+    name: 'firstName',
     label: 'Имя',
     validation: nameValidation,
     value: '',
   },
   {
-    name: 'second_name',
+    name: 'lastName',
     label: 'Фамилия',
     validation: nameValidation,
     value: '',
@@ -49,7 +49,7 @@ export const MapProfileInputFields = [
     value: '',
   },
   {
-    name: 'login',
+    name: 'username',
     label: 'Логин',
     validation: loginValidation,
     value: '',

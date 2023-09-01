@@ -15,16 +15,18 @@ module.exports = function (roles: []) {
         return res.status(403).json({ message: 'The user is not logged in' })
       }
       const verifycode = jwt.verify(token, SECRET_KEY as Secret)
-      const { roles: userRoles } = verifycode as JwtPayload
-      let hasRole = false
-      userRoles.forEach((role: string) => {
-        if (roles.includes(role as never)) {
-          hasRole = true
-        }
-      })
-      if (!hasRole) {
-        return res.status(403).json({ message: "You don't have access" })
-      }
+      const userRoles = verifycode as JwtPayload
+      // let hasRole = false
+      console.log('userRoles = ', userRoles)
+
+      // userRoles.forEach((role: string) => {
+      //   if (roles.includes(role as never)) {
+      //     hasRole = true
+      //   }
+      // })
+      // if (!hasRole) {
+      //   return res.status(403).json({ message: "You don't have access" })
+      // }
       next()
     } catch (e) {
       console.log(e)

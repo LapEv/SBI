@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cache_v_0.1'
+const CACHE_NAME = 'SBI'
 const URLS = ['/index.html', '/src/app.tsx', '/src/main.tsx']
 self.addEventListener('install', event => {
   event.waitUntil(
@@ -47,7 +47,9 @@ const getFromCache = req => {
   })
 }
 self.addEventListener('fetch', event => {
-  event.respondWith(
-    tryNetwork(event.request, 60000).catch(() => getFromCache(event.request))
-  )
+  if (event.request.url.indexOf('http') === 0) {
+    event.respondWith(
+      tryNetwork(event.request, 60000).catch(() => getFromCache(event.request))
+    )
+  }
 })

@@ -22,10 +22,12 @@ export const userRouter = (apiRouter: Router) => {
     service.setUser
   )
   router.post('/login', service.login)
-  router.get('/check', authMiddleware, service.check)
+  router.get('/checkUser', authMiddleware, service.check)
+  router.get('/getUserInfo', service.getUserInfo)
+
   router.get(
     '/getUsers',
-    roleMiddleware(['getUsers', 'SUPERADMIN']),
+    roleMiddleware(['getUsers', 'ADMIN', 'SUPERADMIN']),
     service.getUsers
   )
   router.post(

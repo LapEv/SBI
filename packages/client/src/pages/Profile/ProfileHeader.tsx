@@ -1,6 +1,5 @@
 import { Box } from '@mui/material'
 import { ChangeEvent } from 'react'
-import { AvatarHost } from 'api/config'
 import { AvatarBox } from 'components/AvatarBox'
 
 interface ProfileHeaderProps {
@@ -19,7 +18,7 @@ export function ProfileHeader({
     <Box component="header">
       <label>
         <AvatarBox
-          src={(fileData ?? `${AvatarHost}${avatar}`) as string}
+          src={(fileData ?? `${avatar}`) as string}
           sx={{
             width: '100px',
             height: '100px',

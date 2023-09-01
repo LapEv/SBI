@@ -4,43 +4,26 @@ type NullableString = Nullable<string>
 
 export interface User {
   id: number
-  login: NullableString
-  display_name: NullableString
-  first_name: NullableString
-  second_name: NullableString
+  username: NullableString
+  firstName: NullableString
+  lastName: NullableString
   phone: NullableString
   email: NullableString
   avatar: NullableString
   password: NullableString
+  theme: NullableString
 }
-
-export interface ChangeTheme extends User {
-  user: {
-    id: number
-    login: NullableString
-    display_name: NullableString
-    first_name: NullableString
-    second_name: NullableString
-    phone: NullableString
-    email: NullableString
-    avatar: NullableString
-    password: NullableString
-  }
-  theme: { id: number; theme: string }
-}
-
 export interface SignUp {
-  login: NullableString
-  display_name: NullableString
-  first_name: NullableString
-  second_name: NullableString
+  username: NullableString
+  firstName: NullableString
+  lastName: NullableString
   phone: NullableString
   email: NullableString
   password: NullableString
 }
 
 export interface Login {
-  login: string
+  username: string
   password: string
 }
 

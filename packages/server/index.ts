@@ -14,7 +14,7 @@ async function init() {
   await dbConnect()
   app.use('/api', apiRouter)
   app.get('/', (_, res) => {
-    res.json('👋 Howdy from the server :)')
+    res.json('👋 Server ready ')
   })
 
   app.listen(port, () => {

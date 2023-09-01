@@ -41,7 +41,7 @@ export function LoginPage() {
   function submitForm(data: LoginValues) {
     signin(
       {
-        login: data.list[0].value,
+        username: data.list[0].value,
         password: data.list[1].value,
       },
       () => navigate(location.state ?? '/')
@@ -59,7 +59,6 @@ export function LoginPage() {
           flexDirection: 'column',
           alignItems: 'center',
         }}>
-        <Typography sx={{ fontWeight: 700, fontSize: 96 }}>SBI</Typography>
         <Box
           component="form"
           onSubmit={handleSubmit(submitForm)}

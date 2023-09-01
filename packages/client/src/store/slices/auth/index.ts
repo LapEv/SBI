@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { GetUser, ChangeProfile, ChangeAvatar } from 'api/user'
-import { signin, signout, signup } from 'api/auth'
+import { GetUser, ChangeProfile, ChangeAvatar, CheckUser } from 'api/user'
+import { signin, signout, signup } from 'api/user'
 import { Nullable } from 'utils/nullableType'
-import { ChangeTheme, User } from './interfaces'
+import { User } from './interfaces'
 
 export type AuthState = {
   user: Nullable<User>
@@ -60,8 +60,8 @@ export const authSlise = createSlice({
     [signout.fulfilled.type]: (state, action: PayloadAction<User>) => {
       state.isLoading = false
       state.error = ''
-      state.user = action.payload
-      state.userData = action.payload
+      state.user = null
+      state.userData = null
     },
     [signout.pending.type]: state => {
       state.isLoading = true
@@ -70,18 +70,31 @@ export const authSlise = createSlice({
       state.isLoading = false
       state.error = action.payload
     },
-    [GetUser.fulfilled.type]: (state, action: PayloadAction<ChangeTheme>) => {
+    [GetUser.fulfilled.type]: (state, action: PayloadAction<User>) => {
       state.isLoading = false
       state.error = ''
-      const { user, theme } = action.payload
-      state.user = user
-      state.userData = user
-      localStorage.setItem('theme', theme.theme ?? 'light')
+      state.user = action.payload
+      state.userData = action.payload
+      localStorage.setItem('theme', action.payload.theme ?? 'light')
     },
     [GetUser.pending.type]: state => {
       state.isLoading = true
     },
     [GetUser.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false
+      state.error = action.payload
+    },
+    [CheckUser.fulfilled.type]: (state, action: PayloadAction<User>) => {
+      state.isLoading = false
+      state.error = ''
+      state.user = action.payload
+      state.userData = action.payload
+      localStorage.setItem('theme', action.payload.theme ?? 'light')
+    },
+    [CheckUser.pending.type]: state => {
+      state.isLoading = true
+    },
+    [CheckUser.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false
       state.error = action.payload
     },

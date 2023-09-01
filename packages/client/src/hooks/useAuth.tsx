@@ -5,8 +5,9 @@ import {
   ChangeAvatar,
   ChangePassword,
   ChangeTheme,
+  CheckUser,
 } from 'api/user'
-import { signin, signout, signup } from 'api/auth'
+import { signin, signout, signup } from 'api/user'
 import { RootState } from 'store'
 import { useAppDispatch } from 'store/hooks'
 import { AuthState, updateEditStatus, updateUserData } from 'store/slices/auth'
@@ -44,6 +45,9 @@ export function useAuth(): [AuthState, AuthActions] {
       },
       getUser() {
         dispatch(GetUser())
+      },
+      checkUser() {
+        dispatch(CheckUser())
       },
       updateUserData(data) {
         dispatch(updateUserData(data))

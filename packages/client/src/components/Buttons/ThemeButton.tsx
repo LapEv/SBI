@@ -15,7 +15,7 @@ export function ThemeButton() {
     <Fab
       title={'Переключить тему'}
       onClick={() => colorMode.toggleColorMode(user?.id)}
-      order={5}>
+      order={1}>
       {theme.palette.mode === 'dark' ? (
         <Brightness7Icon />
       ) : (

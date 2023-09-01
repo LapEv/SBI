@@ -1,8 +1,8 @@
 export interface ValidateProps {
-  first_name: string
-  second_name: string
+  firstName: string
+  lastName: string
   display_name: string
-  login: string
+  username: string
   email: string
   password: string
   oldPassword: string

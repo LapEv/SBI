@@ -9,6 +9,7 @@ import { Outlet } from 'react-router-dom'
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
+  backgroundColor: theme.palette.background.default,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -17,6 +18,7 @@ const openedMixin = (theme: Theme): CSSObject => ({
 })
 
 const closedMixin = (theme: Theme): CSSObject => ({
+  backgroundColor: theme.palette.background.default,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -35,7 +37,6 @@ const Drawer = styled(MuiDrawer, {
   flexShrink: 0,
   whiteSpace: 'nowrap',
   boxSizing: 'border-box',
-  position: 'absolute',
   ...(open && {
     ...openedMixin(theme),
     '& .MuiDrawer-paper': openedMixin(theme),
@@ -47,7 +48,7 @@ const Drawer = styled(MuiDrawer, {
 }))
 
 export const MainLayout = () => {
-  const [open, setOpen] = useState<boolean>(false)
+  const [open, setOpen] = useState<boolean>(true)
   const toggleDrawer = () => {
     setOpen(prev => !prev)
   }
@@ -56,7 +57,7 @@ export const MainLayout = () => {
     <Box sx={{ display: 'flex' }}>
       <NavBar />
       <Drawer
-        sx={{ display: { xs: 'flex', md: 'none' } }}
+        sx={{ display: { xs: 'flex', md: 'flex' } }}
         variant="permanent"
         open={open}>
         <DrawerHeader open={open} toggleDrawer={toggleDrawer} />

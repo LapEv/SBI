@@ -1,33 +1,81 @@
+import { JwtPayload } from 'jsonwebtoken'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import host, { serverhost } from './config'
+import jwt_decode from 'jwt-decode'
 import {
+  Login,
+  SignUp,
+  User,
   ChangePasswordProps,
   ChangeThemeProps,
   FileProps,
-  User,
 } from 'storeAuth/interfaces'
-import { ApiEndPoints } from './config'
+import { authhost, host, ApiEndPoints } from './config'
 
-export const GetUser = createAsyncThunk('user/getuser', async (_, thunkAPI) => {
-  try {
-    const response = await host.get<User>(ApiEndPoints.Auth.UserInfo)
-    if (response.data) {
-      const responseTheme = await serverhost.get<ChangeThemeProps>(
-        `${ApiEndPoints.User.GetUserTheme}${response.data.id}`
-      )
-      return { user: response.data, theme: responseTheme.data }
+export const signin = createAsyncThunk(
+  'user/login',
+  async (loginData: Login, thunkAPI) => {
+    try {
+      const { data } = await host.post(ApiEndPoints.User.Login, loginData)
+      localStorage.setItem('token', data.token)
+      const { id } = jwt_decode(data.token) as JwtPayload
+      return { ...data, id }
+    } catch (e) {
+      return thunkAPI.rejectWithValue('Не удалось авторизоваться')
     }
-    return { user: response.data }
+  }
+)
+
+export const signup = createAsyncThunk(
+  'user/setUser',
+  async (signUpData: SignUp, thunkAPI) => {
+    try {
+      const { data } = await host.post(ApiEndPoints.User.SetUser, signUpData)
+      return data
+    } catch (e) {
+      return thunkAPI.rejectWithValue('Не удалось зарегистрироваться!')
+    }
+  }
+)
+
+export const signout = createAsyncThunk('user/signout', async (_, thunkAPI) => {
+  try {
+    localStorage.removeItem('token')
+    return null
   } catch (e) {
-    return thunkAPI.rejectWithValue('Не удалось получить данные пользователя')
+    return thunkAPI.rejectWithValue('Не удалось выйти')
   }
 })
+
+export const GetUser = createAsyncThunk(
+  'user/getUserInfo',
+  async (_, thunkAPI) => {
+    try {
+      const { data } = await authhost.get<User>(ApiEndPoints.User.UserInfo)
+      return data
+    } catch (e) {
+      return thunkAPI.rejectWithValue('Не удалось получить данные пользователя')
+    }
+  }
+)
+
+export const CheckUser = createAsyncThunk(
+  'user/checkUser',
+  async (_, thunkAPI) => {
+    try {
+      const { data } = await authhost.get<User>(ApiEndPoints.User.CheckUser)
+      console.log('data = ', data)
+      return data
+    } catch (e) {
+      return thunkAPI.rejectWithValue('Не удалось получить данные пользователя')
+    }
+  }
+)
 
 export const ChangeProfile = createAsyncThunk(
   'user/changeProfile',
   async (data: User, thunkAPI) => {
     try {
-      const response = await host.put<User[]>(
+      const response = await authhost.put<User[]>(
         ApiEndPoints.User.UpdateProfile,
         data
       )
@@ -49,7 +97,7 @@ export const ChangeAvatar = createAsyncThunk(
       }
       const formData = new FormData()
       formData.append('avatar', data.info as Blob)
-      const response = await host.put<User[]>(
+      const response = await authhost.put<User[]>(
         ApiEndPoints.User.UpdateProfileAvatar,
         formData,
         config
@@ -65,7 +113,7 @@ export const ChangePassword = createAsyncThunk(
   'user/changePassword',
   async (data: ChangePasswordProps, thunkAPI) => {
     try {
-      const response = await host.put<User[]>(
+      const response = await authhost.put<User[]>(
         ApiEndPoints.User.UpdatePassword,
         data
       )
@@ -80,7 +128,7 @@ export const ChangeTheme = createAsyncThunk(
   'user/changeTheme',
   async (data: ChangeThemeProps, thunkAPI) => {
     try {
-      const response = await serverhost.post<ChangeThemeProps>(
+      const response = await authhost.post<ChangeThemeProps>(
         ApiEndPoints.User.ChangeTheme,
         data
       )

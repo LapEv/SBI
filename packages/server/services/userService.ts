@@ -18,7 +18,12 @@ export class userService {
     const id = _req.body.id ?? 0
     const { password } = _req.body
     const hashPassword = bcrypt.hashSync(password, 7)
-    const newUser = { ..._req.body, password: hashPassword, active: true }
+    const newUser = {
+      ..._req.body,
+      password: hashPassword,
+      active: true,
+      theme: 'light',
+    }
     userRepos
       .update(id, { ...newUser })
       .then(resp => {
@@ -33,6 +38,7 @@ export class userService {
           .json({ error: [auth.notification.errorRegistration, err] })
       )
   }
+
   login = (_req: Request, res: Response) => {
     const { username, password } = _req.body
     userRepos
@@ -48,10 +54,21 @@ export class userService {
         }
         const token = generateAccessToken(
           user[0].id,
-          user[0].role,
+          user[0].roles,
           user[0].username
         )
-        return res.json({ token })
+        const { username, firstName, lastName, email, phone, avatar, theme } =
+          user[0]
+        return res.json({
+          token,
+          username,
+          firstName,
+          lastName,
+          email,
+          phone,
+          avatar,
+          theme,
+        })
       })
       .catch(err =>
         res
@@ -59,11 +76,34 @@ export class userService {
           .json({ message: `${auth.notification.userNotFound}, ${err}` })
       )
   }
+
   check = (_req: Request, res: Response) => {
     const { username, id, roles } = _req.body
     try {
       const token = generateAccessToken(id, roles, username)
-      return res.json({ token })
+      userRepos
+        .findAll({
+          where: { id: id },
+        })
+        .then(user => {
+          const { username, firstName, lastName, email, phone, avatar, theme } =
+            user[0]
+          return res.json({
+            token,
+            username,
+            firstName,
+            lastName,
+            email,
+            phone,
+            avatar,
+            theme,
+          })
+        })
+        .catch(err =>
+          res
+            .status(400)
+            .json({ message: `${auth.notification.userNotFound}, ${err}` })
+        )
     } catch (err) {
       if (err instanceof Error) {
         return res
@@ -74,12 +114,30 @@ export class userService {
       }
     }
   }
+
   getUsers = (_req: Request, res: Response) => {
     userRepos
       .findAll({})
       .then(user => res.status(200).json(user))
       .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
+
+  getUserInfo = (_req: Request, res: Response) => {
+    const { id } = _req.body
+    userRepos
+      .findAll({
+        where: { id },
+      })
+      .then(user => {
+        const { username, firstName, lastName, email, phone, avatar, theme } =
+          user[0]
+        res
+          .status(200)
+          .json({ username, firstName, lastName, email, phone, avatar, theme })
+      })
+      .catch(err => res.status(500).json({ error: ['db error', err] }))
+  }
+
   deleteUser = (_req: Request, res: Response) => {
     const { id, username } = _req.body
     userRepos

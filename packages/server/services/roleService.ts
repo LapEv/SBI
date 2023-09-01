@@ -72,7 +72,7 @@ export class roleService {
   getAllRoles = () => {
     roleRepos
       .findAll({})
-      .then(roles => roles.map(value => value.role))
+      .then(roles => roles.map(value => value.roles))
       /* eslint-disable */
       .catch(err => {
         error: `db error, ${err.status}`

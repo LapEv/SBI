@@ -5,8 +5,6 @@ import MuiAppBar from '@mui/material/AppBar'
 import { menuData } from './drawerBarData'
 import { Button } from '@mui/material'
 import { Link } from 'react-router-dom'
-import { useAuth } from 'hooks/useAuth'
-import { LoginButtons } from './loginButtons'
 
 function NavItem({ text, ...rest }: { text: string; to: string }) {
   return (
@@ -50,7 +48,6 @@ export const NavBar = () => {
         {menuData.map(value => (
           <NavItem key={value.text} {...value} />
         ))}
-        <LoginButtons />
       </Toolbar>
     </AppBar>
   )

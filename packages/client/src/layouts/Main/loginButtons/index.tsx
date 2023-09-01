@@ -18,7 +18,7 @@ export function LoginButtons() {
       }}>
       {user && (
         <Typography sx={{ fontWeight: 500, fontSize: 20 }}>
-          {user.display_name}
+          {user.firstName}
         </Typography>
       )}
       <LinkButton

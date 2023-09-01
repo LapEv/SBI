@@ -58,7 +58,7 @@ function NanListItem({ icon, text, to, isExpanded }: NanListItemProps) {
 export function SideBar({ open = false }: SideBarProps) {
   const [{ user }, { checkUser, signout }] = useAuth()
 
-  console.log('Write change theme to BD и аватарка')
+  console.log('Write change аватарка')
 
   const MUITypography = styled(Typography)(({ theme }) => ({
     flexGrow: 1,

@@ -12,6 +12,7 @@ export interface User {
   avatar: NullableString
   password: NullableString
   theme: NullableString
+  token: string
 }
 export interface SignUp {
   username: NullableString
@@ -33,7 +34,7 @@ export interface ChangePasswordProps {
 }
 
 export interface ChangeThemeProps {
-  id: number | null | undefined
+  id: number | string | null | undefined
   theme: string
 }
 export interface FileProps {

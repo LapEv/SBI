@@ -63,8 +63,8 @@ export const CheckUser = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const { data } = await authhost.get<User>(ApiEndPoints.User.CheckUser)
-      console.log('data = ', data)
-      return data
+      const { id } = jwt_decode(data.token) as JwtPayload
+      return { ...data, id }
     } catch (e) {
       return thunkAPI.rejectWithValue('Не удалось получить данные пользователя')
     }
@@ -111,13 +111,13 @@ export const ChangeAvatar = createAsyncThunk(
 
 export const ChangePassword = createAsyncThunk(
   'user/changePassword',
-  async (data: ChangePasswordProps, thunkAPI) => {
+  async (value: ChangePasswordProps, thunkAPI) => {
     try {
-      const response = await authhost.put<User[]>(
+      const { data } = await authhost.put<User[]>(
         ApiEndPoints.User.UpdatePassword,
-        data
+        value
       )
-      return response.data
+      return data
     } catch (e) {
       return thunkAPI.rejectWithValue('Не удалось обновить пароль')
     }
@@ -126,13 +126,15 @@ export const ChangePassword = createAsyncThunk(
 
 export const ChangeTheme = createAsyncThunk(
   'user/changeTheme',
-  async (data: ChangeThemeProps, thunkAPI) => {
+  async (value: ChangeThemeProps, thunkAPI) => {
+    console.log('ChangeTheme')
     try {
-      const response = await authhost.post<ChangeThemeProps>(
+      console.log('value = ', value)
+      const { data } = await authhost.post<ChangeThemeProps>(
         ApiEndPoints.User.ChangeTheme,
-        data
+        value
       )
-      return response.data
+      return data
     } catch (e) {
       return thunkAPI.rejectWithValue('Не удалось обновить данные темы')
     }

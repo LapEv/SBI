@@ -10,7 +10,6 @@ export function ThemeButton() {
   const theme = useTheme()
   const colorMode = useContext(ColorModeContext)
   const [{ user }] = useAuth()
-
   return (
     <Fab
       title={'Переключить тему'}

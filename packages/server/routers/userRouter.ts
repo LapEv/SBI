@@ -24,7 +24,6 @@ export const userRouter = (apiRouter: Router) => {
   router.post('/login', service.login)
   router.get('/checkUser', authMiddleware, service.check)
   router.get('/getUserInfo', service.getUserInfo)
-
   router.get(
     '/getUsers',
     roleMiddleware(['getUsers', 'ADMIN', 'SUPERADMIN']),
@@ -35,6 +34,7 @@ export const userRouter = (apiRouter: Router) => {
     roleMiddleware(['ADMIN', 'SUPERADMIN']),
     service.deleteUser
   )
+  router.post('/theme', service.changeTheme)
 
   apiRouter.use('/user', router)
 }

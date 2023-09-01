@@ -151,4 +151,15 @@ export class userService {
       )
       .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
+  changeTheme = (_req: Request, res: Response) => {
+    const { id, theme } = _req.body
+    userRepos
+      .update(id, { theme: theme })
+      .then(user =>
+        res
+          .status(200)
+          .json(`Theme changed for user with id=${user} on ${theme}!`)
+      )
+      .catch(err => res.status(500).json({ error: ['db error', err] }))
+  }
 }

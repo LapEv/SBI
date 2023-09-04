@@ -6,7 +6,7 @@ import {
   Controller,
   useFormState,
 } from 'react-hook-form'
-import { useAuth } from 'hooks/useAuth'
+import { useAuth } from 'hooks/auth/useAuth'
 import { Routes } from 'utils/routes'
 import { Login } from 'storeAuth/interfaces'
 import { MapLoginFields } from './LoginData'

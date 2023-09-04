@@ -2,7 +2,7 @@ import { createContext, useMemo, useState } from 'react'
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
 import { ThemeConfig } from './themeConfig'
 import App from '../App'
-import { useAuth } from 'hooks/useAuth'
+import { useAuth } from 'hooks/auth/useAuth'
 const defaultTheme =
   (localStorage.getItem('theme') as 'light' | 'dark') ?? 'light'
 // eslint-disable-next-line @typescript-eslint/no-empty-function

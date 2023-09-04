@@ -1,5 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { GetUser, ChangeProfile, ChangeAvatar, CheckUser } from 'api/user'
+import {
+  GetUser,
+  ChangeProfile,
+  ChangeAvatar,
+  CheckUser,
+  GetUsers,
+} from 'api/user'
 import { signin, signout, signup } from 'api/user'
 import { Nullable } from 'utils/nullableType'
 import { User } from './interfaces'
@@ -7,6 +13,7 @@ import { User } from './interfaces'
 export type AuthState = {
   user: Nullable<User>
   userData: Nullable<User>
+  users: User[]
   editStatus: string
   isLoading: boolean
   error?: string
@@ -15,6 +22,7 @@ export type AuthState = {
 const initialState: AuthState = {
   user: null,
   userData: null,
+  users: [],
   editStatus: 'info',
   isLoading: false,
 }
@@ -84,6 +92,19 @@ export const authSlise = createSlice({
       state.isLoading = false
       state.error = action.payload
     },
+    [GetUsers.fulfilled.type]: (state, action: PayloadAction<User[]>) => {
+      state.isLoading = false
+      state.error = ''
+      state.users = action.payload
+    },
+    [GetUsers.pending.type]: state => {
+      state.isLoading = true
+    },
+    [GetUsers.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false
+      state.error = action.payload
+    },
+
     [CheckUser.fulfilled.type]: (state, action: PayloadAction<User>) => {
       state.isLoading = false
       state.error = ''

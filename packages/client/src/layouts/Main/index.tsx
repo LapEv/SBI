@@ -12,7 +12,7 @@ const openedMixin = (theme: Theme): CSSObject => ({
   backgroundColor: theme.palette.background.default,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
+    duration: theme.transitions.duration.complex,
   }),
   overflowX: 'hidden',
 })
@@ -21,7 +21,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
   backgroundColor: theme.palette.background.default,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
+    duration: theme.transitions.duration.complex,
   }),
   overflowX: 'hidden',
   width: `calc(${theme.spacing(7)} + 1px)`,

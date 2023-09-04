@@ -13,6 +13,7 @@ export interface User {
   password: NullableString
   theme: NullableString
   token: string
+  department: string
 }
 export interface SignUp {
   username: NullableString

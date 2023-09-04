@@ -3,8 +3,8 @@ export enum Routes {
   Login = 'login',
   SignUp = 'signup',
   Profile = 'profile',
-  Leaders = 'leaders',
-  Forum = 'forum',
-  Game = 'game',
+  ControlRoom = 'controlroom',
+  Warehouse = 'warehouse',
+  Users = 'users',
   NotFounde = '*',
 }

@@ -12,7 +12,7 @@ import { styled } from '@mui/material/styles'
 import { menuData } from './drawerBarData'
 import AvatarIcon from 'layouts/Main/icons/AvatarIcon'
 import { Routes } from 'utils/routes'
-import { useAuth } from 'hooks/useAuth'
+import { useAuth } from 'hooks/auth/useAuth'
 import { LinkButton } from 'components/LinkButton'
 
 interface SideBarProps {
@@ -42,7 +42,6 @@ function NanListItem({ icon, text, to, isExpanded }: NanListItemProps) {
             minWidth: 0,
             mr: isExpanded ? 3 : 'auto',
             justifyContent: 'center',
-            // color: '#1E515D',
           }}>
           {icon}
         </ListItemIcon>
@@ -71,14 +70,14 @@ export function SideBar({ open = false }: SideBarProps) {
     ...(open && {
       transition: theme.transitions.create('marginTop', {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
+        duration: theme.transitions.duration.complex,
       }),
       marginTop: -70,
     }),
     ...(!open && {
       transition: theme.transitions.create('marginTop', {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
+        duration: theme.transitions.duration.complex,
       }),
     }),
   }))
@@ -128,16 +127,14 @@ export function SideBar({ open = false }: SideBarProps) {
             open={open}
           />
         </Box>
-        <Typography sx={{ mt: open ? 1 : 0, height: 30 }}>
+        <Typography
+          sx={{
+            mt: open ? 1 : 0,
+            height: 30,
+            display: open ? 'flex' : 'none',
+          }}>
           {user ? user.firstName : ''}
         </Typography>
-
-        <LinkButton
-          onClick={() => user && signout()}
-          sx={{ width: open ? '90%' : 40, mt: 1 }}
-          to={`/${Routes.Login}`}>
-          {user ? 'Выйти' : 'Войти'}
-        </LinkButton>
       </Box>
       <Box
         component="div"
@@ -147,6 +144,23 @@ export function SideBar({ open = false }: SideBarProps) {
         {menuData.map(value => (
           <NanListItem key={value.text} {...value} isExpanded={open} />
         ))}
+      </Box>
+      <Box
+        sx={{
+          width: '100%',
+          height: 20,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-around',
+          alignItems: 'center',
+          mt: 0,
+        }}>
+        <LinkButton
+          onClick={() => user && signout()}
+          sx={{ width: '90%', mt: 10, display: open ? 'flex' : 'none' }}
+          to={`/${Routes.Login}`}>
+          {user ? 'Выйти' : 'Войти'}
+        </LinkButton>
       </Box>
     </List>
   )

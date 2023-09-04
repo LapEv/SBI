@@ -58,6 +58,20 @@ export const GetUser = createAsyncThunk(
   }
 )
 
+export const GetUsers = createAsyncThunk(
+  'user/getUsers',
+  async (_, thunkAPI) => {
+    try {
+      const { data } = await authhost.get<User[]>(ApiEndPoints.User.GetUsers)
+      return data
+    } catch (e) {
+      return thunkAPI.rejectWithValue(
+        'Не удалось получить данные пользователей'
+      )
+    }
+  }
+)
+
 export const CheckUser = createAsyncThunk(
   'user/checkUser',
   async (_, thunkAPI) => {

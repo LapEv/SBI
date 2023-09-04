@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { Box } from '@mui/material'
-import { useAuth } from 'hooks/useAuth'
+import { useAuth } from 'hooks/auth/useAuth'
 import { Button } from 'components/Buttons'
 
 interface ProfileFooterProps {

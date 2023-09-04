@@ -19,7 +19,8 @@
     "rootDir": "./src/",
     "baseUrl": "./src/",
     "paths": {
-      "storeAuth/*": ["store/slices/auth/*"]
+      "storeAuth/*": ["store/slices/auth/*"],
+      "storeRoles/*": ["store/slices/roles/*"]
     }
   },
   "include": ["src"],

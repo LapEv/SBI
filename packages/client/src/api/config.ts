@@ -6,6 +6,7 @@ export const ApiEndPoints = {
     SetUser: 'user/setUser',
     SignOut: 'user/logout',
     UserInfo: 'user/getUserInfo',
+    GetUsers: 'user/getUsers',
     CheckUser: 'user/checkUser',
     UserFullInfo: 'user/getUserFullInfo',
     UpdatePassword: 'user/password',
@@ -14,6 +15,14 @@ export const ApiEndPoints = {
     Search: 'user/search',
     ChangeTheme: 'user/theme',
     GetUserTheme: 'user/theme/?id=',
+  },
+  Roles: {
+    newRole: 'role/newRole',
+    newRoleGroup: 'role/newRoleGroup',
+    getRoles: 'role/getRoles',
+    getRolesGroup: 'role/getRolesGroup',
+    deleteRole: 'role/deleteRole',
+    deleteRoleGroup: 'role/deleteRoleGroup',
   },
 }
 

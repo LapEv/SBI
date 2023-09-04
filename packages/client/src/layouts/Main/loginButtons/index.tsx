@@ -1,4 +1,4 @@
-import { useAuth } from 'hooks/useAuth'
+import { useAuth } from 'hooks/auth/useAuth'
 import { Box, Typography } from '@mui/material'
 import { LinkButton } from 'components/LinkButton'
 import { Routes } from 'utils/routes'
@@ -17,7 +17,11 @@ export function LoginButtons() {
         alignItems: 'center',
       }}>
       {user && (
-        <Typography sx={{ fontWeight: 500, fontSize: 20 }}>
+        <Typography
+          sx={{
+            fontWeight: 500,
+            fontSize: 20,
+          }}>
           {user.firstName}
         </Typography>
       )}

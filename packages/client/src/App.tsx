@@ -16,9 +16,9 @@ function App() {
       const data = await response.json()
       console.log(data)
     }
-
     fetchServerData()
   }, [])
+
   return (
     <FullScreen>
       <BrowserRouter>
@@ -36,15 +36,30 @@ function App() {
                     </RequiredAuth>
                   }
                 />
-                {/* <Route path={Paths.Forum}>
-                  <Route index element={<Pages.Forum />} />
-                  <Route path=":theme_name">
-                    <Route index element={<Pages.Theme />} />
-                    <Route path=":theme_branch">
-                      <Route index element={<Pages.ThemeBranch />} />
-                    </Route>
-                  </Route>
-                </Route> */}
+                <Route
+                  path={Paths.ControlRoom}
+                  element={
+                    <RequiredAuth>
+                      <Pages.ControlRoom />
+                    </RequiredAuth>
+                  }
+                />
+                <Route
+                  path={Paths.Warehouse}
+                  element={
+                    <RequiredAuth>
+                      <Pages.Warehouse />
+                    </RequiredAuth>
+                  }
+                />
+                <Route
+                  path={Paths.Users}
+                  element={
+                    <RequiredAuth>
+                      <Pages.Users />
+                    </RequiredAuth>
+                  }
+                />
               </Route>
               <Route path={Paths.NotFounde} element={<Pages.Error />} />
             </Routes>

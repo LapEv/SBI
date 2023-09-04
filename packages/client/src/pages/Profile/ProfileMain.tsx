@@ -6,7 +6,7 @@ import {
   Controller,
   useFormState,
 } from 'react-hook-form'
-import { useAuth } from 'hooks/useAuth'
+import { useAuth } from 'hooks/auth/useAuth'
 import { ProfileFooter } from './ProfileFooter'
 import { User } from 'storeAuth/interfaces'
 import { ChangeEvent, useEffect } from 'react'

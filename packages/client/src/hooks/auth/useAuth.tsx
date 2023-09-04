@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux'
 import {
   GetUser,
+  GetUsers,
   ChangeProfile,
   ChangeAvatar,
   ChangePassword,
@@ -45,6 +46,9 @@ export function useAuth(): [AuthState, AuthActions] {
       },
       getUser() {
         dispatch(GetUser())
+      },
+      getUsers() {
+        dispatch(GetUsers())
       },
       checkUser() {
         dispatch(CheckUser())

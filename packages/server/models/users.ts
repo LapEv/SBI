@@ -15,6 +15,7 @@ export interface User {
   avatar?: string
   active: boolean
   theme: string
+  department: string
 }
 
 export const users: ModelAttributes<Model, User> = {
@@ -70,6 +71,10 @@ export const users: ModelAttributes<Model, User> = {
     allowNull: true,
   },
   theme: {
+    type: DataType.STRING,
+    allowNull: true,
+  },
+  department: {
     type: DataType.STRING,
     allowNull: true,
   },

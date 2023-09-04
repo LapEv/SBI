@@ -28,7 +28,7 @@ export const NavBar = () => {
     height: 60,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+      duration: theme.transitions.duration.slow,
     }),
   }))
 

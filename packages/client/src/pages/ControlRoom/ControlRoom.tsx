@@ -1,9 +1,8 @@
-import { Box, Container, Modal } from '@mui/material'
-import { ChangeEvent, useEffect, useState } from 'react'
+import { Box, Container } from '@mui/material'
 import { useAuth } from 'hooks/auth/useAuth'
 
 export function ControlRoomPage() {
-  const [{ user }, {}] = useAuth()
+  const [{ user }] = useAuth()
 
   return (
     <Container component="main" maxWidth="md">

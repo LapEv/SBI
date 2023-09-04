@@ -1,4 +1,4 @@
-import { Box, useTheme } from '@mui/material'
+import { useTheme } from '@mui/material'
 import { useContext } from 'react'
 import { ColorModeContext } from '../../themes/ThemeWrapper'
 import Brightness4Icon from '@mui/icons-material/Brightness4'

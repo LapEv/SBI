@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { authhost, host, ApiEndPoints } from './config'
+import { authhost, ApiEndPoints } from './config'
 import { Roles } from 'store/slices/roles/interfaces'
 
 export const getRoles = createAsyncThunk(

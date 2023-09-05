@@ -1,19 +1,25 @@
 import { useStructure } from 'hooks/structure/useStructure'
 import { useEffect, useState } from 'react'
-import { Box, ListItemText, ListItemButton, List } from '@mui/material'
+import { Box, List, ListItemText, ListItemButton } from '@mui/material'
 import { Departments } from './Departments'
 import { Division } from 'store/slices/structure/interfaces'
-import { Nullable } from 'utils/nullableType'
+import ExpandLess from '@mui/icons-material/ExpandLess'
+import ExpandMore from '@mui/icons-material/ExpandMore'
 
-export const Divisions = ({ divisionName }: Division) => {
+export const Divisions = ({ divisionName, division, id }: Division) => {
+  const [{ departaments }, { getDepartments }] = useStructure()
+
   const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    getDepartments()
+  }, [])
 
   const handleClick = () => {
     console.log('open = ', open)
     setOpen(!open)
   }
 
-  console.log('value = ', divisionName)
   return (
     <Box
       sx={{
@@ -29,31 +35,31 @@ export const Divisions = ({ divisionName }: Division) => {
         p: 3,
       }}>
       <ListItemButton
+        divider={open}
         sx={{
           fontWeight: 'bold',
           fontSize: '1rem',
           weight: '100%',
           display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-start',
+          flexDirection: 'row',
+          alignItems: 'space-between',
+          justifyContent: 'space-between',
         }}
         onClick={handleClick}>
         <ListItemText primary={divisionName} />
-        {/* {open ? (
-          <List
-            sx={{
-              fontWeight: 'bold',
-              fontSize: '1rem',
-              weight: '100%',
-              height: 20,
-              color: '#000',
-            }}>
-            <Departments />
-          </List>
-        ) : (
-          <></>
-        )} */}
+        {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
+      {open ? (
+        <List sx={{ width: '100%', ml: 2 }}>
+          {departaments
+            .filter(value => value.DivisionId === id)
+            .map(value => (
+              <Departments departmentName={value.departmentName} />
+            ))}
+        </List>
+      ) : (
+        <></>
+      )}
     </Box>
   )
 }

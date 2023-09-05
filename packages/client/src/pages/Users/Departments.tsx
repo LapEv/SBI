@@ -7,16 +7,12 @@ import {
   List,
   TextField,
 } from '@mui/material'
+import { Department } from 'store/slices/structure/interfaces'
+import ExpandLess from '@mui/icons-material/ExpandLess'
+import ExpandMore from '@mui/icons-material/ExpandMore'
 
-export const Departments = () => {
-  const [{ departaments }, { getDepartments }] = useStructure()
-  console.log('departaments = ', departaments)
-
-  useEffect(() => {
-    getDepartments()
-  }, [])
-
-  const [open, setOpen] = useState(true)
+export const Departments = ({ departmentName }: Department) => {
+  const [open, setOpen] = useState(false)
 
   const handleClick = () => {
     console.log('open = ', open)
@@ -24,49 +20,19 @@ export const Departments = () => {
   }
 
   return (
-    <>
-      {departaments.map(value => (
-        <Box
-          sx={{
-            display: 'flex',
-            borderRadius: 2,
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-            justifyContent: 'space-around',
-            width: '100%',
-            mt: 5,
-            border: '3px solid #1E515D',
-            boxShadow: 5,
-            p: 3,
-          }}>
-          <ListItemButton
-            sx={{
-              fontWeight: 'bold',
-              fontSize: '1rem',
-              weight: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-            }}
-            onClick={handleClick}>
-            <ListItemText primary={value.departmentName} />
-            {open ? (
-              <TextField
-                sx={{
-                  fontWeight: 'bold',
-                  fontSize: '1rem',
-                  weight: '100%',
-                  height: 20,
-                  color: '#000',
-                }}>
-                Test
-              </TextField>
-            ) : (
-              <></>
-            )}
-          </ListItemButton>
-        </Box>
-      ))}
-    </>
+    <ListItemButton
+      sx={{
+        fontWeight: 'bold',
+        fontSize: '1rem',
+        weight: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'space-between',
+        justifyContent: 'space-between',
+      }}
+      onClick={handleClick}>
+      <ListItemText primary={departmentName} />
+      {open ? <ExpandLess /> : <ExpandMore />}
+    </ListItemButton>
   )
 }

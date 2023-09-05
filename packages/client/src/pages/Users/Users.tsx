@@ -50,7 +50,11 @@ export function UsersPage() {
       </Box>
       <List sx={{ width: '100%' }}>
         {divisions.map(value => (
-          <Divisions divisionName={value.divisionName} />
+          <Divisions
+            divisionName={value.divisionName}
+            division={value.division}
+            id={value.id}
+          />
         ))}
       </List>
     </Container>

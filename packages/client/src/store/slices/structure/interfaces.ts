@@ -3,14 +3,15 @@ import { Nullable } from 'utils/nullableType'
 type NullableString = Nullable<string>
 
 export interface Division {
-  id?: number
+  id?: string
   division?: NullableString
   divisionName: NullableString
 }
 
 export interface Department {
-  id: number
-  department: NullableString
+  id?: string
+  department?: NullableString
   departmentName: NullableString
-  division: NullableString
+  division?: NullableString
+  DivisionId?: NullableString
 }

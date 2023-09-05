@@ -2,10 +2,11 @@ import type { ModelAttributes } from 'sequelize'
 import { DataType, Model } from 'sequelize-typescript'
 
 export interface Department {
-  id: number
+  id: string
   department: string
   departmentName: string
   division: string
+  id_division: string
 }
 
 export const department: ModelAttributes<Model, Department> = {
@@ -26,6 +27,11 @@ export const department: ModelAttributes<Model, Department> = {
     unique: true,
   },
   division: {
+    type: DataType.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  id_division: {
     type: DataType.STRING,
     allowNull: false,
     unique: true,

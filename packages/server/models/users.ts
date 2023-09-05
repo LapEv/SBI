@@ -16,7 +16,9 @@ export interface User {
   active: boolean
   theme: string
   division: string
-  department?: string
+  department: string
+  id_division: string
+  id_department: string
 }
 
 export const users: ModelAttributes<Model, User> = {
@@ -79,8 +81,18 @@ export const users: ModelAttributes<Model, User> = {
     type: DataType.STRING,
     allowNull: true,
   },
+  id_division: {
+    type: DataType.STRING,
+    allowNull: false,
+    unique: true,
+  },
   department: {
     type: DataType.STRING,
     allowNull: true,
+  },
+  id_department: {
+    type: DataType.STRING,
+    allowNull: false,
+    unique: true,
   },
 }

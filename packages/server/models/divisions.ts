@@ -2,7 +2,7 @@ import type { ModelAttributes } from 'sequelize'
 import { DataType, Model } from 'sequelize-typescript'
 
 export interface Division {
-  id: number
+  id: string
   division: string
   divisionName: string
 }

@@ -19,5 +19,7 @@ export const userStartData = [
     post: 'Директор по сервису',
     division: 'Administration',
     department: 'Administration',
+    id_division: '',
+    id_department: '',
   },
 ]

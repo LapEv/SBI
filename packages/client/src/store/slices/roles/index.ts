@@ -16,7 +16,7 @@ const initialState: RolesState = {
 }
 
 export const rolesSlise = createSlice({
-  name: 'auth',
+  name: 'role',
   initialState,
   reducers: {},
   extraReducers: {

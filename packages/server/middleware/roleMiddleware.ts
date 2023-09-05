@@ -4,8 +4,6 @@ const { SECRET_KEY } = process.env
 
 module.exports = function (roles: []) {
   return function (_req: Request, res: Response, next: NextFunction) {
-    console.log('roles = ', roles)
-
     if (_req.method === 'OPTIONS') {
       next()
     }
@@ -16,17 +14,16 @@ module.exports = function (roles: []) {
       }
       const verifycode = jwt.verify(token, SECRET_KEY as Secret)
       const userRoles = verifycode as JwtPayload
-      // let hasRole = false
-      console.log('userRoles = ', userRoles)
+      let hasRole = false
 
-      // userRoles.forEach((role: string) => {
-      //   if (roles.includes(role as never)) {
-      //     hasRole = true
-      //   }
-      // })
-      // if (!hasRole) {
-      //   return res.status(403).json({ message: "You don't have access" })
-      // }
+      userRoles.roles.forEach((role: string) => {
+        if (roles.includes(role as never)) {
+          hasRole = true
+        }
+      })
+      if (!hasRole) {
+        return res.status(403).json({ message: "You don't have access" })
+      }
       next()
     } catch (e) {
       console.log(e)

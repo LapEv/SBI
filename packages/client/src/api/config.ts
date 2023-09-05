@@ -24,6 +24,14 @@ export const ApiEndPoints = {
     deleteRole: 'role/deleteRole',
     deleteRoleGroup: 'role/deleteRoleGroup',
   },
+  Structure: {
+    newDivision: 'structure/newDivision',
+    newDepartment: 'structure/newDepartment',
+    getDivisions: 'structure/getDivisions',
+    getDepartments: 'structure/getDepartments',
+    deleteDivision: 'structure/deleteDivision',
+    deleteDepartment: 'structure/deleteDepartment',
+  },
 }
 
 const url = `http://localhost:${__SERVER_PORT__}/api/`

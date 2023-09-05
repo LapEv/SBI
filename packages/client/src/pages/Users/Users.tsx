@@ -1,11 +1,15 @@
-import { Box, Container, Typography } from '@mui/material'
+import { Box, Container, Typography, List } from '@mui/material'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useRoles } from 'hooks/roles/useRoles'
 import { useEffect } from 'react'
+import { Divisions } from './Divisions'
+import { useStructure } from 'hooks/structure/useStructure'
 
 export function UsersPage() {
   const [{ roles, rolesGroup }, { getRoles, getRolesGroup }] = useRoles()
   const [{ users }, { getUsers }] = useAuth()
+  const [{ divisions }, { getDivisions }] = useStructure()
+  console.log('divisions = ', divisions)
 
   console.log('roles = ', roles)
   console.log('rolesGroup = ', rolesGroup)
@@ -15,6 +19,7 @@ export function UsersPage() {
     getRoles()
     getRolesGroup()
     getUsers()
+    getDivisions()
   }, [])
 
   return (
@@ -43,20 +48,11 @@ export function UsersPage() {
           Пользователи
         </Typography>
       </Box>
-      <Box
-        bgcolor="background.paper"
-        sx={{
-          display: 'flex',
-          borderRadius: 2,
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'space-around',
-          my: 10,
-          border: '3px solid #1E515D',
-          p: 3,
-        }}>
-        Users
-      </Box>
+      <List sx={{ width: '100%' }}>
+        {divisions.map(value => (
+          <Divisions divisionName={value.divisionName} />
+        ))}
+      </List>
     </Container>
   )
 }

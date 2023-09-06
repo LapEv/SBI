@@ -77,7 +77,7 @@ export const CheckUser = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const { data } = await authhost.get<User>(ApiEndPoints.User.CheckUser)
-      const { id } = jwt_decode(data.token) as JwtPayload
+      const { id } = jwt_decode(data.token as string) as JwtPayload
       return { ...data, id }
     } catch (e) {
       return thunkAPI.rejectWithValue('Не удалось получить данные пользователя')

@@ -6,19 +6,10 @@ import { Divisions } from './Divisions'
 import { useStructure } from 'hooks/structure/useStructure'
 
 export function UsersPage() {
-  const [{ roles, rolesGroup }, { getRoles, getRolesGroup }] = useRoles()
-  const [{ users }, { getUsers }] = useAuth()
   const [{ divisions }, { getDivisions }] = useStructure()
   console.log('divisions = ', divisions)
 
-  console.log('roles = ', roles)
-  console.log('rolesGroup = ', rolesGroup)
-  console.log('users = ', users)
-
   useEffect(() => {
-    getRoles()
-    getRolesGroup()
-    getUsers()
     getDivisions()
   }, [])
 
@@ -29,6 +20,7 @@ export function UsersPage() {
       sx={{
         display: 'flex',
         height: '100%',
+        width: '100%',
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
@@ -37,18 +29,19 @@ export function UsersPage() {
         component="div"
         sx={{
           width: '100%',
-          height: 20,
+          height: 60,
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-around',
           alignItems: 'center',
-          mt: 2.5,
+          border: '3px solid #1E515D',
+          boxShadow: 5,
         }}>
         <Typography sx={{ fontWeight: 'bold', fontSize: '2.375rem' }}>
           Пользователи
         </Typography>
       </Box>
-      <List sx={{ width: '100%' }}>
+      <List sx={{ width: '100%', p: 3 }}>
         {divisions.map(value => (
           <Divisions
             divisionName={value.divisionName}

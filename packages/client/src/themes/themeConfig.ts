@@ -78,9 +78,18 @@ export const ThemeConfig = (mode: PaletteMode) =>
     components: {
       MuiTypography: {
         defaultProps: {
-          fontWeight: '800',
+          fontWeight: 'bold',
           fontSize: '0.975rem',
           color: mode === ThemeMode.light ? '#1E515D' : '#FFFFFF',
+        },
+      },
+      MuiContainer: {
+        styleOverrides: {
+          root: {
+            paddingLeft: '0!important',
+            paddingRight: '0!important',
+            maxWidth: '100%!important',
+          },
         },
       },
     },

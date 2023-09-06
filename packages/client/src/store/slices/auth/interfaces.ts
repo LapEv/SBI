@@ -3,17 +3,19 @@ import { Nullable } from 'utils/nullableType'
 type NullableString = Nullable<string>
 
 export interface User {
-  id: number
-  username: NullableString
-  firstName: NullableString
-  lastName: NullableString
-  phone: NullableString
-  email: NullableString
-  avatar: NullableString
-  password: NullableString
-  theme: NullableString
-  token: string
-  department: string
+  id?: number
+  username?: NullableString
+  firstName?: NullableString
+  lastName?: NullableString
+  phone?: NullableString
+  email?: NullableString
+  avatar?: NullableString
+  password?: NullableString
+  theme?: NullableString
+  token?: string
+  department?: NullableString
+  id_division?: NullableString
+  id_department?: NullableString
 }
 export interface SignUp {
   username: NullableString

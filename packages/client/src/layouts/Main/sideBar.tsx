@@ -8,7 +8,6 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
-
 import { menuData } from './drawerBarData'
 import AvatarIcon from 'layouts/Main/icons/AvatarIcon'
 import { Routes } from 'utils/routes'
@@ -57,50 +56,19 @@ function NanListItem({ icon, text, to, isExpanded }: NanListItemProps) {
 export function SideBar({ open = false }: SideBarProps) {
   const [{ user }, { checkUser, signout }] = useAuth()
 
-  console.log('Write change аватарка')
-
-  const MUITypography = styled(Typography)(({ theme }) => ({
-    flexGrow: 1,
-    fontWeight: 'bold',
-    fontSize: '2.375rem',
-    zIndex: 2,
-    backgroundColor: theme.palette.background.default,
-    height: 40,
-    marginTop: 10,
-    ...(open && {
-      transition: theme.transitions.create('marginTop', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.complex,
-      }),
-      marginTop: -70,
-    }),
-    ...(!open && {
-      transition: theme.transitions.create('marginTop', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.complex,
-      }),
-    }),
-  }))
-
   useEffect(() => {
     checkUser()
   }, [])
 
+  const MUITypography = styled(Typography)(({ theme }) => ({
+    fontWeight: 'bold',
+    fontSize: '1.975rem',
+    zIndex: 1,
+    backgroundColor: theme.palette.background.default,
+  }))
+
   return (
     <List>
-      <Box
-        component="div"
-        sx={{
-          width: '100%',
-          height: 20,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-          mt: 0,
-        }}>
-        <MUITypography>SBI</MUITypography>
-      </Box>
       <Box
         sx={{
           width: '100%',
@@ -111,6 +79,8 @@ export function SideBar({ open = false }: SideBarProps) {
           alignItems: 'center',
           mt: 2,
         }}>
+        {!open ? <MUITypography>SBI</MUITypography> : <></>}
+
         <Box
           sx={{
             width: open ? 100 : 50,

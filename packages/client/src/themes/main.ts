@@ -33,13 +33,4 @@ export const theme = createTheme({
       height: 20,
     },
   },
-  components: {
-    MuiTypography: {
-      defaultProps: {
-        fontWeight: '800',
-        fontSize: '0.975rem',
-        color: '#1E515D',
-      },
-    },
-  },
 } as ThemeOptions)

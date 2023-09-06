@@ -29,17 +29,17 @@ export const Divisions = ({ divisionName, division, id }: Division) => {
         alignItems: 'flex-start',
         justifyContent: 'space-around',
         width: '100%',
-        mt: 5,
+        mt: 2,
         border: '3px solid #1E515D',
         boxShadow: 5,
-        p: 3,
+        p: 2,
       }}>
       <ListItemButton
         divider={open}
         sx={{
           fontWeight: 'bold',
-          fontSize: '1rem',
-          weight: '100%',
+          fontSize: '1.5rem',
+          width: '100%',
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'space-between',
@@ -54,7 +54,11 @@ export const Divisions = ({ divisionName, division, id }: Division) => {
           {departaments
             .filter(value => value.id_division === id)
             .map(value => (
-              <Departments departmentName={value.departmentName} />
+              <Departments
+                departmentName={value.departmentName as string}
+                id_department={value.id as string}
+                id_division={id as string}
+              />
             ))}
         </List>
       ) : (

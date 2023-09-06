@@ -33,7 +33,7 @@ export const NavBar = () => {
   }))
 
   return (
-    <AppBar position="fixed" sx={{ display: { xs: 'none', md: 'none' } }}>
+    <AppBar position="fixed" sx={{ zIndex: 1, display: 'none' }}>
       <Toolbar>
         <Typography
           variant="h6"

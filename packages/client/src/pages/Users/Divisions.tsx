@@ -52,7 +52,7 @@ export const Divisions = ({ divisionName, division, id }: Division) => {
       {open ? (
         <List sx={{ width: '100%', ml: 2 }}>
           {departaments
-            .filter(value => value.DivisionId === id)
+            .filter(value => value.id_division === id)
             .map(value => (
               <Departments departmentName={value.departmentName} />
             ))}

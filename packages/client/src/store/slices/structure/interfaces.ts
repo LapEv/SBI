@@ -13,5 +13,5 @@ export interface Department {
   department?: NullableString
   departmentName: NullableString
   division?: NullableString
-  DivisionId?: NullableString
+  id_division?: NullableString
 }

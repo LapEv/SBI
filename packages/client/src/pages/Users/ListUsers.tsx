@@ -1,9 +1,9 @@
 import { useStructure } from 'hooks/structure/useStructure'
 import { useEffect, useState } from 'react'
-import { Box, List, ListItemText, ListItemButton } from '@mui/material'
+import { ListItemText, ListItemButton } from '@mui/material'
 import ExpandLess from '@mui/icons-material/ExpandLess'
-import ExpandMore from '@mui/icons-material/ExpandMore'
 import { User } from 'storeAuth/interfaces'
+import { RotateButton } from 'components/Buttons/RotateButton'
 
 export const ListUsers = ({ firstName, lastName }: User) => {
   const [{ departaments }, { getDepartments }] = useStructure()
@@ -32,7 +32,8 @@ export const ListUsers = ({ firstName, lastName }: User) => {
         justifyContent: 'space-between',
       }}
       onClick={handleClick}>
-      <ListItemText primary={firstName} />
+      <ListItemText primary={firstName} sx={{ ml: 4 }} />
+      <RotateButton open={open} handleClick={handleClick} size={'2rem'} />
     </ListItemButton>
   )
 }

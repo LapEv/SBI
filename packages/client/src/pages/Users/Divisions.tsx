@@ -1,14 +1,15 @@
 import { useStructure } from 'hooks/structure/useStructure'
 import { useEffect, useState } from 'react'
-import { Box, List, ListItemText, ListItemButton } from '@mui/material'
+import { Box, ListItemText, ListItemButton } from '@mui/material'
 import { Departments } from './Departments'
 import { Division } from 'store/slices/structure/interfaces'
 import ExpandLess from '@mui/icons-material/ExpandLess'
-import ExpandMore from '@mui/icons-material/ExpandMore'
+import Collapse from '@mui/material/Collapse'
+import IconButton from '@mui/material/IconButton/IconButton'
+import { RotateButton } from 'components/Buttons/RotateButton'
 
 export const Divisions = ({ divisionName, division, id }: Division) => {
   const [{ departaments }, { getDepartments }] = useStructure()
-
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -16,7 +17,6 @@ export const Divisions = ({ divisionName, division, id }: Division) => {
   }, [])
 
   const handleClick = () => {
-    console.log('open = ', open)
     setOpen(!open)
   }
 
@@ -30,7 +30,9 @@ export const Divisions = ({ divisionName, division, id }: Division) => {
         justifyContent: 'space-around',
         width: '100%',
         mt: 2,
-        border: '3px solid #1E515D',
+        borderWidth: 2,
+        borderColor: 'icon.default',
+        borderStyle: 'solid',
         boxShadow: 5,
         p: 2,
       }}>
@@ -38,7 +40,7 @@ export const Divisions = ({ divisionName, division, id }: Division) => {
         divider={open}
         sx={{
           fontWeight: 'bold',
-          fontSize: '1.5rem',
+          fontSize: '1.9rem',
           width: '100%',
           display: 'flex',
           flexDirection: 'row',
@@ -47,23 +49,20 @@ export const Divisions = ({ divisionName, division, id }: Division) => {
         }}
         onClick={handleClick}>
         <ListItemText primary={divisionName} />
-        {open ? <ExpandLess /> : <ExpandMore />}
+        <RotateButton open={open} handleClick={handleClick} size={'2rem'} />
       </ListItemButton>
-      {open ? (
-        <List sx={{ width: '100%', ml: 2 }}>
-          {departaments
-            .filter(value => value.id_division === id)
-            .map(value => (
-              <Departments
-                departmentName={value.departmentName as string}
-                id_department={value.id as string}
-                id_division={id as string}
-              />
-            ))}
-        </List>
-      ) : (
-        <></>
-      )}
+      <Collapse sx={{ width: '100%' }} in={open} timeout="auto" unmountOnExit>
+        {departaments
+          .filter(value => value.id_division === id)
+          .map(value => (
+            <Departments
+              departmentName={value.departmentName as string}
+              id_department={value.id as string}
+              id_division={id as string}
+              key={value.id}
+            />
+          ))}
+      </Collapse>
     </Box>
   )
 }

@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
-import { Box, ListItemText, ListItemButton, List } from '@mui/material'
-import { Department } from 'store/slices/structure/interfaces'
+import { Box, ListItemText, ListItemButton } from '@mui/material'
 import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
+import Collapse from '@mui/material/Collapse'
 import { useAuth } from 'hooks/auth/useAuth'
 import { User } from 'storeAuth/interfaces'
 import { ListUsers } from './ListUsers'
+import { RotateButton } from 'components/Buttons/RotateButton'
 
 interface DPR extends User {
   departmentName: string
@@ -24,7 +25,6 @@ export const Departments = ({
   }, [])
 
   const handleClick = () => {
-    console.log('open = ', open)
     setOpen(!open)
   }
 
@@ -49,23 +49,24 @@ export const Departments = ({
           justifyContent: 'space-between',
         }}
         onClick={handleClick}>
-        <ListItemText primary={departmentName} />
-        {open ? <ExpandLess /> : <ExpandMore />}
+        <ListItemText primary={departmentName} sx={{ ml: 2 }} />
+        <RotateButton open={open} handleClick={handleClick} size={'2rem'} />
       </ListItemButton>
-      {open ? (
-        <List sx={{ width: '100%', ml: 2 }}>
-          {users
-            .filter(value => value.id_division === id_division)
-            .map(value => (
-              <ListUsers
-                firstName={value.firstName}
-                lastName={value.lastName}
-              />
-            ))}
-        </List>
-      ) : (
-        <></>
-      )}
+      <Collapse sx={{ width: '100%' }} in={open} timeout="auto" unmountOnExit>
+        {users
+          .filter(
+            value =>
+              value.id_division === id_division &&
+              value.id_department === id_department
+          )
+          .map(value => (
+            <ListUsers
+              firstName={value.firstName}
+              lastName={value.lastName}
+              key={value.id}
+            />
+          ))}
+      </Collapse>
     </Box>
   )
 }

@@ -1,13 +1,10 @@
 import { Box, Container, Typography, List } from '@mui/material'
-import { useAuth } from 'hooks/auth/useAuth'
-import { useRoles } from 'hooks/roles/useRoles'
 import { useEffect } from 'react'
 import { Divisions } from './Divisions'
 import { useStructure } from 'hooks/structure/useStructure'
 
 export function UsersPage() {
   const [{ divisions }, { getDivisions }] = useStructure()
-  console.log('divisions = ', divisions)
 
   useEffect(() => {
     getDivisions()
@@ -34,7 +31,6 @@ export function UsersPage() {
           flexDirection: 'column',
           justifyContent: 'space-around',
           alignItems: 'center',
-          border: '3px solid #1E515D',
           boxShadow: 5,
         }}>
         <Typography sx={{ fontWeight: 'bold', fontSize: '2.375rem' }}>
@@ -47,6 +43,7 @@ export function UsersPage() {
             divisionName={value.divisionName}
             division={value.division}
             id={value.id}
+            key={value.id}
           />
         ))}
       </List>

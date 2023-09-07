@@ -39,7 +39,6 @@ export const DrawerHeader: FC<SideBarProps> = ({ open, toggleDrawer }) => {
         mt: 0,
         minHeight: '59.5px!important',
         zIndex: 1,
-        border: '3px solid #1E515D',
         boxShadow: 5,
         display: 'flex',
         justifyContent: 'space-between',

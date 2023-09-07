@@ -68,7 +68,9 @@ export function ProfilePage() {
           alignItems: 'center',
           justifyContent: 'space-around',
           my: 10,
-          border: '3px solid #1E515D',
+          borderWidth: 2,
+          borderBlockColor: 'icon.default',
+          borderStyle: 'solid',
           p: 3,
         }}>
         <Modal

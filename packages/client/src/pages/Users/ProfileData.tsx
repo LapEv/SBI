@@ -1,10 +1,5 @@
-import { useStructure } from 'hooks/structure/useStructure'
-import { ChangeEvent, useEffect } from 'react'
-import { Box, TextField, ListItemText, ListItemButton } from '@mui/material'
-import Collapse from '@mui/material/Collapse'
+import { Box, TextField } from '@mui/material'
 import { User } from 'storeAuth/interfaces'
-import { RotateButton } from 'components/Buttons/RotateButton'
-// import { TextField } from 'components/TextFields/TextFields'
 import {
   useForm,
   useFieldArray,
@@ -56,10 +51,6 @@ export const ProfileData = (userData: User) => {
   function changeData(data: ProfileValues) {
     console.log('data = ', data)
   }
-
-  // useEffect(() => {
-  //   getUser(id)
-  // }, [])
 
   return (
     <Box

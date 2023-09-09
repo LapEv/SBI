@@ -7,7 +7,7 @@ import { ProfileData } from './ProfileData'
 import { useAuth } from 'hooks/auth/useAuth'
 
 export const ListUsers = (userData: User) => {
-  const [{}, { getUser }] = useAuth()
+  const [{ user }, { getUser }] = useAuth()
   const [open, setOpen] = useState(false)
 
   const handleClick = () => {

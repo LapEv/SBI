@@ -1,4 +1,4 @@
-import IconButton from '@mui/material/IconButton/IconButton'
+import IconButton from '@mui/material/IconButton'
 import ExpandLess from '@mui/icons-material/ExpandLess'
 import { userRotateStyles } from '../../themes/rotateConfig'
 

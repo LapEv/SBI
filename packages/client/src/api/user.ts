@@ -48,9 +48,11 @@ export const signout = createAsyncThunk('user/signout', async (_, thunkAPI) => {
 
 export const GetUser = createAsyncThunk(
   'user/getUserInfo',
-  async (_, thunkAPI) => {
+  async (id: string, thunkAPI) => {
     try {
-      const { data } = await authhost.get<User>(ApiEndPoints.User.UserInfo)
+      const { data } = await authhost.post<User>(ApiEndPoints.User.UserInfo, {
+        id,
+      })
       return data
     } catch (e) {
       return thunkAPI.rejectWithValue('Не удалось получить данные пользователя')
@@ -60,9 +62,12 @@ export const GetUser = createAsyncThunk(
 
 export const GetUsers = createAsyncThunk(
   'user/getUsers',
-  async (_, thunkAPI) => {
+  async (dataFind: User, thunkAPI) => {
     try {
-      const { data } = await authhost.get<User[]>(ApiEndPoints.User.GetUsers)
+      const { data } = await authhost.post<User[]>(
+        ApiEndPoints.User.GetUsers,
+        dataFind
+      )
       return data
     } catch (e) {
       return thunkAPI.rejectWithValue(

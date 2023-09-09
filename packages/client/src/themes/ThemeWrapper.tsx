@@ -9,7 +9,7 @@ const defaultTheme =
 export const ColorModeContext = createContext({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  toggleColorMode: (id: number | undefined) => {},
+  toggleColorMode: (id: string | undefined) => {},
 })
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 export default function ToggleColorMode() {
@@ -18,7 +18,7 @@ export default function ToggleColorMode() {
 
   const colorMode = useMemo(
     () => ({
-      toggleColorMode: (id: number | undefined) => {
+      toggleColorMode: (id: string | undefined) => {
         setMode(prevMode => {
           const theme = prevMode === 'light' ? 'dark' : 'light'
           localStorage.setItem('theme', theme)

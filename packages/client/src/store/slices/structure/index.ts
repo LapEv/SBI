@@ -5,67 +5,75 @@ import { getDepartments, getDivisions, newDivision } from 'api/structure'
 export type StructureState = {
   divisions: Division[]
   departaments: Department[]
-  isLoading: boolean
+  activeDivision: string
+  isLoadingStructure: boolean
   error?: string
 }
 
 const initialState: StructureState = {
   divisions: [],
   departaments: [],
-  isLoading: false,
+  activeDivision: '',
+  isLoadingStructure: false,
 }
 
 export const structureSlise = createSlice({
   name: 'structure',
   initialState,
-  reducers: {},
+  reducers: {
+    setActiveDivision(state, action) {
+      state.activeDivision = action.payload
+    },
+  },
+
   extraReducers: {
     [getDivisions.fulfilled.type]: (
       state,
       action: PayloadAction<Division[]>
     ) => {
-      state.isLoading = false
+      state.isLoadingStructure = false
       state.error = ''
       state.divisions = action.payload
     },
     [getDivisions.pending.type]: state => {
-      state.isLoading = true
+      state.isLoadingStructure = true
     },
     [getDivisions.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoading = false
+      state.isLoadingStructure = false
       state.error = action.payload
     },
     [getDepartments.fulfilled.type]: (
       state,
       action: PayloadAction<Department[]>
     ) => {
-      state.isLoading = false
+      state.isLoadingStructure = false
       state.error = ''
       state.departaments = action.payload
     },
     [getDepartments.pending.type]: state => {
-      state.isLoading = true
+      state.isLoadingStructure = true
     },
     [getDepartments.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoading = false
+      state.isLoadingStructure = false
       state.error = action.payload
     },
     [newDivision.fulfilled.type]: (
       state,
       action: PayloadAction<Division[]>
     ) => {
-      state.isLoading = false
+      state.isLoadingStructure = false
       state.error = ''
       state.divisions = action.payload
     },
     [newDivision.pending.type]: state => {
-      state.isLoading = true
+      state.isLoadingStructure = true
     },
     [newDivision.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoading = false
+      state.isLoadingStructure = false
       state.error = action.payload
     },
   },
 })
 
 export const structureReducer = structureSlise.reducer
+export const { setActiveDivision } = structureSlise.actions

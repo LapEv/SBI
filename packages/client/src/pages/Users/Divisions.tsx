@@ -3,13 +3,14 @@ import { useEffect, useState } from 'react'
 import { Box, ListItemText, ListItemButton } from '@mui/material'
 import { Departments } from './Departments'
 import { Division } from 'store/slices/structure/interfaces'
-import ExpandLess from '@mui/icons-material/ExpandLess'
 import Collapse from '@mui/material/Collapse'
-import IconButton from '@mui/material/IconButton/IconButton'
 import { RotateButton } from 'components/Buttons/RotateButton'
 
 export const Divisions = ({ divisionName, division, id }: Division) => {
-  const [{ departaments }, { getDepartments }] = useStructure()
+  const [
+    { departaments, activeDivision },
+    { getDepartments, setActiveDivision },
+  ] = useStructure()
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -18,7 +19,14 @@ export const Divisions = ({ divisionName, division, id }: Division) => {
 
   const handleClick = () => {
     setOpen(!open)
+    setActiveDivision(id as string)
   }
+
+  useEffect(() => {
+    if (activeDivision !== id) {
+      setOpen(false)
+    }
+  }, [activeDivision])
 
   return (
     <Box
@@ -48,7 +56,10 @@ export const Divisions = ({ divisionName, division, id }: Division) => {
           justifyContent: 'space-between',
         }}
         onClick={handleClick}>
-        <ListItemText primary={divisionName} />
+        <ListItemText
+          primary={divisionName}
+          primaryTypographyProps={{ fontSize: '1.375rem!important' }}
+        />
         <RotateButton open={open} handleClick={handleClick} size={'2rem'} />
       </ListItemButton>
       <Collapse sx={{ width: '100%' }} in={open} timeout="auto" unmountOnExit>

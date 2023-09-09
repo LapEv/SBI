@@ -32,5 +32,8 @@ export const theme = createTheme({
       main: red[400],
       height: 20,
     },
+    input: {
+      main: '#1E515D',
+    },
   },
 } as ThemeOptions)

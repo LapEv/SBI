@@ -5,14 +5,14 @@ import { getRoles, getRolesGroup } from 'api/roles'
 export type RolesState = {
   roles: Roles[]
   rolesGroup: RolesGroup[]
-  isLoading: boolean
+  isLoadingRoles: boolean
   error?: string
 }
 
 const initialState: RolesState = {
   roles: [],
   rolesGroup: [],
-  isLoading: false,
+  isLoadingRoles: false,
 }
 
 export const rolesSlise = createSlice({
@@ -21,30 +21,30 @@ export const rolesSlise = createSlice({
   reducers: {},
   extraReducers: {
     [getRoles.fulfilled.type]: (state, action: PayloadAction<Roles[]>) => {
-      state.isLoading = false
+      state.isLoadingRoles = false
       state.error = ''
       state.roles = action.payload
     },
     [getRoles.pending.type]: state => {
-      state.isLoading = true
+      state.isLoadingRoles = true
     },
     [getRoles.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoading = false
+      state.isLoadingRoles = false
       state.error = action.payload
     },
     [getRolesGroup.fulfilled.type]: (
       state,
       action: PayloadAction<RolesGroup[]>
     ) => {
-      state.isLoading = false
+      state.isLoadingRoles = false
       state.error = ''
       state.rolesGroup = action.payload
     },
     [getRolesGroup.pending.type]: state => {
-      state.isLoading = true
+      state.isLoadingRoles = true
     },
     [getRolesGroup.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoading = false
+      state.isLoadingRoles = false
       state.error = action.payload
     },
   },

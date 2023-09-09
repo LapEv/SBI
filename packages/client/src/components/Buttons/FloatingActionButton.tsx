@@ -31,9 +31,10 @@ export function Fab({ order = 0, title, active, ...props }: FabProps) {
         size="small"
         sx={{
           position: 'absolute',
-          bottom: 16 + order * 64,
-          right: 16,
+          bottom: 8 + order * 49,
+          left: 16,
           borderRadius: '20%',
+          zIndex: 1300,
         }}
         {...props}
       />
@@ -46,16 +47,16 @@ export function Fab({ order = 0, title, active, ...props }: FabProps) {
         anchorEl={anchorEl}
         anchorOrigin={{
           vertical: 'center',
-          horizontal: 'left',
+          horizontal: 'right',
         }}
         transformOrigin={{
           vertical: 'center',
-          horizontal: 'right',
+          horizontal: 'left',
         }}
         onClose={handlePopoverClose}
         disableRestoreFocus
         container={anchorEl}>
-        <Typography sx={{ p: 1 }}>{title}</Typography>
+        <Typography sx={{ p: 1, fontSize: 12 }}>{title}</Typography>
       </Popover>
     </>
   )

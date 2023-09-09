@@ -7,6 +7,7 @@ export interface User {
   password: string
   firstName: string
   lastName: string
+  middleName: string
   email: string
   phone?: string
   roleGroup: string
@@ -16,7 +17,9 @@ export interface User {
   active: boolean
   theme: string
   division: string
+  chiefDivision: boolean
   department: string
+  chiefDepartment: boolean
   id_division: string
   id_department: string
 }
@@ -38,6 +41,10 @@ export const users: ModelAttributes<Model, User> = {
     allowNull: false,
   },
   lastName: {
+    type: DataType.STRING,
+    allowNull: false,
+  },
+  middleName: {
     type: DataType.STRING,
     allowNull: false,
   },
@@ -81,6 +88,10 @@ export const users: ModelAttributes<Model, User> = {
     type: DataType.STRING,
     allowNull: true,
   },
+  chiefDivision: {
+    type: DataType.BOOLEAN,
+    allowNull: true,
+  },
   id_division: {
     type: DataType.STRING,
     allowNull: false,
@@ -88,6 +99,10 @@ export const users: ModelAttributes<Model, User> = {
   },
   department: {
     type: DataType.STRING,
+    allowNull: true,
+  },
+  chiefDepartment: {
+    type: DataType.BOOLEAN,
     allowNull: true,
   },
   id_department: {

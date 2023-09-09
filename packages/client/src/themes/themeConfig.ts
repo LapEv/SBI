@@ -45,10 +45,13 @@ export const ThemeConfig = (mode: PaletteMode) =>
               main: red[400],
               height: 20,
             },
+            input: {
+              main: '#1E515D',
+            },
           }
         : {
             text: {
-              primary: '#FFFFFF',
+              primary: '#000000',
             },
             green: {
               [64]: '#1E515D',
@@ -73,13 +76,16 @@ export const ThemeConfig = (mode: PaletteMode) =>
               main: red[400],
               height: 20,
             },
+            input: {
+              main: '#C1EEE1',
+            },
           }),
     },
     components: {
       MuiTypography: {
         defaultProps: {
           fontWeight: 'bold',
-          fontSize: '0.975rem',
+          // fontSize: '0.975rem',
           color: mode === ThemeMode.light ? '#1E515D' : '#FFFFFF',
         },
       },
@@ -89,6 +95,61 @@ export const ThemeConfig = (mode: PaletteMode) =>
             paddingLeft: '0!important',
             paddingRight: '0!important',
             maxWidth: '100%!important',
+          },
+        },
+      },
+      MuiTextField: {
+        styleOverrides: {
+          root: {
+            '& label': {
+              color: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+            },
+            '& label.Mui-focused': {
+              color:
+                mode === ThemeMode.light
+                  ? '#1E515D!important'
+                  : '#C1EEE1!important',
+            },
+            '& label.Mui-error': {
+              color:
+                mode === ThemeMode.light
+                  ? '#ef5350!important'
+                  : '#ef5350!important',
+            },
+            '& .MuiInputBase-root': {
+              backgroundColor: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+            },
+            '& .MuiOutlinedInput-input.Mui-disabled': {
+              backgroundColor: mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
+              WebkitTextFillColor:
+                mode === ThemeMode.light
+                  ? 'rgba(0,0,0,1)'
+                  : 'rgba(255,255,255,1)',
+              borderColor: mode === ThemeMode.light ? '#FFF' : '#000',
+              cursor: 'text',
+            },
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor:
+                mode === ThemeMode.light
+                  ? 'rgba(30, 81, 93, 0.86)!important'
+                  : 'rgba(255, 255, 255, 0.86)!important',
+              borderWidth: 2,
+            },
+
+            // '& .MuiInputLabel-root': {
+            //   color: 'green',
+            // },
+            // '& .MuiOutlinedInput-root.Mui-focused': {
+            //   '& > fieldset': {
+            //     borderColor: 'orange',
+            //   },
+            // },
+            // '& $disabled': {
+            //   borderColor: 'orange',
+            // },
+            // '&$disabled $notchedOutline': {
+            //   borderColor: 'orange',
+            // },
           },
         },
       },

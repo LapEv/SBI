@@ -44,11 +44,11 @@ export function useAuth(): [AuthState, AuthActions] {
       changeThemeOnServer(data) {
         dispatch(ChangeTheme(data))
       },
-      getUser() {
-        dispatch(GetUser())
+      getUser(id) {
+        dispatch(GetUser(id))
       },
-      getUsers() {
-        dispatch(GetUsers())
+      getUsers(data) {
+        dispatch(GetUsers(data))
       },
       checkUser() {
         dispatch(CheckUser())

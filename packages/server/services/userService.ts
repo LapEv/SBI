@@ -57,17 +57,10 @@ export class userService {
           user[0].roles,
           user[0].username
         )
-        const { username, firstName, lastName, email, phone, avatar, theme } =
-          user[0]
+        const userData = user[0]
         return res.json({
           token,
-          username,
-          firstName,
-          lastName,
-          email,
-          phone,
-          avatar,
-          theme,
+          ...userData.dataValues,
         })
       })
       .catch(err =>
@@ -86,17 +79,10 @@ export class userService {
           where: { id: id },
         })
         .then(user => {
-          const { username, firstName, lastName, email, phone, avatar, theme } =
-            user[0]
+          const userData = user[0]
           return res.json({
             token,
-            username,
-            firstName,
-            lastName,
-            email,
-            phone,
-            avatar,
-            theme,
+            ...userData.dataValues,
           })
         })
         .catch(err =>
@@ -117,8 +103,12 @@ export class userService {
 
   getUsers = (_req: Request, res: Response) => {
     userRepos
-      .findAll({})
-      .then(user => res.status(200).json(user))
+      .findAll({
+        where: _req.body,
+      })
+      .then(user => {
+        res.status(200).json(user)
+      })
       .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
 
@@ -129,11 +119,8 @@ export class userService {
         where: { id },
       })
       .then(user => {
-        const { username, firstName, lastName, email, phone, avatar, theme } =
-          user[0]
-        res
-          .status(200)
-          .json({ username, firstName, lastName, email, phone, avatar, theme })
+        const userData = user[0]
+        res.status(200).json(userData)
       })
       .catch(err => res.status(500).json({ error: ['db error', err] }))
   }

@@ -21,6 +21,7 @@ export const ThemeConfig = (mode: PaletteMode) =>
         ? {
             text: {
               primary: '#FFFFFF',
+              secondary: '#000000',
             },
             green: {
               [64]: '#1E515D',
@@ -31,7 +32,7 @@ export const ThemeConfig = (mode: PaletteMode) =>
             },
             background: {
               default: '#C1EEE1',
-              paper: '#92CCBB',
+              paper: '#1E515D',
               btn: '#7AB3A2',
             },
             primary: {
@@ -48,21 +49,25 @@ export const ThemeConfig = (mode: PaletteMode) =>
             input: {
               main: '#1E515D',
             },
+            border: {
+              default: '#000000',
+            },
           }
         : {
             text: {
               primary: '#000000',
+              secondary: '#FFFFFF',
             },
             green: {
               [64]: '#1E515D',
               dark: '#7AB3A2',
             },
             icon: {
-              default: '#FFFFFF',
+              default: '#C1EEE1',
             },
             background: {
               default: '#1E515D',
-              paper: '#92CCBB',
+              paper: '#C1EEE1',
               btn: '#7AB3A2',
             },
             primary: {
@@ -70,7 +75,7 @@ export const ThemeConfig = (mode: PaletteMode) =>
               contrastText: '#1E515D',
             },
             secondary: {
-              main: '#1E515D',
+              main: '#C1EEE1',
             },
             error: {
               main: red[400],
@@ -78,6 +83,9 @@ export const ThemeConfig = (mode: PaletteMode) =>
             },
             input: {
               main: '#C1EEE1',
+            },
+            border: {
+              default: '#FFFFFF',
             },
           }),
     },
@@ -135,21 +143,6 @@ export const ThemeConfig = (mode: PaletteMode) =>
                   : 'rgba(255, 255, 255, 0.86)!important',
               borderWidth: 2,
             },
-
-            // '& .MuiInputLabel-root': {
-            //   color: 'green',
-            // },
-            // '& .MuiOutlinedInput-root.Mui-focused': {
-            //   '& > fieldset': {
-            //     borderColor: 'orange',
-            //   },
-            // },
-            // '& $disabled': {
-            //   borderColor: 'orange',
-            // },
-            // '&$disabled $notchedOutline': {
-            //   borderColor: 'orange',
-            // },
           },
         },
       },

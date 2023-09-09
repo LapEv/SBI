@@ -13,6 +13,9 @@ export default defineConfig({
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
   plugins: [react()],
+  esbuild: {
+    logOverride: { 'this-is-undefined-in-esm': 'silent' },
+  },
   resolve: {
     alias: {
       assets: path.resolve(__dirname, './src/assets'),

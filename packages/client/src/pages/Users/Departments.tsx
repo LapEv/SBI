@@ -2,13 +2,9 @@ import { useEffect, useState } from 'react'
 import { Box, ListItemText, ListItemButton } from '@mui/material'
 import Collapse from '@mui/material/Collapse'
 import { useAuth } from 'hooks/auth/useAuth'
-import { User } from 'storeAuth/interfaces'
 import { ListUsers } from './ListUsers'
 import { RotateButton } from 'components/Buttons/RotateButton'
-
-interface DPR extends User {
-  departmentName: string
-}
+import { DPR } from './interfaces'
 
 export const Departments = ({
   departmentName,

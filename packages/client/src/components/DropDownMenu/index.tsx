@@ -66,7 +66,7 @@ export default function DropDownMenu({
             width: 40,
             height: 40,
             borderRadius: '20%',
-            color: theme.palette.secondary.main,
+            color: theme.palette.primary.contrastText,
             backgroundColor: theme.palette.primary.main,
             boxShadow: 5,
           }}
@@ -95,7 +95,9 @@ export default function DropDownMenu({
           onClose={handlePopoverClose}
           disableRestoreFocus
           container={anchorEl}>
-          <Typography sx={{ p: 1, fontSize: 12 }}>{popover}</Typography>
+          <Typography sx={{ p: 1, fontSize: 12, color: 'text.primary' }}>
+            {popover}
+          </Typography>
         </Popover>
       )}
       <Menu
@@ -109,6 +111,7 @@ export default function DropDownMenu({
           sx: {
             overflow: 'visible',
             filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+            bgcolor: theme.palette.background.paper,
             mt: 1.5,
             '& .MuiAvatar-root': {
               width: 32,
@@ -124,7 +127,7 @@ export default function DropDownMenu({
               right: 14,
               width: 10,
               height: 10,
-              bgcolor: 'background.paper',
+              bgcolor: 'background.secondary',
               transform: 'translateY(-50%) rotate(45deg)',
               zIndex: 0,
             },
@@ -135,7 +138,9 @@ export default function DropDownMenu({
         {data.map(({ name, title, icon }, index) => (
           <Box key={`${name}${index}`}>
             <MenuItem onClick={() => handleClose(name)}>
-              <ListItemIcon>{icon}</ListItemIcon>
+              <ListItemIcon sx={{ color: theme.palette.background.default }}>
+                {icon}
+              </ListItemIcon>
               {title}
             </MenuItem>
             {divider?.includes(index + 1) && <Divider />}

@@ -54,6 +54,20 @@ export const nameValidation = {
   },
 }
 
+export const textValidation = {
+  required: REQUIRED_FIELD,
+  validate: (value: string) => {
+    if (!value.match('^[?!, .а-яА-ЯёЁ0-9s]+$')) {
+      return 'Только кирилица, цифры'
+    }
+    if (!value.match('^[А-ЯA-Z]')) {
+      return 'Должно начинаться с заглавной буквы'
+    }
+
+    return true
+  },
+}
+
 export const phoneValidation = {
   required: REQUIRED_FIELD,
   validate: (value: string) => {

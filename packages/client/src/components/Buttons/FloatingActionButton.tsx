@@ -30,7 +30,7 @@ export function Fab({ order = 0, title, active, ...props }: FabProps) {
         color={active ? 'secondary' : 'primary'}
         size="small"
         sx={{
-          position: 'absolute',
+          position: 'fixed',
           bottom: 8 + order * 49,
           left: 16,
           borderRadius: '20%',
@@ -56,7 +56,9 @@ export function Fab({ order = 0, title, active, ...props }: FabProps) {
         onClose={handlePopoverClose}
         disableRestoreFocus
         container={anchorEl}>
-        <Typography sx={{ p: 1, fontSize: 12 }}>{title}</Typography>
+        <Typography sx={{ p: 1, fontSize: 12, color: 'text.primary' }}>
+          {title}
+        </Typography>
       </Popover>
     </>
   )

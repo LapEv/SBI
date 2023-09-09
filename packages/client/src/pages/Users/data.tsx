@@ -4,7 +4,7 @@ import Queue from '@mui/icons-material/Queue'
 import LayersClear from '@mui/icons-material/LayersClear'
 import DeleteSweep from '@mui/icons-material/DeleteSweep'
 import PersonRemove from '@mui/icons-material/PersonRemove'
-PersonRemove
+
 export const menuData = [
   {
     name: 'addDivision',

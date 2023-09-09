@@ -12,20 +12,7 @@ import {
 } from 'pages/Profile/ProfileFieldsData'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useTheme } from '@mui/material/styles'
-import { Nullable } from 'utils/nullableType'
-
-type NullableString = Nullable<string>
-
-interface ProfileValues extends User {
-  list: {
-    name: string
-    label: string
-    value: NullableString | string[] | undefined
-    validation: object
-    disabled: boolean
-    type: string
-  }[]
-}
+import { ProfileValues } from './interfaces'
 
 export const ProfileData = (userData: User) => {
   const theme = useTheme()

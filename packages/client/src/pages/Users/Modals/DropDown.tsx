@@ -26,14 +26,21 @@ export const DropDown = ({ data }: Data) => {
     <Autocomplete
       id="divisionsDropDown"
       sx={{ width: '90%', mt: 4, height: 40 }}
-      // disableClearable
       options={data.map(option => option.divisionName)}
+      ListboxProps={{
+        sx: {
+          border: '2px solid grey',
+          minHeight: 400,
+          color: 'green',
+          fontSize: 18,
+        },
+      }}
       renderInput={params => (
         console.log('errors = ', params),
         (
           <TextField
             {...params}
-            variant="outlined"
+            // variant="outlined"
             label="Выберите новое подразделение"
             onBlur={() => {
               params.inputProps.value === ''
@@ -45,10 +52,6 @@ export const DropDown = ({ data }: Data) => {
                 ? setErrors(true)
                 : setErrors(false)
             }}
-            // error={!!(errors?.list ?? [])[0]?.value?.message}
-            // helperText={(errors?.list ?? [])[0]?.value?.message}
-            // error={params.inputProps.value === ''}
-            // helperText={'Не выбрано подразделение'}
             error={errors}
             helperText={errors ? 'Не выбрано подразделение!' : ''}
             InputProps={{
@@ -58,7 +61,6 @@ export const DropDown = ({ data }: Data) => {
                 backgroundColor: theme.palette.background.paper,
               },
               ...params.InputProps,
-              type: 'search',
             }}
             InputLabelProps={{
               style: {

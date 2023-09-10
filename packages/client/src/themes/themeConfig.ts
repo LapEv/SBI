@@ -106,6 +106,17 @@ export const ThemeConfig = (mode: PaletteMode) =>
           },
         },
       },
+      MuiAutocomplete: {
+        styleOverrides: {
+          root: {
+            '& input': {
+              padding: '0!important',
+              paddingLeft: '7px!important',
+              paddingRight: '7px!important',
+            },
+          },
+        },
+      },
       MuiTextField: {
         styleOverrides: {
           root: {

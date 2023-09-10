@@ -7,13 +7,16 @@ import {
   useFormState,
 } from 'react-hook-form'
 import { TextField } from 'components/TextFields/TextFields'
-import { Button } from 'components/Buttons'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
-import { MapDepartmentInputFields, style } from '../data'
+import { MapDepartmentInputFields, style, styleTextFieldProps } from '../data'
 import { ButtonSection } from './ButtonsSection'
+import { Autocomplete } from '@mui/material'
+import { useStructure } from 'hooks/structure/useStructure'
+import { DropDown } from './DropDown'
 
 export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
+    const [{ divisions }] = useStructure()
     const theme = useTheme()
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
@@ -27,7 +30,7 @@ export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
       name: 'list',
     })
 
-    function changeData(data: AddValuesProps) {
+    const changeData = (data: AddValuesProps) => {
       console.log('AddDepartments changeData = ', changeData)
       // handleChange({
       //   division: data.list[0].value,
@@ -35,9 +38,15 @@ export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
       handleModal(false)
     }
 
+    const checkClickMenu = (name: string | null) => {
+      console.log('name = ', name)
+    }
+
+    console.log('division = ', divisions)
     return (
       <Box sx={style} component="form" onSubmit={handleSubmit(changeData)}>
         <Typography>{title}</Typography>
+        <DropDown data={divisions} />
         {fields.map(({ id, label, validation, type, value }, index) => {
           return (
             <Controller
@@ -52,22 +61,20 @@ export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
                   label={label}
                   type={type}
                   variant="outlined"
-                  sx={{ width: '90%', m: 2, mt: 4, height: 40 }}
+                  sx={{ width: '90%', m: 2, mt: 7, height: 40 }}
                   margin="normal"
                   value={field.value || ''}
                   error={!!(errors?.list ?? [])[index]?.value?.message}
                   helperText={(errors?.list ?? [])[index]?.value?.message}
                   inputProps={{
                     style: {
-                      height: 5,
+                      ...styleTextFieldProps.inputProps,
                       backgroundColor: theme.palette.background.paper,
-                      borderRadius: 5,
                     },
                   }}
                   InputLabelProps={{
                     style: {
-                      top: -7,
-                      marginTop: 0,
+                      ...styleTextFieldProps.inputLabelProps,
                       color: value
                         ? theme.palette.mode === 'dark'
                           ? '#C1EEE1'

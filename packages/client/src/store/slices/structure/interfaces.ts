@@ -6,6 +6,7 @@ export interface Division {
   id?: string
   division?: NullableString
   divisionName: NullableString
+  data?: string[]
 }
 
 export interface Department {

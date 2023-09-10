@@ -64,8 +64,19 @@ export const style = {
   p: 4,
 }
 
+export const styleTextFieldProps = {
+  inputProps: {
+    height: 5,
+    borderRadius: 5,
+  },
+  inputLabelProps: {
+    top: -7,
+    marginTop: 0,
+  },
+}
+
 export const ModalTitles = {
-  addDivision: 'Новый дивизион',
+  addDivision: 'Новое подразделение',
   addDepartments: 'Новый отдел',
   addUser: 'Новый пользователь',
   delDivision: 'Удалить дивизион',
@@ -76,7 +87,7 @@ export const ModalTitles = {
 export const MapDivisionInputFields = [
   {
     name: 'newDivision',
-    label: 'Введите новый отдел',
+    label: 'Введите новое подразделение',
     validation: textValidation,
     type: 'text',
   },

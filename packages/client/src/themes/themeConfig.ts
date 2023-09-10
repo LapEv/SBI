@@ -114,6 +114,46 @@ export const ThemeConfig = (mode: PaletteMode) =>
               paddingLeft: '7px!important',
               paddingRight: '7px!important',
             },
+            '& .MuiAutocomplete-endAdornment': {
+              top: -3,
+            },
+            '& .MuiAutocomplete-clearIndicator': {
+              color: mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
+              '& .MuiSvgIcon-root': {
+                width: 25,
+                height: 25,
+              },
+            },
+            '& .MuiAutocomplete-popupIndicator': {
+              color: mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
+              '& .MuiSvgIcon-root': {
+                width: 40,
+                height: 40,
+              },
+            },
+            '& .MuiAutocomplete-listbox': {
+              border: '2px solid grey',
+              // minHeight: 400,
+              color: 'green',
+              fontSize: 18,
+              //hover discussed above
+              '& li': {
+                //list item specific styling
+                border: '2px solid green',
+                borderRadius: 4,
+              },
+            },
+            '& .MuiAutocomplete-popper.MuiAutocomplete-option': {
+              backgroundColor: '#363636',
+            },
+            "& .MuiAutocomplete-popper.MuiAutocomplete-option[aria-selected='true']":
+              {
+                backgroundColor: '#4396e6',
+              },
+            "& .MuiAutocomplete-popper.MuiAutocomplete-option[aria-selected ='true'] .Mui-focused":
+              {
+                backgroundColor: '#3878b4',
+              },
           },
         },
       },

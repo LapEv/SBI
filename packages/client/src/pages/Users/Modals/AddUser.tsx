@@ -7,17 +7,18 @@ import {
   useFormState,
 } from 'react-hook-form'
 import { TextField } from 'components/TextFields/TextFields'
+import { Button } from 'components/Buttons'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
-import { MapDivisionInputFields, style } from '../data'
+import { MapProfileInputFieldsAdmin, style } from '../data'
 import { ButtonSection } from './ButtonsSection'
 
-export const AddDivision = React.forwardRef<unknown, ChooseModalProps>(
+export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
     const theme = useTheme()
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
       defaultValues: {
-        list: MapDivisionInputFields,
+        list: MapProfileInputFieldsAdmin,
       },
     })
     const { errors } = useFormState({ control })
@@ -26,10 +27,10 @@ export const AddDivision = React.forwardRef<unknown, ChooseModalProps>(
       name: 'list',
     })
 
-    function changeData({ list }: AddValuesProps) {
-      console.log('AddDivision changeData = ', list[0].value)
+    function changeData(data: AddValuesProps) {
+      console.log('AddUser changeData = ', changeData)
       // handleChange({
-      //   division: list[0].value,
+      //   division: data.list[0].value,
       // })
       handleModal(false)
     }
@@ -51,7 +52,7 @@ export const AddDivision = React.forwardRef<unknown, ChooseModalProps>(
                   label={label}
                   type={type}
                   variant="outlined"
-                  sx={{ width: '90%', m: 2, mt: 4, height: 40 }}
+                  sx={{ width: '90%', m: 2, mt: 2.5, height: 40 }}
                   margin="normal"
                   value={field.value || ''}
                   error={!!(errors?.list ?? [])[index]?.value?.message}
@@ -67,13 +68,6 @@ export const AddDivision = React.forwardRef<unknown, ChooseModalProps>(
                     style: {
                       top: -7,
                       marginTop: 0,
-                      color: value
-                        ? theme.palette.mode === 'dark'
-                          ? '#C1EEE1'
-                          : '#1E515D'
-                        : theme.palette.mode === 'dark'
-                        ? '#1E515D'
-                        : '#C1EEE1',
                     },
                   }}
                   FormHelperTextProps={{

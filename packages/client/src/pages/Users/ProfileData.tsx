@@ -6,10 +6,7 @@ import {
   Controller,
   useFormState,
 } from 'react-hook-form'
-import {
-  MapProfileInputFields,
-  MapProfileInputFieldsAdmin,
-} from 'pages/Profile/ProfileFieldsData'
+import { MapProfileInputFields, MapProfileInputFieldsAdmin } from './data'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useTheme } from '@mui/material/styles'
 import { ProfileValues } from './interfaces'
@@ -43,7 +40,7 @@ export const ProfileData = (userData: User) => {
     <Box
       component="form"
       onSubmit={handleSubmit(changeData)}
-      sx={{ '& .MuiTextField-root': { m: 0, width: '55ch' } }}>
+      sx={{ '& .MuiTextField-root': { m: 0.5, width: '55ch' } }}>
       {fields.map(({ id, name, label, validation, type, value }, index) => {
         return (
           <Controller
@@ -60,7 +57,7 @@ export const ProfileData = (userData: User) => {
                 required
                 disabled={!admin}
                 variant="outlined"
-                sx={{ width: '88%', height: 65 }}
+                sx={{ width: '88%', m: 2, mt: 2.5, height: 65 }}
                 margin="normal"
                 // onChange={(event: ChangeEvent<HTMLInputElement>) => (
                 //   field.onChange(event),
@@ -71,7 +68,7 @@ export const ProfileData = (userData: User) => {
                 // )}
                 error={!!(errors?.list ?? [])[index]?.value?.message}
                 helperText={(errors?.list ?? [])[index]?.value?.message}
-                inputProps={{ style: { height: 5 } }}
+                inputProps={{ style: { height: 5, borderRadius: 5 } }}
                 InputLabelProps={{
                   style: {
                     top: -7,

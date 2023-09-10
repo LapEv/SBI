@@ -3,7 +3,7 @@ import { Box, ListItemText, ListItemButton } from '@mui/material'
 import Collapse from '@mui/material/Collapse'
 import { User } from 'storeAuth/interfaces'
 import { RotateButton } from 'components/Buttons/RotateButton'
-import { ProfileData } from './ProfileData'
+import { ProfileData } from './'
 import { useAuth } from 'hooks/auth/useAuth'
 
 export const ListUsers = (userData: User) => {

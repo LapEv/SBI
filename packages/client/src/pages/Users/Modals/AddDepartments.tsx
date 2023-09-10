@@ -8,16 +8,17 @@ import {
 } from 'react-hook-form'
 import { TextField } from 'components/TextFields/TextFields'
 import { Button } from 'components/Buttons'
-import { ChangeDivisionProps, DivisionValuesProps } from './interfaces'
-import { MapDivisionInputFields, style } from './data'
+import { ChooseModalProps, AddValuesProps } from './interfaces'
+import { MapDepartmentInputFields, style } from '../data'
+import { ButtonSection } from './ButtonsSection'
 
-export const AddDepartments = React.forwardRef<unknown, ChangeDivisionProps>(
-  ({ ref, handleModal, handleChange }) => {
+export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
+  ({ handleModal, title }: ChooseModalProps, ref) => {
     const theme = useTheme()
-    const { handleSubmit, control } = useForm<DivisionValuesProps>({
+    const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
       defaultValues: {
-        list: MapDivisionInputFields,
+        list: MapDepartmentInputFields,
       },
     })
     const { errors } = useFormState({ control })
@@ -26,16 +27,17 @@ export const AddDepartments = React.forwardRef<unknown, ChangeDivisionProps>(
       name: 'list',
     })
 
-    function changePassword(data: DivisionValuesProps) {
-      handleChange({
-        division: data.list[0].value,
-      })
+    function changeData(data: AddValuesProps) {
+      console.log('AddDepartments changeData = ', changeData)
+      // handleChange({
+      //   division: data.list[0].value,
+      // })
       handleModal(false)
     }
 
     return (
-      <Box sx={style} component="form" onSubmit={handleSubmit(changePassword)}>
-        <Typography>Смена пароля</Typography>
+      <Box sx={style} component="form" onSubmit={handleSubmit(changeData)}>
+        <Typography>{title}</Typography>
         {fields.map(({ id, label, validation, type, value }, index) => {
           return (
             <Controller
@@ -46,7 +48,7 @@ export const AddDepartments = React.forwardRef<unknown, ChangeDivisionProps>(
               render={({ field }) => (
                 <TextField
                   {...field}
-                  inputRef={ref}
+                  inputRef={field.ref}
                   label={label}
                   type={type}
                   variant="outlined"
@@ -59,12 +61,20 @@ export const AddDepartments = React.forwardRef<unknown, ChangeDivisionProps>(
                     style: {
                       height: 5,
                       backgroundColor: theme.palette.background.paper,
+                      borderRadius: 5,
                     },
                   }}
                   InputLabelProps={{
                     style: {
                       top: -7,
                       marginTop: 0,
+                      color: value
+                        ? theme.palette.mode === 'dark'
+                          ? '#C1EEE1'
+                          : '#1E515D'
+                        : theme.palette.mode === 'dark'
+                        ? '#1E515D'
+                        : '#C1EEE1',
                     },
                   }}
                   FormHelperTextProps={{
@@ -75,12 +85,7 @@ export const AddDepartments = React.forwardRef<unknown, ChangeDivisionProps>(
             />
           )
         })}
-        <Button type="submit" sx={{ width: '70%', m: 5 }}>
-          Изменить
-        </Button>
-        <Button sx={{ width: '70%' }} onClick={() => handleModal(false)}>
-          Отмена
-        </Button>
+        <ButtonSection handleModal={handleModal} />
       </Box>
     )
   }

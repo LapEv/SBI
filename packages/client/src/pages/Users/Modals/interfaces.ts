@@ -1,12 +1,13 @@
 import React from 'react'
 
-export interface ChangeDivisionProps {
+export interface ChooseModalProps {
+  modalImage?: string
   handleModal: (state: boolean) => void
-  handleChange: (data: { division: string }) => void
-  ref: typeof React.createRef
+  title?: string
+  // modalRef: typeof React.createRef
 }
 
-export interface DivisionValuesProps {
+export interface AddValuesProps {
   list: {
     label: string
     value: string

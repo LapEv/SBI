@@ -1,7 +1,7 @@
 import { useStructure } from 'hooks/structure/useStructure'
 import { useEffect, useState } from 'react'
 import { Box, ListItemText, ListItemButton } from '@mui/material'
-import { Departments } from './Departments'
+import { Departments } from './'
 import { Division } from 'store/slices/structure/interfaces'
 import Collapse from '@mui/material/Collapse'
 import { RotateButton } from 'components/Buttons/RotateButton'

@@ -17,7 +17,7 @@ interface Data {
     categoryName: string
     id: string
   }[]
-  props?: {}
+  props?: object
   onClick?: (data: string) => void
 }
 

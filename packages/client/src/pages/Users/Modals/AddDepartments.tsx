@@ -10,7 +10,6 @@ import { TextField } from 'components/TextFields/TextFields'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
 import { MapDepartmentInputFields, style, styleTextFieldProps } from '../data'
 import { ButtonSection } from './ButtonsSection'
-import { Autocomplete } from '@mui/material'
 import { useStructure } from 'hooks/structure/useStructure'
 import { DropDown } from './DropDown'
 
@@ -42,11 +41,18 @@ export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
       console.log('name = ', name)
     }
 
-    console.log('division = ', divisions)
     return (
       <Box sx={style} component="form" onSubmit={handleSubmit(changeData)}>
         <Typography>{title}</Typography>
-        <DropDown data={divisions} />
+        <DropDown
+          data={divisions.map(item => {
+            return {
+              ['categoryName']: item.divisionName as string,
+              ['category']: item.division as string,
+              ['id']: item.id as string,
+            }
+          })}
+        />
         {fields.map(({ id, label, validation, type, value }, index) => {
           return (
             <Controller

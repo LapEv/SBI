@@ -131,29 +131,6 @@ export const ThemeConfig = (mode: PaletteMode) =>
                 height: 40,
               },
             },
-            '& .MuiAutocomplete-listbox': {
-              border: '2px solid grey',
-              // minHeight: 400,
-              color: 'green',
-              fontSize: 18,
-              //hover discussed above
-              '& li': {
-                //list item specific styling
-                border: '2px solid green',
-                borderRadius: 4,
-              },
-            },
-            '& .MuiAutocomplete-popper.MuiAutocomplete-option': {
-              backgroundColor: '#363636',
-            },
-            "& .MuiAutocomplete-popper.MuiAutocomplete-option[aria-selected='true']":
-              {
-                backgroundColor: '#4396e6',
-              },
-            "& .MuiAutocomplete-popper.MuiAutocomplete-option[aria-selected ='true'] .Mui-focused":
-              {
-                backgroundColor: '#3878b4',
-              },
           },
         },
       },
@@ -193,6 +170,15 @@ export const ThemeConfig = (mode: PaletteMode) =>
                   ? 'rgba(30, 81, 93, 0.86)!important'
                   : 'rgba(255, 255, 255, 0.86)!important',
               borderWidth: 2,
+            },
+            '& .MuiOutlinedInput-input:-webkit-autofill': {
+              backgroundColor:
+                mode === ThemeMode.light
+                  ? '#1E515D!important'
+                  : '#C1EEE1!important',
+              '-webkit-box-shadow': `0 0 0 100px ${
+                mode === ThemeMode.light ? '#1E515D' : '#C1EEE1'
+              } inset`,
             },
           },
         },

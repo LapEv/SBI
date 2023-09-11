@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
 import {
   useForm,
@@ -7,13 +7,16 @@ import {
   useFormState,
 } from 'react-hook-form'
 import { TextField } from 'components/TextFields/TextFields'
-import { Button } from 'components/Buttons'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
-import { MapProfileInputFieldsAdmin, style } from '../data'
+import { MapProfileInputFieldsAdmin, style, styleTextFieldProps } from '../data'
 import { ButtonSection } from './ButtonsSection'
+import { useStructure } from 'hooks/structure/useStructure'
+import { DropDown } from './DropDown'
 
 export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
+    const [{ divisions, departaments }] = useStructure()
+    const [activeDivision, setActiveDivision] = useState<string>('')
     const theme = useTheme()
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
@@ -35,9 +38,39 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
       handleModal(false)
     }
 
+    const checkClickMenu = (name: string | null) => {
+      console.log('name = ', name)
+    }
+
+    const changeActiveDivision = (data: string) => {
+      console.log('data = ', data)
+      setActiveDivision(data)
+    }
+
     return (
       <Box sx={style} component="form" onSubmit={handleSubmit(changeData)}>
         <Typography>{title}</Typography>
+        <DropDown
+          data={divisions.map(item => {
+            return {
+              ['categoryName']: item.divisionName as string,
+              ['category']: item.division as string,
+              ['id']: item.id as string,
+            }
+          })}
+          props={{ mt: 3 }}
+          onClick={changeActiveDivision}
+        />
+        <DropDown
+          data={departaments.map(item => {
+            return {
+              ['categoryName']: item.departmentName as string,
+              ['category']: item.department as string,
+              ['id']: item.id as string,
+            }
+          })}
+          props={{ mt: 3, mb: 2 }}
+        />
         {fields.map(({ id, label, validation, type, value }, index) => {
           return (
             <Controller
@@ -52,22 +85,27 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
                   label={label}
                   type={type}
                   variant="outlined"
-                  sx={{ width: '90%', m: 2, mt: 2.5, height: 40 }}
+                  sx={{ width: '90%', m: 2, mt: 1.5, height: 40 }}
                   margin="normal"
                   value={field.value || ''}
                   error={!!(errors?.list ?? [])[index]?.value?.message}
                   helperText={(errors?.list ?? [])[index]?.value?.message}
                   inputProps={{
                     style: {
-                      height: 5,
+                      ...styleTextFieldProps.inputProps,
                       backgroundColor: theme.palette.background.paper,
-                      borderRadius: 5,
                     },
                   }}
                   InputLabelProps={{
                     style: {
-                      top: -7,
-                      marginTop: 0,
+                      ...styleTextFieldProps.inputLabelProps,
+                      color: value
+                        ? theme.palette.mode === 'dark'
+                          ? '#C1EEE1'
+                          : '#1E515D'
+                        : theme.palette.mode === 'dark'
+                        ? '#1E515D'
+                        : '#C1EEE1',
                     },
                   }}
                   FormHelperTextProps={{

@@ -68,6 +68,7 @@ export const styleTextFieldProps = {
   inputProps: {
     height: 5,
     borderRadius: 5,
+    padding: '16px 14px',
   },
   inputLabelProps: {
     top: -7,
@@ -130,7 +131,7 @@ export const MapProfileInputFieldsAdmin = [
   {
     name: 'post',
     label: 'Должность',
-    validation: nameValidation,
+    validation: textValidation,
     value: '',
   },
   {

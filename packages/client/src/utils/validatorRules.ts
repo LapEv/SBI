@@ -6,7 +6,7 @@ export const loginValidation = {
     if (value.length < 3) {
       return 'Длина должна состовлять не менее 3 символов'
     }
-    if (!value.match('^[a-zA-Z0-9_-]+$')) {
+    if (!value.match('^[-.a-zA-Z0-9_-]+$')) {
       return 'Только латиниские буквы, цифры'
     }
     if (!value.match('[a-zA-Z]+')) {
@@ -25,6 +25,9 @@ export const passwordValidation = {
   validate: (value: string) => {
     if (value.length < 8) {
       return 'Длина должна состовлять не менее 8 символов'
+    }
+    if (!value.match('[A-Z0-9]')) {
+      return 'Пароль должен сожержать только латинские'
     }
     if (!value.match('[A-Z]+')) {
       return 'Пароль должен сожержать хотя бы одну заглавную букву'
@@ -72,12 +75,24 @@ export const phoneValidation = {
   required: REQUIRED_FIELD,
   validate: (value: string) => {
     if (!value.match(`^[+]?[\\d]+$`)) {
-      return 'Только цифра без + в начале'
+      return 'Только цифры!'
     }
-    if (!(value.length >= 10 && value.length <= 15)) {
-      return 'от 10 до 15 символов'
+    if (value.substring(0, 1) !== '8' && value.substring(0, 2) !== '+7') {
+      return 'Должен начинаться с "8" или "+7"!'
     }
-
+    if (value.substring(0, 1) === '8' && value.length > 11) {
+      return 'Слишком много цифр!'
+    }
+    if (value.substring(0, 1) === '8' && value.length < 11) {
+      return 'Слишком мало цифр!'
+    }
+    if (value.substring(0, 2) === '+7' && value.length > 12) {
+      console.log('много')
+      return 'Слишком много цифр!'
+    }
+    if (value.substring(0, 2) === '+7' && value.length < 12) {
+      return 'Слишком мало цифр!'
+    }
     return true
   },
 }

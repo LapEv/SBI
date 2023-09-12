@@ -15,3 +15,19 @@ export interface AddValuesProps {
     type: string
   }[]
 }
+
+export interface DataDropDown {
+  data: {
+    category: string
+    categoryName: string
+    id: string
+  }[]
+  props?: object
+  onBlur?: (data: string) => void
+}
+
+export interface Data {
+  category: string
+  categoryName: string
+  id: string
+}

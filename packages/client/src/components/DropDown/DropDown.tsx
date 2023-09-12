@@ -8,20 +8,11 @@ import {
   Controller,
   useFormState,
 } from 'react-hook-form'
-import { styleTextFieldProps } from '../data'
+import { styleTextFieldProps } from '../../pages/Users/data'
 import { Department, Division } from 'store/slices/structure/interfaces'
+import { DataDropDown } from '../../pages/Users/Modals/interfaces'
 
-interface Data {
-  data: {
-    category: string
-    categoryName: string
-    id: string
-  }[]
-  props?: object
-  onClick?: (data: string) => void
-}
-
-export const DropDown = ({ data, props, onClick }: Data) => {
+export const DropDown = ({ data, props, onBlur }: DataDropDown) => {
   const theme = useTheme()
   const [errors, setErrors] = useState<boolean>(false)
 
@@ -54,7 +45,7 @@ export const DropDown = ({ data, props, onClick }: Data) => {
           label="Выберите новое подразделение"
           onBlur={() => {
             params.inputProps.value === '' ? setErrors(true) : setErrors(false)
-            onClick?.(params.inputProps.value as string)
+            onBlur?.(params.inputProps.value as string)
           }}
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
             params.inputProps.value === '' ? setErrors(true) : setErrors(false)
@@ -66,6 +57,7 @@ export const DropDown = ({ data, props, onClick }: Data) => {
               ...styleTextFieldProps.inputProps,
               height: 40,
               backgroundColor: theme.palette.background.paper,
+              padding: '10px 6px',
             },
             ...params.InputProps,
           }}

@@ -8,7 +8,7 @@ import {
 } from 'react-hook-form'
 import { TextField } from 'components/TextFields/TextFields'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
-import { MapDivisionInputFields, style } from '../data'
+import { MapDivisionInputFields, style, styleTextFieldProps } from '../data'
 import { ButtonSection } from './ButtonsSection'
 
 export const AddDivision = React.forwardRef<unknown, ChooseModalProps>(
@@ -58,9 +58,8 @@ export const AddDivision = React.forwardRef<unknown, ChooseModalProps>(
                   helperText={(errors?.list ?? [])[index]?.value?.message}
                   inputProps={{
                     style: {
-                      height: 5,
+                      ...styleTextFieldProps.inputProps,
                       backgroundColor: theme.palette.background.paper,
-                      borderRadius: 5,
                     },
                   }}
                   InputLabelProps={{

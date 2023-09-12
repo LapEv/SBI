@@ -59,7 +59,7 @@ export const ThemeConfig = (mode: PaletteMode) =>
               secondary: '#FFFFFF',
             },
             green: {
-              [64]: '#1E515D',
+              [64]: '#C1EEE1',
               dark: '#7AB3A2',
             },
             icon: {
@@ -85,7 +85,7 @@ export const ThemeConfig = (mode: PaletteMode) =>
               main: '#C1EEE1',
             },
             border: {
-              default: '#FFFFFF',
+              default: '#000000',
             },
           }),
     },
@@ -172,6 +172,7 @@ export const ThemeConfig = (mode: PaletteMode) =>
               borderWidth: 2,
             },
             '& .MuiOutlinedInput-input:-webkit-autofill': {
+              padding: '0px 14px',
               backgroundColor:
                 mode === ThemeMode.light
                   ? '#1E515D!important'
@@ -179,6 +180,8 @@ export const ThemeConfig = (mode: PaletteMode) =>
               '-webkit-box-shadow': `0 0 0 100px ${
                 mode === ThemeMode.light ? '#1E515D' : '#C1EEE1'
               } inset`,
+              '-webkit-text-fill-color':
+                mode === ThemeMode.light ? '#FFFFFF' : '#000000',
             },
           },
         },

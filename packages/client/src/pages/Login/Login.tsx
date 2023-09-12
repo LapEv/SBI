@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from '@mui/material'
+import { Box, Container, Typography, useTheme } from '@mui/material'
 import { Navigate, useLocation, useNavigate, Link } from 'react-router-dom'
 import {
   useForm,
@@ -12,6 +12,7 @@ import { Login } from 'storeAuth/interfaces'
 import { MapLoginFields } from './LoginData'
 import { Button } from 'components/Buttons'
 import { TextField } from 'components/TextFields/TextFields'
+import { styleLoginTextFieldProps } from './data'
 
 interface LoginValues extends Login {
   list: {
@@ -24,6 +25,7 @@ interface LoginValues extends Login {
 
 export function LoginPage() {
   const location = useLocation()
+  const theme = useTheme()
   const navigate = useNavigate()
   const [{ user }, { signin }] = useAuth()
   const { handleSubmit, control } = useForm<LoginValues>({
@@ -62,7 +64,7 @@ export function LoginPage() {
         <Box
           component="form"
           onSubmit={handleSubmit(submitForm)}
-          bgcolor="background.paper"
+          bgcolor="background.default"
           sx={{
             borderRadius: 2,
             borderWidth: 2,
@@ -78,7 +80,7 @@ export function LoginPage() {
           <Typography sx={{ fontWeight: 700, fontSize: 32 }} color="green.64">
             Вход
           </Typography>
-          {fields.map(({ id, label, validation, type }, index) => {
+          {fields.map(({ id, label, validation, type, value }, index) => {
             return (
               <Controller
                 key={id}
@@ -97,8 +99,25 @@ export function LoginPage() {
                     value={field.value || ''}
                     error={!!(errors?.list ?? [])[index]?.value?.message}
                     helperText={(errors?.list ?? [])[index]?.value?.message}
-                    inputProps={{ style: { height: 5 } }}
-                    InputLabelProps={{ style: { top: -7, marginTop: 0 } }}
+                    InputProps={{
+                      style: {
+                        ...styleLoginTextFieldProps.inputProps,
+                        backgroundColor: theme.palette.background.paper,
+                        borderRadius: 5,
+                      },
+                    }}
+                    InputLabelProps={{
+                      style: {
+                        ...styleLoginTextFieldProps.inputLabelProps,
+                        color: value
+                          ? theme.palette.mode === 'dark'
+                            ? '#C1EEE1'
+                            : '#1E515D'
+                          : theme.palette.mode === 'dark'
+                          ? '#1E515D'
+                          : '#C1EEE1',
+                      },
+                    }}
                     FormHelperTextProps={{
                       style: { height: 0, marginTop: -1, zIndex: 999 },
                     }}

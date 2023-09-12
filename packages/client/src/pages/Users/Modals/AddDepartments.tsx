@@ -11,7 +11,7 @@ import { ChooseModalProps, AddValuesProps } from './interfaces'
 import { MapDepartmentInputFields, style, styleTextFieldProps } from '../data'
 import { ButtonSection } from './ButtonsSection'
 import { useStructure } from 'hooks/structure/useStructure'
-import { DropDown } from './DropDown'
+import { DropDown } from '../../../components/DropDown/DropDown'
 
 export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {

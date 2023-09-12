@@ -57,7 +57,7 @@ export const ProfileData = (userData: User) => {
                 required
                 disabled={!admin}
                 variant="outlined"
-                sx={{ width: '88%', m: 2, mt: 2.5, height: 65 }}
+                sx={{ width: '88%', m: 2, mt: 2.5, height: 60 }}
                 margin="normal"
                 // onChange={(event: ChangeEvent<HTMLInputElement>) => (
                 //   field.onChange(event),
@@ -68,7 +68,9 @@ export const ProfileData = (userData: User) => {
                 // )}
                 error={!!(errors?.list ?? [])[index]?.value?.message}
                 helperText={(errors?.list ?? [])[index]?.value?.message}
-                inputProps={{ style: { height: 5, borderRadius: 5 } }}
+                inputProps={{
+                  style: { height: 5, borderRadius: 5, padding: '16px 14px' },
+                }}
                 InputLabelProps={{
                   style: {
                     top: -7,

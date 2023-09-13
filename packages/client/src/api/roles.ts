@@ -43,7 +43,7 @@ export const newRole = createAsyncThunk(
   }
 )
 
-export const newDepartment = createAsyncThunk(
+export const newRoleGroup = createAsyncThunk(
   'role/newRoleGroup',
   async (roleGroup: RolesGroup, thunkAPI) => {
     try {

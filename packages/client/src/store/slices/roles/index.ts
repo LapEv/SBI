@@ -5,6 +5,7 @@ import { getRoles, getRolesGroup } from 'api/roles'
 export type RolesState = {
   roles: Roles[]
   rolesGroup: RolesGroup[]
+  activeRolesGroup: string
   isLoadingRoles: boolean
   error?: string
 }
@@ -12,13 +13,19 @@ export type RolesState = {
 const initialState: RolesState = {
   roles: [],
   rolesGroup: [],
+  activeRolesGroup: '',
   isLoadingRoles: false,
 }
 
 export const rolesSlise = createSlice({
   name: 'role',
   initialState,
-  reducers: {},
+  reducers: {
+    setActiveRolesGroup(state, action) {
+      state.activeRolesGroup = action.payload
+    },
+  },
+
   extraReducers: {
     [getRoles.fulfilled.type]: (state, action: PayloadAction<Roles[]>) => {
       state.isLoadingRoles = false
@@ -51,3 +58,4 @@ export const rolesSlise = createSlice({
 })
 
 export const rolesReducer = rolesSlise.reducer
+export const { setActiveRolesGroup } = rolesSlise.actions

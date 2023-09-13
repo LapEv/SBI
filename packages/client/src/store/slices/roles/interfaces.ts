@@ -11,4 +11,6 @@ export interface Roles {
 export interface RolesGroup {
   group: NullableString
   roles: string[]
+  id: string
+  groupName: NullableString
 }

@@ -1,38 +1,17 @@
 export const rolesGroupStartData = [
   {
     group: 'SUPERADMIN',
-    roles: [
-      'SUPERADMIN',
-      'ADMIN',
-      'getUsers',
-      'getRoles',
-      'getRolesGroup',
-      'getDivisions',
-      'getDepartments',
-    ],
-    rolesGroupName: ['SUPERADMIN'],
+    roles: [],
+    groupName: 'SUPERADMIN',
   },
   {
     group: 'ADMIN',
-    roles: [
-      'ADMIN',
-      'getUsers',
-      'getRoles',
-      'getRolesGroup',
-      'getDivisions',
-      'getDepartments',
-    ],
-    rolesGroupName: ['ADMIN'],
+    roles: [],
+    groupName: 'ADMIN',
   },
   {
     group: 'Dispatcher',
-    roles: [
-      'getUsers',
-      'getRoles',
-      'getRolesGroup',
-      'getDivisions',
-      'getDepartments',
-    ],
-    rolesGroupName: ['Диспетчер'],
+    roles: [],
+    groupName: 'Диспетчер',
   },
 ]

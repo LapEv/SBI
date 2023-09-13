@@ -68,6 +68,10 @@ export class Repository<T extends Model<T>> {
     return this.model.destroy(options)
   }
 
+  public async drop(options: DestroyOptions<Attributes<T>>): Promise<void> {
+    return this.model.drop(options)
+  }
+
   public async createOrDestroy(
     searchParameters: WhereOptions<Attributes<T>>,
     body: MakeNullishOptional<T['_creationAttributes']>

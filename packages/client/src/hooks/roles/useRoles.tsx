@@ -4,6 +4,7 @@ import { RootState } from 'store'
 import { useAppDispatch } from 'store/hooks'
 import { RolesActions } from './rolesActions'
 import { RolesState } from 'storeRoles/index'
+import { setActiveRolesGroup } from 'storeRoles/index'
 
 export function useRoles(): [RolesState, RolesActions] {
   const roles = useSelector((state: RootState) => state.roles)
@@ -17,6 +18,9 @@ export function useRoles(): [RolesState, RolesActions] {
       },
       getRolesGroup() {
         dispatch(getRolesGroup())
+      },
+      setActiveRolesGroup(data) {
+        dispatch(setActiveRolesGroup(data))
       },
     },
   ]

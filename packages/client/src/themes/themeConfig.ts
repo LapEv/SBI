@@ -106,6 +106,16 @@ export const ThemeConfig = (mode: PaletteMode) =>
           },
         },
       },
+      MuiCheckbox: {
+        styleOverrides: {
+          root: {
+            '.MuiSvgIcon-root': {
+              color: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+            },
+          },
+        },
+      },
+
       MuiAutocomplete: {
         styleOverrides: {
           root: {

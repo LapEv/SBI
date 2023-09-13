@@ -137,7 +137,10 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
             />
           )
         })} */}
-        <CheckBoxGroup data={rolesGroup as []} />
+        {/* <CheckBoxGroup data={rolesGroup as []} /> */}
+        {rolesGroup.map(item => (
+          <CheckBoxGroup data={item} />
+        ))}
         <ButtonSection handleModal={handleModal} />
       </Box>
     )

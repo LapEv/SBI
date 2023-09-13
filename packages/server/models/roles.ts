@@ -5,7 +5,7 @@ export interface RolesGroup {
   id: number
   group: string
   roles: string
-  rolesGroupName: string
+  groupName: string
 }
 
 export const rolesGroup: ModelAttributes<Model, RolesGroup> = {
@@ -24,8 +24,8 @@ export const rolesGroup: ModelAttributes<Model, RolesGroup> = {
     type: DataType.ARRAY(DataType.STRING),
     allowNull: false,
   },
-  rolesGroupName: {
-    type: DataType.ARRAY(DataType.STRING),
+  groupName: {
+    type: DataType.STRING,
     allowNull: false,
   },
 }

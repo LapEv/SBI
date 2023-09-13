@@ -2,18 +2,22 @@ import { useState, ChangeEvent } from 'react'
 import {
   Box,
   FormControlLabel,
-  Typography,
-  List,
+  ListItemButton,
+  ListItemText,
   Checkbox,
 } from '@mui/material'
 import { RolesGroup } from 'storeRoles/interfaces'
+import { Nullable } from 'utils/nullableType'
+import { ListBoxGroup } from './ListBoxGroup'
 
+type NullableString = Nullable<string>
 export interface CheckBoxGroup {
   data: {
-    group: string
+    group: NullableString
     roles: string[]
     id: string
-  }[]
+    groupName: NullableString
+  }
   props?: object
   onBlur?: (data: string) => void
 }
@@ -33,24 +37,22 @@ export const CheckBoxGroup = ({ data }: CheckBoxGroup) => {
       sx={{
         display: 'flex',
         height: '100%',
-        width: '100%',
-        flexDirection: 'column',
+        width: '90%',
+        flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
       }}>
-      <List sx={{ width: '100%', p: 3, borderColor: 'border.default' }}>
-        {data.map(({ group }: RolesGroup) => (
-          <>
-            <FormControlLabel
-              label={''}
-              control={
-                <Checkbox checked={checked[1]} onChange={handleChange} />
-              }
-            />
-            {group}
-          </>
-        ))}
-      </List>
+      <>
+        <FormControlLabel
+          label={''}
+          control={<Checkbox checked={checked[1]} onChange={handleChange} />}
+        />
+        <ListBoxGroup
+          listName={data.groupName}
+          roles={data.roles}
+          id={data.id}
+        />
+      </>
     </Box>
   )
 }

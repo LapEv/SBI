@@ -3,14 +3,20 @@ import { Nullable } from 'utils/nullableType'
 type NullableString = Nullable<string>
 
 export interface Roles {
-  id: number
+  id: string
   role: NullableString
   nameRole: NullableString
 }
 
 export interface RolesGroup {
   group: NullableString
-  roles: string[]
+  roles: RolesGroupObject[]
   id: string
   groupName: NullableString
+}
+
+export interface RolesGroupObject {
+  nameRole: NullableString
+  id: string
+  role: NullableString
 }

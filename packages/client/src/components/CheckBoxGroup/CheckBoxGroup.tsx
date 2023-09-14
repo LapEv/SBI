@@ -1,12 +1,6 @@
 import { useState, ChangeEvent } from 'react'
-import {
-  Box,
-  FormControlLabel,
-  ListItemButton,
-  ListItemText,
-  Checkbox,
-} from '@mui/material'
-import { RolesGroup } from 'storeRoles/interfaces'
+import { Box, FormControlLabel, Checkbox } from '@mui/material'
+import { RolesGroupObject } from 'storeRoles/interfaces'
 import { Nullable } from 'utils/nullableType'
 import { ListBoxGroup } from './ListBoxGroup'
 
@@ -14,20 +8,21 @@ type NullableString = Nullable<string>
 export interface CheckBoxGroup {
   data: {
     group: NullableString
-    roles: string[]
+    roles: RolesGroupObject[]
     id: string
     groupName: NullableString
   }
   props?: object
   onBlur?: (data: string) => void
+  key: string
 }
 
 export const CheckBoxGroup = ({ data }: CheckBoxGroup) => {
-  console.log('CheckBoxGroup data = ', data)
   const [checked, setChecked] = useState([true, false])
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setChecked([event.target.checked, event.target.checked])
+    console.log('Group checked')
   }
 
   return (
@@ -48,9 +43,10 @@ export const CheckBoxGroup = ({ data }: CheckBoxGroup) => {
           control={<Checkbox checked={checked[1]} onChange={handleChange} />}
         />
         <ListBoxGroup
-          listName={data.groupName}
+          groupName={data.groupName}
           roles={data.roles}
-          id={data.id}
+          groupId={data.id}
+          groupChecked={checked[1]}
         />
       </>
     </Box>

@@ -21,7 +21,7 @@ export const rolesGroup: ModelAttributes<Model, RolesGroup> = {
     unique: true,
   },
   roles: {
-    type: DataType.ARRAY(DataType.STRING),
+    type: DataType.ARRAY(DataType.JSONB),
     allowNull: false,
   },
   groupName: {

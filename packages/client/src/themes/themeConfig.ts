@@ -187,10 +187,10 @@ export const ThemeConfig = (mode: PaletteMode) =>
                 mode === ThemeMode.light
                   ? '#1E515D!important'
                   : '#C1EEE1!important',
-              '-webkit-box-shadow': `0 0 0 100px ${
+              WebkitBoxShadow: `0 0 0 100px ${
                 mode === ThemeMode.light ? '#1E515D' : '#C1EEE1'
               } inset`,
-              '-webkit-text-fill-color':
+              WebkitTextFillColor:
                 mode === ThemeMode.light ? '#FFFFFF' : '#000000',
             },
           },

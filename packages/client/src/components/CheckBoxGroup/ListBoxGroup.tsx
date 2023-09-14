@@ -1,39 +1,44 @@
-import { useState, useEffect, ChangeEvent } from 'react'
-import {
-  Box,
-  Collapse,
-  ListItemButton,
-  ListItemText,
-  Checkbox,
-  FormControlLabel,
-} from '@mui/material'
+import { useState, useEffect } from 'react'
+import { Box, Collapse, ListItemButton, ListItemText } from '@mui/material'
 import { RotateButton } from 'components/Buttons/RotateButton'
 import { Nullable } from 'utils/nullableType'
 import { useRoles } from 'hooks/roles/useRoles'
-import { CheckBoxList } from './CheckBoxList'
+import { RolesGroupObject } from 'storeRoles/interfaces'
+import { Item } from './Item'
 type NullableString = Nullable<string>
 
 interface ListBoxGroup {
-  listName: NullableString
-  roles: string[]
-  id: string
+  groupName: NullableString
+  roles: RolesGroupObject[]
+  groupId: string
+  groupChecked: boolean
 }
 
-export const ListBoxGroup = ({ listName, roles, id }: ListBoxGroup) => {
+export const ListBoxGroup = ({
+  groupName,
+  roles,
+  groupId,
+  groupChecked,
+}: ListBoxGroup) => {
   const [open, setOpen] = useState(false)
   const [{ activeRolesGroup }, { setActiveRolesGroup }] = useRoles()
 
   const handleClick = () => {
-    console.log('Click')
     setOpen(!open)
-    setActiveRolesGroup(id as string)
+    !open ? setActiveRolesGroup(groupId) : setActiveRolesGroup('')
   }
 
   useEffect(() => {
-    if (activeRolesGroup !== id) {
+    if (activeRolesGroup !== groupId) {
       setOpen(false)
     }
   }, [activeRolesGroup])
+
+  useEffect(() => {
+    groupChecked && activeRolesGroup !== groupId
+      ? (setOpen(true), setActiveRolesGroup(groupId))
+      : null
+  }, [groupChecked])
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
@@ -52,13 +57,26 @@ export const ListBoxGroup = ({ listName, roles, id }: ListBoxGroup) => {
         onClick={handleClick}>
         <>
           <ListItemText
-            primary={listName}
+            primary={groupName}
             primaryTypographyProps={{ fontSize: '1rem!important' }}
           />
           <RotateButton open={open} handleClick={handleClick} size={'1.5rem'} />
         </>
       </ListItemButton>
-      <CheckBoxList open={open} roles={roles} id={id} />
+      <Collapse
+        sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}
+        in={open}
+        timeout="auto"
+        unmountOnExit>
+        {roles.map(({ nameRole, id }) => (
+          <Item
+            nameRole={nameRole}
+            id={id}
+            groupChecked={groupChecked}
+            key={id}
+          />
+        ))}
+      </Collapse>
     </Box>
   )
 }

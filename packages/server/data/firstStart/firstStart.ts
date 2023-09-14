@@ -1,6 +1,6 @@
-// import { departmentStartData } from './department'
-// import { divisionStartData } from './division'
-// import { userStartData } from './user'
+import { departmentStartData } from './department'
+import { divisionStartData } from './division'
+import { userStartData } from './user'
 import {
   DepartmentRepos,
   DivisionRepos,
@@ -8,7 +8,7 @@ import {
   roleRepos,
   userRepos,
 } from '../../db'
-// import bcrypt from 'bcryptjs'
+import bcrypt from 'bcryptjs'
 import { rolesStartData } from './role'
 import { rolesGroupStartData } from './rolesGroup'
 
@@ -54,35 +54,35 @@ export const firstStart = async () => {
       console.log('rolesGroupStartData 2 = ', rolesGroupStartData2)
     }
 
-    // const newDivision = await Promise.all(
-    //   divisionStartData.map(async value => await DivisionRepos.create(value))
-    // )
-    // departmentStartData.map(async value => {
-    //   value.id_division = newDivision.find(
-    //     item => item.division === value.division
-    //   )?.id
-    // })
-    // const newDepartment = await Promise.all(
-    //   departmentStartData.map(
-    //     async value => await DepartmentRepos.create(value)
-    //   )
-    // )
-    // userStartData.map(async value => {
-    //   value.id_division = newDivision.find(
-    //     item => item.division === value.division
-    //   )?.id
-    //   value.id_department = newDepartment.find(
-    //     item => item.department === value.department
-    //   )?.id
-    //   const hashPassword = bcrypt.hashSync(value.password, 7)
-    //   const newUser = {
-    //     ...value,
-    //     password: hashPassword,
-    //     active: true,
-    //     theme: 'light',
-    //   }
-    // await userRepos.create(newUser)
-    // })
+    const newDivision = await Promise.all(
+      divisionStartData.map(async value => await DivisionRepos.create(value))
+    )
+    departmentStartData.map(async value => {
+      value.id_division = newDivision.find(
+        item => item.division === value.division
+      )?.id
+    })
+    const newDepartment = await Promise.all(
+      departmentStartData.map(
+        async value => await DepartmentRepos.create(value)
+      )
+    )
+    userStartData.map(async value => {
+      value.id_division = newDivision.find(
+        item => item.division === value.division
+      )?.id
+      value.id_department = newDepartment.find(
+        item => item.department === value.department
+      )?.id
+      const hashPassword = bcrypt.hashSync(value.password, 7)
+      const newUser = {
+        ...value,
+        password: hashPassword,
+        active: true,
+        theme: 'light',
+      }
+      await userRepos.create(newUser)
+    })
   } catch (error) {
     console.error('Unable to connect to the database: ', error)
   }

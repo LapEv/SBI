@@ -5,7 +5,6 @@ export default {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   roots: ['./src'],
-  __esModule: true,
   testMatch: ['<rootDir>/**/*.test.{ts,tsx}'],
   transform: {
     '^.+\\.(ts|tsx|js|jsx|html|svg|mp3)$': 'ts-jest',

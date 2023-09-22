@@ -1,12 +1,17 @@
 import { Router } from 'express'
 import { roleService } from '../services/roleService'
+const roleMiddleware = require('../middleware/roleMiddleware')
 
 export const roleRouter = (apiRouter: Router) => {
   const service = new roleService()
 
   const router: Router = Router()
 
-  router.post('/newRoleGroup', service.newRoleGroup)
+  router.post(
+    '/newRoleGroup',
+    roleMiddleware(['addNewRole', 'ADMIN', 'SUPERADMIN']),
+    service.newRoleGroup
+  )
   router.get('/getRolesGroup', service.getRolesGroup)
   router.delete('/deleteRoleGroup', service.deleteRoleGroup)
 

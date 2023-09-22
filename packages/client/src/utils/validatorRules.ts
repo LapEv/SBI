@@ -66,7 +66,39 @@ export const textValidation = {
     if (!value.match('^[А-ЯA-Z]')) {
       return 'Должно начинаться с заглавной буквы'
     }
+    return true
+  },
+}
 
+export const textValidationlowercase = {
+  required: REQUIRED_FIELD,
+  validate: (value: string) => {
+    if (!value.match('^[?!, .а-яА-ЯёЁ0-9s]+$')) {
+      return 'Только кирилица, цифры'
+    }
+    return true
+  },
+}
+
+export const textValidationENG = {
+  required: REQUIRED_FIELD,
+  validate: (value: string) => {
+    if (!value.match('^[?!, .a-zA-Z0-9s]+$')) {
+      return 'Только кирилица, цифры'
+    }
+    if (!value.match('^[А-ЯA-Z]')) {
+      return 'Должно начинаться с заглавной буквы'
+    }
+    return true
+  },
+}
+
+export const textValidationENGlowercase = {
+  required: REQUIRED_FIELD,
+  validate: (value: string) => {
+    if (!value.match('^[?!, .a-zA-Z0-9s]+$')) {
+      return 'Только кирилица, цифры'
+    }
     return true
   },
 }

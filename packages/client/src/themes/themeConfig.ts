@@ -125,7 +125,7 @@ export const ThemeConfig = (mode: PaletteMode) =>
               paddingRight: '7px!important',
             },
             '& .MuiAutocomplete-endAdornment': {
-              top: -3,
+              top: -2,
             },
             '& .MuiAutocomplete-clearIndicator': {
               color: mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',

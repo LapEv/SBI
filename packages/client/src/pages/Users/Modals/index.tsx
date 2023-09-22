@@ -1,4 +1,6 @@
 export { AddDivision } from './AddDivision'
 export { AddDepartments } from './AddDepartments'
 export { AddUser } from './AddUser'
+export { AddRole } from './AddRole'
+export { DeleteRole } from './DeleteRole'
 export { ChooseModal } from './ChooseModal'

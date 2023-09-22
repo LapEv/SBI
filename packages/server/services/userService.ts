@@ -102,6 +102,7 @@ export class userService {
   }
 
   getUsers = (_req: Request, res: Response) => {
+    console.log('getUsers')
     userRepos
       .findAll({
         where: _req.body,

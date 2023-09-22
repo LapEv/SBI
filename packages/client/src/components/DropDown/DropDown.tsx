@@ -1,26 +1,27 @@
-import { useState, ChangeEvent } from 'react'
+import { useState } from 'react'
 import { Autocomplete } from '@mui/material'
 import { useTheme } from '@mui/material'
 import { TextField } from 'components/TextFields/TextFields'
-import {
-  useForm,
-  useFieldArray,
-  Controller,
-  useFormState,
-} from 'react-hook-form'
 import { styleTextFieldProps } from '../../pages/Users/data'
-import { Department, Division } from 'store/slices/structure/interfaces'
 import { DataDropDown } from '../../pages/Users/Modals/interfaces'
 
-export const DropDown = ({ data, props, onBlur }: DataDropDown) => {
+export const DropDown = ({ data, props, onChange, value }: DataDropDown) => {
   const theme = useTheme()
   const [errors, setErrors] = useState<boolean>(false)
 
   return (
     <Autocomplete
-      id="divisionsDropDown"
-      sx={{ width: '90%', mt: 4, height: 40, ...props }}
+      freeSolo
+      forcePopupIcon
+      sx={{ width: '90%', height: 40, ...props }}
       options={data.map(option => option.categoryName)}
+      clearOnEscape={true}
+      noOptionsText={'Нет данных'}
+      onChange={(_, textValue) => (
+        onChange?.(textValue as string),
+        !textValue ? setErrors(true) : setErrors(false)
+      )}
+      value={value}
       ListboxProps={{
         sx: {
           borderWidth: 2,
@@ -41,16 +42,11 @@ export const DropDown = ({ data, props, onBlur }: DataDropDown) => {
       renderInput={params => (
         <TextField
           {...params}
+          required
           variant="outlined"
           label="Выберите новое подразделение"
-          onBlur={() => {
-            params.inputProps.value === '' ? setErrors(true) : setErrors(false)
-            onBlur?.(params.inputProps.value as string)
-          }}
-          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            params.inputProps.value === '' ? setErrors(true) : setErrors(false)
-          }}
           error={errors}
+          id={params.id}
           helperText={errors ? 'Не выбрано подразделение!' : ''}
           InputProps={{
             style: {

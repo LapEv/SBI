@@ -1,11 +1,12 @@
-import React, { ForwardedRef } from 'react'
-import { AddDivision, AddUser } from './'
+import React from 'react'
+import { AddDivision, AddUser, AddRole, DeleteRole } from './'
 import { AddDepartments } from './'
 import { ModalTitles } from '../data'
 import { ChooseModalProps } from './interfaces'
 
 export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(
   ({ modalImage, handleModal }: ChooseModalProps, ref) => {
+    console.log('modalImage = ', modalImage)
     return (
       <>
         {modalImage === 'addDivision' && (
@@ -27,6 +28,28 @@ export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(
             ref={ref}
             handleModal={handleModal}
             title={ModalTitles.addUser}
+          />
+        )}
+        {modalImage === 'addRole' && (
+          <AddRole
+            ref={ref}
+            handleModal={handleModal}
+            title={ModalTitles.addRole}
+          />
+        )}
+
+        {/* {modalImage === 'addRolesGroup' && (
+          <AddRolesGroup
+            ref={ref}
+            handleModal={handleModal}
+            title={ModalTitles.addRolesGroup}
+          />
+        )} */}
+        {modalImage === 'deleteRole' && (
+          <DeleteRole
+            ref={ref}
+            handleModal={handleModal}
+            title={ModalTitles.delRole}
           />
         )}
       </>

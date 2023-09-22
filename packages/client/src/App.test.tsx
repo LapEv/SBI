@@ -1,4 +1,3 @@
-import React from 'react'
 import { Provider } from 'react-redux'
 import App from './App'
 import { render, screen } from '@testing-library/react'
@@ -10,10 +9,9 @@ global.fetch = jest.fn(() =>
 )
 
 test('Example test', async () => {
-  const ref = React.createRef()
   render(
     <Provider store={store}>
-      <App ref={ref} />
+      <App />
     </Provider>
   )
   expect(screen.getByTestId('App')).toBeDefined()

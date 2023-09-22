@@ -14,7 +14,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { useRoles } from 'hooks/roles/useRoles'
 import { useStructure } from 'hooks/structure/useStructure'
 
-function App({ ref }: any) {
+function App() {
   const theme = useTheme()
   const [{ isLoadingAuth }] = useAuth()
   const [{ isLoadingRoles }] = useRoles()
@@ -25,7 +25,6 @@ function App({ ref }: any) {
       const response = await fetch(url)
       const data = await response.json()
       console.log(data)
-      console.log('ref = ', ref)
     }
     fetchServerData()
   }, [])

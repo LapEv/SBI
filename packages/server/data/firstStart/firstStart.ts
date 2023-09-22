@@ -43,15 +43,28 @@ export const firstStart = async () => {
       const newrolesObj = newRoles.map(({ id, nameRole, role }) => {
         return { id, nameRole, role }
       })
-      console.log('newrolesObj = ', newrolesObj)
-      rolesGroupStartData.map(value => (value.roles = newrolesObj as never[]))
-      console.log('rolesGroupStartData = ', rolesGroupStartData)
-      const rolesGroupStartData2 = await Promise.all(
-        rolesGroupStartData.map(async value => {
-          console.log('value = ', value), await roleGroupRepos.create(value)
-        })
+      rolesGroupStartData.map(value => {
+        if (value.group === 'SUPERADMIN') {
+          value.roles = newrolesObj.filter(
+            item => item.role === 'SUPERADMIN'
+          ) as never[]
+        }
+        if (value.group === 'ADMIN') {
+          value.roles = newrolesObj.filter(
+            item => item.role === 'ADMIN'
+          ) as never[]
+        }
+        if (value.group !== 'SUPERADMIN' && value.group !== 'ADMIN') {
+          value.roles = newrolesObj.filter(
+            item => item.role !== 'SUPERADMIN' && item.role !== 'ADMIN'
+          ) as never[]
+        }
+      })
+      await Promise.all(
+        rolesGroupStartData.map(
+          async value => await roleGroupRepos.create(value)
+        )
       )
-      console.log('rolesGroupStartData 2 = ', rolesGroupStartData2)
     }
 
     const newDivision = await Promise.all(

@@ -9,6 +9,7 @@ export interface ChooseModalProps {
 
 export interface AddValuesProps {
   list: {
+    name: string
     label: string
     value: string
     validation: object
@@ -22,8 +23,9 @@ export interface DataDropDown {
     categoryName: string
     id: string
   }[]
+  value?: string
   props?: object
-  onBlur?: (data: string) => void
+  onChange?: (value: string) => void
 }
 
 export interface Data {

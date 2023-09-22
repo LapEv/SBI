@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react'
+import { useState, ChangeEvent, useEffect } from 'react'
 import { Box, FormControlLabel, Checkbox } from '@mui/material'
 import { RolesGroupObject } from 'storeRoles/interfaces'
 import { Nullable } from 'utils/nullableType'
@@ -13,17 +13,35 @@ export interface CheckBoxGroup {
     groupName: NullableString
   }
   props?: object
-  onBlur?: (data: string) => void
   key: string
+  onChooseGroup: (data: string) => void
+  onChooseItems: (data: string) => void
+  oneGroup: boolean
+  selectedGroup: NullableString[]
 }
 
-export const CheckBoxGroup = ({ data }: CheckBoxGroup) => {
+export const CheckBoxGroup = ({
+  data,
+  onChooseGroup,
+  onChooseItems,
+  oneGroup,
+  selectedGroup,
+}: CheckBoxGroup) => {
   const [checked, setChecked] = useState([true, false])
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setChecked([event.target.checked, event.target.checked])
-    console.log('Group checked')
+    if (event.target.checked) {
+      onChooseGroup(event.target.name)
+    }
   }
+
+  useEffect(() => {
+    if (!oneGroup) return
+    if (!selectedGroup.includes(data.group as string)) {
+      setChecked([false, false])
+    }
+  }, [selectedGroup])
 
   return (
     <Box
@@ -39,6 +57,7 @@ export const CheckBoxGroup = ({ data }: CheckBoxGroup) => {
       }}>
       <>
         <FormControlLabel
+          name={data.groupName as string}
           label={''}
           control={<Checkbox checked={checked[1]} onChange={handleChange} />}
         />
@@ -47,6 +66,7 @@ export const CheckBoxGroup = ({ data }: CheckBoxGroup) => {
           roles={data.roles}
           groupId={data.id}
           groupChecked={checked[1]}
+          onChooseItems={onChooseItems}
         />
       </>
     </Box>

@@ -5,6 +5,7 @@ import {
   passwordValidation,
   phoneValidation,
   textValidation,
+  textValidationENGlowercase,
 } from 'utils/validatorRules'
 import PersonAdd from '@mui/icons-material/PersonAdd'
 import Loupe from '@mui/icons-material/Loupe'
@@ -12,6 +13,10 @@ import Queue from '@mui/icons-material/Queue'
 import LayersClear from '@mui/icons-material/LayersClear'
 import DeleteSweep from '@mui/icons-material/DeleteSweep'
 import PersonRemove from '@mui/icons-material/PersonRemove'
+import Addchart from '@mui/icons-material/Addchart'
+import GroupAdd from '@mui/icons-material/GroupAdd'
+import Remove from '@mui/icons-material/Remove'
+import GroupRemove from '@mui/icons-material/GroupRemove'
 
 export const menuData = [
   {
@@ -30,6 +35,16 @@ export const menuData = [
     icon: <PersonAdd fontSize="medium" />,
   },
   {
+    name: 'addRole',
+    title: 'Добавить роль',
+    icon: <Addchart fontSize="medium" />,
+  },
+  {
+    name: 'addRolesGroup',
+    title: 'Добавить группу ролей',
+    icon: <GroupAdd fontSize="medium" />,
+  },
+  {
     name: 'deleteDivision',
     title: 'Удалить дивизион',
     icon: <LayersClear fontSize="medium" />,
@@ -44,16 +59,28 @@ export const menuData = [
     title: 'Удалить пользователя',
     icon: <PersonRemove fontSize="medium" />,
   },
+  {
+    name: 'deleteRole',
+    title: 'Удалить роль',
+    icon: <Remove fontSize="medium" />,
+  },
+  {
+    name: 'deleteRolesGroup',
+    title: 'Удалить группу ролей',
+    icon: <GroupRemove fontSize="medium" />,
+  },
 ]
 export const style = {
   position: 'absolute',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'space-between',
   width: '40%',
   top: '50%',
   left: '50%',
+  height: 'auto',
+  maxHeight: '98%',
   transform: 'translate(-50%, -50%)',
   bgcolor: 'background.default',
   borderWidth: 2,
@@ -62,6 +89,8 @@ export const style = {
   borderRadius: 3,
   boxShadow: 24,
   p: 4,
+  overflowY: 'auto',
+  overflowX: 'hidden',
 }
 
 export const styleTextFieldProps = {
@@ -80,10 +109,29 @@ export const ModalTitles = {
   addDivision: 'Новое подразделение',
   addDepartments: 'Новый отдел',
   addUser: 'Новый пользователь',
+  addRole: 'Новая роль',
+  addRolesGroup: 'Новая группа ролей',
   delDivision: 'Удалить дивизион',
   delDepartments: 'Удалить отдел',
-  delUser: 'Удалить пользователь',
+  delUser: 'Удалить пользователя',
+  delRole: 'Удалить роль',
+  delRolesGroup: 'Удалить группу ролей',
 }
+
+export const MapRoleInputFields = [
+  {
+    name: 'nameRole',
+    label: 'Введите новую роль',
+    validation: textValidation,
+    type: 'text',
+  },
+  {
+    name: 'role',
+    label: 'Введите идентификатор роли',
+    validation: textValidationENGlowercase,
+    type: 'text',
+  },
+]
 
 export const MapDivisionInputFields = [
   {

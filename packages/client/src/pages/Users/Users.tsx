@@ -6,9 +6,12 @@ import DropDownMenu from 'components/DropDownButtonMenu'
 import { ChooseModal } from './Modals'
 import { Divisions } from './'
 import { menuData } from './data'
+import { useAuth } from 'hooks/auth/useAuth'
 
 export function UsersPage() {
   const modalRef = React.createRef()
+  const [{ admin }] = useAuth()
+
   const [{ divisions }, { getDivisions }] = useStructure()
   const [modal, setModal] = useState<boolean>(false)
   const [modalImage, setModalImage] = useState<string>('')
@@ -18,11 +21,9 @@ export function UsersPage() {
   }, [])
 
   const checkClickMenu = (name: string | null) => {
-    console.log('checkClickMenu = ', name)
     if (name) {
       setModal(true)
       setModalImage(name)
-      console.log('modalImage = ', modalImage)
     }
   }
 
@@ -57,7 +58,6 @@ export function UsersPage() {
           handleModal={handleModal}
         />
       </Modal>
-
       <Box
         component="div"
         sx={{
@@ -73,12 +73,14 @@ export function UsersPage() {
         <Typography sx={{ fontWeight: 'bold', fontSize: '2.375rem' }}>
           Пользователи
         </Typography>
-        <DropDownMenu
-          popover={'Добавить/Удалить'}
-          data={menuData}
-          divider={[3]}
-          onClick={checkClickMenu}
-        />
+        {admin && (
+          <DropDownMenu
+            popover={'Добавить/Удалить'}
+            data={menuData}
+            divider={[5]}
+            onClick={checkClickMenu}
+          />
+        )}
       </Box>
       <List sx={{ width: '100%', p: 3, borderColor: 'border.default' }}>
         {divisions.map(value => (

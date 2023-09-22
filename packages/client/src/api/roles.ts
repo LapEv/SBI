@@ -35,7 +35,9 @@ export const newRole = createAsyncThunk(
   'role/newRole',
   async (role: Roles, thunkAPI) => {
     try {
-      const { data } = await authhost.post(ApiEndPoints.Roles.newRole, role)
+      await authhost.post(ApiEndPoints.Roles.newRole, role)
+      const { data } = await authhost.get<Roles>(ApiEndPoints.Roles.getRoles)
+      console.log('getRoles data = ', data)
       return data
     } catch (e) {
       return thunkAPI.rejectWithValue('Не удалось создать новую роль')

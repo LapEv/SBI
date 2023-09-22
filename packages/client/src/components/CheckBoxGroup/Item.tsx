@@ -8,25 +8,25 @@ interface Item {
   id: string
   key: string
   groupChecked: boolean
+  onChooseItems: (data: string) => void
 }
-export const Item = ({ nameRole, id, groupChecked }: Item) => {
+export const Item = ({ nameRole, id, groupChecked, onChooseItems }: Item) => {
   const [checked, setChecked] = useState([true, false])
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setChecked([event.target.checked, event.target.checked])
-    console.log('Item checked')
-    console.log('nameRole = ', nameRole)
-    console.log('id = ', id)
+    onChooseItems(event.target.name)
   }
 
   useEffect(() => {
-    console.log('Item checked groupChecked = ', groupChecked)
     groupChecked ? setChecked([true, true]) : setChecked([false, false])
   }, [groupChecked])
 
   return (
     <FormControlLabel
       label={nameRole}
+      id={id}
+      name={`${nameRole}`}
       sx={{ width: '100%' }}
       control={<Checkbox checked={checked[1]} onChange={handleChange} />}
     />

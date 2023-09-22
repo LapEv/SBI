@@ -12,6 +12,7 @@ interface ListBoxGroup {
   roles: RolesGroupObject[]
   groupId: string
   groupChecked: boolean
+  onChooseItems: (data: string) => void
 }
 
 export const ListBoxGroup = ({
@@ -19,6 +20,7 @@ export const ListBoxGroup = ({
   roles,
   groupId,
   groupChecked,
+  onChooseItems,
 }: ListBoxGroup) => {
   const [open, setOpen] = useState(false)
   const [{ activeRolesGroup }, { setActiveRolesGroup }] = useRoles()
@@ -68,11 +70,12 @@ export const ListBoxGroup = ({
         in={open}
         timeout="auto"
         unmountOnExit>
-        {roles.map(({ nameRole, id }) => (
+        {roles.map(({ nameRole, id }, index) => (
           <Item
             nameRole={nameRole}
-            id={id}
+            id={`${id}${index}`}
             groupChecked={groupChecked}
+            onChooseItems={onChooseItems}
             key={id}
           />
         ))}

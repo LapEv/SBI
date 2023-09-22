@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Roles, RolesGroup } from './interfaces'
-import { getRoles, getRolesGroup } from 'api/roles'
+import { getRoles, getRolesGroup, newRole, newRoleGroup } from 'api/roles'
 
 export type RolesState = {
   roles: Roles[]
@@ -51,6 +51,31 @@ export const rolesSlise = createSlice({
       state.isLoadingRoles = true
     },
     [getRolesGroup.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingRoles = false
+      state.error = action.payload
+    },
+    [newRole.fulfilled.type]: (state, action: PayloadAction<Roles[]>) => {
+      state.isLoadingRoles = false
+      state.error = ''
+      state.roles = action.payload
+    },
+    [newRole.pending.type]: state => {
+      state.isLoadingRoles = true
+    },
+    [newRole.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingRoles = false
+      state.error = action.payload
+    },
+    [newRoleGroup.fulfilled.type]: (state, action: PayloadAction<Roles[]>) => {
+      state.isLoadingRoles = false
+      state.error = ''
+      console.log('newRoleGroup action.payload = ', action.payload)
+      state.roles = action.payload
+    },
+    [newRoleGroup.pending.type]: state => {
+      state.isLoadingRoles = true
+    },
+    [newRoleGroup.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingRoles = false
       state.error = action.payload
     },

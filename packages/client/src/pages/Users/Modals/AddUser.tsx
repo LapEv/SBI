@@ -3,29 +3,29 @@ import { Box, Typography, useTheme } from '@mui/material'
 import {
   useForm,
   useFieldArray,
-  Controller,
   useFormState,
+  Controller,
 } from 'react-hook-form'
 import { TextField } from 'components/TextFields/TextFields'
-import {
-  ChooseModalProps,
-  AddValuesProps,
-  DataDropDown,
-  Data,
-} from './interfaces'
+import { ChooseModalProps, AddValuesProps, Data } from './interfaces'
 import { MapProfileInputFieldsAdmin, style, styleTextFieldProps } from '../data'
 import { ButtonSection } from './ButtonsSection'
 import { useStructure } from 'hooks/structure/useStructure'
 import { DropDown } from '../../../components/DropDown/DropDown'
 import { useRoles } from 'hooks/roles/useRoles'
 import { CheckBoxGroup } from 'components/CheckBoxGroup/CheckBoxGroup'
+import { Nullable } from 'utils/nullableType'
+type NullableString = Nullable<string>
 
 export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
     const [{ divisions, departaments }] = useStructure()
     const [{ roles, rolesGroup }, { getRoles, getRolesGroup }] = useRoles()
-    const [activeDivision, setActiveDivision] = useState<string>('')
+    const [division, setDivision] = useState<string>('')
     const [listDepartments, setDepartments] = useState<Data[]>([])
+    const [department, setDepartment] = useState<string>('')
+    const [selectedGroup, setGroup] = useState<NullableString[]>([])
+    const [selectedItems, setItems] = useState<NullableString[]>([])
     const theme = useTheme()
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
@@ -33,6 +33,7 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
         list: MapProfileInputFieldsAdmin,
       },
     })
+
     const { errors } = useFormState({ control })
     const { fields } = useFieldArray({
       control,
@@ -41,20 +42,44 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
 
     function changeData(data: AddValuesProps) {
       console.log('AddUser changeData = ', data)
+      console.log('division = ', division)
+      console.log('department = ', department)
+      console.log('group = ', selectedGroup)
+      console.log('role = ', selectedItems)
       // handleChange({
       //   division: data.list[0].value,
       // })
       handleModal(false)
     }
 
-    const changeActiveDivision = (data: string) => {
-      console.log('data = ', data)
-      setActiveDivision(data)
+    const setRolesGroup = (group: string) => {
+      const groupData = rolesGroup.find(item => item.groupName === group)
+      const listRoles = groupData?.roles.map(item => item.role)
+      setItems(listRoles as NullableString[])
+      setGroup([groupData?.group as NullableString])
+    }
+
+    const setRoles = (role: string) => {
+      const itemId = roles.find(item => item.nameRole === role)?.role
+      if (selectedItems.includes(itemId as string)) {
+        setItems(selectedItems.filter(value => value !== itemId))
+        return
+      }
+      setItems([...selectedItems, itemId as string])
+    }
+
+    const changeDivision = (textValue: string) => {
+      setDivision(textValue)
+      if (!textValue) {
+        console.log('textValue = ', textValue)
+        setDepartment('')
+        setDepartments([])
+      }
     }
 
     useEffect(() => {
       const id_division = divisions.find(
-        value => value.divisionName === activeDivision
+        value => value.divisionName === division
       )?.id
       const list = departaments.filter(item => item.id_division === id_division)
       setDepartments(
@@ -66,15 +91,13 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
           }
         })
       )
-    }, [activeDivision])
+      setDepartment('')
+    }, [division])
 
     useEffect(() => {
       getRoles()
       getRolesGroup()
     }, [])
-
-    console.log('roles = ', roles)
-    console.log('rolesGroup = ', rolesGroup)
 
     return (
       <Box sx={style} component="form" onSubmit={handleSubmit(changeData)}>
@@ -88,10 +111,16 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
             }
           })}
           props={{ mt: 3 }}
-          onBlur={changeActiveDivision}
+          onChange={changeDivision}
+          value={division}
         />
-        <DropDown data={listDepartments} props={{ mt: 4, mb: 2 }} />
-        {/* {fields.map(({ id, label, validation, type, value }, index) => {
+        <DropDown
+          data={listDepartments}
+          props={{ mt: 4, mb: 2 }}
+          onChange={data => setDepartment(data)}
+          value={department}
+        />
+        {fields.map(({ id, label, validation, type, value }, index) => {
           return (
             <Controller
               key={id}
@@ -103,6 +132,7 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
                   {...field}
                   inputRef={field.ref}
                   label={label}
+                  name={field.name}
                   type={type}
                   required
                   variant="outlined"
@@ -136,10 +166,16 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
               )}
             />
           )
-        })} */}
-        {/* <CheckBoxGroup data={rolesGroup as []} /> */}
+        })}
         {rolesGroup.map((item, index) => (
-          <CheckBoxGroup data={item} key={`${item}${index}`} />
+          <CheckBoxGroup
+            data={item}
+            key={`${item}${index}`}
+            onChooseGroup={setRolesGroup}
+            onChooseItems={setRoles}
+            oneGroup={true}
+            selectedGroup={selectedGroup}
+          />
         ))}
         <ButtonSection handleModal={handleModal} />
       </Box>

@@ -61,7 +61,7 @@ export const menuData = [
   },
   {
     name: 'deleteRole',
-    title: 'Удалить роль',
+    title: 'Удалить роли',
     icon: <Remove fontSize="medium" />,
   },
   {

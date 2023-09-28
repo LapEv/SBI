@@ -6,4 +6,6 @@ export interface RolesActions {
   setActiveRolesGroup: (data: string) => void
   newRole: (data: Roles) => void
   newRoleGroup: (data: RolesGroup) => void
+  deleteRoles: (data: string[]) => void
+  deleteRoleGroup: (data: RolesGroup) => void
 }

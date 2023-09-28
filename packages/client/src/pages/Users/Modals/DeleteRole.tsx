@@ -20,12 +20,15 @@ import { getRoles } from 'api/roles'
 
 export const DeleteRole = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
-    const [{ roles }, { getRoles }] = useRoles()
+    const [{ roles }, { getRoles, deleteRoles }] = useRoles()
     const [selectedRoles, setSelectedRoles] = useState<string[]>([])
     const theme = useTheme()
 
-    const changeData = () => {
-      console.log('changeData = ')
+    const changeData = (event: any) => {
+      event.preventDefault()
+      deleteRoles(selectedRoles)
+      ////    добавлять в api? если записано или ошибку
+      //// проверка на уникальность записи, тоже вдавать ошибку
     }
 
     const onChooseItems = (role: string) => {
@@ -34,6 +37,7 @@ export const DeleteRole = React.forwardRef<unknown, ChooseModalProps>(
         setSelectedRoles(selectedRoles.filter(value => value !== itemId))
         return
       }
+      console.log('itemId = ', itemId)
       setSelectedRoles([...selectedRoles, itemId as string])
     }
 
@@ -61,7 +65,7 @@ export const DeleteRole = React.forwardRef<unknown, ChooseModalProps>(
             key={id}
           />
         ))}
-        <ButtonSection handleModal={handleModal} />
+        <ButtonSection handleModal={handleModal} btnName="Удалить" />
       </Box>
     )
   }

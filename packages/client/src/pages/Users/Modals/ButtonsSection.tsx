@@ -3,9 +3,10 @@ import { Button } from 'components/Buttons'
 
 type Handle = {
   handleModal: (state: boolean) => void
+  btnName: string
 }
 
-export const ButtonSection = ({ handleModal }: Handle) => {
+export const ButtonSection = ({ handleModal, btnName }: Handle) => {
   return (
     <Box
       sx={{
@@ -14,10 +15,12 @@ export const ButtonSection = ({ handleModal }: Handle) => {
         mt: 3,
         width: '100%',
       }}>
-      <Button type="submit" sx={{ width: '40%' }}>
-        Изменить
+      <Button type="submit" sx={{ width: '40%', fontWeight: 'bold' }}>
+        {btnName ?? 'Изменить'}
       </Button>
-      <Button sx={{ width: '40%' }} onClick={() => handleModal(false)}>
+      <Button
+        sx={{ width: '40%', fontWeight: 'bold' }}
+        onClick={() => handleModal(false)}>
         Отмена
       </Button>
     </Box>

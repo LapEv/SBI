@@ -16,6 +16,7 @@ export const userStartData = [
     chiefDepartment: true,
     id_division: '',
     id_department: '',
+    status: 'employee',
   },
   {
     username: 'a.kalinin',
@@ -40,5 +41,6 @@ export const userStartData = [
     chiefDepartment: true,
     id_division: '',
     id_department: '',
+    status: 'employee',
   },
 ]

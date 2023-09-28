@@ -58,16 +58,22 @@ export class roleService {
       .then(roles => res.status(200).json(roles))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
-  deleteRole = (_req: Request, res: Response) => {
-    const { role } = _req.body
-    roleRepos
-      .destroy({
-        where: { role: role },
-      })
-      .then(result =>
-        res.status(200).json(`Role=${role} id:${result} deleted!`)
+
+  deleteRole = async (_req: Request, res: Response) => {
+    const data = _req.body
+    try {
+      const allResult = await Promise.all(
+        await data.map(async (value: string) => {
+          const destroy = await roleRepos.destroy({
+            where: { role: value },
+          })
+          return `Role=${value} in quantity:${destroy} deleted!`
+        })
       )
-      .catch(err => res.status(500).json({ error: ['db error', err] }))
+      res.status(200).json(allResult)
+    } catch (err: any) {
+      res.status(500).json({ error: ['db error', err] })
+    }
   }
   getAllRoles = () => {
     roleRepos

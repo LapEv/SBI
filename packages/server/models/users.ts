@@ -22,6 +22,7 @@ export interface User {
   chiefDepartment: boolean
   id_division: string
   id_department: string
+  status: string
 }
 
 export const users: ModelAttributes<Model, User> = {
@@ -109,5 +110,9 @@ export const users: ModelAttributes<Model, User> = {
     type: DataType.STRING,
     allowNull: false,
     unique: true,
+  },
+  status: {
+    type: DataType.STRING,
+    allowNull: false,
   },
 }

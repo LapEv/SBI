@@ -1,5 +1,12 @@
 import { useSelector } from 'react-redux'
-import { getRoles, getRolesGroup, newRole, newRoleGroup } from 'api/roles'
+import {
+  getRoles,
+  getRolesGroup,
+  newRole,
+  newRoleGroup,
+  deleteRoles,
+  deleteRoleGroup,
+} from 'api/roles'
 import { RootState } from 'store'
 import { useAppDispatch } from 'store/hooks'
 import { RolesActions } from './rolesActions'
@@ -27,6 +34,12 @@ export function useRoles(): [RolesState, RolesActions] {
       },
       newRoleGroup(data) {
         dispatch(newRoleGroup(data))
+      },
+      deleteRoles(data) {
+        dispatch(deleteRoles(data))
+      },
+      deleteRoleGroup(data) {
+        dispatch(deleteRoleGroup(data))
       },
     },
   ]

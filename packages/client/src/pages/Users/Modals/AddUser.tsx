@@ -177,7 +177,7 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
             selectedGroup={selectedGroup}
           />
         ))}
-        <ButtonSection handleModal={handleModal} />
+        <ButtonSection handleModal={handleModal} btnName="Сохранить" />
       </Box>
     )
   }

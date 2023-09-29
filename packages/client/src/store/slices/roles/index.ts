@@ -1,6 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Roles, RolesGroup } from './interfaces'
-import { getRoles, getRolesGroup, newRole, newRoleGroup } from 'api/roles'
+import {
+  deleteRoles,
+  getRoles,
+  getRolesGroup,
+  newRole,
+  newRoleGroup,
+} from 'api/roles'
 
 export type RolesState = {
   roles: Roles[]
@@ -8,19 +14,39 @@ export type RolesState = {
   activeRolesGroup: string
   isLoadingRoles: boolean
   error?: string
+  message: {
+    text: string
+    type: string | null
+  }
 }
 
 const initialState: RolesState = {
   roles: [],
   rolesGroup: [],
   activeRolesGroup: '',
+  message: {
+    text: '',
+    type: null,
+  },
   isLoadingRoles: false,
+}
+
+interface AnswerRole {
+  data: Roles[]
+  message: {
+    text: string
+    type: string | null
+  }
+  type: string
 }
 
 export const rolesSlise = createSlice({
   name: 'role',
   initialState,
   reducers: {
+    resetMessage(state) {
+      state.message = { text: '', type: null }
+    },
     setActiveRolesGroup(state, action) {
       state.activeRolesGroup = action.payload
     },
@@ -54,22 +80,24 @@ export const rolesSlise = createSlice({
       state.isLoadingRoles = false
       state.error = action.payload
     },
-    [newRole.fulfilled.type]: (state, action: PayloadAction<Roles[]>) => {
+    [newRole.fulfilled.type]: (state, action: PayloadAction<AnswerRole>) => {
       state.isLoadingRoles = false
       state.error = ''
-      state.roles = action.payload
+      state.roles = action.payload.data
+      state.message = action.payload.message
     },
     [newRole.pending.type]: state => {
       state.isLoadingRoles = true
     },
     [newRole.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingRoles = false
+      console.log('action.payload = ', action.payload)
       state.error = action.payload
+      state.message = { type: 'error', text: action.payload }
     },
     [newRoleGroup.fulfilled.type]: (state, action: PayloadAction<Roles[]>) => {
       state.isLoadingRoles = false
       state.error = ''
-      console.log('newRoleGroup action.payload = ', action.payload)
       state.roles = action.payload
     },
     [newRoleGroup.pending.type]: state => {
@@ -79,8 +107,23 @@ export const rolesSlise = createSlice({
       state.isLoadingRoles = false
       state.error = action.payload
     },
+    [deleteRoles.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerRole>
+    ) => {
+      state.isLoadingRoles = false
+      state.error = ''
+      state.message = action.payload.message
+    },
+    [deleteRoles.pending.type]: state => {
+      state.isLoadingRoles = true
+    },
+    [deleteRoles.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingRoles = false
+      state.error = action.payload
+    },
   },
 })
 
 export const rolesReducer = rolesSlise.reducer
-export const { setActiveRolesGroup } = rolesSlise.actions
+export const { setActiveRolesGroup, resetMessage } = rolesSlise.actions

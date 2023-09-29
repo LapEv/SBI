@@ -35,11 +35,16 @@ export const newRole = createAsyncThunk(
   'role/newRole',
   async (role: Roles, thunkAPI) => {
     try {
-      await authhost.post(ApiEndPoints.Roles.newRole, role)
-      const { data } = await authhost.get<Roles>(ApiEndPoints.Roles.getRoles)
-      return data
-    } catch (e) {
-      return thunkAPI.rejectWithValue('Не удалось создать новую роль')
+      const { data } = await authhost.post(ApiEndPoints.Roles.newRole, role)
+      return {
+        data,
+        message: { text: 'Новая роль добавлена', type: 'success' },
+      }
+    } catch (e: any) {
+      console.log('у = ', e)
+      return thunkAPI.rejectWithValue(
+        `Не удалось создать новую роль!\n${e.response.data.error[1].original.detail} `
+      )
     }
   }
 )
@@ -47,15 +52,14 @@ export const newRole = createAsyncThunk(
 export const deleteRoles = createAsyncThunk(
   'role/deleteRoles',
   async (value: string[], thunkAPI) => {
-    console.log('value = ', value)
     try {
-      const temp = await authhost.delete(ApiEndPoints.Roles.deleteRoles, {
+      const { data } = await authhost.delete(ApiEndPoints.Roles.deleteRoles, {
         data: value,
       })
-      console.log('temp = ', temp)
-      const { data } = await authhost.get<Roles>(ApiEndPoints.Roles.getRoles)
-      console.log('allRoles = ', data)
-      return data
+      return {
+        data,
+        message: { text: 'Роли удалены', type: 'success' },
+      }
     } catch (e) {
       return thunkAPI.rejectWithValue('Не удалось удалить роли!')
     }

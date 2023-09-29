@@ -10,7 +10,7 @@ import {
 import { RootState } from 'store'
 import { useAppDispatch } from 'store/hooks'
 import { RolesActions } from './rolesActions'
-import { RolesState } from 'storeRoles/index'
+import { RolesState, resetMessage } from 'storeRoles/index'
 import { setActiveRolesGroup } from 'storeRoles/index'
 
 export function useRoles(): [RolesState, RolesActions] {
@@ -40,6 +40,9 @@ export function useRoles(): [RolesState, RolesActions] {
       },
       deleteRoleGroup(data) {
         dispatch(deleteRoleGroup(data))
+      },
+      resetMessage() {
+        dispatch(resetMessage())
       },
     },
   ]

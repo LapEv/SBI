@@ -26,6 +26,7 @@ export const DeleteRole = React.forwardRef<unknown, ChooseModalProps>(
 
     const changeData = (event: any) => {
       event.preventDefault()
+      handleModal(false)
       deleteRoles(selectedRoles)
       ////    добавлять в api? если записано или ошибку
       //// проверка на уникальность записи, тоже вдавать ошибку
@@ -50,6 +51,7 @@ export const DeleteRole = React.forwardRef<unknown, ChooseModalProps>(
     // }, [selectedRoles])
 
     console.log('roles = ', roles)
+
     return (
       <Box
         sx={{ ...style, paddingLeft: 5 }}

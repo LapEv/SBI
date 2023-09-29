@@ -7,6 +7,7 @@ import { ChooseModal } from './Modals'
 import { Divisions } from './'
 import { menuData } from './data'
 import { useAuth } from 'hooks/auth/useAuth'
+import { Message } from 'components/Message/Message'
 
 export function UsersPage() {
   const modalRef = React.createRef()
@@ -31,10 +32,6 @@ export function UsersPage() {
     setModal(bool)
   }
 
-  const setNewData = (newData: any) => {
-    console.log('setNewPosition = ', newData)
-  }
-
   return (
     <Container
       component="main"
@@ -47,6 +44,7 @@ export function UsersPage() {
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
       }}>
+      <Message />
       <Modal
         open={modal}
         onClose={setModal}

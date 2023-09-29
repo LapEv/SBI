@@ -42,15 +42,14 @@ export class roleService {
     /* eslint-enable */
   }
 
-  newRole = (_req: Request, res: Response) => {
-    roleRepos
-      .create(_req.body)
-      .then(role => {
-        res.status(200).json(`set role ok, ${role}`)
-      })
-      .catch(err =>
-        res.status(500).json({ error: ['db error: unable to set role', err] })
-      )
+  newRole = async (_req: Request, res: Response) => {
+    try {
+      await roleRepos.create(_req.body)
+      const roles = await roleRepos.findAll({})
+      res.status(200).json(roles)
+    } catch (err: any) {
+      res.status(500).json({ error: ['db error: unable to set role', err] })
+    }
   }
   getRoles = (_req: Request, res: Response) => {
     roleRepos
@@ -62,15 +61,15 @@ export class roleService {
   deleteRole = async (_req: Request, res: Response) => {
     const data = _req.body
     try {
-      const allResult = await Promise.all(
+      const roles = await Promise.all([
         await data.map(async (value: string) => {
-          const destroy = await roleRepos.destroy({
+          await roleRepos.destroy({
             where: { role: value },
           })
-          return `Role=${value} in quantity:${destroy} deleted!`
-        })
-      )
-      res.status(200).json(allResult)
+        }),
+        await roleRepos.findAll({}),
+      ])
+      res.status(200).json(roles[1])
     } catch (err: any) {
       res.status(500).json({ error: ['db error', err] })
     }

@@ -28,7 +28,6 @@ export const DeleteRole = React.forwardRef<unknown, ChooseModalProps>(
       event.preventDefault()
       handleModal(false)
       deleteRoles(selectedRoles)
-      ////    добавлять в api? если записано или ошибку
       //// проверка на уникальность записи, тоже вдавать ошибку
     }
 

@@ -196,6 +196,21 @@ export const ThemeConfig = (mode: PaletteMode) =>
           },
         },
       },
+      MuiAlert: {
+        styleOverrides: {
+          root: {
+            '& .MuiAlert-icon': {
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+            },
+            '& .MuiAlert-message': {
+              fontWeight: 'bold',
+            },
+          },
+        },
+      },
       MuiCssBaseline: {
         styleOverrides: {
           body: {

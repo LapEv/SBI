@@ -83,7 +83,7 @@ export const AddDivision = React.forwardRef<unknown, ChooseModalProps>(
             />
           )
         })}
-        <ButtonSection handleModal={handleModal} />
+        <ButtonSection handleModal={handleModal} btnName="Сохранить" />
       </Box>
     )
   }

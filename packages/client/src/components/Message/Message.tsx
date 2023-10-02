@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react'
-import { Snackbar, Alert, AlertTitle, AlertColor } from '@mui/material'
+import {
+  Snackbar,
+  Alert,
+  AlertTitle,
+  AlertColor,
+  useTheme,
+} from '@mui/material'
 import { useRoles } from 'hooks/roles/useRoles'
 import Slide from '@mui/material/Slide'
 
@@ -9,6 +15,7 @@ function TransitionLeft(props: any) {
 
 export const Message = () => {
   const [show, setShow] = useState(false)
+  const theme = useTheme()
 
   const [{ message }, { resetMessage }] = useRoles()
 
@@ -23,12 +30,20 @@ export const Message = () => {
   return (
     <Snackbar
       open={show}
-      autoHideDuration={3000}
+      autoHideDuration={300000}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       message={message.text}
       TransitionComponent={TransitionLeft}
       onClose={() => (setShow(false), resetMessage())}>
-      <Alert severity={(message.type as AlertColor) ?? 'success'}>
+      <Alert
+        severity={(message.type as AlertColor) ?? 'success'}
+        sx={{
+          borderWidth: 2,
+          borderStyle: 'solid',
+          borderColor: theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
+          borderRadius: 2,
+          boxShadow: 20,
+        }}>
         <AlertTitle>
           {message.type === 'error'
             ? 'Ошибка'

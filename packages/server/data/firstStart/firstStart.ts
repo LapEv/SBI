@@ -30,7 +30,7 @@ export const firstStart = async () => {
 
     if (divisions.length || department.length || users.length) {
       console.log(
-        'Первый запуск таблиц невозможен! Какая-то из таблиц уже существует! '
+        'Первый запуск таблиц невозможен! Какая-то из таблиц уже существует!'
       )
       return
     }

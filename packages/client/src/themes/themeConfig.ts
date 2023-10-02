@@ -208,6 +208,9 @@ export const ThemeConfig = (mode: PaletteMode) =>
             '& .MuiAlert-message': {
               fontWeight: 'bold',
             },
+            '& .MuiAlert-standard': {
+              backgroundColor: mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
+            },
           },
         },
       },

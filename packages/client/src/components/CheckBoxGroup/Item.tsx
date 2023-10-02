@@ -7,7 +7,7 @@ interface Item {
   nameRole: NullableString
   id: string
   key: string
-  groupChecked: boolean
+  groupChecked?: boolean
   onChooseItems: (data: string) => void
 }
 export const Item = ({ nameRole, id, groupChecked, onChooseItems }: Item) => {

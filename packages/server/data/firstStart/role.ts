@@ -27,4 +27,12 @@ export const rolesStartData = [
     role: 'getDepartments',
     nameRole: 'Получение списка отделов',
   },
+  {
+    role: 'addNewRole',
+    nameRole: 'Добавление новой роли',
+  },
+  {
+    role: 'addNewRolesGroup',
+    nameRole: 'Добавление новой группы ролей',
+  },
 ]

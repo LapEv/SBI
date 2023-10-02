@@ -133,6 +133,21 @@ export const MapRoleInputFields = [
   },
 ]
 
+export const MapRolesGroupInputFields = [
+  {
+    name: 'nameRolesGroup',
+    label: 'Введите новую группу ролей',
+    validation: textValidation,
+    type: 'text',
+  },
+  {
+    name: 'role',
+    label: 'Введите идентификатор группы ролей',
+    validation: textValidationENGlowercase,
+    type: 'text',
+  },
+]
+
 export const MapDivisionInputFields = [
   {
     name: 'newDivision',

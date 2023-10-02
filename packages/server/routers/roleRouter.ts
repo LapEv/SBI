@@ -8,11 +8,11 @@ export const roleRouter = (apiRouter: Router) => {
   const router: Router = Router()
 
   router.post(
-    '/newRoleGroup',
-    roleMiddleware(['addNewRole', 'SUPERADMIN']),
-    service.newRoleGroup
+    '/newRolesGroup',
+    roleMiddleware(['addNewRolesGroup', 'SUPERADMIN']),
+    service.newRolesGroup
   )
-  router.delete('/deleteRoleGroup', service.deleteRoleGroup)
+  router.delete('/deleteRolesGroup', service.deleteRolesGroup)
 
   router.post(
     '/newRole',

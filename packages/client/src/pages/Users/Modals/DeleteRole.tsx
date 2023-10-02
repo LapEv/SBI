@@ -1,34 +1,21 @@
 import React from 'react'
 import { ChooseModalProps } from './interfaces'
 import { useState, useEffect } from 'react'
-import {
-  Box,
-  Typography,
-  useTheme,
-  Collapse,
-  ListItemButton,
-  ListItemText,
-} from '@mui/material'
-import { RotateButton } from 'components/Buttons/RotateButton'
-import { Nullable } from 'utils/nullableType'
+import { Box, Typography } from '@mui/material'
 import { useRoles } from 'hooks/roles/useRoles'
-import { RolesGroupObject } from 'storeRoles/interfaces'
-import { MapRoleInputFields, style, styleTextFieldProps } from '../data'
+import { style } from '../data'
 import { Item } from 'components/CheckBoxGroup/Item'
 import { ButtonSection } from './ButtonsSection'
-import { getRoles } from 'api/roles'
 
 export const DeleteRole = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
     const [{ roles }, { getRoles, deleteRoles }] = useRoles()
     const [selectedRoles, setSelectedRoles] = useState<string[]>([])
-    const theme = useTheme()
 
     const changeData = (event: any) => {
       event.preventDefault()
       handleModal(false)
       deleteRoles(selectedRoles)
-      //// проверка на уникальность записи, тоже вдавать ошибку
     }
 
     const onChooseItems = (role: string) => {
@@ -37,19 +24,12 @@ export const DeleteRole = React.forwardRef<unknown, ChooseModalProps>(
         setSelectedRoles(selectedRoles.filter(value => value !== itemId))
         return
       }
-      console.log('itemId = ', itemId)
       setSelectedRoles([...selectedRoles, itemId as string])
     }
 
     useEffect(() => {
       getRoles()
     }, [])
-
-    // useEffect(() => {
-    //   console.log('selectedRoles = ', selectedRoles)
-    // }, [selectedRoles])
-
-    console.log('roles = ', roles)
 
     return (
       <Box

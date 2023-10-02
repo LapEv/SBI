@@ -18,11 +18,11 @@ export const ApiEndPoints = {
   },
   Roles: {
     newRole: 'role/newRole',
-    newRoleGroup: 'role/newRoleGroup',
+    newRolesGroup: 'role/newRolesGroup',
     getRoles: 'role/getRoles',
     getRolesGroup: 'role/getRolesGroup',
     deleteRoles: 'role/deleteRole',
-    deleteRoleGroup: 'role/deleteRoleGroup',
+    deleteRolesGroup: 'role/deleteRolesGroup',
   },
   Structure: {
     newDivision: 'structure/newDivision',

@@ -2,16 +2,16 @@ import type { Request, Response } from 'express'
 import { roleRepos, roleGroupRepos } from '../db'
 
 export class roleService {
-  newRoleGroup = (_req: Request, res: Response) => {
+  newRolesGroup = (_req: Request, res: Response) => {
     roleGroupRepos
       .create(_req.body)
       .then(roleGroup => {
-        res.status(200).json(`set roleGroup ok, ${roleGroup}`)
+        res.status(200).json(`set rolesGroup ok, ${roleGroup}`)
       })
       .catch(err =>
         res
           .status(500)
-          .json({ error: ['db error: unable to set roleGroup', err] })
+          .json({ error: ['db error: unable to set rolesGroup', err] })
       )
   }
   getRolesGroup = (_req: Request, res: Response) => {
@@ -20,7 +20,7 @@ export class roleService {
       .then(roleGroup => res.status(200).json(roleGroup))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
-  deleteRoleGroup = (_req: Request, res: Response) => {
+  deleteRolesGroup = (_req: Request, res: Response) => {
     const { group } = _req.body
     roleGroupRepos
       .destroy({

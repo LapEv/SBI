@@ -5,8 +5,8 @@ export interface RolesActions {
   getRolesGroup: () => void
   setActiveRolesGroup: (data: string) => void
   newRole: (data: Roles) => void
-  newRoleGroup: (data: RolesGroup) => void
+  newRolesGroup: (data: RolesGroup) => void
   deleteRoles: (data: string[]) => void
-  deleteRoleGroup: (data: RolesGroup) => void
+  deleteRolesGroup: (data: RolesGroup) => void
   resetMessage: () => void
 }

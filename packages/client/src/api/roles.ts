@@ -1,16 +1,18 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { authhost, ApiEndPoints } from './config'
 import { Roles, RolesGroup } from 'store/slices/roles/interfaces'
+import { getError } from 'utils/getError'
 
 export const getRoles = createAsyncThunk(
   'user/getRoles',
   async (_, thunkAPI) => {
     try {
       const { data } = await authhost.get<Roles>(ApiEndPoints.Roles.getRoles)
-      console.log('getRoles data = ', data)
       return data
-    } catch (e) {
-      return thunkAPI.rejectWithValue('Не удалось получить данные по ролям')
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(
+        `Не удалось получить данные по ролям\n${getError(e)}`
+      )
     }
   }
 )
@@ -23,9 +25,9 @@ export const getRolesGroup = createAsyncThunk(
         ApiEndPoints.Roles.getRolesGroup
       )
       return data
-    } catch (e) {
+    } catch (e: any) {
       return thunkAPI.rejectWithValue(
-        'Не удалось получить данные по группам ролей'
+        `Не удалось получить данные по группам ролей\n${getError(e)}`
       )
     }
   }
@@ -41,9 +43,8 @@ export const newRole = createAsyncThunk(
         message: { text: 'Новая роль добавлена', type: 'success' },
       }
     } catch (e: any) {
-      console.log('у = ', e)
       return thunkAPI.rejectWithValue(
-        `Не удалось создать новую роль!\n${e.response.data.error[1].original.detail} `
+        `Не удалось создать новую роль!\n${getError(e)} `
       )
     }
   }
@@ -60,38 +61,50 @@ export const deleteRoles = createAsyncThunk(
         data,
         message: { text: 'Роли удалены', type: 'success' },
       }
-    } catch (e) {
-      return thunkAPI.rejectWithValue('Не удалось удалить роли!')
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(
+        `Не удалось удалить роли!\n${getError(e)}`
+      )
     }
   }
 )
 
-export const newRoleGroup = createAsyncThunk(
-  'role/newRoleGroup',
+export const newRolesGroup = createAsyncThunk(
+  'role/newRolesGroup',
   async (roleGroup: RolesGroup, thunkAPI) => {
     try {
       const { data } = await authhost.post(
-        ApiEndPoints.Roles.newRoleGroup,
+        ApiEndPoints.Roles.newRolesGroup,
         roleGroup
       )
-      return data
-    } catch (e) {
-      return thunkAPI.rejectWithValue('Не удалось создать новую группу ролей')
+      return {
+        data,
+        message: { text: 'Новая группа ролей добавлена', type: 'success' },
+      }
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(
+        `Не удалось создать новую группу ролей\n${getError(e)}`
+      )
     }
   }
 )
 
-export const deleteRoleGroup = createAsyncThunk(
-  'role/deleteRoleGroup',
+export const deleteRolesGroup = createAsyncThunk(
+  'role/deleteRolesGroup',
   async (roleGroup: RolesGroup, thunkAPI) => {
     try {
       const { data } = await authhost.post(
-        ApiEndPoints.Roles.newRoleGroup,
+        ApiEndPoints.Roles.deleteRolesGroup,
         roleGroup
       )
-      return data
-    } catch (e) {
-      return thunkAPI.rejectWithValue('Не удалось удалить группу ролей!')
+      return {
+        data,
+        message: { text: 'Группа ролей удалена!', type: 'success' },
+      }
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(
+        `Не удалось удалить группу ролей!\n${getError(e)}`
+      )
     }
   }
 )

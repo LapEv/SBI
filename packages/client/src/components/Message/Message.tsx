@@ -25,12 +25,10 @@ export const Message = () => {
     }
   }, [message.type])
 
-  console.log('mes = ', message.type)
-
   return (
     <Snackbar
       open={show}
-      autoHideDuration={300000}
+      autoHideDuration={3000}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       message={message.text}
       TransitionComponent={TransitionLeft}

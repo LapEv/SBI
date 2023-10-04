@@ -1,7 +1,7 @@
 import React from 'react'
 import { ChooseModalProps } from './interfaces'
 import { useState, useEffect } from 'react'
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, useTheme } from '@mui/material'
 import { useRoles } from 'hooks/roles/useRoles'
 import { style } from '../data'
 import { Item } from 'components/CheckBoxGroup/Item'
@@ -11,9 +11,16 @@ export const DeleteRole = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
     const [{ roles }, { getRoles, deleteRoles }] = useRoles()
     const [selectedRoles, setSelectedRoles] = useState<string[]>([])
+    const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
+    const theme = useTheme()
 
     const changeData = (event: any) => {
       event.preventDefault()
+      if (!selectedRoles.length) {
+        setErrSelectedItems(true)
+        return
+      }
+
       handleModal(false)
       deleteRoles(selectedRoles)
     }
@@ -25,6 +32,8 @@ export const DeleteRole = React.forwardRef<unknown, ChooseModalProps>(
         return
       }
       setSelectedRoles([...selectedRoles, itemId as string])
+      if ([...selectedRoles, itemId as string] && errSelectedItems)
+        setErrSelectedItems(false)
     }
 
     useEffect(() => {
@@ -46,6 +55,9 @@ export const DeleteRole = React.forwardRef<unknown, ChooseModalProps>(
             key={id}
           />
         ))}
+        <Box sx={{ color: theme.palette.error.main, height: 20 }}>
+          {errSelectedItems && 'Не выбрана ни одна роль!'}
+        </Box>
         <ButtonSection handleModal={handleModal} btnName="Удалить" />
       </Box>
     )

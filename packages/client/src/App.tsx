@@ -16,7 +16,7 @@ import { useStructure } from 'hooks/structure/useStructure'
 
 function App() {
   const theme = useTheme()
-  const [{ isLoadingAuth }] = useAuth()
+  const [{ isLoadingAuth, user }] = useAuth()
   const [{ isLoadingRoles }] = useRoles()
   const [{ isLoadingStructure }] = useStructure()
   useEffect(() => {
@@ -37,22 +37,23 @@ function App() {
     opacity: 0.5,
     zIndex: 1,
   })
-  const CircularLoading = () => (
-    <>
-      <CircularProgress
-        size={70}
-        sx={{
-          position: 'fixed',
-          left: '50%',
-          top: '50%',
-          transform: 'translate(-50%, -50%)',
-          zIndex: 2,
-          color: theme.palette.primary.main,
-        }}
-      />
-      <DisabledBackground />
-    </>
-  )
+
+  // const CircularLoading = () => (
+  //   <>
+  //     <CircularProgress
+  //       size={70}
+  //       sx={{
+  //         position: 'fixed',
+  //         left: '50%',
+  //         top: '50%',
+  //         transform: 'translate(-50%, -50%)',
+  //         zIndex: 2,
+  //         color: theme.palette.primary.main,
+  //       }}
+  //     />
+  //     <DisabledBackground />
+  //   </>
+  // )
 
   return (
     <FullScreen>
@@ -76,7 +77,10 @@ function App() {
             )}
             <Routes>
               <Route path={Paths.Index} element={<Layouts.Main />}>
-                <Route index element={<Pages.Home />} />
+                <Route
+                  index
+                  element={user ? <Pages.Home /> : <Pages.Login />}
+                />
                 <Route path={Paths.Login} element={<Pages.Login />} />
                 <Route
                   path={Paths.Profile}

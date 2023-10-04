@@ -26,6 +26,7 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
     const [department, setDepartment] = useState<string>('')
     const [selectedGroup, setGroup] = useState<NullableString[]>([])
     const [selectedItems, setItems] = useState<NullableString[]>([])
+    const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
     const theme = useTheme()
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
@@ -49,6 +50,11 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
       // handleChange({
       //   division: data.list[0].value,
       // })
+      if (!selectedGroup.length || selectedItems.length) {
+        setErrSelectedItems(true)
+        return
+      }
+
       handleModal(false)
     }
 
@@ -57,6 +63,8 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
       const listRoles = groupData?.roles.map(item => item.role)
       setItems(listRoles as NullableString[])
       setGroup([groupData?.group as NullableString])
+      if ([groupData?.group as NullableString] && errSelectedItems)
+        setErrSelectedItems(false)
     }
 
     const setRoles = (role: string) => {
@@ -66,6 +74,8 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
         return
       }
       setItems([...selectedItems, itemId as string])
+      if ([...selectedItems, itemId as string] && errSelectedItems)
+        setErrSelectedItems(false)
     }
 
     const changeDivision = (textValue: string) => {
@@ -177,6 +187,9 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
             selectedGroup={selectedGroup}
           />
         ))}
+        <Box sx={{ color: theme.palette.error.main, height: 20, mt: 1 }}>
+          {errSelectedItems && 'Не выбрана ни одна роль или группа ролей!'}
+        </Box>
         <ButtonSection handleModal={handleModal} btnName="Сохранить" />
       </Box>
     )

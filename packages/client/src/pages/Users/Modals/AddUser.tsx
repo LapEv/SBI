@@ -54,7 +54,6 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
         setErrSelectedItems(true)
         return
       }
-
       handleModal(false)
     }
 

@@ -45,16 +45,23 @@ export const DeleteRole = React.forwardRef<unknown, ChooseModalProps>(
         sx={{ ...style, paddingLeft: 5 }}
         component="form"
         onSubmit={changeData}>
-        <Typography>{title}</Typography>
-        {roles.map(({ nameRole, id }, index) => (
-          <Item
-            nameRole={nameRole}
-            id={`${id}${index}`}
-            groupChecked={false}
-            onChooseItems={onChooseItems}
-            key={id}
-          />
-        ))}
+        <Typography variant={'h6'}>{title}</Typography>
+        <Box
+          sx={{
+            mt: 2,
+            width: '100%',
+            pl: 3,
+          }}>
+          {roles.map(({ nameRole, id }, index) => (
+            <Item
+              nameRole={nameRole}
+              id={`${id}${index}`}
+              groupChecked={false}
+              onChooseItems={onChooseItems}
+              key={id}
+            />
+          ))}
+        </Box>
         <Box sx={{ color: theme.palette.error.main, height: 20 }}>
           {errSelectedItems && 'Не выбрана ни одна роль!'}
         </Box>

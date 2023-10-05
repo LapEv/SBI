@@ -52,11 +52,12 @@ export const newRole = createAsyncThunk(
 
 export const deleteRoles = createAsyncThunk(
   'role/deleteRoles',
-  async (value: string[], thunkAPI) => {
+  async (selectedRoles: string[], thunkAPI) => {
     try {
       const { data } = await authhost.delete(ApiEndPoints.Roles.deleteRoles, {
-        data: value,
+        data: selectedRoles,
       })
+      console.log('deleteRoles data = ', data)
       return {
         data,
         message: { text: 'Роли удалены', type: 'success' },
@@ -77,6 +78,7 @@ export const newRolesGroup = createAsyncThunk(
         ApiEndPoints.Roles.newRolesGroup,
         roleGroup
       )
+      console.log('newRolesGroup data = ', data)
       return {
         data,
         message: { text: 'Новая группа ролей добавлена', type: 'success' },
@@ -91,15 +93,45 @@ export const newRolesGroup = createAsyncThunk(
 
 export const deleteRolesGroup = createAsyncThunk(
   'role/deleteRolesGroup',
-  async (roleGroup: RolesGroup, thunkAPI) => {
+  async (selectedRoleGroup: string[], thunkAPI) => {
     try {
-      const { data } = await authhost.post(
+      const { data } = await authhost.delete(
         ApiEndPoints.Roles.deleteRolesGroup,
-        roleGroup
+        { data: selectedRoleGroup }
       )
       return {
         data,
         message: { text: 'Группа ролей удалена!', type: 'success' },
+      }
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(
+        `Не удалось удалить группу ролей!\n${getError(e)}`
+      )
+    }
+  }
+)
+
+interface СhangeRolesGroup {
+  roles: Roles[]
+  activeRolesGroup: string
+}
+
+export const changeRolesGroup = createAsyncThunk(
+  'role/changeRolesGroup',
+  async ({ roles, activeRolesGroup }: СhangeRolesGroup, thunkAPI) => {
+    try {
+      const { data } = await authhost.post(
+        ApiEndPoints.Roles.changeRolesGroup,
+        {
+          data: {
+            roles,
+            activeRolesGroup,
+          },
+        }
+      )
+      return {
+        data,
+        message: { text: 'Группа ролей изменена!', type: 'success' },
       }
     } catch (e: any) {
       return thunkAPI.rejectWithValue(

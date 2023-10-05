@@ -27,6 +27,7 @@ export const rolesGroup: ModelAttributes<Model, RolesGroup> = {
   groupName: {
     type: DataType.STRING,
     allowNull: false,
+    unique: true,
   },
 }
 

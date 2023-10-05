@@ -35,4 +35,16 @@ export const rolesStartData = [
     role: 'addNewRolesGroup',
     nameRole: 'Добавление новой группы ролей',
   },
+  {
+    role: 'deleteRole',
+    nameRole: 'Удаление ролей',
+  },
+  {
+    role: 'deleteRolesGroup',
+    nameRole: 'Удаление группы ролей',
+  },
+  {
+    role: 'changeRolesGroup',
+    nameRole: 'Изменение ролей в группы ролей',
+  },
 ]

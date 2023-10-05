@@ -18,7 +18,8 @@ type NullableString = Nullable<string>
 
 export const AddRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
-    const [{ roles }, { newRolesGroup, getRolesGroup, getRoles }] = useRoles()
+    const [{ roles, rolesGroup }, { newRolesGroup, getRolesGroup, getRoles }] =
+      useRoles()
     const theme = useTheme()
     const [selectedItems, setItems] = useState<NullableString[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
@@ -72,7 +73,7 @@ export const AddRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
 
     return (
       <Box sx={style} component="form" onSubmit={handleSubmit(changeData)}>
-        <Typography>{title}</Typography>
+        <Typography variant={'h6'}>{title}</Typography>
         {fields.map(({ id, label, validation, type, value }, index) => {
           return (
             <Controller

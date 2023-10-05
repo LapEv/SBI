@@ -6,6 +6,7 @@ import {
   newRolesGroup,
   deleteRoles,
   deleteRolesGroup,
+  changeRolesGroup,
 } from 'api/roles'
 import { RootState } from 'store'
 import { useAppDispatch } from 'store/hooks'
@@ -40,6 +41,9 @@ export function useRoles(): [RolesState, RolesActions] {
       },
       deleteRolesGroup(data) {
         dispatch(deleteRolesGroup(data))
+      },
+      changeRolesGroup(roles, activeRolesGroup) {
+        dispatch(changeRolesGroup({ roles, activeRolesGroup }))
       },
       resetMessage() {
         dispatch(resetMessage())

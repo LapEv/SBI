@@ -7,6 +7,7 @@ import {
   getRolesGroup,
   newRole,
   newRolesGroup,
+  changeRolesGroup,
 } from 'api/roles'
 
 export type RolesState = {
@@ -150,6 +151,26 @@ export const rolesSlise = createSlice({
       state.isLoadingRoles = true
     },
     [deleteRolesGroup.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingRoles = false
+      state.error = action.payload
+      state.message = { type: 'error', text: action.payload }
+    },
+    [changeRolesGroup.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerRolesGroup>
+    ) => {
+      state.isLoadingRoles = false
+      state.error = ''
+      state.rolesGroup = action.payload.data
+      state.message = action.payload.message
+    },
+    [changeRolesGroup.pending.type]: state => {
+      state.isLoadingRoles = true
+    },
+    [changeRolesGroup.rejected.type]: (
       state,
       action: PayloadAction<string>
     ) => {

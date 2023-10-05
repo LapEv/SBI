@@ -4,49 +4,47 @@ import { useState, useEffect } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
 import { useRoles } from 'hooks/roles/useRoles'
 import { style } from '../data'
-import { Item } from 'components/CheckBoxGroup/Item'
 import { ButtonSection } from './ButtonsSection'
-import { Nullable } from 'utils/nullableType'
 import { CheckBoxGroup } from 'components/CheckBoxGroup/CheckBoxGroup'
-import { deleteRolesGroup } from 'api/roles'
-import { RolesActions } from 'hooks/roles/rolesActions'
-import { RolesGroup } from 'storeRoles/interfaces'
-type NullableString = Nullable<string>
 
 export const DeleteRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
     const [
       { roles, rolesGroup, activeRolesGroup },
-      { getRoles, getRolesGroup },
+      { getRoles, getRolesGroup, deleteRolesGroup, changeRolesGroup },
     ] = useRoles()
-    const [selectedGroup, setGroup] = useState<NullableString[]>([])
-    const [selectedRoles, setSelectedRoles] = useState<NullableString[]>([])
+    const [selectedGroup, setGroup] = useState<string[]>([])
+    const [selectedRoles, setSelectedRoles] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
     const theme = useTheme()
 
     const changeData = (event: any) => {
       event.preventDefault()
-      // deleteRoles(selectedRoles)
-      console.log('selectedRoles = ', selectedRoles)
-      console.log('selectedGroup = ', selectedGroup)
-      console.log('activeRolesGroup = ', activeRolesGroup)
-      console.log('rolesGroup = ', rolesGroup)
       if (!selectedGroup.length && !selectedRoles.length) {
         setErrSelectedItems(true)
         return
       }
-      // if (selectedGroup.length) {
-      //   deleteRolesGroup(selectedGroup as RolesGroup[])
-      // }
+      if (selectedGroup.length) {
+        deleteRolesGroup(selectedGroup)
+        handleModal(false)
+        return
+      }
+      const activeGroup = rolesGroup.filter(
+        item => item.id === activeRolesGroup
+      )[0]
+      const newRoles = activeGroup.roles.filter(
+        item => !selectedRoles.includes(item.role as string)
+      )
+      changeRolesGroup(newRoles, activeRolesGroup)
       handleModal(false)
     }
 
     const setRolesGroup = (group: string) => {
       const groupData = rolesGroup.find(item => item.groupName === group)
       const listRoles = groupData?.roles.map(item => item.role)
-      setSelectedRoles(listRoles as NullableString[])
-      setGroup([groupData?.group as NullableString])
-      if ([groupData?.group as NullableString] && errSelectedItems)
+      setSelectedRoles(listRoles as string[])
+      setGroup([groupData?.group as string])
+      if ([groupData?.group as string] && errSelectedItems)
         setErrSelectedItems(false)
     }
 
@@ -71,17 +69,24 @@ export const DeleteRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
         sx={{ ...style, paddingLeft: 5 }}
         component="form"
         onSubmit={changeData}>
-        <Typography>{title}</Typography>
-        {rolesGroup.map((item, index) => (
-          <CheckBoxGroup
-            data={item}
-            key={`${item}${index}`}
-            onChooseGroup={setRolesGroup}
-            onChooseItems={setRoles}
-            oneGroup={true}
-            selectedGroup={selectedGroup}
-          />
-        ))}
+        <Typography variant={'h6'}>{title}</Typography>
+        <Box
+          sx={{
+            mt: 2,
+            width: '100%',
+            pl: 3,
+          }}>
+          {rolesGroup.map((item, index) => (
+            <CheckBoxGroup
+              data={item}
+              key={`${item}${index}`}
+              onChooseGroup={setRolesGroup}
+              onChooseItems={setRoles}
+              oneGroup={true}
+              selectedGroup={selectedGroup}
+            />
+          ))}
+        </Box>
         <Box sx={{ color: theme.palette.error.main, height: 20 }}>
           {errSelectedItems && 'Не выбрана ни одна роль или группа ролей!'}
         </Box>

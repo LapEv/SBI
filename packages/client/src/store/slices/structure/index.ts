@@ -7,7 +7,7 @@ import {
   newDivision,
   deleteDivision,
 } from 'api/structure'
-import { setMessage } from '../message/message'
+import { messageSlise, setMessage } from '../message/message'
 import { useMessage } from 'hooks/message/useMessage'
 import { useAppDispatch } from 'store/hooks'
 import { useDispatch } from 'react-redux'
@@ -111,8 +111,15 @@ export const structureSlise = createSlice({
       //   type: 'message/setMessage',
       // })
       // state.message = action.payload.message
-      const dispatch = useDispatch()
-      dispatch(setMessage(action.payload.message))
+      // const dispatch = useDispatch()
+      // dispatch(setMessage(action.payload.message))
+      messageSlise.caseReducers.setMessage(
+        {
+          text: ' string',
+          type: 'string | null',
+        },
+        'message/setMessage'
+      )
     },
     [newDivision.pending.type]: state => {
       state.isLoadingStructure = true

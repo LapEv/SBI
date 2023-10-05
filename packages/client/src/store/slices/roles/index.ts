@@ -55,9 +55,9 @@ export const rolesSlise = createSlice({
   name: 'role',
   initialState,
   reducers: {
-    resetMessage(state) {
-      state.message = { text: '', type: null }
-    },
+    // resetMessage(state) {
+    //   state.message = { text: '', type: null }
+    // },
     setActiveRolesGroup(state, action) {
       state.activeRolesGroup = action.payload
     },
@@ -182,4 +182,4 @@ export const rolesSlise = createSlice({
 })
 
 export const rolesReducer = rolesSlise.reducer
-export const { setActiveRolesGroup, resetMessage } = rolesSlise.actions
+export const { setActiveRolesGroup } = rolesSlise.actions

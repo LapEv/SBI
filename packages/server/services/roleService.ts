@@ -39,7 +39,7 @@ export class roleService {
   }
 
   changeRolesGroup = async (_req: Request, res: Response) => {
-    const { roles, activeRolesGroup } = _req.body.data
+    const { roles, activeRolesGroup } = _req.body
     try {
       await roleGroupRepos.update(activeRolesGroup, {
         roles: roles,

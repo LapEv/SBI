@@ -6,8 +6,8 @@ import {
   AlertColor,
   useTheme,
 } from '@mui/material'
-import { useRoles } from 'hooks/roles/useRoles'
 import Slide from '@mui/material/Slide'
+import { useMessage } from 'hooks/message/useMessage'
 
 function TransitionLeft(props: any) {
   return <Slide {...props} direction="up" />
@@ -17,9 +17,10 @@ export const Message = () => {
   const [show, setShow] = useState(false)
   const theme = useTheme()
 
-  const [{ message }, { resetMessage }] = useRoles()
+  const [{ message }, { resetMessage }] = useMessage()
 
   useEffect(() => {
+    console.log('message = ', message.type)
     if (message.type) {
       setShow(true)
     }

@@ -1,6 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { authhost, ApiEndPoints } from './config'
-import { Roles, RolesGroup } from 'store/slices/roles/interfaces'
+import {
+  Roles,
+  RolesGroup,
+  СhangeRolesGroup,
+} from 'store/slices/roles/interfaces'
 import { getError } from 'utils/getError'
 
 export const getRoles = createAsyncThunk(
@@ -111,11 +115,6 @@ export const deleteRolesGroup = createAsyncThunk(
   }
 )
 
-interface СhangeRolesGroup {
-  roles: Roles[]
-  activeRolesGroup: string
-}
-
 export const changeRolesGroup = createAsyncThunk(
   'role/changeRolesGroup',
   async ({ roles, activeRolesGroup }: СhangeRolesGroup, thunkAPI) => {
@@ -123,10 +122,8 @@ export const changeRolesGroup = createAsyncThunk(
       const { data } = await authhost.post(
         ApiEndPoints.Roles.changeRolesGroup,
         {
-          data: {
-            roles,
-            activeRolesGroup,
-          },
+          roles,
+          activeRolesGroup,
         }
       )
       return {

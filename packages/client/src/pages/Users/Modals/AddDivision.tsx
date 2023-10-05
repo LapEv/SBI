@@ -10,10 +10,12 @@ import { TextField } from 'components/TextFields/TextFields'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
 import { MapDivisionInputFields, style, styleTextFieldProps } from '../data'
 import { ButtonSection } from './ButtonsSection'
+import { useStructure } from 'hooks/structure/useStructure'
 
 export const AddDivision = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
     const theme = useTheme()
+    const [_, { addDivision }] = useStructure()
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
       defaultValues: {
@@ -27,16 +29,13 @@ export const AddDivision = React.forwardRef<unknown, ChooseModalProps>(
     })
 
     function changeData({ list }: AddValuesProps) {
-      console.log('AddDivision changeData = ', list[0].value)
-      // handleChange({
-      //   division: list[0].value,
-      // })
+      addDivision({ division: list[0].value, divisionName: list[1].value })
       handleModal(false)
     }
 
     return (
       <Box sx={style} component="form" onSubmit={handleSubmit(changeData)}>
-        <Typography>{title}</Typography>
+        <Typography variant={'h6'}>{title}</Typography>
         {fields.map(({ id, label, validation, type, value }, index) => {
           return (
             <Controller

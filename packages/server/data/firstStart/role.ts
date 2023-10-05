@@ -47,4 +47,12 @@ export const rolesStartData = [
     role: 'changeRolesGroup',
     nameRole: 'Изменение ролей в группы ролей',
   },
+  {
+    role: 'newDivision',
+    nameRole: 'Добавление нового дивизиона',
+  },
+  {
+    role: 'deleteDivision',
+    nameRole: 'Перемещение дивизиона в архив',
+  },
 ]

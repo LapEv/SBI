@@ -1,6 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { authhost, ApiEndPoints } from './config'
-import { Department, Division } from 'store/slices/structure/interfaces'
+import {
+  Department,
+  Division,
+  NewDepartment,
+  NewDivision,
+} from 'store/slices/structure/interfaces'
+import { getError } from 'utils/getError'
 
 export const getDivisions = createAsyncThunk(
   'structure/getDivisions',
@@ -36,13 +42,17 @@ export const getDepartments = createAsyncThunk(
 
 export const newDivision = createAsyncThunk(
   'structure/newDivision',
-  async (division: Division, thunkAPI) => {
+  async ({ division, divisionName }: NewDivision, thunkAPI) => {
     try {
-      const { data } = await authhost.post(
-        ApiEndPoints.Structure.newDivision,
-        division
-      )
-      return data
+      const { data } = await authhost.post(ApiEndPoints.Structure.newDivision, {
+        division,
+        divisionName,
+      })
+      console.log('data = ', data)
+      return {
+        data,
+        message: { text: 'Новый дивизион добавлен!', type: 'success' },
+      }
     } catch (e) {
       return thunkAPI.rejectWithValue('Не удалось создать новый дивизион')
     }
@@ -51,15 +61,42 @@ export const newDivision = createAsyncThunk(
 
 export const newDepartment = createAsyncThunk(
   'structure/newDepartment',
-  async (department: Department, thunkAPI) => {
+  async ({ department, division }: NewDepartment, thunkAPI) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Structure.newDepartment,
-        department
+        { department, division }
       )
-      return data
+      console.log('data = ', data)
+      return {
+        data,
+        message: { text: 'Новый отдел добавлен!', type: 'success' },
+      }
     } catch (e) {
       return thunkAPI.rejectWithValue('Не удалось создать новый департамент')
+    }
+  }
+)
+
+export const deleteDivision = createAsyncThunk(
+  'role/deleteDivision',
+  async (selectedDivisions: string[], thunkAPI) => {
+    try {
+      const { data } = await authhost.delete(
+        ApiEndPoints.Structure.deleteDivision,
+        {
+          data: selectedDivisions,
+        }
+      )
+      console.log('deleteDivision data = ', data)
+      return {
+        data,
+        message: { text: 'Дивизионы перемещены в архив', type: 'success' },
+      }
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(
+        `Не удалось удалить роли!\n${getError(e)}`
+      )
     }
   }
 )

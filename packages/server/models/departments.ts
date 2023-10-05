@@ -7,6 +7,7 @@ export interface Department {
   departmentName: string
   division: string
   id_division: string
+  active: boolean
 }
 
 export const department: ModelAttributes<Model, Department> = {
@@ -35,5 +36,9 @@ export const department: ModelAttributes<Model, Department> = {
     type: DataType.STRING,
     allowNull: false,
     unique: true,
+  },
+  active: {
+    type: DataType.BOOLEAN,
+    allowNull: false,
   },
 }

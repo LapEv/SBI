@@ -1,7 +1,13 @@
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from 'store/hooks'
 import { StructureActions } from './structureActions'
-import { getDepartments, getDivisions } from 'api/structure'
+import {
+  deleteDivision,
+  getDepartments,
+  getDivisions,
+  newDepartment,
+  newDivision,
+} from 'api/structure'
 import { StructureState, setActiveDivision } from 'store/slices/structure'
 import { RootState } from 'store'
 
@@ -18,6 +24,16 @@ export function useStructure(): [StructureState, StructureActions] {
       getDepartments() {
         dispatch(getDepartments())
       },
+      addDivision(data) {
+        dispatch(newDivision(data))
+      },
+      addDepartments(department, division) {
+        dispatch(newDepartment({ department, division }))
+      },
+      deleteDivision(divisions) {
+        dispatch(deleteDivision(divisions))
+      },
+
       setActiveDivision(division) {
         dispatch(setActiveDivision(division))
       },

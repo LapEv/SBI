@@ -17,3 +17,13 @@ export interface Department {
   divisionName?: NullableString
   id_division?: NullableString
 }
+
+export interface NewDivision {
+  division: string
+  divisionName: string
+}
+
+export interface NewDepartment {
+  department: string
+  division: string
+}

@@ -55,7 +55,7 @@ export const menuData = [
     icon: <DeleteSweep fontSize="medium" />,
   },
   {
-    name: 'deleteDivision',
+    name: 'deleteUser',
     title: 'Удалить пользователя',
     icon: <PersonRemove fontSize="medium" />,
   },
@@ -111,11 +111,11 @@ export const ModalTitles = {
   addUser: 'Новый пользователь',
   addRole: 'Новая роль',
   addRolesGroup: 'Новая группа ролей',
-  delDivision: 'Удалить дивизион',
-  delDepartments: 'Удалить отдел',
-  delUser: 'Удалить пользователя',
-  delRole: 'Удалить роль',
-  delRolesGroup: 'Удалить группу ролей',
+  deleteDivision: 'Удалить дивизион',
+  deleteDepartments: 'Удалить отдел',
+  deleteUser: 'Удалить пользователя',
+  deleteRole: 'Удалить роль',
+  deleteRolesGroup: 'Удалить группу ролей',
 }
 
 export const MapRoleInputFields = [
@@ -150,9 +150,15 @@ export const MapRolesGroupInputFields = [
 
 export const MapDivisionInputFields = [
   {
-    name: 'newDivision',
+    name: 'newDivisionName',
     label: 'Введите новое подразделение',
     validation: textValidation,
+    type: 'text',
+  },
+  {
+    name: 'newDivisionId',
+    label: 'Введите идентификатор нового подразделения',
+    validation: textValidationENGlowercase,
     type: 'text',
   },
 ]

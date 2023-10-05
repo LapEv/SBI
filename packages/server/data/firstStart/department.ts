@@ -4,11 +4,13 @@ export const departmentStartData = [
     departmentName: 'Администрация',
     division: 'Administration',
     id_division: '',
+    active: true,
   },
   {
     department: 'Dispatcher',
     departmentName: 'Диспетчерская',
     division: 'ServiceDepartment',
     id_division: '',
+    active: true,
   },
 ]

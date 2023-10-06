@@ -7,13 +7,14 @@ import {
   newDivision,
   deleteDivision,
 } from 'api/structure'
-import { messageSlise, setMessage } from '../message/message'
+import { messageSlise, MessageState, setMessage } from '../message/message'
 import { useMessage } from 'hooks/message/useMessage'
 import { useAppDispatch } from 'store/hooks'
 import { useDispatch } from 'react-redux'
+import { store } from 'store'
 // import { messageReducer, messageSlise, setMessage } from '../message/message'
 
-export type StructureState = {
+export interface StructureState extends MessageState {
   divisions: Division[]
   departaments: Department[]
   activeDivision: string
@@ -33,10 +34,12 @@ const initialState: StructureState = {
   //   text: '',
   //   type: null,
   // },
+  text: '',
+  type: null,
   isLoadingStructure: false,
 }
 
-interface AnswerDivision {
+interface AnswerDivision extends MessageState {
   data: Division[]
   message: {
     text: string
@@ -45,7 +48,7 @@ interface AnswerDivision {
   type: string
 }
 
-interface AnswerDepartment {
+interface AnswerDepartment extends MessageState {
   data: Department[]
   message: {
     text: string
@@ -113,13 +116,18 @@ export const structureSlise = createSlice({
       // state.message = action.payload.message
       // const dispatch = useDispatch()
       // dispatch(setMessage(action.payload.message))
-      messageSlise.caseReducers.setMessage(
-        {
-          text: ' string',
-          type: 'string | null',
-        },
-        'message/setMessage'
-      )
+      console.log('messageSlise.reducer = ', messageSlise.reducer)
+      console.log('messageSlise.name = ', messageSlise.name)
+      messageSlise.caseReducers.setMessage(action.payload.message, {
+        payload: action.payload.message,
+        type: 'message/setMessage',
+      })
+      // store.dispatch()
+      // messageSlise.caseReducers.setMessage(
+      //   { text: 'text', type: 'type' },
+      //   'message/setMessage'
+      // )
+      // messageSlise.caseReducers.setMessage(action.payload.message)
     },
     [newDivision.pending.type]: state => {
       state.isLoadingStructure = true
@@ -164,8 +172,12 @@ export const structureSlise = createSlice({
       //   payload: action.payload.message,
       //   type: 'message/setMessage',
       // })
-      setMessage
+      messageSlise.caseReducers.setMessage(action.payload.message, {
+        payload: action.payload.message,
+        type: 'message/setMessage',
+      })
       // state.message = action.payload.message
+      // messageSlise.caseReducers.setMessage(action.payload.message)
     },
     [deleteDivision.pending.type]: state => {
       state.isLoadingStructure = true

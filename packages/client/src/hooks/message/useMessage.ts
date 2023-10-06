@@ -9,11 +9,11 @@ import {
 } from 'store/slices/message/message'
 
 export function useMessage(): [MessageState, MessageActions] {
-  const message = useSelector((state: RootState) => state.message)
+  const type = useSelector((state: RootState) => state.message)
   const dispatch = useAppDispatch()
 
   return [
-    message,
+    type,
     {
       resetMessage() {
         dispatch(resetMessage())

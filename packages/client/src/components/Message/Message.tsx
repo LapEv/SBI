@@ -17,45 +17,49 @@ export const Message = () => {
   const [show, setShow] = useState(false)
   const theme = useTheme()
 
-  const [{ message }, { resetMessage }] = useMessage()
+  const [{ type }, { resetMessage }] = useMessage()
 
-  useEffect(() => {
-    console.log('message = ', message.type)
-    if (message.type) {
-      setShow(true)
-    }
-  }, [message.type])
+  // useEffect(() => {
+  //   console.log('message = ', type)
+  //   if (message.type) {
+  //     setShow(true)
+  //   }
+  // }, [message.type])
+
+  console.log('type = ', type)
+  // console.log('type = ', type)
 
   return (
-    <Snackbar
-      open={show}
-      autoHideDuration={3000}
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      message={message.text}
-      TransitionComponent={TransitionLeft}
-      onClose={() => (setShow(false), resetMessage())}>
-      <Alert
-        severity={(message.type as AlertColor) ?? 'success'}
-        sx={{
-          borderWidth: 2,
-          borderStyle: 'solid',
-          borderColor: theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
-          borderRadius: 2,
-          boxShadow: 20,
-        }}>
-        <AlertTitle>
-          {message.type === 'error'
-            ? 'Ошибка'
-            : message.type === 'warning'
-            ? 'Предупреждение'
-            : message.type === 'info'
-            ? 'Информация'
-            : message.type === 'success'
-            ? 'Успешно'
-            : ''}
-        </AlertTitle>
-        {message.text}
-      </Alert>
-    </Snackbar>
+    <></>
+    // <Snackbar
+    //   open={show}
+    //   autoHideDuration={3000}
+    //   anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+    //   message={text}
+    //   TransitionComponent={TransitionLeft}
+    //   onClose={() => (setShow(false), resetMessage())}>
+    //   <Alert
+    //     severity={(type as AlertColor) ?? 'success'}
+    //     sx={{
+    //       borderWidth: 2,
+    //       borderStyle: 'solid',
+    //       borderColor: theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
+    //       borderRadius: 2,
+    //       boxShadow: 20,
+    //     }}>
+    //     <AlertTitle>
+    //       {type === 'error'
+    //         ? 'Ошибка'
+    //         : type === 'warning'
+    //         ? 'Предупреждение'
+    //         : type === 'info'
+    //         ? 'Информация'
+    //         : type === 'success'
+    //         ? 'Успешно'
+    //         : ''}
+    //     </AlertTitle>
+    //     {text}
+    //   </Alert>
+    // </Snackbar>
   )
 }

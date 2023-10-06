@@ -1,17 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 export type MessageState = {
-  message: {
-    text: string
-    type: string | null
-  }
+  text: string
+  type: string | null
 }
 
 const initialState: MessageState = {
-  message: {
-    text: '',
-    type: null,
-  },
+  text: '',
+  type: null,
 }
 
 export const messageSlise = createSlice({
@@ -20,12 +16,14 @@ export const messageSlise = createSlice({
   reducers: {
     resetMessage(state) {
       console.log('resetMessage state = ', state)
-      state.message = { text: '', type: null }
+      state.text = ''
+      state.type = null
     },
     setMessage(state, action) {
       console.log('setMessage state = ', state)
       console.log('setMessage action = ', action)
-      state.message = action.payload
+      state.text = 'action.payload.text'
+      state.type = 'action.payload.type'
     },
   },
 })

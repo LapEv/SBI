@@ -80,11 +80,9 @@ export const deleteDivision = createAsyncThunk(
   'role/deleteDivision',
   async (selectedDivisions: string[], thunkAPI) => {
     try {
-      const { data } = await authhost.delete(
-        ApiEndPoints.Structure.deleteDivision,
-        {
-          data: selectedDivisions,
-        }
+      const { data } = await authhost.post(
+        ApiEndPoints.Structure.updateDivision,
+        { selectedDivisions }
       )
       return {
         data,

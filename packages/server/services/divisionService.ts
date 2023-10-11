@@ -10,7 +10,7 @@ export class divisionService {
         divisionName,
         active: true,
       })
-      const divisions = await DivisionRepos.findAll({})
+      const divisions = await DivisionRepos.findAll({ where: { active: true } })
       res.status(200).json(divisions)
     } catch (err: any) {
       res.status(500).json({ error: ['db error: unable to set division', err] })
@@ -18,6 +18,12 @@ export class divisionService {
   }
 
   getDivisions = (_req: Request, res: Response) => {
+    DivisionRepos.findAll({ where: { active: true } })
+      .then(divisions => res.status(200).json(divisions))
+      .catch(err => res.status(500).json({ error: ['db error', err.status] }))
+  }
+
+  getAllDivisions = (_req: Request, res: Response) => {
     DivisionRepos.findAll({})
       .then(divisions => res.status(200).json(divisions))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
@@ -33,9 +39,8 @@ export class divisionService {
             where: { division: value },
           })
         }),
-        await DivisionRepos.findAll({}),
+        await DivisionRepos.findAll({ where: { active: true } }),
       ])
-      console.log('divisions = ', divisions)
       res.status(200).json(divisions[1])
     } catch (err: any) {
       res.status(500).json({ error: ['db error', err] })
@@ -43,14 +48,14 @@ export class divisionService {
   }
 
   updateDivision = async (_req: Request, res: Response) => {
-    const { data, id } = _req.body
-    console.log('data = ', data)
-    console.log('id = ', id)
+    const { selectedDivisions } = _req.body
+    console.log('_req.body = ', _req.body)
+    console.log('selectedDivisions = ', selectedDivisions)
     try {
-      await DivisionRepos.update(id, {
+      await DivisionRepos.update(selectedDivisions, {
         active: false,
       })
-      const divisions = await DivisionRepos.findAll({})
+      const divisions = await DivisionRepos.findAll({ where: { active: true } })
       console.log('divisions = ', divisions)
       res.status(200).json(divisions)
     } catch (err: any) {

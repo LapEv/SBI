@@ -17,10 +17,21 @@ export const divisionRouter = (apiRouter: Router) => {
     roleMiddleware(['getDivisions', 'ADMIN', 'SUPERADMIN']),
     service.getDivisions
   )
+  router.get(
+    '/getAllDivisions',
+    roleMiddleware(['getAllDivisions', 'ADMIN', 'SUPERADMIN']),
+    service.getAllDivisions
+  )
   router.delete(
     '/deleteDivision',
     roleMiddleware(['deleteDivision', 'SUPERADMIN']),
     service.deleteDivision
+  )
+
+  router.post(
+    '/updateDivision',
+    roleMiddleware(['updateDivision', 'SUPERADMIN']),
+    service.updateDivision
   )
 
   apiRouter.use('/structure', router)

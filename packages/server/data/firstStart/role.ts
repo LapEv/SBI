@@ -24,6 +24,10 @@ export const rolesStartData = [
     nameRole: 'Получение списка дивизионов',
   },
   {
+    role: 'getAllDivisions',
+    nameRole: 'Получение полного списка дивизионов',
+  },
+  {
     role: 'getDepartments',
     nameRole: 'Получение списка отделов',
   },
@@ -53,6 +57,10 @@ export const rolesStartData = [
   },
   {
     role: 'deleteDivision',
+    nameRole: 'Удаление дивизиона',
+  },
+  {
+    role: 'updateDivision',
     nameRole: 'Перемещение дивизиона в архив',
   },
 ]

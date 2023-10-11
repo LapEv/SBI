@@ -20,15 +20,13 @@ export const DeleteDivision = React.forwardRef<unknown, ChooseModalProps>(
         setErrSelectedItems(true)
         return
       }
-
+      console.log('selectedDivisions = ', selectedDivisions)
       handleModal(false)
       deleteDivision(selectedDivisions)
     }
 
     const onChooseItems = (division: string) => {
-      const itemId = divisions.find(
-        item => item.divisionName === division
-      )?.division
+      const itemId = divisions.find(item => item.divisionName === division)?.id
       if (selectedDivisions.includes(itemId as string)) {
         setSelectedDivisions(
           selectedDivisions.filter(value => value !== itemId)

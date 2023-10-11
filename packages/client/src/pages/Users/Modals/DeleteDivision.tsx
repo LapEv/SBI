@@ -20,7 +20,6 @@ export const DeleteDivision = React.forwardRef<unknown, ChooseModalProps>(
         setErrSelectedItems(true)
         return
       }
-      console.log('selectedDivisions = ', selectedDivisions)
       handleModal(false)
       deleteDivision(selectedDivisions)
     }

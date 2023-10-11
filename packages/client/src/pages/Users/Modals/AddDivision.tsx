@@ -29,7 +29,7 @@ export const AddDivision = React.forwardRef<unknown, ChooseModalProps>(
     })
 
     function changeData({ list }: AddValuesProps) {
-      addDivision({ division: list[0].value, divisionName: list[1].value })
+      addDivision({ division: list[1].value, divisionName: list[0].value })
       handleModal(false)
     }
 

@@ -16,9 +16,9 @@ export const getDivisions = createAsyncThunk(
         ApiEndPoints.Structure.getDivisions
       )
       return data
-    } catch (e) {
+    } catch (e: any) {
       return thunkAPI.rejectWithValue(
-        'Не удалось получить данные по дивизионам'
+        `Не удалось получить данные по дивизионам!\n${getError(e)}`
       )
     }
   }
@@ -32,9 +32,9 @@ export const getDepartments = createAsyncThunk(
         ApiEndPoints.Structure.getDepartments
       )
       return data
-    } catch (e) {
+    } catch (e: any) {
       return thunkAPI.rejectWithValue(
-        'Не удалось получить данные по департаментам'
+        `Не удалось получить данные по департаментам!\n${getError(e)}`
       )
     }
   }
@@ -52,8 +52,10 @@ export const newDivision = createAsyncThunk(
         data,
         message: { text: 'Новый дивизион добавлен!', type: 'success' },
       }
-    } catch (e) {
-      return thunkAPI.rejectWithValue('Не удалось создать новый дивизион')
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(
+        `Не удалось создать дивизион!\n${getError(e)}`
+      )
     }
   }
 )
@@ -70,8 +72,10 @@ export const newDepartment = createAsyncThunk(
         data,
         message: { text: 'Новый отдел добавлен!', type: 'success' },
       }
-    } catch (e) {
-      return thunkAPI.rejectWithValue('Не удалось создать новый департамент')
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(
+        `Не удалось создать новый отдел!\n${getError(e)}`
+      )
     }
   }
 )
@@ -90,7 +94,7 @@ export const deleteDivision = createAsyncThunk(
       }
     } catch (e: any) {
       return thunkAPI.rejectWithValue(
-        `Не удалось удалить роли!\n${getError(e)}`
+        `Не удалось удалить дивизион!\n${getError(e)}`
       )
     }
   }

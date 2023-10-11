@@ -30,16 +30,15 @@ export class divisionService {
   }
 
   deleteDivision = async (_req: Request, res: Response) => {
-    const data = _req.body
-    console.log('data = ', data)
+    const { data } = _req.body
     try {
       const divisions = await Promise.all([
         await data.map(async (value: string) => {
           await DivisionRepos.destroy({
-            where: { division: value },
+            where: { id: value },
           })
         }),
-        await DivisionRepos.findAll({ where: { active: true } }),
+        await DivisionRepos.findAll({}),
       ])
       res.status(200).json(divisions[1])
     } catch (err: any) {
@@ -49,14 +48,11 @@ export class divisionService {
 
   updateDivision = async (_req: Request, res: Response) => {
     const { selectedDivisions } = _req.body
-    console.log('_req.body = ', _req.body)
-    console.log('selectedDivisions = ', selectedDivisions)
     try {
       await DivisionRepos.update(selectedDivisions, {
         active: false,
       })
       const divisions = await DivisionRepos.findAll({ where: { active: true } })
-      console.log('divisions = ', divisions)
       res.status(200).json(divisions)
     } catch (err: any) {
       res.status(500).json({ error: ['db error', err] })

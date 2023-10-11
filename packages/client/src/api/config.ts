@@ -33,6 +33,7 @@ export const ApiEndPoints = {
     deleteDivision: 'structure/deleteDivision',
     deleteDepartment: 'structure/deleteDepartment',
     updateDivision: 'structure/updateDivision',
+    updateDepartment: 'structure/updateDepartment',
   },
 }
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
 import {
   useForm,
@@ -15,7 +15,8 @@ import { DropDown } from '../../../components/DropDown/DropDown'
 
 export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
-    const [{ divisions }] = useStructure()
+    const [{ divisions, departaments }, { addDepartments }] = useStructure()
+    const [division, setDivision] = useState<string>('')
     const theme = useTheme()
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
@@ -29,21 +30,29 @@ export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
       name: 'list',
     })
 
-    const changeData = (data: AddValuesProps) => {
-      console.log('AddDepartments changeData = ', changeData)
-      // handleChange({
-      //   division: data.list[0].value,
-      // })
+    const changeData = ({ list }: AddValuesProps) => {
+      console.log('AddDepartments changeData = ', list)
+      console.log('AddDepartments division = ', division)
+      const id_division = divisions.find(
+        item => item.divisionName === division
+      )?.id
+      console.log('id_division = ', id_division)
+      if (!id_division) return
+      addDepartments({
+        department: list[1].value,
+        departmentName: list[0].value,
+        division,
+        id_division,
+      })
       handleModal(false)
     }
 
-    const checkClickMenu = (name: string | null) => {
-      console.log('name = ', name)
-    }
+    console.log('divisions = ', divisions)
+    console.log('departaments = ', departaments)
 
     return (
       <Box sx={style} component="form" onSubmit={handleSubmit(changeData)}>
-        <Typography>{title}</Typography>
+        <Typography variant={'h6'}>{title}</Typography>
         <DropDown
           data={divisions.map(item => {
             return {
@@ -52,6 +61,9 @@ export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
               ['id']: item.id as string,
             }
           })}
+          props={{ mt: 3 }}
+          onChange={setDivision}
+          value={division}
         />
         {fields.map(({ id, label, validation, type, value }, index) => {
           return (
@@ -67,7 +79,7 @@ export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
                   label={label}
                   type={type}
                   variant="outlined"
-                  sx={{ width: '90%', m: 2, mt: 7, height: 40 }}
+                  sx={{ width: '90%', mt: 5, height: 40 }}
                   margin="normal"
                   value={field.value || ''}
                   error={!!(errors?.list ?? [])[index]?.value?.message}

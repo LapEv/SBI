@@ -62,11 +62,14 @@ export const newDivision = createAsyncThunk(
 
 export const newDepartment = createAsyncThunk(
   'structure/newDepartment',
-  async ({ department, division }: NewDepartment, thunkAPI) => {
+  async (
+    { department, departmentName, division, id_division }: NewDepartment,
+    thunkAPI
+  ) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Structure.newDepartment,
-        { department, division }
+        { department, departmentName, division, id_division }
       )
       return {
         data,
@@ -95,6 +98,26 @@ export const deleteDivision = createAsyncThunk(
     } catch (e: any) {
       return thunkAPI.rejectWithValue(
         `Не удалось удалить дивизион!\n${getError(e)}`
+      )
+    }
+  }
+)
+
+export const deleteDepartment = createAsyncThunk(
+  'role/deleteDepartment',
+  async (selectedDeprtments: string[], thunkAPI) => {
+    try {
+      const { data } = await authhost.post(
+        ApiEndPoints.Structure.updateDepartment,
+        { selectedDeprtments }
+      )
+      return {
+        data,
+        message: { text: 'Отделы перемещены в архив', type: 'success' },
+      }
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(
+        `Не удалось удалить отдел!\n${getError(e)}`
       )
     }
   }

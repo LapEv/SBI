@@ -25,5 +25,7 @@ export interface NewDivision {
 
 export interface NewDepartment {
   department: string
+  departmentName: string
   division: string
+  id_division: string
 }

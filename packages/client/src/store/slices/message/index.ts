@@ -6,7 +6,12 @@ import {
   newRole,
   newRolesGroup,
 } from 'api/roles'
-import { deleteDivision, newDivision } from 'api/structure'
+import {
+  deleteDepartment,
+  deleteDivision,
+  newDepartment,
+  newDivision,
+} from 'api/structure'
 import { AnswerMessage, MessageState } from './interfaces'
 
 const initialState: MessageState = {
@@ -47,7 +52,22 @@ export const messageSlise = createSlice({
       state.type = 'error'
       state.text = action.payload
     },
-
+    [newDepartment.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [newDepartment.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [newDepartment.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
     [deleteDivision.fulfilled.type]: (
       state,
       action: PayloadAction<AnswerMessage>
@@ -60,6 +80,25 @@ export const messageSlise = createSlice({
       state.isLoadingMessage = true
     },
     [deleteDivision.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [deleteDepartment.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [deleteDepartment.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [deleteDepartment.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
       state.isLoadingMessage = false
       state.type = 'error'
       state.text = action.payload

@@ -27,8 +27,8 @@ export function useStructure(): [StructureState, StructureActions] {
       addDivision(data) {
         dispatch(newDivision(data))
       },
-      addDepartments(department, division) {
-        dispatch(newDepartment({ department, division }))
+      addDepartments(data) {
+        dispatch(newDepartment(data))
       },
       deleteDivision(divisions) {
         dispatch(deleteDivision(divisions))

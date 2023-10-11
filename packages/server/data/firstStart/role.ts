@@ -32,6 +32,10 @@ export const rolesStartData = [
     nameRole: 'Получение списка отделов',
   },
   {
+    role: 'getAllDepartments',
+    nameRole: 'Получение полного списка отделов',
+  },
+  {
     role: 'addNewRole',
     nameRole: 'Добавление новой роли',
   },
@@ -62,5 +66,17 @@ export const rolesStartData = [
   {
     role: 'updateDivision',
     nameRole: 'Перемещение дивизиона в архив',
+  },
+  {
+    role: 'newDepartment',
+    nameRole: 'Добавление нового отдела',
+  },
+  {
+    role: 'deleteDepartment',
+    nameRole: 'Удаление отдела',
+  },
+  {
+    role: 'updateDepartment',
+    nameRole: 'Перемещение отдела в архив',
   },
 ]

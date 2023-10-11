@@ -30,12 +30,10 @@ export const department: ModelAttributes<Model, Department> = {
   division: {
     type: DataType.STRING,
     allowNull: false,
-    unique: true,
   },
   id_division: {
     type: DataType.STRING,
     allowNull: false,
-    unique: true,
   },
   active: {
     type: DataType.BOOLEAN,

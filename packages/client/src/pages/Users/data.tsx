@@ -165,9 +165,15 @@ export const MapDivisionInputFields = [
 
 export const MapDepartmentInputFields = [
   {
-    name: 'newDivision',
+    name: 'newDepartment',
     label: 'Введите новый отдел',
     validation: textValidation,
+    type: 'text',
+  },
+  {
+    name: 'newDepartmentId',
+    label: 'Введите идентификатор нового отдела',
+    validation: textValidationENGlowercase,
     type: 'text',
   },
 ]

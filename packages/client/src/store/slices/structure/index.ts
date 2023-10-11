@@ -6,6 +6,7 @@ import {
   newDepartment,
   newDivision,
   deleteDivision,
+  deleteDepartment,
 } from 'api/structure'
 
 export interface StructureState {
@@ -95,8 +96,6 @@ export const structureSlise = createSlice({
       state.isLoadingStructure = false
       state.error = ''
       state.departaments = action.payload.data
-      // messageSlise.actions.setMessage(action.payload.message)
-      // state.message = action.payload.message
     },
     [newDepartment.pending.type]: state => {
       state.isLoadingStructure = true
@@ -104,8 +103,6 @@ export const structureSlise = createSlice({
     [newDepartment.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingStructure = false
       state.error = action.payload
-      // state.message = { type: 'error', text: action.payload }
-      // messageSlise.actions.setMessage({ type: 'error', text: action.payload })
     },
     [deleteDivision.fulfilled.type]: (
       state,
@@ -119,6 +116,24 @@ export const structureSlise = createSlice({
       state.isLoadingStructure = true
     },
     [deleteDivision.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingStructure = false
+      state.error = action.payload
+    },
+    [deleteDepartment.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerDivision>
+    ) => {
+      state.isLoadingStructure = false
+      state.error = ''
+      state.divisions = action.payload.data
+    },
+    [deleteDepartment.pending.type]: state => {
+      state.isLoadingStructure = true
+    },
+    [deleteDepartment.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
       state.isLoadingStructure = false
       state.error = action.payload
     },

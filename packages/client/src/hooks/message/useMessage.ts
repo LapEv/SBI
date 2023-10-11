@@ -2,18 +2,16 @@ import { useSelector } from 'react-redux'
 import { RootState } from 'store'
 import { useAppDispatch } from 'store/hooks'
 import { MessageActions } from './messageActions'
-import {
-  MessageState,
-  resetMessage,
-  setMessage,
-} from 'store/slices/message/message'
+import { MessageState, resetMessage, setMessage } from 'store/slices/message'
 
 export function useMessage(): [MessageState, MessageActions] {
-  const type = useSelector((state: RootState) => state.message)
+  const message = useSelector((state: RootState) => state.message)
   const dispatch = useAppDispatch()
 
+  const state = useSelector((state: RootState) => state)
+
   return [
-    type,
+    message,
     {
       resetMessage() {
         dispatch(resetMessage())

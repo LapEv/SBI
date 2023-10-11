@@ -7,53 +7,29 @@ import {
   newDivision,
   deleteDivision,
 } from 'api/structure'
-import { messageSlise, MessageState, setMessage } from '../message/message'
-import { useMessage } from 'hooks/message/useMessage'
-import { useAppDispatch } from 'store/hooks'
-import { useDispatch } from 'react-redux'
-import { store } from 'store'
-// import { messageReducer, messageSlise, setMessage } from '../message/message'
 
-export interface StructureState extends MessageState {
+export interface StructureState {
   divisions: Division[]
   departaments: Department[]
   activeDivision: string
   isLoadingStructure: boolean
   error?: string
-  // message: {
-  //   text: string
-  //   type: string | null
-  // }
 }
 
 const initialState: StructureState = {
   divisions: [],
   departaments: [],
   activeDivision: '',
-  // message: {
-  //   text: '',
-  //   type: null,
-  // },
-  text: '',
-  type: null,
   isLoadingStructure: false,
 }
 
-interface AnswerDivision extends MessageState {
+interface AnswerDivision {
   data: Division[]
-  message: {
-    text: string
-    type: string | null
-  }
   type: string
 }
 
-interface AnswerDepartment extends MessageState {
+interface AnswerDepartment {
   data: Department[]
-  message: {
-    text: string
-    type: string | null
-  }
   type: string
 }
 
@@ -104,30 +80,6 @@ export const structureSlise = createSlice({
       state.isLoadingStructure = false
       state.error = ''
       state.divisions = action.payload.data
-      console.log('action.payload.message = ', action.payload.message)
-      // messageSlise.actions.setMessage({
-      //   payload: action.payload.message,
-      //   type: 'message/setMessage',
-      // })
-      // setMessage({
-      //   payload: action.payload.message,
-      //   type: 'message/setMessage',
-      // })
-      // state.message = action.payload.message
-      // const dispatch = useDispatch()
-      // dispatch(setMessage(action.payload.message))
-      console.log('messageSlise.reducer = ', messageSlise.reducer)
-      console.log('messageSlise.name = ', messageSlise.name)
-      messageSlise.caseReducers.setMessage(action.payload.message, {
-        payload: action.payload.message,
-        type: 'message/setMessage',
-      })
-      // store.dispatch()
-      // messageSlise.caseReducers.setMessage(
-      //   { text: 'text', type: 'type' },
-      //   'message/setMessage'
-      // )
-      // messageSlise.caseReducers.setMessage(action.payload.message)
     },
     [newDivision.pending.type]: state => {
       state.isLoadingStructure = true
@@ -135,8 +87,6 @@ export const structureSlise = createSlice({
     [newDivision.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingStructure = false
       state.error = action.payload
-      // messageSlise.actions.setMessage({ type: 'error', text: action.payload })
-      // state.message = { type: 'error', text: action.payload }
     },
     [newDepartment.fulfilled.type]: (
       state,
@@ -164,20 +114,6 @@ export const structureSlise = createSlice({
       state.isLoadingStructure = false
       state.error = ''
       state.divisions = action.payload.data
-      // messageSlise.actions.setMessage({
-      //   payload: action.payload.message,
-      //   type: 'message/setMessage',
-      // })
-      // setMessage({
-      //   payload: action.payload.message,
-      //   type: 'message/setMessage',
-      // })
-      messageSlise.caseReducers.setMessage(action.payload.message, {
-        payload: action.payload.message,
-        type: 'message/setMessage',
-      })
-      // state.message = action.payload.message
-      // messageSlise.caseReducers.setMessage(action.payload.message)
     },
     [deleteDivision.pending.type]: state => {
       state.isLoadingStructure = true
@@ -185,8 +121,6 @@ export const structureSlise = createSlice({
     [deleteDivision.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingStructure = false
       state.error = action.payload
-      // state.message = { type: 'error', text: action.payload }
-      // messageSlise.actions.setMessage({ type: 'error', text: action.payload })
     },
   },
 })

@@ -17,49 +17,49 @@ export const Message = () => {
   const [show, setShow] = useState(false)
   const theme = useTheme()
 
-  const [{ type }, { resetMessage }] = useMessage()
+  const [{ text, type }, { resetMessage }] = useMessage()
 
-  // useEffect(() => {
-  //   console.log('message = ', type)
-  //   if (message.type) {
-  //     setShow(true)
-  //   }
-  // }, [message.type])
-
-  console.log('type = ', type)
-  // console.log('type = ', type)
+  useEffect(() => {
+    if (type) {
+      setShow(true)
+    }
+  }, [text])
 
   return (
-    <></>
-    // <Snackbar
-    //   open={show}
-    //   autoHideDuration={3000}
-    //   anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-    //   message={text}
-    //   TransitionComponent={TransitionLeft}
-    //   onClose={() => (setShow(false), resetMessage())}>
-    //   <Alert
-    //     severity={(type as AlertColor) ?? 'success'}
-    //     sx={{
-    //       borderWidth: 2,
-    //       borderStyle: 'solid',
-    //       borderColor: theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
-    //       borderRadius: 2,
-    //       boxShadow: 20,
-    //     }}>
-    //     <AlertTitle>
-    //       {type === 'error'
-    //         ? 'Ошибка'
-    //         : type === 'warning'
-    //         ? 'Предупреждение'
-    //         : type === 'info'
-    //         ? 'Информация'
-    //         : type === 'success'
-    //         ? 'Успешно'
-    //         : ''}
-    //     </AlertTitle>
-    //     {text}
-    //   </Alert>
-    // </Snackbar>
+    <Snackbar
+      open={show}
+      autoHideDuration={3000}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      message={text}
+      TransitionComponent={TransitionLeft}
+      onClose={() => (
+        setShow(false),
+        setTimeout(() => {
+          resetMessage()
+        }, 100)
+      )}>
+      <Alert
+        severity={(type as AlertColor) ?? 'success'}
+        sx={{
+          borderWidth: 2,
+          borderStyle: 'solid',
+          borderColor: theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
+          borderRadius: 2,
+          boxShadow: 20,
+        }}>
+        <AlertTitle>
+          {type === 'error'
+            ? 'Ошибка'
+            : type === 'warning'
+            ? 'Предупреждение'
+            : type === 'info'
+            ? 'Информация'
+            : type === 'success'
+            ? 'Успешно'
+            : ''}
+        </AlertTitle>
+        {text}
+      </Alert>
+    </Snackbar>
   )
 }

@@ -48,7 +48,6 @@ export const newDivision = createAsyncThunk(
         division,
         divisionName,
       })
-      console.log('data = ', data)
       return {
         data,
         message: { text: 'Новый дивизион добавлен!', type: 'success' },
@@ -67,7 +66,6 @@ export const newDepartment = createAsyncThunk(
         ApiEndPoints.Structure.newDepartment,
         { department, division }
       )
-      console.log('data = ', data)
       return {
         data,
         message: { text: 'Новый отдел добавлен!', type: 'success' },
@@ -88,7 +86,6 @@ export const deleteDivision = createAsyncThunk(
           data: selectedDivisions,
         }
       )
-      console.log('deleteDivision data = ', data)
       return {
         data,
         message: { text: 'Дивизионы перемещены в архив', type: 'success' },

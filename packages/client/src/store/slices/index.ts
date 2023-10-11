@@ -1,5 +1,5 @@
 import { authReducer } from './auth'
-import { messageReducer } from './message/message'
+import { messageReducer } from './message'
 import { rolesReducer } from './roles'
 import { structureReducer } from './structure'
 

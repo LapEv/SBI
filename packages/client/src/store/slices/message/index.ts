@@ -13,6 +13,15 @@ import {
   newDivision,
 } from 'api/structure'
 import { AnswerMessage, MessageState } from './interfaces'
+import {
+  addUser,
+  ChangeAvatar,
+  ChangePassword,
+  ChangeProfile,
+  signin,
+  signout,
+  signup,
+} from 'api/user'
 
 const initialState: MessageState = {
   text: '',
@@ -186,6 +195,113 @@ export const messageSlise = createSlice({
       state,
       action: PayloadAction<string>
     ) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [signin.fulfilled.type]: (state, action: PayloadAction<AnswerMessage>) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [signin.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [signin.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [signup.fulfilled.type]: (state, action: PayloadAction<AnswerMessage>) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [signup.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [signup.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [signout.fulfilled.type]: (state, action: PayloadAction<AnswerMessage>) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [signout.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [signout.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [ChangeProfile.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [ChangeProfile.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [ChangeProfile.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [ChangeAvatar.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [ChangeAvatar.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [ChangeAvatar.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [ChangePassword.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [ChangePassword.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [ChangePassword.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [addUser.fulfilled.type]: (state, action: PayloadAction<AnswerMessage>) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [addUser.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [addUser.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingMessage = false
       state.type = 'error'
       state.text = action.payload

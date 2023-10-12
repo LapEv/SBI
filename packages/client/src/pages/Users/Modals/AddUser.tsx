@@ -41,12 +41,27 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
       name: 'list',
     })
 
-    function changeData(data: AddValuesProps) {
-      console.log('AddUser changeData = ', data)
+    function changeData({ list }: AddValuesProps) {
+      console.log('AddUser changeData = ', list)
       console.log('division = ', division)
       console.log('department = ', department)
       console.log('group = ', selectedGroup)
       console.log('role = ', selectedItems)
+      const newUser = {
+        username: list[3].value,
+        firstName: list[1].value,
+        lastName: list[0].value,
+        middleName: list[2].value,
+        email: list[5].value,
+        phone: list[6].value,
+        password: list[7].value,
+        post: list[4].value,
+        roleGroup: selectedGroup[0],
+        roles: selectedItems,
+        division,
+        //id_division
+        department,
+      }
       // handleChange({
       //   division: data.list[0].value,
       // })

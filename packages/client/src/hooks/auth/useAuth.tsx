@@ -7,6 +7,7 @@ import {
   ChangePassword,
   ChangeTheme,
   CheckUser,
+  addUser,
 } from 'api/user'
 import { signin, signout, signup } from 'api/user'
 import { RootState } from 'store'
@@ -58,6 +59,9 @@ export function useAuth(): [AuthState, AuthActions] {
       },
       updateEditStatus(data) {
         dispatch(updateEditStatus(data))
+      },
+      addUser(data) {
+        dispatch(addUser(data))
       },
     },
   ]

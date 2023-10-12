@@ -26,7 +26,7 @@ export const menuData = [
   },
   {
     name: 'addDepartments',
-    title: 'Добавить департамент',
+    title: 'Добавить отдел',
     icon: <Queue fontSize="medium" />,
   },
   {
@@ -51,7 +51,7 @@ export const menuData = [
   },
   {
     name: 'deleteDepartments',
-    title: 'Удалить департамент',
+    title: 'Удалить отдел',
     icon: <DeleteSweep fontSize="medium" />,
   },
   {
@@ -112,7 +112,7 @@ export const ModalTitles = {
   addRole: 'Новая роль',
   addRolesGroup: 'Новая группа ролей',
   deleteDivision: 'Удалить дивизион',
-  deleteDepartments: 'Удалить отдел',
+  deleteDepartment: 'Удалить отдел',
   deleteUser: 'Удалить пользователя',
   deleteRole: 'Удалить роль',
   deleteRolesGroup: 'Удалить группу ролей',

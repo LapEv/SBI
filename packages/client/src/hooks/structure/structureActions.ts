@@ -6,6 +6,6 @@ export interface StructureActions {
   addDivision: (data: NewDivision) => void
   addDepartments: (data: NewDepartment) => void
   deleteDivision: (divisions: string[]) => void
-  // deleteDepartments: (departament: string, division: string) => void
+  deleteDepartment: (departaments: string[]) => void
   setActiveDivision: (division: string) => void
 }

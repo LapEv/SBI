@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux'
 import { useAppDispatch } from 'store/hooks'
 import { StructureActions } from './structureActions'
 import {
+  deleteDepartment,
   deleteDivision,
   getDepartments,
   getDivisions,
@@ -33,7 +34,9 @@ export function useStructure(): [StructureState, StructureActions] {
       deleteDivision(divisions) {
         dispatch(deleteDivision(divisions))
       },
-
+      deleteDepartment(department) {
+        dispatch(deleteDepartment(department))
+      },
       setActiveDivision(division) {
         dispatch(setActiveDivision(division))
       },

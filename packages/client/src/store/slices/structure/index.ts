@@ -121,11 +121,11 @@ export const structureSlise = createSlice({
     },
     [deleteDepartment.fulfilled.type]: (
       state,
-      action: PayloadAction<AnswerDivision>
+      action: PayloadAction<AnswerDepartment>
     ) => {
       state.isLoadingStructure = false
       state.error = ''
-      state.divisions = action.payload.data
+      state.departaments = action.payload.data
     },
     [deleteDepartment.pending.type]: state => {
       state.isLoadingStructure = true

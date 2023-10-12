@@ -35,27 +35,33 @@ export class departmentService {
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
 
-  deleteDepartment = (_req: Request, res: Response) => {
-    const { department, id } = _req.body
-    DepartmentRepos.destroy({
-      where: { department, id },
-    })
-      .then(result =>
-        res.status(200).json(`Role=${department} id:${result} deleted!`)
-      )
-      .catch(err => res.status(500).json({ error: ['db error', err] }))
+  deleteDepartment = async (_req: Request, res: Response) => {
+    const { data } = _req.body
+    try {
+      const departaments = await Promise.all([
+        await data.map(async (value: string) => {
+          await DepartmentRepos.destroy({
+            where: { id: value },
+          })
+        }),
+        await DepartmentRepos.findAll({}),
+      ])
+      res.status(200).json(departaments[1])
+    } catch (err: any) {
+      res.status(500).json({ error: ['db error', err] })
+    }
   }
 
   updateDepartment = async (_req: Request, res: Response) => {
-    const { selectedDivisions } = _req.body
+    const { selectedDepartments } = _req.body
     try {
-      await DepartmentRepos.update(selectedDivisions, {
+      await DepartmentRepos.update(selectedDepartments, {
         active: false,
       })
-      const divisions = await DepartmentRepos.findAll({
+      const departaments = await DepartmentRepos.findAll({
         where: { active: true },
       })
-      res.status(200).json(divisions)
+      res.status(200).json(departaments)
     } catch (err: any) {
       res.status(500).json({ error: ['db error', err] })
     }

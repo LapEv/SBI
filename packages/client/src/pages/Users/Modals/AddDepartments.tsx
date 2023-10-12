@@ -31,12 +31,9 @@ export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
     })
 
     const changeData = ({ list }: AddValuesProps) => {
-      console.log('AddDepartments changeData = ', list)
-      console.log('AddDepartments division = ', division)
       const id_division = divisions.find(
         item => item.divisionName === division
       )?.id
-      console.log('id_division = ', id_division)
       if (!id_division) return
       addDepartments({
         department: list[1].value,
@@ -46,9 +43,6 @@ export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
       })
       handleModal(false)
     }
-
-    console.log('divisions = ', divisions)
-    console.log('departaments = ', departaments)
 
     return (
       <Box sx={style} component="form" onSubmit={handleSubmit(changeData)}>

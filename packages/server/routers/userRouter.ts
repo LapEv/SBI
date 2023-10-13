@@ -34,10 +34,21 @@ export const userRouter = (apiRouter: Router) => {
     service.getUsers
   )
   router.post(
+    '/getUsers',
+    roleMiddleware(['getUsers', 'ADMIN', 'SUPERADMIN']),
+    service.getUsers
+  )
+  router.post(
     '/deleteUser',
     roleMiddleware(['ADMIN', 'SUPERADMIN']),
     service.deleteUser
   )
+  router.delete(
+    '/fullDeleteUser',
+    roleMiddleware(['ADMIN', 'SUPERADMIN']),
+    service.fullDeleteUser
+  )
+
   router.post('/theme', service.changeTheme)
 
   apiRouter.use('/user', router)

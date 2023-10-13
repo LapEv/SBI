@@ -6,10 +6,12 @@ import { style } from '../data'
 import { Item } from 'components/CheckBoxGroup/Item'
 import { ButtonSection } from './ButtonsSection'
 import { useStructure } from 'hooks/structure/useStructure'
+import { Nullable } from 'utils/nullableType'
+type NullableString = Nullable<string>
 
 export const DeleteDepartment = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
-    const [{ departaments }, { deleteDepartment, getDepartments }] =
+    const [{ divisions, departaments }, { deleteDepartment, getDepartments }] =
       useStructure()
     const [selectedDepartments, setSelectedDepartments] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
@@ -44,6 +46,12 @@ export const DeleteDepartment = React.forwardRef<unknown, ChooseModalProps>(
       getDepartments()
     }, [])
 
+    const getDivisionName = (id_division: NullableString) => {
+      return divisions.find(item => item.id === id_division)?.divisionName
+    }
+
+    console.log('depart = ', departaments)
+
     return (
       <Box
         sx={{ ...style, paddingLeft: 5 }}
@@ -56,9 +64,11 @@ export const DeleteDepartment = React.forwardRef<unknown, ChooseModalProps>(
             width: '100%',
             pl: 3,
           }}>
-          {departaments.map(({ departmentName, id }, index) => (
+          {departaments.map(({ departmentName, id, id_division }, index) => (
             <Item
-              nameRole={departmentName}
+              nameRole={`${departmentName} - ${getDivisionName(
+                id_division as NullableString
+              )}`}
               id={`${id}${index}`}
               groupChecked={false}
               onChooseItems={onChooseItems}

@@ -24,6 +24,8 @@ export interface DataDropDown {
   }[]
   value?: string
   props?: object
+  label: string
+  errorLabel: string
   onChange?: (value: string) => void
 }
 

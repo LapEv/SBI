@@ -6,6 +6,7 @@ import {
   division,
   department,
   users,
+  userStatus,
 } from './models/index.models'
 import { firstStart } from './data/firstStart/index.startData'
 
@@ -28,6 +29,7 @@ export const RolesGroup = sequelize.define('RolesGroup', rolesGroup, {})
 export const Division = sequelize.define('Division', division, {})
 export const Department = sequelize.define('Department', department, {})
 export const Users = sequelize.define('Users', users, {})
+export const UserStatus = sequelize.define('UserStatus', userStatus, {})
 
 RolesGroup.belongsToMany(Roles, { through: 'RoleGroup' })
 Roles.belongsToMany(RolesGroup, { through: 'RoleGroup' })
@@ -52,6 +54,7 @@ export const roleGroupRepos = new Repository(RolesGroup as ModelCtor)
 export const roleRepos = new Repository(Roles as ModelCtor)
 export const DivisionRepos = new Repository(Division as ModelCtor)
 export const DepartmentRepos = new Repository(Department as ModelCtor)
+export const UserStatusRepos = new Repository(UserStatus as ModelCtor)
 
 export async function dbConnect() {
   try {

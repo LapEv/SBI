@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, memo } from 'react'
 import { Box, ListItemText, ListItemButton } from '@mui/material'
 import Collapse from '@mui/material/Collapse'
 import { useAuth } from 'hooks/auth/useAuth'
@@ -14,11 +14,10 @@ export const Departments = ({
   const [{ users }, { getUsers }] = useAuth()
   const [open, setOpen] = useState(false)
 
-  useEffect(() => {
-    getUsers({ id_division, id_department })
-  }, [])
-
   const handleClick = () => {
+    if (!open) {
+      getUsers({ id_division, id_department })
+    }
     setOpen(!open)
   }
 
@@ -48,7 +47,7 @@ export const Departments = ({
           sx={{ ml: 2 }}
           primaryTypographyProps={{ fontSize: '1.175rem!important' }}
         />
-        <RotateButton open={open} handleClick={handleClick} size={'2rem'} />
+        <RotateButton open={open} size={'2rem'} />
       </ListItemButton>
       <Collapse sx={{ width: '100%' }} in={open} timeout="auto" unmountOnExit>
         {users.map(value => (

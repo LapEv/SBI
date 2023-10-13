@@ -6,12 +6,12 @@ import { auth } from '../data/auth'
 import { generateAccessToken } from '../utils/generateAccessToken'
 
 export class userService {
-  setUser = (_req: Request, res: Response) => {
+  setUser = async (_req: Request, res: Response) => {
     const errValidation: Result = validationResult(_req)
     if (!errValidation.isEmpty()) {
       const errors = errValidation.array()
       return res.status(400).json({
-        message: `${auth.notification.errorRegistration.ENG}: ${errors[0].msg}`,
+        message: `${auth.notification.errorRegistration}: ${errors[0].msg}`,
         errValidation,
       })
     }
@@ -24,19 +24,27 @@ export class userService {
       active: true,
       theme: 'light',
     }
-    userRepos
-      .update(id, { ...newUser })
-      .then(resp => {
-        if (resp[0] === 0) {
-          userRepos.create(newUser)
-        }
-        res.status(200).json(auth.notification.successfulRegistration)
-      })
-      .catch(err =>
-        res
-          .status(500)
-          .json({ error: [auth.notification.errorRegistration, err] })
-      )
+    console.log('newUser = ', newUser)
+    console.log('id = ', id)
+
+    try {
+      if (id === 0) {
+        console.log('no user')
+        const resp = await userRepos.create(newUser)
+        console.log('resp = ', resp)
+        res.status(200).json(newUser)
+      } else {
+        console.log('user')
+        const resp = await userRepos.update(id, { ...newUser })
+        console.log('resp = ', resp)
+        res.status(200).json(newUser)
+      }
+    } catch (err: any) {
+      console.log('err = ', err)
+      res
+        .status(500)
+        .json({ error: [auth.notification.errorRegistration, err] })
+    }
   }
 
   login = (_req: Request, res: Response) => {
@@ -102,7 +110,7 @@ export class userService {
   }
 
   getUsers = (_req: Request, res: Response) => {
-    console.log('getUsers')
+    console.log('_req.body = ', _req.body)
     userRepos
       .findAll({
         where: _req.body,
@@ -115,12 +123,14 @@ export class userService {
 
   getUserInfo = (_req: Request, res: Response) => {
     const { id } = _req.body
+    console.log('id = ', id)
     userRepos
       .findAll({
         where: { id },
       })
       .then(user => {
         const userData = user[0]
+        console.log('user = ', user)
         res.status(200).json(userData)
       })
       .catch(err => res.status(500).json({ error: ['db error', err] }))
@@ -139,6 +149,19 @@ export class userService {
       )
       .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
+
+  fullDeleteUser = (_req: Request, res: Response) => {
+    const { id } = _req.body
+    userRepos
+      .destroy({ where: { id } })
+      .then(user =>
+        res
+          .status(200)
+          .json(`User with id=${user} has acquired the inactive status!`)
+      )
+      .catch(err => res.status(500).json({ error: ['db error', err] }))
+  }
+
   changeTheme = (_req: Request, res: Response) => {
     const { id, theme } = _req.body
     userRepos

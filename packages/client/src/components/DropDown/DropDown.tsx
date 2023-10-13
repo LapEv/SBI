@@ -1,11 +1,18 @@
-import { useState } from 'react'
+import { useState, SyntheticEvent } from 'react'
 import { Autocomplete } from '@mui/material'
 import { useTheme } from '@mui/material'
 import { TextField } from 'components/TextFields/TextFields'
 import { styleTextFieldProps } from '../../pages/Users/data'
 import { DataDropDown } from '../../pages/Users/Modals/interfaces'
 
-export const DropDown = ({ data, props, onChange, value }: DataDropDown) => {
+export const DropDown = ({
+  data,
+  props,
+  onChange,
+  value,
+  label,
+  errorLabel,
+}: DataDropDown) => {
   const theme = useTheme()
   const [errors, setErrors] = useState<boolean>(false)
 
@@ -19,6 +26,7 @@ export const DropDown = ({ data, props, onChange, value }: DataDropDown) => {
       noOptionsText={'Нет данных'}
       onChange={(_, textValue) => (
         onChange?.(textValue as string),
+        console.log('textValue = ', textValue),
         !textValue ? setErrors(true) : setErrors(false)
       )}
       value={value}
@@ -41,13 +49,16 @@ export const DropDown = ({ data, props, onChange, value }: DataDropDown) => {
       }}
       renderInput={params => (
         <TextField
+          onBlur={event =>
+            !event.target.value ? setErrors(true) : setErrors(false)
+          }
           {...params}
           required
           variant="outlined"
-          label="Выберите новое подразделение"
+          label={label}
           error={errors}
           id={params.id}
-          helperText={errors ? 'Не выбрано подразделение!' : ''}
+          helperText={errors ? errorLabel : ''}
           InputProps={{
             style: {
               ...styleTextFieldProps.inputProps,

@@ -1,12 +1,12 @@
 export const rolesGroupStartData = [
   {
     group: 'SUPERADMIN',
-    roles: [],
+    roles: ['SUPERADMIN'],
     groupName: 'SUPERADMIN',
   },
   {
     group: 'ADMIN',
-    roles: [],
+    roles: ['ADMIN'],
     groupName: 'ADMIN',
   },
   {

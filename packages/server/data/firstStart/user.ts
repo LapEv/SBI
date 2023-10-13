@@ -7,7 +7,7 @@ export const userStartData = [
     middleName: 'Владимирович',
     email: 'e.lapkin@sb-i.ru',
     phone: '+79689376758',
-    roleGroup: ['SUPERADMIN'],
+    roleGroup: 'SUPERADMIN',
     roles: ['SUPERADMIN'],
     post: 'Директор по сервису',
     division: 'Administration',
@@ -26,7 +26,7 @@ export const userStartData = [
     middleName: 'Вячеславович',
     email: 'a.kalinin@sb-i.ru',
     phone: '',
-    roleGroup: ['Dispatcher'],
+    roleGroup: 'Dispatcher',
     roles: [
       'getUsers',
       'getRoles',

@@ -13,4 +13,18 @@ export const departmentStartData = [
     id_division: '',
     active: true,
   },
+  {
+    department: 'FieldEngineers',
+    departmentName: 'Выездные инженеры',
+    division: 'ServiceDepartment',
+    id_division: '',
+    active: true,
+  },
+  {
+    department: 'Warehouse',
+    departmentName: 'Склад',
+    division: 'DPFA',
+    id_division: '',
+    active: true,
+  },
 ]

@@ -48,22 +48,8 @@ export interface FileProps {
   info: File | undefined
 }
 
-export interface NewUser {
-  id?: string
-  username?: NullableString
-  firstName?: NullableString
-  lastName?: NullableString
-  middleName?: NullableString
-  phone?: NullableString
-  email?: NullableString
-  avatar?: NullableString
-  password?: NullableString
-  theme?: NullableString
-  post?: NullableString
-  token?: string
-  department?: NullableString
-  id_division?: NullableString
-  id_department?: NullableString
-  roles?: string[]
-  roleGroup?: string[]
+export interface UserStatus {
+  category: string
+  categoryName: string
+  id: string
 }

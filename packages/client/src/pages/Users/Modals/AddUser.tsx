@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Typography, useTheme } from '@mui/material'
+import {
+  Box,
+  Checkbox,
+  FormControlLabel,
+  Typography,
+  useTheme,
+} from '@mui/material'
 import {
   useForm,
   useFieldArray,
@@ -15,10 +21,12 @@ import { DropDown } from '../../../components/DropDown/DropDown'
 import { useRoles } from 'hooks/roles/useRoles'
 import { CheckBoxGroup } from 'components/CheckBoxGroup/CheckBoxGroup'
 import { Nullable } from 'utils/nullableType'
+import { useAuth } from 'hooks/auth/useAuth'
 type NullableString = Nullable<string>
 
 export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
+    const [{ userStatus }, { getUserStatus, signup }] = useAuth()
     const [{ divisions, departaments }] = useStructure()
     const [{ roles, rolesGroup }, { getRoles, getRolesGroup }] = useRoles()
     const [division, setDivision] = useState<string>('')
@@ -27,6 +35,11 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
     const [selectedGroup, setGroup] = useState<NullableString[]>([])
     const [selectedItems, setItems] = useState<NullableString[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
+    const [chiefDivision, setCheckedCheifDivision] = useState<boolean>(false)
+    const [chiefDepartment, setCheckedCheifDepartment] =
+      useState<boolean>(false)
+    const [statusName, setStatusName] = useState<string>('')
+
     const theme = useTheme()
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
@@ -42,11 +55,19 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
     })
 
     function changeData({ list }: AddValuesProps) {
-      console.log('AddUser changeData = ', list)
-      console.log('division = ', division)
-      console.log('department = ', department)
-      console.log('group = ', selectedGroup)
-      console.log('role = ', selectedItems)
+      if (!selectedGroup.length || !selectedItems.length) {
+        setErrSelectedItems(true)
+        return
+      }
+      const id_division = divisions.find(
+        item => item.divisionName === division
+      )?.id
+      const id_department = departaments.find(
+        item => item.departmentName === department
+      )?.id
+      const status = userStatus.find(
+        item => item.categoryName === statusName
+      )?.category
       const newUser = {
         username: list[3].value,
         firstName: list[1].value,
@@ -59,16 +80,14 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
         roleGroup: selectedGroup[0],
         roles: selectedItems,
         division,
-        //id_division
+        chiefDivision,
+        id_division,
         department,
+        chiefDepartment,
+        id_department,
+        status,
       }
-      // handleChange({
-      //   division: data.list[0].value,
-      // })
-      if (!selectedGroup.length || selectedItems.length) {
-        setErrSelectedItems(true)
-        return
-      }
+      signup(newUser)
       handleModal(false)
     }
 
@@ -95,7 +114,6 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
     const changeDivision = (textValue: string) => {
       setDivision(textValue)
       if (!textValue) {
-        console.log('textValue = ', textValue)
         setDepartment('')
         setDepartments([])
       }
@@ -121,11 +139,20 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
     useEffect(() => {
       getRoles()
       getRolesGroup()
+      getUserStatus()
     }, [])
 
     return (
       <Box sx={style} component="form" onSubmit={handleSubmit(changeData)}>
         <Typography>{title}</Typography>
+        <DropDown
+          data={userStatus}
+          props={{ mt: 4 }}
+          onChange={data => setStatusName(data)}
+          value={statusName}
+          label="Выберите статус пользователя"
+          errorLabel="Не выбран статус пользователя!"
+        />
         <DropDown
           data={divisions.map(item => {
             return {
@@ -134,16 +161,48 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
               ['id']: item.id as string,
             }
           })}
-          props={{ mt: 3 }}
+          props={{ mt: 4 }}
           onChange={changeDivision}
           value={division}
+          label="Выберите подразделение"
+          errorLabel="Не выбрано подразделение!"
         />
+        <Box sx={{ width: '85%', mt: 1 }}>
+          <FormControlLabel
+            name={'Шеф подразделения'}
+            label={'Шеф подразделения'}
+            control={
+              <Checkbox
+                checked={chiefDivision}
+                onChange={event =>
+                  setCheckedCheifDivision(event.target.checked)
+                }
+              />
+            }
+          />
+        </Box>
         <DropDown
           data={listDepartments}
-          props={{ mt: 4, mb: 2 }}
+          props={{ mt: 1 }}
           onChange={data => setDepartment(data)}
           value={department}
+          label="Выберите отдел"
+          errorLabel="Не выбран отдел!"
         />
+        <Box sx={{ width: '85%', mt: 1 }}>
+          <FormControlLabel
+            name={'Шеф отдела'}
+            label={'Шеф отдела'}
+            control={
+              <Checkbox
+                checked={chiefDepartment}
+                onChange={event =>
+                  setCheckedCheifDepartment(event.target.checked)
+                }
+              />
+            }
+          />
+        </Box>
         {fields.map(({ id, label, validation, type, value }, index) => {
           return (
             <Controller

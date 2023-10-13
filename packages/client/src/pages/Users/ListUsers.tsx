@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import { Box, ListItemText, ListItemButton } from '@mui/material'
 import Collapse from '@mui/material/Collapse'
 import { User } from 'storeAuth/interfaces'
@@ -6,8 +6,8 @@ import { RotateButton } from 'components/Buttons/RotateButton'
 import { ProfileData } from './'
 import { useAuth } from 'hooks/auth/useAuth'
 
-export const ListUsers = (userData: User) => {
-  const [{ user }, { getUser }] = useAuth()
+export const ListUsers = memo((userData: User) => {
+  const [_, { getUser }] = useAuth()
   const [open, setOpen] = useState(false)
 
   const handleClick = () => {
@@ -51,4 +51,4 @@ export const ListUsers = (userData: User) => {
       </Collapse>
     </Box>
   )
-}
+})

@@ -1,9 +1,11 @@
 import { departmentStartData } from './department'
 import { divisionStartData } from './division'
 import { userStartData } from './user'
+import { userStatusStartData } from './userStatus'
 import {
   DepartmentRepos,
   DivisionRepos,
+  UserStatusRepos,
   roleGroupRepos,
   roleRepos,
   userRepos,
@@ -25,6 +27,7 @@ export const firstStart = async () => {
       await userRepos.drop({ cascade: true })
       await roleRepos.drop({ cascade: true })
       await roleGroupRepos.drop({ cascade: true })
+      await UserStatusRepos.drop({ cascade: true })
       return
     }
 
@@ -54,11 +57,11 @@ export const firstStart = async () => {
             item => item.role === 'ADMIN'
           ) as never[]
         }
-        if (value.group !== 'SUPERADMIN' && value.group !== 'ADMIN') {
-          value.roles = newrolesObj.filter(
-            item => item.role !== 'SUPERADMIN' && item.role !== 'ADMIN'
-          ) as never[]
-        }
+        // if (value.group !== 'SUPERADMIN' && value.group !== 'ADMIN') {
+        //   value.roles = newrolesObj.filter(
+        //     item => item.role !== 'SUPERADMIN' && item.role !== 'ADMIN'
+        //   ) as never[]
+        // }
       })
       await Promise.all(
         rolesGroupStartData.map(
@@ -78,6 +81,11 @@ export const firstStart = async () => {
     const newDepartment = await Promise.all(
       departmentStartData.map(
         async value => await DepartmentRepos.create(value)
+      )
+    )
+    await Promise.all(
+      userStatusStartData.map(
+        async value => await UserStatusRepos.create(value)
       )
     )
     userStartData.map(async value => {

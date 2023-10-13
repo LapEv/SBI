@@ -4,7 +4,7 @@ import { userRotateStyles } from '../../themes/rotateConfig'
 
 interface RotateButton {
   open: boolean
-  handleClick: () => void
+  handleClick?: () => void
   size: string
 }
 export const RotateButton = ({ open, handleClick, size }: RotateButton) => {

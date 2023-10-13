@@ -8,7 +8,7 @@ import {
   ChangePasswordProps,
   ChangeThemeProps,
   FileProps,
-  NewUser,
+  UserStatus,
 } from 'storeAuth/interfaces'
 import { authhost, host, ApiEndPoints } from './config'
 import { getError } from 'utils/getError'
@@ -24,7 +24,7 @@ export const signin = createAsyncThunk(
         ...data,
         id,
         message: {
-          text: 'Пользователь зарегистрирован успешно!',
+          text: 'Успешный вход в систему!',
           type: 'success',
         },
       }
@@ -44,7 +44,7 @@ export const signup = createAsyncThunk(
       return {
         data,
         message: {
-          text: 'Успешный вход в систему!',
+          text: 'Пользователь зарегистрирован успешно!',
           type: 'success',
         },
       }
@@ -94,6 +94,8 @@ export const GetUsers = createAsyncThunk(
         ApiEndPoints.User.GetUsers,
         dataFind
       )
+      console.log('data = ', data)
+
       return data
     } catch (e: any) {
       return thunkAPI.rejectWithValue(
@@ -212,19 +214,17 @@ export const ChangeTheme = createAsyncThunk(
   }
 )
 
-export const addUser = createAsyncThunk(
-  'user/addUser',
-  async (newUser: NewUser, thunkAPI) => {
-    console.log('newUser = ', newUser)
+export const getUserStatus = createAsyncThunk(
+  'user/getUserStatus',
+  async (_, thunkAPI) => {
     try {
-      const { data } = await authhost.post(ApiEndPoints.User.addUser, newUser)
-      return {
-        data,
-        message: { text: 'Новый дивизион добавлен!', type: 'success' },
-      }
+      const { data } = await authhost.get<UserStatus[]>(
+        ApiEndPoints.User.GetUserStatus
+      )
+      return data
     } catch (e: any) {
       return thunkAPI.rejectWithValue(
-        `Не удалось создать дивизион!\n${getError(e)}`
+        `Не удалось получить статусы пользователей!\n${getError(e)}`
       )
     }
   }

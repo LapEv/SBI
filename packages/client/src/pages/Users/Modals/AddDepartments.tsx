@@ -58,6 +58,8 @@ export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
           props={{ mt: 3 }}
           onChange={setDivision}
           value={division}
+          label="Выберите подразделение"
+          errorLabel="Не выбрано подразделение!"
         />
         {fields.map(({ id, label, validation, type, value }, index) => {
           return (

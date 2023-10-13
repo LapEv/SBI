@@ -5,15 +5,17 @@ import {
   ChangeAvatar,
   CheckUser,
   GetUsers,
+  getUserStatus,
 } from 'api/user'
 import { signin, signout, signup } from 'api/user'
 import { Nullable } from 'utils/nullableType'
-import { User } from './interfaces'
+import { User, UserStatus } from './interfaces'
 
 export type AuthState = {
   user: Nullable<User>
   userData: Nullable<User>
   users: User[]
+  userStatus: UserStatus[]
   admin: boolean
   superAdmin: boolean
   editStatus: string
@@ -25,6 +27,7 @@ const initialState: AuthState = {
   user: null,
   userData: null,
   users: [],
+  userStatus: [],
   admin: false,
   superAdmin: false,
   editStatus: 'info',
@@ -112,7 +115,6 @@ export const authSlise = createSlice({
       state.isLoadingAuth = false
       state.error = action.payload
     },
-
     [CheckUser.fulfilled.type]: (state, action: PayloadAction<User>) => {
       state.isLoadingAuth = false
       state.error = ''
@@ -153,6 +155,21 @@ export const authSlise = createSlice({
       state.isLoadingAuth = true
     },
     [ChangeAvatar.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingAuth = false
+      state.error = action.payload
+    },
+    [getUserStatus.fulfilled.type]: (
+      state,
+      action: PayloadAction<UserStatus[]>
+    ) => {
+      state.isLoadingAuth = false
+      state.error = ''
+      state.userStatus = action.payload
+    },
+    [getUserStatus.pending.type]: state => {
+      state.isLoadingAuth = true
+    },
+    [getUserStatus.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingAuth = false
       state.error = action.payload
     },

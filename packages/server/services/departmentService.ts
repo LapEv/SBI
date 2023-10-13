@@ -4,10 +4,6 @@ import { DepartmentRepos } from '../db'
 export class departmentService {
   newDepartment = async (_req: Request, res: Response) => {
     const { department, departmentName, division, id_division } = _req.body
-    console.log('department = ', department)
-    console.log('departmentName = ', departmentName)
-    console.log('division = ', division)
-    console.log('id_division = ', id_division)
     try {
       await DepartmentRepos.create({
         department,

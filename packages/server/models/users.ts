@@ -58,7 +58,7 @@ export const users: ModelAttributes<Model, User> = {
     allowNull: false,
   },
   roleGroup: {
-    type: DataType.ARRAY(DataType.STRING),
+    type: DataType.STRING,
     allowNull: false,
   },
   roles: {
@@ -83,11 +83,11 @@ export const users: ModelAttributes<Model, User> = {
   },
   theme: {
     type: DataType.STRING,
-    allowNull: true,
+    allowNull: false,
   },
   division: {
     type: DataType.STRING,
-    allowNull: true,
+    allowNull: false,
   },
   chiefDivision: {
     type: DataType.BOOLEAN,
@@ -96,11 +96,10 @@ export const users: ModelAttributes<Model, User> = {
   id_division: {
     type: DataType.STRING,
     allowNull: false,
-    unique: true,
   },
   department: {
     type: DataType.STRING,
-    allowNull: true,
+    allowNull: false,
   },
   chiefDepartment: {
     type: DataType.BOOLEAN,
@@ -109,7 +108,6 @@ export const users: ModelAttributes<Model, User> = {
   id_department: {
     type: DataType.STRING,
     allowNull: false,
-    unique: true,
   },
   status: {
     type: DataType.STRING,

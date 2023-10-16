@@ -111,10 +111,10 @@ export const ModalTitles = {
   addUser: 'Новый пользователь',
   addRole: 'Новая роль',
   addRolesGroup: 'Новая группа ролей',
-  deleteDivision: 'Удалить дивизион',
-  deleteDepartment: 'Удалить отдел',
-  deleteUser: 'Удалить пользователя',
-  deleteRole: 'Удалить роль',
+  deleteDivision: 'Удалить дивизионы',
+  deleteDepartment: 'Удалить отделы',
+  deleteUsers: 'Удалить пользователей',
+  deleteRole: 'Удалить роли',
   deleteRolesGroup: 'Удалить группу ролей',
 }
 

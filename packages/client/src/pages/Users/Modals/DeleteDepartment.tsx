@@ -66,9 +66,8 @@ export const DeleteDepartment = React.forwardRef<unknown, ChooseModalProps>(
           }}>
           {departaments.map(({ departmentName, id, id_division }, index) => (
             <Item
-              nameRole={`${departmentName} - ${getDivisionName(
-                id_division as NullableString
-              )}`}
+              nameRole={departmentName}
+              comment={getDivisionName(id_division as NullableString) as string}
               id={`${id}${index}`}
               groupChecked={false}
               onChooseItems={onChooseItems}

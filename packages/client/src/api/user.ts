@@ -94,8 +94,6 @@ export const GetUsers = createAsyncThunk(
         ApiEndPoints.User.GetUsers,
         dataFind
       )
-      console.log('data = ', data)
-
       return data
     } catch (e: any) {
       return thunkAPI.rejectWithValue(
@@ -225,6 +223,26 @@ export const getUserStatus = createAsyncThunk(
     } catch (e: any) {
       return thunkAPI.rejectWithValue(
         `Не удалось получить статусы пользователей!\n${getError(e)}`
+      )
+    }
+  }
+)
+
+export const deleteUser = createAsyncThunk(
+  'user/deleteUser',
+  async (id: string, thunkAPI) => {
+    try {
+      const { data } = await authhost.post(
+        ApiEndPoints.Structure.updateDivision,
+        id
+      )
+      return {
+        data,
+        message: { text: 'Пользователь перемещен в архив', type: 'success' },
+      }
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(
+        `Не удалось переместить пользователя в архив!\n${getError(e)}`
       )
     }
   }

@@ -8,6 +8,7 @@ import {
   ChangeTheme,
   CheckUser,
   getUserStatus,
+  deleteUser,
 } from 'api/user'
 import { signin, signout, signup } from 'api/user'
 import { RootState } from 'store'
@@ -61,6 +62,9 @@ export function useAuth(): [AuthState, AuthActions] {
       },
       getUserStatus() {
         dispatch(getUserStatus())
+      },
+      deleteUser(id) {
+        dispatch(deleteUser(id))
       },
     },
   ]

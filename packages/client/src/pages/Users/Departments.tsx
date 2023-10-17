@@ -5,21 +5,31 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { ListUsers } from './ListUsers'
 import { RotateButton } from 'components/Buttons/RotateButton'
 import { DPR } from './interfaces'
+import { User } from 'storeAuth/interfaces'
+import { useStructure } from 'hooks/structure/useStructure'
 
 export const Departments = ({
   departmentName,
   id_division,
   id_department,
 }: DPR) => {
-  const [{ users }, { getUsers }] = useAuth()
+  const [{ users }, { getActiveUsers }] = useAuth()
+  const [{ activeDepartment }, { setActiveDepartment }] = useStructure()
   const [open, setOpen] = useState(false)
 
   const handleClick = () => {
     if (!open) {
-      getUsers({ id_division, id_department })
+      getActiveUsers({ id_division, id_department })
+      setActiveDepartment(id_department as string)
     }
     setOpen(!open)
   }
+
+  useEffect(() => {
+    if (activeDepartment !== id_department) {
+      setOpen(false)
+    }
+  }, [activeDepartment])
 
   return (
     <Box

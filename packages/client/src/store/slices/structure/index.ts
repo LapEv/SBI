@@ -13,6 +13,7 @@ export interface StructureState {
   divisions: Division[]
   departaments: Department[]
   activeDivision: string
+  activeDepartment: string
   isLoadingStructure: boolean
   error?: string
 }
@@ -21,6 +22,7 @@ const initialState: StructureState = {
   divisions: [],
   departaments: [],
   activeDivision: '',
+  activeDepartment: '',
   isLoadingStructure: false,
 }
 
@@ -40,6 +42,9 @@ export const structureSlise = createSlice({
   reducers: {
     setActiveDivision(state, action) {
       state.activeDivision = action.payload
+    },
+    setActiveDepartment(state, action) {
+      state.activeDepartment = action.payload
     },
   },
 
@@ -141,4 +146,4 @@ export const structureSlise = createSlice({
 })
 
 export const structureReducer = structureSlise.reducer
-export const { setActiveDivision } = structureSlise.actions
+export const { setActiveDivision, setActiveDepartment } = structureSlise.actions

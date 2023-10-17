@@ -1,23 +1,21 @@
 import { useState, ChangeEvent, useEffect } from 'react'
 import { Box, FormControlLabel, Checkbox } from '@mui/material'
 import { RolesGroupObject } from 'storeRoles/interfaces'
-import { Nullable } from 'utils/nullableType'
 import { ListBoxGroup } from './ListBoxGroup'
 
-type NullableString = Nullable<string>
 export interface CheckBoxGroup {
   data: {
-    group: NullableString
-    roles: RolesGroupObject[]
+    group: string
+    roles: { name: string; id: string; nameId: string }[]
     id: string
-    groupName: NullableString
+    groupName: string
   }
   props?: object
   key: string
-  onChooseGroup: (data: string) => void
-  onChooseItems: (data: string) => void
+  onChooseGroup: (data: string, id?: string) => void
+  onChooseItems: (checked: boolean, id: string) => void
   oneGroup: boolean
-  selectedGroup: NullableString[]
+  selectedGroup: string | string[]
 }
 
 export const CheckBoxGroup = ({
@@ -27,19 +25,23 @@ export const CheckBoxGroup = ({
   oneGroup,
   selectedGroup,
 }: CheckBoxGroup) => {
-  const [checked, setChecked] = useState([true, false])
+  const [checked, setChecked] = useState(
+    data.group === selectedGroup ? true : false
+  )
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setChecked([event.target.checked, event.target.checked])
+    setChecked(event.target.checked)
     if (event.target.checked) {
-      onChooseGroup(event.target.name)
+      onChooseGroup(event.target.value)
+      return
     }
+    onChooseGroup('')
   }
 
   useEffect(() => {
     if (!oneGroup) return
-    if (!selectedGroup.includes(data.group as string)) {
-      setChecked([false, false])
+    if (!selectedGroup.includes(data.id)) {
+      setChecked(false)
     }
   }, [selectedGroup])
 
@@ -49,7 +51,7 @@ export const CheckBoxGroup = ({
       maxWidth="md"
       sx={{
         display: 'flex',
-        height: '100%',
+        // height: '100%',
         width: '90%',
         flexDirection: 'row',
         justifyContent: 'flex-start',
@@ -57,15 +59,16 @@ export const CheckBoxGroup = ({
       }}>
       <>
         <FormControlLabel
-          name={data.groupName as string}
+          name={data.groupName}
           label={''}
-          control={<Checkbox checked={checked[1]} onChange={handleChange} />}
+          value={data.id}
+          control={<Checkbox checked={checked} onChange={handleChange} />}
         />
         <ListBoxGroup
           groupName={data.groupName}
-          roles={data.roles}
+          data={data.roles}
           groupId={data.id}
-          groupChecked={checked[1]}
+          groupChecked={checked}
           onChooseItems={onChooseItems}
         />
       </>

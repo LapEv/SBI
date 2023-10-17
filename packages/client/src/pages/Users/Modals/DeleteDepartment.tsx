@@ -6,8 +6,6 @@ import { style } from '../data'
 import { Item } from 'components/CheckBoxGroup/Item'
 import { ButtonSection } from './ButtonsSection'
 import { useStructure } from 'hooks/structure/useStructure'
-import { Nullable } from 'utils/nullableType'
-type NullableString = Nullable<string>
 
 export const DeleteDepartment = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
@@ -27,18 +25,15 @@ export const DeleteDepartment = React.forwardRef<unknown, ChooseModalProps>(
       deleteDepartment(selectedDepartments)
     }
 
-    const onChooseItems = (departament: string) => {
-      const itemId = departaments.find(
-        item => item.departmentName === departament
-      )?.id
-      if (selectedDepartments.includes(itemId as string)) {
+    const onChooseItems = (checked: boolean, id: string) => {
+      if (!checked) {
         setSelectedDepartments(
-          selectedDepartments.filter(value => value !== itemId)
+          selectedDepartments.filter(value => value !== id)
         )
         return
       }
-      setSelectedDepartments([...selectedDepartments, itemId as string])
-      if ([...selectedDepartments, itemId as string] && errSelectedItems)
+      setSelectedDepartments([...selectedDepartments, id])
+      if ([...selectedDepartments, id] && errSelectedItems)
         setErrSelectedItems(false)
     }
 
@@ -46,11 +41,9 @@ export const DeleteDepartment = React.forwardRef<unknown, ChooseModalProps>(
       getDepartments()
     }, [])
 
-    const getDivisionName = (id_division: NullableString) => {
+    const getDivisionName = (id_division: string) => {
       return divisions.find(item => item.id === id_division)?.divisionName
     }
-
-    console.log('depart = ', departaments)
 
     return (
       <Box
@@ -64,11 +57,11 @@ export const DeleteDepartment = React.forwardRef<unknown, ChooseModalProps>(
             width: '100%',
             pl: 3,
           }}>
-          {departaments.map(({ departmentName, id, id_division }, index) => (
+          {departaments.map(({ departmentName, id, id_division }) => (
             <Item
-              nameRole={departmentName}
-              comment={getDivisionName(id_division as NullableString) as string}
-              id={`${id}${index}`}
+              name={departmentName}
+              comment={getDivisionName(id_division as string)}
+              id={`${id}`}
               groupChecked={false}
               onChooseItems={onChooseItems}
               key={id as string}
@@ -78,7 +71,10 @@ export const DeleteDepartment = React.forwardRef<unknown, ChooseModalProps>(
         <Box sx={{ color: theme.palette.error.main, height: 20 }}>
           {errSelectedItems && 'Не выбран ни один отдел!'}
         </Box>
-        <ButtonSection handleModal={handleModal} btnName="Удалить" />
+        <ButtonSection
+          closeModal={() => handleModal(false)}
+          btnName="Удалить"
+        />
       </Box>
     )
   }

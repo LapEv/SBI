@@ -1,4 +1,4 @@
-import { Box, TextField } from '@mui/material'
+import { Box, Collapse, TextField, ListItemButton } from '@mui/material'
 import { User } from 'storeAuth/interfaces'
 import {
   useForm,
@@ -10,10 +10,22 @@ import { MapProfileInputFields, MapProfileInputFieldsAdmin } from './data'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useTheme } from '@mui/material/styles'
 import { ProfileValues } from './interfaces'
+import { CheckBoxGroup } from 'components/CheckBoxGroup/CheckBoxGroup'
+import { RolesGroup } from 'storeRoles/interfaces'
+import { useState } from 'react'
+import { useRoles } from 'hooks/roles/useRoles'
+import { RotateButton } from 'components/Buttons/RotateButton'
 
 export const ProfileData = (userData: User) => {
   const theme = useTheme()
   const [{ admin }, { updateUserData }] = useAuth()
+  const [{ roles, rolesGroup, activeRolesGroup }, { getRoles, getRolesGroup }] =
+    useRoles()
+  const [open, setOpen] = useState(false)
+
+  const [selectedGroup, setGroup] = useState<string>(userData.roleGroup!)
+  const [selectedRoles, setSelectedRoles] = useState(userData.roles)
+  const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
 
   const fieldsData = admin ? MapProfileInputFieldsAdmin : MapProfileInputFields
 
@@ -34,6 +46,37 @@ export const ProfileData = (userData: User) => {
 
   function changeData(data: ProfileValues) {
     console.log('data = ', data)
+  }
+
+  const setRolesGroup = (group: string) => {
+    console.log('group = ', group)
+    const listRoles = rolesGroup
+      .filter(item => item.group === group)[0]
+      .roles.map(item => item.role)
+    setSelectedRoles(listRoles)
+    setGroup(group)
+    if (group && errSelectedItems) setErrSelectedItems(false)
+  }
+
+  const setRoles = (role: string) => {
+    // const itemId = roles.find(item => item.nameRole === role)?.role
+    // if (selectedRoles.includes(itemId as string)) {
+    //   setSelectedRoles(selectedRoles.filter(value => value !== itemId))
+    //   return
+    // }
+    // setSelectedRoles([...selectedRoles, itemId as string])
+    // if ([...selectedRoles, itemId as string] && errSelectedItems)
+    //   setErrSelectedItems(false)
+  }
+
+  console.log('selectedGroup = ', selectedGroup)
+  // console.log('selectedGroup = ', selectedGroup)
+  // console.log('rolesGroup = ', rolesGroup)
+
+  const handleClick = () => {
+    setOpen(!open)
+    getRolesGroup()
+    getRoles()
   }
 
   return (
@@ -92,6 +135,33 @@ export const ProfileData = (userData: User) => {
           />
         )
       })}
+      {admin && (
+        <Box>
+          <ListItemButton
+            sx={{ fontSize: 12, color: theme.palette.text.secondary }}
+            onClick={handleClick}>
+            <RotateButton open={open} handleClick={handleClick} size={'2rem'} />
+            Дополнительно
+          </ListItemButton>
+          <Collapse
+            sx={{ width: '100%', ml: 5 }}
+            in={open}
+            timeout="auto"
+            unmountOnExit>
+            {open &&
+              rolesGroup.map((item, index) => (
+                <CheckBoxGroup
+                  data={item as RolesGroup}
+                  key={`${item}${index}`}
+                  onChooseGroup={setRolesGroup}
+                  onChooseItems={setRoles}
+                  oneGroup={true}
+                  selectedGroup={selectedGroup}
+                />
+              ))}
+          </Collapse>
+        </Box>
+      )}
     </Box>
   )
 }

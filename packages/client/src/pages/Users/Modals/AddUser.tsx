@@ -20,9 +20,7 @@ import { useStructure } from 'hooks/structure/useStructure'
 import { DropDown } from '../../../components/DropDown/DropDown'
 import { useRoles } from 'hooks/roles/useRoles'
 import { CheckBoxGroup } from 'components/CheckBoxGroup/CheckBoxGroup'
-import { Nullable } from 'utils/nullableType'
 import { useAuth } from 'hooks/auth/useAuth'
-type NullableString = Nullable<string>
 
 export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
@@ -32,8 +30,8 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
     const [division, setDivision] = useState<string>('')
     const [listDepartments, setDepartments] = useState<Data[]>([])
     const [department, setDepartment] = useState<string>('')
-    const [selectedGroup, setGroup] = useState<NullableString[]>([])
-    const [selectedItems, setItems] = useState<NullableString[]>([])
+    const [selectedGroup, setGroup] = useState<string[]>([])
+    const [selectedItems, setItems] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
     const [chiefDivision, setCheckedCheifDivision] = useState<boolean>(false)
     const [chiefDepartment, setCheckedCheifDepartment] =
@@ -92,12 +90,11 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
     }
 
     const setRolesGroup = (group: string) => {
-      const groupData = rolesGroup.find(item => item.groupName === group)
-      const listRoles = groupData?.roles.map(item => item.role)
-      setItems(listRoles as NullableString[])
-      setGroup([groupData?.group as NullableString])
-      if ([groupData?.group as NullableString] && errSelectedItems)
-        setErrSelectedItems(false)
+      const groupData = rolesGroup.find(item => item.groupName === group)!
+      const listRoles = groupData.roles.map(item => item.role)
+      setItems(listRoles)
+      setGroup([groupData?.group])
+      if ([groupData?.group] && errSelectedItems) setErrSelectedItems(false)
     }
 
     const setRoles = (role: string) => {

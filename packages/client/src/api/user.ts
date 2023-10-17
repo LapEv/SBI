@@ -86,9 +86,10 @@ export const GetUser = createAsyncThunk(
   }
 )
 
-export const GetUsers = createAsyncThunk(
-  'user/getUsers',
+export const GetActiveUsers = createAsyncThunk(
+  'user/getActiveUsers',
   async (dataFind: User, thunkAPI) => {
+    console.log('GetActiveUsers')
     try {
       const { data } = await authhost.post<User[]>(
         ApiEndPoints.User.GetUsers,
@@ -228,14 +229,13 @@ export const getUserStatus = createAsyncThunk(
   }
 )
 
-export const deleteUser = createAsyncThunk(
-  'user/deleteUser',
-  async (id: string, thunkAPI) => {
+export const deleteUsers = createAsyncThunk(
+  'user/deleteUsers',
+  async (selectedUsers: string[], thunkAPI) => {
     try {
-      const { data } = await authhost.post(
-        ApiEndPoints.Structure.updateDivision,
-        id
-      )
+      const { data } = await authhost.post(ApiEndPoints.User.DeleteUsers, {
+        selectedUsers,
+      })
       return {
         data,
         message: { text: 'Пользователь перемещен в архив', type: 'success' },

@@ -9,7 +9,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 
 export const DeleteUsers = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
-    const [{ users }, { deleteUser, getUsers }] = useAuth()
+    const [{ users }, { deleteUsers, getActiveUsers }] = useAuth()
     const [selectedUsers, setSelectedUsers] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
     const theme = useTheme()
@@ -20,30 +20,23 @@ export const DeleteUsers = React.forwardRef<unknown, ChooseModalProps>(
         setErrSelectedItems(true)
         return
       }
-      // handleModal(false)
-      console.log('selectedUsers = ', selectedUsers)
-      // deleteUser(selectedUsers)
+      handleModal(false)
+      deleteUsers(selectedUsers)
     }
 
-    const onChooseItems = (user: string) => {
-      console.log('user = ', user)
-      const itemId = users.find(
-        item =>
-          user.includes(item.firstName as string) &&
-          user.includes(item.lastName as string) &&
-          user.includes(item.middleName as string)
-      )?.id
-      if (selectedUsers.includes(itemId as string)) {
-        setSelectedUsers(selectedUsers.filter(value => value !== itemId))
+    const onChooseItems = (user: string, id: string | number | undefined) => {
+      if (selectedUsers.includes(id as string)) {
+        setSelectedUsers(selectedUsers.filter(value => value !== id))
         return
       }
-      setSelectedUsers([...selectedUsers, itemId as string])
-      if ([...selectedUsers, itemId as string] && errSelectedItems)
+      setSelectedUsers([...selectedUsers, id as string])
+      if ([...selectedUsers, id as string] && errSelectedItems)
         setErrSelectedItems(false)
     }
 
     useEffect(() => {
-      getUsers({})
+      console.log('useEffect')
+      getActiveUsers({})
     }, [])
 
     console.log('users = ', users)
@@ -64,7 +57,7 @@ export const DeleteUsers = React.forwardRef<unknown, ChooseModalProps>(
             <Item
               nameRole={`${lastName} ${firstName} ${middleName}`}
               comment={post as string}
-              id={`${id}${index}`}
+              id={`${id}`}
               groupChecked={false}
               onChooseItems={onChooseItems}
               key={id as string}
@@ -74,7 +67,10 @@ export const DeleteUsers = React.forwardRef<unknown, ChooseModalProps>(
         <Box sx={{ color: theme.palette.error.main, height: 20 }}>
           {errSelectedItems && 'Не выбрано ниодного пользователя!'}
         </Box>
-        <ButtonSection handleModal={handleModal} btnName="Удалить" />
+        <ButtonSection
+          closeModal={() => handleModal(false)}
+          btnName="Удалить"
+        />
       </Box>
     )
   }

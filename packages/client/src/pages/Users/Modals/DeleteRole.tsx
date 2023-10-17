@@ -25,15 +25,13 @@ export const DeleteRole = React.forwardRef<unknown, ChooseModalProps>(
       deleteRoles(selectedRoles)
     }
 
-    const onChooseItems = (role: string) => {
-      const itemId = roles.find(item => item.nameRole === role)?.role
-      if (selectedRoles.includes(itemId as string)) {
-        setSelectedRoles(selectedRoles.filter(value => value !== itemId))
+    const onChooseItems = (checked: boolean, id: string) => {
+      if (!checked) {
+        setSelectedRoles(selectedRoles.filter(value => value !== id))
         return
       }
-      setSelectedRoles([...selectedRoles, itemId as string])
-      if ([...selectedRoles, itemId as string] && errSelectedItems)
-        setErrSelectedItems(false)
+      setSelectedRoles([...selectedRoles, id])
+      if ([...selectedRoles, id] && errSelectedItems) setErrSelectedItems(false)
     }
 
     useEffect(() => {
@@ -54,8 +52,8 @@ export const DeleteRole = React.forwardRef<unknown, ChooseModalProps>(
           }}>
           {roles.map(({ nameRole, id }, index) => (
             <Item
-              nameRole={nameRole}
-              id={`${id}${index}`}
+              name={nameRole}
+              id={`${id}`}
               groupChecked={false}
               onChooseItems={onChooseItems}
               key={id}
@@ -65,7 +63,10 @@ export const DeleteRole = React.forwardRef<unknown, ChooseModalProps>(
         <Box sx={{ color: theme.palette.error.main, height: 20 }}>
           {errSelectedItems && 'Не выбрана ни одна роль!'}
         </Box>
-        <ButtonSection handleModal={handleModal} btnName="Удалить" />
+        <ButtonSection
+          closeModal={() => handleModal(false)}
+          btnName="Удалить"
+        />
       </Box>
     )
   }

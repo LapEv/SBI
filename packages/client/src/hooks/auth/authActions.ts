@@ -15,10 +15,10 @@ export interface AuthActions {
   changePassword: (data: ChangePasswordProps) => void
   changeThemeOnServer: (data: ChangeThemeProps) => void
   getUser: (id: string) => void
-  getUsers: (data: User) => void
+  getActiveUsers: (data: User) => void
   checkUser: () => void
   updateUserData: (data: User) => void
   updateEditStatus: (data: string) => void
   getUserStatus: () => void
-  deleteUser: (id: string) => void
+  deleteUsers: (id: string[]) => void
 }

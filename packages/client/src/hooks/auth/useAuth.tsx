@@ -1,14 +1,14 @@
 import { useSelector } from 'react-redux'
 import {
   GetUser,
-  GetUsers,
+  GetActiveUsers,
   ChangeProfile,
   ChangeAvatar,
   ChangePassword,
   ChangeTheme,
   CheckUser,
   getUserStatus,
-  deleteUser,
+  deleteUsers,
 } from 'api/user'
 import { signin, signout, signup } from 'api/user'
 import { RootState } from 'store'
@@ -48,8 +48,8 @@ export function useAuth(): [AuthState, AuthActions] {
       getUser(id) {
         dispatch(GetUser(id))
       },
-      getUsers(data) {
-        dispatch(GetUsers(data))
+      getActiveUsers(data) {
+        dispatch(GetActiveUsers(data))
       },
       checkUser() {
         dispatch(CheckUser())
@@ -63,8 +63,8 @@ export function useAuth(): [AuthState, AuthActions] {
       getUserStatus() {
         dispatch(getUserStatus())
       },
-      deleteUser(id) {
-        dispatch(deleteUser(id))
+      deleteUsers(id) {
+        dispatch(deleteUsers(id))
       },
     },
   ]

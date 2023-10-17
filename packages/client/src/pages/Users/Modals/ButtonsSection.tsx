@@ -2,11 +2,11 @@ import { Box } from '@mui/material'
 import { Button } from 'components/Buttons'
 
 type Handle = {
-  handleModal: (state: boolean) => void
+  closeModal: (state: boolean) => void
   btnName: string
 }
 
-export const ButtonSection = ({ handleModal, btnName }: Handle) => {
+export const ButtonSection = ({ closeModal, btnName }: Handle) => {
   return (
     <Box
       sx={{
@@ -20,7 +20,7 @@ export const ButtonSection = ({ handleModal, btnName }: Handle) => {
       </Button>
       <Button
         sx={{ width: '40%', fontWeight: 'bold' }}
-        onClick={() => handleModal(false)}>
+        onClick={() => closeModal(false)}>
         Отмена
       </Button>
     </Box>

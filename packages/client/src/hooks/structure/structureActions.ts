@@ -8,4 +8,5 @@ export interface StructureActions {
   deleteDivision: (divisions: string[]) => void
   deleteDepartment: (departaments: string[]) => void
   setActiveDivision: (division: string) => void
+  setActiveDepartment: (departament: string) => void
 }

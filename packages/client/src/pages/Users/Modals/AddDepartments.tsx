@@ -106,7 +106,10 @@ export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
             />
           )
         })}
-        <ButtonSection handleModal={handleModal} btnName="Сохранить" />
+        <ButtonSection
+          closeModal={() => handleModal(false)}
+          btnName="Сохранить"
+        />
       </Box>
     )
   }

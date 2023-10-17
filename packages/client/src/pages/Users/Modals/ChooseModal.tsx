@@ -13,6 +13,7 @@ import { ModalTitles } from '../data'
 import { ChooseModalProps } from './interfaces'
 import { DeleteDepartment } from './DeleteDepartment'
 import { DeleteUsers } from './DeleteUsers'
+import { ChangeRolesGroup } from './ChangeRolesGroup'
 
 export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(
   ({ modalImage, handleModal }: ChooseModalProps, ref) => {
@@ -68,13 +69,6 @@ export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(
             title={ModalTitles.deleteDepartment}
           />
         )}
-        {modalImage === 'deleteUser' && (
-          <DeleteUsers
-            ref={ref}
-            handleModal={handleModal}
-            title={ModalTitles.deleteUsers}
-          />
-        )}
         {modalImage === 'deleteRole' && (
           <DeleteRole
             ref={ref}
@@ -87,6 +81,13 @@ export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(
             ref={ref}
             handleModal={handleModal}
             title={ModalTitles.deleteRolesGroup}
+          />
+        )}
+        {modalImage === 'changeRolesGroup' && (
+          <ChangeRolesGroup
+            ref={ref}
+            handleModal={handleModal}
+            title={ModalTitles.changeRolesGroup}
           />
         )}
       </>

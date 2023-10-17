@@ -1,43 +1,34 @@
 import { useState, ChangeEvent, useEffect } from 'react'
 import { Checkbox, FormControlLabel, Box, useTheme } from '@mui/material'
-import { Nullable } from 'utils/nullableType'
-type NullableString = Nullable<string>
+import { IItem } from './interface'
 
-interface Item {
-  nameRole: NullableString
-  id: string
-  key: string
-  groupChecked?: boolean
-  comment?: string
-  onChooseItems: (data: string) => void
-}
 export const Item = ({
-  nameRole,
+  name,
   id,
   groupChecked,
   onChooseItems,
   comment,
-}: Item) => {
-  const [checked, setChecked] = useState([true, false])
+}: IItem) => {
+  const [checked, setChecked] = useState<boolean>(true)
   const theme = useTheme()
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setChecked([event.target.checked, event.target.checked])
-    onChooseItems(event.target.name, id)
+    setChecked(event.target.checked)
+    onChooseItems(event.target.checked, id)
   }
 
   useEffect(() => {
-    groupChecked ? setChecked([true, true]) : setChecked([false, false])
+    groupChecked ? setChecked(true) : setChecked(false)
   }, [groupChecked])
 
   return (
     <>
       <FormControlLabel
-        label={nameRole}
+        label={name}
         id={id}
-        name={`${nameRole}`}
+        name={`${name}`}
         sx={{ width: '100%' }}
-        control={<Checkbox checked={checked[1]} onChange={handleChange} />}
+        control={<Checkbox checked={checked} onChange={handleChange} />}
       />
       {comment?.length && (
         <Box sx={{ fontSize: 12, color: theme.palette.text.secondary, ml: 5 }}>

@@ -9,7 +9,11 @@ import {
   newDepartment,
   newDivision,
 } from 'api/structure'
-import { StructureState, setActiveDivision } from 'store/slices/structure'
+import {
+  StructureState,
+  setActiveDepartment,
+  setActiveDivision,
+} from 'store/slices/structure'
 import { RootState } from 'store'
 
 export function useStructure(): [StructureState, StructureActions] {
@@ -39,6 +43,9 @@ export function useStructure(): [StructureState, StructureActions] {
       },
       setActiveDivision(division) {
         dispatch(setActiveDivision(division))
+      },
+      setActiveDepartment(department) {
+        dispatch(setActiveDepartment(department))
       },
     },
   ]

@@ -24,16 +24,13 @@ export const DeleteDivision = React.forwardRef<unknown, ChooseModalProps>(
       deleteDivision(selectedDivisions)
     }
 
-    const onChooseItems = (division: string) => {
-      const itemId = divisions.find(item => item.divisionName === division)?.id
-      if (selectedDivisions.includes(itemId as string)) {
-        setSelectedDivisions(
-          selectedDivisions.filter(value => value !== itemId)
-        )
+    const onChooseItems = (checked: boolean, id: string) => {
+      if (!checked) {
+        setSelectedDivisions(selectedDivisions.filter(value => value !== id))
         return
       }
-      setSelectedDivisions([...selectedDivisions, itemId as string])
-      if ([...selectedDivisions, itemId as string] && errSelectedItems)
+      setSelectedDivisions([...selectedDivisions, id])
+      if ([...selectedDivisions, id] && errSelectedItems)
         setErrSelectedItems(false)
     }
 
@@ -53,10 +50,10 @@ export const DeleteDivision = React.forwardRef<unknown, ChooseModalProps>(
             width: '100%',
             pl: 3,
           }}>
-          {divisions.map(({ divisionName, id }, index) => (
+          {divisions.map(({ divisionName, id }) => (
             <Item
-              nameRole={divisionName}
-              id={`${id}${index}`}
+              name={divisionName}
+              id={`${id}`}
               groupChecked={false}
               onChooseItems={onChooseItems}
               key={id as string}
@@ -66,7 +63,10 @@ export const DeleteDivision = React.forwardRef<unknown, ChooseModalProps>(
         <Box sx={{ color: theme.palette.error.main, height: 20 }}>
           {errSelectedItems && 'Не выбран ни один дивизион!'}
         </Box>
-        <ButtonSection handleModal={handleModal} btnName="Удалить" />
+        <ButtonSection
+          closeModal={() => handleModal(false)}
+          btnName="Удалить"
+        />
       </Box>
     )
   }

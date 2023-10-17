@@ -1,27 +1,17 @@
 import { useState, useEffect } from 'react'
 import { Box, Collapse, ListItemButton, ListItemText } from '@mui/material'
 import { RotateButton } from 'components/Buttons/RotateButton'
-import { Nullable } from 'utils/nullableType'
 import { useRoles } from 'hooks/roles/useRoles'
-import { RolesGroupObject } from 'storeRoles/interfaces'
 import { Item } from './Item'
-type NullableString = Nullable<string>
-
-interface ListBoxGroup {
-  groupName: NullableString
-  roles: RolesGroupObject[]
-  groupId: string
-  groupChecked: boolean
-  onChooseItems: (data: string) => void
-}
+import { IListBoxGroup } from './interface'
 
 export const ListBoxGroup = ({
   groupName,
-  roles,
+  data,
   groupId,
   groupChecked,
   onChooseItems,
-}: ListBoxGroup) => {
+}: IListBoxGroup) => {
   const [open, setOpen] = useState(false)
   const [{ activeRolesGroup }, { setActiveRolesGroup }] = useRoles()
 
@@ -37,10 +27,13 @@ export const ListBoxGroup = ({
   }, [activeRolesGroup])
 
   useEffect(() => {
-    groupChecked && activeRolesGroup !== groupId
-      ? (setOpen(true), setActiveRolesGroup(groupId))
-      : null
+    if (groupChecked && activeRolesGroup !== groupId) {
+      setOpen(true)
+      setActiveRolesGroup(groupId)
+    }
   }, [groupChecked])
+
+  console.log('groupName = ', groupName)
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
@@ -70,10 +63,10 @@ export const ListBoxGroup = ({
         in={open}
         timeout="auto"
         unmountOnExit>
-        {roles.map(({ nameRole, id }, index) => (
+        {data.map(({ name, id }, index) => (
           <Item
-            nameRole={nameRole}
-            id={`${id}${index}`}
+            name={name}
+            id={`${id}`}
             groupChecked={groupChecked}
             onChooseItems={onChooseItems}
             key={id}

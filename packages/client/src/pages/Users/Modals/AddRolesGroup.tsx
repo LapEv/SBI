@@ -11,17 +11,15 @@ import { ChooseModalProps, AddValuesProps } from './interfaces'
 import { MapRolesGroupInputFields, style, styleTextFieldProps } from '../data'
 import { ButtonSection } from './ButtonsSection'
 import { useRoles } from 'hooks/roles/useRoles'
-import { RolesGroup } from 'storeRoles/interfaces'
+import { Roles, RolesGroup } from 'storeRoles/interfaces'
 import { Item } from 'components/CheckBoxGroup/Item'
-import { Nullable } from 'utils/nullableType'
-type NullableString = Nullable<string>
 
 export const AddRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
     const [{ roles, rolesGroup }, { newRolesGroup, getRolesGroup, getRoles }] =
       useRoles()
     const theme = useTheme()
-    const [selectedItems, setItems] = useState<NullableString[]>([])
+    const [selectedItems, setItems] = useState<Roles[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
@@ -40,30 +38,27 @@ export const AddRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
         setErrSelectedItems(true)
         return
       }
-
-      const selectedRoles = roles.filter(item => {
-        if (selectedItems.includes(item.role)) {
-          return item
-        }
-      })
       const data = {
         group: list[1].value,
         groupName: list[0].value,
-        roles: selectedRoles,
+        roles: selectedItems,
       }
       newRolesGroup(data as RolesGroup)
       handleModal(false)
     }
 
-    const setRoles = (role: string) => {
-      const itemId = roles.find(item => item.nameRole === role)?.role
-      if (selectedItems.includes(itemId as string)) {
-        setItems(selectedItems.filter(value => value !== itemId))
-        return
+    const setRoles = (checked: boolean, id: string) => {
+      const itemId = roles.find(item => item.id === id)!
+      const { createdAt, updatedAt, ...newItem } = itemId
+      if (!checked) {
+        const newRoles = selectedItems.filter(item => item.id !== newItem.id)
+        setItems(newRoles)
+      } else {
+        const newRoles = selectedItems
+        newRoles.push(newItem)
+        setItems(newRoles)
+        if (errSelectedItems) setErrSelectedItems(false)
       }
-      setItems([...selectedItems, itemId as string])
-      if ([...selectedItems, itemId as string] && errSelectedItems)
-        setErrSelectedItems(false)
     }
 
     useEffect(() => {
@@ -121,10 +116,10 @@ export const AddRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
           )
         })}
         <Box sx={{ m: 2 }}>
-          {roles.map((item, index) => (
+          {roles.map(item => (
             <Item
-              nameRole={item.nameRole}
-              id={`${item.id}${index}`}
+              name={item.nameRole}
+              id={`${item.id}`}
               onChooseItems={setRoles}
               key={item.id}
             />
@@ -133,7 +128,10 @@ export const AddRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
         <Box sx={{ color: theme.palette.error.main, height: 20 }}>
           {errSelectedItems && 'Не выбрана ни одна роль!'}
         </Box>
-        <ButtonSection handleModal={handleModal} btnName={'Сохранить'} />
+        <ButtonSection
+          closeModal={() => handleModal(false)}
+          btnName={'Сохранить'}
+        />
       </Box>
     )
   }

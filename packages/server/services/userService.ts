@@ -24,23 +24,16 @@ export class userService {
       active: true,
       theme: 'light',
     }
-    console.log('newUser = ', newUser)
-    console.log('id = ', id)
 
     try {
       if (id === 0) {
-        console.log('no user')
-        const resp = await userRepos.create(newUser)
-        console.log('resp = ', resp)
+        await userRepos.create(newUser)
         res.status(200).json(newUser)
       } else {
-        console.log('user')
-        const resp = await userRepos.update(id, { ...newUser })
-        console.log('resp = ', resp)
+        await userRepos.update(id, { ...newUser })
         res.status(200).json(newUser)
       }
     } catch (err: any) {
-      console.log('err = ', err)
       res
         .status(500)
         .json({ error: [auth.notification.errorRegistration, err] })
@@ -109,8 +102,19 @@ export class userService {
     }
   }
 
+  getActiveUsers = (_req: Request, res: Response) => {
+    const dataFind = { ..._req.body, active: true }
+    userRepos
+      .findAll({
+        where: dataFind,
+      })
+      .then(user => {
+        res.status(200).json(user)
+      })
+      .catch(err => res.status(500).json({ error: ['db error', err] }))
+  }
+
   getUsers = (_req: Request, res: Response) => {
-    console.log('_req.body = ', _req.body)
     userRepos
       .findAll({
         where: _req.body,
@@ -123,7 +127,6 @@ export class userService {
 
   getUserInfo = (_req: Request, res: Response) => {
     const { id } = _req.body
-    console.log('id = ', id)
     userRepos
       .findAll({
         where: { id },
@@ -136,30 +139,52 @@ export class userService {
       .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
 
-  deleteUser = (_req: Request, res: Response) => {
-    const { id, username } = _req.body
-    userRepos
-      .update(id, { active: false })
-      .then(user =>
-        res
-          .status(200)
-          .json(
-            `User ${username} with id=${user} has acquired the inactive status!`
-          )
-      )
-      .catch(err => res.status(500).json({ error: ['db error', err] }))
+  deleteUsers = async (_req: Request, res: Response) => {
+    const { selectedUsers } = _req.body
+    try {
+      const user = await userRepos.update(selectedUsers, {
+        active: false,
+      })
+      res
+        .status(200)
+        .json(
+          `User ${selectedUsers} with id=${user} has acquired the inactive status!`
+        )
+    } catch (err: any) {
+      res.status(500).json({ error: ['db error', err] })
+    }
   }
 
-  fullDeleteUser = (_req: Request, res: Response) => {
-    const { id } = _req.body
-    userRepos
-      .destroy({ where: { id } })
-      .then(user =>
-        res
-          .status(200)
-          .json(`User with id=${user} has acquired the inactive status!`)
-      )
-      .catch(err => res.status(500).json({ error: ['db error', err] }))
+  getUserInArchive = async (_req: Request, res: Response) => {
+    const { selectedUsers } = _req.body
+    try {
+      await userRepos.update(selectedUsers, {
+        active: true,
+      })
+      const users = await userRepos.findAll({
+        where: { active: true },
+      })
+      res.status(200).json(users)
+    } catch (err: any) {
+      res.status(500).json({ error: ['db error', err] })
+    }
+  }
+
+  fullDeleteUser = async (_req: Request, res: Response) => {
+    const { selectedUsers } = _req.body
+    try {
+      const users = await Promise.all([
+        await selectedUsers.map(async (value: string) => {
+          await userRepos.destroy({
+            where: { id: value },
+          })
+        }),
+        await userRepos.findAll({}),
+      ])
+      res.status(200).json(users[1])
+    } catch (err: any) {
+      res.status(500).json({ error: ['db error', err] })
+    }
   }
 
   changeTheme = (_req: Request, res: Response) => {

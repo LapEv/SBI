@@ -4,12 +4,13 @@ import {
   ChangeProfile,
   ChangeAvatar,
   CheckUser,
-  GetUsers,
+  GetActiveUsers,
   getUserStatus,
+  deleteUsers,
 } from 'api/user'
 import { signin, signout, signup } from 'api/user'
 import { Nullable } from 'utils/nullableType'
-import { User, UserStatus } from './interfaces'
+import { User, Users, UserStatus } from './interfaces'
 
 export type AuthState = {
   user: Nullable<User>
@@ -103,15 +104,15 @@ export const authSlise = createSlice({
       state.isLoadingAuth = false
       state.error = action.payload
     },
-    [GetUsers.fulfilled.type]: (state, action: PayloadAction<User[]>) => {
+    [GetActiveUsers.fulfilled.type]: (state, action: PayloadAction<User[]>) => {
       state.isLoadingAuth = false
       state.error = ''
       state.users = action.payload
     },
-    [GetUsers.pending.type]: state => {
+    [GetActiveUsers.pending.type]: state => {
       state.isLoadingAuth = true
     },
-    [GetUsers.rejected.type]: (state, action: PayloadAction<string>) => {
+    [GetActiveUsers.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingAuth = false
       state.error = action.payload
     },

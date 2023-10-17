@@ -12,7 +12,7 @@ import Loupe from '@mui/icons-material/Loupe'
 import Queue from '@mui/icons-material/Queue'
 import LayersClear from '@mui/icons-material/LayersClear'
 import DeleteSweep from '@mui/icons-material/DeleteSweep'
-import PersonRemove from '@mui/icons-material/PersonRemove'
+import DisplaySettings from '@mui/icons-material/DisplaySettings'
 import Addchart from '@mui/icons-material/Addchart'
 import GroupAdd from '@mui/icons-material/GroupAdd'
 import Remove from '@mui/icons-material/Remove'
@@ -55,11 +55,6 @@ export const menuData = [
     icon: <DeleteSweep fontSize="medium" />,
   },
   {
-    name: 'deleteUser',
-    title: 'Удалить пользователя',
-    icon: <PersonRemove fontSize="medium" />,
-  },
-  {
     name: 'deleteRole',
     title: 'Удалить роли',
     icon: <Remove fontSize="medium" />,
@@ -68,6 +63,11 @@ export const menuData = [
     name: 'deleteRolesGroup',
     title: 'Удалить группу ролей',
     icon: <GroupRemove fontSize="medium" />,
+  },
+  {
+    name: 'changeRolesGroup',
+    title: 'Изменить группу ролей',
+    icon: <DisplaySettings fontSize="medium" />,
   },
 ]
 export const style = {
@@ -113,9 +113,9 @@ export const ModalTitles = {
   addRolesGroup: 'Новая группа ролей',
   deleteDivision: 'Удалить дивизионы',
   deleteDepartment: 'Удалить отделы',
-  deleteUsers: 'Удалить пользователей',
   deleteRole: 'Удалить роли',
   deleteRolesGroup: 'Удалить группу ролей',
+  changeRolesGroup: 'Изменить группу ролей',
 }
 
 export const MapRoleInputFields = [
@@ -219,12 +219,6 @@ export const MapProfileInputFieldsAdmin = [
     name: 'phone',
     label: 'Телефон',
     validation: phoneValidation,
-    value: '',
-  },
-  {
-    name: 'password',
-    label: 'Пароль',
-    validation: passwordValidation,
     value: '',
   },
 ]

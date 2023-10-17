@@ -1,27 +1,25 @@
-import { Nullable } from 'utils/nullableType'
-
-type NullableString = Nullable<string>
-
 export interface Roles {
   id: string
-  role: NullableString
-  nameRole: NullableString
+  role: string
+  nameRole: string
+  createdAt?: string
+  updatedAt?: string
 }
 
 export interface RolesGroup {
-  group: NullableString
+  group: string
   roles: RolesGroupObject[]
   id: string
-  groupName: NullableString
+  groupName: string
 }
 
 export interface RolesGroupObject {
-  nameRole: NullableString
+  nameRole: string
   id: string
-  role: NullableString
+  role: string
 }
 
 export interface СhangeRolesGroup {
-  roles: Roles[]
+  roles: string[]
   activeRolesGroup: string
 }

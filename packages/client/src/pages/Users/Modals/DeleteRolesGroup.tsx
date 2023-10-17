@@ -5,64 +5,46 @@ import { Box, Typography, useTheme } from '@mui/material'
 import { useRoles } from 'hooks/roles/useRoles'
 import { style } from '../data'
 import { ButtonSection } from './ButtonsSection'
-import { CheckBoxGroup } from 'components/CheckBoxGroup/CheckBoxGroup'
+import { Item } from 'components/CheckBoxGroup/Item'
 
 export const DeleteRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
     const [
-      { roles, rolesGroup, activeRolesGroup },
-      { getRoles, getRolesGroup, deleteRolesGroup, changeRolesGroup },
+      { rolesGroup },
+      { getRoles, getRolesGroup, deleteRolesGroup, setActiveRolesGroup },
     ] = useRoles()
     const [selectedGroup, setGroup] = useState<string[]>([])
-    const [selectedRoles, setSelectedRoles] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
     const theme = useTheme()
 
     const changeData = (event: any) => {
       event.preventDefault()
-      if (!selectedGroup.length && !selectedRoles.length) {
+      if (!selectedGroup.length) {
         setErrSelectedItems(true)
         return
       }
-      if (selectedGroup.length) {
-        deleteRolesGroup(selectedGroup)
-        handleModal(false)
-        return
-      }
-      const activeGroup = rolesGroup.filter(
-        item => item.id === activeRolesGroup
-      )[0]
-      const newRoles = activeGroup.roles.filter(
-        item => !selectedRoles.includes(item.role as string)
-      )
-      changeRolesGroup(newRoles, activeRolesGroup)
+      deleteRolesGroup(selectedGroup)
       handleModal(false)
     }
 
-    const setRolesGroup = (group: string) => {
-      const groupData = rolesGroup.find(item => item.groupName === group)
-      const listRoles = groupData?.roles.map(item => item.role)
-      setSelectedRoles(listRoles as string[])
-      setGroup([groupData?.group as string])
-      if ([groupData?.group as string] && errSelectedItems)
-        setErrSelectedItems(false)
-    }
-
-    const setRoles = (role: string) => {
-      const itemId = roles.find(item => item.nameRole === role)?.role
-      if (selectedRoles.includes(itemId as string)) {
-        setSelectedRoles(selectedRoles.filter(value => value !== itemId))
+    const onChooseItems = (checked: boolean, id: string) => {
+      if (!checked) {
+        setGroup(selectedGroup.filter(value => value !== id))
         return
       }
-      setSelectedRoles([...selectedRoles, itemId as string])
-      if ([...selectedRoles, itemId as string] && errSelectedItems)
-        setErrSelectedItems(false)
+      setGroup([...selectedGroup, id])
+      if ([...selectedGroup, id] && errSelectedItems) setErrSelectedItems(false)
     }
 
     useEffect(() => {
       getRoles()
       getRolesGroup()
     }, [])
+
+    const closeModal = () => {
+      setActiveRolesGroup('')
+      handleModal(false)
+    }
 
     return (
       <Box
@@ -77,20 +59,22 @@ export const DeleteRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
             pl: 3,
           }}>
           {rolesGroup.map((item, index) => (
-            <CheckBoxGroup
-              data={item}
-              key={`${item}${index}`}
-              onChooseGroup={setRolesGroup}
-              onChooseItems={setRoles}
-              oneGroup={true}
-              selectedGroup={selectedGroup}
+            <Item
+              name={item.groupName}
+              id={`${item.id}`}
+              groupChecked={false}
+              onChooseItems={onChooseItems}
+              key={item.id}
             />
           ))}
         </Box>
         <Box sx={{ color: theme.palette.error.main, height: 20 }}>
           {errSelectedItems && 'Не выбрана ни одна роль или группа ролей!'}
         </Box>
-        <ButtonSection handleModal={handleModal} btnName="Удалить" />
+        <ButtonSection
+          closeModal={() => handleModal(false)}
+          btnName="Удалить"
+        />
       </Box>
     )
   }

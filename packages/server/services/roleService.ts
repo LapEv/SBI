@@ -22,12 +22,13 @@ export class roleService {
   }
 
   deleteRolesGroup = async (_req: Request, res: Response) => {
+    console.log('нельзя удалить SUPERADMIN ? ADMIN = ')
     const data = _req.body
     try {
       const rolesGroup = await Promise.all([
         await data.map(async (value: string) => {
           await roleGroupRepos.destroy({
-            where: { group: value },
+            where: { id: value },
           })
         }),
         await roleGroupRepos.findAll({}),
@@ -85,12 +86,11 @@ export class roleService {
       const roles = await Promise.all([
         await data.map(async (value: string) => {
           await roleRepos.destroy({
-            where: { role: value },
+            where: { id: value },
           })
         }),
         await roleRepos.findAll({}),
       ])
-      console.log('roles = ', roles)
       res.status(200).json(roles[1])
     } catch (err: any) {
       res.status(500).json({ error: ['db error', err] })

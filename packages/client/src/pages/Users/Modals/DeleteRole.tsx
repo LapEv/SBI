@@ -1,6 +1,6 @@
 import React from 'react'
 import { ChooseModalProps } from './interfaces'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, SyntheticEvent } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
 import { useRoles } from 'hooks/roles/useRoles'
 import { style } from '../data'
@@ -16,7 +16,7 @@ export const DeleteRole = React.forwardRef<unknown, ChooseModalProps>(
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
     const theme = useTheme()
 
-    const changeData = (event: any) => {
+    const changeData = (event: SyntheticEvent<EventTarget>) => {
       event.preventDefault()
       if (!selectedRoles.length) {
         setErrSelectedItems(true)

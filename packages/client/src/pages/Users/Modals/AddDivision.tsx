@@ -15,9 +15,9 @@ import { useStructure } from 'hooks/structure/useStructure'
 export const AddDivision = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
+    const [_, { addDivision }] = useStructure()
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const theme = useTheme()
-    const [_, { addDivision }] = useStructure()
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
       defaultValues: {

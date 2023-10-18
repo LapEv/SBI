@@ -13,8 +13,8 @@ import { Nullable } from 'utils/nullableType'
 import { User, Users, UserStatus } from './interfaces'
 
 export type AuthState = {
-  user: Nullable<User>
-  userData: Nullable<User>
+  user: User
+  userData: User
   users: User[]
   userStatus: UserStatus[]
   admin: boolean
@@ -25,8 +25,8 @@ export type AuthState = {
 }
 
 const initialState: AuthState = {
-  user: null,
-  userData: null,
+  user: {},
+  userData: {},
   users: [],
   userStatus: [],
   admin: false,
@@ -81,8 +81,8 @@ export const authSlise = createSlice({
     [signout.fulfilled.type]: (state, action: PayloadAction<User>) => {
       state.isLoadingAuth = false
       state.error = ''
-      state.user = null
-      state.userData = null
+      state.user = {}
+      state.userData = {}
     },
     [signout.pending.type]: state => {
       state.isLoadingAuth = true

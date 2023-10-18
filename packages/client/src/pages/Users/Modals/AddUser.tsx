@@ -29,10 +29,8 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const [{ userStatus }, { getUserStatus, signup }] = useAuth()
     const [{ divisions, departaments }] = useStructure()
-    const [
-      { roles, rolesGroup },
-      { getRoles, getRolesGroup, setActiveRolesGroup },
-    ] = useRoles()
+    const [{ rolesGroup }, { getRoles, getRolesGroup, setActiveRolesGroup }] =
+      useRoles()
     const [dataGroup, setDataGroup] = useState<ICheckBoxGroupData[]>([])
     const [division, setDivision] = useState<string>('')
     const [listDepartments, setDepartments] = useState<Data[]>([])

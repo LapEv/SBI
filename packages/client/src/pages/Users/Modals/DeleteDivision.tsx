@@ -1,6 +1,6 @@
 import React from 'react'
 import { ChooseModalProps } from './interfaces'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, SyntheticEvent } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
 import { style } from '../data'
 import { Item } from 'components/CheckBoxGroup/Item'
@@ -16,7 +16,7 @@ export const DeleteDivision = React.forwardRef<unknown, ChooseModalProps>(
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
     const theme = useTheme()
 
-    const changeData = (event: any) => {
+    const changeData = (event: SyntheticEvent<EventTarget>) => {
       event.preventDefault()
       if (!selectedDivisions.length) {
         setErrSelectedItems(true)

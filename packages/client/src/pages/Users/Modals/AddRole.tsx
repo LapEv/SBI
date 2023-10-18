@@ -16,8 +16,8 @@ import { Roles } from 'storeRoles/interfaces'
 export const AddRole = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
-    /* eslint-enable @typescript-eslint/no-unused-vars */
     const [_, { newRole }] = useRoles()
+    /* eslint-enable @typescript-eslint/no-unused-vars */
     const theme = useTheme()
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',

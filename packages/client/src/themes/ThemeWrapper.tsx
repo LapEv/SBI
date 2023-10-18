@@ -5,7 +5,7 @@ import App from '../App'
 import { useAuth } from 'hooks/auth/useAuth'
 const defaultTheme =
   (localStorage.getItem('theme') as 'light' | 'dark') ?? 'light'
-// eslint-disable @typescript-eslint/no-empty-function
+/* eslint-disable @typescript-eslint/no-empty-function */
 export const ColorModeContext = createContext({
   /* eslint-disable @typescript-eslint/no-unused-vars */
   toggleColorMode: (id: string | undefined) => {},

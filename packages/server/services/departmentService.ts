@@ -16,8 +16,9 @@ export class departmentService {
         where: { active: true },
       })
       res.status(200).json(departments)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
       res.status(500).json({ error: ['db error: unable to set division', err] })
     }
   }

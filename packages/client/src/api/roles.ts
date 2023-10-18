@@ -14,6 +14,7 @@ export const getRoles = createAsyncThunk(
       const { data } = await authhost.get<Roles>(ApiEndPoints.Roles.getRoles)
       return data
     } catch (e: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       return thunkAPI.rejectWithValue(
         `Не удалось получить данные по ролям\n${getError(e)}`
       )
@@ -30,6 +31,7 @@ export const getRolesGroup = createAsyncThunk(
       )
       return data
     } catch (e: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       return thunkAPI.rejectWithValue(
         `Не удалось получить данные по группам ролей\n${getError(e)}`
       )
@@ -47,6 +49,7 @@ export const newRole = createAsyncThunk(
         message: { text: 'Новая роль добавлена', type: 'success' },
       }
     } catch (e: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       return thunkAPI.rejectWithValue(
         `Не удалось создать новую роль!\n${getError(e)} `
       )
@@ -67,6 +70,7 @@ export const deleteRoles = createAsyncThunk(
         message: { text: 'Роли удалены', type: 'success' },
       }
     } catch (e: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       return thunkAPI.rejectWithValue(
         `Не удалось удалить роли!\n${getError(e)}`
       )
@@ -88,6 +92,7 @@ export const newRolesGroup = createAsyncThunk(
         message: { text: 'Новая группа ролей добавлена', type: 'success' },
       }
     } catch (e: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       return thunkAPI.rejectWithValue(
         `Не удалось создать новую группу ролей\n${getError(e)}`
       )
@@ -108,6 +113,7 @@ export const deleteRolesGroup = createAsyncThunk(
         message: { text: 'Группа ролей удалена!', type: 'success' },
       }
     } catch (e: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       return thunkAPI.rejectWithValue(
         `Не удалось удалить группу ролей!\n${getError(e)}`
       )
@@ -132,6 +138,7 @@ export const changeRolesGroup = createAsyncThunk(
         message: { text: 'Группа ролей изменена!', type: 'success' },
       }
     } catch (e: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       return thunkAPI.rejectWithValue(
         `Не удалось удалить группу ролей!\n${getError(e)}`
       )

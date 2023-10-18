@@ -8,6 +8,7 @@ export class roleService {
       const rolesGroup = await roleGroupRepos.findAll({})
       res.status(200).json(rolesGroup)
     } catch (err: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       res
         .status(500)
         .json({ error: ['db error: unable to set role group', err] })
@@ -35,6 +36,7 @@ export class roleService {
       ])
       res.status(200).json(rolesGroup[1])
     } catch (err: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       res.status(500).json({ error: ['db error', err] })
     }
   }
@@ -50,6 +52,7 @@ export class roleService {
       const rolesGroup = await roleGroupRepos.findAll({})
       res.status(200).json(rolesGroup)
     } catch (err: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       res.status(500).json({ error: ['db error', err] })
     }
   }
@@ -71,6 +74,7 @@ export class roleService {
       const roles = await roleRepos.findAll({})
       res.status(200).json(roles)
     } catch (err: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       res.status(500).json({ error: ['db error: unable to set role', err] })
     }
   }
@@ -95,6 +99,7 @@ export class roleService {
       ])
       res.status(200).json(roles[1])
     } catch (err: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       res.status(500).json({ error: ['db error', err] })
     }
   }

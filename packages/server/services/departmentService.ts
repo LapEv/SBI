@@ -17,6 +17,7 @@ export class departmentService {
       })
       res.status(200).json(departments)
     } catch (err: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       res.status(500).json({ error: ['db error: unable to set division', err] })
     }
   }
@@ -44,6 +45,7 @@ export class departmentService {
       ])
       res.status(200).json(departaments[1])
     } catch (err: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       res.status(500).json({ error: ['db error', err] })
     }
   }
@@ -59,6 +61,7 @@ export class departmentService {
       })
       res.status(200).json(departaments)
     } catch (err: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       res.status(500).json({ error: ['db error', err] })
     }
   }

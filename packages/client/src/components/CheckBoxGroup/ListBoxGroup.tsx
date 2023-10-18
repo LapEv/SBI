@@ -61,7 +61,7 @@ export const ListBoxGroup = ({
         in={open}
         timeout="auto"
         unmountOnExit>
-        {data.map(({ name, id }, index) => (
+        {data.map(({ name, id }) => (
           <Item
             name={name}
             id={`${id}`}

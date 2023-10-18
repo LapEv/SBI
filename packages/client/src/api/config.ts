@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios'
+import axios, { InternalAxiosRequestConfig } from 'axios'
 
 export const ApiEndPoints = {
   User: {

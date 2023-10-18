@@ -12,6 +12,7 @@ export class userStatusService {
       const userStatus = await UserStatusRepos.findAll({})
       res.status(200).json(userStatus)
     } catch (err: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       res.status(500).json({ error: ['db error: unable to set division', err] })
     }
   }
@@ -33,6 +34,7 @@ export class userStatusService {
       ])
       res.status(200).json(userStatus[1])
     } catch (err: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       res.status(500).json({ error: ['db error', err] })
     }
   }

@@ -1,5 +1,3 @@
-import { RolesGroup } from 'storeRoles/interfaces'
-
 export interface IListBoxGroup {
   groupName: string
   data: DataList[]

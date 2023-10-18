@@ -29,6 +29,7 @@ export const signin = createAsyncThunk(
         },
       }
     } catch (e: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       return thunkAPI.rejectWithValue(
         `Не удалось авторизоваться\n${getError(e)}`
       )
@@ -49,6 +50,7 @@ export const signup = createAsyncThunk(
         },
       }
     } catch (e: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       return thunkAPI.rejectWithValue(
         `Не удалось зарегистрироваться!\n${getError(e)}`
       )
@@ -66,6 +68,7 @@ export const signout = createAsyncThunk('user/signout', async (_, thunkAPI) => {
       },
     }
   } catch (e: any) {
+    // eslint-disable-line @typescript-eslint/no-explicit-any
     return thunkAPI.rejectWithValue(`Не удалось выйти!\n${getError(e)}`)
   }
 })
@@ -79,6 +82,7 @@ export const GetUser = createAsyncThunk(
       })
       return data
     } catch (e: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       return thunkAPI.rejectWithValue(
         `Не удалось получить данные пользователя!\n${getError(e)}`
       )
@@ -97,6 +101,7 @@ export const GetActiveUsers = createAsyncThunk(
       )
       return data
     } catch (e: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       return thunkAPI.rejectWithValue(
         `Не удалось получить данные пользователей!\n${getError(e)}`
       )
@@ -112,6 +117,7 @@ export const CheckUser = createAsyncThunk(
       const { id } = jwt_decode(data.token as string) as JwtPayload
       return { ...data, id }
     } catch (e: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       return thunkAPI.rejectWithValue(
         `Не удалось получить данные пользователя: \n${getError(e)}`
       )
@@ -135,6 +141,7 @@ export const ChangeProfile = createAsyncThunk(
         },
       }
     } catch (e: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       return thunkAPI.rejectWithValue(
         `Не удалось обновить данные пользователя!\n${getError(e)}`
       )
@@ -166,6 +173,7 @@ export const ChangeAvatar = createAsyncThunk(
         },
       }
     } catch (e: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       return thunkAPI.rejectWithValue(
         `Не удалось обновить аватар пользователя! \n${getError(e)}`
       )
@@ -189,6 +197,7 @@ export const ChangePassword = createAsyncThunk(
         },
       }
     } catch (e: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       return thunkAPI.rejectWithValue(
         `Не удалось обновить пароль! \n${getError(e)}`
       )
@@ -206,6 +215,7 @@ export const ChangeTheme = createAsyncThunk(
       )
       return data
     } catch (e: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       return thunkAPI.rejectWithValue(
         `Не удалось обновить данные темы! \n${getError(e)}`
       )
@@ -222,6 +232,7 @@ export const getUserStatus = createAsyncThunk(
       )
       return data
     } catch (e: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       return thunkAPI.rejectWithValue(
         `Не удалось получить статусы пользователей!\n${getError(e)}`
       )
@@ -241,6 +252,7 @@ export const deleteUsers = createAsyncThunk(
         message: { text: 'Пользователь перемещен в архив', type: 'success' },
       }
     } catch (e: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       return thunkAPI.rejectWithValue(
         `Не удалось переместить пользователя в архив!\n${getError(e)}`
       )

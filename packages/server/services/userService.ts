@@ -34,6 +34,7 @@ export class userService {
         res.status(200).json(newUser)
       }
     } catch (err: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       res
         .status(500)
         .json({ error: [auth.notification.errorRegistration, err] })
@@ -150,6 +151,7 @@ export class userService {
           `User ${selectedUsers} with id=${user} has acquired the inactive status!`
         )
     } catch (err: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       res.status(500).json({ error: ['db error', err] })
     }
   }
@@ -165,6 +167,7 @@ export class userService {
       })
       res.status(200).json(users)
     } catch (err: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       res.status(500).json({ error: ['db error', err] })
     }
   }
@@ -182,6 +185,7 @@ export class userService {
       ])
       res.status(200).json(users[1])
     } catch (err: any) {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
       res.status(500).json({ error: ['db error', err] })
     }
   }

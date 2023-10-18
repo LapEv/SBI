@@ -12,8 +12,9 @@ export class divisionService {
       })
       const divisions = await DivisionRepos.findAll({ where: { active: true } })
       res.status(200).json(divisions)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
       res.status(500).json({ error: ['db error: unable to set division', err] })
     }
   }
@@ -42,8 +43,9 @@ export class divisionService {
         await DivisionRepos.findAll({}),
       ])
       res.status(200).json(divisions[1])
+      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
       res.status(500).json({ error: ['db error', err] })
     }
   }
@@ -56,8 +58,9 @@ export class divisionService {
       })
       const divisions = await DivisionRepos.findAll({ where: { active: true } })
       res.status(200).json(divisions)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
       res.status(500).json({ error: ['db error', err] })
     }
   }

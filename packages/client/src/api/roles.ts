@@ -13,8 +13,9 @@ export const getRoles = createAsyncThunk(
     try {
       const { data } = await authhost.get<Roles>(ApiEndPoints.Roles.getRoles)
       return data
+      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (e: any) {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
       return thunkAPI.rejectWithValue(
         `Не удалось получить данные по ролям\n${getError(e)}`
       )
@@ -30,8 +31,9 @@ export const getRolesGroup = createAsyncThunk(
         ApiEndPoints.Roles.getRolesGroup
       )
       return data
+      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (e: any) {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
       return thunkAPI.rejectWithValue(
         `Не удалось получить данные по группам ролей\n${getError(e)}`
       )
@@ -48,8 +50,9 @@ export const newRole = createAsyncThunk(
         data,
         message: { text: 'Новая роль добавлена', type: 'success' },
       }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (e: any) {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
       return thunkAPI.rejectWithValue(
         `Не удалось создать новую роль!\n${getError(e)} `
       )
@@ -69,8 +72,9 @@ export const deleteRoles = createAsyncThunk(
         data,
         message: { text: 'Роли удалены', type: 'success' },
       }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (e: any) {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
       return thunkAPI.rejectWithValue(
         `Не удалось удалить роли!\n${getError(e)}`
       )
@@ -91,8 +95,9 @@ export const newRolesGroup = createAsyncThunk(
         data,
         message: { text: 'Новая группа ролей добавлена', type: 'success' },
       }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (e: any) {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
       return thunkAPI.rejectWithValue(
         `Не удалось создать новую группу ролей\n${getError(e)}`
       )
@@ -112,8 +117,9 @@ export const deleteRolesGroup = createAsyncThunk(
         data,
         message: { text: 'Группа ролей удалена!', type: 'success' },
       }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (e: any) {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
       return thunkAPI.rejectWithValue(
         `Не удалось удалить группу ролей!\n${getError(e)}`
       )
@@ -137,8 +143,9 @@ export const changeRolesGroup = createAsyncThunk(
         data,
         message: { text: 'Группа ролей изменена!', type: 'success' },
       }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (e: any) {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
       return thunkAPI.rejectWithValue(
         `Не удалось удалить группу ролей!\n${getError(e)}`
       )

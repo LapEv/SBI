@@ -7,8 +7,9 @@ export class roleService {
       await roleGroupRepos.create(_req.body)
       const rolesGroup = await roleGroupRepos.findAll({})
       res.status(200).json(rolesGroup)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
       res
         .status(500)
         .json({ error: ['db error: unable to set role group', err] })
@@ -35,8 +36,9 @@ export class roleService {
         await roleGroupRepos.findAll({}),
       ])
       res.status(200).json(rolesGroup[1])
+      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
       res.status(500).json({ error: ['db error', err] })
     }
   }
@@ -51,8 +53,9 @@ export class roleService {
       console.log('result = ', result)
       const rolesGroup = await roleGroupRepos.findAll({})
       res.status(200).json(rolesGroup)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
       res.status(500).json({ error: ['db error', err] })
     }
   }
@@ -73,8 +76,9 @@ export class roleService {
       await roleRepos.create(_req.body)
       const roles = await roleRepos.findAll({})
       res.status(200).json(roles)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
       res.status(500).json({ error: ['db error: unable to set role', err] })
     }
   }
@@ -98,8 +102,9 @@ export class roleService {
         await roleRepos.findAll({}),
       ])
       res.status(200).json(roles[1])
+      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
       res.status(500).json({ error: ['db error', err] })
     }
   }

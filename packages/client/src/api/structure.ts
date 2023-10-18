@@ -16,8 +16,9 @@ export const getDivisions = createAsyncThunk(
         ApiEndPoints.Structure.getDivisions
       )
       return data
+      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (e: any) {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
       return thunkAPI.rejectWithValue(
         `Не удалось получить данные по дивизионам!\n${getError(e)}`
       )
@@ -33,8 +34,9 @@ export const getDepartments = createAsyncThunk(
         ApiEndPoints.Structure.getDepartments
       )
       return data
+      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (e: any) {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
       return thunkAPI.rejectWithValue(
         `Не удалось получить данные по департаментам!\n${getError(e)}`
       )
@@ -54,8 +56,9 @@ export const newDivision = createAsyncThunk(
         data,
         message: { text: 'Новый дивизион добавлен!', type: 'success' },
       }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (e: any) {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
       return thunkAPI.rejectWithValue(
         `Не удалось создать дивизион!\n${getError(e)}`
       )
@@ -78,8 +81,9 @@ export const newDepartment = createAsyncThunk(
         data,
         message: { text: 'Новый отдел добавлен!', type: 'success' },
       }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (e: any) {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
       return thunkAPI.rejectWithValue(
         `Не удалось создать новый отдел!\n${getError(e)}`
       )
@@ -99,8 +103,9 @@ export const deleteDivision = createAsyncThunk(
         data,
         message: { text: 'Дивизионы перемещены в архив', type: 'success' },
       }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (e: any) {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
       return thunkAPI.rejectWithValue(
         `Не удалось удалить дивизион!\n${getError(e)}`
       )
@@ -120,8 +125,9 @@ export const deleteDepartment = createAsyncThunk(
         data,
         message: { text: 'Отделы перемещены в архив', type: 'success' },
       }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (e: any) {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
       return thunkAPI.rejectWithValue(
         `Не удалось удалить отдел!\n${getError(e)}`
       )

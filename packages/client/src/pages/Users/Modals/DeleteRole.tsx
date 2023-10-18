@@ -52,7 +52,7 @@ export const DeleteRole = React.forwardRef<unknown, ChooseModalProps>(
             width: '100%',
             pl: 3,
           }}>
-          {roles.map(({ nameRole, id }, index) => (
+          {roles.map(({ nameRole, id }) => (
             <Item
               name={nameRole}
               id={`${id}`}

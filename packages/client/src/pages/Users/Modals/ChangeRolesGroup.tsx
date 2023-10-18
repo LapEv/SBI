@@ -8,6 +8,7 @@ import { ButtonSection } from './ButtonsSection'
 import { DataList } from 'components/CheckBoxGroup/interface'
 import { Item } from 'components/CheckBoxGroup/Item'
 import { DropDown } from 'components/DropDown/DropDown'
+import { RolesGroupObject } from 'storeRoles/interfaces'
 
 export const ChangeRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -32,7 +33,7 @@ export const ChangeRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
       }
       const selectedRolesGroupId = rolesGroup.find(
         item => item.groupName === selectedGroup
-      )!.id
+      )?.id as string
       const rolesUpdate = roles.filter(item => selectedRoles.includes(item.id))
       changeRolesGroup(rolesUpdate, selectedRolesGroupId)
       handleModal(false)
@@ -49,7 +50,8 @@ export const ChangeRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
 
     const changeGroup = (data: string) => {
       if (!data) return
-      const useRoles = rolesGroup.find(item => item.groupName === data)!.roles
+      const useRoles = rolesGroup.find(item => item.groupName === data)
+        ?.roles as RolesGroupObject[]
       setData(
         roles.map(item => {
           return {

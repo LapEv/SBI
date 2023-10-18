@@ -10,9 +10,7 @@ export const CheckBoxGroup = ({
   oneGroup,
   selectedGroup,
 }: ICheckBoxGroup) => {
-  const [checked, setChecked] = useState<boolean>(
-    data.group === selectedGroup ? true : false
-  )
+  const [checked, setChecked] = useState<boolean>(data.group === selectedGroup)
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked)

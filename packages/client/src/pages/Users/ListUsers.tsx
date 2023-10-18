@@ -7,7 +7,7 @@ import { ProfileData } from './'
 import { useAuth } from 'hooks/auth/useAuth'
 
 export const ListUsers = memo((userData: User) => {
-  const [{}, { getUser }] = useAuth()
+  const [_, { getUser }] = useAuth()
   const [open, setOpen] = useState(false)
 
   const handleClick = () => {

@@ -17,7 +17,7 @@ export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
-    const [{ divisions, departaments }, { addDepartments }] = useStructure()
+    const [{ divisions }, { addDepartments }] = useStructure()
     const [division, setDivision] = useState<string>('')
     const theme = useTheme()
     const { handleSubmit, control } = useForm<AddValuesProps>({

@@ -5,16 +5,17 @@ import App from '../App'
 import { useAuth } from 'hooks/auth/useAuth'
 const defaultTheme =
   (localStorage.getItem('theme') as 'light' | 'dark') ?? 'light'
-// eslint-disable-next-line @typescript-eslint/no-empty-function
+// eslint-disable @typescript-eslint/no-empty-function
 export const ColorModeContext = createContext({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   toggleColorMode: (id: string | undefined) => {},
 })
-// eslint-disable-next-line @typescript-eslint/no-empty-function
+/* eslint-enable @typescript-eslint/no-empty-function */
+
 export default function ToggleColorMode() {
   const [mode, setMode] = useState<'light' | 'dark'>(defaultTheme)
   const [{ user }, { changeThemeOnServer }] = useAuth()
+  /* eslint-enable @typescript-eslint/no-unused-vars */
 
   const colorMode = useMemo(
     () => ({

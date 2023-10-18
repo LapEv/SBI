@@ -51,7 +51,7 @@ export const DeleteUsers = React.forwardRef<unknown, ChooseModalProps>(
             width: '100%',
             pl: 3,
           }}>
-          {users.map(({ lastName, firstName, middleName, post, id }, index) => (
+          {users.map(({ lastName, firstName, middleName, post, id }) => (
             <Item
               name={`${lastName} ${firstName} ${middleName}`}
               comment={post as string}

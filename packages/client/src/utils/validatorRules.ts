@@ -143,7 +143,9 @@ export const emailValidation = {
 
 export const passwordValidationNew = {
   required: REQUIRED_FIELD,
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   validate: (value: string, watch: any) => {
+    /* eslint-enable @typescript-eslint/no-explicit-any */
     if (watch.list[0].value === value) {
       return 'Новый пароль не должен быть таким же, как старый'
     }
@@ -166,7 +168,9 @@ export const passwordValidationNew = {
 
 export const passwordValidationConfrim = {
   required: REQUIRED_FIELD,
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   validate: (value: string, watch: any) => {
+    /* eslint-enable @typescript-eslint/no-explicit-any */
     if (watch.list[1].value !== value) {
       return 'Пароли не совпадают'
     }

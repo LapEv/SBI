@@ -1,6 +1,7 @@
 import { isObject } from './isObject'
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export function deepEqual(object1: any, object2: any) {
+  /* eslint-enable @typescript-eslint/no-explicit-any */
   if (!isObject(object1) || !isObject(object2)) {
     return object1 === object2
   }

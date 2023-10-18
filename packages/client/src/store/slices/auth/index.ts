@@ -6,11 +6,9 @@ import {
   CheckUser,
   GetActiveUsers,
   getUserStatus,
-  deleteUsers,
 } from 'api/user'
 import { signin, signout, signup } from 'api/user'
-import { Nullable } from 'utils/nullableType'
-import { User, Users, UserStatus } from './interfaces'
+import { User, UserStatus } from './interfaces'
 
 export type AuthState = {
   user: User

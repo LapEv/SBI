@@ -2,7 +2,9 @@ interface Error {
   response: {
     data?: {
       message?: string
+      /* eslint-disable @typescript-eslint/no-explicit-any */
       error?: any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
     }
   }
   config?: {

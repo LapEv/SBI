@@ -1,5 +1,3 @@
-import React from 'react'
-
 export interface ChooseModalProps {
   modalImage?: string
   handleModal: (state: boolean) => void

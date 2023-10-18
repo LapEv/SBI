@@ -11,10 +11,8 @@ export const DeleteRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
-    const [
-      { rolesGroup },
-      { getRoles, getRolesGroup, deleteRolesGroup, setActiveRolesGroup },
-    ] = useRoles()
+    const [{ rolesGroup }, { getRoles, getRolesGroup, deleteRolesGroup }] =
+      useRoles()
     const [selectedGroup, setGroup] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
     const theme = useTheme()
@@ -55,7 +53,7 @@ export const DeleteRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
             width: '100%',
             pl: 3,
           }}>
-          {rolesGroup.map((item, index) => (
+          {rolesGroup.map(item => (
             <Item
               name={item.groupName}
               id={`${item.id}`}

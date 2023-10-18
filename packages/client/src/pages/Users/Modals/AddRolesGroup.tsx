@@ -15,7 +15,9 @@ import { Roles, RolesGroup } from 'storeRoles/interfaces'
 import { Item } from 'components/CheckBoxGroup/Item'
 
 export const AddRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
+    /* eslint-enable @typescript-eslint/no-unused-vars */
     const [{ roles }, { newRolesGroup, getRolesGroup, getRoles }] = useRoles()
     const theme = useTheme()
     const [selectedItems, setItems] = useState<Roles[]>([])

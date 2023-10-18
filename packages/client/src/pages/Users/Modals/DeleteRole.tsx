@@ -8,7 +8,9 @@ import { Item } from 'components/CheckBoxGroup/Item'
 import { ButtonSection } from './ButtonsSection'
 
 export const DeleteRole = React.forwardRef<unknown, ChooseModalProps>(
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
+    /* eslint-enable @typescript-eslint/no-unused-vars */
     const [{ roles }, { getRoles, deleteRoles }] = useRoles()
     const [selectedRoles, setSelectedRoles] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)

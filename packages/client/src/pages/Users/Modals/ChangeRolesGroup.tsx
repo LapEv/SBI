@@ -13,7 +13,9 @@ import { Item } from 'components/CheckBoxGroup/Item'
 import { DropDown } from 'components/DropDown/DropDown'
 
 export const ChangeRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
+    /* eslint-enable @typescript-eslint/no-unused-vars */
     const [
       { roles, rolesGroup },
       { getRoles, getRolesGroup, changeRolesGroup, setActiveRolesGroup },

@@ -13,7 +13,9 @@ import { ButtonSection } from './ButtonsSection'
 import { useStructure } from 'hooks/structure/useStructure'
 
 export const AddDivision = React.forwardRef<unknown, ChooseModalProps>(
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
+    /* eslint-enable @typescript-eslint/no-unused-vars */
     const theme = useTheme()
     const [_, { addDivision }] = useStructure()
     const { handleSubmit, control } = useForm<AddValuesProps>({

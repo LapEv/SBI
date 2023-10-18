@@ -8,7 +8,9 @@ import { ButtonSection } from './ButtonsSection'
 import { useStructure } from 'hooks/structure/useStructure'
 
 export const DeleteDivision = React.forwardRef<unknown, ChooseModalProps>(
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
+    /* eslint-enable @typescript-eslint/no-unused-vars */
     const [{ divisions }, { deleteDivision, getDivisions }] = useStructure()
     const [selectedDivisions, setSelectedDivisions] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)

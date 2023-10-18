@@ -8,7 +8,9 @@ import { ButtonSection } from './ButtonsSection'
 import { useAuth } from 'hooks/auth/useAuth'
 
 export const DeleteUsers = React.forwardRef<unknown, ChooseModalProps>(
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
+    /* eslint-enable @typescript-eslint/no-unused-vars */
     const [{ users }, { deleteUsers, getActiveUsers }] = useAuth()
     const [selectedUsers, setSelectedUsers] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)

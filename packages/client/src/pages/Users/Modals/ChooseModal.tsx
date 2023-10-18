@@ -12,7 +12,6 @@ import {
 import { ModalTitles } from '../data'
 import { ChooseModalProps } from './interfaces'
 import { DeleteDepartment } from './DeleteDepartment'
-import { DeleteUsers } from './DeleteUsers'
 import { ChangeRolesGroup } from './ChangeRolesGroup'
 
 export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(

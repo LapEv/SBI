@@ -24,7 +24,9 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { ICheckBoxGroupData } from 'components/CheckBoxGroup/interface'
 
 export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
+    /* eslint-enable @typescript-eslint/no-unused-vars */
     const [{ userStatus }, { getUserStatus, signup }] = useAuth()
     const [{ divisions, departaments }] = useStructure()
     const [

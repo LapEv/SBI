@@ -1,4 +1,4 @@
-import { useState, SyntheticEvent } from 'react'
+import { useState } from 'react'
 import { Autocomplete } from '@mui/material'
 import { useTheme } from '@mui/material'
 import { TextField } from 'components/TextFields/TextFields'

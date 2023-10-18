@@ -1,11 +1,10 @@
-import { useEffect, useState, memo } from 'react'
+import { useEffect, useState } from 'react'
 import { Box, ListItemText, ListItemButton } from '@mui/material'
 import Collapse from '@mui/material/Collapse'
 import { useAuth } from 'hooks/auth/useAuth'
 import { ListUsers } from './ListUsers'
 import { RotateButton } from 'components/Buttons/RotateButton'
 import { DPR } from './interfaces'
-import { User } from 'storeAuth/interfaces'
 import { useStructure } from 'hooks/structure/useStructure'
 
 export const Departments = ({

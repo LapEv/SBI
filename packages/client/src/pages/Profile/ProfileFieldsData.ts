@@ -1,6 +1,6 @@
 import {
   emailValidation,
-  loginValidation,
+  // loginValidation,
   nameValidation,
   passwordValidation,
   passwordValidationNew,

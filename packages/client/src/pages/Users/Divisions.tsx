@@ -6,7 +6,7 @@ import { Division } from 'store/slices/structure/interfaces'
 import Collapse from '@mui/material/Collapse'
 import { RotateButton } from 'components/Buttons/RotateButton'
 
-export const Divisions = ({ divisionName, division, id }: Division) => {
+export const Divisions = ({ divisionName, id }: Division) => {
   const [
     { departaments, activeDivision },
     { getDepartments, setActiveDivision },

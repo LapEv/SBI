@@ -9,7 +9,9 @@ import {
 import Slide from '@mui/material/Slide'
 import { useMessage } from 'hooks/message/useMessage'
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 function TransitionLeft(props: any) {
+  /* eslint-enable @typescript-eslint/no-explicit-any */
   return <Slide {...props} direction="up" />
 }
 

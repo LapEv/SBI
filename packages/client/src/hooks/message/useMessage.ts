@@ -9,8 +9,6 @@ export function useMessage(): [MessageState, MessageActions] {
   const message = useSelector((state: RootState) => state.message)
   const dispatch = useAppDispatch()
 
-  const state = useSelector((state: RootState) => state)
-
   return [
     message,
     {

@@ -49,7 +49,7 @@ export const AddRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
     }
 
     const setRoles = (checked: boolean, id: string) => {
-      const itemId = roles.find(item => item.id === id)!
+      const itemId = roles.find(item => item.id === id) as Roles
       /* eslint-disable @typescript-eslint/no-unused-vars */
       const { createdAt, updatedAt, ...newItem } = itemId
       /* eslint-enable @typescript-eslint/no-unused-vars */

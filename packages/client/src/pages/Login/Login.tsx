@@ -13,6 +13,7 @@ import { MapLoginFields } from './LoginData'
 import { Button } from 'components/Buttons'
 import { TextField } from 'components/TextFields/TextFields'
 import { styleLoginTextFieldProps } from './data'
+import { isEmptyObjField } from 'utils/isEmptyObject'
 
 interface LoginValues extends Login {
   list: {
@@ -50,7 +51,7 @@ export function LoginPage() {
     )
   }
 
-  return user ? (
+  return !isEmptyObjField(user) ? (
     <Navigate to={Routes.Index} replace />
   ) : (
     <Container component="main" maxWidth="sm">

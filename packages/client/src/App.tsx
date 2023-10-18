@@ -12,6 +12,7 @@ import { Box } from '@mui/material'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useRoles } from 'hooks/roles/useRoles'
 import { useStructure } from 'hooks/structure/useStructure'
+import { isEmptyObjField } from 'utils/isEmptyObject'
 
 function App() {
   const [{ isLoadingAuth, user }] = useAuth()
@@ -51,7 +52,9 @@ function App() {
               <Route path={Paths.Index} element={<Layouts.Main />}>
                 <Route
                   index
-                  element={user ? <Pages.Home /> : <Pages.Login />}
+                  element={
+                    !isEmptyObjField(user) ? <Pages.Home /> : <Pages.Login />
+                  }
                 />
                 <Route path={Paths.Login} element={<Pages.Login />} />
                 <Route

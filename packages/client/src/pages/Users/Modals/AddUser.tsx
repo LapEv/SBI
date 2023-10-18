@@ -22,6 +22,7 @@ import { useRoles } from 'hooks/roles/useRoles'
 import { CheckBoxGroup } from 'components/CheckBoxGroup/CheckBoxGroup'
 import { useAuth } from 'hooks/auth/useAuth'
 import { ICheckBoxGroupData } from 'components/CheckBoxGroup/interface'
+import { RolesGroup } from 'storeRoles/interfaces'
 
 export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -97,7 +98,7 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
 
     const setRolesGroup = (group: string) => {
       if (!group) return
-      const groupData = rolesGroup.find(item => item.id === group)!
+      const groupData = rolesGroup.find(item => item.id === group) as RolesGroup
       const listRoles = groupData.roles.map(item => item.role)
       setItems(listRoles)
       setGroup(group)

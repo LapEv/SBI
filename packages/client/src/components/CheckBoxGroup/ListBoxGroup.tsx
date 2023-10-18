@@ -33,8 +33,6 @@ export const ListBoxGroup = ({
     }
   }, [groupChecked])
 
-  console.log('groupName = ', groupName)
-
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
       <ListItemButton

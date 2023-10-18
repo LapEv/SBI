@@ -1,22 +1,7 @@
 import { useState, ChangeEvent, useEffect } from 'react'
 import { Box, FormControlLabel, Checkbox } from '@mui/material'
-import { RolesGroupObject } from 'storeRoles/interfaces'
 import { ListBoxGroup } from './ListBoxGroup'
-
-export interface CheckBoxGroup {
-  data: {
-    group: string
-    roles: { name: string; id: string; nameId: string }[]
-    id: string
-    groupName: string
-  }
-  props?: object
-  key: string
-  onChooseGroup: (data: string, id?: string) => void
-  onChooseItems: (checked: boolean, id: string) => void
-  oneGroup: boolean
-  selectedGroup: string | string[]
-}
+import { ICheckBoxGroup } from './interface'
 
 export const CheckBoxGroup = ({
   data,
@@ -24,7 +9,7 @@ export const CheckBoxGroup = ({
   onChooseItems,
   oneGroup,
   selectedGroup,
-}: CheckBoxGroup) => {
+}: ICheckBoxGroup) => {
   const [checked, setChecked] = useState(
     data.group === selectedGroup ? true : false
   )
@@ -51,7 +36,6 @@ export const CheckBoxGroup = ({
       maxWidth="md"
       sx={{
         display: 'flex',
-        // height: '100%',
         width: '90%',
         flexDirection: 'row',
         justifyContent: 'flex-start',
@@ -66,7 +50,7 @@ export const CheckBoxGroup = ({
         />
         <ListBoxGroup
           groupName={data.groupName}
-          data={data.roles}
+          data={data.items}
           groupId={data.id}
           groupChecked={checked}
           onChooseItems={onChooseItems}

@@ -41,11 +41,6 @@ export const DeleteRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
       getRolesGroup()
     }, [])
 
-    const closeModal = () => {
-      setActiveRolesGroup('')
-      handleModal(false)
-    }
-
     return (
       <Box
         sx={{ ...style, paddingLeft: 5 }}

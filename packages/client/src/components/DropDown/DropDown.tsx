@@ -26,7 +26,6 @@ export const DropDown = ({
       noOptionsText={'Нет данных'}
       onChange={(_, textValue) => (
         onChange?.(textValue as string),
-        console.log('textValue = ', textValue),
         !textValue ? setErrors(true) : setErrors(false)
       )}
       value={value}

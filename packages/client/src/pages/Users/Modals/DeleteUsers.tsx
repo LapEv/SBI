@@ -24,22 +24,18 @@ export const DeleteUsers = React.forwardRef<unknown, ChooseModalProps>(
       deleteUsers(selectedUsers)
     }
 
-    const onChooseItems = (user: string, id: string | number | undefined) => {
-      if (selectedUsers.includes(id as string)) {
+    const onChooseItems = (checked: boolean, id: string) => {
+      if (!checked) {
         setSelectedUsers(selectedUsers.filter(value => value !== id))
         return
       }
-      setSelectedUsers([...selectedUsers, id as string])
-      if ([...selectedUsers, id as string] && errSelectedItems)
-        setErrSelectedItems(false)
+      setSelectedUsers([...selectedUsers, id])
+      if ([...selectedUsers, id] && errSelectedItems) setErrSelectedItems(false)
     }
 
     useEffect(() => {
-      console.log('useEffect')
       getActiveUsers({})
     }, [])
-
-    console.log('users = ', users)
 
     return (
       <Box
@@ -55,7 +51,7 @@ export const DeleteUsers = React.forwardRef<unknown, ChooseModalProps>(
           }}>
           {users.map(({ lastName, firstName, middleName, post, id }, index) => (
             <Item
-              nameRole={`${lastName} ${firstName} ${middleName}`}
+              name={`${lastName} ${firstName} ${middleName}`}
               comment={post as string}
               id={`${id}`}
               groupChecked={false}

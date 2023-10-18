@@ -8,8 +8,9 @@ export const Item = ({
   groupChecked,
   onChooseItems,
   comment,
+  initChecked,
 }: IItem) => {
-  const [checked, setChecked] = useState<boolean>(true)
+  const [checked, setChecked] = useState<boolean>(initChecked! ?? false)
   const theme = useTheme()
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -18,6 +19,7 @@ export const Item = ({
   }
 
   useEffect(() => {
+    if (groupChecked === null) return
     groupChecked ? setChecked(true) : setChecked(false)
   }, [groupChecked])
 

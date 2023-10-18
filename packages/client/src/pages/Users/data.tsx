@@ -221,6 +221,12 @@ export const MapProfileInputFieldsAdmin = [
     validation: phoneValidation,
     value: '',
   },
+  {
+    name: 'password',
+    label: 'Пароль',
+    validation: passwordValidation,
+    value: '',
+  },
 ]
 
 export const MapProfileInputFields = [

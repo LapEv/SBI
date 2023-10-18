@@ -1,5 +1,5 @@
 import React from 'react'
-import { ChooseModalProps } from './interfaces'
+import { ChooseModalProps, Data } from './interfaces'
 import { useState, useEffect } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
 import { useRoles } from 'hooks/roles/useRoles'
@@ -9,26 +9,21 @@ import { CheckBoxGroup } from 'components/CheckBoxGroup/CheckBoxGroup'
 import { isEqualArr } from 'utils/isEqualArr'
 import { ListBoxGroup } from 'components/CheckBoxGroup/ListBoxGroup'
 import { DataList } from 'components/CheckBoxGroup/interface'
+import { Item } from 'components/CheckBoxGroup/Item'
+import { DropDown } from 'components/DropDown/DropDown'
 
 export const ChangeRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
     const [
-      { roles, rolesGroup, activeRolesGroup },
-      {
-        getRoles,
-        getRolesGroup,
-        deleteRolesGroup,
-        changeRolesGroup,
-        setActiveRolesGroup,
-      },
+      { roles, rolesGroup },
+      { getRoles, getRolesGroup, changeRolesGroup, setActiveRolesGroup },
     ] = useRoles()
     const [data, setData] = useState<DataList[]>([])
-    const [selectedGroup, setGroup] = useState<string>('')
+    const [selectedGroup, setSelectedGroup] = useState<string>('')
+    const [group, setGroup] = useState<Data[]>([])
     const [selectedRoles, setSelectedRoles] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
     const theme = useTheme()
-
-    const [checked, setChecked] = useState(false)
 
     const changeData = (event: any) => {
       event.preventDefault()
@@ -36,42 +31,41 @@ export const ChangeRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
         setErrSelectedItems(true)
         return
       }
-      changeRolesGroup(selectedRoles, selectedGroup)
-      setActiveRolesGroup('')
+      const selectedRolesGroupId = rolesGroup.find(
+        item => item.groupName === selectedGroup
+      )!.id
+      const rolesUpdate = roles.filter(item => selectedRoles.includes(item.id))
+      changeRolesGroup(rolesUpdate, selectedRolesGroupId)
       handleModal(false)
     }
 
-    const setRolesGroup = (groupId: string) => {
-      if (!groupId.length) {
-        setGroup(groupId)
-        setSelectedRoles([])
+    const onChooseItems = (checked: boolean, id: string) => {
+      if (!checked) {
+        setSelectedRoles(selectedRoles.filter(value => value !== id))
         return
       }
-      const groupData = rolesGroup.find(item => item.id === groupId)
-      const listRoles = groupData!.roles.map(item => item.id)
-      setSelectedRoles(listRoles)
-      setGroup(groupId)
-      if (groupId.length && errSelectedItems) setErrSelectedItems(false)
+      setSelectedRoles([...selectedRoles, id])
+      if ([...selectedRoles, id] && errSelectedItems) setErrSelectedItems(false)
     }
 
-    const setRoles = (checked: boolean, id: string) => {
-      if (!selectedGroup.length) return
-      if (!checked) {
-        const newRoles = selectedRoles.filter(item => item !== id)
-        const roles = rolesGroup
-          .find(item => item.id === selectedGroup)!
-          .roles.map(item => item.id)
-        const isEqual = isEqualArr(newRoles, roles)
-        setSelectedRoles(newRoles)
-      } else {
-        const newRoles = selectedRoles
-        newRoles.push(id)
-        const roles = rolesGroup
-          .find(item => item.id === selectedGroup)!
-          .roles.map(item => item.id)
-        const isEqual = isEqualArr(newRoles, roles)
-        setSelectedRoles(newRoles as string[])
-      }
+    const changeGroup = (data: string) => {
+      if (!data) return
+      const useRoles = rolesGroup.find(item => item.groupName === data)!.roles
+      setData(
+        roles.map(item => {
+          return {
+            name: item.nameRole,
+            id: item.id,
+            nameId: item.role,
+            initChecked:
+              useRoles.findIndex(value => value.id === item.id) >= 0
+                ? true
+                : false,
+          }
+        })
+      )
+      setSelectedGroup(data)
+      setSelectedRoles(useRoles.map(item => item.id))
     }
 
     useEffect(() => {
@@ -79,29 +73,20 @@ export const ChangeRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
       getRolesGroup()
     }, [])
 
-    const closeModal = () => {
-      setActiveRolesGroup('')
-      handleModal(false)
-    }
-
-    const onChooseItems = () => {
-      console.log('onChooseItems')
-    }
-
-    console.log('rolesGroup = ', rolesGroup)
-
     useEffect(() => {
-      setData(
-        roles.map(item => {
-          return {
-            name: item.nameRole,
-            id: item.id,
-            nameId: item.role,
-            checked: false,
-          }
-        })
+      setGroup(
+        rolesGroup
+          .map(item => {
+            return {
+              ['categoryName']: item.groupName as string,
+              ['category']: item.group as string,
+              ['id']: item.id as string,
+            }
+          })
+          .filter(item => item.category !== 'SUPERADMIN')
+          .filter(item => item.category !== 'ADMIN')
       )
-    }, [roles])
+    }, [rolesGroup])
 
     return (
       <Box
@@ -109,28 +94,38 @@ export const ChangeRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
         component="form"
         onSubmit={changeData}>
         <Typography variant={'h6'}>{title}</Typography>
+        <DropDown
+          data={group}
+          props={{ mt: 4 }}
+          onChange={data => changeGroup(data)}
+          value={selectedGroup}
+          label="Выберите группу ролей"
+          errorLabel="Не выбрана группа ролей!"
+        />
         <Box
           sx={{
             mt: 2,
             width: '100%',
             pl: 3,
           }}>
-          {rolesGroup.map((item, index) =>
-            item.group === 'SUPERADMIN' || item.group === 'ADMIN' ? null : (
-              <ListBoxGroup
-                groupName={item.groupName}
-                data={data}
-                groupId={item.id}
-                groupChecked={checked}
-                onChooseItems={onChooseItems}
-              />
-            )
-          )}
+          {data.map(({ name, id, initChecked }) => (
+            <Item
+              name={name}
+              id={`${id}`}
+              groupChecked={null}
+              onChooseItems={onChooseItems}
+              key={id}
+              initChecked={initChecked}
+            />
+          ))}
         </Box>
         <Box sx={{ color: theme.palette.error.main, height: 20 }}>
           {errSelectedItems && 'Не выбрана ни одна роль или группа ролей!'}
         </Box>
-        <ButtonSection closeModal={closeModal} btnName={'Изменить'} />
+        <ButtonSection
+          closeModal={() => handleModal(false)}
+          btnName={'Изменить'}
+        />
       </Box>
     )
   }

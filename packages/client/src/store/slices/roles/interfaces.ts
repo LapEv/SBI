@@ -20,6 +20,6 @@ export interface RolesGroupObject {
 }
 
 export interface СhangeRolesGroup {
-  roles: string[]
+  roles: Roles[]
   activeRolesGroup: string
 }

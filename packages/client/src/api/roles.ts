@@ -126,6 +126,7 @@ export const changeRolesGroup = createAsyncThunk(
           activeRolesGroup,
         }
       )
+      console.log('data = ', data)
       return {
         data,
         message: { text: 'Группа ролей изменена!', type: 'success' },

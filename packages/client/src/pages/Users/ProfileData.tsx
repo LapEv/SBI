@@ -12,9 +12,10 @@ import { useTheme } from '@mui/material/styles'
 import { ProfileValues } from './interfaces'
 import { CheckBoxGroup } from 'components/CheckBoxGroup/CheckBoxGroup'
 import { RolesGroup } from 'storeRoles/interfaces'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRoles } from 'hooks/roles/useRoles'
 import { RotateButton } from 'components/Buttons/RotateButton'
+import { ICheckBoxGroupData } from 'components/CheckBoxGroup/interface'
 
 export const ProfileData = (userData: User) => {
   const theme = useTheme()
@@ -22,9 +23,10 @@ export const ProfileData = (userData: User) => {
   const [{ roles, rolesGroup, activeRolesGroup }, { getRoles, getRolesGroup }] =
     useRoles()
   const [open, setOpen] = useState(false)
+  const [dataGroup, setDataGroup] = useState<ICheckBoxGroupData[]>([])
 
   const [selectedGroup, setGroup] = useState<string>(userData.roleGroup!)
-  const [selectedRoles, setSelectedRoles] = useState(userData.roles)
+  const [selectedItems, setItems] = useState<string[]>([])
   const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
 
   const fieldsData = admin ? MapProfileInputFieldsAdmin : MapProfileInputFields
@@ -49,24 +51,22 @@ export const ProfileData = (userData: User) => {
   }
 
   const setRolesGroup = (group: string) => {
-    console.log('group = ', group)
-    const listRoles = rolesGroup
-      .filter(item => item.group === group)[0]
-      .roles.map(item => item.role)
-    setSelectedRoles(listRoles)
+    if (!group) return
+    const groupData = rolesGroup.find(item => item.id === group)!
+    const listRoles = groupData.roles.map(item => item.role)
+    setItems(listRoles)
     setGroup(group)
     if (group && errSelectedItems) setErrSelectedItems(false)
   }
 
-  const setRoles = (role: string) => {
-    // const itemId = roles.find(item => item.nameRole === role)?.role
-    // if (selectedRoles.includes(itemId as string)) {
-    //   setSelectedRoles(selectedRoles.filter(value => value !== itemId))
-    //   return
-    // }
-    // setSelectedRoles([...selectedRoles, itemId as string])
-    // if ([...selectedRoles, itemId as string] && errSelectedItems)
-    //   setErrSelectedItems(false)
+  const setRoles = (checked: boolean, id: string) => {
+    if (!checked) {
+      setItems(selectedItems.filter(value => value !== id))
+      return
+    }
+    setItems([...selectedItems, id as string])
+    if ([...selectedItems, id as string] && errSelectedItems)
+      setErrSelectedItems(false)
   }
 
   console.log('selectedGroup = ', selectedGroup)
@@ -78,6 +78,24 @@ export const ProfileData = (userData: User) => {
     getRolesGroup()
     getRoles()
   }
+
+  useEffect(() => {
+    const data = rolesGroup.map(item => {
+      return {
+        id: item.id,
+        group: item.group,
+        groupName: item.groupName,
+        items: item.roles.map(value => {
+          return {
+            name: value.nameRole,
+            nameId: value.role,
+            id: value.id,
+          }
+        }),
+      }
+    })
+    setDataGroup(data)
+  }, [rolesGroup])
 
   return (
     <Box
@@ -149,9 +167,9 @@ export const ProfileData = (userData: User) => {
             timeout="auto"
             unmountOnExit>
             {open &&
-              rolesGroup.map((item, index) => (
+              dataGroup.map((item, index) => (
                 <CheckBoxGroup
-                  data={item as RolesGroup}
+                  data={item}
                   key={`${item}${index}`}
                   onChooseGroup={setRolesGroup}
                   onChooseItems={setRoles}

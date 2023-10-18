@@ -16,8 +16,7 @@ import { Item } from 'components/CheckBoxGroup/Item'
 
 export const AddRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
-    const [{ roles, rolesGroup }, { newRolesGroup, getRolesGroup, getRoles }] =
-      useRoles()
+    const [{ roles }, { newRolesGroup, getRolesGroup, getRoles }] = useRoles()
     const theme = useTheme()
     const [selectedItems, setItems] = useState<Roles[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)

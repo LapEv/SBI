@@ -21,16 +21,21 @@ import { DropDown } from '../../../components/DropDown/DropDown'
 import { useRoles } from 'hooks/roles/useRoles'
 import { CheckBoxGroup } from 'components/CheckBoxGroup/CheckBoxGroup'
 import { useAuth } from 'hooks/auth/useAuth'
+import { ICheckBoxGroupData } from 'components/CheckBoxGroup/interface'
 
 export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
     const [{ userStatus }, { getUserStatus, signup }] = useAuth()
     const [{ divisions, departaments }] = useStructure()
-    const [{ roles, rolesGroup }, { getRoles, getRolesGroup }] = useRoles()
+    const [
+      { roles, rolesGroup },
+      { getRoles, getRolesGroup, setActiveRolesGroup },
+    ] = useRoles()
+    const [dataGroup, setDataGroup] = useState<ICheckBoxGroupData[]>([])
     const [division, setDivision] = useState<string>('')
     const [listDepartments, setDepartments] = useState<Data[]>([])
     const [department, setDepartment] = useState<string>('')
-    const [selectedGroup, setGroup] = useState<string[]>([])
+    const [selectedGroup, setGroup] = useState<string>('')
     const [selectedItems, setItems] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
     const [chiefDivision, setCheckedCheifDivision] = useState<boolean>(false)
@@ -75,7 +80,7 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
         phone: list[6].value,
         password: list[7].value,
         post: list[4].value,
-        roleGroup: selectedGroup[0],
+        roleGroup: selectedGroup,
         roles: selectedItems,
         division,
         chiefDivision,
@@ -86,25 +91,26 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
         status,
       }
       signup(newUser)
+      setActiveRolesGroup('')
       handleModal(false)
     }
 
     const setRolesGroup = (group: string) => {
-      const groupData = rolesGroup.find(item => item.groupName === group)!
+      if (!group) return
+      const groupData = rolesGroup.find(item => item.id === group)!
       const listRoles = groupData.roles.map(item => item.role)
       setItems(listRoles)
-      setGroup([groupData?.group])
-      if ([groupData?.group] && errSelectedItems) setErrSelectedItems(false)
+      setGroup(group)
+      if (group && errSelectedItems) setErrSelectedItems(false)
     }
 
-    const setRoles = (role: string) => {
-      const itemId = roles.find(item => item.nameRole === role)?.role
-      if (selectedItems.includes(itemId as string)) {
-        setItems(selectedItems.filter(value => value !== itemId))
+    const setRoles = (checked: boolean, id: string) => {
+      if (!checked) {
+        setItems(selectedItems.filter(value => value !== id))
         return
       }
-      setItems([...selectedItems, itemId as string])
-      if ([...selectedItems, itemId as string] && errSelectedItems)
+      setItems([...selectedItems, id as string])
+      if ([...selectedItems, id as string] && errSelectedItems)
         setErrSelectedItems(false)
     }
 
@@ -138,6 +144,29 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
       getRolesGroup()
       getUserStatus()
     }, [])
+
+    useEffect(() => {
+      const data = rolesGroup.map(item => {
+        return {
+          id: item.id,
+          group: item.group,
+          groupName: item.groupName,
+          items: item.roles.map(value => {
+            return {
+              name: value.nameRole,
+              nameId: value.role,
+              id: value.id,
+            }
+          }),
+        }
+      })
+      setDataGroup(data)
+    }, [rolesGroup])
+
+    const closeModal = () => {
+      setActiveRolesGroup('')
+      handleModal(false)
+    }
 
     return (
       <Box sx={style} component="form" onSubmit={handleSubmit(changeData)}>
@@ -247,7 +276,7 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
             />
           )
         })}
-        {rolesGroup.map((item, index) => (
+        {dataGroup.map((item, index) => (
           <CheckBoxGroup
             data={item}
             key={`${item}${index}`}
@@ -260,7 +289,7 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
         <Box sx={{ color: theme.palette.error.main, height: 20, mt: 1 }}>
           {errSelectedItems && 'Не выбрана ни одна роль или группа ролей!'}
         </Box>
-        <ButtonSection handleModal={handleModal} btnName="Сохранить" />
+        <ButtonSection closeModal={closeModal} btnName="Сохранить" />
       </Box>
     )
   }

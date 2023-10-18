@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios'
 
 export const ApiEndPoints = {
   User: {
@@ -57,7 +57,9 @@ const host = axios.create({
   },
 })
 
-const authInterceptor = (config: any) => {
+const authInterceptor = (
+  config: InternalAxiosRequestConfig
+): InternalAxiosRequestConfig => {
   config.headers.authorization = `Bearer ${localStorage.getItem('token')}`
   return config
 }

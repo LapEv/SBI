@@ -15,7 +15,6 @@ import { useRoles } from 'hooks/roles/useRoles'
 import { useStructure } from 'hooks/structure/useStructure'
 
 function App() {
-  const theme = useTheme()
   const [{ isLoadingAuth, user }] = useAuth()
   const [{ isLoadingRoles }] = useRoles()
   const [{ isLoadingStructure }] = useStructure()
@@ -28,32 +27,6 @@ function App() {
     }
     fetchServerData()
   }, [])
-
-  const DisabledBackground = styled(Box)({
-    width: '100%',
-    height: '100%',
-    position: 'fixed',
-    background: '#ccc',
-    opacity: 0.5,
-    zIndex: 1,
-  })
-
-  // const CircularLoading = () => (
-  //   <>
-  //     <CircularProgress
-  //       size={70}
-  //       sx={{
-  //         position: 'fixed',
-  //         left: '50%',
-  //         top: '50%',
-  //         transform: 'translate(-50%, -50%)',
-  //         zIndex: 2,
-  //         color: theme.palette.primary.main,
-  //       }}
-  //     />
-  //     <DisabledBackground />
-  //   </>
-  // )
 
   return (
     <FullScreen>

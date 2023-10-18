@@ -133,7 +133,6 @@ export class userService {
       })
       .then(user => {
         const userData = user[0]
-        console.log('user = ', user)
         res.status(200).json(userData)
       })
       .catch(err => res.status(500).json({ error: ['db error', err] }))

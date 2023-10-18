@@ -2,12 +2,12 @@ import IconButton from '@mui/material/IconButton'
 import ExpandLess from '@mui/icons-material/ExpandLess'
 import { userRotateStyles } from '../../themes/rotateConfig'
 
-interface RotateButton {
+interface IRotateButton {
   open: boolean
   handleClick?: () => void
   size: string
 }
-export const RotateButton = ({ open, handleClick, size }: RotateButton) => {
+export const RotateButton = ({ open, handleClick, size }: IRotateButton) => {
   const classes = userRotateStyles()
 
   return (

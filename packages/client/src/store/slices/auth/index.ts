@@ -38,6 +38,7 @@ export const authSlise = createSlice({
   initialState,
   reducers: {
     updateUserData(state, action) {
+      console.log('action = ', action.payload)
       state.userData = action.payload
     },
     updateEditStatus(state, action) {

@@ -4,7 +4,7 @@ import { Box, ListItemText, ListItemButton } from '@mui/material'
 import { Departments } from './'
 import { Division } from 'store/slices/structure/interfaces'
 import Collapse from '@mui/material/Collapse'
-import { RotateButton } from 'components/Buttons/RotateButton'
+import { RotateButton } from 'components/Buttons'
 
 export const Divisions = ({ divisionName, id }: Division) => {
   const [

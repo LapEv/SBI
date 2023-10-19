@@ -5,7 +5,7 @@ import { Box, Typography, useTheme } from '@mui/material'
 import { useRoles } from 'hooks/roles/useRoles'
 import { style } from '../data'
 import { Item } from 'components/CheckBoxGroup/Item'
-import { ButtonSection } from './ButtonsSection'
+import { ButtonsModalSection } from 'components/Buttons'
 
 export const DeleteRole = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -65,7 +65,7 @@ export const DeleteRole = React.forwardRef<unknown, ChooseModalProps>(
         <Box sx={{ color: theme.palette.error.main, height: 20 }}>
           {errSelectedItems && 'Не выбрана ни одна роль!'}
         </Box>
-        <ButtonSection
+        <ButtonsModalSection
           closeModal={() => handleModal(false)}
           btnName="Удалить"
         />

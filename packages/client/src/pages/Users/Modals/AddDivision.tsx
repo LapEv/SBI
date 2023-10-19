@@ -9,7 +9,7 @@ import {
 import { TextField } from 'components/TextFields/TextFields'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
 import { MapDivisionInputFields, style, styleTextFieldProps } from '../data'
-import { ButtonSection } from './ButtonsSection'
+import { ButtonsModalSection } from 'components/Buttons'
 import { useStructure } from 'hooks/structure/useStructure'
 
 export const AddDivision = React.forwardRef<unknown, ChooseModalProps>(
@@ -84,7 +84,7 @@ export const AddDivision = React.forwardRef<unknown, ChooseModalProps>(
             />
           )
         })}
-        <ButtonSection
+        <ButtonsModalSection
           closeModal={() => handleModal(false)}
           btnName="Сохранить"
         />

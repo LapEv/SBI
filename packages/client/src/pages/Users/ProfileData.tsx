@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react'
 import { Box, Collapse, TextField, ListItemButton } from '@mui/material'
 import { User } from 'storeAuth/interfaces'
 import {
@@ -6,37 +7,42 @@ import {
   Controller,
   useFormState,
 } from 'react-hook-form'
-import { MapProfileInputFields, MapProfileInputFieldsAdmin } from './data'
+import {
+  MapProfileInputFields,
+  MapProfileInputFieldsAdminWithoutPassword,
+} from './data'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useTheme } from '@mui/material/styles'
 import { ProfileValues } from './interfaces'
 import { CheckBoxGroup } from 'components/CheckBoxGroup/CheckBoxGroup'
-import { RolesGroup } from 'storeRoles/interfaces'
 import { useEffect, useState } from 'react'
 import { useRoles } from 'hooks/roles/useRoles'
-import { RotateButton } from 'components/Buttons/RotateButton'
+import { ButtonsSection, RotateButton } from 'components/Buttons'
 import { ICheckBoxGroupData } from 'components/CheckBoxGroup/interface'
+import { deepEqual } from 'utils/deepEqual'
 
-export const ProfileData = (userData: User) => {
+export const ProfileData = (user: User) => {
   const theme = useTheme()
-  const [{ admin }, { updateUserData }] = useAuth()
+  const [{ admin, userData }, { updateUserData, deleteUsers }] = useAuth()
   const [{ roles, rolesGroup, activeRolesGroup }, { getRoles, getRolesGroup }] =
     useRoles()
   const [open, setOpen] = useState(false)
   const [dataGroup, setDataGroup] = useState<ICheckBoxGroupData[]>([])
-
-  const [selectedGroup, setGroup] = useState<string>(userData.roleGroup!)
+  const [selectedGroup, setGroup] = useState<string>(user.roleGroup as string)
   const [selectedItems, setItems] = useState<string[]>([])
   const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
+  const [changeActive, setChangeActive] = useState<boolean>(false)
 
-  const fieldsData = admin ? MapProfileInputFieldsAdmin : MapProfileInputFields
+  const fieldsData = admin
+    ? MapProfileInputFieldsAdminWithoutPassword
+    : MapProfileInputFields
 
   const { reset, handleSubmit, control } = useForm<ProfileValues>({
     mode: 'onBlur',
     defaultValues: {
       list: fieldsData.map(data => ({
         ...data,
-        value: userData![data.name as keyof typeof userData],
+        value: user![data.name as keyof typeof user],
       })),
     },
   })
@@ -56,28 +62,34 @@ export const ProfileData = (userData: User) => {
     const listRoles = groupData.roles.map(item => item.role)
     setItems(listRoles)
     setGroup(group)
+    updateUserData({
+      ...userData!,
+      ...{ roleGroup: groupData.group, roles: listRoles },
+    })
     if (group && errSelectedItems) setErrSelectedItems(false)
   }
 
   const setRoles = (checked: boolean, id: string) => {
     if (!checked) {
-      setItems(selectedItems.filter(value => value !== id))
+      setErrSelectedItems(true)
       return
     }
-    setItems([...selectedItems, id as string])
-    if ([...selectedItems, id as string] && errSelectedItems)
-      setErrSelectedItems(false)
+    setErrSelectedItems(true)
   }
-
-  console.log('selectedGroup = ', selectedGroup)
-  // console.log('selectedGroup = ', selectedGroup)
-  // console.log('rolesGroup = ', rolesGroup)
 
   const handleClick = () => {
     setOpen(!open)
     getRolesGroup()
     getRoles()
   }
+
+  const deleteUser = () => {
+    deleteUsers([userData.id as string])
+  }
+
+  useEffect(() => {
+    setChangeActive(deepEqual(userData, user))
+  }, [userData])
 
   useEffect(() => {
     const data = rolesGroup.map(item => {
@@ -95,6 +107,9 @@ export const ProfileData = (userData: User) => {
       }
     })
     setDataGroup(data)
+    setRolesGroup(
+      rolesGroup.find(item => item.group === userData.roleGroup)?.id as string
+    )
   }, [rolesGroup])
 
   return (
@@ -120,13 +135,14 @@ export const ProfileData = (userData: User) => {
                 variant="outlined"
                 sx={{ width: '88%', m: 2, mt: 2.5, height: 60 }}
                 margin="normal"
-                // onChange={(event: ChangeEvent<HTMLInputElement>) => (
-                //   field.onChange(event),
-                //   updateUserData({
-                //     ...userData!,
-                //     ...{ [name]: event.target.value },
-                //   })
-                // )}
+                onChange={(event: ChangeEvent<HTMLInputElement>) => (
+                  field.onChange(event),
+                  console.log('event.target.value = ', event.target.value),
+                  updateUserData({
+                    ...userData!,
+                    ...{ [name]: event.target.value },
+                  })
+                )}
                 error={!!(errors?.list ?? [])[index]?.value?.message}
                 helperText={(errors?.list ?? [])[index]?.value?.message}
                 inputProps={{
@@ -162,7 +178,7 @@ export const ProfileData = (userData: User) => {
             Дополнительно
           </ListItemButton>
           <Collapse
-            sx={{ width: '100%', ml: 5 }}
+            sx={{ width: '90%', ml: 5 }}
             in={open}
             timeout="auto"
             unmountOnExit>
@@ -178,6 +194,16 @@ export const ProfileData = (userData: User) => {
                 />
               ))}
           </Collapse>
+          <Box sx={{ color: theme.palette.error.main, height: 20 }}>
+            {errSelectedItems &&
+              'Здесь роли изменить нельзя! Создайте новую группу ролей с необходимыми ролями!'}
+          </Box>
+          <ButtonsSection
+            btnSecondHandle={deleteUser}
+            btnName="Сохранить"
+            btnDisabled={changeActive}
+            btnSecondName="Удалить"
+          />
         </Box>
       )}
     </Box>

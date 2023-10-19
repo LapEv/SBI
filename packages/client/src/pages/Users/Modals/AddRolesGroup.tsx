@@ -9,7 +9,7 @@ import {
 import { TextField } from 'components/TextFields/TextFields'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
 import { MapRolesGroupInputFields, style, styleTextFieldProps } from '../data'
-import { ButtonSection } from './ButtonsSection'
+import { ButtonsModalSection } from 'components/Buttons'
 import { useRoles } from 'hooks/roles/useRoles'
 import { Roles, RolesGroup } from 'storeRoles/interfaces'
 import { Item } from 'components/CheckBoxGroup/Item'
@@ -131,7 +131,7 @@ export const AddRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
         <Box sx={{ color: theme.palette.error.main, height: 20 }}>
           {errSelectedItems && 'Не выбрана ни одна роль!'}
         </Box>
-        <ButtonSection
+        <ButtonsModalSection
           closeModal={() => handleModal(false)}
           btnName={'Сохранить'}
         />

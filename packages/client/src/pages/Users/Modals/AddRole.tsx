@@ -9,7 +9,7 @@ import {
 import { TextField } from 'components/TextFields/TextFields'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
 import { MapRoleInputFields, style, styleTextFieldProps } from '../data'
-import { ButtonSection } from './ButtonsSection'
+import { ButtonsModalSection } from 'components/Buttons'
 import { useRoles } from 'hooks/roles/useRoles'
 import { Roles } from 'storeRoles/interfaces'
 
@@ -89,7 +89,7 @@ export const AddRole = React.forwardRef<unknown, ChooseModalProps>(
             />
           )
         })}
-        <ButtonSection
+        <ButtonsModalSection
           closeModal={() => handleModal(false)}
           btnName={'Сохранить'}
         />

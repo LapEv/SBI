@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
 import { useRoles } from 'hooks/roles/useRoles'
 import { style } from '../data'
-import { ButtonSection } from './ButtonsSection'
+import { ButtonsModalSection } from 'components/Buttons'
 import { Item } from 'components/CheckBoxGroup/Item'
 
 export const DeleteRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
@@ -66,7 +66,7 @@ export const DeleteRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
         <Box sx={{ color: theme.palette.error.main, height: 20 }}>
           {errSelectedItems && 'Не выбрана ни одна роль или группа ролей!'}
         </Box>
-        <ButtonSection
+        <ButtonsModalSection
           closeModal={() => handleModal(false)}
           btnName="Удалить"
         />

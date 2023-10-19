@@ -3,7 +3,7 @@ import { Box, ListItemText, ListItemButton } from '@mui/material'
 import Collapse from '@mui/material/Collapse'
 import { useAuth } from 'hooks/auth/useAuth'
 import { ListUsers } from './ListUsers'
-import { RotateButton } from 'components/Buttons/RotateButton'
+import { RotateButton } from 'components/Buttons'
 import { DPR } from './interfaces'
 import { useStructure } from 'hooks/structure/useStructure'
 

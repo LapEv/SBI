@@ -9,9 +9,9 @@ import {
 import { TextField } from 'components/TextFields/TextFields'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
 import { MapDepartmentInputFields, style, styleTextFieldProps } from '../data'
-import { ButtonSection } from './ButtonsSection'
+import { ButtonsModalSection } from 'components/Buttons'
 import { useStructure } from 'hooks/structure/useStructure'
-import { DropDown } from '../../../components/DropDown/DropDown'
+import { DropDown } from 'components/DropDown/DropDown'
 
 export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -108,7 +108,7 @@ export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
             />
           )
         })}
-        <ButtonSection
+        <ButtonsModalSection
           closeModal={() => handleModal(false)}
           btnName="Сохранить"
         />

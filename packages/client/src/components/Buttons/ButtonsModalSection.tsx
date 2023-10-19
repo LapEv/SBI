@@ -6,7 +6,7 @@ type Handle = {
   btnName: string
 }
 
-export const ButtonSection = ({ closeModal, btnName }: Handle) => {
+export const ButtonsModalSection = ({ closeModal, btnName }: Handle) => {
   return (
     <Box
       sx={{

@@ -177,6 +177,7 @@ export class userService {
 
   fullDeleteUser = async (_req: Request, res: Response) => {
     const { selectedUsers } = _req.body
+    console.log('selectedUsers = ', selectedUsers)
     try {
       const users = await Promise.all([
         await selectedUsers.map(async (value: string) => {

@@ -37,13 +37,14 @@ function App() {
               <Box
                 sx={{
                   width: '100%',
+                  height: '100vh',
                   minHeight: '100vh',
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
                   zIndex: 1999,
                   backgroundColor: 'rgba(0,0,0,0.7)',
-                  position: 'absolute',
+                  position: 'fixed',
                 }}>
                 <CircularProgress />
               </Box>

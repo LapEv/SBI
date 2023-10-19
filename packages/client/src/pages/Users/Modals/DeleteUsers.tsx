@@ -4,7 +4,7 @@ import { useState, useEffect, SyntheticEvent } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
 import { style } from '../data'
 import { Item } from 'components/CheckBoxGroup/Item'
-import { ButtonSection } from './ButtonsSection'
+import { ButtonsModalSection } from 'components/Buttons'
 import { useAuth } from 'hooks/auth/useAuth'
 
 export const DeleteUsers = React.forwardRef<unknown, ChooseModalProps>(
@@ -65,7 +65,7 @@ export const DeleteUsers = React.forwardRef<unknown, ChooseModalProps>(
         <Box sx={{ color: theme.palette.error.main, height: 20 }}>
           {errSelectedItems && 'Не выбрано ниодного пользователя!'}
         </Box>
-        <ButtonSection
+        <ButtonsModalSection
           closeModal={() => handleModal(false)}
           btnName="Удалить"
         />

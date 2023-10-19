@@ -2,11 +2,11 @@ import { useState, memo } from 'react'
 import { Box, ListItemText, ListItemButton } from '@mui/material'
 import Collapse from '@mui/material/Collapse'
 import { User } from 'storeAuth/interfaces'
-import { RotateButton } from 'components/Buttons/RotateButton'
+import { RotateButton } from 'components/Buttons'
 import { ProfileData } from './'
 import { useAuth } from 'hooks/auth/useAuth'
 
-export const ListUsers = memo((userData: User) => {
+export const ListUsers = memo((user: User) => {
   /* eslint-disable @typescript-eslint/no-unused-vars */
   const [_, { getUser }] = useAuth()
   /* eslint-enable @typescript-eslint/no-unused-vars */
@@ -14,7 +14,7 @@ export const ListUsers = memo((userData: User) => {
 
   const handleClick = () => {
     setOpen(!open)
-    getUser(userData.id as string)
+    getUser(user.id as string)
   }
 
   return (
@@ -33,11 +33,11 @@ export const ListUsers = memo((userData: User) => {
         onClick={handleClick}>
         <Box>
           <ListItemText
-            primary={`${userData.lastName} ${userData.firstName} ${userData.middleName}`}
+            primary={`${user.lastName} ${user.firstName} ${user.middleName}`}
             sx={{ ml: 4 }}
           />
           <ListItemText
-            primary={`${userData.post}`}
+            primary={`${user.post}`}
             sx={{ ml: 5 }}
             primaryTypographyProps={{ fontSize: '0.875rem!important' }}
           />
@@ -49,7 +49,7 @@ export const ListUsers = memo((userData: User) => {
         in={open}
         timeout="auto"
         unmountOnExit>
-        <ProfileData {...userData} />
+        <ProfileData {...user} />
       </Collapse>
     </Box>
   )

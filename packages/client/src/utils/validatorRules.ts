@@ -119,7 +119,6 @@ export const phoneValidation = {
       return 'Слишком мало цифр!'
     }
     if (value.substring(0, 2) === '+7' && value.length > 12) {
-      console.log('много')
       return 'Слишком много цифр!'
     }
     if (value.substring(0, 2) === '+7' && value.length < 12) {
@@ -132,7 +131,6 @@ export const phoneValidation = {
 export const emailValidation = {
   required: REQUIRED_FIELD,
   validate: (value: string) => {
-    console.log('value = ', value)
     if (!value.match('^[a-zA-z0-9]+[a-zA-Z\\d-_.]*@[a-z\\d-_]+\\.')) {
       return 'Неправильный email'
     }

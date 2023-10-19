@@ -15,9 +15,9 @@ import {
 import { TextField } from 'components/TextFields/TextFields'
 import { ChooseModalProps, AddValuesProps, Data } from './interfaces'
 import { MapProfileInputFieldsAdmin, style, styleTextFieldProps } from '../data'
-import { ButtonSection } from './ButtonsSection'
+import { ButtonsModalSection } from 'components/Buttons'
 import { useStructure } from 'hooks/structure/useStructure'
-import { DropDown } from '../../../components/DropDown/DropDown'
+import { DropDown } from 'components/DropDown/DropDown'
 import { useRoles } from 'hooks/roles/useRoles'
 import { CheckBoxGroup } from 'components/CheckBoxGroup/CheckBoxGroup'
 import { useAuth } from 'hooks/auth/useAuth'
@@ -72,6 +72,7 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
       const status = userStatus.find(
         item => item.categoryName === statusName
       )?.category
+      const group = rolesGroup.find(item => item.id === selectedGroup)?.group
       const newUser = {
         username: list[3].value,
         firstName: list[1].value,
@@ -81,7 +82,7 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
         phone: list[6].value,
         password: list[7].value,
         post: list[4].value,
-        roleGroup: selectedGroup,
+        roleGroup: group,
         roles: selectedItems,
         division,
         chiefDivision,
@@ -290,7 +291,7 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
         <Box sx={{ color: theme.palette.error.main, height: 20, mt: 1 }}>
           {errSelectedItems && 'Не выбрана ни одна роль или группа ролей!'}
         </Box>
-        <ButtonSection closeModal={closeModal} btnName="Сохранить" />
+        <ButtonsModalSection closeModal={closeModal} btnName="Сохранить" />
       </Box>
     )
   }

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
 import { style } from '../data'
 import { Item } from 'components/CheckBoxGroup/Item'
-import { ButtonSection } from './ButtonsSection'
+import { ButtonsModalSection } from 'components/Buttons'
 import { useStructure } from 'hooks/structure/useStructure'
 
 export const DeleteDepartment = React.forwardRef<unknown, ChooseModalProps>(
@@ -73,7 +73,7 @@ export const DeleteDepartment = React.forwardRef<unknown, ChooseModalProps>(
         <Box sx={{ color: theme.palette.error.main, height: 20 }}>
           {errSelectedItems && 'Не выбран ни один отдел!'}
         </Box>
-        <ButtonSection
+        <ButtonsModalSection
           closeModal={() => handleModal(false)}
           btnName="Удалить"
         />

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Box, Collapse, ListItemButton, ListItemText } from '@mui/material'
-import { RotateButton } from 'components/Buttons/RotateButton'
+import { RotateButton } from 'components/Buttons'
 import { useRoles } from 'hooks/roles/useRoles'
 import { Item } from './Item'
 import { IListBoxGroup } from './interface'

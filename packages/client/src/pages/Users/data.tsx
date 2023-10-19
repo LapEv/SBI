@@ -229,6 +229,51 @@ export const MapProfileInputFieldsAdmin = [
   },
 ]
 
+export const MapProfileInputFieldsAdminWithoutPassword = [
+  {
+    name: 'lastName',
+    label: 'Фамилия',
+    validation: nameValidation,
+    value: '',
+  },
+  {
+    name: 'firstName',
+    label: 'Имя',
+    validation: nameValidation,
+    value: '',
+  },
+  {
+    name: 'middleName',
+    label: 'Отчество',
+    validation: nameValidation,
+    value: '',
+  },
+  {
+    name: 'username',
+    label: 'Логин',
+    validation: loginValidation,
+    value: '',
+  },
+  {
+    name: 'post',
+    label: 'Должность',
+    validation: textValidation,
+    value: '',
+  },
+  {
+    name: 'email',
+    label: 'Почта',
+    validation: emailValidation,
+    value: '',
+  },
+  {
+    name: 'phone',
+    label: 'Телефон',
+    validation: phoneValidation,
+    value: '',
+  },
+]
+
 export const MapProfileInputFields = [
   {
     name: 'lastName',

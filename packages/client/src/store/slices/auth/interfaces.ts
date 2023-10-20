@@ -57,6 +57,7 @@ export interface Login {
 export interface ChangePasswordProps {
   oldPassword: string
   newPassword: string
+  id: string
 }
 export interface ChangeThemeProps {
   id: number | string | null | undefined

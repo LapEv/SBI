@@ -20,6 +20,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 
 export function ProfileChangePassword({
   handleModal,
+  userId,
 }: ProfileChangePasswordProps) {
   /* eslint-disable @typescript-eslint/no-unused-vars */
   const [_, { changePassword }] = useAuth()
@@ -38,10 +39,10 @@ export function ProfileChangePassword({
   const theme = useTheme()
 
   function changePasswordData(data: ProfileChangePasswordValues) {
-    console.log(' data = ', data)
     changePassword({
       oldPassword: data.list[0].value,
       newPassword: data.list[1].value,
+      id: userId,
     })
     handleModal(false)
   }

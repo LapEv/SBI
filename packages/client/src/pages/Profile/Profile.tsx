@@ -74,7 +74,10 @@ export function ProfilePage() {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description">
           <>
-            <ProfileChangePassword handleModal={setModal} />
+            <ProfileChangePassword
+              handleModal={setModal}
+              userId={user.id as string}
+            />
           </>
         </Modal>
         <ProfileHeader

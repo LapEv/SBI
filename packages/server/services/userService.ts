@@ -73,6 +73,41 @@ export class userService {
       )
   }
 
+  changePassword = async (_req: Request, res: Response) => {
+    const { oldPassword, newPassword, id } = _req.body
+    const user = await userRepos.findAll({
+      where: { id },
+    })
+    const validPassword = bcrypt.compareSync(oldPassword, user[0].password)
+    console.log('validPassword = ', validPassword)
+    console.log('newPassword = ', newPassword)
+    console.log('oldPassword = ', oldPassword)
+    console.log('err = ', auth.notification.invalidPassword)
+    if (!validPassword) {
+      return res
+        .status(400)
+        .json({ message: auth.notification.invalidPassword })
+    }
+    const errValidation: Result = validationResult(_req)
+    if (!errValidation.isEmpty()) {
+      const errors = errValidation.array()
+      return res.status(400).json({
+        message: `${auth.notification.errorRegistration}: ${errors[0].msg}`,
+        errValidation,
+      })
+    }
+    const hashPassword = bcrypt.hashSync(newPassword, 7)
+    try {
+      console.log('hashPassword = ', hashPassword)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res
+        .status(500)
+        .json({ error: [auth.notification.errorRegistration, err] })
+    }
+  }
+
   check = (_req: Request, res: Response) => {
     const { username, id, roles } = _req.body
     try {

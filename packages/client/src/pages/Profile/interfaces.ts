@@ -25,6 +25,7 @@ export interface ProfileValues extends User {
 
 export interface ProfileChangePasswordProps {
   handleModal: (state: boolean) => void
+  userId: string
 }
 
 export interface ProfileChangePasswordValues {

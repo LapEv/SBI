@@ -9,7 +9,7 @@ export const ApiEndPoints = {
     GetUsers: 'user/getActiveUsers',
     CheckUser: 'user/checkUser',
     UserFullInfo: 'user/getUserFullInfo',
-    UpdatePassword: 'user/password',
+    UpdatePassword: 'user/changePassword',
     UpdateProfile: 'user/profile',
     UpdateProfileAvatar: 'user/profile/avatar',
     Search: 'user/search',

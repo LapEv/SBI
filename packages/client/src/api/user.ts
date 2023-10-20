@@ -192,9 +192,7 @@ export const changePassword = createAsyncThunk(
   'user/changePassword',
   async (value: ChangePasswordProps, thunkAPI) => {
     try {
-      const { data } = await authhost.put<User[]>(
-        // 1. на стороне сервера проверить пароль
-        //2. изменить пароль
+      const { data } = await authhost.post<User[]>(
         ApiEndPoints.User.UpdatePassword,
         value
       )
@@ -209,7 +207,7 @@ export const changePassword = createAsyncThunk(
     } catch (e: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
       return thunkAPI.rejectWithValue(
-        `Не удалось обновить пароль! \n${getError(e)}`
+        `Не удалось изменить пароль! \n${getError(e)}`
       )
     }
   }

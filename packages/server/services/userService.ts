@@ -158,7 +158,7 @@ export class userService {
     }
   }
 
-  getUserInArchive = async (_req: Request, res: Response) => {
+  pullUserInArchive = async (_req: Request, res: Response) => {
     const { selectedUsers } = _req.body
     try {
       await userRepos.update(selectedUsers, {
@@ -205,5 +205,20 @@ export class userService {
           .json(`Theme changed for user with id=${user} on ${theme}!`)
       )
       .catch(err => res.status(500).json({ error: ['db error', err] }))
+  }
+
+  updateUser = async (_req: Request, res: Response) => {
+    const { id, userData } = _req.body
+    try {
+      await userRepos.update(id, userData)
+      const { id_division, id_department } = userData
+      const dataFind = { id_division, id_department, active: true }
+      const rolesGroup = await userRepos.findAll({ where: dataFind })
+      res.status(200).json(rolesGroup)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res.status(500).json({ error: ['db error', err] })
+    }
   }
 }

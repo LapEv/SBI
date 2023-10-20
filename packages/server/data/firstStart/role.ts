@@ -79,4 +79,20 @@ export const rolesStartData = [
     role: 'updateDepartment',
     nameRole: 'Перемещение отдела в архив',
   },
+  {
+    role: 'updateUser',
+    nameRole: 'Изменение данных пользователя',
+  },
+  {
+    role: 'fullDeleteUser',
+    nameRole: 'Полное удаление пользователя',
+  },
+  {
+    role: 'deleteUsers',
+    nameRole: 'Перемещение пользователя в архив',
+  },
+  {
+    role: 'pullUserInArchive',
+    nameRole: 'Вытащить пользователя из архива',
+  },
 ]

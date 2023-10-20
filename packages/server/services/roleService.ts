@@ -44,13 +44,11 @@ export class roleService {
   }
 
   changeRolesGroup = async (_req: Request, res: Response) => {
-    console.log('_req.body = ', _req.body)
     const { roles, activeRolesGroup } = _req.body
     try {
-      const result = await roleGroupRepos.update(activeRolesGroup, {
+      await roleGroupRepos.update(activeRolesGroup, {
         roles: roles,
       })
-      console.log('result = ', result)
       const rolesGroup = await roleGroupRepos.findAll({})
       res.status(200).json(rolesGroup)
       /* eslint-disable @typescript-eslint/no-explicit-any */

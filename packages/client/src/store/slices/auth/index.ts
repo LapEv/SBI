@@ -6,21 +6,10 @@ import {
   CheckUser,
   GetActiveUsers,
   getUserStatus,
+  updateUser,
 } from 'api/user'
 import { signin, signout, signup } from 'api/user'
-import { User, UserStatus } from './interfaces'
-
-export type AuthState = {
-  user: User
-  userData: User
-  users: User[]
-  userStatus: UserStatus[]
-  admin: boolean
-  superAdmin: boolean
-  editStatus: string
-  isLoadingAuth: boolean
-  error?: string
-}
+import { AnswerUser, AuthState, User, UserStatus } from './interfaces'
 
 const initialState: AuthState = {
   user: {},
@@ -38,7 +27,6 @@ export const authSlise = createSlice({
   initialState,
   reducers: {
     updateUserData(state, action) {
-      console.log('action = ', action.payload)
       state.userData = action.payload
     },
     updateEditStatus(state, action) {
@@ -172,6 +160,18 @@ export const authSlise = createSlice({
       state.isLoadingAuth = true
     },
     [getUserStatus.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingAuth = false
+      state.error = action.payload
+    },
+    [updateUser.fulfilled.type]: (state, action: PayloadAction<AnswerUser>) => {
+      state.isLoadingAuth = false
+      state.error = ''
+      state.users = action.payload.data
+    },
+    [updateUser.pending.type]: state => {
+      state.isLoadingAuth = true
+    },
+    [updateUser.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingAuth = false
       state.error = action.payload
     },

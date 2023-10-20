@@ -9,12 +9,14 @@ import {
   CheckUser,
   getUserStatus,
   deleteUsers,
+  updateUser,
 } from 'api/user'
 import { signin, signout, signup } from 'api/user'
 import { RootState } from 'store'
 import { useAppDispatch } from 'store/hooks'
-import { AuthState, updateEditStatus, updateUserData } from 'store/slices/auth'
+import { updateEditStatus, updateUserData } from 'store/slices/auth'
 import { AuthActions } from './authActions'
+import { AuthState } from 'storeAuth/interfaces'
 
 export function useAuth(): [AuthState, AuthActions] {
   const auth = useSelector((state: RootState) => state.auth)
@@ -65,6 +67,9 @@ export function useAuth(): [AuthState, AuthActions] {
       },
       deleteUsers(id) {
         dispatch(deleteUsers(id))
+      },
+      updateUser(data) {
+        dispatch(updateUser(data))
       },
     },
   ]

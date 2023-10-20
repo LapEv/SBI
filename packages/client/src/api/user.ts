@@ -97,7 +97,6 @@ export const GetUser = createAsyncThunk(
 export const GetActiveUsers = createAsyncThunk(
   'user/getActiveUsers',
   async (dataFind: User, thunkAPI) => {
-    console.log('GetActiveUsers')
     try {
       const { data } = await authhost.post<User[]>(
         ApiEndPoints.User.GetUsers,
@@ -267,6 +266,29 @@ export const deleteUsers = createAsyncThunk(
       /* eslint-enable @typescript-eslint/no-explicit-any */
       return thunkAPI.rejectWithValue(
         `Не удалось переместить пользователя в архив!\n${getError(e)}`
+      )
+    }
+  }
+)
+
+export const updateUser = createAsyncThunk(
+  'user/updateUser',
+  async (userData: User, thunkAPI) => {
+    try {
+      const id = userData.id
+      const { data } = await authhost.post(ApiEndPoints.User.UpdateUser, {
+        id,
+        userData,
+      })
+      return {
+        data,
+        message: { text: 'Данные пользователя обновлены', type: 'success' },
+      }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      return thunkAPI.rejectWithValue(
+        `Не удалось обновить данные пользователя!\n${getError(e)}`
       )
     }
   }

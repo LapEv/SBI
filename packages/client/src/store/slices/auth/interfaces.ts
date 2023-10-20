@@ -72,3 +72,20 @@ export interface UserStatus {
   categoryName: string
   id: string
 }
+
+export interface AnswerUser {
+  data: User[]
+  type: string
+}
+
+export type AuthState = {
+  user: User
+  userData: User
+  users: User[]
+  userStatus: UserStatus[]
+  admin: boolean
+  superAdmin: boolean
+  editStatus: string
+  isLoadingAuth: boolean
+  error?: string
+}

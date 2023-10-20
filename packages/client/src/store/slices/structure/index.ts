@@ -1,5 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Department, Division } from './interfaces'
+import {
+  AnswerDepartment,
+  AnswerDivision,
+  Department,
+  Division,
+  StructureState,
+} from './interfaces'
 import {
   getDepartments,
   getDivisions,
@@ -9,31 +15,12 @@ import {
   deleteDepartment,
 } from 'api/structure'
 
-export interface StructureState {
-  divisions: Division[]
-  departaments: Department[]
-  activeDivision: string
-  activeDepartment: string
-  isLoadingStructure: boolean
-  error?: string
-}
-
 const initialState: StructureState = {
   divisions: [],
   departaments: [],
   activeDivision: '',
   activeDepartment: '',
   isLoadingStructure: false,
-}
-
-interface AnswerDivision {
-  data: Division[]
-  type: string
-}
-
-interface AnswerDepartment {
-  data: Department[]
-  type: string
 }
 
 export const structureSlise = createSlice({

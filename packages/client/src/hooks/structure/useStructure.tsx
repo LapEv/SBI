@@ -9,12 +9,9 @@ import {
   newDepartment,
   newDivision,
 } from 'api/structure'
-import {
-  StructureState,
-  setActiveDepartment,
-  setActiveDivision,
-} from 'store/slices/structure'
+import { setActiveDepartment, setActiveDivision } from 'store/slices/structure'
 import { RootState } from 'store'
+import { StructureState } from 'store/slices/structure/interfaces'
 
 export function useStructure(): [StructureState, StructureActions] {
   const structure = useSelector((state: RootState) => state.structure)

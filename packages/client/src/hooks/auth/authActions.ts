@@ -21,4 +21,5 @@ export interface AuthActions {
   updateEditStatus: (data: string) => void
   getUserStatus: () => void
   deleteUsers: (id: string[]) => void
+  updateUser: (data: User) => void
 }

@@ -1,5 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Roles, RolesGroup } from './interfaces'
+import {
+  AnswerRole,
+  AnswerRolesGroup,
+  Roles,
+  RolesGroup,
+  RolesState,
+} from './interfaces'
 import {
   deleteRoles,
   deleteRolesGroup,
@@ -10,29 +16,11 @@ import {
   changeRolesGroup,
 } from 'api/roles'
 
-export type RolesState = {
-  roles: Roles[]
-  rolesGroup: RolesGroup[]
-  activeRolesGroup: string
-  isLoadingRoles: boolean
-  error?: string
-}
-
 const initialState: RolesState = {
   roles: [],
   rolesGroup: [],
   activeRolesGroup: '',
   isLoadingRoles: false,
-}
-
-interface AnswerRole {
-  data: Roles[]
-  type: string
-}
-
-interface AnswerRolesGroup {
-  data: RolesGroup[]
-  type: string
 }
 
 export const rolesSlise = createSlice({

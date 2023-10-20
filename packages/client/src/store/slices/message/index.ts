@@ -21,6 +21,7 @@ import {
   signin,
   signout,
   signup,
+  updateUser,
 } from 'api/user'
 
 const initialState: MessageState = {
@@ -305,6 +306,22 @@ export const messageSlise = createSlice({
       state.isLoadingMessage = true
     },
     [deleteUsers.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [updateUser.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [updateUser.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [updateUser.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingMessage = false
       state.type = 'error'
       state.text = action.payload

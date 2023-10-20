@@ -25,3 +25,22 @@ export interface NewDepartment {
   division: string
   id_division: string
 }
+
+export interface StructureState {
+  divisions: Division[]
+  departaments: Department[]
+  activeDivision: string
+  activeDepartment: string
+  isLoadingStructure: boolean
+  error?: string
+}
+
+export interface AnswerDivision {
+  data: Division[]
+  type: string
+}
+
+export interface AnswerDepartment {
+  data: Department[]
+  type: string
+}

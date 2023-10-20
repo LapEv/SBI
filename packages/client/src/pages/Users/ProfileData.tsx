@@ -23,7 +23,8 @@ import { deepEqual } from 'utils/deepEqual'
 
 export const ProfileData = (user: User) => {
   const theme = useTheme()
-  const [{ admin, userData }, { updateUserData, deleteUsers }] = useAuth()
+  const [{ admin, userData }, { updateUserData, deleteUsers, updateUser }] =
+    useAuth()
   const [{ roles, rolesGroup, activeRolesGroup }, { getRoles, getRolesGroup }] =
     useRoles()
   const [open, setOpen] = useState(false)
@@ -52,8 +53,8 @@ export const ProfileData = (user: User) => {
     name: 'list',
   })
 
-  function changeData(data: ProfileValues) {
-    console.log('data = ', data)
+  function changeData() {
+    updateUser(userData)
   }
 
   const setRolesGroup = (group: string) => {

@@ -14,7 +14,7 @@ import { authhost, host, ApiEndPoints } from './config'
 import { getError } from 'utils/getError'
 
 export const signin = createAsyncThunk(
-  'user/login',
+  'user/signin',
   async (loginData: Login, thunkAPI) => {
     try {
       const { data } = await host.post(ApiEndPoints.User.Login, loginData)
@@ -130,8 +130,8 @@ export const CheckUser = createAsyncThunk(
   }
 )
 
-export const ChangeProfile = createAsyncThunk(
-  'user/changeProfile',
+export const updateProfile = createAsyncThunk(
+  'user/updateProfile',
   async (newProfile: User, thunkAPI) => {
     try {
       const { data } = await authhost.put<User[]>(
@@ -191,9 +191,10 @@ export const ChangeAvatar = createAsyncThunk(
 export const changePassword = createAsyncThunk(
   'user/changePassword',
   async (value: ChangePasswordProps, thunkAPI) => {
+    console.log('value = ', value)
     try {
       const { data } = await authhost.post<User[]>(
-        ApiEndPoints.User.UpdatePassword,
+        ApiEndPoints.User.ChangePassword,
         value
       )
       return {

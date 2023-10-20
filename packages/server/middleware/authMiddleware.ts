@@ -3,6 +3,11 @@ import jwt, { Secret } from 'jsonwebtoken'
 import { auth } from '../data/auth'
 const { SECRET_KEY } = process.env
 
+interface jwtAnswer {
+  id?: string
+  roles?: string[]
+  username?: string
+}
 export const authMiddleware = async (
   req: Request,
   res: Response,
@@ -16,7 +21,9 @@ export const authMiddleware = async (
     if (!token) {
       return res.status(401).json({ message: auth.notification.notLogged })
     }
-    req.body = jwt.verify(token, SECRET_KEY as Secret)
+    const verify = jwt.verify(token, SECRET_KEY as Secret)
+    const { id, roles, username } = verify as jwtAnswer
+    req.body = { ...req.body, id, roles, username }
     next()
   } catch (e) {
     res.status(401).json({ message: auth.notification.notLogged })

@@ -14,6 +14,7 @@ import { Button } from 'components/Buttons'
 import { TextField } from 'components/TextFields/TextFields'
 import { styleLoginTextFieldProps } from './data'
 import { isEmptyObjField } from 'utils/isEmptyObject'
+import { Message } from 'components/Message/Message'
 
 interface LoginValues extends Login {
   list: {
@@ -53,9 +54,14 @@ export function LoginPage() {
 
   const { state } = useLocation()
   return !isEmptyObjField(user) ? (
-    <Navigate to={state.from ?? Routes.Index} replace />
+    state ? (
+      <Navigate to={state.from ?? Routes.Index} replace />
+    ) : (
+      <Navigate to={Routes.Index} replace />
+    )
   ) : (
     <Container component="main" maxWidth="sm">
+      <Message />
       <Box
         sx={{
           my: 10,

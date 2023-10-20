@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import {
   GetUser,
-  ChangeProfile,
+  updateProfile,
   ChangeAvatar,
   CheckUser,
   GetActiveUsers,
@@ -124,15 +124,15 @@ export const authSlise = createSlice({
       state.isLoadingAuth = false
       state.error = action.payload
     },
-    [ChangeProfile.fulfilled.type]: (state, action: PayloadAction<User>) => {
+    [updateProfile.fulfilled.type]: (state, action: PayloadAction<User>) => {
       state.isLoadingAuth = false
       state.error = ''
       state.user = action.payload
     },
-    [ChangeProfile.pending.type]: state => {
+    [updateProfile.pending.type]: state => {
       state.isLoadingAuth = true
     },
-    [ChangeProfile.rejected.type]: (state, action: PayloadAction<string>) => {
+    [updateProfile.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingAuth = false
       state.error = action.payload
     },

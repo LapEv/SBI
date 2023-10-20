@@ -12,7 +12,7 @@ import { Message } from 'components/Message/Message'
 export function ProfilePage() {
   const [
     { user, userData },
-    { changeProfile, changeAvatar, changePassword, updateUserData, checkUser },
+    { changeAvatar, changePassword, updateUserData, checkUser },
   ] = useAuth()
   const [file, setFile] = useState<FileProps>()
   const [modal, setModal] = useState<boolean>(false)

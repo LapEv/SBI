@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux'
 import {
   GetUser,
   GetActiveUsers,
-  ChangeProfile,
+  updateProfile,
   ChangeAvatar,
   changePassword,
   ChangeTheme,
@@ -35,8 +35,8 @@ export function useAuth(): [AuthState, AuthActions] {
       signout() {
         dispatch(signout())
       },
-      changeProfile(data) {
-        dispatch(ChangeProfile(data))
+      updateProfile(data) {
+        dispatch(updateProfile(data))
       },
       changeAvatar(data) {
         dispatch(ChangeAvatar(data))

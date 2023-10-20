@@ -1,53 +1,29 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, useTheme } from '@mui/material'
 import {
   useForm,
   useFieldArray,
   Controller,
   useFormState,
 } from 'react-hook-form'
-import { MapPasswordInputFields } from './ProfileFieldsData'
+import {
+  MapPasswordInputFields,
+  styleTextFieldProps,
+  style,
+} from './ProfileFieldsData'
 import { TextField } from 'components/TextFields/TextFields'
-import { Button } from 'components/Buttons'
-
-const style = {
-  position: 'absolute',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '40%',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  bgcolor: 'background.paper',
-  borderWidth: 2,
-  borderBlockColor: 'icon.default',
-  borderStyle: 'solid',
-  borderRadius: 11,
-  boxShadow: 24,
-  p: 4,
-}
-interface ProfileChangePasswordProps {
-  handleModal: (state: boolean) => void
-  handleChangePassword: (data: {
-    oldPassword: string
-    newPassword: string
-  }) => void
-}
-
-interface ProfileChangePasswordValues {
-  list: {
-    label: string
-    value: string
-    validation: object
-    type: string
-  }[]
-}
+import { ButtonsModalSection } from 'components/Buttons'
+import {
+  ProfileChangePasswordProps,
+  ProfileChangePasswordValues,
+} from './interfaces'
+import { useAuth } from 'hooks/auth/useAuth'
 
 export function ProfileChangePassword({
   handleModal,
-  handleChangePassword,
 }: ProfileChangePasswordProps) {
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  const [_, { changePassword }] = useAuth()
+  /* eslint-enable @typescript-eslint/no-unused-vars */
   const { handleSubmit, control } = useForm<ProfileChangePasswordValues>({
     mode: 'onBlur',
     defaultValues: {
@@ -59,18 +35,24 @@ export function ProfileChangePassword({
     control,
     name: 'list',
   })
+  const theme = useTheme()
 
-  function changePassword(data: ProfileChangePasswordValues) {
-    handleChangePassword({
+  function changePasswordData(data: ProfileChangePasswordValues) {
+    console.log(' data = ', data)
+    changePassword({
       oldPassword: data.list[0].value,
       newPassword: data.list[1].value,
     })
+    handleModal(false)
   }
 
   return (
-    <Box sx={style} component="form" onSubmit={handleSubmit(changePassword)}>
-      <Typography>Смена пароля</Typography>
-      {fields.map(({ id, label, validation, type }, index) => {
+    <Box
+      sx={style}
+      component="form"
+      onSubmit={handleSubmit(changePasswordData)}>
+      <Typography variant={'h6'}>Смена пароля</Typography>
+      {fields.map(({ id, label, validation, type, value }, index) => {
         return (
           <Controller
             key={id}
@@ -89,8 +71,25 @@ export function ProfileChangePassword({
                 value={field.value || ''}
                 error={!!(errors?.list ?? [])[index]?.value?.message}
                 helperText={(errors?.list ?? [])[index]?.value?.message}
-                inputProps={{ style: { height: 5 } }}
-                InputLabelProps={{ style: { top: -7, marginTop: 0 } }}
+                inputProps={{
+                  style: {
+                    ...styleTextFieldProps.inputProps,
+                    backgroundColor: theme.palette.background.paper,
+                  },
+                }}
+                InputLabelProps={{
+                  style: {
+                    top: -7,
+                    marginTop: 0,
+                    color: value
+                      ? theme.palette.mode === 'dark'
+                        ? '#C1EEE1'
+                        : '#1E515D'
+                      : theme.palette.mode === 'dark'
+                      ? '#1E515D'
+                      : '#C1EEE1',
+                  },
+                }}
                 FormHelperTextProps={{
                   style: { height: 0, marginTop: -1, zIndex: 999 },
                 }}
@@ -99,12 +98,10 @@ export function ProfileChangePassword({
           />
         )
       })}
-      <Button type="submit" sx={{ width: '70%', m: 5 }}>
-        Изменить
-      </Button>
-      <Button sx={{ width: '70%' }} onClick={() => handleModal(false)}>
-        Отмена
-      </Button>
+      <ButtonsModalSection
+        closeModal={() => handleModal(false)}
+        btnName="Сохранить"
+      />
     </Box>
   )
 }

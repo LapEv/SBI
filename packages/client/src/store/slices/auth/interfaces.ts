@@ -85,7 +85,7 @@ export type AuthState = {
   userStatus: UserStatus[]
   admin: boolean
   superAdmin: boolean
-  editStatus: string
+  // editStatus: string
   isLoadingAuth: boolean
   error?: string
 }

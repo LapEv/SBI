@@ -15,7 +15,7 @@ import {
 import { AnswerMessage, MessageState } from './interfaces'
 import {
   ChangeAvatar,
-  ChangePassword,
+  changePassword,
   ChangeProfile,
   deleteUsers,
   signin,
@@ -276,7 +276,7 @@ export const messageSlise = createSlice({
       state.type = 'error'
       state.text = action.payload
     },
-    [ChangePassword.fulfilled.type]: (
+    [changePassword.fulfilled.type]: (
       state,
       action: PayloadAction<AnswerMessage>
     ) => {
@@ -285,10 +285,10 @@ export const messageSlise = createSlice({
       state.text = action.payload.message.text
       state.type = action.payload.message.type
     },
-    [ChangePassword.pending.type]: state => {
+    [changePassword.pending.type]: state => {
       state.isLoadingMessage = true
     },
-    [ChangePassword.rejected.type]: (state, action: PayloadAction<string>) => {
+    [changePassword.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingMessage = false
       state.type = 'error'
       state.text = action.payload

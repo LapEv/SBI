@@ -51,8 +51,10 @@ export function LoginPage() {
     )
   }
 
+  const { state } = useLocation()
+  const { from } = state
   return !isEmptyObjField(user) ? (
-    <Navigate to={Routes.Index} replace />
+    <Navigate to={from} replace />
   ) : (
     <Container component="main" maxWidth="sm">
       <Box

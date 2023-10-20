@@ -1,4 +1,5 @@
 import { ChangeEvent, FocusEvent } from 'react'
+import { User } from 'storeAuth/interfaces'
 type stringOrNull = string | null
 export interface ProfileValidateFieldsProps {
   label: string
@@ -9,4 +10,28 @@ export interface ProfileValidateFieldsProps {
   handleInputBlur: (e: FocusEvent<HTMLInputElement>) => void
   error: boolean
   errorText: string
+}
+
+export interface ProfileValues extends User {
+  list: {
+    name: string
+    label: string
+    value: string | string[] | undefined
+    validation: object
+    disabled: boolean
+    type: string
+  }[]
+}
+
+export interface ProfileChangePasswordProps {
+  handleModal: (state: boolean) => void
+}
+
+export interface ProfileChangePasswordValues {
+  list: {
+    label: string
+    value: string
+    validation: object
+    type: string
+  }[]
 }

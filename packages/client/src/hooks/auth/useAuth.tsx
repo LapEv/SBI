@@ -4,7 +4,7 @@ import {
   GetActiveUsers,
   ChangeProfile,
   ChangeAvatar,
-  ChangePassword,
+  changePassword,
   ChangeTheme,
   CheckUser,
   getUserStatus,
@@ -14,7 +14,7 @@ import {
 import { signin, signout, signup } from 'api/user'
 import { RootState } from 'store'
 import { useAppDispatch } from 'store/hooks'
-import { updateEditStatus, updateUserData } from 'store/slices/auth'
+import { updateUserData } from 'store/slices/auth'
 import { AuthActions } from './authActions'
 import { AuthState } from 'storeAuth/interfaces'
 
@@ -42,7 +42,7 @@ export function useAuth(): [AuthState, AuthActions] {
         dispatch(ChangeAvatar(data))
       },
       changePassword(data) {
-        dispatch(ChangePassword(data))
+        dispatch(changePassword(data))
       },
       changeThemeOnServer(data) {
         dispatch(ChangeTheme(data))
@@ -59,9 +59,9 @@ export function useAuth(): [AuthState, AuthActions] {
       updateUserData(data) {
         dispatch(updateUserData(data))
       },
-      updateEditStatus(data) {
-        dispatch(updateEditStatus(data))
-      },
+      // updateEditStatus(data) {
+      //   dispatch(updateEditStatus(data))
+      // },
       getUserStatus() {
         dispatch(getUserStatus())
       },

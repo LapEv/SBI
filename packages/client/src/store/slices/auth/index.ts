@@ -18,7 +18,7 @@ const initialState: AuthState = {
   userStatus: [],
   admin: false,
   superAdmin: false,
-  editStatus: 'info',
+  // editStatus: 'info',
   isLoadingAuth: false,
 }
 
@@ -29,9 +29,9 @@ export const authSlise = createSlice({
     updateUserData(state, action) {
       state.userData = action.payload
     },
-    updateEditStatus(state, action) {
-      state.editStatus = action.payload
-    },
+    // updateEditStatus(state, action) {
+    //   state.editStatus = action.payload
+    // },
   },
   extraReducers: {
     [signin.fulfilled.type]: (state, action: PayloadAction<User>) => {
@@ -179,4 +179,5 @@ export const authSlise = createSlice({
 })
 
 export const authReducer = authSlise.reducer
-export const { updateUserData, updateEditStatus } = authSlise.actions
+// export const { updateUserData, updateEditStatus } = authSlise.actions
+export const { updateUserData } = authSlise.actions

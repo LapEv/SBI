@@ -25,12 +25,10 @@ export const ProfileData = (user: User) => {
   const theme = useTheme()
   const [{ admin, userData }, { updateUserData, deleteUsers, updateUser }] =
     useAuth()
-  const [{ roles, rolesGroup, activeRolesGroup }, { getRoles, getRolesGroup }] =
-    useRoles()
+  const [{ rolesGroup }, { getRoles, getRolesGroup }] = useRoles()
   const [open, setOpen] = useState(false)
   const [dataGroup, setDataGroup] = useState<ICheckBoxGroupData[]>([])
   const [selectedGroup, setGroup] = useState<string>(user.roleGroup as string)
-  const [selectedItems, setItems] = useState<string[]>([])
   const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
   const [changeActive, setChangeActive] = useState<boolean>(false)
 
@@ -38,7 +36,7 @@ export const ProfileData = (user: User) => {
     ? MapProfileInputFieldsAdminWithoutPassword
     : MapProfileInputFields
 
-  const { reset, handleSubmit, control } = useForm<ProfileValues>({
+  const { handleSubmit, control } = useForm<ProfileValues>({
     mode: 'onBlur',
     defaultValues: {
       list: fieldsData.map(data => ({
@@ -61,7 +59,6 @@ export const ProfileData = (user: User) => {
     if (!group) return
     const groupData = rolesGroup.find(item => item.id === group)!
     const listRoles = groupData.roles.map(item => item.role)
-    setItems(listRoles)
     setGroup(group)
     updateUserData({
       ...userData!,

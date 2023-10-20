@@ -7,36 +7,30 @@ import {
   useFormState,
 } from 'react-hook-form'
 import { useAuth } from 'hooks/auth/useAuth'
-import { ProfileFooter } from './ProfileFooter'
 import { User } from 'storeAuth/interfaces'
-import { ChangeEvent, useEffect } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { TextField } from 'components/TextFields/TextFields'
-import { Button } from 'components/Buttons'
+import { useTheme } from '@mui/material/styles'
+import { Button, ButtonsSection } from 'components/Buttons'
+import { ProfileValues } from './interfaces'
+import { deepEqual } from 'utils/deepEqual'
 
 interface ProfileMainProps {
   setModal: () => void
+  data: User
 }
 
-interface ProfileValues extends User {
-  list: {
-    name: string
-    label: string
-    value: string
-    validation: object
-    disabled: boolean
-    type: string
-  }[]
-}
+export function ProfileMain({ setModal, data }: ProfileMainProps) {
+  const [{ userData }, { updateUserData, updateUser }] = useAuth()
+  const [changeActive, setChangeActive] = useState<boolean>(false)
+  const theme = useTheme()
 
-export function ProfileMain({ setModal }: ProfileMainProps) {
-  const [{ user, userData, editStatus }, { updateUserData }] = useAuth()
-
-  const { reset, control } = useForm<ProfileValues>({
+  const { handleSubmit, control, reset } = useForm<ProfileValues>({
     mode: 'onBlur',
     defaultValues: {
-      list: MapProfileInputFields.map(data => ({
-        ...data,
-        value: userData![data.name as keyof typeof userData],
+      list: MapProfileInputFields.map(item => ({
+        ...item,
+        value: data![item.name as keyof typeof data],
       })),
     },
   })
@@ -46,19 +40,28 @@ export function ProfileMain({ setModal }: ProfileMainProps) {
     name: 'list',
   })
 
+  const changeData = () => {
+    updateUser(userData)
+  }
+
+  const clearChange = () => {
+    updateUserData(data)
+    reset({
+      list: MapProfileInputFields.map(item => ({
+        ...item,
+        value: data![item.name as keyof typeof data],
+      })),
+    })
+  }
+
   useEffect(() => {
-    if (editStatus === 'cancel') {
-      reset({
-        list: MapProfileInputFields.map(data => ({
-          ...data,
-          value: user![data.name as keyof typeof userData],
-        })),
-      })
-    }
-  }, [editStatus])
+    setChangeActive(deepEqual(userData, data))
+  }, [userData])
 
   return (
     <Box
+      component="form"
+      onSubmit={handleSubmit(changeData)}
       sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Box
         sx={{
@@ -74,7 +77,7 @@ export function ProfileMain({ setModal }: ProfileMainProps) {
           alignItems="center"
           spacing={0}
           sx={{ flexWrap: 'wrap' }}>
-          {fields.map(({ id, name, label, validation, type }, index) => {
+          {fields.map(({ id, name, label, validation, type, value }, index) => {
             return (
               <Controller
                 key={id}
@@ -87,7 +90,6 @@ export function ProfileMain({ setModal }: ProfileMainProps) {
                     inputRef={field.ref}
                     label={label}
                     type={type}
-                    disabled={editStatus === 'info'}
                     variant="outlined"
                     sx={{ width: '48%', height: 80 }}
                     margin="normal"
@@ -100,8 +102,28 @@ export function ProfileMain({ setModal }: ProfileMainProps) {
                     )}
                     error={!!(errors?.list ?? [])[index]?.value?.message}
                     helperText={(errors?.list ?? [])[index]?.value?.message}
-                    inputProps={{ style: { height: 5 } }}
-                    InputLabelProps={{ style: { top: -7, marginTop: 0 } }}
+                    inputProps={{
+                      style: {
+                        height: 5,
+                        borderRadius: 5,
+                        padding: '16px 14px',
+                        backgroundColor:
+                          theme.palette.mode === 'dark' ? '#C1EEE1' : '#1E515D',
+                      },
+                    }}
+                    InputLabelProps={{
+                      style: {
+                        top: -7,
+                        marginTop: 0,
+                        color: value
+                          ? theme.palette.mode === 'dark'
+                            ? '#C1EEE1'
+                            : '#1E515D'
+                          : theme.palette.mode === 'dark'
+                          ? '#1E515D'
+                          : '#C1EEE1',
+                      },
+                    }}
                     FormHelperTextProps={{
                       style: { height: 0, marginTop: -1, zIndex: 999 },
                     }}
@@ -115,7 +137,13 @@ export function ProfileMain({ setModal }: ProfileMainProps) {
       <Button onClick={setModal} sx={{ width: '40%' }}>
         Изменить пароль
       </Button>
-      <ProfileFooter isValid={isValid} />
+      <ButtonsSection
+        btnSecondHandle={clearChange}
+        btnName="Сохранить"
+        btnDisabled={changeActive}
+        btnSecondDisabled={changeActive}
+        btnSecondName="Отменить изменения"
+      />
     </Box>
   )
 }

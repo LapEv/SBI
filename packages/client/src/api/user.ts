@@ -188,11 +188,13 @@ export const ChangeAvatar = createAsyncThunk(
   }
 )
 
-export const ChangePassword = createAsyncThunk(
+export const changePassword = createAsyncThunk(
   'user/changePassword',
   async (value: ChangePasswordProps, thunkAPI) => {
     try {
       const { data } = await authhost.put<User[]>(
+        // 1. на стороне сервера проверить пароль
+        //2. изменить пароль
         ApiEndPoints.User.UpdatePassword,
         value
       )

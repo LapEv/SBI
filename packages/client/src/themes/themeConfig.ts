@@ -85,7 +85,7 @@ export const ThemeConfig = (mode: PaletteMode) =>
               main: '#C1EEE1',
             },
             border: {
-              default: '#000000',
+              default: '#FFFFFF',
             },
           }),
     },

@@ -6,6 +6,7 @@ type Handle = {
   btnSecondName: string
   btnSecondHandle: () => void
   btnDisabled?: boolean
+  btnSecondDisabled?: boolean
 }
 
 export const ButtonsSection = ({
@@ -13,6 +14,7 @@ export const ButtonsSection = ({
   btnName,
   btnSecondName,
   btnDisabled,
+  btnSecondDisabled,
 }: Handle) => {
   return (
     <Box
@@ -25,12 +27,13 @@ export const ButtonsSection = ({
       <Button
         type="submit"
         sx={{ width: '40%', fontWeight: 'bold' }}
-        disabled={btnDisabled}>
+        disabled={btnDisabled ?? false}>
         {btnName ?? 'Изменить'}
       </Button>
       <Button
         sx={{ width: '40%', fontWeight: 'bold' }}
-        onClick={btnSecondHandle}>
+        onClick={btnSecondHandle}
+        disabled={btnSecondDisabled ?? false}>
         {btnSecondName ?? ''}
       </Button>
     </Box>

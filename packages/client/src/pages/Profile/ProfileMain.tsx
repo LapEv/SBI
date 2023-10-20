@@ -14,6 +14,9 @@ import { useTheme } from '@mui/material/styles'
 import { Button, ButtonsSection } from 'components/Buttons'
 import { ProfileValues } from './interfaces'
 import { deepEqual } from 'utils/deepEqual'
+import { ProfileHeader } from './ProfileHeader'
+import { FileProps } from 'storeAuth/interfaces'
+import { isEmptyObjField } from 'utils/isEmptyObject'
 
 interface ProfileMainProps {
   setModal: () => void
@@ -21,8 +24,9 @@ interface ProfileMainProps {
 }
 
 export function ProfileMain({ setModal, data }: ProfileMainProps) {
-  const [{ userData }, { updateUserData, updateUser }] = useAuth()
-  const [changeActive, setChangeActive] = useState<boolean>(false)
+  const [{ userData }, { updateUserData, updateUser, changeAvatar }] = useAuth()
+  const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
+  const [file, setFile] = useState<FileProps>({ data: '', info: undefined })
   const theme = useTheme()
 
   const { handleSubmit, control, reset } = useForm<ProfileValues>({
@@ -41,7 +45,14 @@ export function ProfileMain({ setModal, data }: ProfileMainProps) {
   })
 
   const changeData = () => {
-    updateUser(userData)
+    if (file.info) {
+      console.log('Меняем аватарку')
+      // changeAvatar(file)
+    }
+    if (!deepEqual(userData, data)) {
+      console.log('Меняем данные')
+      // updateUser(userData)
+    }
   }
 
   const clearChange = () => {
@@ -52,17 +63,41 @@ export function ProfileMain({ setModal, data }: ProfileMainProps) {
         value: data![item.name as keyof typeof data],
       })),
     })
+    setFile({ data: '', info: undefined } as FileProps)
+  }
+
+  const onChooseFile = (event: ChangeEvent<HTMLInputElement>) => {
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      if (!event.target.files) return
+      setFile({ info: event.target?.files[0], data: reader.result })
+    }
+    event.target.files instanceof FileList
+      ? reader.readAsDataURL(event.target.files[0])
+      : console.log('handle exception')
   }
 
   useEffect(() => {
-    setChangeActive(deepEqual(userData, data))
+    if (file.info) return
+    setbtnDisabled(deepEqual(userData, data))
   }, [userData])
+
+  useEffect(() => {
+    setbtnDisabled(file.info ? false : true)
+  }, [file])
 
   return (
     <Box
       component="form"
       onSubmit={handleSubmit(changeData)}
       sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <ProfileHeader
+        component="header"
+        onChooseFile={onChooseFile}
+        fileData={file?.data}
+        avatar={(data.avatar as string) ?? ''}
+      />
+
       <Box
         sx={{
           display: 'flex',
@@ -140,8 +175,8 @@ export function ProfileMain({ setModal, data }: ProfileMainProps) {
       <ButtonsSection
         btnSecondHandle={clearChange}
         btnName="Сохранить"
-        btnDisabled={changeActive}
-        btnSecondDisabled={changeActive}
+        btnDisabled={btnDisabled}
+        btnSecondDisabled={btnDisabled}
         btnSecondName="Отменить изменения"
       />
     </Box>

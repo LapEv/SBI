@@ -27,13 +27,13 @@ export const ButtonsSection = ({
       <Button
         type="submit"
         sx={{ width: '40%', fontWeight: 'bold' }}
-        disabled={btnDisabled ?? false}>
+        disabled={btnDisabled ?? true}>
         {btnName ?? 'Изменить'}
       </Button>
       <Button
         sx={{ width: '40%', fontWeight: 'bold' }}
         onClick={btnSecondHandle}
-        disabled={btnSecondDisabled ?? false}>
+        disabled={btnSecondDisabled ?? true}>
         {btnSecondName ?? ''}
       </Button>
     </Box>

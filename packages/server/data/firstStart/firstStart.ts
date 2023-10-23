@@ -3,8 +3,10 @@ import { divisionStartData } from './division'
 import { userStartData } from './user'
 import { userStatusStartData } from './userStatus'
 import {
+  AddressesRepos,
   DepartmentRepos,
   DivisionRepos,
+  RegionsRepos,
   UserStatusRepos,
   roleGroupRepos,
   roleRepos,
@@ -13,12 +15,32 @@ import {
 import bcrypt from 'bcryptjs'
 import { rolesStartData } from './role'
 import { rolesGroupStartData } from './rolesGroup'
+import { addressesStartData, regionsStartData } from './addresses'
 
 export const firstStart = async () => {
   try {
     const divisions = await DivisionRepos.getAll()
     const department = await DivisionRepos.getAll()
     const users = await userRepos.getAll()
+    const regions = await RegionsRepos.getAll()
+    const addresses = await AddressesRepos.getAll()
+
+    console.log('regions = ', regions)
+
+    if (!regions.length) {
+      const newRegions = await Promise.all(
+        regionsStartData.map(async value => await RegionsRepos.create(value))
+      )
+      console.log('newRegions = ', newRegions)
+    }
+    if (!addresses.length) {
+      const newAddress = await Promise.all(
+        addressesStartData.map(
+          async value => await AddressesRepos.create(value)
+        )
+      )
+      console.log('newAddress = ', newAddress)
+    }
 
     const del = false
     if (del) {

@@ -6,5 +6,6 @@ export enum Routes {
   ControlRoom = 'controlroom',
   Warehouse = 'warehouse',
   Users = 'users',
+  Clients = 'clients',
   NotFounde = '*',
 }

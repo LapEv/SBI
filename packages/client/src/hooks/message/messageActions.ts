@@ -1,6 +1,6 @@
-import { MessageState } from 'store/slices/message/interfaces'
+import { Message_State } from 'store/slices/message/interfaces'
 
 export interface MessageActions {
   resetMessage: () => void
-  setMessage: (data: MessageState) => void
+  setMessage: (data: Message_State) => void
 }

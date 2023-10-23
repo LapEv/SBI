@@ -16,7 +16,7 @@ import { ProfileValues } from './interfaces'
 import { deepEqual } from 'utils/deepEqual'
 import { ProfileHeader } from './ProfileHeader'
 import { FileProps } from 'storeAuth/interfaces'
-import { isEmptyObjField } from 'utils/isEmptyObject'
+import { useMessage } from 'hooks/message/useMessage'
 
 interface ProfileMainProps {
   setModal: () => void
@@ -25,6 +25,7 @@ interface ProfileMainProps {
 
 export function ProfileMain({ setModal, data }: ProfileMainProps) {
   const [{ userData }, { updateUserData, updateUser, changeAvatar }] = useAuth()
+  const [{}, { setMessage }] = useMessage()
   const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
   const [file, setFile] = useState<FileProps>({ data: '', info: undefined })
   const theme = useTheme()
@@ -47,11 +48,15 @@ export function ProfileMain({ setModal, data }: ProfileMainProps) {
   const changeData = () => {
     if (file.info) {
       console.log('Меняем аватарку')
+      setMessage({
+        text: 'В разработке',
+        type: 'info',
+      })
       // changeAvatar(file)
     }
     if (!deepEqual(userData, data)) {
       console.log('Меняем данные')
-      // updateUser(userData)
+      updateUser(userData)
     }
   }
 

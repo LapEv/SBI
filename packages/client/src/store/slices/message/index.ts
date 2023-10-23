@@ -40,9 +40,8 @@ export const messageSlise = createSlice({
       state.type = null
     },
     setMessage(state, action) {
-      state = action.payload.payload
-      state.text = action.payload.message.text
-      state.type = action.payload.message.type
+      state.text = action.payload.text
+      state.type = action.payload.type
     },
   },
   extraReducers: {

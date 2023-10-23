@@ -11,3 +11,8 @@ export type AnswerMessage = {
     type: string | null
   }
 }
+
+export type Message_State = {
+  text: string
+  type: string | null
+}

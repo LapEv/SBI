@@ -25,6 +25,7 @@ export const userRouter = (apiRouter: Router) => {
   router.post('/updateProfile', authMiddleware, service.updateProfile)
 
   router.post('/changePassword', authMiddleware, service.changePassword)
+  router.post('/changeAvatar', authMiddleware, service.changeAvatar)
   router.get('/checkUser', authMiddleware, service.check)
   router.post(
     '/getUserInfo',

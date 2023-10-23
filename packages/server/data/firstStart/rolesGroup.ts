@@ -11,7 +11,15 @@ export const rolesGroupStartData = [
   },
   {
     group: 'Dispatcher',
-    roles: [],
+    roles: [
+      'getUsers',
+      'getDivisions',
+      'getDepartments',
+      'getActiveObjects',
+      'getActiveClients',
+      'getAddresses',
+      'getRegions',
+    ],
     groupName: 'Диспетчер',
   },
 ]

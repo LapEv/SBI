@@ -74,18 +74,11 @@ export class userService {
   }
 
   changePassword = async (_req: Request, res: Response) => {
-    console.log('_req.body = ', _req.body)
     const { oldPassword, newPassword, id } = _req.body
     const user = await userRepos.findAll({
       where: { id },
     })
-    console.log('newPassword = ', newPassword)
-    console.log('oldPassword = ', oldPassword)
-    console.log('id = ', id)
-    console.log('user[0].password = ', user[0].password)
-
     const validPassword = bcrypt.compareSync(oldPassword, user[0].password)
-    console.log('validPassword = ', validPassword)
     if (!validPassword) {
       return res
         .status(400)
@@ -101,7 +94,39 @@ export class userService {
     }
     const hashPassword = bcrypt.hashSync(newPassword, 7)
     try {
-      console.log('hashPassword = ', hashPassword)
+      await userRepos.update(id, { password: hashPassword })
+      res.status(200).json('Ok')
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res
+        .status(500)
+        .json({ error: [auth.notification.errorChangePassword, err] })
+    }
+  }
+
+  changeAvatar = async (_req: Request, res: Response) => {
+    console.log('_req.body = ', _req.body)
+    const { oldPassword, newPassword, id } = _req.body
+    const user = await userRepos.findAll({
+      where: { id },
+    })
+    const validPassword = bcrypt.compareSync(oldPassword, user[0].password)
+    if (!validPassword) {
+      return res
+        .status(400)
+        .json({ message: auth.notification.invalidOldPassword })
+    }
+    const errValidation: Result = validationResult(_req)
+    if (!errValidation.isEmpty()) {
+      const errors = errValidation.array()
+      return res.status(400).json({
+        message: `${auth.notification.errorValidation}: ${errors[0].msg}`,
+        errValidation,
+      })
+    }
+    const hashPassword = bcrypt.hashSync(newPassword, 7)
+    try {
       await userRepos.update(id, { password: hashPassword })
       res.status(200).json('Ok')
       /* eslint-disable @typescript-eslint/no-explicit-any */

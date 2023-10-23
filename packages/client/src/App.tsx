@@ -90,6 +90,14 @@ function App() {
                     </RequiredAuth>
                   }
                 />
+                <Route
+                  path={Paths.Clients}
+                  element={
+                    <RequiredAuth>
+                      <Pages.Clients />
+                    </RequiredAuth>
+                  }
+                />
               </Route>
               <Route path={Paths.NotFounde} element={<Pages.Error />} />
             </Routes>

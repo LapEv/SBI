@@ -25,7 +25,7 @@ interface ProfileMainProps {
 
 export function ProfileMain({ setModal, data }: ProfileMainProps) {
   const [{ userData }, { updateUserData, updateUser, changeAvatar }] = useAuth()
-  const [{}, { setMessage }] = useMessage()
+  const [_, { setMessage }] = useMessage()
   const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
   const [file, setFile] = useState<FileProps>({ data: '', info: undefined })
   const theme = useTheme()

@@ -1,12 +1,12 @@
 import type { Request, Response } from 'express'
-import { roleRepos, roleGroupRepos } from '../db'
+import { AddressesRepos, RegionsRepos } from '../db'
 
 export class addressService {
   newAddress = async (_req: Request, res: Response) => {
     try {
-      await roleRepos.create(_req.body)
-      const roles = await roleRepos.findAll({})
-      res.status(200).json(roles)
+      await AddressesRepos.create(_req.body)
+      const addresses = await AddressesRepos.findAll({})
+      res.status(200).json(addresses)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -15,24 +15,24 @@ export class addressService {
   }
 
   getAddresses = (_req: Request, res: Response) => {
-    roleRepos
-      .findAll({})
-      .then(roles => res.status(200).json(roles))
+    console.log('Addresses')
+    AddressesRepos.findAll({})
+      .then(item => res.status(200).json(item))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
 
   deleteAddress = async (_req: Request, res: Response) => {
     const data = _req.body
     try {
-      const roles = await Promise.all([
+      const addresses = await Promise.all([
         await data.map(async (value: string) => {
-          await roleRepos.destroy({
+          await AddressesRepos.destroy({
             where: { id: value },
           })
         }),
-        await roleRepos.findAll({}),
+        await AddressesRepos.findAll({}),
       ])
-      res.status(200).json(roles[1])
+      res.status(200).json(addresses[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -40,13 +40,14 @@ export class addressService {
     }
   }
   changeAddress = async (_req: Request, res: Response) => {
-    const { roles, activeRolesGroup } = _req.body
+    const { address, coordinates, activeRolesGroup } = _req.body
     try {
-      await roleGroupRepos.update(activeRolesGroup, {
-        roles: roles,
+      await AddressesRepos.update(activeRolesGroup, {
+        address,
+        coordinates,
       })
-      const rolesGroup = await roleGroupRepos.findAll({})
-      res.status(200).json(rolesGroup)
+      const addresses = await AddressesRepos.findAll({})
+      res.status(200).json(addresses)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -55,9 +56,9 @@ export class addressService {
   }
   newRegion = async (_req: Request, res: Response) => {
     try {
-      await roleRepos.create(_req.body)
-      const roles = await roleRepos.findAll({})
-      res.status(200).json(roles)
+      await RegionsRepos.create(_req.body)
+      const regions = await RegionsRepos.findAll({})
+      res.status(200).json(regions)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -66,24 +67,23 @@ export class addressService {
   }
 
   getRegions = (_req: Request, res: Response) => {
-    roleRepos
-      .findAll({})
-      .then(roles => res.status(200).json(roles))
+    RegionsRepos.findAll({})
+      .then(regions => res.status(200).json(regions))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
 
   deleteRegion = async (_req: Request, res: Response) => {
     const data = _req.body
     try {
-      const roles = await Promise.all([
+      const regions = await Promise.all([
         await data.map(async (value: string) => {
-          await roleRepos.destroy({
+          await RegionsRepos.destroy({
             where: { id: value },
           })
         }),
-        await roleRepos.findAll({}),
+        await RegionsRepos.findAll({}),
       ])
-      res.status(200).json(roles[1])
+      res.status(200).json(regions[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -91,13 +91,13 @@ export class addressService {
     }
   }
   changeRegion = async (_req: Request, res: Response) => {
-    const { roles, activeRolesGroup } = _req.body
+    const { region, id } = _req.body
     try {
-      await roleGroupRepos.update(activeRolesGroup, {
-        roles: roles,
+      await RegionsRepos.update(id, {
+        region,
       })
-      const rolesGroup = await roleGroupRepos.findAll({})
-      res.status(200).json(rolesGroup)
+      const regions = await RegionsRepos.findAll({})
+      res.status(200).json(regions)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */

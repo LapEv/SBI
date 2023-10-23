@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { addressService } from '../services/addressService'
 const roleMiddleware = require('../middleware/roleMiddleware')
 
-export const roleRouter = (apiRouter: Router) => {
+export const addressRouter = (apiRouter: Router) => {
   const service = new addressService()
 
   const router: Router = Router()
@@ -48,5 +48,5 @@ export const roleRouter = (apiRouter: Router) => {
     service.changeRegion
   )
 
-  apiRouter.use('/role', router)
+  apiRouter.use('/addresses', router)
 }

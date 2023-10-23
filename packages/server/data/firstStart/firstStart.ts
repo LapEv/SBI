@@ -32,6 +32,9 @@ export const firstStart = async () => {
       return
     }
     if (addresses.length || regions.length) {
+      console.log(
+        'Первый запуск таблиц Address и Regions невозможен! Какая-то из таблиц уже существует!'
+      )
     } else {
       if (!regions.length) {
         const newRegions = await Promise.all(
@@ -65,7 +68,6 @@ export const firstStart = async () => {
       console.log(
         'Первый запуск таблиц невозможен! Какая-то из таблиц уже существует!'
       )
-      return
     } else {
       const roles = await roleRepos.getAll()
       if (!roles.length) {

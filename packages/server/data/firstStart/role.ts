@@ -170,30 +170,48 @@ export const rolesStartData = [
   },
   {
     role: 'getAddresses',
-    nameRole: 'Получение списка адресов',
+    nameRole: 'Получение списка активных адресов',
+  },
+  {
+    role: 'getAllAddresses',
+    nameRole: 'Получение полного списка адресов',
   },
   {
     role: 'newAddress',
     nameRole: 'Создание нового адреса',
   },
   {
-    role: 'deleteClient',
+    role: 'deleteAddress',
+    nameRole: 'Перемещение адреса в архив',
+  },
+  {
+    role: 'fullDeleteAddress',
     nameRole: 'Удаление адреса',
   },
+
   {
     role: 'changeAddress',
     nameRole: 'Изменение данных адреса',
   },
   {
     role: 'getRegions',
-    nameRole: 'Получение списка регионов',
+    nameRole: 'Получение активныхсписка регионов',
   },
+  {
+    role: 'getAllRegions',
+    nameRole: 'Получение полного списка регионов',
+  },
+
   {
     role: 'newRegion',
     nameRole: 'Создание нового региона',
   },
   {
     role: 'deleteRegion',
+    nameRole: 'Перемещение региона в архив',
+  },
+  {
+    role: 'fullDeleteRegion',
     nameRole: 'Удаление региона',
   },
   {

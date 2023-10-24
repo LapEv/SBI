@@ -1,3 +1,4 @@
+import { addressesReducer } from './addresses'
 import { authReducer } from './auth'
 import { messageReducer } from './message'
 import { rolesReducer } from './roles'
@@ -8,4 +9,5 @@ export const rootReducer = {
   roles: rolesReducer,
   structure: structureReducer,
   message: messageReducer,
+  addresses: addressesReducer,
 }

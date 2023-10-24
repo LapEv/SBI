@@ -105,6 +105,7 @@ export function LoginPage() {
                     sx={{ width: '68%' }}
                     margin="normal"
                     value={field.value || ''}
+                    required
                     error={!!(errors?.list ?? [])[index]?.value?.message}
                     helperText={(errors?.list ?? [])[index]?.value?.message}
                     InputProps={{

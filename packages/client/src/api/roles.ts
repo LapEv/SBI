@@ -90,7 +90,6 @@ export const newRolesGroup = createAsyncThunk(
         ApiEndPoints.Roles.newRolesGroup,
         roleGroup
       )
-      console.log('newRolesGroup data = ', data)
       return {
         data,
         message: { text: 'Новая группа ролей добавлена', type: 'success' },
@@ -138,7 +137,6 @@ export const changeRolesGroup = createAsyncThunk(
           activeRolesGroup,
         }
       )
-      console.log('data = ', data)
       return {
         data,
         message: { text: 'Группа ролей изменена!', type: 'success' },
@@ -147,7 +145,7 @@ export const changeRolesGroup = createAsyncThunk(
     } catch (e: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
       return thunkAPI.rejectWithValue(
-        `Не удалось удалить группу ролей!\n${getError(e)}`
+        `Не удалось изменить группу ролей!\n${getError(e)}`
       )
     }
   }

@@ -5,6 +5,7 @@ export interface Addresses {
   id: string
   address: string
   coordinates: string
+  active: boolean
 }
 
 export const addresses: ModelAttributes<Model, Addresses> = {
@@ -24,11 +25,16 @@ export const addresses: ModelAttributes<Model, Addresses> = {
     allowNull: false,
     unique: true,
   },
+  active: {
+    type: DataType.BOOLEAN,
+    allowNull: false,
+  },
 }
 
 export interface Regions {
   id: string
   region: string
+  active: boolean
 }
 
 export const regions: ModelAttributes<Model, Regions> = {
@@ -42,5 +48,9 @@ export const regions: ModelAttributes<Model, Regions> = {
     type: DataType.STRING,
     allowNull: false,
     unique: true,
+  },
+  active: {
+    type: DataType.BOOLEAN,
+    allowNull: false,
   },
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
 import {
   useForm,
@@ -8,20 +8,22 @@ import {
 } from 'react-hook-form'
 import { TextField } from 'components/TextFields/TextFields'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
-import { MapDivisionInputFields, style, styleTextFieldProps } from '../data'
+import { MapRegionInputFields, style, styleTextFieldProps } from '../data'
 import { ButtonsModalSection } from 'components/Buttons'
-import { useStructure } from 'hooks/structure/useStructure'
+import { useAddresses } from 'hooks/addresses/useAddresses'
+import { useMessage } from 'hooks/message/useMessage'
 
-export const AddDivision = React.forwardRef<unknown, ChooseModalProps>(
+export const AddRegion = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
-    const [_, { addDivision }] = useStructure()
     /* eslint-enable @typescript-eslint/no-unused-vars */
+    const [{ regions }, { getRegions, newRegion }] = useAddresses()
+    const [_, { setMessage }] = useMessage()
     const theme = useTheme()
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
       defaultValues: {
-        list: MapDivisionInputFields,
+        list: MapRegionInputFields,
       },
     })
     const { errors } = useFormState({ control })
@@ -30,10 +32,22 @@ export const AddDivision = React.forwardRef<unknown, ChooseModalProps>(
       name: 'list',
     })
 
-    function changeData({ list }: AddValuesProps) {
-      addDivision({ division: list[1].value, divisionName: list[0].value })
+    const changeData = ({ list }: AddValuesProps) => {
+      const isExist = regions.find(item => item.region === list[0].value)
+      if (isExist) {
+        setMessage({
+          text: 'Такой регион уже существует',
+          type: 'error',
+        })
+        return
+      }
+      newRegion({ region: list[0].value })
       handleModal(false)
     }
+
+    useEffect(() => {
+      getRegions()
+    }, [])
 
     return (
       <Box sx={style} component="form" onSubmit={handleSubmit(changeData)}>
@@ -52,9 +66,9 @@ export const AddDivision = React.forwardRef<unknown, ChooseModalProps>(
                   label={label}
                   type={type}
                   variant="outlined"
-                  sx={{ width: '90%', m: 2, mt: 4, height: 40 }}
-                  margin="normal"
                   required
+                  sx={{ width: '90%', mt: 5, height: 40 }}
+                  margin="normal"
                   value={field.value || ''}
                   error={!!(errors?.list ?? [])[index]?.value?.message}
                   helperText={(errors?.list ?? [])[index]?.value?.message}
@@ -66,8 +80,7 @@ export const AddDivision = React.forwardRef<unknown, ChooseModalProps>(
                   }}
                   InputLabelProps={{
                     style: {
-                      top: -7,
-                      marginTop: 0,
+                      ...styleTextFieldProps.inputLabelProps,
                       color: value
                         ? theme.palette.mode === 'dark'
                           ? '#C1EEE1'

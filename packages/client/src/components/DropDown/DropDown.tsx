@@ -31,14 +31,12 @@ export const DropDown = ({
       value={value}
       ListboxProps={{
         sx: {
-          borderWidth: 2,
-          minHeight: 150,
+          borderWidth: 1,
+          minHeight: 40,
           maxHeight: 225,
           color: 'green',
-          fontSize: 18,
+          fontSize: 13,
           '& li': {
-            borderBottomWidth: 1,
-            borderBottomStyle: 'solid',
             borderColor: theme.palette.mode === 'dark' ? '#1E515D' : '#C1EEE1',
           },
           '& :hover': {

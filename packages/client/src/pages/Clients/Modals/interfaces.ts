@@ -16,7 +16,7 @@ export interface AddValuesProps {
 
 export interface DataDropDown {
   data: {
-    category?: string
+    category: string
     categoryName: string
     id: string
   }[]

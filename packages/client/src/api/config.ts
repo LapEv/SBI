@@ -38,6 +38,16 @@ export const ApiEndPoints = {
     updateDivision: 'structure/updateDivision',
     updateDepartment: 'structure/updateDepartment',
   },
+  Addresses: {
+    getAddresses: 'addresses/getAddresses',
+    newAddress: 'addresses/newAddress',
+    deleteAddress: 'addresses/deleteAddress',
+    changeAddress: 'addresses/changeAddress',
+    getRegions: 'addresses/getRegions',
+    newRegion: 'addresses/newRegion',
+    deleteRegion: 'addresses/deleteRegion',
+    changeRegion: 'addresses/changeRegion',
+  },
 }
 
 const url = `http://localhost:${__SERVER_PORT__}/api/`

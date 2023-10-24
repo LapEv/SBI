@@ -77,6 +77,7 @@ export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
                   label={label}
                   type={type}
                   variant="outlined"
+                  required
                   sx={{ width: '90%', mt: 5, height: 40 }}
                   margin="normal"
                   value={field.value || ''}

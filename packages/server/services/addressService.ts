@@ -4,28 +4,58 @@ import { AddressesRepos, RegionsRepos } from '../db'
 export class addressService {
   newAddress = async (_req: Request, res: Response) => {
     try {
-      await AddressesRepos.create(_req.body)
+      await AddressesRepos.create({ ..._req.body, active: true })
       const addresses = await AddressesRepos.findAll({})
       res.status(200).json(addresses)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error: unable to set role', err] })
+      res
+        .status(500)
+        .json({ error: ['db error: unable to set new address', err] })
     }
   }
 
-  getAddresses = (_req: Request, res: Response) => {
-    console.log('Addresses')
+  getAllAddresses = (_req: Request, res: Response) => {
     AddressesRepos.findAll({})
       .then(item => res.status(200).json(item))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
 
+  getAddresses = (_req: Request, res: Response) => {
+    AddressesRepos.findAll({
+      where: { active: true },
+    })
+      .then(addresses => {
+        res.status(200).json(addresses)
+      })
+      .catch(err => res.status(500).json({ error: ['db error', err] }))
+  }
+
   deleteAddress = async (_req: Request, res: Response) => {
-    const data = _req.body
+    const { selectedAddresses } = _req.body
     try {
       const addresses = await Promise.all([
-        await data.map(async (value: string) => {
+        await selectedAddresses.map(async (value: string) => {
+          await AddressesRepos.update(value, {
+            active: false,
+          })
+        }),
+        await AddressesRepos.findAll({}),
+      ])
+      res.status(200).json(addresses[1])
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res.status(500).json({ error: ['db error', err] })
+    }
+  }
+
+  fullDeleteAddress = async (_req: Request, res: Response) => {
+    const { selectedAddresses } = _req.body
+    try {
+      const addresses = await Promise.all([
+        await selectedAddresses.map(async (value: string) => {
           await AddressesRepos.destroy({
             where: { id: value },
           })
@@ -56,7 +86,7 @@ export class addressService {
   }
   newRegion = async (_req: Request, res: Response) => {
     try {
-      await RegionsRepos.create(_req.body)
+      await RegionsRepos.create({ ..._req.body, active: true })
       const regions = await RegionsRepos.findAll({})
       res.status(200).json(regions)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -65,18 +95,45 @@ export class addressService {
       res.status(500).json({ error: ['db error: unable to set role', err] })
     }
   }
-
-  getRegions = (_req: Request, res: Response) => {
+  getAllRegions = (_req: Request, res: Response) => {
     RegionsRepos.findAll({})
       .then(regions => res.status(200).json(regions))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
-
+  getRegions = (_req: Request, res: Response) => {
+    RegionsRepos.findAll({
+      where: { active: true },
+    })
+      .then(regions => {
+        res.status(200).json(regions)
+      })
+      .catch(err => res.status(500).json({ error: ['db error', err] }))
+  }
   deleteRegion = async (_req: Request, res: Response) => {
-    const data = _req.body
+    const { selectedRegions } = _req.body
     try {
       const regions = await Promise.all([
-        await data.map(async (value: string) => {
+        await selectedRegions.map(async (value: string) => {
+          await RegionsRepos.update(value, {
+            active: false,
+          })
+        }),
+        await RegionsRepos.findAll({}),
+      ])
+      res.status(200).json(regions[1])
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res.status(500).json({ error: ['db error', err] })
+    }
+  }
+
+  fullDeleteRegion = async (_req: Request, res: Response) => {
+    const { selectedRegions } = _req.body
+    console.log('selectedRegions = ', selectedRegions)
+    try {
+      const regions = await Promise.all([
+        await selectedRegions.map(async (value: string) => {
           await RegionsRepos.destroy({
             where: { id: value },
           })

@@ -23,6 +23,14 @@ import {
   signup,
   updateUser,
 } from 'api/user'
+import {
+  changeAddress,
+  changeRegion,
+  deleteAddress,
+  deleteRegion,
+  newAddress,
+  newRegion,
+} from 'api/address'
 
 const initialState: MessageState = {
   text: '',
@@ -321,6 +329,104 @@ export const messageSlise = createSlice({
       state.isLoadingMessage = true
     },
     [updateUser.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [newAddress.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [newAddress.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [newAddress.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [deleteAddress.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [deleteAddress.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [deleteAddress.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [changeAddress.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [changeAddress.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [changeAddress.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [newRegion.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [newRegion.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [newRegion.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [deleteRegion.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [deleteRegion.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [deleteRegion.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [changeRegion.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [changeRegion.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [changeRegion.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingMessage = false
       state.type = 'error'
       state.text = action.payload

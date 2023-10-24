@@ -115,7 +115,6 @@ export const ThemeConfig = (mode: PaletteMode) =>
           },
         },
       },
-
       MuiAutocomplete: {
         styleOverrides: {
           root: {
@@ -123,6 +122,7 @@ export const ThemeConfig = (mode: PaletteMode) =>
               padding: '0!important',
               paddingLeft: '7px!important',
               paddingRight: '7px!important',
+              fontSize: 16,
             },
             '& .MuiAutocomplete-endAdornment': {
               top: -2,

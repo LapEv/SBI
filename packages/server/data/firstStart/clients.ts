@@ -8,6 +8,7 @@ export const objectsStartData = [
     address: 'г. Москва, Боровское шоссе, д. 6',
     coordinates: '55.658799, 37.401914',
     contracts: [],
+    active: true,
   },
   {
     object: 'Перекресток Солнцевский',
@@ -18,6 +19,7 @@ export const objectsStartData = [
     address: 'г. Москва, Солнцевский проспект, д. 21',
     coordinates: '55.680986, 37.485718',
     contracts: [],
+    active: true,
   },
   {
     object: 'Перекресток Удальцово',
@@ -28,6 +30,7 @@ export const objectsStartData = [
     address: 'г. Москва, ул. Удальцова, д. 85, кор. 5',
     coordinates: '55.680986, 37.485718',
     contracts: [],
+    active: true,
   },
 ]
 
@@ -37,6 +40,7 @@ export const clietnsStartData = [
     name: 'Перекресток',
     objects: [],
     contracts: [],
+    active: true,
   },
 ]
 
@@ -44,5 +48,6 @@ export const clientGroupStartData = [
   {
     clients: ['Перекресток', 'Пятерочка'],
     groupName: 'Х5 Retail Group',
+    active: true,
   },
 ]

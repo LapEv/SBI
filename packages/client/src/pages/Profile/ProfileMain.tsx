@@ -130,6 +130,7 @@ export function ProfileMain({ setModal, data }: ProfileMainProps) {
                     inputRef={field.ref}
                     label={label}
                     type={type}
+                    required
                     variant="outlined"
                     sx={{ width: '48%', height: 80 }}
                     margin="normal"

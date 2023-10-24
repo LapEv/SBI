@@ -69,6 +69,7 @@ export function ProfileChangePassword({
                 variant="outlined"
                 sx={{ width: '90%', m: 2, mt: 4, height: 40 }}
                 margin="normal"
+                required
                 value={field.value || ''}
                 error={!!(errors?.list ?? [])[index]?.value?.message}
                 helperText={(errors?.list ?? [])[index]?.value?.message}

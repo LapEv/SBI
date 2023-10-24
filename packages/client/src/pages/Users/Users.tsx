@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Container, Typography, List, Modal } from '@mui/material'
-import { useEffect, useState } from 'react'
 import { useStructure } from 'hooks/structure/useStructure'
 import DropDownMenu from 'components/DropDownButtonMenu'
 import { ChooseModal } from './Modals'

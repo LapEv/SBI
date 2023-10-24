@@ -193,7 +193,11 @@ export const coordinatesValidation = {
   required: REQUIRED_FIELD,
   validate: (value: string) => {
     console.log('value = ', value)
-    if (!value.match('^([-+]?)([0-9]{1,2})([\,\.])([0-9]{1,6})([\,])([\ ])([-+]?)([0-9]{1,2})([\,\.])([0-9]{1,6})')) {
+    if (
+      !value.match(
+        '^([-+]?)([0-9]{1,2})([,.])([0-9]{1,6})([,])([ ])([-+]?)([0-9]{1,2})([,.])([0-9]{1,6})'
+      )
+    ) {
       console.log('Не соответсвует формату координат')
       return 'Не соответсвует формату координат'
     }

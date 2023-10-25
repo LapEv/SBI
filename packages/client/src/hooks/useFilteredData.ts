@@ -1,9 +1,16 @@
 import { useMemo } from 'react'
-import { Addresses } from 'store/slices/addresses/interfaces'
 
-export const useFilteredData = (data: Addresses[], filterText: string) => {
+export const useFilteredData = <T>(
+  data: T[],
+  filterText: string,
+  key: string
+): T[] => {
+  console.log('data = ', data)
+  console.log('filterText = ', filterText)
   const filtered = useMemo(() => {
-    return data.filter((item: any) => item.address.includes(filterText))
+    return data.filter((item: any) =>
+      item[key].toLowerCase().includes(filterText.toLowerCase())
+    )
   }, [data, filterText])
   return filtered
 }

@@ -8,6 +8,9 @@ import { ButtonsModalSection } from 'components/Buttons'
 import { useAddresses } from 'hooks/addresses/useAddresses'
 import { useFilteredData } from 'hooks/useFilteredData'
 import { TextField } from 'components/TextFields/TextFields'
+import InputAdornment from '@mui/material/InputAdornment'
+import SearchIcon from '@mui/icons-material/Search'
+import { Addresses } from 'store/slices/addresses/interfaces'
 
 export const DeleteAddress = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -20,7 +23,11 @@ export const DeleteAddress = React.forwardRef<unknown, ChooseModalProps>(
     const [selectedAddresses, setSelectedAddresses] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
     const [filterText, setFilterText] = useState<string>('')
-    const filteredAddresses = useFilteredData(addresses, filterText)
+    const filteredAddresses = useFilteredData<Addresses>(
+      addresses,
+      filterText,
+      'address'
+    )
     const theme = useTheme()
 
     const changeData = (event: SyntheticEvent<EventTarget>) => {
@@ -52,6 +59,13 @@ export const DeleteAddress = React.forwardRef<unknown, ChooseModalProps>(
       return regions.find(item => item.id === id_region)?.region
     }
 
+    const setText = (text: string) => {
+      if (!height) {
+        setHeight(boxRef.current!.offsetHeight)
+      }
+      setFilterText(text)
+    }
+
     return (
       <Box
         sx={{ ...style, paddingLeft: 5 }}
@@ -64,7 +78,18 @@ export const DeleteAddress = React.forwardRef<unknown, ChooseModalProps>(
           label="Введите фильтр"
           margin="normal"
           value={filterText || ''}
-          onChange={e => setFilterText(e.target.value ?? '')}
+          onChange={e => setText(e.target.value ?? '')}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon
+                  htmlColor={
+                    theme.palette.mode === 'light' ? '#C1EEE1' : '#1E515D'
+                  }
+                />
+              </InputAdornment>
+            ),
+          }}
           inputProps={{
             style: {
               ...styleTextFieldProps.inputProps,

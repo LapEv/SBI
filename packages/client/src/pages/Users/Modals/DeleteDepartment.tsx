@@ -2,19 +2,32 @@ import React, { SyntheticEvent } from 'react'
 import { ChooseModalProps } from './interfaces'
 import { useState, useEffect } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
-import { style } from '../data'
+import { style, styleTextFieldProps } from '../data'
 import { Item } from 'components/CheckBoxGroup/Item'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useStructure } from 'hooks/structure/useStructure'
+import { Department } from 'store/slices/structure/interfaces'
+import InputAdornment from '@mui/material/InputAdornment'
+import SearchIcon from '@mui/icons-material/Search'
+import { TextField } from 'components/TextFields/TextFields'
+import { useFilteredData } from 'hooks/useFilteredData'
 
 export const DeleteDepartment = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
+    const boxRef = React.createRef<HTMLDivElement>()
+    const [height, setHeight] = useState<number | any>()
     const [{ divisions, departaments }, { deleteDepartment, getDepartments }] =
       useStructure()
     const [selectedDepartments, setSelectedDepartments] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
+    const [filterText, setFilterText] = useState<string>('')
+    const filteredDepartments = useFilteredData<Department>(
+      departaments,
+      filterText,
+      'departmentName'
+    )
     const theme = useTheme()
 
     const changeData = (event: SyntheticEvent<EventTarget>) => {
@@ -47,19 +60,69 @@ export const DeleteDepartment = React.forwardRef<unknown, ChooseModalProps>(
       return divisions.find(item => item.id === id_division)?.divisionName
     }
 
+    const setText = (text: string) => {
+      console.log('boxRef.current = ', boxRef.current)
+      if (!height) {
+        setHeight(boxRef.current!.offsetHeight)
+      }
+      setFilterText(text)
+    }
+
     return (
       <Box
         sx={{ ...style, paddingLeft: 5 }}
         component="form"
         onSubmit={changeData}>
         <Typography variant={'h6'}>{title}</Typography>
+        <TextField
+          variant="outlined"
+          sx={{ width: '90%', mt: 2, height: 40 }}
+          label="Введите фильтр"
+          margin="normal"
+          value={filterText || ''}
+          onChange={e => setText(e.target.value ?? '')}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon
+                  htmlColor={
+                    theme.palette.mode === 'light' ? '#C1EEE1' : '#1E515D'
+                  }
+                />
+              </InputAdornment>
+            ),
+          }}
+          inputProps={{
+            style: {
+              ...styleTextFieldProps.inputProps,
+              backgroundColor: theme.palette.background.paper,
+            },
+          }}
+          InputLabelProps={{
+            style: {
+              ...styleTextFieldProps.inputLabelProps,
+              color: filterText
+                ? theme.palette.mode === 'dark'
+                  ? '#C1EEE1'
+                  : '#1E515D'
+                : theme.palette.mode === 'dark'
+                ? '#1E515D'
+                : '#C1EEE1',
+            },
+          }}
+          FormHelperTextProps={{
+            style: { height: 0, marginTop: -1, zIndex: 999 },
+          }}
+        />
         <Box
+          ref={boxRef}
           sx={{
             mt: 2,
             width: '100%',
             pl: 3,
+            height: filterText ? height : 'auto',
           }}>
-          {departaments.map(({ departmentName, id, id_division }) => (
+          {filteredDepartments.map(({ departmentName, id, id_division }) => (
             <Item
               name={departmentName}
               comment={getDivisionName(id_division as string)}

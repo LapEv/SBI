@@ -36,15 +36,24 @@ export const AddAddress = React.forwardRef<unknown, ChooseModalProps>(
     })
 
     const changeData = ({ list }: AddValuesProps) => {
-      const isExist = addresses.find(item => item.address === list[0].value)
+      const isExist = addresses.find(
+        item =>
+          item.address === list[0].value || item.coordinates === list[1].value
+      )
       if (isExist) {
         setMessage({
-          text: 'Такой адрес уже существует',
+          text: 'Такой адрес или координаты уже существуют',
           type: 'error',
         })
         return
       }
-      newAddress({ address: list[0].value, coordinates: list[1].value })
+      const id_region = regions.find(item => item.region === region)
+        ?.id as string
+      newAddress({
+        address: list[0].value,
+        coordinates: list[1].value,
+        id_region,
+      })
       handleModal(false)
     }
 

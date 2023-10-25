@@ -106,7 +106,6 @@ export class userService {
   }
 
   changeAvatar = async (_req: Request, res: Response) => {
-    console.log('_req.body = ', _req.body)
     const { oldPassword, newPassword, id } = _req.body
     const user = await userRepos.findAll({
       where: { id },

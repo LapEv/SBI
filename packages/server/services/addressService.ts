@@ -34,6 +34,7 @@ export class addressService {
 
   deleteAddress = async (_req: Request, res: Response) => {
     const { selectedAddresses } = _req.body
+    console.log('selectedAddresses = ', selectedAddresses)
     try {
       const addresses = await Promise.all([
         await selectedAddresses.map(async (value: string) => {
@@ -69,6 +70,23 @@ export class addressService {
       res.status(500).json({ error: ['db error', err] })
     }
   }
+  pullAddressFromArchive = async (_req: Request, res: Response) => {
+    const { selectedAddresses } = _req.body
+    try {
+      await AddressesRepos.update(selectedAddresses, {
+        active: true,
+      })
+      const users = await AddressesRepos.findAll({
+        where: { active: true },
+      })
+      res.status(200).json(users)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res.status(500).json({ error: ['db error', err] })
+    }
+  }
+
   changeAddress = async (_req: Request, res: Response) => {
     const { address, coordinates, activeRolesGroup } = _req.body
     try {
@@ -111,6 +129,7 @@ export class addressService {
   }
   deleteRegion = async (_req: Request, res: Response) => {
     const { selectedRegions } = _req.body
+    console.log('selectedRegions = ', selectedRegions)
     try {
       const regions = await Promise.all([
         await selectedRegions.map(async (value: string) => {
@@ -147,6 +166,23 @@ export class addressService {
       res.status(500).json({ error: ['db error', err] })
     }
   }
+  pullRegionFromArchive = async (_req: Request, res: Response) => {
+    const { selectedRegions } = _req.body
+    try {
+      await RegionsRepos.update(selectedRegions, {
+        active: true,
+      })
+      const users = await RegionsRepos.findAll({
+        where: { active: true },
+      })
+      res.status(200).json(users)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res.status(500).json({ error: ['db error', err] })
+    }
+  }
+
   changeRegion = async (_req: Request, res: Response) => {
     const { region, id } = _req.body
     try {

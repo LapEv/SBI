@@ -185,11 +185,6 @@ export const rolesStartData = [
     nameRole: 'Перемещение адреса в архив',
   },
   {
-    role: 'fullDeleteAddress',
-    nameRole: 'Удаление адреса',
-  },
-
-  {
     role: 'changeAddress',
     nameRole: 'Изменение данных адреса',
   },
@@ -209,10 +204,6 @@ export const rolesStartData = [
   {
     role: 'deleteRegion',
     nameRole: 'Перемещение региона в архив',
-  },
-  {
-    role: 'fullDeleteRegion',
-    nameRole: 'Удаление региона',
   },
   {
     role: 'changeRegion',

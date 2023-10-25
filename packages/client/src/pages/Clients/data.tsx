@@ -41,7 +41,7 @@ export const menuData = [
   {
     name: 'deleteRegion',
     title: 'Удалить регион',
-    icon: <SouthAmerica fontSize="medium" />,
+    icon: <RegionsSVG fontSize="medium" />,
   },
   {
     name: 'deleteDepartments',
@@ -102,6 +102,8 @@ export const styleTextFieldProps = {
 export const ModalTitles = {
   newAddress: 'Новый адрес',
   newRegion: 'Новый регион',
+  deleteAddress: 'Удалить адрес',
+  deleteRegion: 'Удалить регион',
 }
 
 export const MapAddressInputFields = [

@@ -2,6 +2,7 @@ export interface Addresses {
   id?: string
   address: string
   coordinates: string
+  id_region: string
 }
 
 export interface Regions {

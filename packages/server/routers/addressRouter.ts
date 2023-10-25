@@ -32,7 +32,11 @@ export const addressRouter = (apiRouter: Router) => {
     roleMiddleware(['fullDeleteAddress', 'ADMIN', 'SUPERADMIN']),
     service.fullDeleteAddress
   )
-
+  router.post(
+    '/pullAddressFromArchive',
+    roleMiddleware(['ADMIN', 'SUPERADMIN', 'pullAddressFromArchive']),
+    service.pullAddressFromArchive
+  )
   router.post(
     '/changeAddress',
     roleMiddleware(['changeAddress', 'ADMIN', 'SUPERADMIN']),
@@ -63,6 +67,11 @@ export const addressRouter = (apiRouter: Router) => {
     '/fullDeleteRegion',
     roleMiddleware(['fullDeleteRegion', 'ADMIN', 'SUPERADMIN']),
     service.fullDeleteRegion
+  )
+  router.post(
+    '/pullRegionFromArchive',
+    roleMiddleware(['ADMIN', 'SUPERADMIN', 'pullRegionFromArchive']),
+    service.pullRegionFromArchive
   )
   router.post(
     '/changeRegion',

@@ -1,5 +1,5 @@
 import React from 'react'
-import { AddAddress, AddRegion } from './'
+import { AddAddress, AddRegion, DeleteAddress, DeleteRegion } from './'
 import { ModalTitles } from '../data'
 import { ChooseModalProps } from './interfaces'
 
@@ -19,6 +19,20 @@ export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(
             ref={ref}
             handleModal={handleModal}
             title={ModalTitles.newRegion}
+          />
+        )}
+        {modalImage === 'deleteAddress' && (
+          <DeleteAddress
+            ref={ref}
+            handleModal={handleModal}
+            title={ModalTitles.deleteAddress}
+          />
+        )}
+        {modalImage === 'deleteRegion' && (
+          <DeleteRegion
+            ref={ref}
+            handleModal={handleModal}
+            title={ModalTitles.deleteRegion}
           />
         )}
       </>

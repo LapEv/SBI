@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { ProfileMain } from './ProfileMain'
 import { useAuth } from 'hooks/auth/useAuth'
 import { ProfileChangePassword } from './ProfileChangePassword'
-import { Message } from 'components/Message/Message'
+import { Message } from 'components/Message'
 
 export function ProfilePage() {
   const [{ user }] = useAuth()

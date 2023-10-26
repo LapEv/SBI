@@ -2,15 +2,15 @@ import React, { SyntheticEvent } from 'react'
 import { ChooseModalProps } from './interfaces'
 import { useState, useEffect } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
-import { style, styleTextFieldProps } from '../data'
-import { Item } from 'components/CheckBoxGroup/Item'
+import { Item } from 'components/CheckBoxGroup'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useAddresses } from 'hooks/addresses/useAddresses'
 import { useFilteredData } from 'hooks/useFilteredData'
-import { TextField } from 'components/TextFields/TextFields'
-import InputAdornment from '@mui/material/InputAdornment'
-import SearchIcon from '@mui/icons-material/Search'
+import { TextField } from 'components/TextFields'
 import { Addresses } from 'store/slices/addresses/interfaces'
+import { style } from 'static/styles/modals'
+import { styleTextFieldProps } from 'static/styles/textFields'
+import { SearchIconElement } from 'components/SearchIconElement'
 
 export const DeleteAddress = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -52,7 +52,7 @@ export const DeleteAddress = React.forwardRef<unknown, ChooseModalProps>(
 
     useEffect(() => {
       getAddresses()
-      if (boxRef.current!.offsetHeight) {
+      if (boxRef.current) {
         setHeight(boxRef.current!.offsetHeight)
       }
     }, [])
@@ -62,7 +62,7 @@ export const DeleteAddress = React.forwardRef<unknown, ChooseModalProps>(
     }
 
     const setText = (text: string) => {
-      if (!height && boxRef.current!.offsetHeight) {
+      if (!height && boxRef.current) {
         setHeight(boxRef.current!.offsetHeight)
       }
       setFilterText(text)
@@ -82,36 +82,16 @@ export const DeleteAddress = React.forwardRef<unknown, ChooseModalProps>(
           value={filterText || ''}
           onChange={e => setText(e.target.value ?? '')}
           InputProps={{
-            endAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon
-                  htmlColor={
-                    theme.palette.mode === 'light' ? '#C1EEE1' : '#1E515D'
-                  }
-                />
-              </InputAdornment>
-            ),
+            endAdornment: <SearchIconElement />,
           }}
           inputProps={{
-            style: {
-              ...styleTextFieldProps.inputProps,
-              backgroundColor: theme.palette.background.paper,
-            },
+            style: styleTextFieldProps.inputProps,
           }}
           InputLabelProps={{
-            style: {
-              ...styleTextFieldProps.inputLabelProps,
-              color: filterText
-                ? theme.palette.mode === 'dark'
-                  ? '#C1EEE1'
-                  : '#1E515D'
-                : theme.palette.mode === 'dark'
-                ? '#1E515D'
-                : '#C1EEE1',
-            },
+            style: styleTextFieldProps.inputLabelProps,
           }}
           FormHelperTextProps={{
-            style: { height: 0, marginTop: -1, zIndex: 999 },
+            style: styleTextFieldProps.formHelperTextProps,
           }}
         />
         <Box
@@ -134,7 +114,7 @@ export const DeleteAddress = React.forwardRef<unknown, ChooseModalProps>(
           ))}
         </Box>
         <Box sx={{ color: theme.palette.error.main, height: 20 }}>
-          {errSelectedItems && 'Не выбран ни один отдел!'}
+          {errSelectedItems && 'Не выбран ни один адрес!'}
         </Box>
         <ButtonsModalSection
           closeModal={() => handleModal(false)}

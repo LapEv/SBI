@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Box, Container, Modal, Typography } from '@mui/material'
 import { Message } from 'components/Message/Message'
 import { useAuth } from 'hooks/auth/useAuth'
-import DropDownMenu from 'components/DropDownButtonMenu'
+import { DropDownMenu } from 'components/DropDownButtonMenu'
 import { menuData } from './data'
 import { ChooseModal } from './Modals/ChooseModal'
 

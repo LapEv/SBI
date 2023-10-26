@@ -165,6 +165,9 @@ export const ThemeConfig = (mode: PaletteMode) =>
             '& .MuiInputBase-root': {
               backgroundColor: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
             },
+            '& .MuiInputBase-input': {
+              backgroundColor: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+            },
             '& .MuiOutlinedInput-input.Mui-disabled': {
               backgroundColor: mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
               WebkitTextFillColor:

@@ -2,18 +2,30 @@ import React from 'react'
 import { ChooseModalProps } from './interfaces'
 import { useState, useEffect, SyntheticEvent } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
-import { style } from '../data'
-import { Item } from 'components/CheckBoxGroup/Item'
+import { style, styleTextFieldProps } from 'static/styles'
+import { Item } from 'components/CheckBoxGroup'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useStructure } from 'hooks/structure/useStructure'
+import { useFilteredData } from 'hooks/useFilteredData'
+import { SearchIconElement } from 'components/SearchIconElement'
+import { Division } from 'store/slices/structure/interfaces'
+import { TextField } from 'components/TextFields'
 
 export const DeleteDivision = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
+    const boxRef = React.createRef<HTMLDivElement>()
+    const [height, setHeight] = useState<number | any>()
     const [{ divisions }, { deleteDivision, getDivisions }] = useStructure()
     const [selectedDivisions, setSelectedDivisions] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
+    const [filterText, setFilterText] = useState<string>('')
+    const filteredDivisions = useFilteredData<Division>(
+      divisions,
+      filterText,
+      'divisionName'
+    )
     const theme = useTheme()
 
     const changeData = (event: SyntheticEvent<EventTarget>) => {
@@ -38,7 +50,17 @@ export const DeleteDivision = React.forwardRef<unknown, ChooseModalProps>(
 
     useEffect(() => {
       getDivisions()
+      if (boxRef.current) {
+        setHeight(boxRef.current!.offsetHeight)
+      }
     }, [])
+
+    const setText = (text: string) => {
+      if (!height && boxRef.current) {
+        setHeight(boxRef.current!.offsetHeight)
+      }
+      setFilterText(text)
+    }
 
     return (
       <Box
@@ -46,13 +68,34 @@ export const DeleteDivision = React.forwardRef<unknown, ChooseModalProps>(
         component="form"
         onSubmit={changeData}>
         <Typography variant={'h6'}>{title}</Typography>
+        <TextField
+          variant="outlined"
+          sx={{ width: '90%', mt: 2, height: 40 }}
+          label="Введите фильтр"
+          margin="normal"
+          value={filterText || ''}
+          onChange={e => setText(e.target.value ?? '')}
+          InputProps={{
+            endAdornment: <SearchIconElement />,
+          }}
+          inputProps={{
+            style: styleTextFieldProps.inputProps,
+          }}
+          InputLabelProps={{
+            style: styleTextFieldProps.inputLabelProps,
+          }}
+          FormHelperTextProps={{
+            style: styleTextFieldProps.formHelperTextProps,
+          }}
+        />
         <Box
+          ref={boxRef}
           sx={{
             mt: 2,
             width: '100%',
             pl: 3,
           }}>
-          {divisions.map(({ divisionName, id }) => (
+          {filteredDivisions.map(({ divisionName, id }) => (
             <Item
               name={divisionName}
               id={`${id}`}

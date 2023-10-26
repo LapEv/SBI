@@ -6,13 +6,14 @@ import {
   Controller,
   useFormState,
 } from 'react-hook-form'
-import { TextField } from 'components/TextFields/TextFields'
+import { TextField } from 'components/TextFields'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
-import { MapRolesGroupInputFields, style, styleTextFieldProps } from '../data'
+import { MapRolesGroupInputFields } from '../data'
+import { style, styleTextFieldProps } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useRoles } from 'hooks/roles/useRoles'
 import { Roles, RolesGroup } from 'storeRoles/interfaces'
-import { Item } from 'components/CheckBoxGroup/Item'
+import { Item } from 'components/CheckBoxGroup'
 
 export const AddRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */

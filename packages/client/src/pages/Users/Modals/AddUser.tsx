@@ -12,14 +12,15 @@ import {
   useFormState,
   Controller,
 } from 'react-hook-form'
-import { TextField } from 'components/TextFields/TextFields'
+import { TextField } from 'components/TextFields'
 import { ChooseModalProps, AddValuesProps, Data } from './interfaces'
-import { MapProfileInputFieldsAdmin, style, styleTextFieldProps } from '../data'
+import { MapProfileInputFieldsAdmin } from '../data'
+import { style, styleTextFieldProps } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useStructure } from 'hooks/structure/useStructure'
-import { DropDown } from 'components/DropDown/DropDown'
+import { DropDown } from 'components/DropDown'
 import { useRoles } from 'hooks/roles/useRoles'
-import { CheckBoxGroup } from 'components/CheckBoxGroup/CheckBoxGroup'
+import { CheckBoxGroup } from 'components/CheckBoxGroup'
 import { useAuth } from 'hooks/auth/useAuth'
 import { ICheckBoxGroupData } from 'components/CheckBoxGroup/interface'
 import { RolesGroup } from 'storeRoles/interfaces'
@@ -253,25 +254,13 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
                   error={!!(errors?.list ?? [])[index]?.value?.message}
                   helperText={(errors?.list ?? [])[index]?.value?.message}
                   inputProps={{
-                    style: {
-                      ...styleTextFieldProps.inputProps,
-                      backgroundColor: theme.palette.background.paper,
-                    },
+                    style: styleTextFieldProps.inputProps,
                   }}
                   InputLabelProps={{
-                    style: {
-                      ...styleTextFieldProps.inputLabelProps,
-                      color: value
-                        ? theme.palette.mode === 'dark'
-                          ? '#C1EEE1'
-                          : '#1E515D'
-                        : theme.palette.mode === 'dark'
-                        ? '#1E515D'
-                        : '#C1EEE1',
-                    },
+                    style: styleTextFieldProps.inputLabelProps,
                   }}
                   FormHelperTextProps={{
-                    style: { height: 0, marginTop: -1, zIndex: 999 },
+                    style: styleTextFieldProps.formHelperTextProps,
                   }}
                 />
               )}

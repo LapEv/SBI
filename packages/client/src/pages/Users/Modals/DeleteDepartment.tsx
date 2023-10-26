@@ -2,15 +2,14 @@ import React, { SyntheticEvent } from 'react'
 import { ChooseModalProps } from './interfaces'
 import { useState, useEffect } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
-import { style, styleTextFieldProps } from '../data'
-import { Item } from 'components/CheckBoxGroup/Item'
+import { Item } from 'components/CheckBoxGroup'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useStructure } from 'hooks/structure/useStructure'
 import { Department } from 'store/slices/structure/interfaces'
-import InputAdornment from '@mui/material/InputAdornment'
-import SearchIcon from '@mui/icons-material/Search'
-import { TextField } from 'components/TextFields/TextFields'
+import { TextField } from 'components/TextFields'
 import { useFilteredData } from 'hooks/useFilteredData'
+import { style, styleTextFieldProps } from 'static/styles'
+import { SearchIconElement } from 'components/SearchIconElement'
 
 export const DeleteDepartment = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -54,6 +53,9 @@ export const DeleteDepartment = React.forwardRef<unknown, ChooseModalProps>(
 
     useEffect(() => {
       getDepartments()
+      if (boxRef.current) {
+        setHeight(boxRef.current!.offsetHeight)
+      }
     }, [])
 
     const getDivisionName = (id_division: string) => {
@@ -61,8 +63,7 @@ export const DeleteDepartment = React.forwardRef<unknown, ChooseModalProps>(
     }
 
     const setText = (text: string) => {
-      console.log('boxRef.current = ', boxRef.current)
-      if (!height) {
+      if (!height && boxRef.current) {
         setHeight(boxRef.current!.offsetHeight)
       }
       setFilterText(text)
@@ -82,36 +83,16 @@ export const DeleteDepartment = React.forwardRef<unknown, ChooseModalProps>(
           value={filterText || ''}
           onChange={e => setText(e.target.value ?? '')}
           InputProps={{
-            endAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon
-                  htmlColor={
-                    theme.palette.mode === 'light' ? '#C1EEE1' : '#1E515D'
-                  }
-                />
-              </InputAdornment>
-            ),
+            endAdornment: <SearchIconElement />,
           }}
           inputProps={{
-            style: {
-              ...styleTextFieldProps.inputProps,
-              backgroundColor: theme.palette.background.paper,
-            },
+            style: styleTextFieldProps.inputProps,
           }}
           InputLabelProps={{
-            style: {
-              ...styleTextFieldProps.inputLabelProps,
-              color: filterText
-                ? theme.palette.mode === 'dark'
-                  ? '#C1EEE1'
-                  : '#1E515D'
-                : theme.palette.mode === 'dark'
-                ? '#1E515D'
-                : '#C1EEE1',
-            },
+            style: styleTextFieldProps.inputLabelProps,
           }}
           FormHelperTextProps={{
-            style: { height: 0, marginTop: -1, zIndex: 999 },
+            style: styleTextFieldProps.formHelperTextProps,
           }}
         />
         <Box

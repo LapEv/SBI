@@ -3,8 +3,8 @@ import { ChooseModalProps } from './interfaces'
 import { useState, useEffect, SyntheticEvent } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
 import { useRoles } from 'hooks/roles/useRoles'
-import { style } from '../data'
-import { Item } from 'components/CheckBoxGroup/Item'
+import { style } from 'static/styles'
+import { Item } from 'components/CheckBoxGroup'
 import { ButtonsModalSection } from 'components/Buttons'
 
 export const DeleteRole = React.forwardRef<unknown, ChooseModalProps>(

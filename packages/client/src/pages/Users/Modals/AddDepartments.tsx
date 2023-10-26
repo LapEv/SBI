@@ -6,12 +6,13 @@ import {
   Controller,
   useFormState,
 } from 'react-hook-form'
-import { TextField } from 'components/TextFields/TextFields'
+import { TextField } from 'components/TextFields'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
-import { MapDepartmentInputFields, style, styleTextFieldProps } from '../data'
+import { MapDepartmentInputFields } from '../data'
+import { style, styleTextFieldProps } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useStructure } from 'hooks/structure/useStructure'
-import { DropDown } from 'components/DropDown/DropDown'
+import { DropDown } from 'components/DropDown'
 
 export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -84,25 +85,13 @@ export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
                   error={!!(errors?.list ?? [])[index]?.value?.message}
                   helperText={(errors?.list ?? [])[index]?.value?.message}
                   inputProps={{
-                    style: {
-                      ...styleTextFieldProps.inputProps,
-                      backgroundColor: theme.palette.background.paper,
-                    },
+                    style: styleTextFieldProps.inputProps,
                   }}
                   InputLabelProps={{
-                    style: {
-                      ...styleTextFieldProps.inputLabelProps,
-                      color: value
-                        ? theme.palette.mode === 'dark'
-                          ? '#C1EEE1'
-                          : '#1E515D'
-                        : theme.palette.mode === 'dark'
-                        ? '#1E515D'
-                        : '#C1EEE1',
-                    },
+                    style: styleTextFieldProps.inputLabelProps,
                   }}
                   FormHelperTextProps={{
-                    style: { height: 0, marginTop: -1, zIndex: 999 },
+                    style: styleTextFieldProps.formHelperTextProps,
                   }}
                 />
               )}

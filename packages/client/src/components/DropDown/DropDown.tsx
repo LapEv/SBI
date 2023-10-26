@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Autocomplete } from '@mui/material'
 import { useTheme } from '@mui/material'
 import { TextField } from 'components/TextFields/TextFields'
-import { styleTextFieldProps } from '../../pages/Users/data'
+import { styleTextFieldProps } from 'static/styles'
 import { DataDropDown } from '../../pages/Users/Modals/interfaces'
 
 export const DropDown = ({
@@ -58,24 +58,13 @@ export const DropDown = ({
           helperText={errors ? errorLabel : ''}
           InputProps={{
             style: {
-              ...styleTextFieldProps.inputProps,
-              height: 40,
+              ...styleTextFieldProps.inputPropsDropDown,
               backgroundColor: theme.palette.background.paper,
-              padding: '10px 6px',
             },
             ...params.InputProps,
           }}
           InputLabelProps={{
-            style: {
-              ...styleTextFieldProps.inputLabelProps,
-              color: params.inputProps.value
-                ? theme.palette.mode === 'dark'
-                  ? '#C1EEE1'
-                  : '#1E515D'
-                : theme.palette.mode === 'dark'
-                ? '#1E515D'
-                : '#C1EEE1',
-            },
+            style: styleTextFieldProps.inputLabelProps,
           }}
         />
       )}

@@ -70,40 +70,6 @@ export const menuData = [
     icon: <DisplaySettings fontSize="medium" />,
   },
 ]
-export const style = {
-  position: 'absolute',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  width: '40%',
-  top: '50%',
-  left: '50%',
-  height: 'auto',
-  maxHeight: '98%',
-  transform: 'translate(-50%, -50%)',
-  bgcolor: 'background.default',
-  borderWidth: 2,
-  borderColor: 'border.default',
-  borderStyle: 'solid',
-  borderRadius: 3,
-  boxShadow: 24,
-  p: 4,
-  overflowY: 'auto',
-  overflowX: 'hidden',
-}
-
-export const styleTextFieldProps = {
-  inputProps: {
-    height: 5,
-    borderRadius: 5,
-    padding: '16px 14px',
-  },
-  inputLabelProps: {
-    top: -7,
-    marginTop: 0,
-  },
-}
 
 export const ModalTitles = {
   addDivision: 'Новое подразделение',

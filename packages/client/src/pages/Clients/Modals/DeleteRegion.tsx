@@ -1,20 +1,15 @@
 import React, { SyntheticEvent } from 'react'
 import { ChooseModalProps } from './interfaces'
 import { useState, useEffect } from 'react'
-import {
-  Box,
-  InputAdornment,
-  TextField,
-  Typography,
-  useTheme,
-} from '@mui/material'
-import { style, styleTextFieldProps } from '../data'
-import { Item } from 'components/CheckBoxGroup/Item'
+import { Box, TextField, Typography, useTheme } from '@mui/material'
+import { Item } from 'components/CheckBoxGroup'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useAddresses } from 'hooks/addresses/useAddresses'
-import SearchIcon from '@mui/icons-material/Search'
 import { useFilteredData } from 'hooks/useFilteredData'
 import { Regions } from 'store/slices/addresses/interfaces'
+import { style } from 'static/styles/modals'
+import { styleTextFieldProps } from 'static/styles/textFields'
+import { SearchIconElement } from 'components/SearchIconElement'
 
 export const DeleteRegion = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -55,6 +50,10 @@ export const DeleteRegion = React.forwardRef<unknown, ChooseModalProps>(
 
     useEffect(() => {
       getRegions()
+    }, [])
+
+    useEffect(() => {
+      getRegions()
       if (boxRef.current) {
         setHeight(boxRef.current!.offsetHeight)
       }
@@ -81,33 +80,16 @@ export const DeleteRegion = React.forwardRef<unknown, ChooseModalProps>(
           value={filterText || ''}
           onChange={e => setText(e.target.value ?? '')}
           InputProps={{
-            endAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon
-                  htmlColor={
-                    theme.palette.mode === 'light' ? '#C1EEE1' : '#1E515D'
-                  }
-                />
-              </InputAdornment>
-            ),
+            endAdornment: <SearchIconElement />,
           }}
           inputProps={{
-            style: {
-              ...styleTextFieldProps.inputProps,
-              backgroundColor: theme.palette.background.paper,
-            },
+            style: styleTextFieldProps.inputProps,
           }}
           InputLabelProps={{
-            style: {
-              ...styleTextFieldProps.inputLabelProps,
-              color: filterText
-                ? theme.palette.mode === 'dark'
-                  ? '#C1EEE1'
-                  : '#1E515D'
-                : theme.palette.mode === 'dark'
-                ? '#1E515D'
-                : '#C1EEE1',
-            },
+            style: styleTextFieldProps.inputLabelProps,
+          }}
+          FormHelperTextProps={{
+            style: styleTextFieldProps.formHelperTextProps,
           }}
         />
         <Box

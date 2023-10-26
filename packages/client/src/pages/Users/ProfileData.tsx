@@ -14,12 +14,13 @@ import {
 import { useAuth } from 'hooks/auth/useAuth'
 import { useTheme } from '@mui/material/styles'
 import { ProfileValues } from './interfaces'
-import { CheckBoxGroup } from 'components/CheckBoxGroup/CheckBoxGroup'
+import { CheckBoxGroup } from 'components/CheckBoxGroup'
 import { useEffect, useState } from 'react'
 import { useRoles } from 'hooks/roles/useRoles'
 import { ButtonsSection, RotateButton } from 'components/Buttons'
 import { ICheckBoxGroupData } from 'components/CheckBoxGroup/interface'
 import { deepEqual } from 'utils/deepEqual'
+import { styleTextFieldProps } from 'static/styles'
 
 export const ProfileData = (user: User) => {
   const theme = useTheme()
@@ -135,7 +136,6 @@ export const ProfileData = (user: User) => {
                 margin="normal"
                 onChange={(event: ChangeEvent<HTMLInputElement>) => (
                   field.onChange(event),
-                  console.log('event.target.value = ', event.target.value),
                   updateUserData({
                     ...userData!,
                     ...{ [name]: event.target.value },
@@ -144,23 +144,13 @@ export const ProfileData = (user: User) => {
                 error={!!(errors?.list ?? [])[index]?.value?.message}
                 helperText={(errors?.list ?? [])[index]?.value?.message}
                 inputProps={{
-                  style: { height: 5, borderRadius: 5, padding: '16px 14px' },
+                  style: styleTextFieldProps.inputProps,
                 }}
                 InputLabelProps={{
-                  style: {
-                    top: -7,
-                    marginTop: 0,
-                    color: value
-                      ? theme.palette.mode === 'dark'
-                        ? '#C1EEE1'
-                        : '#1E515D'
-                      : theme.palette.mode === 'dark'
-                      ? '#1E515D'
-                      : '#C1EEE1',
-                  },
+                  style: styleTextFieldProps.inputLabelProps,
                 }}
                 FormHelperTextProps={{
-                  style: { height: 0, marginTop: -1, zIndex: 999 },
+                  style: styleTextFieldProps.formHelperTextProps,
                 }}
               />
             )}

@@ -3,9 +3,9 @@ import { ChooseModalProps } from './interfaces'
 import { useState, useEffect } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
 import { useRoles } from 'hooks/roles/useRoles'
-import { style } from '../data'
+import { style } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
-import { Item } from 'components/CheckBoxGroup/Item'
+import { Item } from 'components/CheckBoxGroup'
 
 export const DeleteRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */

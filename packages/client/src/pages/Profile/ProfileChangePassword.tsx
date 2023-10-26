@@ -5,18 +5,15 @@ import {
   Controller,
   useFormState,
 } from 'react-hook-form'
-import {
-  MapPasswordInputFields,
-  styleTextFieldProps,
-  style,
-} from './ProfileFieldsData'
-import { TextField } from 'components/TextFields/TextFields'
+import { MapPasswordInputFields } from './ProfileFieldsData'
+import { TextField } from 'components/TextFields'
 import { ButtonsModalSection } from 'components/Buttons'
 import {
   ProfileChangePasswordProps,
   ProfileChangePasswordValues,
 } from './interfaces'
 import { useAuth } from 'hooks/auth/useAuth'
+import { style, styleTextFieldProps } from 'static/styles'
 
 export function ProfileChangePassword({
   handleModal,
@@ -74,26 +71,13 @@ export function ProfileChangePassword({
                 error={!!(errors?.list ?? [])[index]?.value?.message}
                 helperText={(errors?.list ?? [])[index]?.value?.message}
                 inputProps={{
-                  style: {
-                    ...styleTextFieldProps.inputProps,
-                    backgroundColor: theme.palette.background.paper,
-                  },
+                  style: styleTextFieldProps.inputProps,
                 }}
                 InputLabelProps={{
-                  style: {
-                    top: -7,
-                    marginTop: 0,
-                    color: value
-                      ? theme.palette.mode === 'dark'
-                        ? '#C1EEE1'
-                        : '#1E515D'
-                      : theme.palette.mode === 'dark'
-                      ? '#1E515D'
-                      : '#C1EEE1',
-                  },
+                  style: styleTextFieldProps.inputLabelProps,
                 }}
                 FormHelperTextProps={{
-                  style: { height: 0, marginTop: -1, zIndex: 999 },
+                  style: styleTextFieldProps.formHelperTextProps,
                 }}
               />
             )}

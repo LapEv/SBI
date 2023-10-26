@@ -52,7 +52,9 @@ export const DeleteAddress = React.forwardRef<unknown, ChooseModalProps>(
 
     useEffect(() => {
       getAddresses()
-      setHeight(boxRef.current!.offsetHeight)
+      if (boxRef.current!.offsetHeight) {
+        setHeight(boxRef.current!.offsetHeight)
+      }
     }, [])
 
     const getRegionName = (id_region: string) => {
@@ -60,7 +62,7 @@ export const DeleteAddress = React.forwardRef<unknown, ChooseModalProps>(
     }
 
     const setText = (text: string) => {
-      if (!height) {
+      if (!height && boxRef.current!.offsetHeight) {
         setHeight(boxRef.current!.offsetHeight)
       }
       setFilterText(text)

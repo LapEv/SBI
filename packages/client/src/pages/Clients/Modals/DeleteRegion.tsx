@@ -55,7 +55,17 @@ export const DeleteRegion = React.forwardRef<unknown, ChooseModalProps>(
 
     useEffect(() => {
       getRegions()
+      if (boxRef.current) {
+        setHeight(boxRef.current!.offsetHeight)
+      }
     }, [])
+
+    const setText = (text: string) => {
+      if (!height && boxRef.current) {
+        setHeight(boxRef.current!.offsetHeight)
+      }
+      setFilterText(text)
+    }
 
     return (
       <Box
@@ -69,7 +79,7 @@ export const DeleteRegion = React.forwardRef<unknown, ChooseModalProps>(
           label="Введите фильтр"
           margin="normal"
           value={filterText || ''}
-          onChange={e => setFilterText(e.target.value ?? '')}
+          onChange={e => setText(e.target.value ?? '')}
           InputProps={{
             endAdornment: (
               <InputAdornment position="start">
@@ -101,6 +111,7 @@ export const DeleteRegion = React.forwardRef<unknown, ChooseModalProps>(
           }}
         />
         <Box
+          ref={boxRef}
           sx={{
             mt: 2,
             width: '100%',

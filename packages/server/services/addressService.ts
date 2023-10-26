@@ -34,7 +34,6 @@ export class addressService {
 
   deleteAddress = async (_req: Request, res: Response) => {
     const { selectedAddresses } = _req.body
-    console.log('selectedAddresses = ', selectedAddresses)
     try {
       const addresses = await Promise.all([
         await selectedAddresses.map(async (value: string) => {

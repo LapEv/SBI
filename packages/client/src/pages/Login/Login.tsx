@@ -11,10 +11,10 @@ import { Routes } from 'utils/routes'
 import { Login } from 'storeAuth/interfaces'
 import { MapLoginFields } from './LoginData'
 import { Button } from 'components/Buttons'
-import { TextField } from 'components/TextFields/TextFields'
-import { styleLoginTextFieldProps } from './data'
+import { TextField } from 'components/TextFields/'
 import { isEmptyObjField } from 'utils/isEmptyObject'
-import { Message } from 'components/Message/Message'
+import { Message } from 'components/Message'
+import { styleTextFieldProps } from 'static/styles'
 
 interface LoginValues extends Login {
   list: {
@@ -82,8 +82,10 @@ export function LoginPage() {
             flexDirection: 'column',
             alignItems: 'center',
             width: 540,
-            height: 382,
+            height: 350,
             justifyContent: 'space-around',
+            boxShadow: 5,
+            p: 2,
           }}>
           <Typography sx={{ fontWeight: 700, fontSize: 32 }} color="green.64">
             Вход
@@ -103,41 +105,24 @@ export function LoginPage() {
                     type={type}
                     variant="outlined"
                     sx={{ width: '68%' }}
-                    margin="normal"
                     value={field.value || ''}
                     required
                     error={!!(errors?.list ?? [])[index]?.value?.message}
                     helperText={(errors?.list ?? [])[index]?.value?.message}
                     InputProps={{
-                      style: {
-                        ...styleLoginTextFieldProps.inputProps,
-                        backgroundColor: theme.palette.background.paper,
-                        borderRadius: 5,
-                      },
+                      style: styleTextFieldProps.inputPropsLogin,
                     }}
                     InputLabelProps={{
-                      style: {
-                        ...styleLoginTextFieldProps.inputLabelProps,
-                        color: value
-                          ? theme.palette.mode === 'dark'
-                            ? '#C1EEE1'
-                            : '#1E515D'
-                          : theme.palette.mode === 'dark'
-                          ? '#1E515D'
-                          : '#C1EEE1',
-                      },
+                      style: styleTextFieldProps.inputLabelProps,
                     }}
                     FormHelperTextProps={{
-                      style: { height: 0, marginTop: -1, zIndex: 999 },
+                      style: styleTextFieldProps.formHelperTextProps,
                     }}
                   />
                 )}
               />
             )
           })}
-          <Typography component={Link} to={`/${Routes.SignUp}`}>
-            Нет аккаунта?!! Регистрация
-          </Typography>
           <Button type="submit">Авторизация</Button>
         </Box>
       </Box>

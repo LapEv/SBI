@@ -163,11 +163,13 @@ export const ThemeConfig = (mode: PaletteMode) =>
                   : '#ef5350!important',
             },
             '& .MuiInputBase-root': {
-              backgroundColor: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+              // backgroundColor: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
             },
-            '& .MuiInputBase-input': {
-              backgroundColor: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
-            },
+            // '& .MuiInputBase-input': {
+            //   backgroundColor: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+            //   color: mode === ThemeMode.light ? '#FFFFFF' : '#000000',
+            //   height: '100%',
+            // },
             '& .MuiOutlinedInput-input.Mui-disabled': {
               backgroundColor: mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
               WebkitTextFillColor:

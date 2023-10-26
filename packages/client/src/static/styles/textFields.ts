@@ -9,6 +9,10 @@ export const styleTextFieldProps = {
     borderRadius: 5,
     padding: '10px 6px',
   },
+  inputPropsLogin: {
+    height: 40,
+    borderRadius: 5,
+  },
   inputLabelProps: {
     top: -7,
     marginTop: 0,

@@ -1,11 +1,13 @@
 import { TextField as MuiTextField, styled } from '@mui/material'
+import { ThemeMode } from '../../themes/themeConfig'
 
-export const TextField = styled(MuiTextField)({
+export const TextField = styled(MuiTextField)(({ theme }) => ({
   '& label': {
     color: '#FFF',
   },
   '& .MuiInputBase-root': {
-    backgroundColor: '#1E515D',
+    backgroundColor:
+      theme.palette.mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
   },
   '& .MuiInput-underline:after': {
     borderBottomColor: 'green',
@@ -16,4 +18,4 @@ export const TextField = styled(MuiTextField)({
       color: '#FFF',
     },
   },
-})
+}))

@@ -20,7 +20,7 @@ import { useRoles } from 'hooks/roles/useRoles'
 import { ButtonsSection, RotateButton } from 'components/Buttons'
 import { ICheckBoxGroupData } from 'components/CheckBoxGroup/interface'
 import { deepEqual } from 'utils/deepEqual'
-import { styleTextFieldProps } from 'static/styles'
+// import { styleTextFieldProps } from 'static/styles'
 
 export const ProfileData = (user: User) => {
   const theme = useTheme()
@@ -143,15 +143,15 @@ export const ProfileData = (user: User) => {
                 )}
                 error={!!(errors?.list ?? [])[index]?.value?.message}
                 helperText={(errors?.list ?? [])[index]?.value?.message}
-                inputProps={{
-                  style: styleTextFieldProps.inputProps,
-                }}
-                InputLabelProps={{
-                  style: styleTextFieldProps.inputLabelProps,
-                }}
-                FormHelperTextProps={{
-                  style: styleTextFieldProps.formHelperTextProps,
-                }}
+                // inputProps={{
+                //   style: styleTextFieldProps.inputProps,
+                // }}
+                // InputLabelProps={{
+                //   style: styleTextFieldProps.inputLabelProps,
+                // }}
+                // FormHelperTextProps={{
+                //   style: styleTextFieldProps.formHelperTextProps,
+                // }}
               />
             )}
           />

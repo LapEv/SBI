@@ -147,57 +147,61 @@ export const ThemeConfig = (mode: PaletteMode) =>
       MuiTextField: {
         styleOverrides: {
           root: {
-            '& label': {
-              color: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+            '&.MuiInputLabel-shrink': {
+              color: 'orange',
             },
-            '& label.Mui-focused': {
-              color:
-                mode === ThemeMode.light
-                  ? '#1E515D!important'
-                  : '#C1EEE1!important',
-            },
-            '& label.Mui-error': {
-              color:
-                mode === ThemeMode.light
-                  ? '#ef5350!important'
-                  : '#ef5350!important',
-            },
-            '& .MuiInputBase-root': {
-              // backgroundColor: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
-            },
+
+            // '& label': {
+            //   color: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+            // },
+            // '& label.Mui-focused': {
+            //   color:
+            //     mode === ThemeMode.light
+            //       ? '#1E515D!important'
+            //       : '#C1EEE1!important',
+            // },
+            // '& label.Mui-error': {
+            //   color:
+            //     mode === ThemeMode.light
+            //       ? '#ef5350!important'
+            //       : '#ef5350!important',
+            // },
+            // '& .MuiInputBase-root': {
+            //   // backgroundColor: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+            // },
             // '& .MuiInputBase-input': {
             //   backgroundColor: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
             //   color: mode === ThemeMode.light ? '#FFFFFF' : '#000000',
             //   height: '100%',
             // },
-            '& .MuiOutlinedInput-input.Mui-disabled': {
-              backgroundColor: mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
-              WebkitTextFillColor:
-                mode === ThemeMode.light
-                  ? 'rgba(0,0,0,1)'
-                  : 'rgba(255,255,255,1)',
-              borderColor: mode === ThemeMode.light ? '#FFF' : '#000',
-              cursor: 'text',
-            },
-            '& .MuiOutlinedInput-notchedOutline': {
-              borderColor:
-                mode === ThemeMode.light
-                  ? 'rgba(30, 81, 93, 0.86)!important'
-                  : 'rgba(255, 255, 255, 0.86)!important',
-              borderWidth: 2,
-            },
-            '& .MuiOutlinedInput-input:-webkit-autofill': {
-              padding: '0px 14px',
-              backgroundColor:
-                mode === ThemeMode.light
-                  ? '#1E515D!important'
-                  : '#C1EEE1!important',
-              WebkitBoxShadow: `0 0 0 100px ${
-                mode === ThemeMode.light ? '#1E515D' : '#C1EEE1'
-              } inset`,
-              WebkitTextFillColor:
-                mode === ThemeMode.light ? '#FFFFFF' : '#000000',
-            },
+            // '& .MuiOutlinedInput-input.Mui-disabled': {
+            //   backgroundColor: mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
+            //   WebkitTextFillColor:
+            //     mode === ThemeMode.light
+            //       ? 'rgba(0,0,0,1)'
+            //       : 'rgba(255,255,255,1)',
+            //   borderColor: mode === ThemeMode.light ? '#FFF' : '#000',
+            //   cursor: 'text',
+            // },
+            // '& .MuiOutlinedInput-notchedOutline': {
+            //   borderColor:
+            //     mode === ThemeMode.light
+            //       ? 'rgba(30, 81, 93, 0.86)!important'
+            //       : 'rgba(255, 255, 255, 0.86)!important',
+            //   borderWidth: 2,
+            // },
+            // '& .MuiOutlinedInput-input:-webkit-autofill': {
+            //   padding: '0px 14px',
+            //   backgroundColor:
+            //     mode === ThemeMode.light
+            //       ? '#1E515D!important'
+            //       : '#C1EEE1!important',
+            //   WebkitBoxShadow: `0 0 0 100px ${
+            //     mode === ThemeMode.light ? '#1E515D' : '#C1EEE1'
+            //   } inset`,
+            //   WebkitTextFillColor:
+            //     mode === ThemeMode.light ? '#FFFFFF' : '#000000',
+            // },
           },
         },
       },

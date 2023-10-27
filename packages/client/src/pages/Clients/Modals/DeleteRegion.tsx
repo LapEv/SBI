@@ -82,15 +82,15 @@ export const DeleteRegion = React.forwardRef<unknown, ChooseModalProps>(
           InputProps={{
             endAdornment: <SearchIconElement />,
           }}
-          inputProps={{
-            style: styleTextFieldProps.inputProps,
-          }}
-          InputLabelProps={{
-            style: styleTextFieldProps.inputLabelProps,
-          }}
-          FormHelperTextProps={{
-            style: styleTextFieldProps.formHelperTextProps,
-          }}
+          // inputProps={{
+          //   style: styleTextFieldProps.inputProps,
+          // }}
+          // InputLabelProps={{
+          //   style: styleTextFieldProps.inputLabelProps,
+          // }}
+          // FormHelperTextProps={{
+          //   style: styleTextFieldProps.formHelperTextProps,
+          // }}
         />
         <Box
           ref={boxRef}

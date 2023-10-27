@@ -13,13 +13,13 @@ export const styleTextFieldProps = {
     height: 40,
     borderRadius: 5,
   },
-  inputLabelProps: {
-    top: -7,
-    marginTop: 0,
-  },
-  formHelperTextProps: {
-    height: 0,
-    marginTop: -1,
-    zIndex: 999,
-  },
+  // inputLabelProps: {
+  //   top: -7,
+  //   marginTop: 0,
+  // },
+  // formHelperTextProps: {
+  //   height: 0,
+  //   marginTop: -1,
+  //   zIndex: 999,
+  // },
 }

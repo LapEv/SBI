@@ -14,8 +14,6 @@ import { Button } from 'components/Buttons'
 import { TextField } from 'components/TextFields/'
 import { isEmptyObjField } from 'utils/isEmptyObject'
 import { Message } from 'components/Message'
-import { styleTextFieldProps } from 'static/styles'
-
 interface LoginValues extends Login {
   list: {
     label: string
@@ -109,15 +107,6 @@ export function LoginPage() {
                     required
                     error={!!(errors?.list ?? [])[index]?.value?.message}
                     helperText={(errors?.list ?? [])[index]?.value?.message}
-                    InputProps={{
-                      style: styleTextFieldProps.inputPropsLogin,
-                    }}
-                    InputLabelProps={{
-                      style: styleTextFieldProps.inputLabelProps,
-                    }}
-                    FormHelperTextProps={{
-                      style: styleTextFieldProps.formHelperTextProps,
-                    }}
                   />
                 )}
               />

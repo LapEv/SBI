@@ -10,14 +10,12 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { User } from 'storeAuth/interfaces'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { TextField } from 'components/TextFields'
-import { useTheme } from '@mui/material/styles'
 import { Button, ButtonsSection } from 'components/Buttons'
 import { ProfileValues } from './interfaces'
 import { deepEqual } from 'utils/deepEqual'
 import { ProfileHeader } from './ProfileHeader'
 import { FileProps } from 'storeAuth/interfaces'
 import { useMessage } from 'hooks/message/useMessage'
-import { styleTextFieldProps } from 'static/styles'
 
 interface ProfileMainProps {
   setModal: () => void
@@ -29,7 +27,6 @@ export function ProfileMain({ setModal, data }: ProfileMainProps) {
   const [_, { setMessage }] = useMessage()
   const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
   const [file, setFile] = useState<FileProps>({ data: '', info: undefined })
-  const theme = useTheme()
 
   const { handleSubmit, control, reset } = useForm<ProfileValues>({
     mode: 'onBlur',
@@ -144,15 +141,6 @@ export function ProfileMain({ setModal, data }: ProfileMainProps) {
                     )}
                     error={!!(errors?.list ?? [])[index]?.value?.message}
                     helperText={(errors?.list ?? [])[index]?.value?.message}
-                    inputProps={{
-                      style: styleTextFieldProps.inputProps,
-                    }}
-                    InputLabelProps={{
-                      style: styleTextFieldProps.inputLabelProps,
-                    }}
-                    FormHelperTextProps={{
-                      style: styleTextFieldProps.formHelperTextProps,
-                    }}
                   />
                 )}
               />

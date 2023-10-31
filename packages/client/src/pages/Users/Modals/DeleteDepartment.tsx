@@ -8,7 +8,7 @@ import { useStructure } from 'hooks/structure/useStructure'
 import { Department } from 'store/slices/structure/interfaces'
 import { TextField } from 'components/TextFields'
 import { useFilteredData } from 'hooks/useFilteredData'
-import { style, styleTextFieldProps } from 'static/styles'
+import { modalStyle } from 'static/styles'
 import { SearchIconElement } from 'components/SearchIconElement'
 
 export const DeleteDepartment = React.forwardRef<unknown, ChooseModalProps>(
@@ -71,7 +71,7 @@ export const DeleteDepartment = React.forwardRef<unknown, ChooseModalProps>(
 
     return (
       <Box
-        sx={{ ...style, paddingLeft: 5 }}
+        sx={{ ...modalStyle, paddingLeft: 5 }}
         component="form"
         onSubmit={changeData}>
         <Typography variant={'h6'}>{title}</Typography>
@@ -84,15 +84,6 @@ export const DeleteDepartment = React.forwardRef<unknown, ChooseModalProps>(
           onChange={e => setText(e.target.value ?? '')}
           InputProps={{
             endAdornment: <SearchIconElement />,
-          }}
-          inputProps={{
-            style: styleTextFieldProps.inputProps,
-          }}
-          InputLabelProps={{
-            style: styleTextFieldProps.inputLabelProps,
-          }}
-          FormHelperTextProps={{
-            style: styleTextFieldProps.formHelperTextProps,
           }}
         />
         <Box

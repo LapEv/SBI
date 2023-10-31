@@ -9,7 +9,7 @@ import {
 import { TextField } from 'components/TextFields'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
 import { MapRolesGroupInputFields } from '../data'
-import { style, styleTextFieldProps } from 'static/styles'
+import { modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useRoles } from 'hooks/roles/useRoles'
 import { Roles, RolesGroup } from 'storeRoles/interfaces'
@@ -71,7 +71,7 @@ export const AddRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
     }, [])
 
     return (
-      <Box sx={style} component="form" onSubmit={handleSubmit(changeData)}>
+      <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
         <Typography variant={'h6'}>{title}</Typography>
         {fields.map(({ id, label, validation, type, value }, index) => {
           return (
@@ -93,28 +93,6 @@ export const AddRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
                   value={field.value || ''}
                   error={!!(errors?.list ?? [])[index]?.value?.message}
                   helperText={(errors?.list ?? [])[index]?.value?.message}
-                  inputProps={{
-                    style: {
-                      ...styleTextFieldProps.inputProps,
-                      backgroundColor: theme.palette.background.paper,
-                    },
-                  }}
-                  InputLabelProps={{
-                    style: {
-                      top: -7,
-                      marginTop: 0,
-                      color: value
-                        ? theme.palette.mode === 'dark'
-                          ? '#C1EEE1'
-                          : '#1E515D'
-                        : theme.palette.mode === 'dark'
-                        ? '#1E515D'
-                        : '#C1EEE1',
-                    },
-                  }}
-                  FormHelperTextProps={{
-                    style: { height: 0, marginTop: -1, zIndex: 999 },
-                  }}
                 />
               )}
             />

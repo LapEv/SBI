@@ -69,6 +69,8 @@ export const ModalTitles = {
   newRegion: 'Новый регион',
   deleteAddress: 'Удалить адрес',
   deleteRegion: 'Удалить регион',
+  changeAddress: 'Изменить адрес',
+  changeRegion: 'Изменить регион',
 }
 
 export const MapAddressInputFields = [

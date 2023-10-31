@@ -1,5 +1,5 @@
-import { Box, Container, Typography, useTheme } from '@mui/material'
-import { Navigate, useLocation, useNavigate, Link } from 'react-router-dom'
+import { Box, Container, Typography } from '@mui/material'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import {
   useForm,
   useFieldArray,
@@ -25,7 +25,6 @@ interface LoginValues extends Login {
 
 export function LoginPage() {
   const location = useLocation()
-  const theme = useTheme()
   const navigate = useNavigate()
   const [{ user }, { signin }] = useAuth()
   const { handleSubmit, control } = useForm<LoginValues>({

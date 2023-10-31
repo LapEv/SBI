@@ -1,2 +1,1 @@
-export { style } from '../styles/modals'
-export { styleTextFieldProps } from '../styles/textFields'
+export { modalStyle } from '../styles/modals'

@@ -7,8 +7,7 @@ import { ButtonsModalSection } from 'components/Buttons'
 import { useAddresses } from 'hooks/addresses/useAddresses'
 import { useFilteredData } from 'hooks/useFilteredData'
 import { Regions } from 'store/slices/addresses/interfaces'
-import { style } from 'static/styles/modals'
-import { styleTextFieldProps } from 'static/styles/textFields'
+import { modalStyle } from 'static/styles/modals'
 import { SearchIconElement } from 'components/SearchIconElement'
 
 export const DeleteRegion = React.forwardRef<unknown, ChooseModalProps>(
@@ -68,7 +67,7 @@ export const DeleteRegion = React.forwardRef<unknown, ChooseModalProps>(
 
     return (
       <Box
-        sx={{ ...style, paddingLeft: 5 }}
+        sx={{ ...modalStyle, paddingLeft: 5 }}
         component="form"
         onSubmit={changeData}>
         <Typography variant={'h6'}>{title}</Typography>
@@ -82,15 +81,6 @@ export const DeleteRegion = React.forwardRef<unknown, ChooseModalProps>(
           InputProps={{
             endAdornment: <SearchIconElement />,
           }}
-          // inputProps={{
-          //   style: styleTextFieldProps.inputProps,
-          // }}
-          // InputLabelProps={{
-          //   style: styleTextFieldProps.inputLabelProps,
-          // }}
-          // FormHelperTextProps={{
-          //   style: styleTextFieldProps.formHelperTextProps,
-          // }}
         />
         <Box
           ref={boxRef}

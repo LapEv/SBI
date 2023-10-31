@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Typography, useTheme } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import {
   useForm,
   useFieldArray,
@@ -9,7 +9,7 @@ import {
 import { TextField } from 'components/TextFields'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
 import { MapAddressInputFields } from '../data'
-import { style, styleTextFieldProps } from 'static/styles'
+import { modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { DropDown } from 'components/DropDown'
 import { useAddresses } from 'hooks/addresses/useAddresses'
@@ -23,7 +23,6 @@ export const AddAddress = React.forwardRef<unknown, ChooseModalProps>(
       useAddresses()
     const [_, { setMessage }] = useMessage()
     const [region, setRegion] = useState<string>('')
-    const theme = useTheme()
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
       defaultValues: {
@@ -64,7 +63,7 @@ export const AddAddress = React.forwardRef<unknown, ChooseModalProps>(
     }, [])
 
     return (
-      <Box sx={style} component="form" onSubmit={handleSubmit(changeData)}>
+      <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
         <Typography variant={'h6'}>{title}</Typography>
         <DropDown
           data={regions.map(item => {
@@ -100,15 +99,6 @@ export const AddAddress = React.forwardRef<unknown, ChooseModalProps>(
                     value={field.value || ''}
                     error={!!(errors?.list ?? [])[index]?.value?.message}
                     helperText={(errors?.list ?? [])[index]?.value?.message}
-                    inputProps={{
-                      style: styleTextFieldProps.inputProps,
-                    }}
-                    InputLabelProps={{
-                      style: styleTextFieldProps.inputLabelProps,
-                    }}
-                    FormHelperTextProps={{
-                      style: styleTextFieldProps.formHelperTextProps,
-                    }}
                   />
                 )}
               />

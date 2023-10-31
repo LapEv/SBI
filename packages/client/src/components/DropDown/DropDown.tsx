@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { Autocomplete } from '@mui/material'
 import { useTheme } from '@mui/material'
 import { TextField } from 'components/TextFields/TextFields'
-import { styleTextFieldProps } from 'static/styles'
 import { DataDropDown } from '../../pages/Users/Modals/interfaces'
+import { Autocomplete } from 'components/Autocomplete'
+import { Data } from 'pages/Clients/Modals/interfaces'
 
 export const DropDown = ({
   data,
@@ -16,17 +16,23 @@ export const DropDown = ({
   const theme = useTheme()
   const [errors, setErrors] = useState<boolean>(false)
 
+  console.log('data = ', data)
   return (
     <Autocomplete
       freeSolo
       forcePopupIcon
       sx={{ width: '90%', height: 40, ...props }}
-      options={data.map(option => option.categoryName)}
+      options={data}
+      getOptionLabel={option => option.categoryName}
       clearOnEscape={true}
       noOptionsText={'Нет данных'}
-      onChange={(_, textValue) => (
-        onChange?.(textValue as string),
-        !textValue ? setErrors(true) : setErrors(false)
+      onChange={(value, textValue, reason, details) => (
+        console.log('value = ', value),
+        console.log('textValue = ', textValue),
+        console.log('reason = ', reason),
+        console.log('details = ', details)
+        // onChange?.(textValue as string),
+        // !textValue ? setErrors(true) : setErrors(false)
       )}
       value={value}
       ListboxProps={{
@@ -34,7 +40,6 @@ export const DropDown = ({
           borderWidth: 1,
           minHeight: 40,
           maxHeight: 225,
-          color: 'green',
           fontSize: 13,
           '& li': {
             borderColor: theme.palette.mode === 'dark' ? '#1E515D' : '#C1EEE1',
@@ -57,14 +62,7 @@ export const DropDown = ({
           id={params.id}
           helperText={errors ? errorLabel : ''}
           InputProps={{
-            style: {
-              ...styleTextFieldProps.inputPropsDropDown,
-              backgroundColor: theme.palette.background.paper,
-            },
             ...params.InputProps,
-          }}
-          InputLabelProps={{
-            style: styleTextFieldProps.inputLabelProps,
           }}
         />
       )}

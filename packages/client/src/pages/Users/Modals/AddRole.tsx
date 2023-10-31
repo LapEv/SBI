@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Typography, useTheme } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import {
   useForm,
   useFieldArray,
@@ -9,7 +9,7 @@ import {
 import { TextField } from 'components/TextFields'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
 import { MapRoleInputFields } from '../data'
-import { style, styleTextFieldProps } from 'static/styles'
+import { modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useRoles } from 'hooks/roles/useRoles'
 import { Roles } from 'storeRoles/interfaces'
@@ -19,7 +19,6 @@ export const AddRole = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
     const [_, { newRole }] = useRoles()
     /* eslint-enable @typescript-eslint/no-unused-vars */
-    const theme = useTheme()
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
       defaultValues: {
@@ -42,7 +41,7 @@ export const AddRole = React.forwardRef<unknown, ChooseModalProps>(
     }
 
     return (
-      <Box sx={style} component="form" onSubmit={handleSubmit(changeData)}>
+      <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
         <Typography>{title}</Typography>
         {fields.map(({ id, label, validation, type, value }, index) => {
           return (
@@ -64,15 +63,6 @@ export const AddRole = React.forwardRef<unknown, ChooseModalProps>(
                   value={field.value || ''}
                   error={!!(errors?.list ?? [])[index]?.value?.message}
                   helperText={(errors?.list ?? [])[index]?.value?.message}
-                  inputProps={{
-                    style: styleTextFieldProps.inputProps,
-                  }}
-                  InputLabelProps={{
-                    style: styleTextFieldProps.inputLabelProps,
-                  }}
-                  FormHelperTextProps={{
-                    style: styleTextFieldProps.formHelperTextProps,
-                  }}
                 />
               )}
             />

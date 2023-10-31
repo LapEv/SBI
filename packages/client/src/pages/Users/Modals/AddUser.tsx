@@ -15,7 +15,7 @@ import {
 import { TextField } from 'components/TextFields'
 import { ChooseModalProps, AddValuesProps, Data } from './interfaces'
 import { MapProfileInputFieldsAdmin } from '../data'
-import { style, styleTextFieldProps } from 'static/styles'
+import { modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useStructure } from 'hooks/structure/useStructure'
 import { DropDown } from 'components/DropDown'
@@ -172,7 +172,7 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
     }
 
     return (
-      <Box sx={style} component="form" onSubmit={handleSubmit(changeData)}>
+      <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
         <Typography>{title}</Typography>
         <DropDown
           data={userStatus}
@@ -253,15 +253,6 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
                   value={field.value || ''}
                   error={!!(errors?.list ?? [])[index]?.value?.message}
                   helperText={(errors?.list ?? [])[index]?.value?.message}
-                  inputProps={{
-                    style: styleTextFieldProps.inputProps,
-                  }}
-                  InputLabelProps={{
-                    style: styleTextFieldProps.inputLabelProps,
-                  }}
-                  FormHelperTextProps={{
-                    style: styleTextFieldProps.formHelperTextProps,
-                  }}
                 />
               )}
             />

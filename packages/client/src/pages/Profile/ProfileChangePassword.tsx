@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import {
   useForm,
   useFieldArray,
@@ -13,7 +13,7 @@ import {
   ProfileChangePasswordValues,
 } from './interfaces'
 import { useAuth } from 'hooks/auth/useAuth'
-import { style, styleTextFieldProps } from 'static/styles'
+import { modalStyle } from 'static/styles'
 
 export function ProfileChangePassword({
   handleModal,
@@ -33,7 +33,6 @@ export function ProfileChangePassword({
     control,
     name: 'list',
   })
-  const theme = useTheme()
 
   function changePasswordData(data: ProfileChangePasswordValues) {
     changePassword({
@@ -46,7 +45,7 @@ export function ProfileChangePassword({
 
   return (
     <Box
-      sx={style}
+      sx={modalStyle}
       component="form"
       onSubmit={handleSubmit(changePasswordData)}>
       <Typography variant={'h6'}>Смена пароля</Typography>
@@ -70,15 +69,6 @@ export function ProfileChangePassword({
                 value={field.value || ''}
                 error={!!(errors?.list ?? [])[index]?.value?.message}
                 helperText={(errors?.list ?? [])[index]?.value?.message}
-                inputProps={{
-                  style: styleTextFieldProps.inputProps,
-                }}
-                InputLabelProps={{
-                  style: styleTextFieldProps.inputLabelProps,
-                }}
-                FormHelperTextProps={{
-                  style: styleTextFieldProps.formHelperTextProps,
-                }}
               />
             )}
           />

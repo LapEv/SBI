@@ -1,5 +1,6 @@
 import { ChangeEvent } from 'react'
-import { Box, Collapse, TextField, ListItemButton } from '@mui/material'
+import { Box, Collapse, ListItemButton } from '@mui/material'
+import { TextField } from 'components/TextFields/'
 import { User } from 'storeAuth/interfaces'
 import {
   useForm,
@@ -20,7 +21,6 @@ import { useRoles } from 'hooks/roles/useRoles'
 import { ButtonsSection, RotateButton } from 'components/Buttons'
 import { ICheckBoxGroupData } from 'components/CheckBoxGroup/interface'
 import { deepEqual } from 'utils/deepEqual'
-// import { styleTextFieldProps } from 'static/styles'
 
 export const ProfileData = (user: User) => {
   const theme = useTheme()
@@ -143,15 +143,6 @@ export const ProfileData = (user: User) => {
                 )}
                 error={!!(errors?.list ?? [])[index]?.value?.message}
                 helperText={(errors?.list ?? [])[index]?.value?.message}
-                // inputProps={{
-                //   style: styleTextFieldProps.inputProps,
-                // }}
-                // InputLabelProps={{
-                //   style: styleTextFieldProps.inputLabelProps,
-                // }}
-                // FormHelperTextProps={{
-                //   style: styleTextFieldProps.formHelperTextProps,
-                // }}
               />
             )}
           />

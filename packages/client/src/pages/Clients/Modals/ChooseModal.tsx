@@ -1,5 +1,11 @@
 import React from 'react'
-import { AddAddress, AddRegion, DeleteAddress, DeleteRegion } from './'
+import {
+  AddAddress,
+  AddRegion,
+  DeleteAddress,
+  DeleteRegion,
+  ChangeAddress,
+} from './'
 import { ModalTitles } from '../data'
 import { ChooseModalProps } from './interfaces'
 
@@ -33,6 +39,13 @@ export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(
             ref={ref}
             handleModal={handleModal}
             title={ModalTitles.deleteRegion}
+          />
+        )}
+        {modalImage === 'changeAddress' && (
+          <ChangeAddress
+            ref={ref}
+            handleModal={handleModal}
+            title={ModalTitles.changeAddress}
           />
         )}
       </>

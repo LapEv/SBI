@@ -33,7 +33,6 @@ export const TextField = styled(MuiTextField)(({ theme }) => ({
     borderBottomColor: 'green',
   },
   '.MuiOutlinedInput-root': {
-    // color: theme.palette.mode === ThemeMode.light ? '#FFFFFF' : '#000000',
     '& fieldset': {
       border: 'none',
       color: '#FFF',

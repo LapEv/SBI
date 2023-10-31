@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Box, Typography, useTheme } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import {
   useForm,
   useFieldArray,
@@ -9,7 +9,7 @@ import {
 import { TextField } from 'components/TextFields'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
 import { MapRegionInputFields } from '../data'
-import { style, styleTextFieldProps } from 'static/styles'
+import { modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useAddresses } from 'hooks/addresses/useAddresses'
 import { useMessage } from 'hooks/message/useMessage'
@@ -20,7 +20,6 @@ export const AddRegion = React.forwardRef<unknown, ChooseModalProps>(
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const [{ regions }, { getRegions, newRegion }] = useAddresses()
     const [_, { setMessage }] = useMessage()
-    const theme = useTheme()
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
       defaultValues: {
@@ -51,7 +50,7 @@ export const AddRegion = React.forwardRef<unknown, ChooseModalProps>(
     }, [])
 
     return (
-      <Box sx={style} component="form" onSubmit={handleSubmit(changeData)}>
+      <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
         <Typography variant={'h6'}>{title}</Typography>
         {fields.map(({ id, label, validation, type, value }, index) => {
           return (
@@ -73,15 +72,6 @@ export const AddRegion = React.forwardRef<unknown, ChooseModalProps>(
                   value={field.value || ''}
                   error={!!(errors?.list ?? [])[index]?.value?.message}
                   helperText={(errors?.list ?? [])[index]?.value?.message}
-                  inputProps={{
-                    style: styleTextFieldProps.inputProps,
-                  }}
-                  InputLabelProps={{
-                    style: styleTextFieldProps.inputLabelProps,
-                  }}
-                  FormHelperTextProps={{
-                    style: styleTextFieldProps.formHelperTextProps,
-                  }}
                 />
               )}
             />

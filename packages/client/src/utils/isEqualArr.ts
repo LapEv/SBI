@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const isEqualArr = (array1: any, array2: any) => {
   if (!array2 || array2.length < 0) return false
-  array1.sort()
-  array2.sort()
+  const arr1 = [...array1]
+  const arr2 = [...array2]
+  arr1.sort()
+  arr2.sort()
   return (
-    array1.length === array2.length &&
-    array1.every(function (element: any, index: any) {
+    arr1.length === arr2.length &&
+    arr1.every(function (element: any, index: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
-      return element === array2[index]
+      return element === arr2[index]
     })
   )
 }

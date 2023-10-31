@@ -2,7 +2,7 @@ import React from 'react'
 import { ChooseModalProps } from './interfaces'
 import { useState, useEffect, SyntheticEvent } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
-import { style, styleTextFieldProps } from 'static/styles'
+import { modalStyle } from 'static/styles'
 import { Item } from 'components/CheckBoxGroup'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useStructure } from 'hooks/structure/useStructure'
@@ -64,7 +64,7 @@ export const DeleteDivision = React.forwardRef<unknown, ChooseModalProps>(
 
     return (
       <Box
-        sx={{ ...style, paddingLeft: 5 }}
+        sx={{ ...modalStyle, paddingLeft: 5 }}
         component="form"
         onSubmit={changeData}>
         <Typography variant={'h6'}>{title}</Typography>
@@ -77,15 +77,6 @@ export const DeleteDivision = React.forwardRef<unknown, ChooseModalProps>(
           onChange={e => setText(e.target.value ?? '')}
           InputProps={{
             endAdornment: <SearchIconElement />,
-          }}
-          inputProps={{
-            style: styleTextFieldProps.inputProps,
-          }}
-          InputLabelProps={{
-            style: styleTextFieldProps.inputLabelProps,
-          }}
-          FormHelperTextProps={{
-            style: styleTextFieldProps.formHelperTextProps,
           }}
         />
         <Box

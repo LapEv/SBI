@@ -23,6 +23,7 @@ export interface User {
   id_division: string
   id_department: string
   status: string
+  reasonOfDelete: string
 }
 
 export const users: ModelAttributes<Model, User> = {
@@ -112,5 +113,9 @@ export const users: ModelAttributes<Model, User> = {
   status: {
     type: DataType.STRING,
     allowNull: false,
+  },
+  reasonOfDelete: {
+    type: DataType.STRING,
+    allowNull: true,
   },
 }

@@ -13,7 +13,7 @@ import {
   Controller,
 } from 'react-hook-form'
 import { TextField } from 'components/TextFields'
-import { ChooseModalProps, AddValuesProps, Data } from './interfaces'
+import { ChooseModalProps, AddValuesProps } from './interfaces'
 import { MapProfileInputFieldsAdmin } from '../data'
 import { modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
@@ -24,6 +24,7 @@ import { CheckBoxGroup } from 'components/CheckBoxGroup'
 import { useAuth } from 'hooks/auth/useAuth'
 import { ICheckBoxGroupData } from 'components/CheckBoxGroup/interface'
 import { RolesGroup } from 'storeRoles/interfaces'
+import { Options } from 'components/DropDown/interface'
 
 export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -34,16 +35,25 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
     const [{ rolesGroup }, { getRoles, getRolesGroup, setActiveRolesGroup }] =
       useRoles()
     const [dataGroup, setDataGroup] = useState<ICheckBoxGroupData[]>([])
-    const [division, setDivision] = useState<string>('')
-    const [listDepartments, setDepartments] = useState<Data[]>([])
-    const [department, setDepartment] = useState<string>('')
+    const [division, setDivision] = useState<Options>({
+      label: '',
+      id: '',
+    })
+    const [listDepartments, setDepartments] = useState<Options[]>([])
+    const [department, setDepartment] = useState<Options>({
+      label: '',
+      id: '',
+    })
     const [selectedGroup, setGroup] = useState<string>('')
     const [selectedItems, setItems] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
     const [chiefDivision, setCheckedCheifDivision] = useState<boolean>(false)
     const [chiefDepartment, setCheckedCheifDepartment] =
       useState<boolean>(false)
-    const [statusName, setStatusName] = useState<string>('')
+    const [statusName, setStatusName] = useState<Options>({
+      label: '',
+      id: '',
+    })
 
     const theme = useTheme()
     const { handleSubmit, control } = useForm<AddValuesProps>({
@@ -64,14 +74,8 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
         setErrSelectedItems(true)
         return
       }
-      const id_division = divisions.find(
-        item => item.divisionName === division
-      )?.id
-      const id_department = departaments.find(
-        item => item.departmentName === department
-      )?.id
       const status = userStatus.find(
-        item => item.categoryName === statusName
+        item => item.id === statusName.id
       )?.category
       const group = rolesGroup.find(item => item.id === selectedGroup)?.group
       const newUser = {
@@ -85,13 +89,14 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
         post: list[4].value,
         roleGroup: group,
         roles: selectedItems,
-        division,
+        division: division.label,
         chiefDivision,
-        id_division,
-        department,
+        id_division: division.id,
+        department: department.label,
         chiefDepartment,
-        id_department,
+        id_department: department.id,
         status,
+        reasonOfDelete: '',
       }
       signup(newUser)
       setActiveRolesGroup('')
@@ -117,29 +122,31 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
         setErrSelectedItems(false)
     }
 
-    const changeDivision = (textValue: string) => {
-      setDivision(textValue)
-      if (!textValue) {
-        setDepartment('')
+    const changeDivision = (data: Options) => {
+      setDivision(data)
+      if (!data) {
+        setDepartment({
+          label: '',
+          id: '',
+        })
         setDepartments([])
       }
     }
 
     useEffect(() => {
-      const id_division = divisions.find(
-        value => value.divisionName === division
-      )?.id
-      const list = departaments.filter(item => item.id_division === id_division)
+      const list = departaments.filter(item => item.id_division === division.id)
       setDepartments(
         list.map(item => {
           return {
-            ['categoryName']: item.departmentName as string,
-            ['category']: item.department as string,
+            ['label']: item.departmentName as string,
             ['id']: item.id as string,
           }
         })
       )
-      setDepartment('')
+      setDepartment({
+        label: '',
+        id: '',
+      })
     }, [division])
 
     useEffect(() => {
@@ -171,28 +178,34 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
       handleModal(false)
     }
 
+    console.log('dataGroup = ', dataGroup)
+
     return (
       <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
         <Typography>{title}</Typography>
         <DropDown
-          data={userStatus}
+          data={userStatus.map(item => {
+            return {
+              ['label']: item.categoryName as string,
+              ['id']: item.id as string,
+            }
+          })}
           props={{ mt: 4 }}
           onChange={data => setStatusName(data)}
-          value={statusName}
+          value={statusName.label}
           label="Выберите статус пользователя"
           errorLabel="Не выбран статус пользователя!"
         />
         <DropDown
           data={divisions.map(item => {
             return {
-              ['categoryName']: item.divisionName as string,
-              ['category']: item.division as string,
+              ['label']: item.divisionName as string,
               ['id']: item.id as string,
             }
           })}
           props={{ mt: 4 }}
           onChange={changeDivision}
-          value={division}
+          value={division.label}
           label="Выберите подразделение"
           errorLabel="Не выбрано подразделение!"
         />
@@ -214,7 +227,7 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
           data={listDepartments}
           props={{ mt: 1 }}
           onChange={data => setDepartment(data)}
-          value={department}
+          value={department.label}
           label="Выберите отдел"
           errorLabel="Не выбран отдел!"
         />

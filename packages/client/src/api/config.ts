@@ -16,7 +16,7 @@ export const ApiEndPoints = {
     ChangeTheme: 'user/theme',
     GetUserTheme: 'user/theme/?id=',
     GetUserStatus: 'user/getUserStatus',
-    DeleteUsers: 'user/deleteUsers',
+    DeleteUser: 'user/deleteUser',
     UpdateUser: 'user/updateUser',
   },
   Roles: {

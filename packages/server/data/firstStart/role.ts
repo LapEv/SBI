@@ -88,7 +88,7 @@ export const rolesStartData = [
     nameRole: 'Полное удаление пользователя',
   },
   {
-    role: 'deleteUsers',
+    role: 'deleteUser',
     nameRole: 'Перемещение пользователя в архив',
   },
   {

@@ -14,6 +14,7 @@ import { ButtonsModalSection } from 'components/Buttons'
 import { DropDown } from 'components/DropDown'
 import { useAddresses } from 'hooks/addresses/useAddresses'
 import { useMessage } from 'hooks/message/useMessage'
+import { Options } from 'components/DropDown/interface'
 
 export const AddAddress = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -22,7 +23,10 @@ export const AddAddress = React.forwardRef<unknown, ChooseModalProps>(
     const [{ regions, addresses }, { getRegions, getAddresses, newAddress }] =
       useAddresses()
     const [_, { setMessage }] = useMessage()
-    const [region, setRegion] = useState<string>('')
+    const [region, setRegion] = useState<Options>({
+      label: '',
+      id: '',
+    })
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
       defaultValues: {
@@ -47,12 +51,10 @@ export const AddAddress = React.forwardRef<unknown, ChooseModalProps>(
         })
         return
       }
-      const id_region = regions.find(item => item.region === region)
-        ?.id as string
       newAddress({
         address: list[0].value,
         coordinates: list[1].value,
-        id_region,
+        id_region: region.id,
       })
       handleModal(false)
     }
@@ -68,18 +70,18 @@ export const AddAddress = React.forwardRef<unknown, ChooseModalProps>(
         <DropDown
           data={regions.map(item => {
             return {
-              ['categoryName']: item.region as string,
+              ['label']: item.region as string,
               ['id']: item.id as string,
             }
           })}
           props={{ mt: 3 }}
           onChange={setRegion}
-          value={region}
+          value={region.label}
           label="Выберите регион"
           errorLabel="Не выбран регион!"
         />
         <Box sx={{ mt: 2, width: '90%' }}>
-          {fields.map(({ id, label, validation, type, value }, index) => {
+          {fields.map(({ id, label, validation, type }, index) => {
             return (
               <Controller
                 key={id}

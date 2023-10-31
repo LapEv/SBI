@@ -251,12 +251,18 @@ export const getUserStatus = createAsyncThunk(
   }
 )
 
-export const deleteUsers = createAsyncThunk(
-  'user/deleteUsers',
-  async (selectedUsers: string[], thunkAPI) => {
+interface delData {
+  id: string
+  reasonOfDelete: string
+}
+
+export const deleteUser = createAsyncThunk(
+  'user/deleteUser',
+  async ({ id, reasonOfDelete }: delData, thunkAPI) => {
     try {
-      const { data } = await authhost.post(ApiEndPoints.User.DeleteUsers, {
-        selectedUsers,
+      const { data } = await authhost.post(ApiEndPoints.User.DeleteUser, {
+        id,
+        reasonOfDelete,
       })
       return {
         data,

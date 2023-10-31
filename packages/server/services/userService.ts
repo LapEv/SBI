@@ -204,17 +204,17 @@ export class userService {
       .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
 
-  deleteUsers = async (_req: Request, res: Response) => {
-    const { selectedUsers } = _req.body
+  deleteUser = async (_req: Request, res: Response) => {
+    console.log('req = ', _req.body)
+    const { id, reasonOfDelete } = _req.body
     try {
-      const user = await userRepos.update(selectedUsers, {
+      const user = await userRepos.update(id, {
         active: false,
+        reasonOfDelete,
       })
       res
         .status(200)
-        .json(
-          `User ${selectedUsers} with id=${user} has acquired the inactive status!`
-        )
+        .json(`User ${id} with id=${user} has acquired the inactive status!`)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */

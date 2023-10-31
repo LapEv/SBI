@@ -1,5 +1,5 @@
 import React, { SyntheticEvent } from 'react'
-import { ChooseModalProps, Data } from './interfaces'
+import { ChooseModalProps } from './interfaces'
 import { useState, useEffect } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
 import { useRoles } from 'hooks/roles/useRoles'
@@ -10,13 +10,14 @@ import { Item } from 'components/CheckBoxGroup'
 import { DropDown } from 'components/DropDown'
 import { RolesGroupObject } from 'storeRoles/interfaces'
 import { useAddresses } from 'hooks/addresses/useAddresses'
+import { Options } from 'components/DropDown/interface'
 
 export const ChangeAddress = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const [{ addresses }, { getAddresses, changeAddress }] = useAddresses()
-    const [list, setList] = useState<Data[]>([])
+    const [list, setList] = useState<Options[]>([])
     const [selectedAddresses, setSelectedAddresses] = useState<string>('')
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
     const theme = useTheme()
@@ -44,10 +45,11 @@ export const ChangeAddress = React.forwardRef<unknown, ChooseModalProps>(
     //   if ([...selectedRoles, id] && errSelectedItems) setErrSelectedItems(false)
     // }
 
-    const changeGroup = (data: string) => {
+    const changeGroup = (data: Options) => {
       console.log('data = ', data)
+      console.log('id = ', data.id)
       if (!data) return
-      const newAddress = addresses.find
+      // const newAddress = addresses.find
     }
 
     useEffect(() => {
@@ -58,8 +60,7 @@ export const ChangeAddress = React.forwardRef<unknown, ChooseModalProps>(
       setList(
         addresses.map(item => {
           return {
-            ['categoryName']: item.address as string,
-            ['category']: item.address as string,
+            ['label']: item.address as string,
             ['id']: item.id as string,
           }
         })
@@ -77,7 +78,7 @@ export const ChangeAddress = React.forwardRef<unknown, ChooseModalProps>(
           props={{ mt: 4 }}
           onChange={data => changeGroup(data)}
           value={selectedAddresses}
-          label="Выберите адресс"
+          label="Выберите адрес"
           errorLabel="Не выбран адрес!"
         />
         <Box

@@ -13,22 +13,3 @@ export interface AddValuesProps {
     type: string
   }[]
 }
-
-export interface DataDropDown {
-  data: {
-    category?: string
-    categoryName: string
-    id: string
-  }[]
-  value?: string
-  props?: object
-  label: string
-  errorLabel: string
-  onChange?: (value: string) => void
-}
-
-export interface Data {
-  category: string
-  categoryName: string
-  id: string
-}

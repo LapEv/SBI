@@ -17,7 +17,7 @@ import {
   ChangeAvatar,
   changePassword,
   updateProfile,
-  deleteUsers,
+  deleteUser,
   signin,
   signout,
   signup,
@@ -300,7 +300,7 @@ export const messageSlise = createSlice({
       state.type = 'error'
       state.text = action.payload
     },
-    [deleteUsers.fulfilled.type]: (
+    [deleteUser.fulfilled.type]: (
       state,
       action: PayloadAction<AnswerMessage>
     ) => {
@@ -309,10 +309,10 @@ export const messageSlise = createSlice({
       state.text = action.payload.message.text
       state.type = action.payload.message.type
     },
-    [deleteUsers.pending.type]: state => {
+    [deleteUser.pending.type]: state => {
       state.isLoadingMessage = true
     },
-    [deleteUsers.rejected.type]: (state, action: PayloadAction<string>) => {
+    [deleteUser.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingMessage = false
       state.type = 'error'
       state.text = action.payload

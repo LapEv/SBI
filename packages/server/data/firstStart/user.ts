@@ -17,6 +17,7 @@ export const userStartData = [
     id_division: '',
     id_department: '',
     status: 'employee',
+    reasonOfDelete: '',
   },
   {
     username: 'a.kalinin',
@@ -42,5 +43,6 @@ export const userStartData = [
     id_division: '',
     id_department: '',
     status: 'employee',
+    reasonOfDelete: '',
   },
 ]

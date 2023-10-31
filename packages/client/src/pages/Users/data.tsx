@@ -17,6 +17,7 @@ import Addchart from '@mui/icons-material/Addchart'
 import GroupAdd from '@mui/icons-material/GroupAdd'
 import Remove from '@mui/icons-material/Remove'
 import GroupRemove from '@mui/icons-material/GroupRemove'
+import PersonRemoveIcon from '@mui/icons-material/PersonRemove'
 
 export const menuData = [
   {
@@ -65,6 +66,11 @@ export const menuData = [
     icon: <GroupRemove fontSize="medium" />,
   },
   {
+    name: 'deleteUser',
+    title: 'Удалить пользователя',
+    icon: <PersonRemoveIcon fontSize="medium" />,
+  },
+  {
     name: 'changeRolesGroup',
     title: 'Изменить группу ролей',
     icon: <DisplaySettings fontSize="medium" />,
@@ -81,6 +87,7 @@ export const ModalTitles = {
   deleteDepartment: 'Удалить отделы',
   deleteRole: 'Удалить роли',
   deleteRolesGroup: 'Удалить группу ролей',
+  deleteUser: 'Удалить пользователя',
   changeRolesGroup: 'Изменить группу ролей',
 }
 

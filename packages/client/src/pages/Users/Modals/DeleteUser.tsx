@@ -6,33 +6,39 @@ import { modalStyle } from 'static/styles'
 import { Item } from 'components/CheckBoxGroup'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useAuth } from 'hooks/auth/useAuth'
+import { TextField } from 'components/TextFields'
 
-export const DeleteUsers = React.forwardRef<unknown, ChooseModalProps>(
+export const DeleteUser = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
-    const [{ users }, { deleteUsers, getActiveUsers }] = useAuth()
-    const [selectedUsers, setSelectedUsers] = useState<string[]>([])
-    const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
+    const [{ users }, { deleteUser, getActiveUsers }] = useAuth()
+    const [selectedUser, setSelectedUser] = useState<string>('')
+    const [reasonOfDelete, setReason] = useState<string>('')
+    const [errSelectedItems, setErrSelectedItems] = useState<string>('')
     const theme = useTheme()
 
     const changeData = (event: SyntheticEvent<EventTarget>) => {
       event.preventDefault()
-      if (!selectedUsers.length) {
-        setErrSelectedItems(true)
+      if (!selectedUser.length) {
+        setErrSelectedItems('Не выбрано ниодного пользователя!')
+        return
+      }
+      if (!reasonOfDelete.length) {
+        setErrSelectedItems('Не указана причина удаления!')
         return
       }
       handleModal(false)
-      deleteUsers(selectedUsers)
+      deleteUser(selectedUser, reasonOfDelete)
     }
 
     const onChooseItems = (checked: boolean, id: string) => {
       if (!checked) {
-        setSelectedUsers(selectedUsers.filter(value => value !== id))
+        setSelectedUser('')
         return
       }
-      setSelectedUsers([...selectedUsers, id])
-      if ([...selectedUsers, id] && errSelectedItems) setErrSelectedItems(false)
+      setSelectedUser(id)
+      if (id && reasonOfDelete.length) setErrSelectedItems('')
     }
 
     useEffect(() => {
@@ -58,9 +64,19 @@ export const DeleteUsers = React.forwardRef<unknown, ChooseModalProps>(
               id={`${id}`}
               groupChecked={false}
               onChooseItems={onChooseItems}
+              oneChecked={selectedUser === id ? true : false}
               key={id as string}
             />
           ))}
+          <TextField
+            label="Причина удаления"
+            variant="outlined"
+            required
+            sx={{ width: '100%', mt: 2, height: 40 }}
+            margin="normal"
+            value={reasonOfDelete || ''}
+            onChange={e => setReason(e.target.value ?? '')}
+          />
         </Box>
         <Box sx={{ color: theme.palette.error.main, height: 20 }}>
           {errSelectedItems && 'Не выбрано ниодного пользователя!'}

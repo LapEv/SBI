@@ -1,5 +1,5 @@
 import React, { SyntheticEvent } from 'react'
-import { ChooseModalProps, Data } from './interfaces'
+import { ChooseModalProps } from './interfaces'
 import { useState, useEffect } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
 import { useRoles } from 'hooks/roles/useRoles'
@@ -9,6 +9,7 @@ import { DataList } from 'components/CheckBoxGroup/interface'
 import { Item } from 'components/CheckBoxGroup'
 import { DropDown } from 'components/DropDown'
 import { RolesGroupObject } from 'storeRoles/interfaces'
+import { Options } from 'components/DropDown/interface'
 
 export const ChangeRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -19,23 +20,23 @@ export const ChangeRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
       { getRoles, getRolesGroup, changeRolesGroup },
     ] = useRoles()
     const [data, setData] = useState<DataList[]>([])
-    const [selectedGroup, setSelectedGroup] = useState<string>('')
-    const [group, setGroup] = useState<Data[]>([])
+    const [selectedGroup, setSelectedGroup] = useState<Options>({
+      label: '',
+      id: '',
+    })
+    const [group, setGroup] = useState<Options[]>([])
     const [selectedRoles, setSelectedRoles] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
     const theme = useTheme()
 
     const changeData = (event: SyntheticEvent<EventTarget>) => {
       event.preventDefault()
-      if (!selectedGroup.length) {
+      if (!selectedGroup.id.length) {
         setErrSelectedItems(true)
         return
       }
-      const selectedRolesGroupId = rolesGroup.find(
-        item => item.groupName === selectedGroup
-      )?.id as string
       const rolesUpdate = roles.filter(item => selectedRoles.includes(item.id))
-      changeRolesGroup(rolesUpdate, selectedRolesGroupId)
+      changeRolesGroup(rolesUpdate, selectedGroup.id)
       handleModal(false)
     }
 
@@ -48,9 +49,9 @@ export const ChangeRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
       if ([...selectedRoles, id] && errSelectedItems) setErrSelectedItems(false)
     }
 
-    const changeGroup = (data: string) => {
+    const changeGroup = (data: Options) => {
       if (!data) return
-      const useRoles = rolesGroup.find(item => item.groupName === data)
+      const useRoles = rolesGroup.find(item => item.id === data.id)
         ?.roles as RolesGroupObject[]
       setData(
         roles.map(item => {
@@ -79,13 +80,12 @@ export const ChangeRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
         rolesGroup
           .map(item => {
             return {
-              ['categoryName']: item.groupName as string,
-              ['category']: item.group as string,
+              ['label']: item.groupName as string,
               ['id']: item.id as string,
             }
           })
-          .filter(item => item.category !== 'SUPERADMIN')
-          .filter(item => item.category !== 'ADMIN')
+          .filter(item => item.label !== 'SUPERADMIN')
+        // .filter(item => item.label !== 'ADMIN')
       )
     }, [rolesGroup])
 
@@ -99,7 +99,7 @@ export const ChangeRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
           data={group}
           props={{ mt: 4 }}
           onChange={data => changeGroup(data)}
-          value={selectedGroup}
+          value={selectedGroup.label}
           label="Выберите группу ролей"
           errorLabel="Не выбрана группа ролей!"
         />

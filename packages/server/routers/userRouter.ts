@@ -43,9 +43,9 @@ export const userRouter = (apiRouter: Router) => {
     service.getActiveUsers
   )
   router.post(
-    '/deleteUsers',
-    roleMiddleware(['ADMIN', 'SUPERADMIN', 'deleteUsers']),
-    service.deleteUsers
+    '/deleteUser',
+    roleMiddleware(['ADMIN', 'SUPERADMIN', 'deleteUser']),
+    service.deleteUser
   )
   router.post(
     '/pullUserInArchive',

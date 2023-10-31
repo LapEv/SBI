@@ -9,6 +9,7 @@ export const Item = ({
   onChooseItems,
   comment,
   initChecked,
+  oneChecked,
 }: IItem) => {
   const [checked, setChecked] = useState<boolean>(initChecked! ?? false) // eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
   const theme = useTheme()
@@ -23,6 +24,16 @@ export const Item = ({
     groupChecked ? setChecked(true) : setChecked(false)
   }, [groupChecked])
 
+  useEffect(() => {
+    if (!oneChecked) {
+      setChecked(false)
+    }
+  }, [oneChecked])
+
+  useEffect(() => {
+    setChecked(initChecked as boolean)
+  }, [initChecked])
+
   return (
     <>
       <FormControlLabel
@@ -30,7 +41,9 @@ export const Item = ({
         id={id}
         name={`${name}`}
         sx={{ width: '100%' }}
-        control={<Checkbox checked={checked} onChange={handleChange} />}
+        control={
+          <Checkbox checked={checked || false} onChange={handleChange} />
+        }
       />
       {comment?.length && (
         <Box sx={{ fontSize: 12, color: theme.palette.text.secondary, ml: 5 }}>

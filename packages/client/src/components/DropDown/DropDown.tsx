@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import { useTheme } from '@mui/material'
 import { TextField } from 'components/TextFields/TextFields'
-import { DataDropDown } from '../../pages/Users/Modals/interfaces'
 import { Autocomplete } from 'components/Autocomplete'
-import { Data } from 'pages/Clients/Modals/interfaces'
+import { DataDropDown, Options } from './interface'
 
 export const DropDown = ({
   data,
@@ -16,24 +15,19 @@ export const DropDown = ({
   const theme = useTheme()
   const [errors, setErrors] = useState<boolean>(false)
 
-  console.log('data = ', data)
   return (
     <Autocomplete
       freeSolo
       forcePopupIcon
       sx={{ width: '90%', height: 40, ...props }}
       options={data}
-      getOptionLabel={option => option.categoryName}
       clearOnEscape={true}
       noOptionsText={'Нет данных'}
-      onChange={(value, textValue, reason, details) => (
-        console.log('value = ', value),
-        console.log('textValue = ', textValue),
-        console.log('reason = ', reason),
-        console.log('details = ', details)
-        // onChange?.(textValue as string),
-        // !textValue ? setErrors(true) : setErrors(false)
-      )}
+      onChange={(_, textValue) =>
+        textValue
+          ? (onChange?.(textValue as Options), setErrors(false))
+          : setErrors(true)
+      }
       value={value}
       ListboxProps={{
         sx: {

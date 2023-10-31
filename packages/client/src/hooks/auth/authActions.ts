@@ -19,6 +19,6 @@ export interface AuthActions {
   checkUser: () => void
   updateUserData: (data: User) => void
   getUserStatus: () => void
-  deleteUsers: (id: string[]) => void
+  deleteUser: (id: string, reasonOfDelete: string) => void
   updateUser: (data: User) => void
 }

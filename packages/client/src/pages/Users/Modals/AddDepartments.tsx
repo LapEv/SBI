@@ -13,13 +13,17 @@ import { modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useStructure } from 'hooks/structure/useStructure'
 import { DropDown } from 'components/DropDown'
+import { Options } from 'components/DropDown/interface'
 
 export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const [{ divisions }, { addDepartments }] = useStructure()
-    const [division, setDivision] = useState<string>('')
+    const [division, setDivision] = useState<Options>({
+      label: '',
+      id: '',
+    })
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
       defaultValues: {
@@ -33,15 +37,12 @@ export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
     })
 
     const changeData = ({ list }: AddValuesProps) => {
-      const id_division = divisions.find(
-        item => item.divisionName === division
-      )?.id
-      if (!id_division) return
+      if (!division.id) return
       addDepartments({
         department: list[1].value,
         departmentName: list[0].value,
-        division,
-        id_division,
+        division: division.label,
+        id_division: division.id,
       })
       handleModal(false)
     }
@@ -52,14 +53,13 @@ export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
         <DropDown
           data={divisions.map(item => {
             return {
-              ['categoryName']: item.divisionName as string,
-              ['category']: item.division as string,
+              ['label']: item.divisionName as string,
               ['id']: item.id as string,
             }
           })}
           props={{ mt: 3 }}
           onChange={setDivision}
-          value={division}
+          value={division.label}
           label="Выберите подразделение"
           errorLabel="Не выбрано подразделение!"
         />

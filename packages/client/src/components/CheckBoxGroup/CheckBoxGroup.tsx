@@ -49,6 +49,7 @@ export const CheckBoxGroup = ({
           control={<Checkbox checked={checked} onChange={handleChange} />}
         />
         <ListBoxGroup
+          key={`${data.id}${data.groupName}`}
           groupName={data.groupName}
           data={data.items}
           groupId={data.id}

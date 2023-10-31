@@ -22,13 +22,6 @@ export function deepEqual(object1: any, object2: any) {
     if (!areObjects && val1 !== val2 && !Array.isArray(val1)) {
       return false
     }
-    if (!areObjects) {
-      if (Array.isArray(val1)) {
-        if (!isEqualArr(val1, val2)) {
-        }
-      }
-    }
-
     if (!areObjects && Array.isArray(val1) && !isEqualArr(val1, val2)) {
       return false
     }

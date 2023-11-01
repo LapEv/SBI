@@ -18,7 +18,7 @@ import { MapProfileInputFieldsAdmin } from '../data'
 import { modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useStructure } from 'hooks/structure/useStructure'
-import { DropDown } from 'components/DropDown'
+import { DropDown, emptyValue } from 'components/DropDown'
 import { useRoles } from 'hooks/roles/useRoles'
 import { CheckBoxGroup } from 'components/CheckBoxGroup'
 import { useAuth } from 'hooks/auth/useAuth'
@@ -35,25 +35,16 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
     const [{ rolesGroup }, { getRoles, getRolesGroup, setActiveRolesGroup }] =
       useRoles()
     const [dataGroup, setDataGroup] = useState<ICheckBoxGroupData[]>([])
-    const [division, setDivision] = useState<Options>({
-      label: '',
-      id: '',
-    })
+    const [division, setDivision] = useState<Options>(emptyValue)
     const [listDepartments, setDepartments] = useState<Options[]>([])
-    const [department, setDepartment] = useState<Options>({
-      label: '',
-      id: '',
-    })
+    const [department, setDepartment] = useState<Options>(emptyValue)
     const [selectedGroup, setGroup] = useState<string>('')
     const [selectedItems, setItems] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
     const [chiefDivision, setCheckedCheifDivision] = useState<boolean>(false)
     const [chiefDepartment, setCheckedCheifDepartment] =
       useState<boolean>(false)
-    const [statusName, setStatusName] = useState<Options>({
-      label: '',
-      id: '',
-    })
+    const [statusName, setStatusName] = useState<Options>(emptyValue)
 
     const theme = useTheme()
     const { handleSubmit, control } = useForm<AddValuesProps>({
@@ -177,8 +168,6 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
       setActiveRolesGroup('')
       handleModal(false)
     }
-
-    console.log('dataGroup = ', dataGroup)
 
     return (
       <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, SyntheticEvent } from 'react'
 import { useTheme } from '@mui/material'
 import { TextField } from 'components/TextFields/TextFields'
 import { Autocomplete } from 'components/Autocomplete'
@@ -8,6 +8,7 @@ export const DropDown = ({
   data,
   props,
   onChange,
+  onBlur,
   value,
   label,
   errorLabel,
@@ -45,9 +46,10 @@ export const DropDown = ({
       }}
       renderInput={params => (
         <TextField
-          onBlur={event =>
-            !event.target.value ? setErrors(true) : setErrors(false)
-          }
+          onBlur={event => (
+            !event.target.value ? setErrors(true) : setErrors(false),
+            onBlur?.(event.target.value)
+          )}
           {...params}
           required
           variant="outlined"

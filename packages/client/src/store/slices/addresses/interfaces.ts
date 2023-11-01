@@ -3,11 +3,13 @@ export interface Addresses {
   address: string
   coordinates: string
   id_region: string
+  active?: boolean
 }
 
 export interface Regions {
   id?: string
   region: string
+  active?: boolean
 }
 
 export interface AnswerAddresses {
@@ -28,11 +30,11 @@ export type AddressesState = {
 }
 
 export interface СhangeAddress {
-  address: Addresses
+  newAddress: Addresses
   id: string
 }
 
 export interface СhangeRegion {
-  region: Regions
+  newRegion: Regions
   id: string
 }

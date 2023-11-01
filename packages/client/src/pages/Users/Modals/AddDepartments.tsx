@@ -12,7 +12,7 @@ import { MapDepartmentInputFields } from '../data'
 import { modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useStructure } from 'hooks/structure/useStructure'
-import { DropDown } from 'components/DropDown'
+import { DropDown, emptyValue } from 'components/DropDown'
 import { Options } from 'components/DropDown/interface'
 
 export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
@@ -20,10 +20,7 @@ export const AddDepartments = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const [{ divisions }, { addDepartments }] = useStructure()
-    const [division, setDivision] = useState<Options>({
-      label: '',
-      id: '',
-    })
+    const [division, setDivision] = useState<Options>(emptyValue)
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
       defaultValues: {

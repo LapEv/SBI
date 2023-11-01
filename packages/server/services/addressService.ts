@@ -87,12 +87,9 @@ export class addressService {
   }
 
   changeAddress = async (_req: Request, res: Response) => {
-    const { address, coordinates, activeRolesGroup } = _req.body
+    const { newAddress, id } = _req.body
     try {
-      await AddressesRepos.update(activeRolesGroup, {
-        address,
-        coordinates,
-      })
+      await AddressesRepos.update(id, newAddress)
       const addresses = await AddressesRepos.findAll({})
       res.status(200).json(addresses)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -128,7 +125,6 @@ export class addressService {
   }
   deleteRegion = async (_req: Request, res: Response) => {
     const { selectedRegions } = _req.body
-    console.log('selectedRegions = ', selectedRegions)
     try {
       const regions = await Promise.all([
         await selectedRegions.map(async (value: string) => {
@@ -183,11 +179,9 @@ export class addressService {
   }
 
   changeRegion = async (_req: Request, res: Response) => {
-    const { region, id } = _req.body
+    const { newRegion, id } = _req.body
     try {
-      await RegionsRepos.update(id, {
-        region,
-      })
+      await RegionsRepos.update(id, newRegion)
       const regions = await RegionsRepos.findAll({})
       res.status(200).json(regions)
       /* eslint-disable @typescript-eslint/no-explicit-any */

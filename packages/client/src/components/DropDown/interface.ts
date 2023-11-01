@@ -5,6 +5,7 @@ export interface DataDropDown {
   label: string
   errorLabel: string
   onChange?: (value: Options) => void
+  onBlur?: (value: string) => void
 }
 
 export interface Data {

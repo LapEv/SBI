@@ -11,7 +11,7 @@ import { ChooseModalProps, AddValuesProps } from './interfaces'
 import { MapAddressInputFields } from '../data'
 import { modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
-import { DropDown } from 'components/DropDown'
+import { DropDown, emptyValue } from 'components/DropDown'
 import { useAddresses } from 'hooks/addresses/useAddresses'
 import { useMessage } from 'hooks/message/useMessage'
 import { Options } from 'components/DropDown/interface'
@@ -23,10 +23,7 @@ export const AddAddress = React.forwardRef<unknown, ChooseModalProps>(
     const [{ regions, addresses }, { getRegions, getAddresses, newAddress }] =
       useAddresses()
     const [_, { setMessage }] = useMessage()
-    const [region, setRegion] = useState<Options>({
-      label: '',
-      id: '',
-    })
+    const [region, setRegion] = useState<Options>(emptyValue)
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
       defaultValues: {

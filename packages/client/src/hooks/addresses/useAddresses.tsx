@@ -39,11 +39,11 @@ export function useAddresses(): [AddressesState, AddressesActions] {
       deleteRegion(data) {
         dispatch(deleteRegion(data))
       },
-      changeAddress(address, id) {
-        dispatch(changeAddress({ address, id }))
+      changeAddress(newAddress, id) {
+        dispatch(changeAddress({ newAddress, id }))
       },
-      changeRegion(region, id) {
-        dispatch(changeRegion({ region, id }))
+      changeRegion(newRegion, id) {
+        dispatch(changeRegion({ newRegion, id }))
       },
     },
   ]

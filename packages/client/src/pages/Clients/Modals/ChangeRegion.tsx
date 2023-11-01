@@ -15,20 +15,14 @@ import {
   useFormState,
 } from 'react-hook-form'
 import { TextField } from 'components/TextFields'
-import { MapNewAddressInputFields } from './data'
+import { MapNewRegionInputFields } from './data'
 
-export const ChangeAddress = React.forwardRef<unknown, ChooseModalProps>(
+export const ChangeRegion = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
-    const [
-      { addresses, regions },
-      { getAddresses, getRegions, changeAddress },
-    ] = useAddresses()
-    const [listAddresses, setListAddresses] = useState<Options[]>([])
+    const [{ regions }, { getRegions, changeRegion }] = useAddresses()
     const [listRegions, setListRegions] = useState<Options[]>([])
-    const [selectedAddresses, setSelectedAddresses] =
-      useState<Options>(emptyValue)
     const [selectedRegions, setSelectedRegions] = useState<Options>(emptyValue)
     const [errSelectedItems, setErrSelectedItems] = useState<string>('')
     const theme = useTheme()
@@ -36,7 +30,7 @@ export const ChangeAddress = React.forwardRef<unknown, ChooseModalProps>(
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
       defaultValues: {
-        list: MapNewAddressInputFields,
+        list: MapNewRegionInputFields,
       },
     })
     const { errors } = useFormState({ control })
@@ -46,54 +40,26 @@ export const ChangeAddress = React.forwardRef<unknown, ChooseModalProps>(
     })
 
     const changeData = ({ list }: AddValuesProps) => {
-      if (!selectedAddresses) {
-        setErrSelectedItems('Не выбран адрес')
-        return
-      }
       if (!selectedRegions) {
         setErrSelectedItems('Не выбран регион')
         setSelectedRegions(emptyValue)
         return
       }
-      changeAddress(
+      changeRegion(
         {
-          address: list[0].value,
-          coordinates: list[1].value,
-          id_region: selectedRegions.id,
+          region: list[0].value,
           active: true,
         },
-        selectedAddresses.id
+        selectedRegions.id
       )
       handleModal(false)
-    }
-
-    const changeSelectedAddresses = (data: Options) => {
-      if (!data) return
-      setSelectedAddresses(data)
-      if (data.id && selectedRegions && errSelectedItems) {
-        setErrSelectedItems('')
-      }
-      const newAddress = addresses.find(
-        item => item.id === data.id
-      ) as Addresses
-      const newRegion = regions.find(
-        item => item.id === newAddress.id_region
-      ) as Regions
-      setSelectedRegions({ label: newRegion.region, id: newAddress.id_region })
     }
 
     const changeSelectedRegions = (data: Options) => {
       if (!data) return
       setSelectedRegions(data)
-      if (data.id && selectedAddresses && errSelectedItems) {
+      if (data.id && selectedRegions && errSelectedItems) {
         setErrSelectedItems('')
-      }
-    }
-
-    const checkAddressValue = (value: string) => {
-      const isNew = addresses.findIndex(item => item.address === value)
-      if (isNew < 0) {
-        setSelectedAddresses(emptyValue)
       }
     }
 
@@ -105,20 +71,8 @@ export const ChangeAddress = React.forwardRef<unknown, ChooseModalProps>(
     }
 
     useEffect(() => {
-      getAddresses()
       getRegions()
     }, [])
-
-    useEffect(() => {
-      setListAddresses(
-        addresses.map(item => {
-          return {
-            ['label']: item.address as string,
-            ['id']: item.id as string,
-          }
-        })
-      )
-    }, [addresses])
 
     useEffect(() => {
       setListRegions(
@@ -137,15 +91,6 @@ export const ChangeAddress = React.forwardRef<unknown, ChooseModalProps>(
         component="form"
         onSubmit={handleSubmit(changeData)}>
         <Typography variant={'h6'}>{title}</Typography>
-        <DropDown
-          data={listAddresses}
-          props={{ mt: 4 }}
-          onChange={data => changeSelectedAddresses(data)}
-          value={selectedAddresses.label || ''}
-          label="Выберите адрес"
-          errorLabel="Не выбран адрес!"
-          onBlur={text => checkAddressValue(text)}
-        />
         <DropDown
           data={listRegions}
           props={{ mt: 4 }}

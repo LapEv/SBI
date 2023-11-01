@@ -7,7 +7,7 @@ import { modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { DataList } from 'components/CheckBoxGroup/interface'
 import { Item } from 'components/CheckBoxGroup'
-import { DropDown } from 'components/DropDown'
+import { DropDown, emptyValue } from 'components/DropDown'
 import { RolesGroupObject } from 'storeRoles/interfaces'
 import { Options } from 'components/DropDown/interface'
 
@@ -20,10 +20,7 @@ export const ChangeRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
       { getRoles, getRolesGroup, changeRolesGroup },
     ] = useRoles()
     const [data, setData] = useState<DataList[]>([])
-    const [selectedGroup, setSelectedGroup] = useState<Options>({
-      label: '',
-      id: '',
-    })
+    const [selectedGroup, setSelectedGroup] = useState<Options>(emptyValue)
     const [group, setGroup] = useState<Options[]>([])
     const [selectedRoles, setSelectedRoles] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
@@ -85,7 +82,7 @@ export const ChangeRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
             }
           })
           .filter(item => item.label !== 'SUPERADMIN')
-        // .filter(item => item.label !== 'ADMIN')
+          .filter(item => item.label !== 'ADMIN')
       )
     }, [rolesGroup])
 

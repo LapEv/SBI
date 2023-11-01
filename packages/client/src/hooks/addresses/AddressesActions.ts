@@ -7,6 +7,6 @@ export interface AddressesActions {
   newRegion: (data: Regions) => void
   deleteAddress: (data: string[]) => void
   deleteRegion: (data: string[]) => void
-  changeAddress: (address: Addresses, id: string) => void
+  changeAddress: (newAddress: Addresses, id: string) => void
   changeRegion: (region: Regions, id: string) => void
 }

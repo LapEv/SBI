@@ -72,12 +72,12 @@ export const deleteAddress = createAsyncThunk(
 
 export const changeAddress = createAsyncThunk(
   'addresses/changeAddress',
-  async ({ address, id }: СhangeAddress, thunkAPI) => {
+  async ({ newAddress, id }: СhangeAddress, thunkAPI) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Addresses.changeAddress,
         {
-          address,
+          newAddress,
           id,
         }
       )
@@ -159,12 +159,12 @@ export const deleteRegion = createAsyncThunk(
 
 export const changeRegion = createAsyncThunk(
   'addresses/changeRegion',
-  async ({ region, id }: СhangeRegion, thunkAPI) => {
+  async ({ newRegion, id }: СhangeRegion, thunkAPI) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Addresses.changeRegion,
         {
-          region,
+          newRegion,
           id,
         }
       )

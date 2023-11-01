@@ -5,6 +5,7 @@ import { divisionRouter } from './divisionRouter'
 import { departmentRouter } from './departmentRouter'
 import { userStatusRouter } from './userStatusRouter'
 import { addressRouter } from './addressRouter'
+import { clientRouter } from './clientRouter'
 
 export const apiRouter: Router = Router()
 
@@ -14,3 +15,5 @@ divisionRouter(apiRouter)
 departmentRouter(apiRouter)
 userStatusRouter(apiRouter)
 addressRouter(apiRouter)
+addressRouter(apiRouter)
+clientRouter(apiRouter)

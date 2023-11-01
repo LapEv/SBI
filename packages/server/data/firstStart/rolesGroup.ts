@@ -22,4 +22,9 @@ export const rolesGroupStartData = [
     ],
     groupName: 'Диспетчер',
   },
+  {
+    group: 'FieldEngineers',
+    roles: ['getUsers', 'getDivisions', 'getDepartments'],
+    groupName: 'Выездные инженеры',
+  },
 ]

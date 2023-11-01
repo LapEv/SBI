@@ -7,6 +7,10 @@ import {
   department,
   users,
   userStatus,
+  clients,
+  clientsGroup,
+  contracts,
+  objects,
 } from './models/index.models'
 import { firstStart } from './data/firstStart/index.startData'
 import { addresses, regions } from './models/adresses'
@@ -34,6 +38,11 @@ export const UserStatus = sequelize.define('UserStatus', userStatus, {})
 
 export const Addresses = sequelize.define('Addresses', addresses, {})
 export const Regions = sequelize.define('Regions', regions, {})
+
+export const ClientsGroup = sequelize.define('ClientsGroup', clientsGroup, {})
+export const Clients = sequelize.define('Clients', clients, {})
+export const Contracts = sequelize.define('Contracts', contracts, {})
+export const Objects = sequelize.define('Objects', objects, {})
 
 RolesGroup.belongsToMany(Roles, { through: 'RoleGroup' })
 Roles.belongsToMany(RolesGroup, { through: 'RoleGroup' })

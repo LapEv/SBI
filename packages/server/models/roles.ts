@@ -4,7 +4,7 @@ import { DataType, Model } from 'sequelize-typescript'
 export interface RolesGroup {
   id: number
   group: string
-  roles: string
+  roles: object[]
   groupName: string
 }
 

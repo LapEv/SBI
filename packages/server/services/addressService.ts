@@ -5,9 +5,7 @@ export class addressService {
   newAddress = async (_req: Request, res: Response) => {
     try {
       await AddressesRepos.create({ ..._req.body, active: true })
-      const addresses = await AddressesRepos.findAll({
-        where: { active: true },
-      })
+      const addresses = await AddressesRepos.findAll({})
       res.status(200).json(addresses)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
@@ -43,7 +41,7 @@ export class addressService {
             active: false,
           })
         }),
-        await AddressesRepos.findAll({ where: { active: true } }),
+        await AddressesRepos.findAll({}),
       ])
       res.status(200).json(addresses[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -77,10 +75,10 @@ export class addressService {
       await AddressesRepos.update(selectedAddresses, {
         active: true,
       })
-      const addresses = await AddressesRepos.findAll({
+      const users = await AddressesRepos.findAll({
         where: { active: true },
       })
-      res.status(200).json(addresses)
+      res.status(200).json(users)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -89,12 +87,13 @@ export class addressService {
   }
 
   changeAddress = async (_req: Request, res: Response) => {
-    const { newAddress, id } = _req.body
+    const { address, coordinates, activeRolesGroup } = _req.body
     try {
-      await AddressesRepos.update(id, newAddress)
-      const addresses = await AddressesRepos.findAll({
-        where: { active: true },
+      await AddressesRepos.update(activeRolesGroup, {
+        address,
+        coordinates,
       })
+      const addresses = await AddressesRepos.findAll({})
       res.status(200).json(addresses)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
@@ -105,7 +104,7 @@ export class addressService {
   newRegion = async (_req: Request, res: Response) => {
     try {
       await RegionsRepos.create({ ..._req.body, active: true })
-      const regions = await RegionsRepos.findAll({ where: { active: true } })
+      const regions = await RegionsRepos.findAll({})
       res.status(200).json(regions)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
@@ -129,6 +128,7 @@ export class addressService {
   }
   deleteRegion = async (_req: Request, res: Response) => {
     const { selectedRegions } = _req.body
+    console.log('selectedRegions = ', selectedRegions)
     try {
       const regions = await Promise.all([
         await selectedRegions.map(async (value: string) => {
@@ -136,7 +136,7 @@ export class addressService {
             active: false,
           })
         }),
-        await RegionsRepos.findAll({ where: { active: true } }),
+        await RegionsRepos.findAll({}),
       ])
       res.status(200).json(regions[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -183,9 +183,11 @@ export class addressService {
   }
 
   changeRegion = async (_req: Request, res: Response) => {
-    const { newRegion, id } = _req.body
+    const { region, id } = _req.body
     try {
-      await RegionsRepos.update(id, newRegion)
+      await RegionsRepos.update(id, {
+        region,
+      })
       const regions = await RegionsRepos.findAll({})
       res.status(200).json(regions)
       /* eslint-disable @typescript-eslint/no-explicit-any */

@@ -13,6 +13,7 @@ import {
   UserStatusRepos,
   roleGroupRepos,
   roleRepos,
+  sequelize,
   userRepos,
 } from '../../db'
 import bcrypt from 'bcryptjs'
@@ -23,6 +24,10 @@ import { typ_malfunctionsStartData } from './classifier'
 
 export const firstStart = async () => {
   try {
+    const AllDelete = false
+    if (AllDelete) {
+      await sequelize.drop()
+    }
     const divisions = await DivisionRepos.getAll()
     const department = await DivisionRepos.getAll()
     const users = await userRepos.getAll()
@@ -44,20 +49,12 @@ export const firstStart = async () => {
         )
       } else {
         if (!regions.length) {
-          const newRegions = await Promise.all(
-            regionsStartData.map(
-              async value => await RegionsRepos.create(value)
-            )
-          )
+          const newRegions = await RegionsRepos.bulkCreate(regionsStartData)
           const newAddressesData = addressesStartData.map(value => {
             return { ...value, id_region: newRegions[0].id }
           })
           if (!addresses.length) {
-            await Promise.all(
-              newAddressesData.map(
-                async value => await AddressesRepos.create(value)
-              )
-            )
+            await AddressesRepos.bulkCreate(newAddressesData)
           }
         }
       }
@@ -72,16 +69,13 @@ export const firstStart = async () => {
     } else {
       if (equipments.length || models.length || typ_malfunctions.length) {
         console.log(
-          'Первый запуск таблиц  ClassifierEquipment, ClassifierModels и TypicalMalfunctions невозможен! Какая-то из таблиц уже существует!'
+          'Первый запуск таблиц ClassifierEquipment, ClassifierModels и TypicalMalfunctions невозможен! Какая-то из таблиц уже существует!'
         )
       } else {
         if (!typ_malfunctions.length) {
-          const newtyp_malfunctions = await Promise.all(
-            typ_malfunctionsStartData.map(
-              async value => await TypicalMalfunctionsRepos.create(value)
-            )
+          const newtyp_malfunctions = await TypicalMalfunctionsRepos.bulkCreate(
+            typ_malfunctionsStartData
           )
-
           console.log('newtyp_malfunctions = ', newtyp_malfunctions)
           // const newModelsData = modelsStartData.map((value, index) => {
           //   return {
@@ -120,9 +114,7 @@ export const firstStart = async () => {
     } else {
       const roles = await roleRepos.getAll()
       if (!roles.length) {
-        const newRoles = await Promise.all(
-          rolesStartData.map(async value => await roleRepos.create(value))
-        )
+        const newRoles = await roleRepos.bulkCreate(rolesStartData)
         const newrolesObj = newRoles.map(({ id, nameRole, role }) => {
           return { id, nameRole, role }
         })
@@ -143,32 +135,21 @@ export const firstStart = async () => {
           //   ) as never[]
           // }
         })
-        await Promise.all(
-          rolesGroupStartData.map(
-            async value => await roleGroupRepos.create(value)
-          )
-        )
+        await roleGroupRepos.bulkCreate(rolesGroupStartData)
       }
 
-      const newDivision = await Promise.all(
-        divisionStartData.map(async value => await DivisionRepos.create(value))
-      )
+      const newDivision = await DivisionRepos.bulkCreate(divisionStartData)
+      console.log('newDivision = ', newDivision)
       departmentStartData.map(async value => {
         value.id_division = newDivision.find(
           item => item.division === value.division
         )?.id
       })
-      const newDepartment = await Promise.all(
-        departmentStartData.map(
-          async value => await DepartmentRepos.create(value)
-        )
+      const newDepartment = await DepartmentRepos.bulkCreate(
+        departmentStartData
       )
-      await Promise.all(
-        userStatusStartData.map(
-          async value => await UserStatusRepos.create(value)
-        )
-      )
-      userStartData.map(async value => {
+      await UserStatusRepos.bulkCreate(userStatusStartData)
+      const newuserStartData = userStartData.map(value => {
         value.id_division = newDivision.find(
           item => item.division === value.division
         )?.id
@@ -176,14 +157,14 @@ export const firstStart = async () => {
           item => item.department === value.department
         )?.id
         const hashPassword = bcrypt.hashSync(value.password, 7)
-        const newUser = {
+        return {
           ...value,
           password: hashPassword,
           active: true,
           theme: 'light',
         }
-        await userRepos.create(newUser)
       })
+      await userRepos.bulkCreate(newuserStartData)
     }
   } catch (error) {
     console.error('Unable to connect to the database: ', error)

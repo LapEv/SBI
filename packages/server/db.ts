@@ -63,14 +63,14 @@ export const TypicalMalfunctions = sequelize.define(
   {}
 )
 
-RolesGroup.belongsToMany(Roles, { through: 'RoleGroup' })
-Roles.belongsToMany(RolesGroup, { through: 'RoleGroup' })
+RolesGroup.belongsToMany(Roles, { through: 'ThroughRolesGroup' })
+Roles.belongsToMany(RolesGroup, { through: 'ThroughRolesGroup' })
 
-Users.belongsToMany(RolesGroup, { through: 'UserRoleGroup' })
-RolesGroup.belongsToMany(Users, { through: 'UserRoleGroup' })
+Users.belongsToMany(RolesGroup, { through: 'ThroughUserRoleGroup' })
+RolesGroup.belongsToMany(Users, { through: 'ThroughUserRoleGroup' })
 
-Users.belongsToMany(Roles, { through: 'UserRole' })
-Roles.belongsToMany(Users, { through: 'UserRole' })
+Users.belongsToMany(Roles, { through: 'ThroughUserRole' })
+Roles.belongsToMany(Users, { through: 'ThroughUserRole' })
 
 Division.hasMany(Users, { foreignKey: 'id_division' })
 Users.belongsTo(Division, { foreignKey: 'id_division', targetKey: 'id' })
@@ -80,9 +80,6 @@ Users.belongsTo(Department, { foreignKey: 'id_department', targetKey: 'id' })
 
 Division.hasMany(Department, { foreignKey: 'id_division' })
 Department.belongsTo(Division, { foreignKey: 'id_division', targetKey: 'id' })
-
-Regions.hasMany(Addresses, { foreignKey: 'id_region' })
-Addresses.belongsTo(Regions, { foreignKey: 'id_region', targetKey: 'id' })
 
 Regions.hasMany(Addresses, { foreignKey: 'id_region' })
 Addresses.belongsTo(Regions, { foreignKey: 'id_region', targetKey: 'id' })

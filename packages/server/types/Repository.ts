@@ -4,6 +4,7 @@ import type {
   FindOptions,
   WhereOptions,
   DestroyOptions,
+  // BulkCreateOptions,
 } from 'sequelize'
 import type { Model, ModelCtor } from 'sequelize-typescript'
 import type { MakeNullishOptional } from 'sequelize/types/utils'
@@ -19,6 +20,12 @@ export class Repository<T extends Model<T>> {
     value: MakeNullishOptional<T['_creationAttributes']>
   ): Promise<T> {
     return this.model.create(value)
+  }
+
+  public async bulkCreate(
+    value: MakeNullishOptional<T['_creationAttributes']>[]
+  ): Promise<T[]> {
+    return this.model.bulkCreate(value)
   }
 
   public async findOrCreate(
@@ -80,7 +87,6 @@ export class Repository<T extends Model<T>> {
 
     if (data) {
       await data.destroy()
-
       return null
     } else {
       const res = await this.create(body)

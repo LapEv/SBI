@@ -2,7 +2,7 @@ import type { ModelAttributes } from 'sequelize'
 import { DataType, Model } from 'sequelize-typescript'
 
 export interface RolesGroup {
-  id: number
+  id: string
   group: string
   roles: object[]
   groupName: string
@@ -32,7 +32,7 @@ export const rolesGroup: ModelAttributes<Model, RolesGroup> = {
 }
 
 export interface Roles {
-  id: number
+  id: string
   role: string
   nameRole: string
 }

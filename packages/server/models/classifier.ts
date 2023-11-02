@@ -62,7 +62,7 @@ export const classifierModels: ModelAttributes<Model, ClassifierModels> = {
 
 export interface TypicalMalfunctions {
   id: string
-  typicalMalfunctions: string
+  typicalMalfunction: string
   active: boolean
 }
 
@@ -74,7 +74,7 @@ export const typicalMalfunctions: ModelAttributes<Model, TypicalMalfunctions> =
       allowNull: false,
       primaryKey: true,
     },
-    typicalMalfunctions: {
+    typicalMalfunction: {
       type: DataType.STRING,
       allowNull: false,
       unique: true,

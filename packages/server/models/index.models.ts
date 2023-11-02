@@ -9,4 +9,4 @@ export {
   classifierEquipment,
   classifierModels,
   typicalMalfunctions,
-} from './classifierEquipment'
+} from './classifier'

@@ -4,9 +4,12 @@ import { userStartData } from './user'
 import { userStatusStartData } from './userStatus'
 import {
   AddressesRepos,
+  ClassifierEquipmentRepos,
+  ClassifierModelsRepos,
   DepartmentRepos,
   DivisionRepos,
   RegionsRepos,
+  TypicalMalfunctionsRepos,
   UserStatusRepos,
   roleGroupRepos,
   roleRepos,
@@ -16,6 +19,7 @@ import bcrypt from 'bcryptjs'
 import { rolesStartData } from './role'
 import { rolesGroupStartData } from './rolesGroup'
 import { addressesStartData, regionsStartData } from './addresses'
+import { modelsStartData, typ_malfunctionsStartData } from './classifier'
 
 export const firstStart = async () => {
   try {
@@ -24,36 +28,78 @@ export const firstStart = async () => {
     const users = await userRepos.getAll()
     const regions = await RegionsRepos.getAll()
     const addresses = await AddressesRepos.getAll()
+    const equipments = await ClassifierEquipmentRepos.getAll()
+    const models = await ClassifierModelsRepos.getAll()
+    const typ_malfunctions = await TypicalMalfunctionsRepos.getAll()
 
     const deleteAddress = false
     if (deleteAddress) {
       await AddressesRepos.drop({ cascade: true })
       await RegionsRepos.drop({ cascade: true })
-      return
-    }
-    if (addresses.length || regions.length) {
-      console.log(
-        'Первый запуск таблиц Address и Regions невозможен! Какая-то из таблиц уже существует!'
-      )
     } else {
-      if (!regions.length) {
-        const newRegions = await Promise.all(
-          regionsStartData.map(async value => await RegionsRepos.create(value))
+      if (addresses.length || regions.length) {
+        console.log(
+          'Первый запуск таблиц Address и Regions невозможен! Какая-то из таблиц уже существует!'
         )
-        const newAddressesData = addressesStartData.map(value => {
-          return { ...value, id_region: newRegions[0].id }
-        })
-        if (!addresses.length) {
-          await Promise.all(
-            newAddressesData.map(
-              async value => await AddressesRepos.create(value)
+      } else {
+        if (!regions.length) {
+          const newRegions = await Promise.all(
+            regionsStartData.map(
+              async value => await RegionsRepos.create(value)
             )
           )
+          const newAddressesData = addressesStartData.map(value => {
+            return { ...value, id_region: newRegions[0].id }
+          })
+          if (!addresses.length) {
+            await Promise.all(
+              newAddressesData.map(
+                async value => await AddressesRepos.create(value)
+              )
+            )
+          }
         }
       }
     }
 
-    const del = false
+    const deleteClassifier = false
+    if (deleteClassifier) {
+      await ClassifierEquipmentRepos.drop({ cascade: true })
+      await ClassifierModelsRepos.drop({ cascade: true })
+      await TypicalMalfunctionsRepos.drop({ cascade: true })
+    } else {
+      if (equipments.length || models.length || typ_malfunctions.length) {
+        console.log(
+          'Первый запуск таблиц ClassifierEquipment, ClassifierModels и TypicalMalfunctions невозможен! Какая-то из таблиц уже существует!'
+        )
+      } else {
+        if (!typ_malfunctions.length) {
+          const newtyp_malfunctions = await Promise.all(
+            typ_malfunctionsStartData.map(
+              async value => await TypicalMalfunctionsRepos.create(value)
+            )
+          )
+
+          console.log('newtyp_malfunctions = ', newtyp_malfunctions)
+          const newModelsData = modelsStartData.map((value, index) => {
+            return {
+              ...value,
+              typicalMalfunctions['id']: newtyp_malfunctions[index].id 
+            }
+          })
+          console.log('newModelsData = ', newModelsData)
+          if (!models.length) {
+            await Promise.all(
+              newModelsData.map(
+                async value => await ClassifierModelsRepos.create(value)
+              )
+            )
+          }
+        }
+      }
+    }
+
+    const del = true
     if (del) {
       await DepartmentRepos.drop({ cascade: true })
       await DivisionRepos.drop({ cascade: true })

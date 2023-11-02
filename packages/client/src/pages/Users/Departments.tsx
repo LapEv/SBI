@@ -30,6 +30,8 @@ export const Departments = ({
     }
   }, [activeDepartment])
 
+  console.log('users = ', users)
+
   return (
     <Box
       sx={{

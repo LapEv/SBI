@@ -4,7 +4,7 @@ import { DataType, Model } from 'sequelize-typescript'
 export interface ClassifierEquipment {
   id: string
   equipment: string
-  models: object[]
+  models: string[]
   active: boolean
 }
 
@@ -22,7 +22,7 @@ export const classifierEquipment: ModelAttributes<Model, ClassifierEquipment> =
       unique: true,
     },
     models: {
-      type: DataType.ARRAY(DataType.JSONB),
+      type: DataType.ARRAY(DataType.STRING),
       allowNull: false,
     },
     active: {
@@ -34,7 +34,7 @@ export const classifierEquipment: ModelAttributes<Model, ClassifierEquipment> =
 export interface ClassifierModels {
   id: string
   model: string
-  typicalMalfunctions: object[]
+  typicalMalfunctions: string[]
   active: boolean
 }
 
@@ -51,7 +51,7 @@ export const classifierModels: ModelAttributes<Model, ClassifierModels> = {
     unique: true,
   },
   typicalMalfunctions: {
-    type: DataType.ARRAY(DataType.JSONB),
+    type: DataType.ARRAY(DataType.STRING),
     allowNull: false,
   },
   active: {

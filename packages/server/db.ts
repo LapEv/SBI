@@ -7,10 +7,10 @@ import {
   department,
   users,
   userStatus,
-  clients,
-  clientsGroup,
-  contracts,
-  objects,
+  // clients,
+  // clientsGroup,
+  // contracts,
+  // objects,
   classifierEquipment,
   classifierModels,
   typicalMalfunctions,
@@ -42,10 +42,10 @@ export const UserStatus = sequelize.define('UserStatus', userStatus, {})
 export const Addresses = sequelize.define('Addresses', addresses, {})
 export const Regions = sequelize.define('Regions', regions, {})
 
-export const ClientsGroup = sequelize.define('ClientsGroup', clientsGroup, {})
-export const Clients = sequelize.define('Clients', clients, {})
-export const Contracts = sequelize.define('Contracts', contracts, {})
-export const Objects = sequelize.define('Objects', objects, {})
+// export const ClientsGroup = sequelize.define('ClientsGroup', clientsGroup, {})
+// export const Clients = sequelize.define('Clients', clients, {})
+// export const Contracts = sequelize.define('Contracts', contracts, {})
+// export const Objects = sequelize.define('Objects', objects, {})
 
 export const ClassifierEquipment = sequelize.define(
   'ClassifierEquipment',
@@ -87,12 +87,11 @@ Addresses.belongsTo(Regions, { foreignKey: 'id_region', targetKey: 'id' })
 Regions.hasMany(Addresses, { foreignKey: 'id_region' })
 Addresses.belongsTo(Regions, { foreignKey: 'id_region', targetKey: 'id' })
 
-ClassifierEquipment.hasMany(ClassifierModels, {
-  foreignKey: 'id_classifierModels',
+ClassifierEquipment.belongsToMany(ClassifierModels, {
+  through: 'ClassifierEquipmentModels',
 })
-ClassifierModels.belongsTo(ClassifierEquipment, {
-  foreignKey: 'id_classifierModels',
-  targetKey: 'id',
+ClassifierModels.belongsToMany(ClassifierEquipment, {
+  through: 'ClassifierEquipmentModels',
 })
 
 ClassifierModels.belongsToMany(TypicalMalfunctions, {
@@ -112,10 +111,10 @@ export const UserStatusRepos = new Repository(UserStatus as ModelCtor)
 export const RegionsRepos = new Repository(Regions as ModelCtor)
 export const AddressesRepos = new Repository(Addresses as ModelCtor)
 
-export const ClientsGroupRepos = new Repository(ClientsGroup as ModelCtor)
-export const ClientsRepos = new Repository(Clients as ModelCtor)
-export const ContractsRepos = new Repository(Contracts as ModelCtor)
-export const ObjectsRepos = new Repository(Objects as ModelCtor)
+// export const ClientsGroupRepos = new Repository(ClientsGroup as ModelCtor)
+// export const ClientsRepos = new Repository(Clients as ModelCtor)
+// export const ContractsRepos = new Repository(Contracts as ModelCtor)
+// export const ObjectsRepos = new Repository(Objects as ModelCtor)
 
 export const ClassifierEquipmentRepos = new Repository(
   ClassifierEquipment as ModelCtor

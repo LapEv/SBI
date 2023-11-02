@@ -16,38 +16,12 @@ export const typ_malfunctionsStartData = [
 export const modelsStartData = [
   {
     model: 'DIGI SM-100',
-    typicalMalfunctions: [
-      {
-        typicalMalfunction: 'Весы не пропечатывывают этикетку',
-        id: '',
-      },
-      {
-        typicalMalfunction: 'Весы не в сети',
-        id: '',
-      },
-      {
-        typicalMalfunction: 'Весы не включаются',
-        id: '',
-      },
-    ],
+    typicalMalfunctions: [],
     active: true,
   },
   {
     models: 'DIGI SM-5000',
-    typicalMalfunctions: [
-      {
-        typicalMalfunction: 'Весы не пропечатывывают этикетку',
-        id: '',
-      },
-      {
-        typicalMalfunction: 'Весы не в сети',
-        id: '',
-      },
-      {
-        typicalMalfunction: 'Весы не включаются',
-        id: '',
-      },
-    ],
+    typicalMalfunctions: [],
     active: true,
   },
 ]
@@ -55,15 +29,6 @@ export const modelsStartData = [
 export const equipmentsStartData = [
   {
     equipment: 'Весы',
-    models: [
-      {
-        model: 'DIGI SM-100',
-        id: '',
-      },
-      {
-        model: 'DIGI SM-5000',
-        id: '',
-      },
-    ],
+    models: [],
   },
 ]

@@ -19,7 +19,7 @@ import bcrypt from 'bcryptjs'
 import { rolesStartData } from './role'
 import { rolesGroupStartData } from './rolesGroup'
 import { addressesStartData, regionsStartData } from './addresses'
-import { modelsStartData, typ_malfunctionsStartData } from './classifier'
+import { typ_malfunctionsStartData } from './classifier'
 
 export const firstStart = async () => {
   try {
@@ -34,6 +34,7 @@ export const firstStart = async () => {
 
     const deleteAddress = false
     if (deleteAddress) {
+      console.log('Delete Addresses')
       await AddressesRepos.drop({ cascade: true })
       await RegionsRepos.drop({ cascade: true })
     } else {
@@ -64,13 +65,14 @@ export const firstStart = async () => {
 
     const deleteClassifier = false
     if (deleteClassifier) {
+      console.log('Delete Classifier')
       await ClassifierEquipmentRepos.drop({ cascade: true })
       await ClassifierModelsRepos.drop({ cascade: true })
       await TypicalMalfunctionsRepos.drop({ cascade: true })
     } else {
       if (equipments.length || models.length || typ_malfunctions.length) {
         console.log(
-          'Первый запуск таблиц ClassifierEquipment, ClassifierModels и TypicalMalfunctions невозможен! Какая-то из таблиц уже существует!'
+          'Первый запуск таблиц  ClassifierEquipment, ClassifierModels и TypicalMalfunctions невозможен! Какая-то из таблиц уже существует!'
         )
       } else {
         if (!typ_malfunctions.length) {
@@ -99,8 +101,9 @@ export const firstStart = async () => {
       }
     }
 
-    const del = true
+    const del = false
     if (del) {
+      console.log('Delete Users & Divisions')
       await DepartmentRepos.drop({ cascade: true })
       await DivisionRepos.drop({ cascade: true })
       await userRepos.drop({ cascade: true })

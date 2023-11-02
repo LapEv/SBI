@@ -7,6 +7,7 @@ export interface Contracts {
   sla: object
   equipment: object[]
   objects: object[]
+  active: boolean
 }
 
 export const contracts: ModelAttributes<Model, Contracts> = {
@@ -33,12 +34,17 @@ export const contracts: ModelAttributes<Model, Contracts> = {
     type: DataType.ARRAY(DataType.JSONB),
     allowNull: false,
   },
+  active: {
+    type: DataType.BOOLEAN,
+    allowNull: false,
+  },
 }
 
 export interface SLA {
   id: string
   sla: string
   time: string
+  active: boolean
 }
 
 export const sla: ModelAttributes<Model, SLA> = {
@@ -57,12 +63,17 @@ export const sla: ModelAttributes<Model, SLA> = {
     type: DataType.STRING,
     allowNull: false,
   },
+  active: {
+    type: DataType.BOOLEAN,
+    allowNull: false,
+  },
 }
 
 export interface Objects {
   id: string
   object: string
   internalClientId: string
+  active: boolean
 }
 
 export const objects: ModelAttributes<Model, Objects> = {
@@ -79,6 +90,10 @@ export const objects: ModelAttributes<Model, Objects> = {
   },
   internalClientId: {
     type: DataType.STRING,
+    allowNull: false,
+  },
+  active: {
+    type: DataType.BOOLEAN,
     allowNull: false,
   },
 }

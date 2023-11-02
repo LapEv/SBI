@@ -1,10 +1,7 @@
 import { FC } from 'react'
 import { styled } from '@mui/material/styles'
-import IconButton from '@mui/material/IconButton'
-import LeftArrow from 'layouts/Main/icons/LeftArrow'
-import RightArrow from 'layouts/Main/icons/RightArrow'
-import Typography from '@mui/material/Typography'
-import { Box } from '@mui/material'
+import { IconButton, Typography, Box } from '@mui/material'
+import { LeftArrow, RightArrow } from 'layouts/Main/icons'
 
 interface SideBarProps {
   open?: boolean

@@ -40,7 +40,7 @@ export class divisionService {
             where: { id: value },
           })
         }),
-        await DivisionRepos.findAll({}),
+        await DivisionRepos.findAll({ where: { active: true } }),
       ])
       res.status(200).json(divisions[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */

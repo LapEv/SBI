@@ -4,7 +4,7 @@ interface AvatarIconProps extends SvgIconProps {
   open?: boolean
 }
 
-export default function AvatarIcon(props: AvatarIconProps) {
+export function Avatar(props: AvatarIconProps) {
   return (
     <SvgIcon {...props} viewBox="0 0 70 70">
       <path

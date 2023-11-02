@@ -28,11 +28,11 @@ export const getAddresses = createAsyncThunk(
 
 export const newAddress = createAsyncThunk(
   'addresses/newAddress',
-  async (role: Addresses, thunkAPI) => {
+  async (address: Addresses, thunkAPI) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Addresses.newAddress,
-        role
+        address
       )
       return {
         data,
@@ -115,11 +115,11 @@ export const getRegions = createAsyncThunk(
 
 export const newRegion = createAsyncThunk(
   'addresses/newRegion',
-  async (role: Regions, thunkAPI) => {
+  async (region: Regions, thunkAPI) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Addresses.newRegion,
-        role
+        region
       )
       return {
         data,

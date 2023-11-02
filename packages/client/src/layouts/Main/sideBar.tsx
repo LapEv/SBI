@@ -1,15 +1,17 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import Box from '@mui/material/Box'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import Typography from '@mui/material/Typography'
-import { styled } from '@mui/material/styles'
+import {
+  Box,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+  styled,
+} from '@mui/material'
 import { menuData } from './drawerBarData'
-import AvatarIcon from 'layouts/Main/icons/AvatarIcon'
+import { Avatar } from 'layouts/Main/icons/Avatar'
 import { Routes } from 'utils/routes'
 import { useAuth } from 'hooks/auth/useAuth'
 import { LinkButton } from 'components/LinkButton'
@@ -92,7 +94,7 @@ export function SideBar({ open = false }: SideBarProps) {
             alignItems: 'center',
             mt: open ? 0 : 2,
           }}>
-          <AvatarIcon
+          <Avatar
             sx={{ width: open ? 70 : 35, height: open ? 100 : 45 }}
             open={open}
           />

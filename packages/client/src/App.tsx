@@ -83,6 +83,14 @@ function App() {
                   }
                 />
                 <Route
+                  path={Paths.Classifier}
+                  element={
+                    <RequiredAuth>
+                      <Pages.Classifier />
+                    </RequiredAuth>
+                  }
+                />
+                <Route
                   path={Paths.Users}
                   element={
                     <RequiredAuth>

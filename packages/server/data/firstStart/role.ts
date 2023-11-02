@@ -190,13 +190,12 @@ export const rolesStartData = [
   },
   {
     role: 'getRegions',
-    nameRole: 'Получение активныхсписка регионов',
+    nameRole: 'Получение списка активных регионов',
   },
   {
     role: 'getAllRegions',
     nameRole: 'Получение полного списка регионов',
   },
-
   {
     role: 'newRegion',
     nameRole: 'Создание нового региона',
@@ -208,5 +207,65 @@ export const rolesStartData = [
   {
     role: 'changeRegion',
     nameRole: 'Изменение данных региона',
+  },
+  {
+    role: 'getClassifierEquipments',
+    nameRole: 'Получение списка активных позиций классификатора оборудования',
+  },
+  {
+    role: 'getAllClassifierEquipments',
+    nameRole: 'Получение полного списка классификатора оборудования',
+  },
+  {
+    role: 'newClassifierEquipment',
+    nameRole: 'Создание нового классификатора оборудования',
+  },
+  {
+    role: 'deleteClassifierEquipment',
+    nameRole: 'Перемещение классификатора оборудования в архив',
+  },
+  {
+    role: 'changeClassifierEquipment',
+    nameRole: 'Изменение данных классификатора оборудования',
+  },
+  {
+    role: 'getClassifierModels',
+    nameRole: 'Получение списка активных позиций классификатора моделей',
+  },
+  {
+    role: 'getAllClassifierModels',
+    nameRole: 'Получение полного списка классификатора моделей',
+  },
+  {
+    role: 'newClassifierModel',
+    nameRole: 'Создание нового классификатора моделей',
+  },
+  {
+    role: 'deleteClassifierModel',
+    nameRole: 'Перемещение классификатора моделей в архив',
+  },
+  {
+    role: 'changeClassifierModel',
+    nameRole: 'Изменение данных классификатора моделей',
+  },
+  {
+    role: 'getTypicalMalfunctions',
+    nameRole: 'Получение списка активных позиций типовых неисправностей',
+  },
+  {
+    role: 'getAllTypicalMalfunctions',
+    nameRole: 'Получение полного списка типовых неисправностей',
+  },
+  {
+    role: 'newTypicalMalfunction',
+    nameRole: 'Создание нового типовых неисправностей',
+  },
+  {
+    role: 'deleteTypicalMalfunction',
+    nameRole: 'Перемещение типовых неисправностей в архив',
+  },
+  {
+    role: 'changeTypicalMalfunction',
+    nameRole: 'Изменение данных типовых неисправностей',
   },
 ]

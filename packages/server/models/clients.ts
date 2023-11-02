@@ -6,6 +6,7 @@ export interface Clients {
   legalName: string
   name: string
   contracts: string[]
+  active: boolean
 }
 
 export const clients: ModelAttributes<Model, Clients> = {
@@ -29,12 +30,17 @@ export const clients: ModelAttributes<Model, Clients> = {
     type: DataType.ARRAY(DataType.JSONB),
     allowNull: false,
   },
+  active: {
+    type: DataType.BOOLEAN,
+    allowNull: false,
+  },
 }
 
 export interface ClientsGroup {
   id: string
   groupName: string
   clients: string[]
+  active: boolean
 }
 
 export const clientsGroup: ModelAttributes<Model, ClientsGroup> = {
@@ -51,6 +57,10 @@ export const clientsGroup: ModelAttributes<Model, ClientsGroup> = {
   },
   clients: {
     type: DataType.ARRAY(DataType.JSONB),
+    allowNull: false,
+  },
+  active: {
+    type: DataType.BOOLEAN,
     allowNull: false,
   },
 }

@@ -6,6 +6,7 @@ import { departmentRouter } from './departmentRouter'
 import { userStatusRouter } from './userStatusRouter'
 import { addressRouter } from './addressRouter'
 import { clientRouter } from './clientRouter'
+import { classifierRouter } from './classifierEquipment'
 
 export const apiRouter: Router = Router()
 
@@ -17,3 +18,4 @@ userStatusRouter(apiRouter)
 addressRouter(apiRouter)
 addressRouter(apiRouter)
 clientRouter(apiRouter)
+classifierRouter(apiRouter)

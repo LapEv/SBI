@@ -1,0 +1,57 @@
+export interface ClassifierEquipment {
+  id?: string
+  equipment: string
+  models: object[]
+  active?: boolean
+}
+
+export interface ClassifierModels {
+  id?: string
+  model: string
+  typicalMalfunctions: object[]
+  active?: boolean
+}
+
+export interface TypicalMalfunctions {
+  id?: string
+  typicalMalfunctions: string
+  active?: boolean
+}
+
+export interface AnswerClassifierEquipment {
+  data: ClassifierEquipment[]
+  type: string
+}
+
+export interface AnswerClassifierModels {
+  data: ClassifierModels[]
+  type: string
+}
+
+export interface AnswerTypicalMalfunctions {
+  data: TypicalMalfunctions[]
+  type: string
+}
+
+export type ClassifierState = {
+  equipments: ClassifierEquipment[]
+  models: ClassifierModels[]
+  typicalMalfunctions: TypicalMalfunctions[]
+  isLoadingRoles: boolean
+  error?: string
+}
+
+export interface ChangeClassifierEquipment {
+  newClassifierEquipment: ClassifierEquipment
+  id: string
+}
+
+export interface ChangeClassifierModel {
+  newClassifierModel: ClassifierModels
+  id: string
+}
+
+export interface ChangeTypicalMalfunction {
+  newTypicalMalfunction: TypicalMalfunctions
+  id: string
+}

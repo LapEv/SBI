@@ -5,10 +5,10 @@ import {
   DeleteAddress,
   DeleteRegion,
   ChangeAddress,
+  ChangeRegion,
 } from './'
 import { ModalTitles } from '../data'
 import { ChooseModalProps } from './interfaces'
-import { ChangeRegion } from './ChangeRegion'
 
 export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(
   ({ modalImage, handleModal }: ChooseModalProps, ref) => {

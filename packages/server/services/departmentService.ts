@@ -42,7 +42,7 @@ export class departmentService {
             where: { id: value },
           })
         }),
-        await DepartmentRepos.findAll({}),
+        await DepartmentRepos.findAll({ where: { active: true } }),
       ])
       res.status(200).json(departaments[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */

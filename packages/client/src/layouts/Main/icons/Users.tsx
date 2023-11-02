@@ -9,5 +9,3 @@ export function Users(props: SvgIconProps) {
     </SvgIcon>
   )
 }
-
-// x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"><g><g><g></g></g></g></svg>

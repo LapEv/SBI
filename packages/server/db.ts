@@ -11,6 +11,9 @@ import {
   clientsGroup,
   contracts,
   objects,
+  classifierEquipment,
+  classifierModels,
+  typicalMalfunctions,
 } from './models/index.models'
 import { firstStart } from './data/firstStart/index.startData'
 import { addresses, regions } from './models/adresses'
@@ -44,6 +47,22 @@ export const Clients = sequelize.define('Clients', clients, {})
 export const Contracts = sequelize.define('Contracts', contracts, {})
 export const Objects = sequelize.define('Objects', objects, {})
 
+export const ClassifierEquipment = sequelize.define(
+  'ClassifierEquipment',
+  classifierEquipment,
+  {}
+)
+export const ClassifierModels = sequelize.define(
+  'ClassifierModels',
+  classifierModels,
+  {}
+)
+export const TypicalMalfunctions = sequelize.define(
+  'TypicalMalfunctions',
+  typicalMalfunctions,
+  {}
+)
+
 RolesGroup.belongsToMany(Roles, { through: 'RoleGroup' })
 Roles.belongsToMany(RolesGroup, { through: 'RoleGroup' })
 
@@ -65,14 +84,48 @@ Department.belongsTo(Division, { foreignKey: 'id_division', targetKey: 'id' })
 Regions.hasMany(Addresses, { foreignKey: 'id_region' })
 Addresses.belongsTo(Regions, { foreignKey: 'id_region', targetKey: 'id' })
 
+Regions.hasMany(Addresses, { foreignKey: 'id_region' })
+Addresses.belongsTo(Regions, { foreignKey: 'id_region', targetKey: 'id' })
+
+ClassifierEquipment.hasMany(ClassifierModels, {
+  foreignKey: 'id_classifierModels',
+})
+ClassifierModels.belongsTo(ClassifierEquipment, {
+  foreignKey: 'id_classifierModels',
+  targetKey: 'id',
+})
+
+ClassifierModels.belongsToMany(TypicalMalfunctions, {
+  through: 'ClassifierModelTypicalMalfunctions',
+})
+TypicalMalfunctions.belongsToMany(ClassifierModels, {
+  through: 'ClassifierModelTypicalMalfunctions',
+})
+
 export const userRepos = new Repository(Users as ModelCtor)
 export const roleGroupRepos = new Repository(RolesGroup as ModelCtor)
 export const roleRepos = new Repository(Roles as ModelCtor)
 export const DivisionRepos = new Repository(Division as ModelCtor)
 export const DepartmentRepos = new Repository(Department as ModelCtor)
 export const UserStatusRepos = new Repository(UserStatus as ModelCtor)
+
 export const RegionsRepos = new Repository(Regions as ModelCtor)
 export const AddressesRepos = new Repository(Addresses as ModelCtor)
+
+export const ClientsGroupRepos = new Repository(ClientsGroup as ModelCtor)
+export const ClientsRepos = new Repository(Clients as ModelCtor)
+export const ContractsRepos = new Repository(Contracts as ModelCtor)
+export const ObjectsRepos = new Repository(Objects as ModelCtor)
+
+export const ClassifierEquipmentRepos = new Repository(
+  ClassifierEquipment as ModelCtor
+)
+export const ClassifierModelsRepos = new Repository(
+  ClassifierModels as ModelCtor
+)
+export const TypicalMalfunctionsRepos = new Repository(
+  TypicalMalfunctions as ModelCtor
+)
 
 export async function dbConnect() {
   try {

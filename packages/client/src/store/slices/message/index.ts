@@ -31,6 +31,20 @@ import {
   newAddress,
   newRegion,
 } from 'api/address'
+import {
+  getClassifierEquipments,
+  getClassifierModels,
+  getTypicalMalfunctions,
+  newClassifierEquipment,
+  newClassifierModel,
+  newTypicalMalfunction,
+  deleteclassifierEquipment,
+  deleteClassifierModel,
+  deleteTypicalMalfunction,
+  changeClassifierEquipment,
+  changeClassifierModel,
+  changeTypicalMalfunction,
+} from 'api/classifier'
 
 const initialState: MessageState = {
   text: '',
@@ -427,6 +441,180 @@ export const messageSlise = createSlice({
       state.isLoadingMessage = true
     },
     [changeRegion.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [newClassifierEquipment.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [newClassifierEquipment.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [newClassifierEquipment.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [deleteclassifierEquipment.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [deleteclassifierEquipment.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [deleteclassifierEquipment.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [changeClassifierEquipment.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [changeClassifierEquipment.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [changeClassifierEquipment.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [newClassifierModel.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [newClassifierModel.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [newClassifierModel.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [deleteClassifierModel.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [deleteClassifierModel.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [deleteClassifierModel.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [changeClassifierModel.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [changeClassifierModel.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [changeClassifierModel.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [newTypicalMalfunction.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [newTypicalMalfunction.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [newTypicalMalfunction.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [deleteTypicalMalfunction.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [deleteTypicalMalfunction.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [deleteTypicalMalfunction.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [changeTypicalMalfunction.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [changeTypicalMalfunction.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [changeTypicalMalfunction.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
       state.isLoadingMessage = false
       state.type = 'error'
       state.text = action.payload

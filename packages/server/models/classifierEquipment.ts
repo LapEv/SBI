@@ -1,37 +1,44 @@
 import type { ModelAttributes } from 'sequelize'
 import { DataType, Model } from 'sequelize-typescript'
 
-export interface Equipment {
+export interface ClassifierEquipment {
   id: string
   equipment: string
   models: object[]
+  active: boolean
 }
 
-export const equipment: ModelAttributes<Model, Equipment> = {
-  id: {
-    type: DataType.STRING,
-    defaultValue: DataType.UUIDV4,
-    allowNull: false,
-    primaryKey: true,
-  },
-  equipment: {
-    type: DataType.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  models: {
-    type: DataType.ARRAY(DataType.JSONB),
-    allowNull: false,
-  },
-}
+export const classifierEquipment: ModelAttributes<Model, ClassifierEquipment> =
+  {
+    id: {
+      type: DataType.STRING,
+      defaultValue: DataType.UUIDV4,
+      allowNull: false,
+      primaryKey: true,
+    },
+    equipment: {
+      type: DataType.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    models: {
+      type: DataType.ARRAY(DataType.JSONB),
+      allowNull: false,
+    },
+    active: {
+      type: DataType.BOOLEAN,
+      allowNull: false,
+    },
+  }
 
-export interface Models {
+export interface ClassifierModels {
   id: string
   model: string
   typicalMalfunctions: object[]
+  active: boolean
 }
 
-export const models: ModelAttributes<Model, Models> = {
+export const classifierModels: ModelAttributes<Model, ClassifierModels> = {
   id: {
     type: DataType.STRING,
     defaultValue: DataType.UUIDV4,
@@ -47,11 +54,16 @@ export const models: ModelAttributes<Model, Models> = {
     type: DataType.ARRAY(DataType.JSONB),
     allowNull: false,
   },
+  active: {
+    type: DataType.BOOLEAN,
+    allowNull: false,
+  },
 }
 
 export interface TypicalMalfunctions {
   id: string
   typicalMalfunctions: string
+  active: boolean
 }
 
 export const typicalMalfunctions: ModelAttributes<Model, TypicalMalfunctions> =
@@ -66,5 +78,9 @@ export const typicalMalfunctions: ModelAttributes<Model, TypicalMalfunctions> =
       type: DataType.STRING,
       allowNull: false,
       unique: true,
+    },
+    active: {
+      type: DataType.BOOLEAN,
+      allowNull: false,
     },
   }

@@ -5,7 +5,9 @@ export class addressService {
   newAddress = async (_req: Request, res: Response) => {
     try {
       await AddressesRepos.create({ ..._req.body, active: true })
-      const addresses = await AddressesRepos.findAll({})
+      const addresses = await AddressesRepos.findAll({
+        where: { active: true },
+      })
       res.status(200).json(addresses)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
@@ -41,7 +43,7 @@ export class addressService {
             active: false,
           })
         }),
-        await AddressesRepos.findAll({}),
+        await AddressesRepos.findAll({ where: { active: true } }),
       ])
       res.status(200).json(addresses[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -75,10 +77,10 @@ export class addressService {
       await AddressesRepos.update(selectedAddresses, {
         active: true,
       })
-      const users = await AddressesRepos.findAll({
+      const addresses = await AddressesRepos.findAll({
         where: { active: true },
       })
-      res.status(200).json(users)
+      res.status(200).json(addresses)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -90,7 +92,9 @@ export class addressService {
     const { newAddress, id } = _req.body
     try {
       await AddressesRepos.update(id, newAddress)
-      const addresses = await AddressesRepos.findAll({})
+      const addresses = await AddressesRepos.findAll({
+        where: { active: true },
+      })
       res.status(200).json(addresses)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
@@ -101,7 +105,7 @@ export class addressService {
   newRegion = async (_req: Request, res: Response) => {
     try {
       await RegionsRepos.create({ ..._req.body, active: true })
-      const regions = await RegionsRepos.findAll({})
+      const regions = await RegionsRepos.findAll({ where: { active: true } })
       res.status(200).json(regions)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
@@ -132,7 +136,7 @@ export class addressService {
             active: false,
           })
         }),
-        await RegionsRepos.findAll({}),
+        await RegionsRepos.findAll({ where: { active: true } }),
       ])
       res.status(200).json(regions[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */

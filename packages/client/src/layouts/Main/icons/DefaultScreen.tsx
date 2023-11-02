@@ -1,6 +1,6 @@
 import { SvgIcon, SvgIconProps } from '@mui/material'
 
-export function DefaultScreenIcon(props: SvgIconProps) {
+export function DefaultScreen(props: SvgIconProps) {
   return (
     <SvgIcon {...props} viewBox="0 0 24 24">
       <path

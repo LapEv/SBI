@@ -48,6 +48,20 @@ export const ApiEndPoints = {
     deleteRegion: 'addresses/deleteRegion',
     changeRegion: 'addresses/changeRegion',
   },
+  Classifier: {
+    getClassifierEquipments: 'classifier/getClassifierEquipments',
+    newClassifierEquipment: 'classifier/newClassifierEquipment',
+    deleteclassifierEquipment: 'classifier/deleteclassifierEquipment',
+    changeClassifierEquipment: 'classifier/changeClassifierEquipment',
+    getClassifierModels: 'classifier/getClassifierModels',
+    newClassifierModel: 'classifier/newClassifierModel',
+    deleteClassifierModel: 'classifier/deleteClassifierModel',
+    changeClassifierModel: 'classifier/changeClassifierModel',
+    getTypicalMalfunctions: 'classifier/getTypicalMalfunctions',
+    newTypicalMalfunction: 'classifier/newTypicalMalfunction',
+    deleteTypicalMalfunction: 'classifier/deleteTypicalMalfunction',
+    changeTypicalMalfunction: 'classifier/changeTypicalMalfunction',
+  },
 }
 
 const url = `http://localhost:${__SERVER_PORT__}/api/`

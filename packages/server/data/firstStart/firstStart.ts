@@ -81,20 +81,20 @@ export const firstStart = async () => {
           )
 
           console.log('newtyp_malfunctions = ', newtyp_malfunctions)
-          const newModelsData = modelsStartData.map((value, index) => {
-            return {
-              ...value,
-              typicalMalfunctions['id']: newtyp_malfunctions[index].id 
-            }
-          })
-          console.log('newModelsData = ', newModelsData)
-          if (!models.length) {
-            await Promise.all(
-              newModelsData.map(
-                async value => await ClassifierModelsRepos.create(value)
-              )
-            )
-          }
+          // const newModelsData = modelsStartData.map((value, index) => {
+          //   return {
+          //     ...value,
+          //     newtyp_malfunctions[index]
+          //   }
+          // })
+          // console.log('newModelsData = ', newModelsData)
+          // if (!models.length) {
+          //   await Promise.all(
+          //     newModelsData.map(
+          //       async value => await ClassifierModelsRepos.create(value)
+          //     )
+          //   )
+          // }
         }
       }
     }

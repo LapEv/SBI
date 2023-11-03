@@ -84,18 +84,23 @@ Department.belongsTo(Division, { foreignKey: 'id_division', targetKey: 'id' })
 Regions.hasMany(Addresses, { foreignKey: 'id_region' })
 Addresses.belongsTo(Regions, { foreignKey: 'id_region', targetKey: 'id' })
 
-ClassifierEquipment.belongsToMany(ClassifierModels, {
-  through: 'ClassifierEquipmentModels',
+ClassifierEquipment.hasMany(ClassifierModels, { foreignKey: 'id_equipment' })
+ClassifierModels.belongsTo(ClassifierEquipment, {
+  foreignKey: 'id_equipment',
+  targetKey: 'id',
 })
-ClassifierModels.belongsToMany(ClassifierEquipment, {
-  through: 'ClassifierEquipmentModels',
+
+ClassifierEquipment.hasMany(TypicalMalfunctions, { foreignKey: 'id_equipment' })
+TypicalMalfunctions.belongsTo(ClassifierEquipment, {
+  foreignKey: 'id_equipment',
+  targetKey: 'id',
 })
 
 ClassifierModels.belongsToMany(TypicalMalfunctions, {
-  through: 'ClassifierModelTypicalMalfunctions',
+  through: 'ThroughModelTypMalfunctions',
 })
 TypicalMalfunctions.belongsToMany(ClassifierModels, {
-  through: 'ClassifierModelTypicalMalfunctions',
+  through: 'ThroughModelTypMalfunctions',
 })
 
 export const userRepos = new Repository(Users as ModelCtor)

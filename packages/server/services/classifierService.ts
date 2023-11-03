@@ -139,6 +139,17 @@ export class classifierService {
       .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
 
+  getClassifierModelsById = (_req: Request, res: Response) => {
+    const { id_equipment } = _req.body
+    ClassifierModelsRepos.findAll({
+      where: { active: true, id_equipment },
+    })
+      .then(classifierModels => {
+        res.status(200).json(classifierModels)
+      })
+      .catch(err => res.status(500).json({ error: ['db error', err] }))
+  }
+
   deleteClassifierModel = async (_req: Request, res: Response) => {
     const { selectedclassifierModels } = _req.body
     try {
@@ -233,6 +244,17 @@ export class classifierService {
   getTypicalMalfunctions = (_req: Request, res: Response) => {
     TypicalMalfunctionsRepos.findAll({
       where: { active: true },
+    })
+      .then(typicalMalfunctions => {
+        res.status(200).json(typicalMalfunctions)
+      })
+      .catch(err => res.status(500).json({ error: ['db error', err] }))
+  }
+
+  getTypicalMalfunctionsById = (_req: Request, res: Response) => {
+    const { id_equipment } = _req.body
+    TypicalMalfunctionsRepos.findAll({
+      where: { active: true, id_equipment },
     })
       .then(typicalMalfunctions => {
         res.status(200).json(typicalMalfunctions)

@@ -20,14 +20,22 @@ import bcrypt from 'bcryptjs'
 import { rolesStartData } from './role'
 import { rolesGroupStartData } from './rolesGroup'
 import { addressesStartData, regionsStartData } from './addresses'
-import { typ_malfunctionsStartData } from './classifier'
+import {
+  equipmentsStartData,
+  modelsStartData,
+  typ_malfunctionsStartData,
+} from './classifier'
 
 export const firstStart = async () => {
   try {
     const AllDelete = false
     if (AllDelete) {
-      await sequelize.drop()
+      console.log('Full Delete')
+      await sequelize.drop({ cascade: true })
+      return
     }
+
+    console.log('Check for tables')
     const divisions = await DivisionRepos.getAll()
     const department = await DivisionRepos.getAll()
     const users = await userRepos.getAll()
@@ -72,26 +80,31 @@ export const firstStart = async () => {
           'Первый запуск таблиц ClassifierEquipment, ClassifierModels и TypicalMalfunctions невозможен! Какая-то из таблиц уже существует!'
         )
       } else {
-        if (!typ_malfunctions.length) {
-          const newtyp_malfunctions = await TypicalMalfunctionsRepos.bulkCreate(
-            typ_malfunctionsStartData
-          )
-          console.log('newtyp_malfunctions = ', newtyp_malfunctions)
-          // const newModelsData = modelsStartData.map((value, index) => {
-          //   return {
-          //     ...value,
-          //     newtyp_malfunctions[index]
-          //   }
-          // })
-          // console.log('newModelsData = ', newModelsData)
-          // if (!models.length) {
-          //   await Promise.all(
-          //     newModelsData.map(
-          //       async value => await ClassifierModelsRepos.create(value)
-          //     )
-          //   )
-          // }
-        }
+        const newEquipments = await ClassifierEquipmentRepos.bulkCreate(
+          equipmentsStartData
+        )
+        const newModelsStartData = modelsStartData.map(value => {
+          return {
+            ...value,
+            id_equipment: newEquipments[0].id,
+          }
+        })
+        const newModels = await ClassifierModelsRepos.bulkCreate(
+          newModelsStartData
+        )
+        const newModelsIDs = newModels.map(value => value.id)
+        const new_typ_malfunctions_startData = typ_malfunctionsStartData.map(
+          value => {
+            return {
+              ...value,
+              id_equipment: newEquipments[0].id,
+              models: newModelsIDs,
+            }
+          }
+        )
+        await TypicalMalfunctionsRepos.bulkCreate(
+          new_typ_malfunctions_startData
+        )
       }
     }
 

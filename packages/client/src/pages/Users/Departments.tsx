@@ -6,6 +6,7 @@ import { ListUsers } from './ListUsers'
 import { RotateButton } from 'components/Buttons'
 import { DPR } from './interfaces'
 import { useStructure } from 'hooks/structure/useStructure'
+import { classifierChildComponent, flexColumn_FS_SA } from 'static/styles'
 
 export const Departments = ({
   departmentName,
@@ -30,28 +31,11 @@ export const Departments = ({
     }
   }, [activeDepartment])
 
-  console.log('users = ', users)
-
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        justifyContent: 'space-around',
-        width: '100%',
-      }}>
+    <Box sx={flexColumn_FS_SA}>
       <ListItemButton
         divider={open}
-        sx={{
-          fontWeight: 'bold',
-          fontSize: '1rem',
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'space-between',
-          justifyContent: 'space-between',
-        }}
+        sx={classifierChildComponent}
         onClick={handleClick}>
         <ListItemText
           primary={departmentName}

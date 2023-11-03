@@ -6,19 +6,15 @@ import { ChooseModal } from './Modals'
 import { Divisions } from './'
 import { menuData } from './data'
 import { useAuth } from 'hooks/auth/useAuth'
-import { Message } from 'components/Message/Message'
+import { Message } from 'components/Message'
+import { headerForPages, mainHeaderForPages } from 'static/styles'
 
 export function UsersPage() {
   const modalRef = React.createRef()
   const [{ admin }] = useAuth()
-
   const [{ divisions }, { getDivisions }] = useStructure()
   const [modal, setModal] = useState<boolean>(false)
   const [modalImage, setModalImage] = useState<string>('')
-
-  useEffect(() => {
-    getDivisions()
-  }, [])
 
   const checkClickMenu = (name: string | null) => {
     if (name) {
@@ -31,18 +27,12 @@ export function UsersPage() {
     setModal(bool)
   }
 
+  useEffect(() => {
+    getDivisions()
+  }, [])
+
   return (
-    <Container
-      component="main"
-      maxWidth="md"
-      sx={{
-        display: 'flex',
-        height: '100%',
-        width: '100%',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-      }}>
+    <Container component="main" maxWidth="md" sx={mainHeaderForPages}>
       <Message />
       <Modal
         open={modal}
@@ -55,18 +45,7 @@ export function UsersPage() {
           handleModal={handleModal}
         />
       </Modal>
-      <Box
-        component="div"
-        sx={{
-          width: '100%',
-          height: 60,
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          boxShadow: 5,
-          pl: 5,
-          pr: 2,
-        }}>
+      <Box component="div" sx={headerForPages}>
         <Typography sx={{ fontWeight: 'bold', fontSize: '2.375rem' }}>
           Пользователи
         </Typography>

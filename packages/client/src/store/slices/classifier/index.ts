@@ -21,19 +21,30 @@ import {
   changeClassifierEquipment,
   changeClassifierModel,
   changeTypicalMalfunction,
+  getClassifierModelsById,
+  getTypicalMalfunctionsById,
 } from 'api/classifier'
 
 const initialState: ClassifierState = {
   equipments: [],
   models: [],
   typicalMalfunctions: [],
+  activeEquipment: '',
+  activeModel: '',
   isLoadingRoles: false,
 }
 
 export const classifierSlise = createSlice({
   name: 'role',
   initialState,
-  reducers: {},
+  reducers: {
+    setActiveEquipment(state, action) {
+      state.activeEquipment = action.payload
+    },
+    setActiveModel(state, action) {
+      state.activeModel = action.payload
+    },
+  },
   extraReducers: {
     [getClassifierEquipments.fulfilled.type]: (
       state,
@@ -125,6 +136,24 @@ export const classifierSlise = createSlice({
       state.isLoadingRoles = false
       state.error = action.payload
     },
+    [getClassifierModelsById.fulfilled.type]: (
+      state,
+      action: PayloadAction<ClassifierModels[]>
+    ) => {
+      state.isLoadingRoles = false
+      state.error = ''
+      state.models = action.payload
+    },
+    [getClassifierModelsById.pending.type]: state => {
+      state.isLoadingRoles = true
+    },
+    [getClassifierModelsById.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingRoles = false
+      state.error = action.payload
+    },
     [newClassifierModel.fulfilled.type]: (
       state,
       action: PayloadAction<AnswerClassifierModels>
@@ -197,6 +226,25 @@ export const classifierSlise = createSlice({
       state.isLoadingRoles = false
       state.error = action.payload
     },
+    [getTypicalMalfunctionsById.fulfilled.type]: (
+      state,
+      action: PayloadAction<TypicalMalfunctions[]>
+    ) => {
+      state.isLoadingRoles = false
+      state.error = ''
+      state.typicalMalfunctions = action.payload
+    },
+    [getTypicalMalfunctionsById.pending.type]: state => {
+      state.isLoadingRoles = true
+    },
+    [getTypicalMalfunctionsById.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingRoles = false
+      state.error = action.payload
+    },
+
     [newTypicalMalfunction.fulfilled.type]: (
       state,
       action: PayloadAction<AnswerTypicalMalfunctions>
@@ -255,3 +303,4 @@ export const classifierSlise = createSlice({
 })
 
 export const classifierReducer = classifierSlise.reducer
+export const { setActiveEquipment, setActiveModel } = classifierSlise.actions

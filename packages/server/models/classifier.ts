@@ -4,7 +4,6 @@ import { DataType, Model } from 'sequelize-typescript'
 export interface ClassifierEquipment {
   id: string
   equipment: string
-  models: string[]
   active: boolean
 }
 
@@ -21,10 +20,6 @@ export const classifierEquipment: ModelAttributes<Model, ClassifierEquipment> =
       allowNull: false,
       unique: true,
     },
-    models: {
-      type: DataType.ARRAY(DataType.STRING),
-      allowNull: false,
-    },
     active: {
       type: DataType.BOOLEAN,
       allowNull: false,
@@ -34,7 +29,6 @@ export const classifierEquipment: ModelAttributes<Model, ClassifierEquipment> =
 export interface ClassifierModels {
   id: string
   model: string
-  typicalMalfunctions: string[]
   active: boolean
 }
 
@@ -50,10 +44,6 @@ export const classifierModels: ModelAttributes<Model, ClassifierModels> = {
     allowNull: false,
     unique: true,
   },
-  typicalMalfunctions: {
-    type: DataType.ARRAY(DataType.STRING),
-    allowNull: false,
-  },
   active: {
     type: DataType.BOOLEAN,
     allowNull: false,
@@ -63,6 +53,7 @@ export const classifierModels: ModelAttributes<Model, ClassifierModels> = {
 export interface TypicalMalfunctions {
   id: string
   typicalMalfunction: string
+  models: string[]
   active: boolean
 }
 
@@ -78,6 +69,10 @@ export const typicalMalfunctions: ModelAttributes<Model, TypicalMalfunctions> =
       type: DataType.STRING,
       allowNull: false,
       unique: true,
+    },
+    models: {
+      type: DataType.ARRAY(DataType.STRING),
+      allowNull: false,
     },
     active: {
       type: DataType.BOOLEAN,

@@ -1,20 +1,21 @@
 export interface ClassifierEquipment {
   id?: string
   equipment: string
-  models: object[]
   active?: boolean
 }
 
 export interface ClassifierModels {
   id?: string
   model: string
-  typicalMalfunctions: object[]
+  id_equipment: string
   active?: boolean
 }
 
 export interface TypicalMalfunctions {
   id?: string
-  typicalMalfunctions: string
+  typicalMalfunction: string
+  models: string[]
+  id_equipment: string
   active?: boolean
 }
 
@@ -37,6 +38,8 @@ export type ClassifierState = {
   equipments: ClassifierEquipment[]
   models: ClassifierModels[]
   typicalMalfunctions: TypicalMalfunctions[]
+  activeEquipment: string
+  activeModel: string
   isLoadingRoles: boolean
   error?: string
 }

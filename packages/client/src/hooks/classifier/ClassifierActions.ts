@@ -7,7 +7,9 @@ import {
 export interface ClassifierActions {
   getClassifierEquipments: () => void
   getClassifierModels: () => void
+  getClassifierModelsById: (id_equipment: string) => void
   getTypicalMalfunctions: () => void
+  getTypicalMalfunctionsById: (id_equipment: string) => void
   newClassifierEquipment: (data: ClassifierEquipment) => void
   newClassifierModel: (data: ClassifierModels) => void
   newTypicalMalfunction: (data: TypicalMalfunctions) => void
@@ -26,4 +28,6 @@ export interface ClassifierActions {
     changeTypicalMalfunction: TypicalMalfunctions,
     id: string
   ) => void
+  setActiveEquipment: (id: string) => void
+  setActiveModel: (id: string) => void
 }

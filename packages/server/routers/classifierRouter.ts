@@ -51,6 +51,11 @@ export const classifierRouter = (apiRouter: Router) => {
     roleMiddleware(['getClassifierModels', 'ADMIN', 'SUPERADMIN']),
     service.getClassifierModels
   )
+  router.post(
+    '/getClassifierModelsById',
+    roleMiddleware(['getClassifierModelsById', 'ADMIN', 'SUPERADMIN']),
+    service.getClassifierModelsById
+  )
   router.get(
     '/getAllClassifierModels',
     roleMiddleware(['getAllClassifierModels', 'ADMIN', 'SUPERADMIN']),
@@ -90,6 +95,11 @@ export const classifierRouter = (apiRouter: Router) => {
     '/getAllTypicalMalfunctions',
     roleMiddleware(['getAllTypicalMalfunctions', 'ADMIN', 'SUPERADMIN']),
     service.getAllTypicalMalfunctions
+  )
+  router.post(
+    '/getTypicalMalfunctionsById',
+    roleMiddleware(['getTypicalMalfunctionsById', 'ADMIN', 'SUPERADMIN']),
+    service.getTypicalMalfunctionsById
   )
   router.post(
     '/newTypicalMalfunction',

@@ -16,12 +16,14 @@ export const typ_malfunctionsStartData = [
 export const modelsStartData = [
   {
     model: 'DIGI SM-100',
-    typicalMalfunctions: [],
     active: true,
   },
   {
-    models: 'DIGI SM-5000',
-    typicalMalfunctions: [],
+    model: 'DIGI SM-5000',
+    active: true,
+  },
+  {
+    model: 'DIBAL M-525',
     active: true,
   },
 ]
@@ -29,6 +31,6 @@ export const modelsStartData = [
 export const equipmentsStartData = [
   {
     equipment: 'Весы',
-    models: [],
+    active: true,
   },
 ]

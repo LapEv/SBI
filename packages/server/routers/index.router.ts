@@ -6,7 +6,7 @@ import { departmentRouter } from './departmentRouter'
 import { userStatusRouter } from './userStatusRouter'
 import { addressRouter } from './addressRouter'
 import { clientRouter } from './clientRouter'
-import { classifierRouter } from './classifierEquipment'
+import { classifierRouter } from './classifierRouter'
 
 export const apiRouter: Router = Router()
 

@@ -1,33 +1,35 @@
 import { useStructure } from 'hooks/structure/useStructure'
 import { useEffect, useState } from 'react'
 import { Box, ListItemText, ListItemButton } from '@mui/material'
-import { Departments } from './'
 import { Division } from 'store/slices/structure/interfaces'
 import Collapse from '@mui/material/Collapse'
 import { RotateButton } from 'components/Buttons'
+import { ClassifierEquipment } from 'store/slices/classifier/interfaces'
 import { classifier, classifierComponent } from 'static/styles'
+import { useClassifier } from 'hooks/classifier/useClassifier'
+import { Models } from './Models'
 
-export const Divisions = ({ divisionName, id }: Division) => {
+export const Equipments = ({ equipment, id }: ClassifierEquipment) => {
   const [
-    { departaments, activeDivision },
-    { getDepartments, setActiveDivision },
-  ] = useStructure()
+    { models, activeEquipment },
+    { getClassifierModelsById, setActiveEquipment },
+  ] = useClassifier()
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    getDepartments()
+    getClassifierModelsById(id as string)
   }, [])
 
   const handleClick = () => {
     setOpen(!open)
-    setActiveDivision(id as string)
+    setActiveEquipment(id as string)
   }
 
   useEffect(() => {
-    if (activeDivision !== id) {
+    if (activeEquipment !== id) {
       setOpen(false)
     }
-  }, [activeDivision])
+  }, [activeEquipment])
 
   return (
     <Box sx={classifier}>
@@ -36,22 +38,20 @@ export const Divisions = ({ divisionName, id }: Division) => {
         sx={classifierComponent}
         onClick={handleClick}>
         <ListItemText
-          primary={divisionName}
+          primary={equipment}
           primaryTypographyProps={{ fontSize: '1.375rem!important' }}
         />
         <RotateButton open={open} handleClick={handleClick} size={'2rem'} />
       </ListItemButton>
       <Collapse sx={{ width: '100%' }} in={open} timeout="auto" unmountOnExit>
-        {departaments
-          .filter(value => value.id_division === id)
-          .map(value => (
-            <Departments
-              departmentName={value.departmentName as string}
-              id_department={value.id as string}
-              id_division={id as string}
-              key={value.id}
-            />
-          ))}
+        {models.map(({ model, id, id_equipment }) => (
+          <Models
+            model={model}
+            id_equipment={id_equipment}
+            id={id as string}
+            key={`${id_equipment}${id}`}
+          />
+        ))}
       </Collapse>
     </Box>
   )

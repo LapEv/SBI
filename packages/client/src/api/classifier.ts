@@ -129,6 +129,25 @@ export const getClassifierModels = createAsyncThunk(
   }
 )
 
+export const getClassifierModelsById = createAsyncThunk(
+  'classifier/getClassifierModelsById',
+  async (id_equipment: string, thunkAPI) => {
+    try {
+      const { data } = await authhost.post<ClassifierModels>(
+        ApiEndPoints.Classifier.getClassifierModelsById,
+        { id_equipment }
+      )
+      return data
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      return thunkAPI.rejectWithValue(
+        `Не удалось получить данные по списку моделей\n${getError(e)}`
+      )
+    }
+  }
+)
+
 export const newClassifierModel = createAsyncThunk(
   'classifier/newClassifierModel',
   async (model: ClassifierModels, thunkAPI) => {
@@ -213,6 +232,27 @@ export const getTypicalMalfunctions = createAsyncThunk(
     try {
       const { data } = await authhost.get<ClassifierEquipment>(
         ApiEndPoints.Classifier.getTypicalMalfunctions
+      )
+      return data
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      return thunkAPI.rejectWithValue(
+        `Не удалось получить данные по списку типовых неисправностей\n${getError(
+          e
+        )}`
+      )
+    }
+  }
+)
+
+export const getTypicalMalfunctionsById = createAsyncThunk(
+  'classifier/getTypicalMalfunctionsById',
+  async (id_equipment: string, thunkAPI) => {
+    try {
+      const { data } = await authhost.post<TypicalMalfunctions>(
+        ApiEndPoints.Classifier.getTypicalMalfunctionsById,
+        { id_equipment }
       )
       return data
       /* eslint-disable @typescript-eslint/no-explicit-any */

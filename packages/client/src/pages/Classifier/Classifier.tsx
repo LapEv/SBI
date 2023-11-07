@@ -10,7 +10,7 @@ import { headerForPages, mainHeaderForPages } from 'static/styles'
 
 export function ClassifierPage() {
   const modalClientRef = React.createRef()
-  const [{ admin }] = useAuth()
+  const [{ admin, user }] = useAuth()
   const [{ equipments }, { getClassifierEquipments }] = useClassifier()
   const [modal, setModal] = useState<boolean>(false)
   const [modalImage, setModalImage] = useState<string>('')
@@ -27,9 +27,14 @@ export function ClassifierPage() {
   }
 
   useEffect(() => {
+    console.log('user = ', user)
+    console.log(
+      'если идет изменение прав в группе, надо эту группу менять везде'
+    )
     getClassifierEquipments()
   }, [])
 
+  console.log('user = ', user)
   return (
     <Container component="main" maxWidth="md" sx={mainHeaderForPages}>
       <Message />

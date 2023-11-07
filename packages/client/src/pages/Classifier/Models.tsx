@@ -22,6 +22,9 @@ export const Models = memo(({ model, id_equipment, id }: ClassifierModels) => {
       setActiveModel(id as string)
     }
     setOpen(!open)
+  }
+
+  useEffect(() => {
     setData(
       typicalMalfunctions.map(item => {
         return {
@@ -31,7 +34,7 @@ export const Models = memo(({ model, id_equipment, id }: ClassifierModels) => {
         }
       })
     )
-  }
+  }, [typicalMalfunctions])
 
   const onChooseItems = (checked: boolean, id: string) => {
     // if (!checked) {

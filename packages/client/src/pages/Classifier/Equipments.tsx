@@ -1,7 +1,5 @@
-import { useStructure } from 'hooks/structure/useStructure'
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { Box, ListItemText, ListItemButton } from '@mui/material'
-import { Division } from 'store/slices/structure/interfaces'
 import Collapse from '@mui/material/Collapse'
 import { RotateButton } from 'components/Buttons'
 import { ClassifierEquipment } from 'store/slices/classifier/interfaces'
@@ -9,7 +7,7 @@ import { classifier, classifierComponent } from 'static/styles'
 import { useClassifier } from 'hooks/classifier/useClassifier'
 import { Models } from './Models'
 
-export const Equipments = ({ equipment, id }: ClassifierEquipment) => {
+export const Equipments = memo(({ equipment, id }: ClassifierEquipment) => {
   const [
     { models, activeEquipment },
     { getClassifierModelsById, setActiveEquipment },
@@ -17,6 +15,7 @@ export const Equipments = ({ equipment, id }: ClassifierEquipment) => {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
+    console.log('getClassifierModelsById')
     getClassifierModelsById(id as string)
   }, [])
 
@@ -55,4 +54,4 @@ export const Equipments = ({ equipment, id }: ClassifierEquipment) => {
       </Collapse>
     </Box>
   )
-}
+})

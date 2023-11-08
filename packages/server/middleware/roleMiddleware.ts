@@ -20,13 +20,8 @@ module.exports = function (roles: []) {
       const groupRoles = await roleGroupRepos.findAll({
         where: { group: rolesGroup },
       })
-      console.log('groupRoles = ', groupRoles[0].roles)
-      console.log('rolesGroup = ', rolesGroup)
-      console.log('roles = ', roles)
       groupRoles[0].roles.forEach((item: string) => {
-        console.log('item = ', item)
         if (roles.includes(item as never)) {
-          console.log('hasRole')
           hasRole = true
         }
       })

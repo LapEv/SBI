@@ -13,3 +13,9 @@ export interface AddValuesProps {
     type: string
   }[]
 }
+
+export interface ModalProps {
+  handleModal: (state: boolean) => void
+  title?: string
+  answerFromModal: (answer: boolean, reason: string) => void
+}

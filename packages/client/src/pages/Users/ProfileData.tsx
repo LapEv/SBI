@@ -1,5 +1,5 @@
-import { ChangeEvent } from 'react'
-import { Box, Collapse, ListItemButton } from '@mui/material'
+import React, { ChangeEvent } from 'react'
+import { Box, Collapse, ListItemButton, Modal, Typography } from '@mui/material'
 import { TextField } from 'components/TextFields/'
 import { User } from 'storeAuth/interfaces'
 import {
@@ -24,17 +24,19 @@ import {
   ICheckBoxGroupData,
 } from 'components/CheckBoxGroup/interface'
 import { deepEqual } from 'utils/deepEqual'
+import { DeleteUserModal } from './Modals/DeleteUserModal'
 
 export const ProfileData = (user: User) => {
+  const modalRef = React.createRef()
   const theme = useTheme()
   const [{ admin, userData }, { updateUserData, deleteUser, updateUser }] =
     useAuth()
   const [{ rolesGroup }, { getRolesGroup }] = useRoles()
   const [open, setOpen] = useState(false)
   const [dataGroup, setDataGroup] = useState<DataList[]>([])
-  const [selectedGroup, setGroup] = useState<string>(user.rolesGroup as string)
   const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
   const [changeActive, setChangeActive] = useState<boolean>(false)
+  const [modal, setModal] = useState<boolean>(false)
 
   const fieldsData = admin
     ? MapProfileInputFieldsAdminWithoutPassword
@@ -59,23 +61,28 @@ export const ProfileData = (user: User) => {
     updateUser(userData)
   }
 
-  const setRolesGroup = (group: string) => {
-    if (!group) return
-    const groupData = rolesGroup.find(item => item.id === group)!
-    setGroup(group)
-    updateUserData({
-      ...userData!,
-      ...{ roleGroup: groupData.group },
-    })
-    if (group && errSelectedItems) setErrSelectedItems(false)
-  }
-
-  const setRoles = (checked: boolean, id: string) => {
+  const setNewRolesGroup = (checked: boolean, id: string) => {
     if (!checked) {
       setErrSelectedItems(true)
+      setChangeActive(true)
       return
     }
-    setErrSelectedItems(true)
+    const data = rolesGroup.map(item => {
+      return {
+        name: item.groupName,
+        id: item.id,
+        initChecked: item.id === id ?? false,
+      }
+    })
+    setDataGroup(data)
+    setErrSelectedItems(false)
+    setChangeActive(false)
+
+    const groupData = rolesGroup.find(item => item.id === id)!
+    updateUserData({
+      ...userData!,
+      ...{ rolesGroup: groupData.group },
+    })
   }
 
   const handleClick = () => {
@@ -83,8 +90,10 @@ export const ProfileData = (user: User) => {
     getRolesGroup()
   }
 
-  const deleteUserFunc = () => {
-    deleteUser([userData.id as string])
+  const deleteUserFunc = (answer: boolean, reasonOfDelete: string) => {
+    setModal(false)
+    if (!answer) return
+    deleteUser(userData.id as string, reasonOfDelete)
   }
 
   useEffect(() => {
@@ -96,29 +105,11 @@ export const ProfileData = (user: User) => {
       return {
         name: item.groupName,
         id: item.id,
-        initChecked: userData.rolesGroup?.includes(item.id),
+        initChecked: userData.rolesGroup === item.group ?? false,
       }
-      // return {
-      //   id: item.id,
-      //   group: item.group,
-      //   groupName: item.groupName,
-      //   items: item.roles.map((value, index) => {
-      //     return {
-      //       name: value,
-      //       nameId: `${value}${index}`,
-      //       id: `${index}`,
-      //     }
-      //   }),
-      // }
     })
     setDataGroup(data)
-    setRolesGroup(
-      rolesGroup.find(item => item.group === userData.rolesGroup)?.id as string
-    )
   }, [rolesGroup])
-
-  console.log('dataGroup = ', dataGroup)
-  console.log('rolesGroup = ', rolesGroup)
 
   return (
     <Box
@@ -159,6 +150,19 @@ export const ProfileData = (user: User) => {
       })}
       {admin && (
         <Box>
+          <Modal
+            open={modal}
+            onClose={() => setModal(false)}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description">
+            <DeleteUserModal
+              answerFromModal={deleteUserFunc}
+              handleModal={setModal}
+              ref={modalRef}
+              title="Вы действительно хотите удалить пользователя?"
+            />
+          </Modal>
+
           <ListItemButton
             sx={{ fontSize: 12, color: theme.palette.text.secondary }}
             onClick={handleClick}>
@@ -171,34 +175,26 @@ export const ProfileData = (user: User) => {
             timeout="auto"
             unmountOnExit>
             {open &&
-              dataGroup.map((item, index) => (
-                // <CheckBoxGroup
-                //   data={item}
-                //   key={`${item}${index}`}
-                //   onChooseGroup={setRolesGroup}
-                //   onChooseItems={setRoles}
-                //   oneGroup={true}
-                //   selectedGroup={selectedGroup}
-                // />
+              dataGroup.map(item => (
                 <Item
                   name={item.name}
                   id={`${item.id}`}
                   groupChecked={null}
-                  onChooseItems={setRoles}
+                  onChooseItems={setNewRolesGroup}
                   initChecked={item.initChecked}
                   key={`${item.id}`}
                 />
               ))}
           </Collapse>
-          <Box sx={{ color: theme.palette.error.main, height: 20 }}>
-            {errSelectedItems &&
-              'Здесь роли изменить нельзя! Создайте новую группу ролей с необходимыми ролями!'}
+          <Box sx={{ color: theme.palette.error.main, height: 20, ml: 5 }}>
+            {errSelectedItems && 'Пользователь не может быть без роли!'}
           </Box>
           <ButtonsSection
-            btnSecondHandle={deleteUserFunc}
+            btnSecondHandle={() => setModal(true)}
             btnName="Сохранить"
             btnDisabled={changeActive}
             btnSecondName="Удалить"
+            btnSecondDisabled={false}
           />
         </Box>
       )}

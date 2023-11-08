@@ -127,32 +127,32 @@ export const firstStart = async () => {
     } else {
       const roles = await roleRepos.getAll()
       if (!roles.length) {
-        const newRoles = await roleRepos.bulkCreate(rolesStartData)
-        const newrolesObj = newRoles.map(({ id, nameRole, role }) => {
-          return { id, nameRole, role }
-        })
-        rolesGroupStartData.map(value => {
-          if (value.group === 'SUPERADMIN') {
-            value.roles = newrolesObj.filter(
-              item => item.role === 'SUPERADMIN'
-            ) as never[]
-          }
-          if (value.group === 'ADMIN') {
-            value.roles = newrolesObj.filter(
-              item => item.role === 'ADMIN'
-            ) as never[]
-          }
-          // if (value.group !== 'SUPERADMIN' && value.group !== 'ADMIN') {
-          //   value.roles = newrolesObj.filter(
-          //     item => item.role !== 'SUPERADMIN' && item.role !== 'ADMIN'
-          //   ) as never[]
-          // }
-        })
+        await roleRepos.bulkCreate(rolesStartData)
+        // const newRoles = await roleRepos.bulkCreate(rolesStartData)
+        // const newrolesObj = newRoles.map(({ id, nameRole, role }) => {
+        //   return { id, nameRole, role }
+        // })
+        // rolesGroupStartData.map(value => {
+        //   if (value.group === 'SUPERADMIN') {
+        //     value.roles = newrolesObj.filter(
+        //       item => item.role === 'SUPERADMIN'
+        //     ) as never[]
+        //   }
+        //   if (value.group === 'ADMIN') {
+        //     value.roles = newrolesObj.filter(
+        //       item => item.role === 'ADMIN'
+        //     ) as never[]
+        //   }
+        //   // if (value.group !== 'SUPERADMIN' && value.group !== 'ADMIN') {
+        //   //   value.roles = newrolesObj.filter(
+        //   //     item => item.role !== 'SUPERADMIN' && item.role !== 'ADMIN'
+        //   //   ) as never[]
+        //   // }
+        // })
         await roleGroupRepos.bulkCreate(rolesGroupStartData)
       }
 
       const newDivision = await DivisionRepos.bulkCreate(divisionStartData)
-      console.log('newDivision = ', newDivision)
       departmentStartData.map(async value => {
         value.id_division = newDivision.find(
           item => item.division === value.division

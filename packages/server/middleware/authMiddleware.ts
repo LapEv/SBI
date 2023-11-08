@@ -5,7 +5,7 @@ const { SECRET_KEY } = process.env
 
 interface jwtAnswer {
   id?: string
-  roles?: string[]
+  rolesGroup?: string[]
   username?: string
 }
 export const authMiddleware = async (
@@ -22,8 +22,8 @@ export const authMiddleware = async (
       return res.status(401).json({ message: auth.notification.notLogged })
     }
     const verify = jwt.verify(token, SECRET_KEY as Secret)
-    const { id, roles, username } = verify as jwtAnswer
-    req.body = { ...req.body, id, roles, username }
+    const { id, rolesGroup, username } = verify as jwtAnswer
+    req.body = { ...req.body, id, rolesGroup, username }
     next()
   } catch (e) {
     res.status(401).json({ message: auth.notification.notLogged })

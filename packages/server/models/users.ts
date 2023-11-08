@@ -10,8 +10,7 @@ export interface User {
   middleName: string
   email: string
   phone?: string
-  roleGroup: string
-  roles: string
+  rolesGroup: string
   post?: string
   avatar?: string
   active: boolean
@@ -58,12 +57,8 @@ export const users: ModelAttributes<Model, User> = {
     type: DataType.STRING,
     allowNull: false,
   },
-  roleGroup: {
+  rolesGroup: {
     type: DataType.STRING,
-    allowNull: false,
-  },
-  roles: {
-    type: DataType.ARRAY(DataType.STRING),
     allowNull: false,
   },
   password: {

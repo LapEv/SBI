@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from 'express'
 import jwt, { Secret, JwtPayload } from 'jsonwebtoken'
+import { roleGroupRepos } from '../db'
 const { SECRET_KEY } = process.env
 
 module.exports = function (roles: []) {
-  return function (_req: Request, res: Response, next: NextFunction) {
+  return async function (_req: Request, res: Response, next: NextFunction) {
     if (_req.method === 'OPTIONS') {
       next()
     }
@@ -13,11 +14,19 @@ module.exports = function (roles: []) {
         return res.status(403).json({ message: 'The user is not logged in' })
       }
       const verifycode = jwt.verify(token, SECRET_KEY as Secret)
-      const userRoles = verifycode as JwtPayload
+      const { rolesGroup } = verifycode as JwtPayload
       let hasRole = false
 
-      userRoles.roles.forEach((role: string) => {
-        if (roles.includes(role as never)) {
+      const groupRoles = await roleGroupRepos.findAll({
+        where: { group: rolesGroup },
+      })
+      console.log('groupRoles = ', groupRoles[0].roles)
+      console.log('rolesGroup = ', rolesGroup)
+      console.log('roles = ', roles)
+      groupRoles[0].roles.forEach((item: string) => {
+        console.log('item = ', item)
+        if (roles.includes(item as never)) {
+          console.log('hasRole')
           hasRole = true
         }
       })

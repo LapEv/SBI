@@ -4,7 +4,7 @@ import { DataType, Model } from 'sequelize-typescript'
 export interface RolesGroup {
   id: string
   group: string
-  roles: object[]
+  roles: string[]
   groupName: string
 }
 
@@ -21,7 +21,7 @@ export const rolesGroup: ModelAttributes<Model, RolesGroup> = {
     unique: true,
   },
   roles: {
-    type: DataType.ARRAY(DataType.JSONB),
+    type: DataType.ARRAY(DataType.STRING),
     allowNull: false,
   },
   groupName: {

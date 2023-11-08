@@ -57,7 +57,7 @@ export class userService {
         }
         const token = generateAccessToken(
           user[0].id,
-          user[0].roles,
+          user[0].rolesGroup,
           user[0].username
         )
         const userData = user[0]

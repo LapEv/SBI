@@ -14,8 +14,7 @@ export interface User {
   department?: string
   id_division?: string
   id_department?: string
-  roles?: string[]
-  roleGroup?: string
+  rolesGroup?: string
 }
 
 export interface Users {
@@ -35,8 +34,7 @@ export interface Users {
     department?: string
     id_division?: string
     id_department?: string
-    roles?: string[]
-    roleGroup?: string[]
+    rolesGroup?: string[]
   }[]
 }
 

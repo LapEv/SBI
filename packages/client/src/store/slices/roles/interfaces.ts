@@ -8,16 +8,16 @@ export interface Roles {
 
 export interface RolesGroup {
   group: string
-  roles: RolesGroupObject[]
+  roles: string[]
   id: string
   groupName: string
 }
 
-export interface RolesGroupObject {
-  nameRole: string
-  id: string
-  role: string
-}
+// export interface RolesGroupObject {
+//   nameRole: string
+//   id: string
+//   role: string
+// }
 
 export interface СhangeRolesGroup {
   roles: Roles[]

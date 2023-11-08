@@ -84,11 +84,11 @@ export const deleteRoles = createAsyncThunk(
 
 export const newRolesGroup = createAsyncThunk(
   'role/newRolesGroup',
-  async (roleGroup: RolesGroup, thunkAPI) => {
+  async (rolesGroup: RolesGroup, thunkAPI) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Roles.newRolesGroup,
-        roleGroup
+        rolesGroup
       )
       return {
         data,

@@ -78,7 +78,7 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
         phone: list[6].value,
         password: list[7].value,
         post: list[4].value,
-        roleGroup: group,
+        rolesGroup: group,
         roles: selectedItems,
         division: division.label,
         chiefDivision,

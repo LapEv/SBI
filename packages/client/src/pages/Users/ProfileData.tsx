@@ -15,21 +15,24 @@ import {
 import { useAuth } from 'hooks/auth/useAuth'
 import { useTheme } from '@mui/material/styles'
 import { ProfileValues } from './interfaces'
-import { CheckBoxGroup } from 'components/CheckBoxGroup'
+import { CheckBoxGroup, Item } from 'components/CheckBoxGroup'
 import { useEffect, useState } from 'react'
 import { useRoles } from 'hooks/roles/useRoles'
 import { ButtonsSection, RotateButton } from 'components/Buttons'
-import { ICheckBoxGroupData } from 'components/CheckBoxGroup/interface'
+import {
+  DataList,
+  ICheckBoxGroupData,
+} from 'components/CheckBoxGroup/interface'
 import { deepEqual } from 'utils/deepEqual'
 
 export const ProfileData = (user: User) => {
   const theme = useTheme()
-  const [{ admin, userData }, { updateUserData, deleteUsers, updateUser }] =
+  const [{ admin, userData }, { updateUserData, deleteUser, updateUser }] =
     useAuth()
-  const [{ rolesGroup }, { getRoles, getRolesGroup }] = useRoles()
+  const [{ rolesGroup }, { getRolesGroup }] = useRoles()
   const [open, setOpen] = useState(false)
-  const [dataGroup, setDataGroup] = useState<ICheckBoxGroupData[]>([])
-  const [selectedGroup, setGroup] = useState<string>(user.roleGroup as string)
+  const [dataGroup, setDataGroup] = useState<DataList[]>([])
+  const [selectedGroup, setGroup] = useState<string>(user.rolesGroup as string)
   const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
   const [changeActive, setChangeActive] = useState<boolean>(false)
 
@@ -46,7 +49,7 @@ export const ProfileData = (user: User) => {
       })),
     },
   })
-  const { errors, isValid } = useFormState({ control })
+  const { errors } = useFormState({ control })
   const { fields } = useFieldArray({
     control,
     name: 'list',
@@ -59,11 +62,10 @@ export const ProfileData = (user: User) => {
   const setRolesGroup = (group: string) => {
     if (!group) return
     const groupData = rolesGroup.find(item => item.id === group)!
-    const listRoles = groupData.roles.map(item => item.role)
     setGroup(group)
     updateUserData({
       ...userData!,
-      ...{ roleGroup: groupData.group, roles: listRoles },
+      ...{ roleGroup: groupData.group },
     })
     if (group && errSelectedItems) setErrSelectedItems(false)
   }
@@ -79,11 +81,10 @@ export const ProfileData = (user: User) => {
   const handleClick = () => {
     setOpen(!open)
     getRolesGroup()
-    getRoles()
   }
 
-  const deleteUser = () => {
-    deleteUsers([userData.id as string])
+  const deleteUserFunc = () => {
+    deleteUser([userData.id as string])
   }
 
   useEffect(() => {
@@ -93,23 +94,31 @@ export const ProfileData = (user: User) => {
   useEffect(() => {
     const data = rolesGroup.map(item => {
       return {
+        name: item.groupName,
         id: item.id,
-        group: item.group,
-        groupName: item.groupName,
-        items: item.roles.map(value => {
-          return {
-            name: value.nameRole,
-            nameId: value.role,
-            id: value.id,
-          }
-        }),
+        initChecked: userData.rolesGroup?.includes(item.id),
       }
+      // return {
+      //   id: item.id,
+      //   group: item.group,
+      //   groupName: item.groupName,
+      //   items: item.roles.map((value, index) => {
+      //     return {
+      //       name: value,
+      //       nameId: `${value}${index}`,
+      //       id: `${index}`,
+      //     }
+      //   }),
+      // }
     })
     setDataGroup(data)
     setRolesGroup(
-      rolesGroup.find(item => item.group === userData.roleGroup)?.id as string
+      rolesGroup.find(item => item.group === userData.rolesGroup)?.id as string
     )
   }, [rolesGroup])
+
+  console.log('dataGroup = ', dataGroup)
+  console.log('rolesGroup = ', rolesGroup)
 
   return (
     <Box
@@ -163,13 +172,21 @@ export const ProfileData = (user: User) => {
             unmountOnExit>
             {open &&
               dataGroup.map((item, index) => (
-                <CheckBoxGroup
-                  data={item}
-                  key={`${item}${index}`}
-                  onChooseGroup={setRolesGroup}
+                // <CheckBoxGroup
+                //   data={item}
+                //   key={`${item}${index}`}
+                //   onChooseGroup={setRolesGroup}
+                //   onChooseItems={setRoles}
+                //   oneGroup={true}
+                //   selectedGroup={selectedGroup}
+                // />
+                <Item
+                  name={item.name}
+                  id={`${item.id}`}
+                  groupChecked={null}
                   onChooseItems={setRoles}
-                  oneGroup={true}
-                  selectedGroup={selectedGroup}
+                  initChecked={item.initChecked}
+                  key={`${item.id}`}
                 />
               ))}
           </Collapse>
@@ -178,7 +195,7 @@ export const ProfileData = (user: User) => {
               'Здесь роли изменить нельзя! Создайте новую группу ролей с необходимыми ролями!'}
           </Box>
           <ButtonsSection
-            btnSecondHandle={deleteUser}
+            btnSecondHandle={deleteUserFunc}
             btnName="Сохранить"
             btnDisabled={changeActive}
             btnSecondName="Удалить"

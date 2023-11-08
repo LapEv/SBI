@@ -36,10 +36,10 @@ export const authSlise = createSlice({
       state.user = action.payload
       state.userData = action.payload
       state.admin =
-        (state.user.roles?.includes('ADMIN') ||
-          state.user.roles?.includes('SUPERADMIN')) ??
+        (state.user.rolesGroup?.includes('ADMIN') ||
+          state.user.rolesGroup?.includes('SUPERADMIN')) ??
         false
-      state.superAdmin = state.user.roles?.includes('SUPERADMIN') ?? false
+      state.superAdmin = state.user.rolesGroup?.includes('SUPERADMIN') ?? false
     },
     [signin.pending.type]: state => {
       state.isLoadingAuth = true
@@ -108,10 +108,10 @@ export const authSlise = createSlice({
       state.userData = action.payload
       localStorage.setItem('theme', action.payload.theme ?? 'light')
       state.admin =
-        (state.user.roles?.includes('ADMIN') ||
-          state.user.roles?.includes('SUPERADMIN')) ??
+        (state.user.rolesGroup?.includes('ADMIN') ||
+          state.user.rolesGroup?.includes('SUPERADMIN')) ??
         false
-      state.superAdmin = state.user.roles?.includes('SUPERADMIN') ?? false
+      state.superAdmin = state.user.rolesGroup?.includes('SUPERADMIN') ?? false
     },
     [CheckUser.pending.type]: state => {
       state.isLoadingAuth = true

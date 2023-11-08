@@ -2,10 +2,10 @@ import jwt from 'jsonwebtoken'
 
 export const generateAccessToken = (
   id: string,
-  roles: string,
+  rolesGroup: string,
   username: string
 ): string => {
-  const payload = { id, roles, username }
+  const payload = { id, rolesGroup, username }
   return jwt.sign(payload, process.env.SECRET_KEY as string, {
     expiresIn: '24h',
   })

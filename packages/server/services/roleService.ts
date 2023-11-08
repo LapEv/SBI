@@ -19,7 +19,7 @@ export class roleService {
   getRolesGroup = (_req: Request, res: Response) => {
     roleGroupRepos
       .findAll({})
-      .then(roleGroup => res.status(200).json(roleGroup))
+      .then(rolesGroup => res.status(200).json(rolesGroup))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
 
@@ -82,6 +82,7 @@ export class roleService {
   }
 
   getRoles = (_req: Request, res: Response) => {
+    console.log('_req = ', _req)
     roleRepos
       .findAll({})
       .then(roles => res.status(200).json(roles))

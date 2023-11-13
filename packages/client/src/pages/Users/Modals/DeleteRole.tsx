@@ -3,7 +3,7 @@ import { ChooseModalProps } from './interfaces'
 import { useState, useEffect, SyntheticEvent } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
 import { useRoles } from 'hooks/roles/useRoles'
-import { modalStyle } from 'static/styles'
+import { boxDataModal, modalStyle } from 'static/styles'
 import { Item } from 'components/CheckBoxGroup'
 import { ButtonsModalSection } from 'components/Buttons'
 
@@ -46,12 +46,7 @@ export const DeleteRole = React.forwardRef<unknown, ChooseModalProps>(
         component="form"
         onSubmit={changeData}>
         <Typography variant={'h6'}>{title}</Typography>
-        <Box
-          sx={{
-            mt: 2,
-            width: '100%',
-            pl: 3,
-          }}>
+        <Box sx={boxDataModal}>
           {roles.map(({ nameRole, id }) => (
             <Item
               name={nameRole}

@@ -2,7 +2,7 @@ import React from 'react'
 import { ChooseModalProps } from './interfaces'
 import { useState, useEffect, SyntheticEvent } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
-import { modalStyle } from 'static/styles'
+import { modalStyle, boxDataModal } from 'static/styles'
 import { Item } from 'components/CheckBoxGroup'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useStructure } from 'hooks/structure/useStructure'
@@ -81,11 +81,7 @@ export const DeleteDivision = React.forwardRef<unknown, ChooseModalProps>(
         />
         <Box
           ref={boxRef}
-          sx={{
-            mt: 2,
-            width: '100%',
-            pl: 3,
-          }}>
+          sx={{ ...boxDataModal, height: filterText ? height : 'auto' }}>
           {filteredDivisions.map(({ divisionName, id }) => (
             <Item
               name={divisionName}

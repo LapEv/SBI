@@ -13,14 +13,14 @@ export interface RolesGroup {
   groupName: string
 }
 
-// export interface RolesGroupObject {
-//   nameRole: string
-//   id: string
-//   role: string
-// }
+export interface RolesGroupObject {
+  nameRole: string
+  id: string
+  role: string
+}
 
 export interface СhangeRolesGroup {
-  roles: Roles[]
+  roles: string[]
   activeRolesGroup: string
 }
 

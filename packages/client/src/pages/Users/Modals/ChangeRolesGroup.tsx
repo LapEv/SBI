@@ -3,12 +3,11 @@ import { ChooseModalProps } from './interfaces'
 import { useState, useEffect } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
 import { useRoles } from 'hooks/roles/useRoles'
-import { modalStyle } from 'static/styles'
+import { modalStyle, boxDataModal } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { DataList } from 'components/CheckBoxGroup/interface'
 import { Item } from 'components/CheckBoxGroup'
 import { DropDown, emptyValue } from 'components/DropDown'
-import { RolesGroupObject } from 'storeRoles/interfaces'
 import { Options } from 'components/DropDown/interface'
 
 export const ChangeRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
@@ -32,24 +31,25 @@ export const ChangeRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
         setErrSelectedItems(true)
         return
       }
-      const rolesUpdate = roles.filter(item => selectedRoles.includes(item.id))
-      changeRolesGroup(rolesUpdate, selectedGroup.id)
+      changeRolesGroup(selectedRoles, selectedGroup.id)
       handleModal(false)
     }
 
     const onChooseItems = (checked: boolean, id: string) => {
       if (!checked) {
-        setSelectedRoles(selectedRoles.filter(value => value !== id))
+        const delRole = roles.find(item => item.id === id)?.role as string
+        setSelectedRoles(selectedRoles.filter(value => value !== delRole))
         return
       }
-      setSelectedRoles([...selectedRoles, id])
-      if ([...selectedRoles, id] && errSelectedItems) setErrSelectedItems(false)
+      const newRole = roles.find(item => item.id === id)?.role as string
+      setSelectedRoles([...selectedRoles, newRole])
+      if ([...selectedRoles, newRole] && errSelectedItems)
+        setErrSelectedItems(false)
     }
 
     const changeGroup = (data: Options) => {
       if (!data) return
-      const useRoles = rolesGroup.find(item => item.id === data.id)
-        ?.roles as RolesGroupObject[]
+      const useRoles = rolesGroup.find(item => item.id === data.id)?.roles
       setData(
         roles.map(item => {
           return {
@@ -57,14 +57,14 @@ export const ChangeRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
             id: item.id,
             nameId: item.role,
             initChecked:
-              useRoles.findIndex(value => value.id === item.id) >= 0
+              useRoles!.findIndex(value => value === item.role) >= 0
                 ? true
                 : false,
           }
         })
       )
       setSelectedGroup(data)
-      setSelectedRoles(useRoles.map(item => item.id))
+      setSelectedRoles(useRoles!)
     }
 
     useEffect(() => {
@@ -100,12 +100,7 @@ export const ChangeRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
           label="Выберите группу ролей"
           errorLabel="Не выбрана группа ролей!"
         />
-        <Box
-          sx={{
-            mt: 2,
-            width: '100%',
-            pl: 3,
-          }}>
+        <Box sx={boxDataModal}>
           {data.map(({ name, id, initChecked }) => (
             <Item
               name={name}

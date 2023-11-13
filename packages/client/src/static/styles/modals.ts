@@ -8,7 +8,7 @@ export const modalStyle = {
   top: '50%',
   left: '50%',
   height: 'auto',
-  maxHeight: '98%',
+  maxHeight: '95%',
   transform: 'translate(-50%, -50%)',
   bgcolor: 'background.default',
   borderWidth: 2,
@@ -19,4 +19,13 @@ export const modalStyle = {
   p: 4,
   overflowY: 'auto',
   overflowX: 'hidden',
+}
+
+export const boxDataModal = {
+  mt: 2,
+  width: '100%',
+  maxHeight: '65vH',
+  overflowX: 'hidden',
+  overflowY: 'auto',
+  pl: 3,
 }

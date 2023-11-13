@@ -8,7 +8,7 @@ import { useStructure } from 'hooks/structure/useStructure'
 import { Department } from 'store/slices/structure/interfaces'
 import { TextField } from 'components/TextFields'
 import { useFilteredData } from 'hooks/useFilteredData'
-import { modalStyle } from 'static/styles'
+import { modalStyle, boxDataModal } from 'static/styles'
 import { SearchIconElement } from 'components/SearchIconElement'
 
 export const DeleteDepartment = React.forwardRef<unknown, ChooseModalProps>(
@@ -88,12 +88,7 @@ export const DeleteDepartment = React.forwardRef<unknown, ChooseModalProps>(
         />
         <Box
           ref={boxRef}
-          sx={{
-            mt: 2,
-            width: '100%',
-            pl: 3,
-            height: filterText ? height : 'auto',
-          }}>
+          sx={{ ...boxDataModal, height: filterText ? height : 'auto' }}>
           {filteredDepartments.map(({ departmentName, id, id_division }) => (
             <Item
               name={departmentName}

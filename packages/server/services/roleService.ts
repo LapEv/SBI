@@ -82,7 +82,6 @@ export class roleService {
   }
 
   getRoles = (_req: Request, res: Response) => {
-    console.log('_req = ', _req)
     roleRepos
       .findAll({})
       .then(roles => res.status(200).json(roles))

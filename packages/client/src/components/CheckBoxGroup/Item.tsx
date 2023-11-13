@@ -11,6 +11,7 @@ export const Item = memo(
     comment,
     initChecked,
     oneChecked,
+    props,
   }: IItem) => {
     const [checked, setChecked] = useState<boolean>(initChecked! ?? false) // eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
     const theme = useTheme()
@@ -41,7 +42,7 @@ export const Item = memo(
           label={name}
           id={id}
           name={`${name}`}
-          sx={{ width: '100%' }}
+          sx={{ ...props, width: '100%' }}
           control={
             <Checkbox checked={checked || false} onChange={handleChange} />
           }

@@ -139,6 +139,7 @@ export const ThemeConfig = (mode: PaletteMode) =>
             scrollbarColor: '#6b6b6b #2b2b2b',
             '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
               backgroundColor: '#2b2b2b',
+              borderRadius: 8,
             },
             '&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb': {
               borderRadius: 8,

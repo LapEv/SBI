@@ -162,7 +162,6 @@ export const ProfileData = (user: User) => {
               title="Вы действительно хотите удалить пользователя?"
             />
           </Modal>
-
           <ListItemButton
             sx={{ fontSize: 12, color: theme.palette.text.secondary }}
             onClick={handleClick}>
@@ -175,14 +174,14 @@ export const ProfileData = (user: User) => {
             timeout="auto"
             unmountOnExit>
             {open &&
-              dataGroup.map(item => (
+              dataGroup.map(({ name, id, initChecked }) => (
                 <Item
-                  name={item.name}
-                  id={`${item.id}`}
+                  name={name}
+                  id={`${id}`}
                   groupChecked={null}
                   onChooseItems={setNewRolesGroup}
-                  initChecked={item.initChecked}
-                  key={`${item.id}`}
+                  initChecked={initChecked}
+                  key={`${id}`}
                 />
               ))}
           </Collapse>

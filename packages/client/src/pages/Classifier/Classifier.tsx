@@ -34,7 +34,6 @@ export function ClassifierPage() {
     getClassifierEquipments()
   }, [])
 
-  console.log('user = ', user)
   return (
     <Container component="main" maxWidth="md" sx={mainHeaderForPages}>
       <Message />

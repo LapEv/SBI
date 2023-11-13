@@ -1,4 +1,4 @@
-export { modalStyle } from './modals'
+export { modalStyle, boxDataModal } from './modals'
 export { headerForPages, mainHeaderForPages } from './headerForPages'
 export {
   classifier,

@@ -9,7 +9,7 @@ import {
 import { TextField } from 'components/TextFields'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
 import { MapRolesGroupInputFields } from '../data'
-import { modalStyle } from 'static/styles'
+import { boxDataModal, modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useRoles } from 'hooks/roles/useRoles'
 import { Roles, RolesGroup } from 'storeRoles/interfaces'
@@ -98,7 +98,7 @@ export const AddRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
             />
           )
         })}
-        <Box sx={{ m: 2 }}>
+        <Box sx={boxDataModal}>
           {roles.map(item => (
             <Item
               name={item.nameRole}

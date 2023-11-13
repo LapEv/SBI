@@ -239,7 +239,7 @@ export const rolesStartData = [
   {
     role: 'getClassifierModelsById',
     nameRole:
-      'Получение полного списка классификатора моделей по ID оборудования',
+      'Получение полного списка классификатора активных моделей по ID оборудования',
   },
   {
     role: 'newClassifierModel',
@@ -264,7 +264,7 @@ export const rolesStartData = [
   {
     role: 'getTypicalMalfunctionsById',
     nameRole:
-      'Получение полного списка типовых неисправностей по ID оборудования',
+      'Получение полного списка активных типовых неисправностей по ID оборудования',
   },
 
   {

@@ -15,14 +15,17 @@ import {
 import { TextField } from 'components/TextFields'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
 import { MapProfileInputFieldsAdmin } from '../data'
-import { modalStyle } from 'static/styles'
+import { modalStyle, boxDataModal } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useStructure } from 'hooks/structure/useStructure'
 import { DropDown, emptyValue } from 'components/DropDown'
 import { useRoles } from 'hooks/roles/useRoles'
-import { CheckBoxGroup } from 'components/CheckBoxGroup'
+import { CheckBoxGroup, Item } from 'components/CheckBoxGroup'
 import { useAuth } from 'hooks/auth/useAuth'
-import { ICheckBoxGroupData } from 'components/CheckBoxGroup/interface'
+import {
+  DataList,
+  ICheckBoxGroupData,
+} from 'components/CheckBoxGroup/interface'
 import { RolesGroup } from 'storeRoles/interfaces'
 import { Options } from 'components/DropDown/interface'
 
@@ -32,14 +35,12 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const [{ userStatus }, { getUserStatus, signup }] = useAuth()
     const [{ divisions, departaments }] = useStructure()
-    const [{ rolesGroup }, { getRoles, getRolesGroup, setActiveRolesGroup }] =
-      useRoles()
-    const [dataGroup, setDataGroup] = useState<ICheckBoxGroupData[]>([])
+    const [{ rolesGroup }, { getRolesGroup }] = useRoles()
+    const [dataGroup, setDataGroup] = useState<DataList[]>([])
     const [division, setDivision] = useState<Options>(emptyValue)
     const [listDepartments, setDepartments] = useState<Options[]>([])
     const [department, setDepartment] = useState<Options>(emptyValue)
     const [selectedGroup, setGroup] = useState<string>('')
-    const [selectedItems, setItems] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
     const [chiefDivision, setCheckedCheifDivision] = useState<boolean>(false)
     const [chiefDepartment, setCheckedCheifDepartment] =
@@ -61,7 +62,7 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
     })
 
     function changeData({ list }: AddValuesProps) {
-      if (!selectedGroup.length || !selectedItems.length) {
+      if (!selectedGroup.length) {
         setErrSelectedItems(true)
         return
       }
@@ -79,7 +80,6 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
         password: list[7].value,
         post: list[4].value,
         rolesGroup: group,
-        roles: selectedItems,
         division: division.label,
         chiefDivision,
         id_division: division.id,
@@ -90,27 +90,25 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
         reasonOfDelete: '',
       }
       signup(newUser)
-      setActiveRolesGroup('')
       handleModal(false)
     }
 
-    const setRolesGroup = (group: string) => {
-      if (!group) return
-      const groupData = rolesGroup.find(item => item.id === group) as RolesGroup
-      const listRoles = groupData.roles.map(item => item.role)
-      setItems(listRoles)
-      setGroup(group)
-      if (group && errSelectedItems) setErrSelectedItems(false)
-    }
-
-    const setRoles = (checked: boolean, id: string) => {
+    const setRolesGroup = (checked: boolean, id: string) => {
       if (!checked) {
-        setItems(selectedItems.filter(value => value !== id))
+        setErrSelectedItems(true)
+        setGroup('')
         return
       }
-      setItems([...selectedItems, id as string])
-      if ([...selectedItems, id as string] && errSelectedItems)
-        setErrSelectedItems(false)
+      const data = rolesGroup.map(item => {
+        return {
+          name: item.groupName,
+          id: item.id,
+          initChecked: item.id === id ?? false,
+        }
+      })
+      setDataGroup(data)
+      setGroup(id)
+      setErrSelectedItems(false)
     }
 
     const changeDivision = (data: Options) => {
@@ -141,7 +139,6 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
     }, [division])
 
     useEffect(() => {
-      getRoles()
       getRolesGroup()
       getUserStatus()
     }, [])
@@ -150,22 +147,13 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
       const data = rolesGroup.map(item => {
         return {
           id: item.id,
-          group: item.group,
-          groupName: item.groupName,
-          items: item.roles.map(value => {
-            return {
-              name: value.nameRole,
-              nameId: value.role,
-              id: value.id,
-            }
-          }),
+          name: item.groupName,
         }
       })
       setDataGroup(data)
     }, [rolesGroup])
 
     const closeModal = () => {
-      setActiveRolesGroup('')
       handleModal(false)
     }
 
@@ -234,7 +222,7 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
             }
           />
         </Box>
-        {fields.map(({ id, label, validation, type, value }, index) => {
+        {fields.map(({ id, label, validation, type }, index) => {
           return (
             <Controller
               key={id}
@@ -260,17 +248,18 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
             />
           )
         })}
-        {dataGroup.map((item, index) => (
-          <CheckBoxGroup
-            data={item}
-            key={`${item}${index}`}
-            onChooseGroup={setRolesGroup}
-            onChooseItems={setRoles}
-            oneGroup={true}
-            selectedGroup={selectedGroup}
+        {dataGroup.map(({ name, id, initChecked }) => (
+          <Item
+            name={name}
+            id={`${id}`}
+            groupChecked={null}
+            onChooseItems={setRolesGroup}
+            initChecked={initChecked}
+            key={id}
+            props={{ ml: 7 }}
           />
         ))}
-        <Box sx={{ color: theme.palette.error.main, height: 20, mt: 1 }}>
+        <Box sx={{ color: theme.palette.error.main, minHeight: 10, mt: 1 }}>
           {errSelectedItems && 'Не выбрана ни одна роль или группа ролей!'}
         </Box>
         <ButtonsModalSection closeModal={closeModal} btnName="Сохранить" />

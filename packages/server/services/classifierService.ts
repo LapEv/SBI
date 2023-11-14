@@ -96,7 +96,7 @@ export class classifierService {
   changeClassifierEquipment = async (_req: Request, res: Response) => {
     const { equipment, id } = _req.body
     try {
-      const temp = await ClassifierEquipmentRepos.update(id, { equipment })
+      await ClassifierEquipmentRepos.update(id, { equipment })
       const classifierEquipments = await ClassifierEquipmentRepos.findAll({
         where: { active: true },
       })

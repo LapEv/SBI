@@ -1,3 +1,6 @@
 export { NewClassifierEquipment } from './NewClassifierEquipment'
 export { NewClassifierModel } from './NewClassifierModel'
 export { NewTypicalMalfunction } from './NewTypicalMalfunction'
+export { DeleteClassifierModel } from './DeleteClassifierModel'
+export { DeleteClassifierEquipment } from './DeleteClassifierEquipment'
+export { DeleteTypicalMalfunction } from './DeleteTypicalMalfunction'

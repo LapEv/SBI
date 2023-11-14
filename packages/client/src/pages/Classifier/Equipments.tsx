@@ -14,14 +14,10 @@ export const Equipments = memo(({ equipment, id }: ClassifierEquipment) => {
   ] = useClassifier()
   const [open, setOpen] = useState(false)
 
-  useEffect(() => {
-    console.log('getClassifierModelsById')
-    getClassifierModelsById(id as string)
-  }, [])
-
   const handleClick = () => {
     setOpen(!open)
     setActiveEquipment(id as string)
+    getClassifierModelsById(id as string)
   }
 
   useEffect(() => {

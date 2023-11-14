@@ -51,7 +51,7 @@ export const ApiEndPoints = {
   Classifier: {
     getClassifierEquipments: 'classifier/getClassifierEquipments',
     newClassifierEquipment: 'classifier/newClassifierEquipment',
-    deleteclassifierEquipment: 'classifier/deleteclassifierEquipment',
+    deleteClassifierEquipment: 'classifier/deleteClassifierEquipment',
     changeClassifierEquipment: 'classifier/changeClassifierEquipment',
     getClassifierModels: 'classifier/getClassifierModels',
     getClassifierModelsById: 'classifier/getClassifierModelsById',

@@ -38,7 +38,7 @@ import {
   newClassifierEquipment,
   newClassifierModel,
   newTypicalMalfunction,
-  deleteclassifierEquipment,
+  deleteClassifierEquipment,
   deleteClassifierModel,
   deleteTypicalMalfunction,
   changeClassifierEquipment,
@@ -464,7 +464,7 @@ export const messageSlise = createSlice({
       state.type = 'error'
       state.text = action.payload
     },
-    [deleteclassifierEquipment.fulfilled.type]: (
+    [deleteClassifierEquipment.fulfilled.type]: (
       state,
       action: PayloadAction<AnswerMessage>
     ) => {
@@ -472,10 +472,10 @@ export const messageSlise = createSlice({
       state.text = action.payload.message.text
       state.type = action.payload.message.type
     },
-    [deleteclassifierEquipment.pending.type]: state => {
+    [deleteClassifierEquipment.pending.type]: state => {
       state.isLoadingMessage = true
     },
-    [deleteclassifierEquipment.rejected.type]: (
+    [deleteClassifierEquipment.rejected.type]: (
       state,
       action: PayloadAction<string>
     ) => {

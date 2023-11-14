@@ -32,11 +32,11 @@ export const getClassifierEquipments = createAsyncThunk(
 
 export const newClassifierEquipment = createAsyncThunk(
   'classifier/newClassifierEquipment',
-  async (role: ClassifierEquipment, thunkAPI) => {
+  async (equipment: ClassifierEquipment, thunkAPI) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Classifier.newClassifierEquipment,
-        role
+        equipment
       )
       return {
         data,
@@ -55,13 +55,13 @@ export const newClassifierEquipment = createAsyncThunk(
   }
 )
 
-export const deleteclassifierEquipment = createAsyncThunk(
-  'classifier/deleteclassifierEquipment',
-  async (selectedclassifierEquipments: string[], thunkAPI) => {
+export const deleteClassifierEquipment = createAsyncThunk(
+  'classifier/deleteClassifierEquipment',
+  async (selectedClassifierEquipments: string[], thunkAPI) => {
     try {
       const { data } = await authhost.post(
-        ApiEndPoints.Classifier.deleteclassifierEquipment,
-        { selectedclassifierEquipments }
+        ApiEndPoints.Classifier.deleteClassifierEquipment,
+        { selectedClassifierEquipments }
       )
       return {
         data,
@@ -153,7 +153,7 @@ export const newClassifierModel = createAsyncThunk(
   async (model: ClassifierModels, thunkAPI) => {
     try {
       const { data } = await authhost.post(
-        ApiEndPoints.Classifier.newClassifierEquipment,
+        ApiEndPoints.Classifier.newClassifierModel,
         model
       )
       return {
@@ -175,11 +175,11 @@ export const newClassifierModel = createAsyncThunk(
 
 export const deleteClassifierModel = createAsyncThunk(
   'classifier/deleteClassifierModel',
-  async (selectedclassifierModels: string[], thunkAPI) => {
+  async (selectedClassifierModels: string[], thunkAPI) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Classifier.deleteClassifierModel,
-        { selectedclassifierModels }
+        { selectedClassifierModels }
       )
       return {
         data,
@@ -269,11 +269,11 @@ export const getTypicalMalfunctionsById = createAsyncThunk(
 
 export const newTypicalMalfunction = createAsyncThunk(
   'classifier/newTypicalMalfunction',
-  async (role: TypicalMalfunctions, thunkAPI) => {
+  async (typMalfunction: TypicalMalfunctions, thunkAPI) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Classifier.newTypicalMalfunction,
-        role
+        typMalfunction
       )
       return {
         data,

@@ -11,7 +11,8 @@ import { headerForPages, mainHeaderForPages } from 'static/styles'
 export function ClassifierPage() {
   const modalClientRef = React.createRef()
   const [{ admin, user }] = useAuth()
-  const [{ equipments }, { getClassifierEquipments }] = useClassifier()
+  const [{ equipments }, { getClassifierEquipments, setActiveEquipment }] =
+    useClassifier()
   const [modal, setModal] = useState<boolean>(false)
   const [modalImage, setModalImage] = useState<string>('')
 
@@ -19,6 +20,7 @@ export function ClassifierPage() {
     if (name) {
       setModal(true)
       setModalImage(name)
+      setActiveEquipment('')
     }
   }
 
@@ -27,10 +29,6 @@ export function ClassifierPage() {
   }
 
   useEffect(() => {
-    console.log('user = ', user)
-    console.log(
-      'если идет изменение прав в группе, надо эту группу менять везде'
-    )
     getClassifierEquipments()
   }, [])
 
@@ -56,7 +54,7 @@ export function ClassifierPage() {
           <DropDownMenu
             popover={'Добавить/Удалить'}
             data={menuData}
-            divider={[5]}
+            divider={[3]}
             onClick={checkClickMenu}
           />
         )}

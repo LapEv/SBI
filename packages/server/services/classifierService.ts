@@ -16,9 +16,9 @@ export class classifierService {
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
-      res
-        .status(500)
-        .json({ error: ['db error: unable to set new address', err] })
+      res.status(500).json({
+        error: ['db error: unable to set new classifier equipment', err],
+      })
     }
   }
 
@@ -39,10 +39,10 @@ export class classifierService {
   }
 
   deleteClassifierEquipment = async (_req: Request, res: Response) => {
-    const { selectedclassifierEquipments } = _req.body
+    const { selectedClassifierEquipments } = _req.body
     try {
       const classifierEquipments = await Promise.all([
-        await selectedclassifierEquipments.map(async (value: string) => {
+        await selectedClassifierEquipments.map(async (value: string) => {
           await ClassifierEquipmentRepos.update(value, {
             active: false,
           })
@@ -58,10 +58,10 @@ export class classifierService {
   }
 
   fullDeleteClassifierEquipment = async (_req: Request, res: Response) => {
-    const { selectedclassifierEquipments } = _req.body
+    const { selectedClassifierEquipments } = _req.body
     try {
       const classifierEquipments = await Promise.all([
-        await selectedclassifierEquipments.map(async (value: string) => {
+        await selectedClassifierEquipments.map(async (value: string) => {
           await ClassifierEquipmentRepos.destroy({
             where: { id: value },
           })
@@ -76,9 +76,10 @@ export class classifierService {
     }
   }
   pullClassifierEquipmentFromArchive = async (_req: Request, res: Response) => {
-    const { selectedclassifierEquipments } = _req.body
+    const { selectedClassifierEquipments } = _req.body
+    console.log('selectedClassifierEquipments = ', selectedClassifierEquipments)
     try {
-      await ClassifierEquipmentRepos.update(selectedclassifierEquipments, {
+      await ClassifierEquipmentRepos.update(selectedClassifierEquipments, {
         active: true,
       })
       const classifierEquipments = await ClassifierEquipmentRepos.findAll({
@@ -108,18 +109,38 @@ export class classifierService {
   }
 
   newClassifierModel = async (_req: Request, res: Response) => {
+    console.log('DIGI SM-300 _req.body = ', _req.body)
+    const { id_equipment, model, selectedTypicalMalfunctions } = _req.body
+
     try {
-      await ClassifierModelsRepos.create({ ..._req.body, active: true })
+      const newModel = await ClassifierModelsRepos.create({
+        id_equipment,
+        model,
+        active: true,
+      })
+      console.log('newModel.id = ', newModel.id)
       const classifierModels = await ClassifierModelsRepos.findAll({
         where: { active: true },
       })
-      res.status(200).json(classifierModels)
+
+      await selectedTypicalMalfunctions.map(async (value: string) => {
+        const type = await TypicalMalfunctionsRepos.findAll({
+          where: {
+            id: value,
+          },
+        })
+        type[0].models.push(newModel.id)
+        await TypicalMalfunctionsRepos.update(value, {
+          models: type[0].models,
+        })
+      }),
+        res.status(200).json(classifierModels)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
       res
         .status(500)
-        .json({ error: ['db error: unable to set new address', err] })
+        .json({ error: ['db error: unable to set new classifier model', err] })
     }
   }
 
@@ -151,10 +172,10 @@ export class classifierService {
   }
 
   deleteClassifierModel = async (_req: Request, res: Response) => {
-    const { selectedclassifierModels } = _req.body
+    const { selectedClassifierModels } = _req.body
     try {
       const classifierModels = await Promise.all([
-        await selectedclassifierModels.map(async (value: string) => {
+        await selectedClassifierModels.map(async (value: string) => {
           await ClassifierModelsRepos.update(value, {
             active: false,
           })
@@ -170,10 +191,10 @@ export class classifierService {
   }
 
   fullDeleteClassifierModel = async (_req: Request, res: Response) => {
-    const { selectedclassifierModels } = _req.body
+    const { selectedСlassifierModels } = _req.body
     try {
       const classifierModels = await Promise.all([
-        await selectedclassifierModels.map(async (value: string) => {
+        await selectedСlassifierModels.map(async (value: string) => {
           await ClassifierModelsRepos.destroy({
             where: { id: value },
           })
@@ -188,9 +209,9 @@ export class classifierService {
     }
   }
   pullClassifierModelFromArchive = async (_req: Request, res: Response) => {
-    const { selectedclassifierModels } = _req.body
+    const { selectedClassifierModels } = _req.body
     try {
-      await ClassifierModelsRepos.update(selectedclassifierModels, {
+      await ClassifierModelsRepos.update(selectedClassifierModels, {
         active: true,
       })
       const classifierModels = await ClassifierModelsRepos.findAll({
@@ -220,6 +241,7 @@ export class classifierService {
   }
 
   newTypicalMalfunction = async (_req: Request, res: Response) => {
+    console.log('_req.body = ', _req.body)
     try {
       await TypicalMalfunctionsRepos.create({ ..._req.body, active: true })
       const typicalMalfunctions = await TypicalMalfunctionsRepos.findAll({
@@ -229,9 +251,9 @@ export class classifierService {
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
-      res
-        .status(500)
-        .json({ error: ['db error: unable to set new address', err] })
+      res.status(500).json({
+        error: ['db error: unable to set new typical malfunction', err],
+      })
     }
   }
 
@@ -300,9 +322,9 @@ export class classifierService {
     }
   }
   pullTypicalMalfunctionFromArchive = async (_req: Request, res: Response) => {
-    const { selectedtypicalMalfunctions } = _req.body
+    const { selectedTypicalMalfunctions } = _req.body
     try {
-      await TypicalMalfunctionsRepos.update(selectedtypicalMalfunctions, {
+      await TypicalMalfunctionsRepos.update(selectedTypicalMalfunctions, {
         active: true,
       })
       const typicalMalfunctions = await TypicalMalfunctionsRepos.findAll({

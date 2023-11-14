@@ -13,7 +13,7 @@ export interface ClassifierActions {
   newClassifierEquipment: (data: ClassifierEquipment) => void
   newClassifierModel: (data: ClassifierModels) => void
   newTypicalMalfunction: (data: TypicalMalfunctions) => void
-  deleteclassifierEquipment: (data: string[]) => void
+  deleteClassifierEquipment: (data: string[]) => void
   deleteClassifierModel: (data: string[]) => void
   deleteTypicalMalfunction: (data: string[]) => void
   changeClassifierEquipment: (

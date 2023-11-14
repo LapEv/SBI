@@ -15,17 +15,14 @@ import {
 import { TextField } from 'components/TextFields'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
 import { MapProfileInputFieldsAdmin } from '../data'
-import { modalStyle, boxDataModal } from 'static/styles'
+import { modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useStructure } from 'hooks/structure/useStructure'
 import { DropDown, emptyValue } from 'components/DropDown'
 import { useRoles } from 'hooks/roles/useRoles'
-import { CheckBoxGroup, Item } from 'components/CheckBoxGroup'
+import { Item } from 'components/CheckBoxGroup'
 import { useAuth } from 'hooks/auth/useAuth'
-import {
-  DataList,
-  ICheckBoxGroupData,
-} from 'components/CheckBoxGroup/interface'
+import { DataList } from 'components/CheckBoxGroup/interface'
 import { RolesGroup } from 'storeRoles/interfaces'
 import { Options } from 'components/DropDown/interface'
 

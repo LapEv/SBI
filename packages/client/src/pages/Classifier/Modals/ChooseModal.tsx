@@ -1,5 +1,8 @@
 import React from 'react'
 import {
+  DeleteClassifierModel,
+  DeleteClassifierEquipment,
+  DeleteTypicalMalfunction,
   NewClassifierEquipment,
   NewClassifierModel,
   NewTypicalMalfunction,
@@ -30,6 +33,27 @@ export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(
             ref={ref}
             handleModal={handleModal}
             title={ModalTitles.newTypicalMalfunction}
+          />
+        )}
+        {modalImage === 'deleteClassifierEquipment' && (
+          <DeleteClassifierEquipment
+            ref={ref}
+            handleModal={handleModal}
+            title={ModalTitles.deleteClassifierEquipment}
+          />
+        )}
+        {modalImage === 'deleteClassifierModel' && (
+          <DeleteClassifierModel
+            ref={ref}
+            handleModal={handleModal}
+            title={ModalTitles.deleteClassifierModel}
+          />
+        )}
+        {modalImage === 'deleteTypicalMalfunction' && (
+          <DeleteTypicalMalfunction
+            ref={ref}
+            handleModal={handleModal}
+            title={ModalTitles.deleteTypicalMalfunction}
           />
         )}
       </>

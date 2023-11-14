@@ -57,6 +57,16 @@ export const nameValidation = {
   },
 }
 
+export const lightTextValidation = {
+  required: REQUIRED_FIELD,
+  validate: (value: string) => {
+    if (!value.match('^[А-ЯA-Z]')) {
+      return 'Должно начинаться с заглавной буквы'
+    }
+    return true
+  },
+}
+
 export const textValidation = {
   required: REQUIRED_FIELD,
   validate: (value: string) => {
@@ -84,7 +94,7 @@ export const textValidationENG = {
   required: REQUIRED_FIELD,
   validate: (value: string) => {
     if (!value.match('^[?!, .a-zA-Z0-9s]+$')) {
-      return 'Только кирилица, цифры'
+      return 'Только латиница, цифры'
     }
     if (!value.match('^[А-ЯA-Z]')) {
       return 'Должно начинаться с заглавной буквы'
@@ -97,7 +107,7 @@ export const textValidationENGlowercase = {
   required: REQUIRED_FIELD,
   validate: (value: string) => {
     if (!value.match('^[?!, .a-zA-Z0-9s]+$')) {
-      return 'Только кирилица, цифры'
+      return 'Только латиница, цифры'
     }
     return true
   },

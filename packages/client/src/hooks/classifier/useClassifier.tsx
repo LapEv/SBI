@@ -9,7 +9,7 @@ import {
   newClassifierEquipment,
   newClassifierModel,
   newTypicalMalfunction,
-  deleteclassifierEquipment,
+  deleteClassifierEquipment,
   deleteClassifierModel,
   deleteTypicalMalfunction,
   changeClassifierEquipment,
@@ -52,8 +52,8 @@ export function useClassifier(): [ClassifierState, ClassifierActions] {
       newTypicalMalfunction(data) {
         dispatch(newTypicalMalfunction(data))
       },
-      deleteclassifierEquipment(data) {
-        dispatch(deleteclassifierEquipment(data))
+      deleteClassifierEquipment(data) {
+        dispatch(deleteClassifierEquipment(data))
       },
       deleteClassifierModel(data) {
         dispatch(deleteClassifierModel(data))

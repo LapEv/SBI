@@ -9,6 +9,7 @@ export interface ClassifierModels {
   model: string
   id_equipment: string
   active?: boolean
+  selectedTypicalMalfunctions?: string[]
 }
 
 export interface TypicalMalfunctions {
@@ -16,6 +17,7 @@ export interface TypicalMalfunctions {
   typicalMalfunction: string
   models: string[]
   id_equipment: string
+  id_model: string
   active?: boolean
 }
 

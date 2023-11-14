@@ -13,6 +13,13 @@ export interface RolesGroup {
   groupName: string
 }
 
+export interface NewRolesGroup {
+  group: string
+  roles: string[]
+  id?: string | undefined
+  groupName: string
+}
+
 export interface RolesGroupObject {
   nameRole: string
   id: string

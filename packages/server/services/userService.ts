@@ -229,7 +229,7 @@ export class userService {
         active: true,
       })
       const users = await userRepos.findAll({
-        where: { active: true },
+        where: { active: true, reasonOfDelete: '' },
       })
       res.status(200).json(users)
       /* eslint-disable @typescript-eslint/no-explicit-any */

@@ -56,6 +56,11 @@ export const menuData = [
     icon: <DeleteSweep fontSize="medium" />,
   },
   {
+    name: 'deleteUser',
+    title: 'Удалить пользователя',
+    icon: <PersonRemoveIcon fontSize="medium" />,
+  },
+  {
     name: 'deleteRole',
     title: 'Удалить роли',
     icon: <Remove fontSize="medium" />,
@@ -64,11 +69,6 @@ export const menuData = [
     name: 'deleteRolesGroup',
     title: 'Удалить группу ролей',
     icon: <GroupRemove fontSize="medium" />,
-  },
-  {
-    name: 'deleteUser',
-    title: 'Удалить пользователя',
-    icon: <PersonRemoveIcon fontSize="medium" />,
   },
   {
     name: 'changeRolesGroup',

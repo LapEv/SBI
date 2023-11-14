@@ -12,14 +12,15 @@ import { MapRolesGroupInputFields } from '../data'
 import { boxDataModal, modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useRoles } from 'hooks/roles/useRoles'
-import { Roles, RolesGroup } from 'storeRoles/interfaces'
+import { Roles, RolesGroup, NewRolesGroup } from 'storeRoles/interfaces'
 import { Item } from 'components/CheckBoxGroup'
 
 export const AddRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
-    const [{ roles }, { newRolesGroup, getRolesGroup, getRoles }] = useRoles()
+    const [{ roles, rolesGroup }, { newRolesGroup, getRolesGroup, getRoles }] =
+      useRoles()
     const theme = useTheme()
     const [selectedItems, setItems] = useState<Roles[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
@@ -43,7 +44,7 @@ export const AddRolesGroup = React.forwardRef<unknown, ChooseModalProps>(
       const data = {
         group: list[1].value,
         groupName: list[0].value,
-        roles: selectedItems,
+        roles: selectedItems.map(item => item.role),
       }
       newRolesGroup(data as RolesGroup)
       handleModal(false)

@@ -6,6 +6,7 @@ import {
   NewClassifierEquipment,
   NewClassifierModel,
   NewTypicalMalfunction,
+  ChangeTypicalMalfunction,
 } from './'
 import { ModalTitles } from '../data'
 import { ChooseModalProps } from './interfaces'
@@ -54,6 +55,13 @@ export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(
             ref={ref}
             handleModal={handleModal}
             title={ModalTitles.deleteTypicalMalfunction}
+          />
+        )}
+        {modalImage === 'changeTypicalMalfunction' && (
+          <ChangeTypicalMalfunction
+            ref={ref}
+            handleModal={handleModal}
+            title={ModalTitles.changeTypicalMalfunction}
           />
         )}
       </>

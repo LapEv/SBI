@@ -52,6 +52,7 @@ export interface ChangeClassifierEquipment {
 export interface ChangeClassifierModel {
   model: string
   id: string
+  id_equipment: string
 }
 
 export interface ChangeTypicalMalfunction {

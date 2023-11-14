@@ -11,6 +11,7 @@ import {
 } from 'utils/validatorRules'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
+import EditIcon from '@mui/icons-material/Edit'
 
 export const menuData = [
   {
@@ -25,7 +26,7 @@ export const menuData = [
   },
   {
     name: 'newTypicalMalfunction',
-    title: 'Добавить типичную неисправность',
+    title: 'Добавить типовую неисправность',
     icon: <AddCircleOutlineIcon fontSize="medium" />,
   },
   {
@@ -40,8 +41,13 @@ export const menuData = [
   },
   {
     name: 'deleteTypicalMalfunction',
-    title: 'Удалить типичную неисправность',
+    title: 'Удалить типовую неисправность',
     icon: <RemoveCircleOutline fontSize="medium" />,
+  },
+  {
+    name: 'changeTypicalMalfunction',
+    title: 'Изменить типовую неисправность',
+    icon: <EditIcon fontSize="medium" />,
   },
 ]
 export const ModalTitles = {
@@ -79,6 +85,15 @@ export const MapTypMalfunctionInputFields = [
     name: 'model',
     label: 'Введите новую типовую неисправность',
     validation: textValidation,
+    type: 'text',
+  },
+]
+
+export const MapNewTypicalMalfunctionsInputFields = [
+  {
+    name: 'typicalMalfunctions',
+    label: 'Введите новую типовую неисправность',
+    validation: lightTextValidation,
     type: 'text',
   },
 ]

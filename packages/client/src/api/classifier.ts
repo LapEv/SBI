@@ -194,11 +194,11 @@ export const deleteClassifierModel = createAsyncThunk(
 
 export const changeClassifierModel = createAsyncThunk(
   'classifier/changeClassifierModel',
-  async ({ model, id }: ChangeClassifierModel, thunkAPI) => {
+  async ({ model, id, id_equipment }: ChangeClassifierModel, thunkAPI) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Classifier.changeClassifierModel,
-        { model, id }
+        { model, id, id_equipment }
       )
       return {
         data,

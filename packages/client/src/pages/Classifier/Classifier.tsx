@@ -54,7 +54,7 @@ export function ClassifierPage() {
           <DropDownMenu
             popover={'Добавить/Удалить'}
             data={menuData}
-            divider={[3]}
+            divider={[3, 6]}
             onClick={checkClickMenu}
           />
         )}

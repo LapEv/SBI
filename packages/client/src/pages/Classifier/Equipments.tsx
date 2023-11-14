@@ -65,7 +65,7 @@ export const Equipments = memo(({ equipment, id }: ClassifierEquipment) => {
           primary={equipment}
           primaryTypographyProps={{ fontSize: '1.375rem!important' }}
         />
-        <EditButton handleClick={editEquipment} size={'2rem'} />
+        <EditButton handleClick={editEquipment} size={'1.7rem'} />
         <RotateButton open={open} handleClick={handleClick} size={'2rem'} />
       </ListItemButton>
       <Collapse sx={{ width: '100%' }} in={open} timeout="auto" unmountOnExit>

@@ -47,7 +47,7 @@ export function ClientsPage() {
           <DropDownMenu
             popover={'Добавить/Удалить'}
             data={menuData}
-            divider={[5]}
+            divider={[2, 4]}
             onClick={checkClickMenu}
           />
         )}

@@ -224,11 +224,11 @@ export class classifierService {
   }
 
   changeClassifierModel = async (_req: Request, res: Response) => {
-    const { model, id } = _req.body
+    const { model, id, id_equipment } = _req.body
     try {
-      await ClassifierEquipmentRepos.update(id, { model })
-      const classifierModels = await ClassifierEquipmentRepos.findAll({
-        where: { active: true },
+      await ClassifierModelsRepos.update(id, { model })
+      const classifierModels = await ClassifierModelsRepos.findAll({
+        where: { active: true, id_equipment },
       })
       res.status(200).json(classifierModels)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -337,6 +337,8 @@ export class classifierService {
 
   changeTypicalMalfunction = async (_req: Request, res: Response) => {
     const { typicalMalfunction, id } = _req.body
+    console.log('typicalMalfunction = ', typicalMalfunction)
+    console.log('id = ', id)
     try {
       await TypicalMalfunctionsRepos.update(id, { typicalMalfunction })
       const typicalMalfunctions = await TypicalMalfunctionsRepos.findAll({

@@ -10,58 +10,40 @@ import {
   textValidationlowercase,
 } from 'utils/validatorRules'
 import SouthAmerica from '@mui/icons-material/SouthAmerica'
-import { RegionsSVG } from 'static/svg/region'
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
+import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
+import EditIcon from '@mui/icons-material/Edit'
 
 export const menuData = [
   {
     name: 'newAddress',
     title: 'Добавить адрес',
-    icon: <SouthAmerica fontSize="medium" />,
+    icon: <AddCircleOutlineIcon fontSize="medium" />,
   },
   {
     name: 'newRegion',
     title: 'Добавить регион',
-    icon: <RegionsSVG fontSize="medium" />,
+    icon: <AddCircleOutlineIcon fontSize="medium" />,
   },
   {
     name: 'changeAddress',
     title: 'Изменить адрес',
-    icon: <SouthAmerica fontSize="medium" />,
+    icon: <EditIcon fontSize="medium" />,
   },
   {
     name: 'changeRegion',
     title: 'Изменить регион',
-    icon: <SouthAmerica fontSize="medium" />,
+    icon: <EditIcon fontSize="medium" />,
   },
   {
     name: 'deleteAddress',
     title: 'Удалить адрес',
-    icon: <SouthAmerica fontSize="medium" />,
+    icon: <RemoveCircleOutline fontSize="medium" />,
   },
   {
     name: 'deleteRegion',
     title: 'Удалить регион',
-    icon: <RegionsSVG fontSize="medium" />,
-  },
-  {
-    name: 'deleteDepartments',
-    title: 'Удалить отдел',
-    icon: <SouthAmerica fontSize="medium" />,
-  },
-  {
-    name: 'deleteRole',
-    title: 'Удалить роли',
-    icon: <SouthAmerica fontSize="medium" />,
-  },
-  {
-    name: 'deleteRolesGroup',
-    title: 'Удалить группу ролей',
-    icon: <SouthAmerica fontSize="medium" />,
-  },
-  {
-    name: 'changeRolesGroup',
-    title: 'Изменить группу ролей',
-    icon: <SouthAmerica fontSize="medium" />,
+    icon: <RemoveCircleOutline fontSize="medium" />,
   },
 ]
 export const ModalTitles = {

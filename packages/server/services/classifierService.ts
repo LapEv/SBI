@@ -337,8 +337,6 @@ export class classifierService {
 
   changeTypicalMalfunction = async (_req: Request, res: Response) => {
     const { typicalMalfunction, id } = _req.body
-    console.log('typicalMalfunction = ', typicalMalfunction)
-    console.log('id = ', id)
     try {
       await TypicalMalfunctionsRepos.update(id, { typicalMalfunction })
       const typicalMalfunctions = await TypicalMalfunctionsRepos.findAll({

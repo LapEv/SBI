@@ -82,17 +82,11 @@ export const deleteClassifierEquipment = createAsyncThunk(
 
 export const changeClassifierEquipment = createAsyncThunk(
   'classifier/changeClassifierEquipment',
-  async (
-    { newClassifierEquipment, id }: ChangeClassifierEquipment,
-    thunkAPI
-  ) => {
+  async ({ equipment, id }: ChangeClassifierEquipment, thunkAPI) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Classifier.changeClassifierEquipment,
-        {
-          newClassifierEquipment,
-          id,
-        }
+        { equipment, id }
       )
       return {
         data,
@@ -200,14 +194,11 @@ export const deleteClassifierModel = createAsyncThunk(
 
 export const changeClassifierModel = createAsyncThunk(
   'classifier/changeClassifierModel',
-  async ({ newClassifierModel, id }: ChangeClassifierModel, thunkAPI) => {
+  async ({ model, id }: ChangeClassifierModel, thunkAPI) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Classifier.changeClassifierModel,
-        {
-          newClassifierModel,
-          id,
-        }
+        { model, id }
       )
       return {
         data,
@@ -269,11 +260,11 @@ export const getTypicalMalfunctionsById = createAsyncThunk(
 
 export const newTypicalMalfunction = createAsyncThunk(
   'classifier/newTypicalMalfunction',
-  async (typMalfunction: TypicalMalfunctions, thunkAPI) => {
+  async (newTypicalMalfunction: TypicalMalfunctions, thunkAPI) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Classifier.newTypicalMalfunction,
-        typMalfunction
+        newTypicalMalfunction
       )
       return {
         data,
@@ -319,14 +310,11 @@ export const deleteTypicalMalfunction = createAsyncThunk(
 
 export const changeTypicalMalfunction = createAsyncThunk(
   'classifier/changeTypicalMalfunction',
-  async ({ newTypicalMalfunction, id }: ChangeTypicalMalfunction, thunkAPI) => {
+  async ({ typicalMalfunction, id }: ChangeTypicalMalfunction, thunkAPI) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Classifier.changeTypicalMalfunction,
-        {
-          newTypicalMalfunction,
-          id,
-        }
+        { typicalMalfunction, id }
       )
       return {
         data,

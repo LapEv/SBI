@@ -42,15 +42,12 @@ export const NewClassifierModel = React.forwardRef<unknown, ChooseModalProps>(
     })
 
     function changeData({ list }: AddValuesProps) {
-      console.log('list = ', list[0].value)
-      console.log('equipment = ', equipment)
-      console.log('selectedTypicalMalfunctions = ', selectedTypicalMalfunctions)
       newClassifierModel({
         id_equipment: equipment.id,
         model: list[0].value,
         selectedTypicalMalfunctions,
       })
-      // handleModal(false)
+      handleModal(false)
     }
 
     const chooseClassifierEquipment = (data: Options) => {

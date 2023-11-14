@@ -61,14 +61,14 @@ export function useClassifier(): [ClassifierState, ClassifierActions] {
       deleteTypicalMalfunction(data) {
         dispatch(deleteTypicalMalfunction(data))
       },
-      changeClassifierEquipment(newClassifierEquipment, id) {
-        dispatch(changeClassifierEquipment({ newClassifierEquipment, id }))
+      changeClassifierEquipment(data) {
+        dispatch(changeClassifierEquipment(data))
       },
-      changeClassifierModel(newClassifierModel, id) {
-        dispatch(changeClassifierModel({ newClassifierModel, id }))
+      changeClassifierModel(data) {
+        dispatch(changeClassifierModel(data))
       },
-      changeTypicalMalfunction(newTypicalMalfunction, id) {
-        dispatch(changeTypicalMalfunction({ newTypicalMalfunction, id }))
+      changeTypicalMalfunction(data) {
+        dispatch(changeTypicalMalfunction(data))
       },
       setActiveEquipment(id) {
         dispatch(setActiveEquipment(id))

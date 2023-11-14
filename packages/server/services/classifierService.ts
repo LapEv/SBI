@@ -94,9 +94,9 @@ export class classifierService {
   }
 
   changeClassifierEquipment = async (_req: Request, res: Response) => {
-    const { classifierEquipment, id } = _req.body
+    const { equipment, id } = _req.body
     try {
-      await ClassifierEquipmentRepos.update(id, classifierEquipment)
+      const temp = await ClassifierEquipmentRepos.update(id, { equipment })
       const classifierEquipments = await ClassifierEquipmentRepos.findAll({
         where: { active: true },
       })
@@ -109,7 +109,6 @@ export class classifierService {
   }
 
   newClassifierModel = async (_req: Request, res: Response) => {
-    console.log('DIGI SM-300 _req.body = ', _req.body)
     const { id_equipment, model, selectedTypicalMalfunctions } = _req.body
 
     try {
@@ -118,7 +117,6 @@ export class classifierService {
         model,
         active: true,
       })
-      console.log('newModel.id = ', newModel.id)
       const classifierModels = await ClassifierModelsRepos.findAll({
         where: { active: true },
       })
@@ -226,9 +224,9 @@ export class classifierService {
   }
 
   changeClassifierModel = async (_req: Request, res: Response) => {
-    const { classifierModel, id } = _req.body
+    const { model, id } = _req.body
     try {
-      await ClassifierEquipmentRepos.update(id, classifierModel)
+      await ClassifierEquipmentRepos.update(id, { model })
       const classifierModels = await ClassifierEquipmentRepos.findAll({
         where: { active: true },
       })
@@ -241,7 +239,6 @@ export class classifierService {
   }
 
   newTypicalMalfunction = async (_req: Request, res: Response) => {
-    console.log('_req.body = ', _req.body)
     try {
       await TypicalMalfunctionsRepos.create({ ..._req.body, active: true })
       const typicalMalfunctions = await TypicalMalfunctionsRepos.findAll({
@@ -341,7 +338,7 @@ export class classifierService {
   changeTypicalMalfunction = async (_req: Request, res: Response) => {
     const { typicalMalfunction, id } = _req.body
     try {
-      await TypicalMalfunctionsRepos.update(id, typicalMalfunction)
+      await TypicalMalfunctionsRepos.update(id, { typicalMalfunction })
       const typicalMalfunctions = await TypicalMalfunctionsRepos.findAll({
         where: { active: true },
       })

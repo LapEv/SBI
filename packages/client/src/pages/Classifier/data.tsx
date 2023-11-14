@@ -47,13 +47,13 @@ export const menuData = [
 export const ModalTitles = {
   newClassifierEquipment: 'Новый классификатор',
   newClassifierModel: 'Новая модель',
-  newTypicalMalfunction: 'Новая типичная неисправность',
+  newTypicalMalfunction: 'Новая типовую неисправность',
   deleteClassifierEquipment: 'Удалить классификатор',
   deleteClassifierModel: 'Удалить модель',
-  deleteTypicalMalfunction: 'Удалить типичную неисправность',
+  deleteTypicalMalfunction: 'Удалить типовую неисправность',
   changeClassifierEquipment: 'Изменить классификатор',
   changeClassifierModel: 'Изменить модель',
-  changeTypicalMalfunction: 'Изменить типичную неисправность',
+  changeTypicalMalfunction: 'Изменить типовую неисправность',
 }
 
 export const MapClassifierInputFields = [

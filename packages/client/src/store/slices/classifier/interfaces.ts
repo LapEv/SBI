@@ -3,7 +3,6 @@ export interface ClassifierEquipment {
   equipment: string
   active?: boolean
 }
-
 export interface ClassifierModels {
   id?: string
   model: string
@@ -17,7 +16,6 @@ export interface TypicalMalfunctions {
   typicalMalfunction: string
   models: string[]
   id_equipment: string
-  id_model: string
   active?: boolean
 }
 
@@ -47,16 +45,16 @@ export type ClassifierState = {
 }
 
 export interface ChangeClassifierEquipment {
-  newClassifierEquipment: ClassifierEquipment
+  equipment: string
   id: string
 }
 
 export interface ChangeClassifierModel {
-  newClassifierModel: ClassifierModels
+  model: string
   id: string
 }
 
 export interface ChangeTypicalMalfunction {
-  newTypicalMalfunction: TypicalMalfunctions
+  typicalMalfunction: string
   id: string
 }

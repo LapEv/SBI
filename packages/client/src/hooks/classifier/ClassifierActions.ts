@@ -1,4 +1,7 @@
 import {
+  ChangeClassifierEquipment,
+  ChangeClassifierModel,
+  ChangeTypicalMalfunction,
   ClassifierEquipment,
   ClassifierModels,
   TypicalMalfunctions,
@@ -16,18 +19,9 @@ export interface ClassifierActions {
   deleteClassifierEquipment: (data: string[]) => void
   deleteClassifierModel: (data: string[]) => void
   deleteTypicalMalfunction: (data: string[]) => void
-  changeClassifierEquipment: (
-    newClassifierEquipment: ClassifierEquipment,
-    id: string
-  ) => void
-  changeClassifierModel: (
-    newClassifierModel: ClassifierModels,
-    id: string
-  ) => void
-  changeTypicalMalfunction: (
-    changeTypicalMalfunction: TypicalMalfunctions,
-    id: string
-  ) => void
+  changeClassifierEquipment: (data: ChangeClassifierEquipment) => void
+  changeClassifierModel: (data: ChangeClassifierModel) => void
+  changeTypicalMalfunction: (data: ChangeTypicalMalfunction) => void
   setActiveEquipment: (id: string) => void
   setActiveModel: (id: string) => void
 }

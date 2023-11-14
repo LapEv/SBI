@@ -9,11 +9,12 @@ import {
 import { TextField } from 'components/TextFields'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
 import { MapTypMalfunctionInputFields } from '../data'
-import { modalStyle } from 'static/styles'
+import { modalStyle, boxDataModal } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { DropDown, emptyValue } from 'components/DropDown'
 import { Options } from 'components/DropDown/interface'
 import { useClassifier } from 'hooks/classifier/useClassifier'
+import { Item } from 'components/CheckBoxGroup'
 
 export const NewTypicalMalfunction = React.forwardRef<
   unknown,
@@ -26,9 +27,11 @@ export const NewTypicalMalfunction = React.forwardRef<
       { newTypicalMalfunction, getClassifierModelsById },
     ] = useClassifier()
     /* eslint-enable @typescript-eslint/no-unused-vars */
+    const boxRef = React.createRef<HTMLDivElement>()
     const [equipment, setEquipment] = useState<Options>(emptyValue)
-    const [listModels, setModelsList] = useState<Options[]>([])
-    const [model, setModel] = useState<Options>(emptyValue)
+    const [selectedModels, setModels] = useState<string[]>([])
+    const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
+
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
       defaultValues: {
@@ -44,40 +47,30 @@ export const NewTypicalMalfunction = React.forwardRef<
     function changeData({ list }: AddValuesProps) {
       newTypicalMalfunction({
         id_equipment: equipment.id,
-        id_model: model.id,
-        typ,
+        typicalMalfunction: list[0].value,
+        models: selectedModels,
       })
       handleModal(false)
     }
 
-    const changeEquipment = (data: Options) => {
-      setEquipment(data)
-      if (!data) {
-        setModel({
-          label: '',
-          id: '',
-        })
-        setModelsList([])
-      }
+    const chooseClassifierEquipment = (data: Options) => {
       getClassifierModelsById(data.id)
-      setModel(data)
+      setEquipment(data)
+    }
+
+    const onChooseItems = (checked: boolean, id: string) => {
+      if (!checked) {
+        setModels(selectedModels.filter(value => value !== id))
+        return
+      }
+      setModels([...selectedModels, id])
+      if ([...selectedModels, id] && errSelectedItems)
+        setErrSelectedItems(false)
     }
 
     useEffect(() => {
-      const list = models.filter(item => item.id_equipment === model.id)
-      setModelsList(
-        list.map(item => {
-          return {
-            ['label']: item.model as string,
-            ['id']: item.id as string,
-          }
-        })
-      )
-      setModel({
-        label: '',
-        id: '',
-      })
-    }, [models])
+      getClassifierModelsById('')
+    }, [])
 
     return (
       <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
@@ -90,23 +83,10 @@ export const NewTypicalMalfunction = React.forwardRef<
             }
           })}
           props={{ mt: 3 }}
-          onChange={changeEquipment}
+          onChange={chooseClassifierEquipment}
           value={equipment.label}
           label="Выберите классификатор оборудования"
           errorLabel="Не выбран классификатор оборудования!"
-        />
-        <DropDown
-          data={models.map(item => {
-            return {
-              ['label']: item.model as string,
-              ['id']: item.id as string,
-            }
-          })}
-          props={{ mt: 3 }}
-          onChange={setModel}
-          value={model.label}
-          label="Выберите модель оборудования"
-          errorLabel="Не выбрана модель оборудования!"
         />
         {fields.map(({ id, label, validation, type }, index) => {
           return (
@@ -133,6 +113,27 @@ export const NewTypicalMalfunction = React.forwardRef<
             />
           )
         })}
+        <Typography sx={{ fontSize: 14 }}>
+          Выберите модели для этой типовой неисправности:
+        </Typography>
+        <Box
+          ref={boxRef}
+          sx={{
+            ...boxDataModal,
+            height: 200,
+            mt: 0,
+          }}>
+          {models.map(({ model, id }) => (
+            <Item
+              name={model}
+              id={`${id}`}
+              groupChecked={false}
+              onChooseItems={onChooseItems}
+              key={id}
+            />
+          ))}
+        </Box>
+
         <ButtonsModalSection
           closeModal={() => handleModal(false)}
           btnName="Сохранить"

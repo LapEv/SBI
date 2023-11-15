@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from 'react'
-import { Box, Collapse, ListItemButton, Modal, Typography } from '@mui/material'
+import { Box, Collapse, ListItemButton, Modal } from '@mui/material'
 import { TextField } from 'components/TextFields/'
 import { User } from 'storeAuth/interfaces'
 import {
@@ -15,14 +15,11 @@ import {
 import { useAuth } from 'hooks/auth/useAuth'
 import { useTheme } from '@mui/material/styles'
 import { ProfileValues } from './interfaces'
-import { CheckBoxGroup, Item } from 'components/CheckBoxGroup'
+import { Item } from 'components/CheckBoxGroup'
 import { useEffect, useState } from 'react'
 import { useRoles } from 'hooks/roles/useRoles'
 import { ButtonsSection, RotateButton } from 'components/Buttons'
-import {
-  DataList,
-  ICheckBoxGroupData,
-} from 'components/CheckBoxGroup/interface'
+import { DataList } from 'components/CheckBoxGroup/interface'
 import { deepEqual } from 'utils/deepEqual'
 import { DeleteUserModal } from './Modals/DeleteUserModal'
 
@@ -169,7 +166,7 @@ export const ProfileData = (user: User) => {
             Дополнительно
           </ListItemButton>
           <Collapse
-            sx={{ width: '90%', ml: 5 }}
+            sx={{ width: '90%', ml: 5, height: 'auto' }}
             in={open}
             timeout="auto"
             unmountOnExit>

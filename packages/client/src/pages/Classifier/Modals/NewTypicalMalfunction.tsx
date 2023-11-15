@@ -129,6 +129,7 @@ export const NewTypicalMalfunction = React.forwardRef<
               id={`${id}`}
               groupChecked={false}
               onChooseItems={onChooseItems}
+              initChecked={true}
               key={id}
             />
           ))}

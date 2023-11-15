@@ -110,7 +110,6 @@ export class classifierService {
 
   newClassifierModel = async (_req: Request, res: Response) => {
     const { id_equipment, model, selectedTypicalMalfunctions } = _req.body
-
     try {
       const newModel = await ClassifierModelsRepos.create({
         id_equipment,
@@ -120,15 +119,12 @@ export class classifierService {
       const classifierModels = await ClassifierModelsRepos.findAll({
         where: { active: true },
       })
-
-      await selectedTypicalMalfunctions.map(async (value: string) => {
+      await selectedTypicalMalfunctions.map(async (id: string) => {
         const type = await TypicalMalfunctionsRepos.findAll({
-          where: {
-            id: value,
-          },
+          where: { id },
         })
         type[0].models.push(newModel.id)
-        await TypicalMalfunctionsRepos.update(value, {
+        await TypicalMalfunctionsRepos.update(id, {
           models: type[0].models,
         })
       }),
@@ -342,6 +338,32 @@ export class classifierService {
       const typicalMalfunctions = await TypicalMalfunctionsRepos.findAll({
         where: { active: true },
       })
+      res.status(200).json(typicalMalfunctions)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res.status(500).json({ error: ['db error', err] })
+    }
+  }
+
+  changeModelsInTypicalMalfunction = async (_req: Request, res: Response) => {
+    const { selectedTypicalMalfunction, id_equipment, id } = _req.body
+    console.log('selectedTypicalMalfunction = ', selectedTypicalMalfunction)
+    console.log('id_equipment = ', id_equipment)
+    console.log('id = ', id)
+    try {
+      // await TypicalMalfunctionsRepos.update(id, { typicalMalfunction })
+      const typicalMalfunctions = await Promise.all([
+        await selectedTypicalMalfunction.map(async (id: string) => {
+          const type = await TypicalMalfunctionsRepos.findAll({
+            where: { id },
+          })
+
+          console.log('type = ', type)
+        }),
+        await TypicalMalfunctionsRepos.findAll({ where: { active: true } }),
+      ])
+      // res.status(200).json(typicalMalfunctions[1])
       res.status(200).json(typicalMalfunctions)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {

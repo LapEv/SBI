@@ -8,6 +8,7 @@ import {
   ChangeClassifierEquipment,
   ChangeClassifierModel,
   ChangeTypicalMalfunction,
+  ChangeModelsInTypicalMalfunction,
 } from 'store/slices/classifier/interfaces'
 
 export const getClassifierEquipments = createAsyncThunk(
@@ -320,6 +321,38 @@ export const changeTypicalMalfunction = createAsyncThunk(
         data,
         message: {
           text: 'Типовая неисправность изменена!',
+          type: 'success',
+        },
+      }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      return thunkAPI.rejectWithValue(
+        `Не удалось изменить типовую неисправность!\n${getError(e)}`
+      )
+    }
+  }
+)
+
+export const changeModelsInTypicalMalfunction = createAsyncThunk(
+  'classifier/changeModelsInTypicalMalfunction',
+  async (
+    {
+      selectedTypicalMalfunction,
+      id_equipment,
+      id,
+    }: ChangeModelsInTypicalMalfunction,
+    thunkAPI
+  ) => {
+    try {
+      const { data } = await authhost.post(
+        ApiEndPoints.Classifier.changeModelsInTypicalMalfunction,
+        { selectedTypicalMalfunction, id_equipment, id }
+      )
+      return {
+        data,
+        message: {
+          text: 'Модель изменена!',
           type: 'success',
         },
       }

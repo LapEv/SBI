@@ -129,6 +129,7 @@ export const NewClassifierModel = React.forwardRef<unknown, ChooseModalProps>(
               id={`${id}`}
               groupChecked={false}
               onChooseItems={onChooseItems}
+              initChecked={true}
               key={id}
             />
           ))}

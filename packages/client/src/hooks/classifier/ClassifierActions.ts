@@ -1,3 +1,4 @@
+import { DataList } from 'components/CheckBoxGroup/interface'
 import {
   ChangeClassifierEquipment,
   ChangeClassifierModel,
@@ -5,6 +6,7 @@ import {
   ClassifierEquipment,
   ClassifierModels,
   TypicalMalfunctions,
+  ChangeModelsInTypicalMalfunction,
 } from 'store/slices/classifier/interfaces'
 
 export interface ClassifierActions {
@@ -22,6 +24,10 @@ export interface ClassifierActions {
   changeClassifierEquipment: (data: ChangeClassifierEquipment) => void
   changeClassifierModel: (data: ChangeClassifierModel) => void
   changeTypicalMalfunction: (data: ChangeTypicalMalfunction) => void
+  changeModelsInTypicalMalfunction: (
+    data: ChangeModelsInTypicalMalfunction
+  ) => void
   setActiveEquipment: (id: string) => void
   setActiveModel: (id: string) => void
+  setCompareData: (data: DataList[]) => void
 }

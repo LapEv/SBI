@@ -23,6 +23,7 @@ import {
   changeTypicalMalfunction,
   getClassifierModelsById,
   getTypicalMalfunctionsById,
+  changeModelsInTypicalMalfunction,
 } from 'api/classifier'
 
 const initialState: ClassifierState = {
@@ -31,6 +32,7 @@ const initialState: ClassifierState = {
   typicalMalfunctions: [],
   activeEquipment: '',
   activeModel: '',
+  compareData: [],
   isLoadingRoles: false,
 }
 
@@ -43,6 +45,9 @@ export const classifierSlise = createSlice({
     },
     setActiveModel(state, action) {
       state.activeModel = action.payload
+    },
+    setCompareData(state, action) {
+      state.compareData = action.payload
     },
   },
   extraReducers: {
@@ -299,8 +304,27 @@ export const classifierSlise = createSlice({
       state.isLoadingRoles = false
       state.error = action.payload
     },
+    [changeModelsInTypicalMalfunction.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerTypicalMalfunctions>
+    ) => {
+      state.isLoadingRoles = false
+      state.error = ''
+      state.typicalMalfunctions = action.payload.data
+    },
+    [changeModelsInTypicalMalfunction.pending.type]: state => {
+      state.isLoadingRoles = true
+    },
+    [changeModelsInTypicalMalfunction.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingRoles = false
+      state.error = action.payload
+    },
   },
 })
 
 export const classifierReducer = classifierSlise.reducer
-export const { setActiveEquipment, setActiveModel } = classifierSlise.actions
+export const { setActiveEquipment, setActiveModel, setCompareData } =
+  classifierSlise.actions

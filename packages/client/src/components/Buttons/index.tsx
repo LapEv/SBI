@@ -15,6 +15,7 @@ export function Button(props: TButtonProps) {
 
 export { ButtonsSection } from './ButtonsSection'
 export { ButtonsModalSection } from './ButtonsModalSection'
+export { ButtonsSectionNoSubmit } from './ButtonsSectionNoSubmit'
 export { RotateButton } from './RotateButton'
 export { ThemeButton } from './ThemeButton'
 export { EditButton } from './EditButton'

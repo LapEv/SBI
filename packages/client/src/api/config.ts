@@ -63,6 +63,8 @@ export const ApiEndPoints = {
     newTypicalMalfunction: 'classifier/newTypicalMalfunction',
     deleteTypicalMalfunction: 'classifier/deleteTypicalMalfunction',
     changeTypicalMalfunction: 'classifier/changeTypicalMalfunction',
+    changeModelsInTypicalMalfunction:
+      'classifier/changeModelsInTypicalMalfunction',
   },
 }
 

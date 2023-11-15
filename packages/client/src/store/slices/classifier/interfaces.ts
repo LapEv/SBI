@@ -1,3 +1,5 @@
+import { DataList } from 'components/CheckBoxGroup/interface'
+
 export interface ClassifierEquipment {
   id?: string
   equipment: string
@@ -40,6 +42,7 @@ export type ClassifierState = {
   typicalMalfunctions: TypicalMalfunctions[]
   activeEquipment: string
   activeModel: string
+  compareData: DataList[]
   isLoadingRoles: boolean
   error?: string
 }
@@ -57,5 +60,11 @@ export interface ChangeClassifierModel {
 
 export interface ChangeTypicalMalfunction {
   typicalMalfunction: string
+  id: string
+}
+
+export interface ChangeModelsInTypicalMalfunction {
+  selectedTypicalMalfunction: string[]
+  id_equipment: string
   id: string
 }

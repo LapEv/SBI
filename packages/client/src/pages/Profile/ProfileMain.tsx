@@ -45,7 +45,6 @@ export function ProfileMain({ setModal, data }: ProfileMainProps) {
 
   const changeData = () => {
     if (file.info) {
-      console.log('Меняем аватарку')
       setMessage({
         text: 'В разработке',
         type: 'info',
@@ -53,7 +52,6 @@ export function ProfileMain({ setModal, data }: ProfileMainProps) {
       // changeAvatar(file)
     }
     if (!deepEqual(userData, data)) {
-      console.log('Меняем данные')
       updateUser(userData)
     }
   }

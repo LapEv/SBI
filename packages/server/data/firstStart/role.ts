@@ -279,4 +279,8 @@ export const rolesStartData = [
     role: 'changeTypicalMalfunction',
     nameRole: 'Изменение данных типовых неисправностей',
   },
+  {
+    role: 'changeModelsInTypicalMalfunction',
+    nameRole: 'Изменение данных типовых неисправностей по моделям',
+  },
 ]

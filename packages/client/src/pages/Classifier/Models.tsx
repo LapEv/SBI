@@ -1,23 +1,42 @@
 import React, { useEffect, useState, memo, SyntheticEvent } from 'react'
 import { Box, ListItemText, ListItemButton, Modal } from '@mui/material'
 import Collapse from '@mui/material/Collapse'
-import { EditButton, RotateButton } from 'components/Buttons'
+import {
+  ButtonsSectionNoSubmit,
+  EditButton,
+  RotateButton,
+} from 'components/Buttons'
+import { useTheme } from '@mui/material/styles'
+
 import { ClassifierModels } from 'store/slices/classifier/interfaces'
 import { useClassifier } from 'hooks/classifier/useClassifier'
 import { classifierChildComponent, flexColumn_FS_SA } from 'static/styles'
 import { Item } from 'components/CheckBoxGroup'
 import { DataList } from 'components/CheckBoxGroup/interface'
 import { ModalChangeName } from 'components/ModaQuestions'
+import { deepEqual } from 'utils/deepEqual'
 
 export const Models = memo(({ model, id_equipment, id }: ClassifierModels) => {
   const [
-    { activeModel, typicalMalfunctions },
-    { setActiveModel, getTypicalMalfunctionsById, changeClassifierModel },
+    { activeModel, typicalMalfunctions, compareData },
+    {
+      setActiveModel,
+      getTypicalMalfunctionsById,
+      changeClassifierModel,
+      setCompareData,
+      changeModelsInTypicalMalfunction,
+    },
   ] = useClassifier()
+  const theme = useTheme()
   const modalRef = React.createRef()
   const [open, setOpen] = useState(false)
   const [data, setData] = useState<DataList[]>([])
   const [modal, setModal] = useState<boolean>(false)
+  const [changeActive, setChangeActive] = useState<boolean>(true)
+  const [selectedTypicalMalfunction, setSelectedTypicalMalfunction] = useState<
+    string[]
+  >([])
+  const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
 
   const handleClick = () => {
     if (!open) {
@@ -28,24 +47,60 @@ export const Models = memo(({ model, id_equipment, id }: ClassifierModels) => {
   }
 
   useEffect(() => {
-    setData(
-      typicalMalfunctions.map(item => {
-        return {
-          name: item.typicalMalfunction,
-          id: item.id as string,
-          initChecked: item.models.includes(id as string),
-        }
-      })
-    )
+    const listData = typicalMalfunctions.map(item => {
+      return {
+        name: item.typicalMalfunction,
+        id: item.id as string,
+        initChecked: item.models.includes(id as string),
+      }
+    })
+    setData(listData)
+    setCompareData(listData)
+    setSelectedTypicalMalfunction(listData.map(item => item.id))
   }, [typicalMalfunctions])
 
   const onChooseItems = (checked: boolean, id: string) => {
-    // if (!checked) {
-    //   setSelectedRoles(selectedRoles.filter(value => value !== id))
-    //   return
-    // }
-    // setSelectedRoles([...selectedRoles, id])
-    // if ([...selectedRoles, id] && errSelectedItems) setErrSelectedItems(false)
+    const newData = data.map(item => {
+      return {
+        ...item,
+        initChecked: item.id === id ? checked : item.initChecked,
+      }
+    })
+    const isNotCompare =
+      newData.findIndex(
+        (item, index) => !deepEqual(item, compareData[index])
+      ) >= 0 ?? false
+
+    setData(newData)
+    setChangeActive(!isNotCompare)
+    if (!checked) {
+      setSelectedTypicalMalfunction(
+        selectedTypicalMalfunction.filter(value => value !== id)
+      )
+      return
+    }
+    setSelectedTypicalMalfunction([...selectedTypicalMalfunction, id])
+    if ([...selectedTypicalMalfunction, id] && errSelectedItems)
+      setErrSelectedItems(false)
+  }
+
+  const undoChanges = () => {
+    if (changeActive) return
+    setData(compareData)
+    setChangeActive(true)
+  }
+
+  const changeDataModels = () => {
+    if (!selectedTypicalMalfunction.length) {
+      setErrSelectedItems(true)
+      return
+    }
+    console.log('changeDataModels')
+    changeModelsInTypicalMalfunction({
+      selectedTypicalMalfunction,
+      id_equipment,
+      id: id as string,
+    })
   }
 
   const editModel = (event: SyntheticEvent<EventTarget>) => {
@@ -96,7 +151,7 @@ export const Models = memo(({ model, id_equipment, id }: ClassifierModels) => {
         <RotateButton open={open} size={'2rem'} />
       </ListItemButton>
       <Collapse
-        sx={{ width: '100%', p: 2, pl: 5, pr: 5 }}
+        sx={{ width: '100%', p: 2, pl: 5, pr: 5, height: 'auto' }}
         in={open}
         timeout="auto"
         unmountOnExit>
@@ -110,6 +165,18 @@ export const Models = memo(({ model, id_equipment, id }: ClassifierModels) => {
             key={id as string}
           />
         ))}
+        <Box sx={{ color: theme.palette.error.main, height: 20, ml: 5 }}>
+          {errSelectedItems &&
+            'Модель не может быть без типовых неисправностей!'}
+        </Box>
+        <ButtonsSectionNoSubmit
+          btnHandle={changeDataModels}
+          btnSecondHandle={undoChanges}
+          btnName="Сохранить"
+          btnDisabled={changeActive}
+          btnSecondName="Отменить"
+          btnSecondDisabled={false}
+        />
       </Collapse>
     </Box>
   )

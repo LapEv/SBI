@@ -44,7 +44,11 @@ export const Departments = ({
         />
         <RotateButton open={open} size={'2rem'} />
       </ListItemButton>
-      <Collapse sx={{ width: '100%' }} in={open} timeout="auto" unmountOnExit>
+      <Collapse
+        sx={{ width: '100%', height: 'auto' }}
+        in={open}
+        timeout="auto"
+        unmountOnExit>
         {users.map(value => (
           <ListUsers {...value} key={value.id} />
         ))}

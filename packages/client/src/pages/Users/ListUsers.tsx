@@ -45,7 +45,7 @@ export const ListUsers = memo((user: User) => {
         <RotateButton open={open} handleClick={handleClick} size={'2rem'} />
       </ListItemButton>
       <Collapse
-        sx={{ width: '100%', mt: 4, ml: 5 }}
+        sx={{ width: '100%', mt: 4, ml: 5, height: 'auto' }}
         in={open}
         timeout="auto"
         unmountOnExit>

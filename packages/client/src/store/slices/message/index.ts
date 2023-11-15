@@ -44,6 +44,7 @@ import {
   changeClassifierEquipment,
   changeClassifierModel,
   changeTypicalMalfunction,
+  changeModelsInTypicalMalfunction,
 } from 'api/classifier'
 
 const initialState: MessageState = {
@@ -612,6 +613,26 @@ export const messageSlise = createSlice({
       state.isLoadingMessage = true
     },
     [changeTypicalMalfunction.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [changeModelsInTypicalMalfunction.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [changeModelsInTypicalMalfunction.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [changeModelsInTypicalMalfunction.rejected.type]: (
       state,
       action: PayloadAction<string>
     ) => {

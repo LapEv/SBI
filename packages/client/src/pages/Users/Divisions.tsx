@@ -41,7 +41,11 @@ export const Divisions = ({ divisionName, id }: Division) => {
         />
         <RotateButton open={open} handleClick={handleClick} size={'2rem'} />
       </ListItemButton>
-      <Collapse sx={{ width: '100%' }} in={open} timeout="auto" unmountOnExit>
+      <Collapse
+        sx={{ width: '100%', height: 'auto' }}
+        in={open}
+        timeout="auto"
+        unmountOnExit>
         {departaments
           .filter(value => value.id_division === id)
           .map(value => (

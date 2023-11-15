@@ -68,7 +68,11 @@ export const Equipments = memo(({ equipment, id }: ClassifierEquipment) => {
         <EditButton handleClick={editEquipment} size={'1.7rem'} />
         <RotateButton open={open} handleClick={handleClick} size={'2rem'} />
       </ListItemButton>
-      <Collapse sx={{ width: '100%' }} in={open} timeout="auto" unmountOnExit>
+      <Collapse
+        sx={{ width: '100%', height: 'auto' }}
+        in={open}
+        timeout="auto"
+        unmountOnExit>
         {models.map(({ model, id, id_equipment }) => (
           <Models
             model={model}

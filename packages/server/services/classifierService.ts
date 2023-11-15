@@ -4,6 +4,7 @@ import {
   TypicalMalfunctionsRepos,
 } from '../db'
 import type { Request, Response } from 'express'
+import { typicalMalfunctions } from '/models/classifier'
 
 export class classifierService {
   newClassifierEquipment = async (_req: Request, res: Response) => {
@@ -353,18 +354,26 @@ export class classifierService {
     console.log('id = ', id)
     try {
       // await TypicalMalfunctionsRepos.update(id, { typicalMalfunction })
-      const typicalMalfunctions = await Promise.all([
-        await selectedTypicalMalfunction.map(async (id: string) => {
-          const type = await TypicalMalfunctionsRepos.findAll({
-            where: { id },
-          })
-
-          console.log('type = ', type)
-        }),
-        await TypicalMalfunctionsRepos.findAll({ where: { active: true } }),
-      ])
-      // res.status(200).json(typicalMalfunctions[1])
-      res.status(200).json(typicalMalfunctions)
+      const type = await TypicalMalfunctionsRepos.findAll({
+        where: { id_equipment },
+      })
+      const newType = type.map(value => {
+        if (
+          value.models.includes(id) &&
+          selectedTypicalMalfunction.includes(value.typicalMalfunction)
+        ) {
+          return value
+        }
+        if (
+          value.models.includes(id) &&
+          !selectedTypicalMalfunction.includes(value.typicalMalfunction)
+        ) {
+          return value.models.filter(id)
+        }
+      })
+      await TypicalMalfunctionsRepos.findAll({ where: { active: true } }),
+        // res.status(200).json(typicalMalfunctions[1])
+        res.status(200).json(type)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */

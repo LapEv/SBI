@@ -8,13 +8,17 @@ import {
 } from 'components/Buttons'
 import { useTheme } from '@mui/material/styles'
 
-import { ClassifierModels } from 'store/slices/classifier/interfaces'
+import {
+  ClassifierModels,
+  TypicalMalfunctions,
+} from 'store/slices/classifier/interfaces'
 import { useClassifier } from 'hooks/classifier/useClassifier'
 import { classifierChildComponent, flexColumn_FS_SA } from 'static/styles'
 import { Item } from 'components/CheckBoxGroup'
 import { DataList } from 'components/CheckBoxGroup/interface'
 import { ModalChangeName } from 'components/ModaQuestions'
 import { deepEqual } from 'utils/deepEqual'
+import { TypeModels } from './Modals/interfaces'
 
 export const Models = memo(({ model, id_equipment, id }: ClassifierModels) => {
   const [
@@ -33,11 +37,13 @@ export const Models = memo(({ model, id_equipment, id }: ClassifierModels) => {
   const [data, setData] = useState<DataList[]>([])
   const [modal, setModal] = useState<boolean>(false)
   const [changeActive, setChangeActive] = useState<boolean>(true)
-  const [selectedTypicalMalfunction, setSelectedTypicalMalfunction] = useState<
-    string[]
-  >([])
+  // const [selectedTypicalMalfunction, setSelectedTypicalMalfunction] = useState<
+  //   string[]
+  // >([])
   const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
+  const [type, setType] = useState<TypicalMalfunctions[]>([])
 
+  const id_model = id
   const handleClick = () => {
     if (!open) {
       getTypicalMalfunctionsById(id_equipment)
@@ -56,33 +62,87 @@ export const Models = memo(({ model, id_equipment, id }: ClassifierModels) => {
     })
     setData(listData)
     setCompareData(listData)
-    setSelectedTypicalMalfunction(listData.map(item => item.id))
+    setType(typicalMalfunctions)
   }, [typicalMalfunctions])
 
   const onChooseItems = (checked: boolean, id: string) => {
-    const newData = data.map(item => {
-      return {
-        ...item,
-        initChecked: item.id === id ? checked : item.initChecked,
-      }
-    })
-    const isNotCompare =
-      newData.findIndex(
-        (item, index) => !deepEqual(item, compareData[index])
-      ) >= 0 ?? false
+    // const newData = data.map(item => {
+    //   return {
+    //     ...item,
+    //     initChecked: item.id === id ? checked : item.initChecked,
+    //   }
+    // })
+    // const isNotCompare =
+    //   newData.findIndex(
+    //     (item, index) => !deepEqual(item, compareData[index])
+    //   ) >= 0 ?? false
 
-    setData(newData)
-    setChangeActive(!isNotCompare)
+    // // setData(newData)
+    // setChangeActive(!isNotCompare)
+
+    // const newType = typicalMalfunctions.filter(item => item.id === id)[0]
+    console.log('type = ', type)
+    // console.log('newType = ', newType)
+    console.log('id_model = ', id_model)
     if (!checked) {
-      setSelectedTypicalMalfunction(
-        selectedTypicalMalfunction.filter(value => value !== id)
+      setType(
+        type.map(item =>
+          item.id !== id
+            ? item
+            : {
+                ...item,
+                models: item.models.filter(value => value !== id_model),
+              }
+        )
       )
+      // console.log(
+      //   'type end = ',
+      //   type.map(item =>
+      //     item.id !== id
+      //       ? item
+      //       : {
+      //           ...item,
+      //           models: item.models.filter(value => value !== id_model),
+      //         }
+      //   )
+      // )
+      // console.log('id_model = ', id_model)
+      // const newModels = newType.models.filter(
+      //   models => !models.includes(id_model as string)
+      // )
+      // console.log('newModels = ', newModels)
+      // setType(
+      //   type.map(item =>
+      //     item.id != newType.id ? item : { id, models: newModels }
+      //   )
+      // )
+      // console.log(
+      //   'type end = ',
+      //   type.map(item =>
+      //     item.id != newType.id ? item : { id, models: newModels }
+      //   )
+      // )
       return
     }
-    setSelectedTypicalMalfunction([...selectedTypicalMalfunction, id])
-    if ([...selectedTypicalMalfunction, id] && errSelectedItems)
-      setErrSelectedItems(false)
+    // newType.models.push(id_model as string)
+    // console.log('newType = ', newType)
+    setType(type.map(item => (item.id !== id ? item : checkArrayPush(item))))
+    // console.log(
+    //   'type end = ',
+    //   type.map(item => (item.id !== id ? item : checkArrayPush(item)))
+    // )
   }
+
+  const checkArrayPush = (item: any) => {
+    if (item.models.includes(id_model)) return item
+    item.models.push(id_model)
+    return item
+  }
+
+  useEffect(() => {
+    const temp = deepEqual(type, typicalMalfunctions)
+    console.log('temp = ', temp)
+  }, [type])
 
   const undoChanges = () => {
     if (changeActive) return
@@ -91,16 +151,15 @@ export const Models = memo(({ model, id_equipment, id }: ClassifierModels) => {
   }
 
   const changeDataModels = () => {
-    if (!selectedTypicalMalfunction.length) {
-      setErrSelectedItems(true)
-      return
-    }
-    console.log('changeDataModels')
-    changeModelsInTypicalMalfunction({
-      selectedTypicalMalfunction,
-      id_equipment,
-      id: id as string,
-    })
+    // if (!selectedTypicalMalfunction.length) {
+    //   setErrSelectedItems(true)
+    //   return
+    // }
+    // changeModelsInTypicalMalfunction({
+    //   selectedTypicalMalfunction,
+    //   id_equipment,
+    //   id: id as string,
+    // })
   }
 
   const editModel = (event: SyntheticEvent<EventTarget>) => {

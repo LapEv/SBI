@@ -13,3 +13,8 @@ export interface AddValuesProps {
     type: string
   }[]
 }
+
+export interface TypeModels {
+  id: string
+  models: string[]
+}

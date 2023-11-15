@@ -4,7 +4,6 @@ import {
   TypicalMalfunctionsRepos,
 } from '../db'
 import type { Request, Response } from 'express'
-import { typicalMalfunctions } from '/models/classifier'
 
 export class classifierService {
   newClassifierEquipment = async (_req: Request, res: Response) => {
@@ -357,20 +356,29 @@ export class classifierService {
       const type = await TypicalMalfunctionsRepos.findAll({
         where: { id_equipment },
       })
-      const newType = type.map(value => {
-        if (
-          value.models.includes(id) &&
-          selectedTypicalMalfunction.includes(value.typicalMalfunction)
-        ) {
-          return value
-        }
-        if (
-          value.models.includes(id) &&
-          !selectedTypicalMalfunction.includes(value.typicalMalfunction)
-        ) {
-          return value.models.filter(id)
-        }
-      })
+      // const newType = type.map(value => {
+      //   console.log('models = ', value.models)
+      //   console.log('value.models.includes(id)  = ', value.models.includes(id))
+      //   console.log(
+      //     'selectedTypicalMalfunction.includes(value.typicalMalfunction) = ',
+      //     selectedTypicalMalfunction.includes(value.id)
+      //   )
+
+      //   if (
+      //     value.models.includes(id) &&
+      //     selectedTypicalMalfunction.includes(value.id)
+      //   ) {
+      //     return value
+      //   }
+      //   if (
+      //     value.models.includes(id) &&
+      //     !selectedTypicalMalfunction.includes(value.id)
+      //   ) {
+      //     console.log('value.models.filter(id) = ', value.models.filter(id))
+      //     return value.models.filter(id)
+      //   }
+      // })
+      // console.log('new = ', newType)
       await TypicalMalfunctionsRepos.findAll({ where: { active: true } }),
         // res.status(200).json(typicalMalfunctions[1])
         res.status(200).json(type)

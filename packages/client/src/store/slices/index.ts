@@ -4,6 +4,7 @@ import { classifierReducer } from './classifier'
 import { messageReducer } from './message'
 import { rolesReducer } from './roles'
 import { structureReducer } from './structure'
+import { slaReducer } from './sla'
 
 export const rootReducer = {
   auth: authReducer,
@@ -12,4 +13,5 @@ export const rootReducer = {
   message: messageReducer,
   addresses: addressesReducer,
   classifier: classifierReducer,
+  sla: slaReducer,
 }

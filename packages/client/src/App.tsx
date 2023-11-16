@@ -106,6 +106,14 @@ function App() {
                     </RequiredAuth>
                   }
                 />
+                <Route
+                  path={Paths.ServiceLevel}
+                  element={
+                    <RequiredAuth>
+                      <Pages.ServiceLevel />
+                    </RequiredAuth>
+                  }
+                />
               </Route>
               <Route path={Paths.NotFounde} element={<Pages.Error />} />
             </Routes>

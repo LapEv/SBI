@@ -36,7 +36,7 @@ const initialState: ClassifierState = {
 }
 
 export const classifierSlise = createSlice({
-  name: 'role',
+  name: 'classifier',
   initialState,
   reducers: {
     setActiveEquipment(state, action) {

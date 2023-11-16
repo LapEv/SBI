@@ -66,6 +66,16 @@ export const ApiEndPoints = {
     changeModelsInTypicalMalfunction:
       'classifier/changeModelsInTypicalMalfunction',
   },
+  SLA: {
+    getSLA: 'SLA/getSLA',
+    newSLA: 'SLA/newSLA',
+    deleteSLA: 'SLA/deleteSLA',
+    changeSLA: 'SLA/changeSLA',
+    getOLA: 'SLA/getOLA',
+    newOLA: 'SLA/newOLA',
+    deleteOLA: 'SLA/deleteOLA',
+    changeOLA: 'SLA/changeOLA',
+  },
 }
 
 const url = `http://localhost:${__SERVER_PORT__}/api/`

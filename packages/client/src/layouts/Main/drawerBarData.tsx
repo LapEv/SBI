@@ -5,6 +5,7 @@ import {
   Users,
   Warehouse,
   Classifier,
+  SLA,
 } from 'layouts/Main/icons'
 import { Routes } from 'utils/routes'
 import Diversity3Icon from '@mui/icons-material/Diversity3'
@@ -16,6 +17,7 @@ export const menuData = [
   { text: 'Классификатор', icon: <Classifier />, to: Routes.Classifier },
   { text: 'Пользователи', icon: <Users />, to: Routes.Users },
   { text: 'Клиенты', icon: <Diversity3Icon />, to: Routes.Clients },
+  { text: 'Уровни сервиса', icon: <SLA />, to: Routes.ServiceLevel },
   { text: 'Профиль', icon: <Profile />, to: `/${Routes.Profile}` },
 ]
 

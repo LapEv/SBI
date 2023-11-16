@@ -43,6 +43,14 @@ import {
   changeTypicalMalfunction,
   changeModelsInTypicalMalfunction,
 } from 'api/classifier'
+import {
+  changeOLA,
+  changeSLA,
+  deleteOLA,
+  deleteSLA,
+  newOLA,
+  newSLA,
+} from 'api/sla'
 
 const initialState: MessageState = {
   text: '',
@@ -633,6 +641,98 @@ export const messageSlise = createSlice({
       state,
       action: PayloadAction<string>
     ) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [newSLA.fulfilled.type]: (state, action: PayloadAction<AnswerMessage>) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [newSLA.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [newSLA.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [deleteSLA.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [deleteSLA.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [deleteSLA.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [changeSLA.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [changeSLA.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [changeSLA.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [newOLA.fulfilled.type]: (state, action: PayloadAction<AnswerMessage>) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [newOLA.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [newOLA.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [deleteOLA.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [deleteOLA.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [deleteOLA.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [changeOLA.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [changeOLA.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [changeOLA.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingMessage = false
       state.type = 'error'
       state.text = action.payload

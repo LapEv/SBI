@@ -32,7 +32,6 @@ const initialState: ClassifierState = {
   typicalMalfunctions: [],
   activeEquipment: '',
   activeModel: '',
-  compareData: [],
   isLoadingRoles: false,
 }
 
@@ -45,9 +44,6 @@ export const classifierSlise = createSlice({
     },
     setActiveModel(state, action) {
       state.activeModel = action.payload
-    },
-    setCompareData(state, action) {
-      state.compareData = action.payload
     },
   },
   extraReducers: {
@@ -326,5 +322,4 @@ export const classifierSlise = createSlice({
 })
 
 export const classifierReducer = classifierSlise.reducer
-export const { setActiveEquipment, setActiveModel, setCompareData } =
-  classifierSlise.actions
+export const { setActiveEquipment, setActiveModel } = classifierSlise.actions

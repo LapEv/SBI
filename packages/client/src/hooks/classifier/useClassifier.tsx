@@ -20,11 +20,7 @@ import {
   changeModelsInTypicalMalfunction,
 } from 'api/classifier'
 import { ClassifierState } from 'store/slices/classifier/interfaces'
-import {
-  setActiveEquipment,
-  setActiveModel,
-  setCompareData,
-} from 'store/slices/classifier'
+import { setActiveEquipment, setActiveModel } from 'store/slices/classifier'
 
 export function useClassifier(): [ClassifierState, ClassifierActions] {
   const classifier = useSelector((state: RootState) => state.classifier)
@@ -75,17 +71,22 @@ export function useClassifier(): [ClassifierState, ClassifierActions] {
       changeTypicalMalfunction(data) {
         dispatch(changeTypicalMalfunction(data))
       },
-      changeModelsInTypicalMalfunction(data) {
-        dispatch(changeModelsInTypicalMalfunction(data))
+      changeModelsInTypicalMalfunction({
+        id_equipment,
+        newTypicalMalfunction,
+      }) {
+        dispatch(
+          changeModelsInTypicalMalfunction({
+            id_equipment,
+            newTypicalMalfunction,
+          })
+        )
       },
       setActiveEquipment(id) {
         dispatch(setActiveEquipment(id))
       },
       setActiveModel(id) {
         dispatch(setActiveModel(id))
-      },
-      setCompareData(data) {
-        dispatch(setCompareData(data))
       },
     },
   ]

@@ -6,7 +6,6 @@ export function deepEqual(object1: any, object2: any) {
   if (!isObject(object1) || !isObject(object2)) {
     return object1 === object2
   }
-
   const keys1: string[] = Object.keys(object1)
   const keys2: string[] = Object.keys(object2)
   if (keys1.length !== keys2.length) {

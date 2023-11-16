@@ -9,6 +9,7 @@ import {
   ChangeClassifierModel,
   ChangeTypicalMalfunction,
   ChangeModelsInTypicalMalfunction,
+  ShortTypicalMalfunctions,
 } from 'store/slices/classifier/interfaces'
 
 export const getClassifierEquipments = createAsyncThunk(
@@ -337,17 +338,13 @@ export const changeTypicalMalfunction = createAsyncThunk(
 export const changeModelsInTypicalMalfunction = createAsyncThunk(
   'classifier/changeModelsInTypicalMalfunction',
   async (
-    {
-      selectedTypicalMalfunction,
-      id_equipment,
-      id,
-    }: ChangeModelsInTypicalMalfunction,
+    { id_equipment, newTypicalMalfunction }: ChangeModelsInTypicalMalfunction,
     thunkAPI
   ) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Classifier.changeModelsInTypicalMalfunction,
-        { selectedTypicalMalfunction, id_equipment, id }
+        { id_equipment, newTypicalMalfunction }
       )
       return {
         data,

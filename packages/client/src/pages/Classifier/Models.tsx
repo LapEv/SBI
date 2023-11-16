@@ -7,9 +7,10 @@ import {
   RotateButton,
 } from 'components/Buttons'
 import { useTheme } from '@mui/material/styles'
-
 import {
+  ChangeModelsInTypicalMalfunction,
   ClassifierModels,
+  ShortTypicalMalfunctions,
   TypicalMalfunctions,
 } from 'store/slices/classifier/interfaces'
 import { useClassifier } from 'hooks/classifier/useClassifier'
@@ -17,17 +18,16 @@ import { classifierChildComponent, flexColumn_FS_SA } from 'static/styles'
 import { Item } from 'components/CheckBoxGroup'
 import { DataList } from 'components/CheckBoxGroup/interface'
 import { ModalChangeName } from 'components/ModaQuestions'
-import { deepEqual } from 'utils/deepEqual'
-import { TypeModels } from './Modals/interfaces'
+import { сheckArrObjects } from 'utils/сheckArrObjects'
+import { EmptyTypicalMalfunctions } from './data'
 
 export const Models = memo(({ model, id_equipment, id }: ClassifierModels) => {
   const [
-    { activeModel, typicalMalfunctions, compareData },
+    { activeModel, typicalMalfunctions },
     {
       setActiveModel,
       getTypicalMalfunctionsById,
       changeClassifierModel,
-      setCompareData,
       changeModelsInTypicalMalfunction,
     },
   ] = useClassifier()
@@ -37,13 +37,15 @@ export const Models = memo(({ model, id_equipment, id }: ClassifierModels) => {
   const [data, setData] = useState<DataList[]>([])
   const [modal, setModal] = useState<boolean>(false)
   const [changeActive, setChangeActive] = useState<boolean>(true)
-  // const [selectedTypicalMalfunction, setSelectedTypicalMalfunction] = useState<
-  //   string[]
-  // >([])
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([])
   const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
+  const [resetData, setResetData] = useState<boolean>(false)
   const [type, setType] = useState<TypicalMalfunctions[]>([])
-
+  const [newTypicalMalfunction, setNewTypicalMalfunction] = useState<
+    ShortTypicalMalfunctions[]
+  >(EmptyTypicalMalfunctions)
   const id_model = id
+
   const handleClick = () => {
     if (!open) {
       getTypicalMalfunctionsById(id_equipment)
@@ -52,7 +54,7 @@ export const Models = memo(({ model, id_equipment, id }: ClassifierModels) => {
     setOpen(!open)
   }
 
-  useEffect(() => {
+  const setDataList = () => {
     const listData = typicalMalfunctions.map(item => {
       return {
         name: item.typicalMalfunction,
@@ -61,29 +63,19 @@ export const Models = memo(({ model, id_equipment, id }: ClassifierModels) => {
       }
     })
     setData(listData)
-    setCompareData(listData)
     setType(typicalMalfunctions)
+    setSelectedTypes(
+      listData
+        .map(item => (item.initChecked ? item.id : ''))
+        .filter(item => item !== '')
+    )
+  }
+
+  useEffect(() => {
+    setDataList()
   }, [typicalMalfunctions])
 
   const onChooseItems = (checked: boolean, id: string) => {
-    // const newData = data.map(item => {
-    //   return {
-    //     ...item,
-    //     initChecked: item.id === id ? checked : item.initChecked,
-    //   }
-    // })
-    // const isNotCompare =
-    //   newData.findIndex(
-    //     (item, index) => !deepEqual(item, compareData[index])
-    //   ) >= 0 ?? false
-
-    // // setData(newData)
-    // setChangeActive(!isNotCompare)
-
-    // const newType = typicalMalfunctions.filter(item => item.id === id)[0]
-    console.log('type = ', type)
-    // console.log('newType = ', newType)
-    console.log('id_model = ', id_model)
     if (!checked) {
       setType(
         type.map(item =>
@@ -95,71 +87,52 @@ export const Models = memo(({ model, id_equipment, id }: ClassifierModels) => {
               }
         )
       )
-      // console.log(
-      //   'type end = ',
-      //   type.map(item =>
-      //     item.id !== id
-      //       ? item
-      //       : {
-      //           ...item,
-      //           models: item.models.filter(value => value !== id_model),
-      //         }
-      //   )
-      // )
-      // console.log('id_model = ', id_model)
-      // const newModels = newType.models.filter(
-      //   models => !models.includes(id_model as string)
-      // )
-      // console.log('newModels = ', newModels)
-      // setType(
-      //   type.map(item =>
-      //     item.id != newType.id ? item : { id, models: newModels }
-      //   )
-      // )
-      // console.log(
-      //   'type end = ',
-      //   type.map(item =>
-      //     item.id != newType.id ? item : { id, models: newModels }
-      //   )
-      // )
+      setSelectedTypes(selectedTypes.filter(value => value !== id))
       return
     }
-    // newType.models.push(id_model as string)
-    // console.log('newType = ', newType)
     setType(type.map(item => (item.id !== id ? item : checkArrayPush(item))))
-    // console.log(
-    //   'type end = ',
-    //   type.map(item => (item.id !== id ? item : checkArrayPush(item)))
-    // )
+    setSelectedTypes([...selectedTypes, id])
   }
 
   const checkArrayPush = (item: any) => {
-    if (item.models.includes(id_model)) return item
-    item.models.push(id_model)
-    return item
+    const newItemModels = [...item.models]
+    if (newItemModels.includes(id_model)) return item
+    newItemModels.push(id_model)
+    return { ...item, models: newItemModels }
   }
 
   useEffect(() => {
-    const temp = deepEqual(type, typicalMalfunctions)
-    console.log('temp = ', temp)
+    const isEqualArr = сheckArrObjects(
+      type,
+      typicalMalfunctions
+    ) as ShortTypicalMalfunctions[]
+    setChangeActive(isEqualArr.length ? false : true)
+    setNewTypicalMalfunction(isEqualArr)
+    if (!selectedTypes.length) {
+      setErrSelectedItems(true)
+      return
+    }
+    setErrSelectedItems(false)
   }, [type])
 
   const undoChanges = () => {
     if (changeActive) return
-    setData(compareData)
+    setData([{ name: '', id: '', initChecked: false }])
     setChangeActive(true)
+    setErrSelectedItems(false)
+    setResetData(true)
   }
 
+  useEffect(() => {
+    setDataList()
+    setResetData(false)
+  }, [resetData])
+
   const changeDataModels = () => {
-    // if (!selectedTypicalMalfunction.length) {
-    //   setErrSelectedItems(true)
-    //   return
-    // }
-    // changeModelsInTypicalMalfunction({
-    //   selectedTypicalMalfunction,
-    //   id_equipment,
-    //   id: id as string,
-    // })
+    if (errSelectedItems) return
+    console.log('newTypicalMalfunction = ', newTypicalMalfunction)
+    console.log('id_equipment = ', id_equipment)
+    changeModelsInTypicalMalfunction({ id_equipment, newTypicalMalfunction })
   }
 
   const editModel = (event: SyntheticEvent<EventTarget>) => {

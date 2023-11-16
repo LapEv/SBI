@@ -5,6 +5,10 @@ import {
 } from '../db'
 import type { Request, Response } from 'express'
 
+interface ShortTypicalMalfunctions {
+  models: string[]
+  id: string
+}
 export class classifierService {
   newClassifierEquipment = async (_req: Request, res: Response) => {
     try {
@@ -347,41 +351,21 @@ export class classifierService {
   }
 
   changeModelsInTypicalMalfunction = async (_req: Request, res: Response) => {
-    const { selectedTypicalMalfunction, id_equipment, id } = _req.body
-    console.log('selectedTypicalMalfunction = ', selectedTypicalMalfunction)
-    console.log('id_equipment = ', id_equipment)
-    console.log('id = ', id)
+    const { id_equipment, newTypicalMalfunction } = _req.body
     try {
-      // await TypicalMalfunctionsRepos.update(id, { typicalMalfunction })
-      const type = await TypicalMalfunctionsRepos.findAll({
-        where: { id_equipment },
-      })
-      // const newType = type.map(value => {
-      //   console.log('models = ', value.models)
-      //   console.log('value.models.includes(id)  = ', value.models.includes(id))
-      //   console.log(
-      //     'selectedTypicalMalfunction.includes(value.typicalMalfunction) = ',
-      //     selectedTypicalMalfunction.includes(value.id)
-      //   )
-
-      //   if (
-      //     value.models.includes(id) &&
-      //     selectedTypicalMalfunction.includes(value.id)
-      //   ) {
-      //     return value
-      //   }
-      //   if (
-      //     value.models.includes(id) &&
-      //     !selectedTypicalMalfunction.includes(value.id)
-      //   ) {
-      //     console.log('value.models.filter(id) = ', value.models.filter(id))
-      //     return value.models.filter(id)
-      //   }
-      // })
-      // console.log('new = ', newType)
-      await TypicalMalfunctionsRepos.findAll({ where: { active: true } }),
-        // res.status(200).json(typicalMalfunctions[1])
-        res.status(200).json(type)
+      const typicalMalfunctions = await Promise.all([
+        await newTypicalMalfunction.map(
+          async ({ id, models }: ShortTypicalMalfunctions) => {
+            await TypicalMalfunctionsRepos.update(id, {
+              models,
+            })
+          }
+        ),
+        await TypicalMalfunctionsRepos.findAll({
+          where: { active: true, id_equipment },
+        }),
+      ])
+      res.status(200).json(typicalMalfunctions[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */

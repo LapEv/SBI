@@ -42,7 +42,6 @@ export type ClassifierState = {
   typicalMalfunctions: TypicalMalfunctions[]
   activeEquipment: string
   activeModel: string
-  compareData: DataList[]
   isLoadingRoles: boolean
   error?: string
 }
@@ -63,8 +62,12 @@ export interface ChangeTypicalMalfunction {
   id: string
 }
 
-export interface ChangeModelsInTypicalMalfunction {
-  selectedTypicalMalfunction: string[]
-  id_equipment: string
+export interface ShortTypicalMalfunctions {
+  models: string[]
   id: string
+}
+
+export interface ChangeModelsInTypicalMalfunction {
+  newTypicalMalfunction: ShortTypicalMalfunctions[]
+  id_equipment: string
 }

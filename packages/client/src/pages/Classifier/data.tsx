@@ -97,3 +97,11 @@ export const MapNewTypicalMalfunctionsInputFields = [
     type: 'text',
   },
 ]
+
+export const EmptyTypicalMalfunctions = [
+  {
+    models: [''],
+    id: '',
+    id_equipment: '',
+  },
+]

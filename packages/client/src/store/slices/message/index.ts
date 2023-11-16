@@ -32,9 +32,6 @@ import {
   newRegion,
 } from 'api/address'
 import {
-  getClassifierEquipments,
-  getClassifierModels,
-  getTypicalMalfunctions,
   newClassifierEquipment,
   newClassifierModel,
   newTypicalMalfunction,

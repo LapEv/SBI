@@ -81,7 +81,6 @@ export class classifierService {
   }
   pullClassifierEquipmentFromArchive = async (_req: Request, res: Response) => {
     const { selectedClassifierEquipments } = _req.body
-    console.log('selectedClassifierEquipments = ', selectedClassifierEquipments)
     try {
       await ClassifierEquipmentRepos.update(selectedClassifierEquipments, {
         active: true,

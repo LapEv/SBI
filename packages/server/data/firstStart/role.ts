@@ -266,7 +266,6 @@ export const rolesStartData = [
     nameRole:
       'Получение полного списка активных типовых неисправностей по ID оборудования',
   },
-
   {
     role: 'newTypicalMalfunction',
     nameRole: 'Создание нового типовых неисправностей',
@@ -282,5 +281,37 @@ export const rolesStartData = [
   {
     role: 'changeModelsInTypicalMalfunction',
     nameRole: 'Изменение данных типовых неисправностей по моделям',
+  },
+  {
+    role: 'getSLA',
+    nameRole: 'Получение списка активных SLA',
+  },
+  {
+    role: 'newSLA',
+    nameRole: 'Создание нового SLA',
+  },
+  {
+    role: 'deleteSLA',
+    nameRole: 'Перемещение SLA в архив',
+  },
+  {
+    role: 'changeSLA',
+    nameRole: 'Изменение данных SLA',
+  },
+  {
+    role: 'getOLA',
+    nameRole: 'Получение списка активных OLA',
+  },
+  {
+    role: 'newOLA',
+    nameRole: 'Создание нового OLA',
+  },
+  {
+    role: 'deleteOLA',
+    nameRole: 'Перемещение OLA в архив',
+  },
+  {
+    role: 'changeOLA',
+    nameRole: 'Изменение данных OLA',
   },
 ]

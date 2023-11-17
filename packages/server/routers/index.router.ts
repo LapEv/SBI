@@ -7,6 +7,7 @@ import { userStatusRouter } from './userStatusRouter'
 import { addressRouter } from './addressRouter'
 import { clientRouter } from './clientRouter'
 import { classifierRouter } from './classifierRouter'
+import { slaRouter } from './slaRouter'
 
 export const apiRouter: Router = Router()
 
@@ -19,3 +20,4 @@ addressRouter(apiRouter)
 addressRouter(apiRouter)
 clientRouter(apiRouter)
 classifierRouter(apiRouter)
+slaRouter(apiRouter)

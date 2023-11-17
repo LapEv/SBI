@@ -14,6 +14,8 @@ import {
   classifierEquipment,
   classifierModels,
   typicalMalfunctions,
+  sla,
+  ola,
 } from './models/index.models'
 import { firstStart } from './data/firstStart/index.startData'
 import { addresses, regions } from './models/adresses'
@@ -62,6 +64,9 @@ export const TypicalMalfunctions = sequelize.define(
   typicalMalfunctions,
   {}
 )
+
+export const SLA = sequelize.define('SLA', sla, {})
+export const OLA = sequelize.define('OLA', ola, {})
 
 RolesGroup.belongsToMany(Roles, { through: 'ThroughRolesGroup' })
 Roles.belongsToMany(RolesGroup, { through: 'ThroughRolesGroup' })
@@ -127,6 +132,9 @@ export const ClassifierModelsRepos = new Repository(
 export const TypicalMalfunctionsRepos = new Repository(
   TypicalMalfunctions as ModelCtor
 )
+
+export const SLARepos = new Repository(SLA as ModelCtor)
+export const OLARepos = new Repository(OLA as ModelCtor)
 
 export async function dbConnect() {
   try {

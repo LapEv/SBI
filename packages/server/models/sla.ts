@@ -1,37 +1,37 @@
 import type { ModelAttributes } from 'sequelize'
 import { DataType, Model } from 'sequelize-typescript'
 
-export interface Contracts {
+export interface SLA {
   id: string
-  contract: object
-  sla: object
-  equipment: object[]
-  objects: object[]
+  sla: string
+  time: string
+  timeStart: string
+  timeEnd: string
   active: boolean
 }
 
-export const contracts: ModelAttributes<Model, Contracts> = {
+export const sla: ModelAttributes<Model, SLA> = {
   id: {
     type: DataType.STRING,
     defaultValue: DataType.UUIDV4,
     allowNull: false,
     primaryKey: true,
   },
-  contract: {
+  sla: {
     type: DataType.STRING,
     allowNull: false,
     unique: true,
   },
-  sla: {
-    type: DataType.JSONB,
+  time: {
+    type: DataType.STRING,
     allowNull: false,
   },
-  equipment: {
-    type: DataType.ARRAY(DataType.JSONB),
+  timeStart: {
+    type: DataType.TIME,
     allowNull: false,
   },
-  objects: {
-    type: DataType.ARRAY(DataType.JSONB),
+  timeEnd: {
+    type: DataType.TIME,
     allowNull: false,
   },
   active: {
@@ -40,27 +40,37 @@ export const contracts: ModelAttributes<Model, Contracts> = {
   },
 }
 
-export interface Objects {
+export interface OLA {
   id: string
-  object: string
-  internalClientId: string
+  ola: string
+  time: string
+  timeStart: string
+  timeEnd: string
   active: boolean
 }
 
-export const objects: ModelAttributes<Model, Objects> = {
+export const ola: ModelAttributes<Model, OLA> = {
   id: {
     type: DataType.STRING,
     defaultValue: DataType.UUIDV4,
     allowNull: false,
     primaryKey: true,
   },
-  object: {
+  ola: {
     type: DataType.STRING,
     allowNull: false,
     unique: true,
   },
-  internalClientId: {
+  time: {
     type: DataType.STRING,
+    allowNull: false,
+  },
+  timeStart: {
+    type: DataType.TIME,
+    allowNull: false,
+  },
+  timeEnd: {
+    type: DataType.TIME,
     allowNull: false,
   },
   active: {

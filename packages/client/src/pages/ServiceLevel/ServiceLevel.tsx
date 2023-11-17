@@ -48,13 +48,13 @@ export function ServiceLevelPage() {
       </Modal>
       <Box component="div" sx={headerForPages}>
         <Typography sx={{ fontWeight: 'bold', fontSize: '2.375rem' }}>
-          Классификатор
+          Уровни сервиса
         </Typography>
         {admin && (
           <DropDownMenu
             popover={'Добавить/Удалить'}
             data={menuData}
-            divider={[3, 6]}
+            divider={[2, 4]}
             onClick={checkClickMenu}
           />
         )}

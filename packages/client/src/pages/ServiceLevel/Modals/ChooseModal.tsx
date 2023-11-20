@@ -1,5 +1,5 @@
 import React from 'react'
-import { DeleteSLA, DeleteOLA } from './'
+import { DeleteSLA, DeleteOLA, NewSLA, NewOLA } from './'
 import { ModalTitles } from '../data'
 import { ChooseModalProps } from './interfaces'
 
@@ -7,6 +7,20 @@ export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(
   ({ modalImage, handleModal }: ChooseModalProps, ref) => {
     return (
       <>
+        {modalImage === 'newSLA' && (
+          <NewSLA
+            ref={ref}
+            handleModal={handleModal}
+            title={ModalTitles.newSLA}
+          />
+        )}
+        {modalImage === 'newOLA' && (
+          <NewOLA
+            ref={ref}
+            handleModal={handleModal}
+            title={ModalTitles.newOLA}
+          />
+        )}
         {modalImage === 'deleteSLA' && (
           <DeleteSLA
             ref={ref}

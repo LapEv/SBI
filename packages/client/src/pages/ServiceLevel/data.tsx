@@ -1,14 +1,4 @@
-import {
-  coordinatesValidation,
-  emailValidation,
-  loginValidation,
-  nameValidation,
-  passwordValidation,
-  lightTextValidation,
-  textValidation,
-  textValidationENGlowercase,
-  textValidationlowercase,
-} from 'utils/validatorRules'
+import { timeValidation, textValidationlowercase } from 'utils/validatorRules'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
 import EditIcon from '@mui/icons-material/Edit'
@@ -54,46 +44,38 @@ export const ModalTitles = {
   changeOLA: 'Изменить OLA',
 }
 
-// export const MapClassifierInputFields = [
-//   {
-//     name: 'classifier',
-//     label: 'Введите новую классификацию оборудования',
-//     validation: textValidationlowercase,
-//     type: 'text',
-//   },
-// ]
+export const MapSLAInputFields = [
+  {
+    name: 'sla',
+    label: 'Введите новый SLA',
+    validation: textValidationlowercase,
+    type: 'text',
+  },
+  {
+    name: 'time',
+    label: 'Выберите время реакции',
+    validation: timeValidation,
+    type: 'time',
+  },
+  {
+    name: 'timeStart',
+    label: 'Выберите время начала',
+    validation: timeValidation,
+    type: 'time',
+  },
+  {
+    name: 'timeEnd',
+    label: 'Выберите время конца',
+    validation: timeValidation,
+    type: 'time',
+  },
+]
 
-// export const MapModelsInputFields = [
-//   {
-//     name: 'model',
-//     label: 'Введите новую модель',
-//     validation: lightTextValidation,
-//     type: 'text',
-//   },
-// ]
-
-// export const MapTypMalfunctionInputFields = [
-//   {
-//     name: 'model',
-//     label: 'Введите новую типовую неисправность',
-//     validation: textValidation,
-//     type: 'text',
-//   },
-// ]
-
-// export const MapNewTypicalMalfunctionsInputFields = [
-//   {
-//     name: 'typicalMalfunctions',
-//     label: 'Введите новую типовую неисправность',
-//     validation: lightTextValidation,
-//     type: 'text',
-//   },
-// ]
-
-// export const EmptyTypicalMalfunctions = [
-//   {
-//     models: [''],
-//     id: '',
-//     id_equipment: '',
-//   },
-// ]
+export const MapOLAInputFields = [
+  {
+    name: 'ola',
+    label: 'Введите новый OLA',
+    validation: textValidationlowercase,
+    type: 'text',
+  },
+]

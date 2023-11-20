@@ -3,16 +3,15 @@ import { Box, Container, Modal, Typography, List } from '@mui/material'
 import { Message } from 'components/Message/Message'
 import { useAuth } from 'hooks/auth/useAuth'
 import { DropDownMenu } from 'components/DropDownButtonMenu'
-import { menuData } from '.'
+import { SLAList, menuData } from '.'
 import { ChooseModal } from './Modals/ChooseModal'
-import { useClassifier } from 'hooks/classifier/useClassifier'
 import { headerForPages, mainHeaderForPages } from 'static/styles'
+import { useSLA } from 'hooks/sla/useSLA'
 
 export function ServiceLevelPage() {
   const modalClientRef = React.createRef()
   const [{ admin, user }] = useAuth()
-  const [{ equipments }, { getClassifierEquipments, setActiveEquipment }] =
-    useClassifier()
+  const [{ sla }, { getSLA }] = useSLA()
   const [modal, setModal] = useState<boolean>(false)
   const [modalImage, setModalImage] = useState<string>('')
 
@@ -20,7 +19,6 @@ export function ServiceLevelPage() {
     if (name) {
       setModal(true)
       setModalImage(name)
-      setActiveEquipment('')
     }
   }
 
@@ -29,8 +27,10 @@ export function ServiceLevelPage() {
   }
 
   useEffect(() => {
-    getClassifierEquipments()
+    getSLA()
   }, [])
+
+  console.log('sla = ', sla)
 
   return (
     <Container component="main" maxWidth="md" sx={mainHeaderForPages}>
@@ -60,9 +60,16 @@ export function ServiceLevelPage() {
         )}
       </Box>
       <List sx={{ width: '100%', p: 3, borderColor: 'border.default' }}>
-        {/* {equipments.map(({ equipment, id }) => (
-          <Equipments equipment={equipment} id={id} key={id} />
-        ))} */}
+        {sla.map(({ sla, id, time, timeStart, timeEnd }) => (
+          <SLAList
+            sla={sla}
+            id={id}
+            key={id}
+            time={time}
+            timeStart={timeStart}
+            timeEnd={timeStart}
+          />
+        ))}
       </List>
     </Container>
   )

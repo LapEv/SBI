@@ -7,6 +7,7 @@ import type { Request, Response } from 'express'
 // }
 export class slaService {
   newSLA = async (_req: Request, res: Response) => {
+    console.log('_req.body = ', _req.body)
     try {
       await SLARepos.create({ ..._req.body, active: true })
       const sla = await SLARepos.findAll({

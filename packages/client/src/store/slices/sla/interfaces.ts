@@ -3,11 +3,17 @@ import { DataList } from 'components/CheckBoxGroup/interface'
 export interface SLA {
   id?: string
   sla: string
+  time: string
+  timeStart: string
+  timeEnd: string
   active?: boolean
 }
 export interface OLA {
   id?: string
   ola: string
+  time: string
+  timeStart: string
+  timeEnd: string
   active?: boolean
 }
 
@@ -24,6 +30,7 @@ export interface AnswerOLA {
 export type SLAState = {
   sla: SLA[]
   ola: OLA[]
+  activeSLA: string
   isLoadingRoles: boolean
   error?: string
 }

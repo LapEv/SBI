@@ -1,3 +1,5 @@
 export { ServiceLevelPage } from './ServiceLevel'
-export { SLAList } from './SLA'
+export { ServeiceList } from './ServiceList'
+export { SLAList } from './SLAList'
+export { SLAPage } from './SLA'
 export { menuData } from './data'

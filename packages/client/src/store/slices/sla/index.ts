@@ -15,6 +15,7 @@ const initialState: SLAState = {
   sla: [],
   ola: [],
   activeSLA: '',
+  activeList: '',
   isLoadingRoles: false,
 }
 
@@ -25,9 +26,9 @@ export const slaSlise = createSlice({
     setActiveSLA(state, action) {
       state.activeSLA = action.payload
     },
-    // setActiveModel(state, action) {
-    //   state.activeModel = action.payload
-    // },
+    setActiveList(state, action) {
+      state.activeList = action.payload
+    },
   },
   extraReducers: {
     [getSLA.fulfilled.type]: (state, action: PayloadAction<SLA[]>) => {
@@ -130,4 +131,4 @@ export const slaSlise = createSlice({
 })
 
 export const slaReducer = slaSlise.reducer
-export const { setActiveSLA } = slaSlise.actions
+export const { setActiveSLA, setActiveList } = slaSlise.actions

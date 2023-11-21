@@ -10,4 +10,5 @@ export interface SLAActions {
   changeSLA: (data: ChangeSLA) => void
   changeOLA: (data: ChangeOLA) => void
   setActiveSLA: (id: string) => void
+  setActiveList: (id: string) => void
 }

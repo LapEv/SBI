@@ -13,7 +13,7 @@ import {
   changeSLA,
   changeOLA,
 } from 'api/sla'
-import { setActiveSLA } from 'store/slices/sla'
+import { setActiveList, setActiveSLA } from 'store/slices/sla'
 
 export function useSLA(): [SLAState, SLAActions] {
   const sla = useSelector((state: RootState) => state.sla)
@@ -48,6 +48,9 @@ export function useSLA(): [SLAState, SLAActions] {
       },
       setActiveSLA(id) {
         dispatch(setActiveSLA(id))
+      },
+      setActiveList(id) {
+        dispatch(setActiveList(id))
       },
     },
   ]

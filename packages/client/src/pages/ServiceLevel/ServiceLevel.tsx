@@ -3,15 +3,14 @@ import { Box, Container, Modal, Typography, List } from '@mui/material'
 import { Message } from 'components/Message/Message'
 import { useAuth } from 'hooks/auth/useAuth'
 import { DropDownMenu } from 'components/DropDownButtonMenu'
-import { SLAList, menuData } from '.'
+import { ServeiceList, menuData } from '.'
 import { ChooseModal } from './Modals/ChooseModal'
 import { headerForPages, mainHeaderForPages } from 'static/styles'
-import { useSLA } from 'hooks/sla/useSLA'
+import { ServiceList } from './data'
 
 export function ServiceLevelPage() {
   const modalClientRef = React.createRef()
-  const [{ admin, user }] = useAuth()
-  const [{ sla }, { getSLA }] = useSLA()
+  const [{ admin }] = useAuth()
   const [modal, setModal] = useState<boolean>(false)
   const [modalImage, setModalImage] = useState<string>('')
 
@@ -25,12 +24,6 @@ export function ServiceLevelPage() {
   const handleModal = (bool: boolean) => {
     setModal(bool)
   }
-
-  useEffect(() => {
-    getSLA()
-  }, [])
-
-  console.log('sla = ', sla)
 
   return (
     <Container component="main" maxWidth="md" sx={mainHeaderForPages}>
@@ -60,15 +53,8 @@ export function ServiceLevelPage() {
         )}
       </Box>
       <List sx={{ width: '100%', p: 3, borderColor: 'border.default' }}>
-        {sla.map(({ sla, id, time, timeStart, timeEnd }) => (
-          <SLAList
-            sla={sla}
-            id={id}
-            key={id}
-            time={time}
-            timeStart={timeStart}
-            timeEnd={timeStart}
-          />
+        {ServiceList.map(({ name, label }, index) => (
+          <ServeiceList name={name} label={label} key={`${label}${index}`} />
         ))}
       </List>
     </Container>

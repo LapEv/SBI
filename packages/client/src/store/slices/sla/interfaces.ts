@@ -31,6 +31,7 @@ export type SLAState = {
   sla: SLA[]
   ola: OLA[]
   activeSLA: string
+  activeList: string
   isLoadingRoles: boolean
   error?: string
 }
@@ -42,4 +43,17 @@ export interface ChangeSLA {
 export interface ChangeOLA {
   ola: string
   id: string
+}
+
+export interface IServiceList {
+  name: string
+  label: string
+}
+export interface IServiceListData {
+  sla?: string
+  ola?: string
+  id?: string
+  time: string
+  timeStart: string
+  timeEnd: string
 }

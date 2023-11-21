@@ -44,6 +44,17 @@ export const ModalTitles = {
   changeOLA: 'Изменить OLA',
 }
 
+export const ServiceList = [
+  {
+    name: 'sla',
+    label: 'SLA',
+  },
+  {
+    name: 'ola',
+    label: 'OLA',
+  },
+]
+
 export const MapSLAInputFields = [
   {
     name: 'sla',
@@ -77,5 +88,23 @@ export const MapOLAInputFields = [
     label: 'Введите новый OLA',
     validation: textValidationlowercase,
     type: 'text',
+  },
+  {
+    name: 'time',
+    label: 'Выберите время реакции',
+    validation: timeValidation,
+    type: 'time',
+  },
+  {
+    name: 'timeStart',
+    label: 'Выберите время начала',
+    validation: timeValidation,
+    type: 'time',
+  },
+  {
+    name: 'timeEnd',
+    label: 'Выберите время конца',
+    validation: timeValidation,
+    type: 'time',
   },
 ]

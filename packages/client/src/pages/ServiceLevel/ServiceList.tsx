@@ -95,8 +95,16 @@ export const ServeiceList = memo(({ name, label }: IServiceList) => {
         in={open}
         timeout="auto"
         unmountOnExit>
-        {data.map(item => (
-          <SLAList item={item} key={`${item.id}`} />
+        {data.map(({ sla, ola, time, timeStart, timeEnd, id }) => (
+          <SLAList
+            sla={sla}
+            ola={ola}
+            time={time}
+            timeStart={timeStart}
+            timeEnd={timeEnd}
+            id={id as string}
+            key={`${id}`}
+          />
         ))}
       </Collapse>
     </Box>

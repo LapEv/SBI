@@ -57,3 +57,14 @@ export interface IServiceListData {
   timeStart: string
   timeEnd: string
 }
+
+export interface ServiceListItem {
+  item: {
+    sla?: string
+    ola?: string
+    id?: string
+    time: string
+    timeStart: string
+    timeEnd: string
+  }[]
+}

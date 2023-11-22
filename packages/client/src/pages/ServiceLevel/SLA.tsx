@@ -5,19 +5,14 @@ import {
   Controller,
   useFormState,
 } from 'react-hook-form'
-import { User } from 'storeAuth/interfaces'
-import { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { TextField } from 'components/TextFields'
-import { Button, ButtonsSection } from 'components/Buttons'
+import { ButtonsSection } from 'components/Buttons'
 import { deepEqual } from 'utils/deepEqual'
 import { IServiceListData, SLAValues } from 'store/slices/sla/interfaces'
 import { useSLA } from 'hooks/sla/useSLA'
-import {
-  MapOLAInputFields,
-  MapOLAViewInputFields,
-  MapSLAInputFields,
-  MapSLAViewInputFields,
-} from './data'
+import { MapOLAViewInputFields, MapSLAViewInputFields } from './data'
+import { useAuth } from 'hooks/auth/useAuth'
 
 export function SLAPage({
   sla,
@@ -28,9 +23,12 @@ export function SLAPage({
   id,
 }: IServiceListData) {
   const [_, { changeSLA, changeOLA }] = useSLA()
+  const [{ admin }] = useAuth()
   const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
   const [slaData, setSlaData] = useState<IServiceListData>(
-    sla ? { sla, time, timeStart, timeEnd } : { ola, time, timeStart, timeEnd }
+    sla
+      ? { sla, time, timeStart, timeEnd, id }
+      : { ola, time, timeStart, timeEnd, id }
   )
 
   const fieldsData = sla ? MapSLAViewInputFields : MapOLAViewInputFields
@@ -44,44 +42,67 @@ export function SLAPage({
       })),
     },
   })
-  const { errors, isValid } = useFormState({ control })
+  const { errors } = useFormState({ control })
   const { fields } = useFieldArray({
     control,
     name: 'list',
   })
-  const changeData = () => {
-    // if (!deepEqual(userData, data)) {
-    //   updateUser(userData)
-    // }
+
+  const changeData = ({ list }: SLAValues) => {
+    if (sla) {
+      changeSLA({
+        sla: list[0].value,
+        time: list[1].value,
+        timeStart: list[2].value,
+        timeEnd: list[3].value,
+        id,
+      })
+    }
+    if (ola) {
+      changeOLA({
+        ola: list[0].value,
+        time: list[1].value,
+        timeStart: list[2].value,
+        timeEnd: list[3].value,
+        id,
+      })
+    }
   }
 
   const checkForChange = (newData: IServiceListData) => {
-    console.log('newData = ', newData)
+    if (!admin) return
+    setbtnDisabled(deepEqual(newData, slaData))
   }
 
   const clearChange = () => {
-    // updateUserData(data)
-    // reset({
-    //   list: MapProfileInputFields.map(item => ({
-    //     ...item,
-    //     value: data![item.name as keyof typeof data],
-    //   })),
-    // })
+    setbtnDisabled(true)
+    const newSLA = sla
+      ? { sla, time, timeStart, timeEnd, id }
+      : { ola, time, timeStart, timeEnd, id }
+    setSlaData(newSLA)
+    reset({
+      list: fieldsData.map(data => ({
+        ...data,
+        value: newSLA![data.name as keyof typeof newSLA],
+      })),
+    })
   }
-
-  console.log('slaData = ', slaData)
 
   return (
     <Box
       component="form"
       onSubmit={handleSubmit(changeData)}
-      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        p: 3,
+      }}>
       <Box
         sx={{
           display: 'flex',
           flexDirection: { xs: 'column', sm: 'row' },
           justifyContent: 'center',
-          p: 3,
           width: '95%',
         }}>
         <Stack
@@ -89,7 +110,7 @@ export function SLAPage({
           justifyContent="space-between"
           alignItems="center"
           spacing={0}
-          sx={{ flexWrap: 'wrap' }}>
+          sx={{ flexWrap: 'wrap', width: '100%' }}>
           {fields.map(({ id, name, label, validation, type, value }, index) => {
             return (
               <Controller
@@ -105,7 +126,7 @@ export function SLAPage({
                     type={type}
                     required
                     variant="outlined"
-                    sx={{ width: '48%', height: 80 }}
+                    sx={{ width: '48%', height: 60 }}
                     margin="normal"
                     onChange={(event: ChangeEvent<HTMLInputElement>) => (
                       field.onChange(event),
@@ -116,6 +137,7 @@ export function SLAPage({
                     )}
                     error={!!(errors?.list ?? [])[index]?.value?.message}
                     helperText={(errors?.list ?? [])[index]?.value?.message}
+                    inputProps={{ step: 1 }}
                   />
                 )}
               />

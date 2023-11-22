@@ -1,7 +1,10 @@
-import { timeValidation, textValidationlowercase } from 'utils/validatorRules'
+import {
+  timeValidation,
+  textValidationlowercase,
+  lightTextValidation,
+} from 'utils/validatorRules'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
-import EditIcon from '@mui/icons-material/Edit'
 
 export const menuData = [
   {
@@ -24,27 +27,15 @@ export const menuData = [
     title: 'Удалить OLA',
     icon: <RemoveCircleOutline fontSize="medium" />,
   },
-  {
-    name: 'changeSLA',
-    title: 'Изменить SLA',
-    icon: <EditIcon fontSize="medium" />,
-  },
-  {
-    name: 'changeOLA',
-    title: 'Изменить OLA',
-    icon: <EditIcon fontSize="medium" />,
-  },
 ]
 export const ModalTitles = {
   newSLA: 'Новый SLA',
   newOLA: 'Новая OLA',
   deleteSLA: 'Удалить SLA',
   deleteOLA: 'Удалить OLA',
-  changeSLA: 'Изменить SLA',
-  changeOLA: 'Изменить OLA',
 }
 
-export const ServiceList = [
+export const ServiceDataList = [
   {
     name: 'sla',
     label: 'SLA',
@@ -59,7 +50,7 @@ export const MapSLAInputFields = [
   {
     name: 'sla',
     label: 'Введите новый SLA',
-    validation: textValidationlowercase,
+    validation: lightTextValidation,
     type: 'text',
   },
   {
@@ -86,7 +77,7 @@ export const MapSLAViewInputFields = [
   {
     name: 'sla',
     label: 'Наименование SLA',
-    validation: textValidationlowercase,
+    validation: lightTextValidation,
     type: 'text',
   },
   {
@@ -113,7 +104,7 @@ export const MapOLAInputFields = [
   {
     name: 'ola',
     label: 'Введите новый OLA',
-    validation: textValidationlowercase,
+    validation: lightTextValidation,
     type: 'text',
   },
   {
@@ -140,7 +131,7 @@ export const MapOLAViewInputFields = [
   {
     name: 'ola',
     label: 'Наименование OLA',
-    validation: textValidationlowercase,
+    validation: lightTextValidation,
     type: 'text',
   },
   {

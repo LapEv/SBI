@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express'
 import { AddressesRepos, RegionsRepos } from '../db'
+const { Op } = require('sequelize')
 
 export class addressService {
   newAddress = async (_req: Request, res: Response) => {
@@ -36,12 +37,14 @@ export class addressService {
     const { selectedAddresses } = _req.body
     try {
       const addresses = await Promise.all([
-        await selectedAddresses.map(async (value: string) => {
-          await AddressesRepos.update(value, {
+        await selectedAddresses.map(async (id: string) => {
+          await AddressesRepos.update(id, {
             active: false,
           })
         }),
-        await AddressesRepos.findAll({}),
+        await AddressesRepos.findAll({
+          where: { id: { [Op.not]: selectedAddresses } },
+        }),
       ])
       res.status(200).json(addresses[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -55,12 +58,14 @@ export class addressService {
     const { selectedAddresses } = _req.body
     try {
       const addresses = await Promise.all([
-        await selectedAddresses.map(async (value: string) => {
+        await selectedAddresses.map(async (id: string) => {
           await AddressesRepos.destroy({
-            where: { id: value },
+            where: { id },
           })
         }),
-        await AddressesRepos.findAll({}),
+        await AddressesRepos.findAll({
+          where: { id: { [Op.not]: selectedAddresses } },
+        }),
       ])
       res.status(200).json(addresses[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -131,12 +136,14 @@ export class addressService {
     console.log('selectedRegions = ', selectedRegions)
     try {
       const regions = await Promise.all([
-        await selectedRegions.map(async (value: string) => {
-          await RegionsRepos.update(value, {
+        await selectedRegions.map(async (id: string) => {
+          await RegionsRepos.update(id, {
             active: false,
           })
         }),
-        await RegionsRepos.findAll({}),
+        await RegionsRepos.findAll({
+          where: { id: { [Op.not]: selectedRegions } },
+        }),
       ])
       res.status(200).json(regions[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -151,12 +158,14 @@ export class addressService {
     console.log('selectedRegions = ', selectedRegions)
     try {
       const regions = await Promise.all([
-        await selectedRegions.map(async (value: string) => {
+        await selectedRegions.map(async (id: string) => {
           await RegionsRepos.destroy({
-            where: { id: value },
+            where: { id },
           })
         }),
-        await RegionsRepos.findAll({}),
+        await RegionsRepos.findAll({
+          where: { id: { [Op.not]: selectedRegions } },
+        }),
       ])
       res.status(200).json(regions[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */

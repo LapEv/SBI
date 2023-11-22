@@ -8,8 +8,8 @@ import { ButtonsModalSection } from 'components/Buttons'
 import { useFilteredData } from 'hooks/useFilteredData'
 import { SearchIconElement } from 'components/SearchIconElement'
 import { TextField } from 'components/TextFields'
-import { useClassifier } from 'hooks/classifier/useClassifier'
-import { ClassifierEquipment } from 'store/slices/classifier/interfaces'
+import { useSLA } from 'hooks/sla/useSLA'
+import { SLA } from 'store/slices/sla/interfaces'
 
 export const DeleteSLA = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -17,42 +17,34 @@ export const DeleteSLA = React.forwardRef<unknown, ChooseModalProps>(
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const boxRef = React.createRef<HTMLDivElement>()
     const [height, setHeight] = useState<number | any>()
-    const [
-      { equipments },
-      { deleteClassifierEquipment, getClassifierEquipments },
-    ] = useClassifier()
-    const [selectedDivisions, setSelectedDivisions] = useState<string[]>([])
+    const [{ sla }, { deleteSLA, getSLA }] = useSLA()
+    const [selectedSLA, setSelectedSLA] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
     const [filterText, setFilterText] = useState<string>('')
-    const filteredEquipments = useFilteredData<ClassifierEquipment>(
-      equipments,
-      filterText,
-      'equipment'
-    )
+    const filteredSLA = useFilteredData<SLA>(sla, filterText, 'sla')
     const theme = useTheme()
 
     const changeData = (event: SyntheticEvent<EventTarget>) => {
       event.preventDefault()
-      if (!selectedDivisions.length) {
+      if (!selectedSLA.length) {
         setErrSelectedItems(true)
         return
       }
       handleModal(false)
-      deleteClassifierEquipment(selectedDivisions)
+      deleteSLA(selectedSLA)
     }
 
     const onChooseItems = (checked: boolean, id: string) => {
       if (!checked) {
-        setSelectedDivisions(selectedDivisions.filter(value => value !== id))
+        setSelectedSLA(selectedSLA.filter(value => value !== id))
         return
       }
-      setSelectedDivisions([...selectedDivisions, id])
-      if ([...selectedDivisions, id] && errSelectedItems)
-        setErrSelectedItems(false)
+      setSelectedSLA([...selectedSLA, id])
+      if ([...selectedSLA, id] && errSelectedItems) setErrSelectedItems(false)
     }
 
     useEffect(() => {
-      getClassifierEquipments()
+      getSLA()
       if (boxRef.current) {
         setHeight(boxRef.current!.offsetHeight)
       }
@@ -85,9 +77,9 @@ export const DeleteSLA = React.forwardRef<unknown, ChooseModalProps>(
         <Box
           ref={boxRef}
           sx={{ ...boxDataModal, height: filterText ? height : 'auto' }}>
-          {filteredEquipments.map(({ equipment, id }) => (
+          {filteredSLA.map(({ sla, id }) => (
             <Item
-              name={equipment}
+              name={sla}
               id={`${id}`}
               groupChecked={false}
               onChooseItems={onChooseItems}

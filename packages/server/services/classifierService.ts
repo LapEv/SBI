@@ -4,6 +4,7 @@ import {
   TypicalMalfunctionsRepos,
 } from '../db'
 import type { Request, Response } from 'express'
+const { Op } = require('sequelize')
 
 interface ShortTypicalMalfunctions {
   models: string[]
@@ -46,12 +47,17 @@ export class classifierService {
     const { selectedClassifierEquipments } = _req.body
     try {
       const classifierEquipments = await Promise.all([
-        await selectedClassifierEquipments.map(async (value: string) => {
-          await ClassifierEquipmentRepos.update(value, {
+        await selectedClassifierEquipments.map(async (id: string) => {
+          await ClassifierEquipmentRepos.update(id, {
             active: false,
           })
         }),
-        await ClassifierEquipmentRepos.findAll({ where: { active: true } }),
+        await ClassifierEquipmentRepos.findAll({
+          where: {
+            active: true,
+            id: { [Op.not]: selectedClassifierEquipments },
+          },
+        }),
       ])
       res.status(200).json(classifierEquipments[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -65,12 +71,17 @@ export class classifierService {
     const { selectedClassifierEquipments } = _req.body
     try {
       const classifierEquipments = await Promise.all([
-        await selectedClassifierEquipments.map(async (value: string) => {
+        await selectedClassifierEquipments.map(async (id: string) => {
           await ClassifierEquipmentRepos.destroy({
-            where: { id: value },
+            where: { id },
           })
         }),
-        await ClassifierEquipmentRepos.findAll({ where: { active: true } }),
+        await ClassifierEquipmentRepos.findAll({
+          where: {
+            active: true,
+            id: { [Op.not]: selectedClassifierEquipments },
+          },
+        }),
       ])
       res.status(200).json(classifierEquipments[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -172,12 +183,14 @@ export class classifierService {
     const { selectedClassifierModels } = _req.body
     try {
       const classifierModels = await Promise.all([
-        await selectedClassifierModels.map(async (value: string) => {
-          await ClassifierModelsRepos.update(value, {
+        await selectedClassifierModels.map(async (id: string) => {
+          await ClassifierModelsRepos.update(id, {
             active: false,
           })
         }),
-        await ClassifierEquipmentRepos.findAll({ where: { active: true } }),
+        await ClassifierEquipmentRepos.findAll({
+          where: { active: true, id: { [Op.not]: selectedClassifierModels } },
+        }),
       ])
       res.status(200).json(classifierModels[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -191,12 +204,14 @@ export class classifierService {
     const { selectedСlassifierModels } = _req.body
     try {
       const classifierModels = await Promise.all([
-        await selectedСlassifierModels.map(async (value: string) => {
+        await selectedСlassifierModels.map(async (id: string) => {
           await ClassifierModelsRepos.destroy({
-            where: { id: value },
+            where: { id },
           })
         }),
-        await ClassifierModelsRepos.findAll({ where: { active: true } }),
+        await ClassifierModelsRepos.findAll({
+          where: { active: true, id: { [Op.not]: selectedСlassifierModels } },
+        }),
       ])
       res.status(200).json(classifierModels[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -284,12 +299,17 @@ export class classifierService {
     const { selectedtypicalMalfunctions } = _req.body
     try {
       const typicalMalfunctions = await Promise.all([
-        await selectedtypicalMalfunctions.map(async (value: string) => {
-          await TypicalMalfunctionsRepos.update(value, {
+        await selectedtypicalMalfunctions.map(async (id: string) => {
+          await TypicalMalfunctionsRepos.update(id, {
             active: false,
           })
         }),
-        await TypicalMalfunctionsRepos.findAll({ where: { active: true } }),
+        await TypicalMalfunctionsRepos.findAll({
+          where: {
+            active: true,
+            id: { [Op.not]: selectedtypicalMalfunctions },
+          },
+        }),
       ])
       res.status(200).json(typicalMalfunctions[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -303,12 +323,17 @@ export class classifierService {
     const { selectedtypicalMalfunctions } = _req.body
     try {
       const typicalMalfunctions = await Promise.all([
-        await selectedtypicalMalfunctions.map(async (value: string) => {
+        await selectedtypicalMalfunctions.map(async (id: string) => {
           await TypicalMalfunctionsRepos.destroy({
-            where: { id: value },
+            where: { id },
           })
         }),
-        await TypicalMalfunctionsRepos.findAll({ where: { active: true } }),
+        await TypicalMalfunctionsRepos.findAll({
+          where: {
+            active: true,
+            id: { [Op.not]: selectedtypicalMalfunctions },
+          },
+        }),
       ])
       res.status(200).json(typicalMalfunctions[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */

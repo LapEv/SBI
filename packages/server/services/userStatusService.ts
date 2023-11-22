@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express'
 import { UserStatusRepos } from '../db'
+const { Op } = require('sequelize')
 
 export class userStatusService {
   setNewUserStatus = async (_req: Request, res: Response) => {
@@ -26,12 +27,12 @@ export class userStatusService {
     const { data } = _req.body
     try {
       const userStatus = await Promise.all([
-        await data.map(async (value: string) => {
+        await data.map(async (id: string) => {
           await UserStatusRepos.destroy({
-            where: { id: value },
+            where: { id },
           })
         }),
-        await UserStatusRepos.findAll({}),
+        await UserStatusRepos.findAll({ where: { id: { [Op.not]: data } } }),
       ])
       res.status(200).json(userStatus[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */

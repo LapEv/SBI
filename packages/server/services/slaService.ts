@@ -1,13 +1,12 @@
 import { SLARepos, OLARepos } from '../db'
 import type { Request, Response } from 'express'
-
+const { Op } = require('sequelize')
 // interface ShortTypicalMalfunctions {
 //   models: string[]
 //   id: string
 // }
 export class slaService {
   newSLA = async (_req: Request, res: Response) => {
-    console.log('_req.body = ', _req.body)
     try {
       await SLARepos.create({ ..._req.body, active: true })
       const sla = await SLARepos.findAll({
@@ -43,12 +42,14 @@ export class slaService {
     const { selectedSLA } = _req.body
     try {
       const sla = await Promise.all([
-        await selectedSLA.map(async (value: string) => {
-          await SLARepos.update(value, {
+        await selectedSLA.map(async (id: string) => {
+          await SLARepos.update(id, {
             active: false,
           })
         }),
-        await SLARepos.findAll({ where: { active: true } }),
+        await SLARepos.findAll({
+          where: { active: true, id: { [Op.not]: selectedSLA } },
+        }),
       ])
       res.status(200).json(sla[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -62,12 +63,14 @@ export class slaService {
     const { selectedSLA } = _req.body
     try {
       const sla = await Promise.all([
-        await selectedSLA.map(async (value: string) => {
+        await selectedSLA.map(async (id: string) => {
           await SLARepos.destroy({
-            where: { id: value },
+            where: { id },
           })
         }),
-        await SLARepos.findAll({ where: { active: true } }),
+        await SLARepos.findAll({
+          where: { active: true, id: { [Op.not]: selectedSLA } },
+        }),
       ])
       res.status(200).json(sla[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -76,6 +79,7 @@ export class slaService {
       res.status(500).json({ error: ['db error', err] })
     }
   }
+
   pullSLAFromArchive = async (_req: Request, res: Response) => {
     const { selectedSLA } = _req.body
     try {
@@ -94,9 +98,9 @@ export class slaService {
   }
 
   changeSLA = async (_req: Request, res: Response) => {
-    const { sla, id } = _req.body
+    const { sla, id, time, timeStart, timeEnd } = _req.body
     try {
-      await SLARepos.update(id, { sla })
+      await SLARepos.update(id, { sla, time, timeStart, timeEnd })
       const slas = await SLARepos.findAll({
         where: { active: true },
       })
@@ -144,12 +148,14 @@ export class slaService {
     const { selectedOLA } = _req.body
     try {
       const ola = await Promise.all([
-        await selectedOLA.map(async (value: string) => {
-          await OLARepos.update(value, {
+        await selectedOLA.map(async (id: string) => {
+          await OLARepos.update(id, {
             active: false,
           })
         }),
-        await OLARepos.findAll({ where: { active: true } }),
+        await OLARepos.findAll({
+          where: { active: true, id: { [Op.not]: selectedOLA } },
+        }),
       ])
       res.status(200).json(ola[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -163,12 +169,14 @@ export class slaService {
     const { selectedOLA } = _req.body
     try {
       const ola = await Promise.all([
-        await selectedOLA.map(async (value: string) => {
+        await selectedOLA.map(async (id: string) => {
           await OLARepos.destroy({
-            where: { id: value },
+            where: { id },
           })
         }),
-        await OLARepos.findAll({ where: { active: true } }),
+        await OLARepos.findAll({
+          where: { active: true, id: { [Op.not]: selectedOLA } },
+        }),
       ])
       res.status(200).json(ola[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */

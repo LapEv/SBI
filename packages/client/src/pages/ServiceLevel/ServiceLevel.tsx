@@ -3,10 +3,10 @@ import { Box, Container, Modal, Typography, List } from '@mui/material'
 import { Message } from 'components/Message/Message'
 import { useAuth } from 'hooks/auth/useAuth'
 import { DropDownMenu } from 'components/DropDownButtonMenu'
-import { ServeiceList, menuData } from '.'
+import { ServiceList, menuData } from '.'
 import { ChooseModal } from './Modals/ChooseModal'
 import { headerForPages, mainHeaderForPages } from 'static/styles'
-import { ServiceList } from './data'
+import { ServiceDataList } from './data'
 
 export function ServiceLevelPage() {
   const modalClientRef = React.createRef()
@@ -53,8 +53,8 @@ export function ServiceLevelPage() {
         )}
       </Box>
       <List sx={{ width: '100%', p: 3, borderColor: 'border.default' }}>
-        {ServiceList.map(({ name, label }, index) => (
-          <ServeiceList name={name} label={label} key={`${label}${index}`} />
+        {ServiceDataList.map(({ name, label }, index) => (
+          <ServiceList name={name} label={label} key={`${label}${index}`} />
         ))}
       </List>
     </Container>

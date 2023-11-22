@@ -2,20 +2,16 @@ import React, { memo, useEffect, useState, SyntheticEvent } from 'react'
 import { Box, ListItemText, ListItemButton, Modal } from '@mui/material'
 import Collapse from '@mui/material/Collapse'
 import { RotateButton, EditButton } from 'components/Buttons'
-import { ClassifierEquipment } from 'store/slices/classifier/interfaces'
 import { classifier, classifierComponent } from 'static/styles'
-import { useClassifier } from 'hooks/classifier/useClassifier'
 import { ModalChangeName } from 'components/ModaQuestions'
 import { useSLA } from 'hooks/sla/useSLA'
-import {
-  IServiceListData,
-  SLA,
-  ServiceListItem,
-} from 'store/slices/sla/interfaces'
+import { IServiceListData } from 'store/slices/sla/interfaces'
 import { SLAPage } from './'
+import { useAuth } from 'hooks/auth/useAuth'
 
 export const SLAList = memo(
   ({ sla, ola, time, timeStart, timeEnd, id }: IServiceListData) => {
+    const [{ admin }] = useAuth()
     const [{ activeSLA }, { setActiveSLA, changeSLA, changeOLA }] = useSLA()
     const modalRef = React.createRef()
     const [open, setOpen] = useState(false)
@@ -24,7 +20,6 @@ export const SLAList = memo(
     const handleClick = () => {
       setOpen(!open)
       setActiveSLA(id as string)
-      // getClassifierModelsById(id as string)
     }
 
     const editSLA = (event: SyntheticEvent<EventTarget>) => {
@@ -35,10 +30,14 @@ export const SLAList = memo(
     const changeServiceLevel = (answer: boolean, text: string) => {
       setModal(false)
       if (!answer) return
-      // changeClassifierEquipment({
-      //   equipment: text,
-      //   id: id as string,
-      // })
+      if (sla) {
+        changeSLA({ sla: text, id, time, timeStart, timeEnd })
+        return
+      }
+      if (ola) {
+        changeOLA({ ola: text, id, time, timeStart, timeEnd })
+        return
+      }
     }
 
     useEffect(() => {
@@ -46,8 +45,6 @@ export const SLAList = memo(
         setOpen(false)
       }
     }, [activeSLA])
-
-    console.log('sla 2 = ', sla)
 
     return (
       <Box sx={classifier}>
@@ -60,7 +57,7 @@ export const SLAList = memo(
             answer={changeServiceLevel}
             handleModal={setModal}
             ref={modalRef}
-            question="Введите новое наименование классификатора"
+            question={`Введите новое наименование ${sla ? 'SLA' : 'OLA'}`}
           />
         </Modal>
         <ListItemButton
@@ -71,7 +68,7 @@ export const SLAList = memo(
             primary={sla ?? ola}
             primaryTypographyProps={{ fontSize: '1.375rem!important' }}
           />
-          <EditButton handleClick={editSLA} size={'1.7rem'} />
+          {admin ? <EditButton handleClick={editSLA} size={'1.7rem'} /> : <></>}
           <RotateButton open={open} handleClick={handleClick} size={'2rem'} />
         </ListItemButton>
         <Collapse

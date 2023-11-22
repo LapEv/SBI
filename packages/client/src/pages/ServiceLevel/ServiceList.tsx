@@ -1,42 +1,23 @@
-import React, { memo, useEffect, useState, SyntheticEvent } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { Box, ListItemText, ListItemButton, Modal } from '@mui/material'
 import Collapse from '@mui/material/Collapse'
-import { RotateButton, EditButton } from 'components/Buttons'
-import { ModalChangeName } from 'components/ModaQuestions'
+import { RotateButton } from 'components/Buttons'
 import { IServiceList, IServiceListData } from 'store/slices/sla/interfaces'
 import { useSLA } from 'hooks/sla/useSLA'
 import { classifier, classifierComponent } from 'static/styles'
 import { SLAList } from '.'
 
-export const ServeiceList = memo(({ name, label }: IServiceList) => {
+export const ServiceList = memo(({ name, label }: IServiceList) => {
   const [{ sla, ola, activeList }, { setActiveList, getSLA, getOLA }] = useSLA()
-  const modalRef = React.createRef()
   const [open, setOpen] = useState<boolean>(false)
   const [data, setData] = useState<IServiceListData[]>([])
-  const [modal, setModal] = useState<boolean>(false)
 
   const handleClick = () => {
     setOpen(!open)
     setActiveList(name as string)
-    // getClassifierModelsById(id as string)
-  }
-
-  const editEquipment = (event: SyntheticEvent<EventTarget>) => {
-    event.stopPropagation()
-    setModal(true)
-  }
-
-  const changeEquipment = (answer: boolean, text: string) => {
-    setModal(false)
-    if (!answer) return
-    // changeClassifierEquipment({
-    //   equipment: text,
-    //   id: id as string,
-    // })
   }
 
   useEffect(() => {
-    console.log('sla = ', sla)
     setData(
       sla.map(({ sla, id, time, timeStart, timeEnd }) => {
         return {
@@ -51,7 +32,6 @@ export const ServeiceList = memo(({ name, label }: IServiceList) => {
   }, [sla])
 
   useEffect(() => {
-    console.log('ola = ', ola)
     setData(
       ola.map(({ ola, id, time, timeStart, timeEnd }) => {
         return {

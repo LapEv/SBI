@@ -31,7 +31,6 @@ export const NewSLA = React.forwardRef<unknown, ChooseModalProps>(
     })
 
     function changeData({ list }: AddValuesProps) {
-      console.log('list = ', list)
       newSLA({
         sla: list[0].value,
         time: list[1].value,

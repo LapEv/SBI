@@ -1,15 +1,15 @@
-import React, { SyntheticEvent } from 'react'
+import React from 'react'
 import { ChooseModalProps } from './interfaces'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, SyntheticEvent } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
+import { modalStyle, boxDataModal } from 'static/styles'
 import { Item } from 'components/CheckBoxGroup'
 import { ButtonsModalSection } from 'components/Buttons'
-import { TextField } from 'components/TextFields'
 import { useFilteredData } from 'hooks/useFilteredData'
-import { modalStyle, boxDataModal } from 'static/styles'
 import { SearchIconElement } from 'components/SearchIconElement'
-import { useClassifier } from 'hooks/classifier/useClassifier'
-import { ClassifierModels } from 'store/slices/classifier/interfaces'
+import { TextField } from 'components/TextFields'
+import { useSLA } from 'hooks/sla/useSLA'
+import { OLA } from 'store/slices/sla/interfaces'
 
 export const DeleteOLA = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -17,50 +17,38 @@ export const DeleteOLA = React.forwardRef<unknown, ChooseModalProps>(
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const boxRef = React.createRef<HTMLDivElement>()
     const [height, setHeight] = useState<number | any>()
-    const [
-      { models, equipments },
-      { deleteClassifierModel, getClassifierModels },
-    ] = useClassifier()
-    const [selectedModels, setSelectedModels] = useState<string[]>([])
+    const [{ ola }, { deleteOLA, getOLA }] = useSLA()
+    const [selectedOLA, setSelectedOLA] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
     const [filterText, setFilterText] = useState<string>('')
-    const filteredModels = useFilteredData<ClassifierModels>(
-      models,
-      filterText,
-      'model'
-    )
+    const filteredOLA = useFilteredData<OLA>(ola, filterText, 'ola')
     const theme = useTheme()
 
     const changeData = (event: SyntheticEvent<EventTarget>) => {
       event.preventDefault()
-      if (!selectedModels.length) {
+      if (!selectedOLA.length) {
         setErrSelectedItems(true)
         return
       }
-      deleteClassifierModel(selectedModels)
       handleModal(false)
+      deleteOLA(selectedOLA)
     }
 
     const onChooseItems = (checked: boolean, id: string) => {
       if (!checked) {
-        setSelectedModels(selectedModels.filter(value => value !== id))
+        setSelectedOLA(selectedOLA.filter(value => value !== id))
         return
       }
-      setSelectedModels([...selectedModels, id])
-      if ([...selectedModels, id] && errSelectedItems)
-        setErrSelectedItems(false)
+      setSelectedOLA([...selectedOLA, id])
+      if ([...selectedOLA, id] && errSelectedItems) setErrSelectedItems(false)
     }
 
     useEffect(() => {
-      getClassifierModels()
+      getOLA()
       if (boxRef.current) {
         setHeight(boxRef.current!.offsetHeight)
       }
     }, [])
-
-    const getEquipmentName = (id_equipment: string) => {
-      return equipments.find(item => item.id === id_equipment)?.equipment
-    }
 
     const setText = (text: string) => {
       if (!height && boxRef.current) {
@@ -89,10 +77,9 @@ export const DeleteOLA = React.forwardRef<unknown, ChooseModalProps>(
         <Box
           ref={boxRef}
           sx={{ ...boxDataModal, height: filterText ? height : 'auto' }}>
-          {filteredModels.map(({ model, id, id_equipment }) => (
+          {filteredOLA.map(({ ola, id }) => (
             <Item
-              name={model}
-              comment={getEquipmentName(id_equipment as string)}
+              name={ola}
               id={`${id}`}
               groupChecked={false}
               onChooseItems={onChooseItems}
@@ -101,7 +88,7 @@ export const DeleteOLA = React.forwardRef<unknown, ChooseModalProps>(
           ))}
         </Box>
         <Box sx={{ color: theme.palette.error.main, height: 20 }}>
-          {errSelectedItems && 'Не выбран ни одна модель!'}
+          {errSelectedItems && 'Не выбран ни один классификатор!'}
         </Box>
         <ButtonsModalSection
           closeModal={() => handleModal(false)}

@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express'
 import { DivisionRepos } from '../db'
+const { Op } = require('sequelize')
 
 export class divisionService {
   newDivision = async (_req: Request, res: Response) => {
@@ -35,12 +36,14 @@ export class divisionService {
     const { data } = _req.body
     try {
       const divisions = await Promise.all([
-        await data.map(async (value: string) => {
+        await data.map(async (id: string) => {
           await DivisionRepos.destroy({
-            where: { id: value },
+            where: { id },
           })
         }),
-        await DivisionRepos.findAll({ where: { active: true } }),
+        await DivisionRepos.findAll({
+          where: { active: true, id: { [Op.not]: data } },
+        }),
       ])
       res.status(200).json(divisions[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */

@@ -4,6 +4,7 @@ import { Result, validationResult } from 'express-validator'
 import bcrypt from 'bcryptjs'
 import { auth } from '../data/auth'
 import { generateAccessToken } from '../utils/generateAccessToken'
+const { Op } = require('sequelize')
 
 export class userService {
   setUser = async (_req: Request, res: Response) => {
@@ -243,12 +244,12 @@ export class userService {
     const { selectedUsers } = _req.body
     try {
       const users = await Promise.all([
-        await selectedUsers.map(async (value: string) => {
+        await selectedUsers.map(async (id: string) => {
           await userRepos.destroy({
-            where: { id: value },
+            where: { id },
           })
         }),
-        await userRepos.findAll({}),
+        await userRepos.findAll({ where: { id: { [Op.not]: selectedUsers } } }),
       ])
       res.status(200).json(users[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */

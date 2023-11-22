@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express'
 import { roleRepos, roleGroupRepos } from '../db'
+const { Op } = require('sequelize')
 
 export class roleService {
   newRolesGroup = async (_req: Request, res: Response) => {
@@ -28,12 +29,12 @@ export class roleService {
     const data = _req.body
     try {
       const rolesGroup = await Promise.all([
-        await data.map(async (value: string) => {
+        await data.map(async (id: string) => {
           await roleGroupRepos.destroy({
-            where: { id: value },
+            where: { id },
           })
         }),
-        await roleGroupRepos.findAll({}),
+        await roleGroupRepos.findAll({ where: { id: { [Op.not]: data } } }),
       ])
       res.status(200).json(rolesGroup[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -92,12 +93,12 @@ export class roleService {
     const data = _req.body
     try {
       const roles = await Promise.all([
-        await data.map(async (value: string) => {
+        await data.map(async (id: string) => {
           await roleRepos.destroy({
-            where: { id: value },
+            where: { id },
           })
         }),
-        await roleRepos.findAll({}),
+        await roleRepos.findAll({ where: { id: { [Op.not]: data } } }),
       ])
       res.status(200).json(roles[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */

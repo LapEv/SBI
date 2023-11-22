@@ -23,7 +23,7 @@ export const sla: ModelAttributes<Model, SLA> = {
     unique: true,
   },
   time: {
-    type: DataType.STRING,
+    type: DataType.TIME,
     allowNull: false,
   },
   timeStart: {

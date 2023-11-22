@@ -38,11 +38,17 @@ export type SLAState = {
 
 export interface ChangeSLA {
   sla: string
-  id: string
+  id?: string
+  time: string
+  timeStart: string
+  timeEnd: string
 }
 export interface ChangeOLA {
   ola: string
-  id: string
+  id?: string
+  time: string
+  timeStart: string
+  timeEnd: string
 }
 
 export interface IServiceList {
@@ -73,7 +79,7 @@ export interface SLAValues {
   list: {
     name: string
     label: string
-    value: string | string[] | undefined
+    value: string
     validation: object
     disabled: boolean
     type: string

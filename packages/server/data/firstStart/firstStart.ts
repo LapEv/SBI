@@ -8,7 +8,9 @@ import {
   ClassifierModelsRepos,
   DepartmentRepos,
   DivisionRepos,
+  OLARepos,
   RegionsRepos,
+  SLARepos,
   TypicalMalfunctionsRepos,
   UserStatusRepos,
   roleGroupRepos,
@@ -25,6 +27,7 @@ import {
   modelsStartData,
   typ_malfunctionsStartData,
 } from './classifier'
+import { olaStartData, slaStartData } from './sla'
 
 export const firstStart = async () => {
   try {
@@ -36,6 +39,8 @@ export const firstStart = async () => {
     }
 
     console.log('Check for tables')
+    const roles = await roleRepos.getAll()
+    const rolesGroup = await roleGroupRepos.getAll()
     const divisions = await DivisionRepos.getAll()
     const department = await DivisionRepos.getAll()
     const users = await userRepos.getAll()
@@ -44,6 +49,8 @@ export const firstStart = async () => {
     const equipments = await ClassifierEquipmentRepos.getAll()
     const models = await ClassifierModelsRepos.getAll()
     const typ_malfunctions = await TypicalMalfunctionsRepos.getAll()
+    const sla = await SLARepos.getAll()
+    const ola = await OLARepos.getAll()
 
     const deleteAddress = false
     if (deleteAddress) {
@@ -65,6 +72,22 @@ export const firstStart = async () => {
             await AddressesRepos.bulkCreate(newAddressesData)
           }
         }
+      }
+    }
+
+    const deleteSLA = false
+    if (deleteSLA) {
+      console.log('Delete SLA')
+      await SLARepos.drop({ cascade: true })
+      await OLARepos.drop({ cascade: true })
+    } else {
+      if (sla.length || ola.length) {
+        console.log(
+          'Первый запуск таблиц SLA, OLA невозможен! Какая-то из таблиц уже существует!'
+        )
+      } else {
+        await SLARepos.bulkCreate(slaStartData)
+        await OLARepos.bulkCreate(olaStartData)
       }
     }
 
@@ -108,14 +131,27 @@ export const firstStart = async () => {
       }
     }
 
+    const deleteRoles = false
+    if (deleteRoles) {
+      await roleRepos.drop({ cascade: true })
+      await roleGroupRepos.drop({ cascade: true })
+    } else {
+      if (roles.length || rolesGroup.length) {
+        console.log(
+          'Первый запуск таблиц Roles, RolesGroup невозможен! Какая-то из таблиц уже существует!'
+        )
+      } else {
+        await roleRepos.bulkCreate(rolesStartData)
+        await roleGroupRepos.bulkCreate(rolesGroupStartData)
+      }
+    }
+
     const del = false
     if (del) {
       console.log('Delete Users & Divisions')
       await DepartmentRepos.drop({ cascade: true })
       await DivisionRepos.drop({ cascade: true })
       await userRepos.drop({ cascade: true })
-      await roleRepos.drop({ cascade: true })
-      await roleGroupRepos.drop({ cascade: true })
       await UserStatusRepos.drop({ cascade: true })
       return
     }
@@ -125,33 +161,6 @@ export const firstStart = async () => {
         'Первый запуск таблиц невозможен! Какая-то из таблиц уже существует!'
       )
     } else {
-      const roles = await roleRepos.getAll()
-      if (!roles.length) {
-        await roleRepos.bulkCreate(rolesStartData)
-        // const newRoles = await roleRepos.bulkCreate(rolesStartData)
-        // const newrolesObj = newRoles.map(({ id, nameRole, role }) => {
-        //   return { id, nameRole, role }
-        // })
-        // rolesGroupStartData.map(value => {
-        //   if (value.group === 'SUPERADMIN') {
-        //     value.roles = newrolesObj.filter(
-        //       item => item.role === 'SUPERADMIN'
-        //     ) as never[]
-        //   }
-        //   if (value.group === 'ADMIN') {
-        //     value.roles = newrolesObj.filter(
-        //       item => item.role === 'ADMIN'
-        //     ) as never[]
-        //   }
-        //   // if (value.group !== 'SUPERADMIN' && value.group !== 'ADMIN') {
-        //   //   value.roles = newrolesObj.filter(
-        //   //     item => item.role !== 'SUPERADMIN' && item.role !== 'ADMIN'
-        //   //   ) as never[]
-        //   // }
-        // })
-        await roleGroupRepos.bulkCreate(rolesGroupStartData)
-      }
-
       const newDivision = await DivisionRepos.bulkCreate(divisionStartData)
       departmentStartData.map(async value => {
         value.id_division = newDivision.find(

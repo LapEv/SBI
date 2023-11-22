@@ -216,7 +216,7 @@ export const coordinatesValidation = {
 export const timeValidation = {
   required: REQUIRED_FIELD,
   validate: (value: string) => {
-    if (!value.match('^(?:0?[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$')) {
+    if (!value.match('^(?:[01]?[0-9]|2[0-3]):[0-5]?[0-9](?::[0-5]?[0-9])?$')) {
       return 'Не соответсвует формату времени'
     }
     return true

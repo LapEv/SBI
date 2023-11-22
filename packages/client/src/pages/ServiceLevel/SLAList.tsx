@@ -47,6 +47,8 @@ export const SLAList = memo(
       }
     }, [activeSLA])
 
+    console.log('sla 2 = ', sla)
+
     return (
       <Box sx={classifier}>
         <Modal

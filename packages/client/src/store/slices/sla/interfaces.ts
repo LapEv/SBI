@@ -68,3 +68,14 @@ export interface ServiceListItem {
     timeEnd: string
   }[]
 }
+
+export interface SLAValues {
+  list: {
+    name: string
+    label: string
+    value: string | string[] | undefined
+    validation: object
+    disabled: boolean
+    type: string
+  }[]
+}

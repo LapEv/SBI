@@ -82,6 +82,33 @@ export const MapSLAInputFields = [
   },
 ]
 
+export const MapSLAViewInputFields = [
+  {
+    name: 'sla',
+    label: 'Наименование SLA',
+    validation: textValidationlowercase,
+    type: 'text',
+  },
+  {
+    name: 'time',
+    label: 'Время реакции',
+    validation: timeValidation,
+    type: 'time',
+  },
+  {
+    name: 'timeStart',
+    label: 'Время начала',
+    validation: timeValidation,
+    type: 'time',
+  },
+  {
+    name: 'timeEnd',
+    label: 'Время конца',
+    validation: timeValidation,
+    type: 'time',
+  },
+]
+
 export const MapOLAInputFields = [
   {
     name: 'ola',
@@ -104,6 +131,33 @@ export const MapOLAInputFields = [
   {
     name: 'timeEnd',
     label: 'Выберите время конца',
+    validation: timeValidation,
+    type: 'time',
+  },
+]
+
+export const MapOLAViewInputFields = [
+  {
+    name: 'ola',
+    label: 'Наименование OLA',
+    validation: textValidationlowercase,
+    type: 'text',
+  },
+  {
+    name: 'time',
+    label: 'Время реакции',
+    validation: timeValidation,
+    type: 'time',
+  },
+  {
+    name: 'timeStart',
+    label: 'Время начала',
+    validation: timeValidation,
+    type: 'time',
+  },
+  {
+    name: 'timeEnd',
+    label: 'Время конца',
     validation: timeValidation,
     type: 'time',
   },

@@ -51,6 +51,7 @@ export const ServeiceList = memo(({ name, label }: IServiceList) => {
   }, [sla])
 
   useEffect(() => {
+    console.log('ola = ', ola)
     setData(
       ola.map(({ ola, id, time, timeStart, timeEnd }) => {
         return {
@@ -65,17 +66,14 @@ export const ServeiceList = memo(({ name, label }: IServiceList) => {
   }, [ola])
 
   useEffect(() => {
-    if (name === 'ola') {
+    if (activeList !== name) {
+      setOpen(false)
+    }
+    if (activeList === 'ola') {
       getOLA()
       return
     }
     getSLA()
-  }, [])
-
-  useEffect(() => {
-    if (activeList !== name) {
-      setOpen(false)
-    }
   }, [activeList])
 
   return (

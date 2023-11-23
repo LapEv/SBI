@@ -1,4 +1,5 @@
 export { AddClient } from './AddClient'
+export { AddContract } from './AddContract'
 export { AddAddress } from './AddAddress'
 export { AddRegion } from './AddRegion'
 export { DeleteAddress } from './DeleteAddress'

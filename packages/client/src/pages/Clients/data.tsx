@@ -1,6 +1,7 @@
 import {
   coordinatesValidation,
   emailValidation,
+  lightTextValidation,
   loginValidation,
   nameValidation,
   passwordValidation,
@@ -9,12 +10,16 @@ import {
   textValidationENGlowercase,
   textValidationlowercase,
 } from 'utils/validatorRules'
-import SouthAmerica from '@mui/icons-material/SouthAmerica'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
 import EditIcon from '@mui/icons-material/Edit'
 
 export const menuData = [
+  {
+    name: 'newClient',
+    title: 'Добавить клиента',
+    icon: <AddCircleOutlineIcon fontSize="medium" />,
+  },
   {
     name: 'newAddress',
     title: 'Добавить адрес',
@@ -47,6 +52,7 @@ export const menuData = [
   },
 ]
 export const ModalTitles = {
+  newClient: 'Новый клиент',
   newAddress: 'Новый адрес',
   newRegion: 'Новый регион',
   deleteAddress: 'Удалить адрес',
@@ -75,6 +81,21 @@ export const MapRegionInputFields = [
     name: 'region',
     label: 'Введите новый регион',
     validation: textValidation,
+    type: 'text',
+  },
+]
+
+export const MapClientInputFields = [
+  {
+    name: 'client',
+    label: 'Введите внутренние наименование клиента',
+    validation: lightTextValidation,
+    type: 'text',
+  },
+  {
+    name: 'legalName',
+    label: 'Введите юридическое наименование клиента',
+    validation: lightTextValidation,
     type: 'text',
   },
 ]

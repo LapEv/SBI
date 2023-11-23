@@ -8,6 +8,8 @@ import { addressRouter } from './addressRouter'
 import { clientRouter } from './clientRouter'
 import { classifierRouter } from './classifierRouter'
 import { slaRouter } from './slaRouter'
+import { contractRouter } from './contractRouter'
+import { objectsRouter } from './objectsRouter'
 
 export const apiRouter: Router = Router()
 
@@ -21,3 +23,5 @@ addressRouter(apiRouter)
 clientRouter(apiRouter)
 classifierRouter(apiRouter)
 slaRouter(apiRouter)
+contractRouter(apiRouter)
+objectsRouter(apiRouter)

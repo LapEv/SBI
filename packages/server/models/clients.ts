@@ -4,8 +4,11 @@ import { DataType, Model } from 'sequelize-typescript'
 export interface Clients {
   id: number
   legalName: string
-  name: string
+  client: string
+  office: string
   contracts: string[]
+  contacts: string[]
+  comments: string
   active: boolean
 }
 
@@ -21,14 +24,26 @@ export const clients: ModelAttributes<Model, Clients> = {
     allowNull: false,
     unique: true,
   },
-  name: {
+  client: {
     type: DataType.STRING,
     allowNull: false,
     unique: true,
   },
+  office: {
+    type: DataType.STRING,
+    allowNull: true,
+  },
   contracts: {
-    type: DataType.ARRAY(DataType.JSONB),
-    allowNull: false,
+    type: DataType.ARRAY(DataType.STRING),
+    allowNull: true,
+  },
+  contacts: {
+    type: DataType.ARRAY(DataType.STRING),
+    allowNull: true,
+  },
+  comments: {
+    type: DataType.STRING,
+    allowNull: true,
   },
   active: {
     type: DataType.BOOLEAN,
@@ -56,7 +71,7 @@ export const clientsGroup: ModelAttributes<Model, ClientsGroup> = {
     unique: true,
   },
   clients: {
-    type: DataType.ARRAY(DataType.JSONB),
+    type: DataType.ARRAY(DataType.STRING),
     allowNull: false,
   },
   active: {

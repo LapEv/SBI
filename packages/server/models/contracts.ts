@@ -3,10 +3,12 @@ import { DataType, Model } from 'sequelize-typescript'
 
 export interface Contracts {
   id: string
-  contract: object
-  sla: object
-  equipment: object[]
-  objects: object[]
+  contract: string
+  number: string
+  date: string
+  sla: string
+  equipment: string[]
+  objects: string[]
   active: boolean
 }
 
@@ -22,46 +24,25 @@ export const contracts: ModelAttributes<Model, Contracts> = {
     allowNull: false,
     unique: true,
   },
-  sla: {
-    type: DataType.JSONB,
+  number: {
+    type: DataType.STRING,
     allowNull: false,
+  },
+  date: {
+    type: DataType.DATE,
+    allowNull: false,
+  },
+  sla: {
+    type: DataType.ARRAY(DataType.STRING),
+    allowNull: true,
   },
   equipment: {
-    type: DataType.ARRAY(DataType.JSONB),
-    allowNull: false,
+    type: DataType.ARRAY(DataType.STRING),
+    allowNull: true,
   },
   objects: {
-    type: DataType.ARRAY(DataType.JSONB),
-    allowNull: false,
-  },
-  active: {
-    type: DataType.BOOLEAN,
-    allowNull: false,
-  },
-}
-
-export interface Objects {
-  id: string
-  object: string
-  internalClientId: string
-  active: boolean
-}
-
-export const objects: ModelAttributes<Model, Objects> = {
-  id: {
-    type: DataType.STRING,
-    defaultValue: DataType.UUIDV4,
-    allowNull: false,
-    primaryKey: true,
-  },
-  object: {
-    type: DataType.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  internalClientId: {
-    type: DataType.STRING,
-    allowNull: false,
+    type: DataType.ARRAY(DataType.STRING),
+    allowNull: true,
   },
   active: {
     type: DataType.BOOLEAN,

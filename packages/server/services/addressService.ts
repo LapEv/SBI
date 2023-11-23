@@ -133,7 +133,6 @@ export class addressService {
   }
   deleteRegion = async (_req: Request, res: Response) => {
     const { selectedRegions } = _req.body
-    console.log('selectedRegions = ', selectedRegions)
     try {
       const regions = await Promise.all([
         await selectedRegions.map(async (id: string) => {
@@ -155,7 +154,6 @@ export class addressService {
 
   fullDeleteRegion = async (_req: Request, res: Response) => {
     const { selectedRegions } = _req.body
-    console.log('selectedRegions = ', selectedRegions)
     try {
       const regions = await Promise.all([
         await selectedRegions.map(async (id: string) => {

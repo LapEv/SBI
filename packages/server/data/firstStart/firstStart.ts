@@ -6,6 +6,7 @@ import {
   AddressesRepos,
   ClassifierEquipmentRepos,
   ClassifierModelsRepos,
+  ClientsRepos,
   DepartmentRepos,
   DivisionRepos,
   OLARepos,
@@ -28,6 +29,7 @@ import {
   typ_malfunctionsStartData,
 } from './classifier'
 import { olaStartData, slaStartData } from './sla'
+import { clietnsStartData } from './clients'
 
 export const firstStart = async () => {
   try {
@@ -51,6 +53,7 @@ export const firstStart = async () => {
     const typ_malfunctions = await TypicalMalfunctionsRepos.getAll()
     const sla = await SLARepos.getAll()
     const ola = await OLARepos.getAll()
+    const clients = await ClientsRepos.getAll()
 
     const deleteAddress = false
     if (deleteAddress) {
@@ -128,6 +131,20 @@ export const firstStart = async () => {
         await TypicalMalfunctionsRepos.bulkCreate(
           new_typ_malfunctions_startData
         )
+      }
+    }
+
+    const deleteClients = false
+    if (deleteClients) {
+      console.log('Delete Clients')
+      await ClientsRepos.drop({ cascade: true })
+    } else {
+      if (clients.length) {
+        console.log(
+          'Первый запуск таблиц Clients невозможен! Какая-то из таблиц уже существует!'
+        )
+      } else {
+        await ClientsRepos.bulkCreate(clietnsStartData)
       }
     }
 

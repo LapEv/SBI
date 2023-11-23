@@ -145,7 +145,7 @@ export const rolesStartData = [
     nameRole: 'Получение списка всех клиентов',
   },
   {
-    role: 'getActiveClients',
+    role: 'getClients',
     nameRole: 'Получение списка всех активных клиентов',
   },
   {
@@ -313,5 +313,21 @@ export const rolesStartData = [
   {
     role: 'changeOLA',
     nameRole: 'Изменение данных OLA',
+  },
+  {
+    role: 'getContracts',
+    nameRole: 'Получение списка активных контрактов',
+  },
+  {
+    role: 'newContract',
+    nameRole: 'Создание нового контракта',
+  },
+  {
+    role: 'deleteContract',
+    nameRole: 'Перемещение контракта в архив',
+  },
+  {
+    role: 'changeContract',
+    nameRole: 'Изменение данных контракта',
   },
 ]

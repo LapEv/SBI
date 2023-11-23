@@ -45,7 +45,6 @@ export const deleteSLA = createAsyncThunk(
       const { data } = await authhost.post(ApiEndPoints.SLA.deleteSLA, {
         selectedSLA,
       })
-      console.log('data = ', data)
       return {
         data,
         message: {

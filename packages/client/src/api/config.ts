@@ -48,6 +48,12 @@ export const ApiEndPoints = {
     deleteRegion: 'addresses/deleteRegion',
     changeRegion: 'addresses/changeRegion',
   },
+  Objects: {
+    getObjects: 'objects/getObjects',
+    newObject: 'objects/newObject',
+    deleteObjects: 'objects/deleteObjects',
+    changeObject: 'objects/changeObject',
+  },
   Classifier: {
     getClassifierEquipments: 'classifier/getClassifierEquipments',
     newClassifierEquipment: 'classifier/newClassifierEquipment',
@@ -75,6 +81,22 @@ export const ApiEndPoints = {
     newOLA: 'SLA/newOLA',
     deleteOLA: 'SLA/deleteOLA',
     changeOLA: 'SLA/changeOLA',
+  },
+  Clients: {
+    getClientGroups: 'client/getClientGroups',
+    newClientGroup: 'client/newClientGroup',
+    deleteClientGroup: 'client/deleteClientGroup',
+    changeClientGroup: 'client/changeClientGroup',
+    getClients: 'client/getClients',
+    newClient: 'client/newClient',
+    deleteClient: 'client/deleteClient',
+    changeClient: 'client/changeClient',
+  },
+  Contracts: {
+    getContracts: 'contract/getContracts',
+    newContract: 'contracts/newContract',
+    deleteContract: 'contracts/deleteContract',
+    changeContract: 'contracts/changeContract',
   },
 }
 

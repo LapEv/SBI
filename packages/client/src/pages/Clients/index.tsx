@@ -1,1 +1,2 @@
-export { ClientsPage } from './Clients'
+export { ClientsPage } from './ClientsPage'
+export { ClientsList } from './ClientsList'

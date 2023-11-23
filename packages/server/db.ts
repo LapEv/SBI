@@ -7,10 +7,10 @@ import {
   department,
   users,
   userStatus,
-  // clients,
-  // clientsGroup,
-  // contracts,
-  // objects,
+  clients,
+  clientsGroup,
+  contracts,
+  objects,
   classifierEquipment,
   classifierModels,
   typicalMalfunctions,
@@ -41,13 +41,12 @@ export const Department = sequelize.define('Department', department, {})
 export const Users = sequelize.define('Users', users, {})
 export const UserStatus = sequelize.define('UserStatus', userStatus, {})
 
+export const ClientsGroup = sequelize.define('ClientsGroup', clientsGroup, {})
+export const Clients = sequelize.define('Clients', clients, {})
+export const Contracts = sequelize.define('Contracts', contracts, {})
+export const Objects = sequelize.define('Objects', objects, {})
 export const Addresses = sequelize.define('Addresses', addresses, {})
 export const Regions = sequelize.define('Regions', regions, {})
-
-// export const ClientsGroup = sequelize.define('ClientsGroup', clientsGroup, {})
-// export const Clients = sequelize.define('Clients', clients, {})
-// export const Contracts = sequelize.define('Contracts', contracts, {})
-// export const Objects = sequelize.define('Objects', objects, {})
 
 export const ClassifierEquipment = sequelize.define(
   'ClassifierEquipment',
@@ -89,6 +88,15 @@ Department.belongsTo(Division, { foreignKey: 'id_division', targetKey: 'id' })
 Regions.hasMany(Addresses, { foreignKey: 'id_region' })
 Addresses.belongsTo(Regions, { foreignKey: 'id_region', targetKey: 'id' })
 
+Addresses.hasMany(Objects, { foreignKey: 'id_address' })
+Objects.belongsTo(Addresses, { foreignKey: 'id_address' })
+
+Regions.hasMany(Objects, { foreignKey: 'id_region' })
+Objects.belongsTo(Regions, { foreignKey: 'id_region' })
+
+Clients.hasMany(Objects, { foreignKey: 'id_client' })
+Objects.belongsTo(Clients, { foreignKey: 'id_client' })
+
 ClassifierEquipment.hasMany(ClassifierModels, { foreignKey: 'id_equipment' })
 ClassifierModels.belongsTo(ClassifierEquipment, {
   foreignKey: 'id_equipment',
@@ -108,6 +116,28 @@ TypicalMalfunctions.belongsToMany(ClassifierModels, {
   through: 'ThroughModelTypMalfunctions',
 })
 
+ClientsGroup.hasMany(Clients, { foreignKey: 'id_clientsGroup' })
+Clients.belongsTo(ClientsGroup, {
+  foreignKey: 'id_clientsGroup',
+  targetKey: 'id',
+})
+
+Clients.hasMany(Contracts, { foreignKey: 'id_client' })
+Contracts.belongsTo(Clients, { foreignKey: 'id_client', targetKey: 'id' })
+
+Clients.belongsToMany(Users, { through: 'ThroughUserClients' })
+Users.belongsToMany(Clients, { through: 'ThroughUserClients' })
+
+Contracts.belongsToMany(SLA, { through: 'ThroughContractsSLA' })
+SLA.belongsToMany(Contracts, { through: 'ThroughUserClients' })
+
+Contracts.belongsToMany(ClassifierEquipment, {
+  through: 'ThroughContractsEquipment',
+})
+ClassifierEquipment.belongsToMany(Contracts, {
+  through: 'ThroughContractsEquipment',
+})
+
 export const userRepos = new Repository(Users as ModelCtor)
 export const roleGroupRepos = new Repository(RolesGroup as ModelCtor)
 export const roleRepos = new Repository(Roles as ModelCtor)
@@ -118,10 +148,10 @@ export const UserStatusRepos = new Repository(UserStatus as ModelCtor)
 export const RegionsRepos = new Repository(Regions as ModelCtor)
 export const AddressesRepos = new Repository(Addresses as ModelCtor)
 
-// export const ClientsGroupRepos = new Repository(ClientsGroup as ModelCtor)
-// export const ClientsRepos = new Repository(Clients as ModelCtor)
-// export const ContractsRepos = new Repository(Contracts as ModelCtor)
-// export const ObjectsRepos = new Repository(Objects as ModelCtor)
+export const ClientsGroupRepos = new Repository(ClientsGroup as ModelCtor)
+export const ClientsRepos = new Repository(Clients as ModelCtor)
+export const ContractsRepos = new Repository(Contracts as ModelCtor)
+export const ObjectsRepos = new Repository(Objects as ModelCtor)
 
 export const ClassifierEquipmentRepos = new Repository(
   ClassifierEquipment as ModelCtor

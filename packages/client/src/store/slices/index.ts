@@ -5,6 +5,9 @@ import { messageReducer } from './message'
 import { rolesReducer } from './roles'
 import { structureReducer } from './structure'
 import { slaReducer } from './sla'
+import { clientsReducer } from './clients'
+import { contractsReducer } from './contracts'
+import { objectsReducer } from './objects'
 
 export const rootReducer = {
   auth: authReducer,
@@ -14,4 +17,7 @@ export const rootReducer = {
   addresses: addressesReducer,
   classifier: classifierReducer,
   sla: slaReducer,
+  clients: clientsReducer,
+  contracts: contractsReducer,
+  objects: objectsReducer,
 }

@@ -5,6 +5,7 @@ export const mainHeaderForPages = {
   flexDirection: 'column',
   justifyContent: 'flex-start',
   alignItems: 'flex-start',
+  overflowX: 'hidden',
 }
 
 export const headerForPages = {

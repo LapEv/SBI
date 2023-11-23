@@ -35,14 +35,20 @@ export const objectsStartData = [
 export const clietnsStartData = [
   {
     legalName: 'АО "ТД Перекресток"',
-    name: 'Перекресток',
-    contracts: [],
+    client: 'Перекресток',
+    office: 'г. Москва, Ср. Калитниковая 24 стр.1',
     active: true,
   },
   {
     legalName: 'ООО "ФММР"',
-    name: 'Мясницкий ряд',
-    contracts: [],
+    client: 'Мясницкий ряд',
+    office: 'Одинцово',
+    active: true,
+  },
+  {
+    legalName: 'ООО "ТК "Мираторг"',
+    client: 'Мираторг',
+    office: '',
     active: true,
   },
 ]

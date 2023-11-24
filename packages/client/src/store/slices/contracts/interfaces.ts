@@ -3,9 +3,9 @@ export interface Contracts {
   contract: string
   number: string
   date: string
-  sla: string[]
-  equipment: string[]
-  objects: string[]
+  sla?: string[]
+  equipment?: string[]
+  objects?: string[]
   active?: boolean
 }
 
@@ -26,9 +26,9 @@ export interface ChangeContract {
   contract: string
   number: string
   date: string
-  sla: string[]
-  equipment: string[]
-  objects: string[]
+  sla?: string[]
+  equipment?: string[]
+  objects?: string[]
 }
 // export interface IServiceList {
 //   name: string

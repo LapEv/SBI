@@ -1,5 +1,6 @@
 import {
   coordinatesValidation,
+  dateValidation,
   emailValidation,
   lightTextValidation,
   loginValidation,
@@ -18,6 +19,11 @@ export const menuData = [
   {
     name: 'newClient',
     title: 'Добавить клиента',
+    icon: <AddCircleOutlineIcon fontSize="medium" />,
+  },
+  {
+    name: 'newContract',
+    title: 'Создать контракт',
     icon: <AddCircleOutlineIcon fontSize="medium" />,
   },
   {
@@ -53,6 +59,7 @@ export const menuData = [
 ]
 export const ModalTitles = {
   newClient: 'Новый клиент',
+  newContract: 'Новый контракт',
   newAddress: 'Новый адрес',
   newRegion: 'Новый регион',
   deleteAddress: 'Удалить адрес',
@@ -95,6 +102,21 @@ export const MapClientInputFields = [
   {
     name: 'legalName',
     label: 'Введите юридическое наименование клиента',
+    validation: lightTextValidation,
+    type: 'text',
+  },
+]
+
+export const MapContractInputFields = [
+  {
+    name: 'contract',
+    label: 'Введите название контракта',
+    validation: lightTextValidation,
+    type: 'text',
+  },
+  {
+    name: 'number',
+    label: 'Введите номер контракта',
     validation: lightTextValidation,
     type: 'text',
   },

@@ -72,6 +72,10 @@ export const NewTypicalMalfunction = React.forwardRef<
       getClassifierModelsById('')
     }, [])
 
+    useEffect(() => {
+      setModels(models.map(item => item.id as string))
+    }, [models])
+
     return (
       <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
         <Typography variant={'h6'}>{title}</Typography>

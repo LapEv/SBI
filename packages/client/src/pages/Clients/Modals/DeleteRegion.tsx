@@ -8,7 +8,7 @@ import { useAddresses } from 'hooks/addresses/useAddresses'
 import { useFilteredData } from 'hooks/useFilteredData'
 import { Regions } from 'store/slices/addresses/interfaces'
 import { modalStyle } from 'static/styles/modals'
-import { SearchIconElement } from 'components/SearchIconElement'
+import { SearchIconElement } from 'components/Icons'
 
 export const DeleteRegion = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Typography } from '@mui/material'
 import {
   useForm,
@@ -14,13 +14,19 @@ import { ButtonsModalSection } from 'components/Buttons'
 import { useMessage } from 'hooks/message/useMessage'
 import { useContracts } from 'hooks/contracts/useContracts'
 import { DateField } from 'components/DatePicker'
+import { useClassifier } from 'hooks/classifier/useClassifier'
+import { DropDown, DropDownMultiple, emptyValue } from 'components/DropDown'
+import { Options } from 'components/DropDown/interface'
 
 export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const [{ contracts }, { getContracts, newContract }] = useContracts()
+    const [{ equipments }, { getClassifierEquipments }] = useClassifier()
+    const [equipmentList, setEquipmentList] = useState<string[]>([])
     const [_, { setMessage }] = useMessage()
+    const [dateValue, setDateValue] = useState<string>('')
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
       defaultValues: {
@@ -49,7 +55,14 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
 
     useEffect(() => {
       getContracts()
+      getClassifierEquipments()
     }, [])
+
+    const setEquipmentData = (data: Options[]) => {
+      setEquipmentList(data.map(item => item.id as string))
+    }
+
+    console.log('equipmentList = ', equipmentList)
 
     return (
       <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
@@ -79,7 +92,21 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
             />
           )
         })}
-        <DateField />
+        <DateField dateValue={dateValue} setDateValue={setDateValue} />
+        <DropDownMultiple
+          data={equipments.map(item => {
+            return {
+              ['label']: item.equipment as string,
+              ['id']: item.id as string,
+            }
+          })}
+          props={{ mt: 3 }}
+          onChange={setEquipmentData}
+          value={equipmentList}
+          label="Выберите оборудование"
+          errorLabel="Не выбрано оборудование!"
+        />
+
         <ButtonsModalSection
           closeModal={() => handleModal(false)}
           btnName="Сохранить"

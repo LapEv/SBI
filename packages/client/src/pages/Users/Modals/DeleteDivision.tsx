@@ -7,7 +7,7 @@ import { Item } from 'components/CheckBoxGroup'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useStructure } from 'hooks/structure/useStructure'
 import { useFilteredData } from 'hooks/useFilteredData'
-import { SearchIconElement } from 'components/SearchIconElement'
+import { SearchIconElement } from 'components/Icons'
 import { Division } from 'store/slices/structure/interfaces'
 import { TextField } from 'components/TextFields'
 

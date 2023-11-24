@@ -7,7 +7,7 @@ import { ButtonsModalSection } from 'components/Buttons'
 import { TextField } from 'components/TextFields'
 import { useFilteredData } from 'hooks/useFilteredData'
 import { modalStyle, boxDataModal } from 'static/styles'
-import { SearchIconElement } from 'components/SearchIconElement'
+import { SearchIconElement } from 'components/Icons'
 import { useClassifier } from 'hooks/classifier/useClassifier'
 import { ClassifierModels } from 'store/slices/classifier/interfaces'
 

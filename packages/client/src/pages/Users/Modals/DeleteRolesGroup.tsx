@@ -8,7 +8,7 @@ import { ButtonsModalSection } from 'components/Buttons'
 import { Item } from 'components/CheckBoxGroup'
 import { TextField } from 'components/TextFields'
 import { useFilteredData } from 'hooks/useFilteredData'
-import { SearchIconElement } from 'components/SearchIconElement'
+import { SearchIconElement } from 'components/Icons'
 import { RolesGroup } from 'storeRoles/interfaces'
 
 export const DeleteRolesGroup = React.forwardRef<unknown, ChooseModalProps>(

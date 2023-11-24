@@ -9,7 +9,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { TextField } from 'components/TextFields'
 import { User } from 'storeAuth/interfaces'
 import { useFilteredData } from 'hooks/useFilteredData'
-import { SearchIconElement } from 'components/SearchIconElement'
+import { SearchIconElement } from 'components/Icons'
 
 export const DeleteUser = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */

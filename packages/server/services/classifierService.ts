@@ -253,6 +253,7 @@ export class classifierService {
   }
 
   newTypicalMalfunction = async (_req: Request, res: Response) => {
+    console.log('_req.body = ', _req.body)
     try {
       await TypicalMalfunctionsRepos.create({ ..._req.body, active: true })
       const typicalMalfunctions = await TypicalMalfunctionsRepos.findAll({

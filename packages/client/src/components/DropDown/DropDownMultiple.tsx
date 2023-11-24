@@ -2,9 +2,14 @@ import { useState } from 'react'
 import { useTheme } from '@mui/material'
 import { TextField } from 'components/TextFields/TextFields'
 import { Autocomplete } from 'components/Autocomplete'
-import { DataDropDown, Options } from './interface'
+import { DataDropDownMultiple, Options } from './interface'
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
+import CheckBoxIcon from '@mui/icons-material/CheckBox'
 
-export const DropDown = ({
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />
+const checkedIcon = <CheckBoxIcon fontSize="small" />
+
+export const DropDownMultiple = ({
   data,
   props,
   onChange,
@@ -12,30 +17,32 @@ export const DropDown = ({
   value,
   label,
   errorLabel,
-}: DataDropDown) => {
+}: DataDropDownMultiple) => {
   const theme = useTheme()
   const [errors, setErrors] = useState<boolean>(false)
 
   return (
     <Autocomplete
-      freeSolo
-      forcePopupIcon
-      sx={{ width: '90%', height: 40, ...props }}
+      multiple
+      disableCloseOnSelect
+      sx={{ width: '90%', ...props }}
       options={data}
-      clearOnEscape={true}
-      noOptionsText={'Нет данных'}
+      isOptionEqualToValue={(option, value): any =>
+        (option as any).id === (value as any).id
+      }
       onChange={(_, textValue) =>
         textValue
-          ? (onChange?.(textValue as Options), setErrors(false))
+          ? (onChange?.(textValue as Options[]), setErrors(false))
           : setErrors(true)
       }
-      value={value}
+      // value={''}
       ListboxProps={{
         sx: {
           borderWidth: 1,
           minHeight: 40,
           maxHeight: 225,
           fontSize: 13,
+
           '& li': {
             borderColor: theme.palette.mode === 'dark' ? '#1E515D' : '#C1EEE1',
           },
@@ -46,10 +53,10 @@ export const DropDown = ({
       }}
       renderInput={params => (
         <TextField
-          onBlur={event => (
-            !event.target.value ? setErrors(true) : setErrors(false),
-            onBlur?.(event.target.value)
-          )}
+          // onBlur={event => (
+          //   !event.target.value ? setErrors(true) : setErrors(false),
+          //   onBlur?.(event.target.value)
+          // )}
           {...params}
           required
           variant="outlined"
@@ -59,6 +66,7 @@ export const DropDown = ({
           helperText={errors ? errorLabel : ''}
           InputProps={{
             ...params.InputProps,
+            style: { padding: 0, minHeight: 40, height: 'auto' },
           }}
         />
       )}

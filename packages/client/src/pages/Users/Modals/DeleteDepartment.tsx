@@ -9,7 +9,7 @@ import { Department } from 'store/slices/structure/interfaces'
 import { TextField } from 'components/TextFields'
 import { useFilteredData } from 'hooks/useFilteredData'
 import { modalStyle, boxDataModal } from 'static/styles'
-import { SearchIconElement } from 'components/SearchIconElement'
+import { SearchIconElement } from 'components/Icons'
 
 export const DeleteDepartment = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */

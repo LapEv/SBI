@@ -8,6 +8,16 @@ export interface DataDropDown {
   onBlur?: (value: string) => void
 }
 
+export interface DataDropDownMultiple {
+  data: Options[]
+  value?: string[]
+  props?: object
+  label: string
+  errorLabel: string
+  onChange?: (data: Options[]) => void
+  onBlur?: (value: string) => void
+}
+
 export interface Data {
   category: string
   categoryName: string

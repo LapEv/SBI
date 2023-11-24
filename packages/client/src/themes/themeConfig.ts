@@ -133,6 +133,18 @@ export const ThemeConfig = (mode: PaletteMode) =>
           },
         },
       },
+      // MuiDateCalendar: {
+      //   styleOverrides: {
+      //     root: {
+      //       color: ThemeMode.light ? '#C1EEE1' : '#1E515D',
+      //       borderRadius: 9,
+      //       borderWidth: 8,
+      //       borderColor: ThemeMode.light ? '#FFF' : '#000',
+      //       border: '8px solid',
+      //       backgroundColor: ThemeMode.light ? '#1E515D' : '#C1EEE1',
+      //     },
+      //   },
+      // },
       MuiCssBaseline: {
         styleOverrides: {
           body: {

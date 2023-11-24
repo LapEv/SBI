@@ -222,13 +222,3 @@ export const timeValidation = {
     return true
   },
 }
-
-export const dateValidation = {
-  required: REQUIRED_FIELD,
-  validate: (value: string) => {
-    if (!value.match('^d{2}[./-]d{2}[./-]d{4}$')) {
-      return 'Не соответсвует формату даты'
-    }
-    return true
-  },
-}

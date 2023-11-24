@@ -7,7 +7,6 @@ import {
   ChangeAddress,
   ChangeRegion,
   AddClient,
-  AddContract,
 } from './'
 import { ModalTitles } from '../data'
 import { ChooseModalProps } from './interfaces'
@@ -21,13 +20,6 @@ export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(
             ref={ref}
             handleModal={handleModal}
             title={ModalTitles.newClient}
-          />
-        )}
-        {modalImage === 'newContract' && (
-          <AddContract
-            ref={ref}
-            handleModal={handleModal}
-            title={ModalTitles.newContract}
           />
         )}
         {modalImage === 'newAddress' && (

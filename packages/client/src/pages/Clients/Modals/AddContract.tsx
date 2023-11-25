@@ -15,8 +15,9 @@ import { useMessage } from 'hooks/message/useMessage'
 import { useContracts } from 'hooks/contracts/useContracts'
 import { DateField } from 'components/DatePicker'
 import { useClassifier } from 'hooks/classifier/useClassifier'
-import { DropDown, DropDownMultiple, emptyValue } from 'components/DropDown'
+import { DropDownMultiple } from 'components/DropDown'
 import { Options } from 'components/DropDown/interface'
+import { useSLA } from 'hooks/sla/useSLA'
 
 export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -24,7 +25,9 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const [{ contracts }, { getContracts, newContract }] = useContracts()
     const [{ equipments }, { getClassifierEquipments }] = useClassifier()
+    const [{ sla }, { getSLA }] = useSLA()
     const [equipmentList, setEquipmentList] = useState<string[]>([])
+    const [slaList, setSLAList] = useState<string[]>([])
     const [_, { setMessage }] = useMessage()
     const [dateValue, setDateValue] = useState<string>('')
     const { handleSubmit, control } = useForm<AddValuesProps>({
@@ -56,18 +59,23 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
     useEffect(() => {
       getContracts()
       getClassifierEquipments()
+      getSLA()
     }, [])
 
     const setEquipmentData = (data: Options[]) => {
       setEquipmentList(data.map(item => item.id as string))
     }
 
-    console.log('equipmentList = ', equipmentList)
+    const setSLAData = (data: Options[]) => {
+      setSLAList(data.map(item => item.id as string))
+    }
+
+    console.log('slaList = ', slaList)
 
     return (
       <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
         <Typography variant={'h6'}>{title}</Typography>
-        {fields.map(({ id, label, validation, type }, index) => {
+        {fields.map(({ id, label, validation, type, required }, index) => {
           return (
             <Controller
               key={id}
@@ -81,7 +89,7 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
                   label={label}
                   type={type}
                   variant="outlined"
-                  required
+                  required={required ?? true}
                   sx={{ width: '90%', mt: 3, height: 40 }}
                   margin="normal"
                   value={field.value || ''}
@@ -105,6 +113,19 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
           value={equipmentList}
           label="Выберите оборудование"
           errorLabel="Не выбрано оборудование!"
+        />
+        <DropDownMultiple
+          data={sla.map(item => {
+            return {
+              ['label']: item.sla as string,
+              ['id']: item.id as string,
+            }
+          })}
+          props={{ mt: 3 }}
+          onChange={setSLAData}
+          value={slaList}
+          label="Выберите уровни сервиса"
+          errorLabel="Не выбраны уровни сервиса!"
         />
 
         <ButtonsModalSection

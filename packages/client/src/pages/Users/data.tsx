@@ -97,12 +97,14 @@ export const MapRoleInputFields = [
     label: 'Введите новую роль',
     validation: textValidation,
     type: 'text',
+    required: true,
   },
   {
     name: 'role',
     label: 'Введите идентификатор роли',
     validation: textValidationENGlowercase,
     type: 'text',
+    required: true,
   },
 ]
 
@@ -112,12 +114,14 @@ export const MapRolesGroupInputFields = [
     label: 'Введите новую группу ролей',
     validation: textValidation,
     type: 'text',
+    required: true,
   },
   {
     name: 'role',
     label: 'Введите идентификатор группы ролей',
     validation: textValidationENGlowercase,
     type: 'text',
+    required: true,
   },
 ]
 
@@ -127,12 +131,14 @@ export const MapDivisionInputFields = [
     label: 'Введите новое подразделение',
     validation: textValidation,
     type: 'text',
+    required: true,
   },
   {
     name: 'newDivisionId',
     label: 'Введите идентификатор нового подразделения',
     validation: textValidationENGlowercase,
     type: 'text',
+    required: true,
   },
 ]
 
@@ -142,12 +148,14 @@ export const MapDepartmentInputFields = [
     label: 'Введите новый отдел',
     validation: textValidation,
     type: 'text',
+    required: true,
   },
   {
     name: 'newDepartmentId',
     label: 'Введите идентификатор нового отдела',
     validation: textValidationENGlowercase,
     type: 'text',
+    required: true,
   },
 ]
 
@@ -157,48 +165,56 @@ export const MapProfileInputFieldsAdmin = [
     label: 'Фамилия',
     validation: nameValidation,
     value: '',
+    required: true,
   },
   {
     name: 'firstName',
     label: 'Имя',
     validation: nameValidation,
     value: '',
+    required: true,
   },
   {
     name: 'middleName',
     label: 'Отчество',
     validation: nameValidation,
     value: '',
+    required: true,
   },
   {
     name: 'username',
     label: 'Логин',
     validation: loginValidation,
     value: '',
+    required: true,
   },
   {
     name: 'post',
     label: 'Должность',
     validation: textValidation,
     value: '',
+    required: true,
   },
   {
     name: 'email',
     label: 'Почта',
     validation: emailValidation,
     value: '',
+    required: true,
   },
   {
     name: 'phone',
     label: 'Телефон',
     validation: phoneValidation,
     value: '',
+    required: true,
   },
   {
     name: 'password',
     label: 'Пароль',
     validation: passwordValidation,
     value: '',
+    required: true,
   },
 ]
 
@@ -208,42 +224,49 @@ export const MapProfileInputFieldsAdminWithoutPassword = [
     label: 'Фамилия',
     validation: nameValidation,
     value: '',
+    required: true,
   },
   {
     name: 'firstName',
     label: 'Имя',
     validation: nameValidation,
     value: '',
+    required: true,
   },
   {
     name: 'middleName',
     label: 'Отчество',
     validation: nameValidation,
     value: '',
+    required: true,
   },
   {
     name: 'username',
     label: 'Логин',
     validation: loginValidation,
     value: '',
+    required: true,
   },
   {
     name: 'post',
     label: 'Должность',
     validation: textValidation,
     value: '',
+    required: true,
   },
   {
     name: 'email',
     label: 'Почта',
     validation: emailValidation,
     value: '',
+    required: true,
   },
   {
     name: 'phone',
     label: 'Телефон',
     validation: phoneValidation,
     value: '',
+    required: true,
   },
 ]
 
@@ -253,35 +276,41 @@ export const MapProfileInputFields = [
     label: 'Фамилия',
     validation: nameValidation,
     value: '',
+    required: true,
   },
   {
     name: 'firstName',
     label: 'Имя',
     validation: nameValidation,
     value: '',
+    required: true,
   },
   {
     name: 'middleName',
     label: 'Отчество',
     validation: nameValidation,
     value: '',
+    required: true,
   },
   {
     name: 'post',
     label: 'Должность',
     validation: nameValidation,
     value: '',
+    required: true,
   },
   {
     name: 'email',
     label: 'Почта',
     validation: emailValidation,
     value: '',
+    required: true,
   },
   {
     name: 'phone',
     label: 'Телефон',
     validation: phoneValidation,
     value: '',
+    required: true,
   },
 ]

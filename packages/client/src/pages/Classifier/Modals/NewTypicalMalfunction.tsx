@@ -92,7 +92,7 @@ export const NewTypicalMalfunction = React.forwardRef<
           label="Выберите классификатор оборудования"
           errorLabel="Не выбран классификатор оборудования!"
         />
-        {fields.map(({ id, label, validation, type }, index) => {
+        {fields.map(({ id, label, validation, type, required }, index) => {
           return (
             <Controller
               key={id}
@@ -108,7 +108,7 @@ export const NewTypicalMalfunction = React.forwardRef<
                   variant="outlined"
                   sx={{ width: '90%', m: 2, mt: 4, height: 40 }}
                   margin="normal"
-                  required
+                  required={required ?? true}
                   value={field.value || ''}
                   error={!!(errors?.list ?? [])[index]?.value?.message}
                   helperText={(errors?.list ?? [])[index]?.value?.message}

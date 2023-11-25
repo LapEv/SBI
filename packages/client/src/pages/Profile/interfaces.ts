@@ -20,6 +20,7 @@ export interface ProfileValues extends User {
     validation: object
     disabled: boolean
     type: string
+    required: boolean
   }[]
 }
 
@@ -34,5 +35,6 @@ export interface ProfileChangePasswordValues {
     value: string
     validation: object
     type: string
+    required: boolean
   }[]
 }

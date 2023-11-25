@@ -41,7 +41,7 @@ export const NewClassifierEquipment = React.forwardRef<
     return (
       <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
         <Typography variant={'h6'}>{title}</Typography>
-        {fields.map(({ id, label, validation, type, value }, index) => {
+        {fields.map(({ id, label, validation, type, required }, index) => {
           return (
             <Controller
               key={id}
@@ -57,7 +57,7 @@ export const NewClassifierEquipment = React.forwardRef<
                   variant="outlined"
                   sx={{ width: '90%', m: 2, mt: 4, height: 40 }}
                   margin="normal"
-                  required
+                  required={required ?? true}
                   value={field.value || ''}
                   error={!!(errors?.list ?? [])[index]?.value?.message}
                   helperText={(errors?.list ?? [])[index]?.value?.message}

@@ -52,7 +52,7 @@ export const AddRegion = React.forwardRef<unknown, ChooseModalProps>(
     return (
       <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
         <Typography variant={'h6'}>{title}</Typography>
-        {fields.map(({ id, label, validation, type, value }, index) => {
+        {fields.map(({ id, label, validation, type, required }, index) => {
           return (
             <Controller
               key={id}
@@ -66,7 +66,7 @@ export const AddRegion = React.forwardRef<unknown, ChooseModalProps>(
                   label={label}
                   type={type}
                   variant="outlined"
-                  required
+                  required={required ?? true}
                   sx={{ width: '90%', mt: 5, height: 40 }}
                   margin="normal"
                   value={field.value || ''}

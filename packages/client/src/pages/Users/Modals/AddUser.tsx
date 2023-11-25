@@ -219,7 +219,7 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
             }
           />
         </Box>
-        {fields.map(({ id, label, validation, type }, index) => {
+        {fields.map(({ id, label, validation, type, required }, index) => {
           return (
             <Controller
               key={id}
@@ -233,7 +233,7 @@ export const AddUser = React.forwardRef<unknown, ChooseModalProps>(
                   label={label}
                   name={field.name}
                   type={type}
-                  required
+                  required={required ?? true}
                   variant="outlined"
                   sx={{ width: '90%', m: 2, mt: 1.5, height: 40 }}
                   margin="normal"

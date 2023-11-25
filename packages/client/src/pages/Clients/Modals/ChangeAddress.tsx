@@ -156,7 +156,7 @@ export const ChangeAddress = React.forwardRef<unknown, ChooseModalProps>(
           onBlur={text => checkRegionValue(text)}
         />
         <Box sx={{ mt: 2, width: '90%' }}>
-          {fields.map(({ id, label, validation, type }, index) => {
+          {fields.map(({ id, label, validation, type, required }, index) => {
             return (
               <Controller
                 key={id}
@@ -170,7 +170,7 @@ export const ChangeAddress = React.forwardRef<unknown, ChooseModalProps>(
                     label={label}
                     type={type}
                     variant="outlined"
-                    required
+                    required={required ?? true}
                     sx={{ width: '100%', mt: 2, height: 40 }}
                     margin="normal"
                     value={field.value || ''}

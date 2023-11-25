@@ -9,12 +9,14 @@ export const MapNewAddressInputFields = [
     label: 'Введите новый адрес',
     validation: textValidationlowercase,
     type: 'text',
+    required: true,
   },
   {
     name: 'coordinates',
     label: 'Введите координаты точки',
     validation: coordinatesValidation,
     type: 'text',
+    required: true,
   },
 ]
 
@@ -24,5 +26,6 @@ export const MapNewRegionInputFields = [
     label: 'Введите новый регион',
     validation: textValidationlowercase,
     type: 'text',
+    required: true,
   },
 ]

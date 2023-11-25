@@ -1,17 +1,17 @@
 import { useSelector } from 'react-redux'
 import { RootState } from 'store'
 import { useAppDispatch } from 'store/hooks'
-import { ContractsActions } from './objectsActions'
-import { ContractsState } from 'store/slices/contracts/interfaces'
+import { ObjectsActions } from './objectsActions'
 import { changeObject, deleteObjects, getObjects, newObject } from 'api/objects'
 import { setActiveObject } from 'store/slices/objects'
+import { ObjectsState } from 'store/slices/objects/interfaces'
 
-export function useContracts(): [ContractsState, ContractsActions] {
-  const contracts = useSelector((state: RootState) => state.contracts)
+export function useObjects(): [ObjectsState, ObjectsActions] {
+  const objects = useSelector((state: RootState) => state.objects)
   const dispatch = useAppDispatch()
 
   return [
-    contracts,
+    objects,
     {
       getObjects() {
         dispatch(getObjects())

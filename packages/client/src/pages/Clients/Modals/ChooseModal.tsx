@@ -11,6 +11,7 @@ import {
 } from './'
 import { ModalTitles } from '../data'
 import { ChooseModalProps } from './interfaces'
+import { AddObject } from './AddObject'
 
 export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(
   ({ modalImage, handleModal }: ChooseModalProps, ref) => {
@@ -28,6 +29,13 @@ export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(
             ref={ref}
             handleModal={handleModal}
             title={ModalTitles.newContract}
+          />
+        )}
+        {modalImage === 'newObject' && (
+          <AddObject
+            ref={ref}
+            handleModal={handleModal}
+            title={ModalTitles.newObject}
           />
         )}
         {modalImage === 'newAddress' && (

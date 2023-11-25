@@ -1,14 +1,7 @@
 import {
   coordinatesValidation,
-  dateValidation,
-  emailValidation,
   lightTextValidation,
-  loginValidation,
-  nameValidation,
-  passwordValidation,
-  phoneValidation,
   textValidation,
-  textValidationENGlowercase,
   textValidationlowercase,
 } from 'utils/validatorRules'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
@@ -24,6 +17,11 @@ export const menuData = [
   {
     name: 'newContract',
     title: 'Создать контракт',
+    icon: <AddCircleOutlineIcon fontSize="medium" />,
+  },
+  {
+    name: 'newObject',
+    title: 'Добавить объект',
     icon: <AddCircleOutlineIcon fontSize="medium" />,
   },
   {
@@ -60,6 +58,7 @@ export const menuData = [
 export const ModalTitles = {
   newClient: 'Новый клиент',
   newContract: 'Новый контракт',
+  newObject: 'Новый объект',
   newAddress: 'Новый адрес',
   newRegion: 'Новый регион',
   deleteAddress: 'Удалить адрес',
@@ -67,6 +66,29 @@ export const ModalTitles = {
   changeAddress: 'Изменить адрес',
   changeRegion: 'Изменить регион',
 }
+export const MapObjectInputFields = [
+  {
+    name: 'object',
+    label: 'Введите название нового объекта',
+    validation: lightTextValidation,
+    type: 'text',
+    required: true,
+  },
+  {
+    name: 'internalClientID',
+    label: 'Введите клиентский номер объекта',
+    validation: lightTextValidation,
+    type: 'text',
+    required: false,
+  },
+  {
+    name: 'internalClientName',
+    label: 'Введите клиентское название объекта',
+    validation: lightTextValidation,
+    type: 'text',
+    required: false,
+  },
+]
 
 export const MapAddressInputFields = [
   {
@@ -74,12 +96,14 @@ export const MapAddressInputFields = [
     label: 'Введите новый адрес',
     validation: textValidationlowercase,
     type: 'text',
+    required: true,
   },
   {
     name: 'coordinates',
     label: 'Введите координаты точки',
     validation: coordinatesValidation,
     type: 'text',
+    required: true,
   },
 ]
 
@@ -89,6 +113,7 @@ export const MapRegionInputFields = [
     label: 'Введите новый регион',
     validation: textValidation,
     type: 'text',
+    required: true,
   },
 ]
 
@@ -98,12 +123,14 @@ export const MapClientInputFields = [
     label: 'Введите внутренние наименование клиента',
     validation: lightTextValidation,
     type: 'text',
+    required: true,
   },
   {
     name: 'legalName',
     label: 'Введите юридическое наименование клиента',
     validation: lightTextValidation,
     type: 'text',
+    required: true,
   },
 ]
 
@@ -113,11 +140,13 @@ export const MapContractInputFields = [
     label: 'Введите название контракта',
     validation: lightTextValidation,
     type: 'text',
+    required: true,
   },
   {
     name: 'number',
     label: 'Введите номер контракта',
     validation: lightTextValidation,
     type: 'text',
+    required: true,
   },
 ]

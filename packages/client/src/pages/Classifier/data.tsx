@@ -68,6 +68,7 @@ export const MapClassifierInputFields = [
     label: 'Введите новую классификацию оборудования',
     validation: textValidationlowercase,
     type: 'text',
+    required: true,
   },
 ]
 
@@ -77,6 +78,7 @@ export const MapModelsInputFields = [
     label: 'Введите новую модель',
     validation: lightTextValidation,
     type: 'text',
+    required: true,
   },
 ]
 
@@ -86,6 +88,7 @@ export const MapTypMalfunctionInputFields = [
     label: 'Введите новую типовую неисправность',
     validation: textValidation,
     type: 'text',
+    required: true,
   },
 ]
 
@@ -95,6 +98,7 @@ export const MapNewTypicalMalfunctionsInputFields = [
     label: 'Введите новую типовую неисправность',
     validation: lightTextValidation,
     type: 'text',
+    required: true,
   },
 ]
 

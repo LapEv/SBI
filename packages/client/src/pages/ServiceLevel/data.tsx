@@ -48,24 +48,28 @@ export const MapSLAInputFields = [
     label: 'Введите новый SLA',
     validation: lightTextValidation,
     type: 'text',
+    required: true,
   },
   {
     name: 'time',
     label: 'Выберите время реакции',
     validation: timeValidation,
     type: 'time',
+    required: true,
   },
   {
     name: 'timeStart',
     label: 'Выберите время начала',
     validation: timeValidation,
     type: 'time',
+    required: true,
   },
   {
     name: 'timeEnd',
     label: 'Выберите время конца',
     validation: timeValidation,
     type: 'time',
+    required: true,
   },
 ]
 
@@ -75,24 +79,28 @@ export const MapSLAViewInputFields = [
     label: 'Наименование SLA',
     validation: lightTextValidation,
     type: 'text',
+    required: true,
   },
   {
     name: 'time',
     label: 'Время реакции',
     validation: timeValidation,
     type: 'time',
+    required: true,
   },
   {
     name: 'timeStart',
     label: 'Время начала',
     validation: timeValidation,
     type: 'time',
+    required: true,
   },
   {
     name: 'timeEnd',
     label: 'Время конца',
     validation: timeValidation,
     type: 'time',
+    required: true,
   },
 ]
 
@@ -102,24 +110,28 @@ export const MapOLAInputFields = [
     label: 'Введите новый OLA',
     validation: lightTextValidation,
     type: 'text',
+    required: true,
   },
   {
     name: 'time',
     label: 'Выберите время реакции',
     validation: timeValidation,
     type: 'time',
+    required: true,
   },
   {
     name: 'timeStart',
     label: 'Выберите время начала',
     validation: timeValidation,
     type: 'time',
+    required: true,
   },
   {
     name: 'timeEnd',
     label: 'Выберите время конца',
     validation: timeValidation,
     type: 'time',
+    required: true,
   },
 ]
 
@@ -129,23 +141,27 @@ export const MapOLAViewInputFields = [
     label: 'Наименование OLA',
     validation: lightTextValidation,
     type: 'text',
+    required: true,
   },
   {
     name: 'time',
     label: 'Время реакции',
     validation: timeValidation,
     type: 'time',
+    required: true,
   },
   {
     name: 'timeStart',
     label: 'Время начала',
     validation: timeValidation,
     type: 'time',
+    required: true,
   },
   {
     name: 'timeEnd',
     label: 'Время конца',
     validation: timeValidation,
     type: 'time',
+    required: true,
   },
 ]

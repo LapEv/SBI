@@ -113,37 +113,39 @@ export function ProfileMain({ setModal, data }: ProfileMainProps) {
           alignItems="center"
           spacing={0}
           sx={{ flexWrap: 'wrap' }}>
-          {fields.map(({ id, name, label, validation, type, value }, index) => {
-            return (
-              <Controller
-                key={id}
-                control={control}
-                name={`list.${index}.value`}
-                rules={validation}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    inputRef={field.ref}
-                    label={label}
-                    type={type}
-                    required
-                    variant="outlined"
-                    sx={{ width: '48%', height: 80 }}
-                    margin="normal"
-                    onChange={(event: ChangeEvent<HTMLInputElement>) => (
-                      field.onChange(event),
-                      updateUserData({
-                        ...userData!,
-                        ...{ [name]: event.target.value },
-                      })
-                    )}
-                    error={!!(errors?.list ?? [])[index]?.value?.message}
-                    helperText={(errors?.list ?? [])[index]?.value?.message}
-                  />
-                )}
-              />
-            )
-          })}
+          {fields.map(
+            ({ id, name, label, validation, type, required }, index) => {
+              return (
+                <Controller
+                  key={id}
+                  control={control}
+                  name={`list.${index}.value`}
+                  rules={validation}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      inputRef={field.ref}
+                      label={label}
+                      type={type}
+                      required={required ?? true}
+                      variant="outlined"
+                      sx={{ width: '48%', height: 80 }}
+                      margin="normal"
+                      onChange={(event: ChangeEvent<HTMLInputElement>) => (
+                        field.onChange(event),
+                        updateUserData({
+                          ...userData!,
+                          ...{ [name]: event.target.value },
+                        })
+                      )}
+                      error={!!(errors?.list ?? [])[index]?.value?.message}
+                      helperText={(errors?.list ?? [])[index]?.value?.message}
+                    />
+                  )}
+                />
+              )
+            }
+          )}
         </Stack>
       </Box>
       <Button onClick={setModal} sx={{ width: '40%' }}>

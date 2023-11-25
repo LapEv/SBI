@@ -11,5 +11,6 @@ export interface AddValuesProps {
     value: string
     validation: object
     type: string
+    required?: boolean
   }[]
 }

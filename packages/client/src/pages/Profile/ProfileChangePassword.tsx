@@ -49,7 +49,7 @@ export function ProfileChangePassword({
       component="form"
       onSubmit={handleSubmit(changePasswordData)}>
       <Typography variant={'h6'}>Смена пароля</Typography>
-      {fields.map(({ id, label, validation, type, value }, index) => {
+      {fields.map(({ id, label, validation, type, required }, index) => {
         return (
           <Controller
             key={id}
@@ -65,7 +65,7 @@ export function ProfileChangePassword({
                 variant="outlined"
                 sx={{ width: '90%', m: 2, mt: 4, height: 40 }}
                 margin="normal"
-                required
+                required={required ?? true}
                 value={field.value || ''}
                 error={!!(errors?.list ?? [])[index]?.value?.message}
                 helperText={(errors?.list ?? [])[index]?.value?.message}

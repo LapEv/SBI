@@ -8,26 +8,29 @@ import {
 } from 'react-hook-form'
 import { TextField } from 'components/TextFields'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
-import { MapAddressInputFields } from '../data'
+import { MapObjectInputFields } from '../data'
 import { modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { DropDown, emptyValue } from 'components/DropDown'
 import { useAddresses } from 'hooks/addresses/useAddresses'
 import { useMessage } from 'hooks/message/useMessage'
 import { Options } from 'components/DropDown/interface'
+import { useObjects } from 'hooks/objects/useObjects'
 
-export const AddAddress = React.forwardRef<unknown, ChooseModalProps>(
+export const AddObject = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const [{ regions, addresses }, { getRegions, getAddresses, newAddress }] =
       useAddresses()
+    const [{ objects }, { getObjects, newObject }] = useObjects()
     const [_, { setMessage }] = useMessage()
     const [region, setRegion] = useState<Options>(emptyValue)
+    const [address, setAddress] = useState<Options>(emptyValue)
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
       defaultValues: {
-        list: MapAddressInputFields,
+        list: MapObjectInputFields,
       },
     })
     const { errors } = useFormState({ control })
@@ -37,26 +40,24 @@ export const AddAddress = React.forwardRef<unknown, ChooseModalProps>(
     })
 
     const changeData = ({ list }: AddValuesProps) => {
-      const isExist = addresses.find(
-        item =>
-          item.address === list[0].value || item.coordinates === list[1].value
-      )
+      const isExist = objects.find(item => item.object === list[0].value)
       if (isExist) {
         setMessage({
-          text: 'Такой адрес или координаты уже существуют',
+          text: 'Такой объект уже существуют',
           type: 'error',
         })
         return
       }
-      newAddress({
-        address: list[0].value,
-        coordinates: list[1].value,
-        id_region: region.id,
-      })
+      // newObject({
+      //   address: list[0].value,
+      //   coordinates: list[1].value,
+      //   id_region: region.id,
+      // })
       handleModal(false)
     }
 
     useEffect(() => {
+      getObjects()
       getAddresses()
       getRegions()
     }, [])
@@ -64,19 +65,6 @@ export const AddAddress = React.forwardRef<unknown, ChooseModalProps>(
     return (
       <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
         <Typography variant={'h6'}>{title}</Typography>
-        <DropDown
-          data={regions.map(item => {
-            return {
-              ['label']: item.region as string,
-              ['id']: item.id as string,
-            }
-          })}
-          props={{ mt: 3 }}
-          onChange={setRegion}
-          value={region.label}
-          label="Выберите регион"
-          errorLabel="Не выбран регион!"
-        />
         <Box sx={{ mt: 2, width: '90%' }}>
           {fields.map(({ id, label, validation, type, required }, index) => {
             return (
@@ -104,6 +92,33 @@ export const AddAddress = React.forwardRef<unknown, ChooseModalProps>(
             )
           })}
         </Box>
+        <DropDown
+          data={addresses.map(item => {
+            return {
+              ['label']: item.address as string,
+              ['id']: item.id as string,
+            }
+          })}
+          props={{ mt: 3 }}
+          onChange={setAddress}
+          value={address.label}
+          label="Выберите адрес"
+          errorLabel="Не выбран адрес!"
+        />
+        <DropDown
+          data={regions.map(item => {
+            return {
+              ['label']: item.region as string,
+              ['id']: item.id as string,
+            }
+          })}
+          props={{ mt: 3 }}
+          onChange={setRegion}
+          value={region.label}
+          label="Выберите регион"
+          errorLabel="Не выбран регион!"
+        />
+
         <ButtonsModalSection
           closeModal={() => handleModal(false)}
           btnName="Сохранить"

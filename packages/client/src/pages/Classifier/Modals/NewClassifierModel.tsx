@@ -88,7 +88,7 @@ export const NewClassifierModel = React.forwardRef<unknown, ChooseModalProps>(
           label="Выберите классификатор оборудования"
           errorLabel="Не выбран классификатор оборудования!"
         />
-        {fields.map(({ id, label, validation, type }, index) => {
+        {fields.map(({ id, label, validation, type, required }, index) => {
           return (
             <Controller
               key={id}
@@ -104,7 +104,7 @@ export const NewClassifierModel = React.forwardRef<unknown, ChooseModalProps>(
                   variant="outlined"
                   sx={{ width: '90%', m: 2, mt: 4, height: 40 }}
                   margin="normal"
-                  required
+                  required={required ?? true}
                   value={field.value || ''}
                   error={!!(errors?.list ?? [])[index]?.value?.message}
                   helperText={(errors?.list ?? [])[index]?.value?.message}

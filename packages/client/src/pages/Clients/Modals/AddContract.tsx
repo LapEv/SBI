@@ -70,8 +70,6 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
       setSLAList(data.map(item => item.id as string))
     }
 
-    console.log('slaList = ', slaList)
-
     return (
       <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
         <Typography variant={'h6'}>{title}</Typography>

@@ -10,6 +10,7 @@ import {
   DepartmentRepos,
   DivisionRepos,
   OLARepos,
+  ObjectsRepos,
   RegionsRepos,
   SLARepos,
   TypicalMalfunctionsRepos,
@@ -29,7 +30,8 @@ import {
   typ_malfunctionsStartData,
 } from './classifier'
 import { olaStartData, slaStartData } from './sla'
-import { clietnsStartData } from './clients'
+import { clientsStartData } from './clients'
+import { objectsStartData } from './objects'
 
 export const firstStart = async () => {
   try {
@@ -55,11 +57,26 @@ export const firstStart = async () => {
     const ola = await OLARepos.getAll()
     const clients = await ClientsRepos.getAll()
 
+    const deleteClients = false
+    if (deleteClients) {
+      console.log('Delete Clients')
+      await ClientsRepos.drop({ cascade: true })
+    } else {
+      if (clients.length) {
+        console.log(
+          'Первый запуск таблиц Clients невозможен! Какая-то из таблиц уже существует!'
+        )
+      } else {
+        await ClientsRepos.bulkCreate(clientsStartData)
+      }
+    }
+
     const deleteAddress = false
     if (deleteAddress) {
       console.log('Delete Addresses')
       await AddressesRepos.drop({ cascade: true })
       await RegionsRepos.drop({ cascade: true })
+      await ObjectsRepos.drop({ cascade: true })
     } else {
       if (addresses.length || regions.length) {
         console.log(
@@ -72,7 +89,23 @@ export const firstStart = async () => {
             return { ...value, id_region: newRegions[0].id }
           })
           if (!addresses.length) {
-            await AddressesRepos.bulkCreate(newAddressesData)
+            const newAddresses = await AddressesRepos.bulkCreate(
+              newAddressesData
+            )
+            // console.log('newRegions = ', newRegions[0])
+            // console.log('newAddresses = ', newAddresses)
+            const newClients = await ClientsRepos.getAll()
+
+            console.log('newClients = ', newClients)
+            const objectdata = objectsStartData.map((value, index) => {
+              return {
+                ...value,
+                id_region: newRegions[0].id,
+                id_address: newAddresses[index].id,
+                id_client: newClients[0].id,
+              }
+            })
+            await ObjectsRepos.bulkCreate(objectdata)
           }
         }
       }
@@ -131,20 +164,6 @@ export const firstStart = async () => {
         await TypicalMalfunctionsRepos.bulkCreate(
           new_typ_malfunctions_startData
         )
-      }
-    }
-
-    const deleteClients = false
-    if (deleteClients) {
-      console.log('Delete Clients')
-      await ClientsRepos.drop({ cascade: true })
-    } else {
-      if (clients.length) {
-        console.log(
-          'Первый запуск таблиц Clients невозможен! Какая-то из таблиц уже существует!'
-        )
-      } else {
-        await ClientsRepos.bulkCreate(clietnsStartData)
       }
     }
 

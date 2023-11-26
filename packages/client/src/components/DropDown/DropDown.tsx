@@ -24,11 +24,12 @@ export const DropDown = ({
       options={data}
       clearOnEscape={true}
       noOptionsText={'Нет данных'}
-      onChange={(_, textValue) =>
+      onChange={(_, textValue) => (
+        console.log('text = ', textValue),
         textValue
           ? (onChange?.(textValue as Options), setErrors(false))
           : setErrors(true)
-      }
+      )}
       value={value}
       ListboxProps={{
         sx: {

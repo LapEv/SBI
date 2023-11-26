@@ -1,3 +1,5 @@
+import { Options } from 'components/DropDown/interface'
+
 export interface ChooseModalProps {
   modalImage?: string
   handleModal: (state: boolean) => void
@@ -13,4 +15,25 @@ export interface AddValuesProps {
     type: string
     required?: boolean
   }[]
+}
+export interface AddValuesProps2 {
+  list2: {
+    name: string
+    label: string
+    value: string
+    validation: object
+    type: string
+    required?: boolean
+  }[]
+}
+
+export interface answerModalAddAddressInObject {
+  state: boolean
+  region: Options
+}
+
+export interface IModalAddAddressInObject {
+  handleModal: (data: answerModalAddAddressInObject) => void
+  question: string
+  address: string
 }

@@ -67,6 +67,12 @@ export const lightTextValidation = {
   },
 }
 
+export const NoRequiredValidation = {
+  validate: (value: string) => {
+    return true
+  },
+}
+
 export const textValidation = {
   required: REQUIRED_FIELD,
   validate: (value: string) => {

@@ -1,4 +1,5 @@
 import {
+  NoRequiredValidation,
   coordinatesValidation,
   lightTextValidation,
   textValidation,
@@ -77,14 +78,14 @@ export const MapObjectInputFields = [
   {
     name: 'internalClientID',
     label: 'Введите клиентский номер объекта',
-    validation: lightTextValidation,
+    validation: NoRequiredValidation,
     type: 'text',
     required: false,
   },
   {
     name: 'internalClientName',
     label: 'Введите клиентское название объекта',
-    validation: lightTextValidation,
+    validation: NoRequiredValidation,
     type: 'text',
     required: false,
   },
@@ -97,6 +98,23 @@ export const MapAddressInputFields = [
     validation: textValidationlowercase,
     type: 'text',
     required: true,
+  },
+  {
+    name: 'coordinates',
+    label: 'Введите координаты точки',
+    validation: coordinatesValidation,
+    type: 'text',
+    required: true,
+  },
+]
+
+export const MapNewAddressModalInputFields = [
+  {
+    name: 'address',
+    label: 'Введите новый адрес',
+    validation: textValidationlowercase,
+    type: 'text',
+    required: false,
   },
   {
     name: 'coordinates',

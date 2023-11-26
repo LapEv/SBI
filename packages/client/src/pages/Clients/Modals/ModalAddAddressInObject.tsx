@@ -67,7 +67,7 @@ export const ModalAddAddressInObject = React.forwardRef<
         sx={modalStyle}
         component="form"
         key={2}
-        onSubmit={handleSubmitAddAddress(AddAddress)}>
+        onSubmit={() => handleSubmitAddAddress(AddAddress)}>
         <Typography variant={'h6'}>{question}</Typography>
         <DropDown
           data={regions.map(item => {

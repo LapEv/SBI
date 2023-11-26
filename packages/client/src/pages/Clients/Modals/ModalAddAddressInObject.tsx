@@ -29,13 +29,16 @@ export const ModalAddAddressInObject = React.forwardRef<
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const [{ regions }, { getRegions, newAddress }] = useAddresses()
     const [region, setRegion] = useState<Options>(emptyValue)
-    const { control: controlADD, handleSubmit: handleSubmitAddAddress } =
-      useForm<AddValuesProps2>({
-        mode: 'onBlur',
-        defaultValues: {
-          list2: MapNewAddressModalInputFields,
-        },
-      })
+    const {
+      control: controlADD,
+      handleSubmit: handleSubmitAddAddress,
+      register: registerADD,
+    } = useForm<AddValuesProps2>({
+      mode: 'onBlur',
+      defaultValues: {
+        list2: MapNewAddressModalInputFields,
+      },
+    })
     const { errors } = useFormState({ control: controlADD })
     const { fields } = useFieldArray({
       control: controlADD,
@@ -86,7 +89,7 @@ export const ModalAddAddressInObject = React.forwardRef<
                 <Controller
                   key={id}
                   control={controlADD}
-                  name={`list2.${index}.value`}
+                  {...registerADD(`list2.${index}.value`)}
                   rules={validation}
                   render={({ field }) => (
                     <TextField

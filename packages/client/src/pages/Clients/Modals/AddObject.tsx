@@ -39,7 +39,7 @@ export const AddObject = React.forwardRef<unknown, ChooseModalProps>(
     const [modal, setModal] = useState<boolean>(false)
     const modalRef = React.createRef()
 
-    const { handleSubmit, control } = useForm<AddValuesProps>({
+    const { handleSubmit, control, register } = useForm<AddValuesProps>({
       mode: 'onBlur',
       defaultValues: {
         list: MapObjectInputFields,
@@ -153,7 +153,8 @@ export const AddObject = React.forwardRef<unknown, ChooseModalProps>(
               <Controller
                 key={id}
                 control={control}
-                name={`list.${index}.value`}
+                // name={`list.${index}.value`}
+                {...register(`list.${index}.value`)}
                 rules={validation}
                 render={({ field }) => (
                   <TextField

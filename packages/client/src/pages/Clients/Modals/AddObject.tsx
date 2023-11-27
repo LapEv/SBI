@@ -39,7 +39,8 @@ export const AddObject = React.forwardRef<unknown, ChooseModalProps>(
     const [errAddress, setErrAddress] = useState<boolean>(false)
     const [newAddressName, setNewAddress] = useState<string>('')
     const [modal, setModal] = useState<boolean>(false)
-    const modalRef = React.createRef()
+    const modalAddRef = React.createRef()
+    // const dropDownRef = React.createRef()
 
     const { handleSubmit, control, register } = useForm<AddValuesProps>({
       mode: 'onBlur',
@@ -54,7 +55,6 @@ export const AddObject = React.forwardRef<unknown, ChooseModalProps>(
     })
 
     const changeData = ({ list }: AddValuesProps) => {
-      console.log('changeData')
       const isExistObject = objects.find(item => item.object === list[0].value)
       if (isExistObject) {
         setMessage({
@@ -126,7 +126,6 @@ export const AddObject = React.forwardRef<unknown, ChooseModalProps>(
     }
 
     useEffect(() => {
-      console.log('addresses = ', addresses)
       if (!address.id && address.label) {
         const isAddress = addresses.find(item => item.address === address.label)
         if (isAddress) {
@@ -138,8 +137,6 @@ export const AddObject = React.forwardRef<unknown, ChooseModalProps>(
       }
     }, [addresses])
 
-    console.log('address = ', address)
-
     return (
       <Box>
         <Modal
@@ -149,7 +146,7 @@ export const AddObject = React.forwardRef<unknown, ChooseModalProps>(
           aria-describedby="modal-modal-description">
           <ModalAddAddressInObject
             handleModal={setModalNewAddress}
-            ref={modalRef}
+            ref={modalAddRef}
             question={`Вы дествительно создать новый адрес: "${newAddressName}"`}
             address={newAddressName}
           />
@@ -178,8 +175,8 @@ export const AddObject = React.forwardRef<unknown, ChooseModalProps>(
                 <Controller
                   key={id}
                   control={control}
-                  // name={`list.${index}.value`}
-                  {...register(`list.${index}.value`)}
+                  name={`list.${index}.value`}
+                  // {...register(`list.${index}.value`)}
                   rules={validation}
                   render={({ field }) => (
                     <TextField

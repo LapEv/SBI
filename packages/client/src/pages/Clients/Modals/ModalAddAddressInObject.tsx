@@ -92,7 +92,8 @@ export const ModalAddAddressInObject = React.forwardRef<
                 <Controller
                   key={id}
                   control={controlADD}
-                  {...registerADD(`list2.${index}.value`)}
+                  name={`list2.${index}.value`}
+                  // {...registerADD(`list2.${index}.value`)}
                   rules={validation}
                   render={({ field }) => (
                     <TextField

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useTheme } from '@mui/material'
 import { TextField } from 'components/TextFields/TextFields'
 import { Autocomplete } from 'components/Autocomplete'
@@ -17,24 +17,27 @@ export const DropDown = ({
   const theme = useTheme()
   const [errors, setErrors] = useState<boolean>(error as boolean)
 
-  // console.log('errors = ', errors)
+  console.log('value = ', value)
 
   return (
     <Autocomplete
+      forcePopupIcon={true}
       clearOnEscape
       autoSelect={false}
       sx={{ width: '90%', height: 40, ...props }}
       options={data}
       noOptionsText={'Нет данных'}
       isOptionEqualToValue={(option, value): any =>
-        (option as any).id === (value as any).id
+        (option as any).label === value ||
+        (option as any).id === value ||
+        value === ''
       }
       onChange={(_, textValue) =>
         textValue
           ? (onChange?.(textValue as Options), setErrors(false))
           : setErrors(true)
       }
-      value={value}
+      value={value ?? ''}
       ListboxProps={{
         sx: {
           borderWidth: 1,

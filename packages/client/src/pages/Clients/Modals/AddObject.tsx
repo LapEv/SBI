@@ -34,7 +34,9 @@ export const AddObject = React.forwardRef<unknown, ChooseModalProps>(
     const [_, { setMessage }] = useMessage()
     const [client, setClient] = useState<Options>(emptyValue)
     const [region, setRegion] = useState<Options>(emptyValue)
+    const [errRegion, setErrRegion] = useState<boolean>(false)
     const [address, setAddress] = useState<Options>(emptyValue)
+    const [errAddress, setErrAddress] = useState<boolean>(false)
     const [newAddressName, setNewAddress] = useState<string>('')
     const [modal, setModal] = useState<boolean>(false)
     const modalRef = React.createRef()
@@ -81,14 +83,14 @@ export const AddObject = React.forwardRef<unknown, ChooseModalProps>(
         })
         return
       }
-      // newObject({
-      //   object: list[0].value,
-      //   internalClientID: list[1].value,
-      //   internalClientName: list[2].value,
-      //   id_client: client.id,
-      //   id_address: address.id,
-      //   id_region: region.id,
-      // })
+      newObject({
+        object: list[0].value,
+        internalClientID: list[1].value,
+        internalClientName: list[2].value,
+        id_client: client.id,
+        id_address: address.id,
+        id_region: region.id,
+      })
       handleModal(false)
     }
 
@@ -103,21 +105,40 @@ export const AddObject = React.forwardRef<unknown, ChooseModalProps>(
       const isAddress = addresses.find(item => item.address === text)
       if (isAddress || !text) return
       setNewAddress(text)
+      setErrRegion(true)
+      setErrAddress(true)
       setModal(true)
     }
 
     const setModalNewAddress = ({
       state,
       region,
+      address,
     }: answerModalAddAddressInObject) => {
       if (state) {
         setRegion(region)
+        setErrRegion(false)
+        setAddress(address)
+        setErrAddress(false)
       }
       getAddresses()
       setModal(false)
     }
 
-    console.log('objects = ', objects)
+    useEffect(() => {
+      console.log('addresses = ', addresses)
+      if (!address.id && address.label) {
+        const isAddress = addresses.find(item => item.address === address.label)
+        if (isAddress) {
+          setAddress({
+            label: address.label,
+            id: isAddress.id as string,
+          })
+        }
+      }
+    }, [addresses])
+
+    console.log('address = ', address)
 
     return (
       <Box>
@@ -192,6 +213,7 @@ export const AddObject = React.forwardRef<unknown, ChooseModalProps>(
             value={address.label}
             label="Выберите адрес"
             errorLabel="Не выбран адрес!"
+            error={errAddress}
           />
           <DropDown
             data={regions.map(item => {
@@ -205,6 +227,7 @@ export const AddObject = React.forwardRef<unknown, ChooseModalProps>(
             value={region.label}
             label="Выберите регион"
             errorLabel="Не выбран регион!"
+            error={errRegion}
           />
           <ButtonsModalSection
             closeModal={() => handleModal(false)}

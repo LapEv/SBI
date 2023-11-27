@@ -6,6 +6,7 @@ export interface DataDropDown {
   errorLabel: string
   onChange?: (value: Options) => void
   onBlur?: (value: string) => void
+  error?: boolean
 }
 
 export interface DataDropDownMultiple {

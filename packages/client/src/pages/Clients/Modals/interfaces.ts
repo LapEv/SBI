@@ -16,7 +16,7 @@ export interface AddValuesProps {
     required?: boolean
   }[]
 }
-export interface AddValuesProps2 {
+export interface AddValuesPropsTwoForms {
   list2: {
     name: string
     label: string
@@ -30,6 +30,7 @@ export interface AddValuesProps2 {
 export interface answerModalAddAddressInObject {
   state: boolean
   region: Options
+  address: Options
 }
 
 export interface IModalAddAddressInObject {

@@ -15,9 +15,9 @@ import { useMessage } from 'hooks/message/useMessage'
 import { useContracts } from 'hooks/contracts/useContracts'
 import { DateField } from 'components/DatePicker'
 import { useClassifier } from 'hooks/classifier/useClassifier'
-import { DropDownMultiple } from 'components/DropDown'
 import { Options } from 'components/DropDown/interface'
 import { useSLA } from 'hooks/sla/useSLA'
+import { DropDownMultiple } from 'components/DropDown'
 
 export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */

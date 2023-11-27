@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useTheme } from '@mui/material'
 import { TextField } from 'components/TextFields/TextFields'
 import { Autocomplete } from 'components/Autocomplete'
@@ -12,24 +12,28 @@ export const DropDown = ({
   value,
   label,
   errorLabel,
+  error,
 }: DataDropDown) => {
   const theme = useTheme()
-  const [errors, setErrors] = useState<boolean>(false)
+  const [errors, setErrors] = useState<boolean>(error as boolean)
+
+  // console.log('errors = ', errors)
 
   return (
     <Autocomplete
-      freeSolo
-      forcePopupIcon
+      clearOnEscape
+      autoSelect={false}
       sx={{ width: '90%', height: 40, ...props }}
       options={data}
-      clearOnEscape={true}
       noOptionsText={'Нет данных'}
-      onChange={(_, textValue) => (
-        console.log('text = ', textValue),
+      isOptionEqualToValue={(option, value): any =>
+        (option as any).id === (value as any).id
+      }
+      onChange={(_, textValue) =>
         textValue
           ? (onChange?.(textValue as Options), setErrors(false))
           : setErrors(true)
-      )}
+      }
       value={value}
       ListboxProps={{
         sx: {

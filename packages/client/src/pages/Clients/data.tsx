@@ -4,6 +4,7 @@ import {
   lightTextValidation,
   textValidation,
   textValidationlowercase,
+  textValidationlowercaseSymbols,
 } from 'utils/validatorRules'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
@@ -95,7 +96,7 @@ export const MapAddressInputFields = [
   {
     name: 'address',
     label: 'Введите новый адрес',
-    validation: textValidationlowercase,
+    validation: textValidationlowercaseSymbols,
     type: 'text',
     required: true,
   },
@@ -112,9 +113,10 @@ export const MapNewAddressModalInputFields = [
   {
     name: 'address',
     label: 'Введите новый адрес',
-    validation: textValidationlowercase,
+    validation: textValidationlowercaseSymbols,
     type: 'text',
-    required: false,
+    required: true,
+    value: '',
   },
   {
     name: 'coordinates',
@@ -122,6 +124,7 @@ export const MapNewAddressModalInputFields = [
     validation: coordinatesValidation,
     type: 'text',
     required: true,
+    value: '',
   },
 ]
 

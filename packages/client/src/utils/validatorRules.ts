@@ -96,6 +96,16 @@ export const textValidationlowercase = {
   },
 }
 
+export const textValidationlowercaseSymbols = {
+  required: REQUIRED_FIELD,
+  validate: (value: string) => {
+    if (!value.match('^[?!-_, .а-яА-ЯёЁ0-9s]+$')) {
+      return 'Только кирилица, цифры'
+    }
+    return true
+  },
+}
+
 export const textValidationENG = {
   required: REQUIRED_FIELD,
   validate: (value: string) => {

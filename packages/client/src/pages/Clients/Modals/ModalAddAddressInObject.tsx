@@ -39,8 +39,8 @@ export const ModalAddAddressInObject = React.forwardRef<
         list2: MapNewAddressModalInputFields,
       },
     })
-    const { errors } = useFormState({ control: controlADD })
-    const { fields } = useFieldArray({
+    const { errors: errorsModal } = useFormState({ control: controlADD })
+    const { fields: filedsModal } = useFieldArray({
       control: controlADD,
       name: 'list2',
     })
@@ -83,7 +83,7 @@ export const ModalAddAddressInObject = React.forwardRef<
           errorLabel="Не выбран регион!"
         />
         <Box sx={{ mt: 2, width: '90%' }}>
-          {fields.map(
+          {filedsModal.map(
             ({ id, label, validation, type, required, name }, index) => {
               return (
                 <Controller
@@ -104,12 +104,12 @@ export const ModalAddAddressInObject = React.forwardRef<
                       value={name === 'address' ? address : field.value}
                       error={
                         name !== 'address'
-                          ? !!(errors?.list2 ?? [])[index]?.value?.message
+                          ? !!(errorsModal?.list2 ?? [])[index]?.value?.message
                           : false
                       }
                       helperText={
                         name !== 'address'
-                          ? (errors?.list2 ?? [])[index]?.value?.message
+                          ? (errorsModal?.list2 ?? [])[index]?.value?.message
                           : ''
                       }
                     />

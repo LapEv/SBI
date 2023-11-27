@@ -37,7 +37,7 @@ export const firstStart = async () => {
   try {
     const AllDelete = false
     if (AllDelete) {
-      console.log('Full Delete')
+      console.log('Full Delete!')
       await sequelize.drop({ cascade: true })
       return
     }
@@ -92,11 +92,7 @@ export const firstStart = async () => {
             const newAddresses = await AddressesRepos.bulkCreate(
               newAddressesData
             )
-            // console.log('newRegions = ', newRegions[0])
-            // console.log('newAddresses = ', newAddresses)
             const newClients = await ClientsRepos.getAll()
-
-            console.log('newClients = ', newClients)
             const objectdata = objectsStartData.map((value, index) => {
               return {
                 ...value,

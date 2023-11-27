@@ -120,7 +120,7 @@ export const AddObject = React.forwardRef<unknown, ChooseModalProps>(
     console.log('objects = ', objects)
 
     return (
-      <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
+      <Box>
         <Modal
           open={modal}
           onClose={() => setModal(false)}
@@ -133,79 +133,84 @@ export const AddObject = React.forwardRef<unknown, ChooseModalProps>(
             address={newAddressName}
           />
         </Modal>
-        <Typography variant={'h6'}>{title}</Typography>
-        <DropDown
-          data={clients.map(item => {
-            return {
-              ['label']: item.client as string,
-              ['id']: item.id as string,
-            }
-          })}
-          props={{ mt: 3 }}
-          onChange={setClient}
-          value={client.label}
-          label="Выберите клиента"
-          errorLabel="Не выбран клиент!"
-        />
-        <Box sx={{ mt: 1, width: '90%' }}>
-          {fields.map(({ id, label, validation, type, required }, index) => {
-            return (
-              <Controller
-                key={id}
-                control={control}
-                // name={`list.${index}.value`}
-                {...register(`list.${index}.value`)}
-                rules={validation}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    inputRef={field.ref}
-                    label={label}
-                    type={type}
-                    variant="outlined"
-                    required={required ?? true}
-                    sx={{ width: '100%', mt: 3, height: 40 }}
-                    margin="normal"
-                    value={field.value || ''}
-                    error={!!(errors?.list ?? [])[index]?.value?.message}
-                    helperText={(errors?.list ?? [])[index]?.value?.message}
-                  />
-                )}
-              />
-            )
-          })}
+        <Box
+          sx={modalStyle}
+          component="form"
+          onSubmit={handleSubmit(changeData)}>
+          <Typography variant={'h6'}>{title}</Typography>
+          <DropDown
+            data={clients.map(item => {
+              return {
+                ['label']: item.client as string,
+                ['id']: item.id as string,
+              }
+            })}
+            props={{ mt: 3 }}
+            onChange={setClient}
+            value={client.label}
+            label="Выберите клиента"
+            errorLabel="Не выбран клиент!"
+          />
+          <Box sx={{ mt: 1, width: '90%' }}>
+            {fields.map(({ id, label, validation, type, required }, index) => {
+              return (
+                <Controller
+                  key={id}
+                  control={control}
+                  // name={`list.${index}.value`}
+                  {...register(`list.${index}.value`)}
+                  rules={validation}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      inputRef={field.ref}
+                      label={label}
+                      type={type}
+                      variant="outlined"
+                      required={required ?? true}
+                      sx={{ width: '100%', mt: 3, height: 40 }}
+                      margin="normal"
+                      value={field.value || ''}
+                      error={!!(errors?.list ?? [])[index]?.value?.message}
+                      helperText={(errors?.list ?? [])[index]?.value?.message}
+                    />
+                  )}
+                />
+              )
+            })}
+          </Box>
+          <DropDown
+            data={addresses.map(item => {
+              return {
+                ['label']: item.address as string,
+                ['id']: item.id as string,
+              }
+            })}
+            props={{ mt: 3 }}
+            onBlur={checkAddress}
+            onChange={setAddress}
+            value={address.label}
+            label="Выберите адрес"
+            errorLabel="Не выбран адрес!"
+          />
+          <DropDown
+            data={regions.map(item => {
+              return {
+                ['label']: item.region as string,
+                ['id']: item.id as string,
+              }
+            })}
+            props={{ mt: 4 }}
+            onChange={setRegion}
+            value={region.label}
+            label="Выберите регион"
+            errorLabel="Не выбран регион!"
+          />
+          <ButtonsModalSection
+            closeModal={() => handleModal(false)}
+            btnName="Сохранить"
+          />
         </Box>
-        <DropDown
-          data={addresses.map(item => {
-            return {
-              ['label']: item.address as string,
-              ['id']: item.id as string,
-            }
-          })}
-          props={{ mt: 3 }}
-          onBlur={checkAddress}
-          onChange={setAddress}
-          value={address.label}
-          label="Выберите адрес"
-          errorLabel="Не выбран адрес!"
-        />
-        <DropDown
-          data={regions.map(item => {
-            return {
-              ['label']: item.region as string,
-              ['id']: item.id as string,
-            }
-          })}
-          props={{ mt: 4 }}
-          onChange={setRegion}
-          value={region.label}
-          label="Выберите регион"
-          errorLabel="Не выбран регион!"
-        />
-        <ButtonsModalSection
-          closeModal={() => handleModal(false)}
-          btnName="Сохранить"
-        />
       </Box>
     )
   }

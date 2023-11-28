@@ -57,7 +57,7 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
         return
       }
       if (!equipmentList.length) {
-        setErrors
+        // setErrors
       }
       console.log('list = ', list)
       console.log('sla = ', slaList)

@@ -28,9 +28,9 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
     const [{ equipments }, { getClassifierEquipments }] = useClassifier()
     const [{ sla }, { getSLA }] = useSLA()
     const [{ objects }, { getObjects }] = useObjects()
-    const [equipmentList, setEquipmentList] = useState<string[]>([])
-    const [slaList, setSLAList] = useState<string[]>([])
-    const [objectList, setObjectList] = useState<string[]>([])
+    const [equipmentList, setEquipmentList] = useState<Options[]>([])
+    const [slaList, setSLAList] = useState<Options[]>([])
+    const [objectList, setObjectList] = useState<Options[]>([])
     const [_, { setMessage }] = useMessage()
     const [dateValue, setDateValue] = useState<string>('')
     const { handleSubmit, control } = useForm<AddValuesProps>({
@@ -56,6 +56,9 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
         })
         return
       }
+      if (!equipmentList.length) {
+        setErrors
+      }
       console.log('list = ', list)
       console.log('sla = ', slaList)
       console.log('equipment = ', equipmentList)
@@ -65,7 +68,7 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
       //   number: list[1].value,
       //   date: list[2].value,
       // })
-      handleModal(false)
+      // handleModal(false)
     }
 
     useEffect(() => {
@@ -75,17 +78,17 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
       getObjects()
     }, [])
 
-    const setEquipmentData = (data: Options[]) => {
-      setEquipmentList(data.map(item => item.id as string))
-    }
+    // const setEquipmentData = (data: Options[]) => {
+    //   setEquipmentList(data.map(item => item.id as string))
+    // }
 
-    const setSLAData = (data: Options[]) => {
-      setSLAList(data.map(item => item.id as string))
-    }
+    // const setSLAData = (data: Options[]) => {
+    //   setSLAList(data)
+    // }
 
-    const setObjectData = (data: Options[]) => {
-      setObjectList(data.map(item => item.id as string))
-    }
+    // const setObjectData = (data: Options[]) => {
+    //   setObjectList(data.map(item => item.id as string))
+    // }
 
     return (
       <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
@@ -116,7 +119,7 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
           )
         })}
         <DateField dateValue={dateValue} setDateValue={setDateValue} />
-        <DropDownMultiple
+        {/* <DropDownMultiple
           data={equipments.map(item => {
             return {
               ['label']: item.equipment as string,
@@ -124,7 +127,7 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
             }
           })}
           props={{ mt: 3 }}
-          onChange={setEquipmentData}
+          onChange={setEquipmentList}
           value={equipmentList}
           label="Выберите оборудование"
           errorLabel="Не выбрано оборудование!"
@@ -137,11 +140,11 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
             }
           })}
           props={{ mt: 3 }}
-          onChange={setSLAData}
+          onChange={setSLAList}
           value={slaList}
           label="Выберите уровни сервиса"
           errorLabel="Не выбраны уровни сервиса!"
-        />
+        /> */}
         <DropDownMultiple
           data={objects.map(item => {
             return {
@@ -150,7 +153,7 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
             }
           })}
           props={{ mt: 3 }}
-          onChange={setObjectData}
+          onChange={setObjectList}
           value={objectList}
           label="Выберите объекты"
           errorLabel="Не выбраны объекты!"

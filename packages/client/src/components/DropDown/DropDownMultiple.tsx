@@ -5,6 +5,7 @@ import { Autocomplete } from 'components/Autocomplete'
 import { DataDropDownMultiple, Options } from './interface'
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
 import CheckBoxIcon from '@mui/icons-material/CheckBox'
+import { emptyValue } from '.'
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />
 const checkedIcon = <CheckBoxIcon fontSize="small" />
@@ -21,10 +22,17 @@ export const DropDownMultiple = ({
 }: DataDropDownMultiple) => {
   const theme = useTheme()
   const [errors, setErrors] = useState<boolean>(error as boolean)
+  const [fieldValue, setFieldValue] = useState<string>('')
 
   useEffect(() => {
+    console.log('useeffect')
     setErrors(error as boolean)
+    console.log('err = ', error)
   }, [error])
+
+  console.log('errors = ', errors)
+  console.log('value = ', value)
+  console.log('fieldValue = ', fieldValue)
 
   return (
     <Autocomplete
@@ -32,18 +40,16 @@ export const DropDownMultiple = ({
       disableCloseOnSelect
       sx={{ width: '90%', ...props }}
       options={data}
-      isOptionEqualToValue={(option, value): any => (
-        console.log('option = ', option),
-        console.log('value = ', value),
-        (option as any).id === value || value === ''
-      )}
-      onChange={(_, textValue) => (
-        console.log('textValue = ', textValue),
-        textValue
+      getOptionLabel={(option: any) => (option as any).label}
+      isOptionEqualToValue={(option, value): any =>
+        (option as any).label === (value as any).label || value === emptyValue
+      }
+      onChange={(_, textValue) =>
+        (textValue as any).length
           ? (onChange?.(textValue as Options[]), setErrors(false))
-          : setErrors(true)
-      )}
-      value={value ?? ''}
+          : (onChange?.(textValue as Options[]), setErrors(true))
+      }
+      value={value ?? emptyValue}
       ListboxProps={{
         sx: {
           borderWidth: 1,
@@ -61,16 +67,30 @@ export const DropDownMultiple = ({
       }}
       renderInput={params => (
         <TextField
-          onBlur={event => (
-            !event.target.value ? setErrors(true) : setErrors(false),
-            onBlur?.(event.target.value)
-          )}
           {...params}
-          required
+          onBlur={() => {
+            console.log('value?.length = ', value?.length)
+            if (value?.length) {
+              console.log('params start = ', params)
+              console.log(
+                '1params.inputProps.value = ',
+                params.inputProps.value
+              )
+
+              params.inputProps.value = value[0].id as string
+              console.log(
+                '2params.inputProps.value = ',
+                params.inputProps.value
+              )
+              console.log('params end = ', params)
+              setFieldValue(value[0].id)
+            }
+          }}
           variant="outlined"
           label={label}
           error={errors}
           id={params.id}
+          value={fieldValue}
           helperText={errors ? errorLabel : ''}
           InputProps={{
             ...params.InputProps,

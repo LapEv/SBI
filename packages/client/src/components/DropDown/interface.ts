@@ -11,7 +11,7 @@ export interface DataDropDown {
 
 export interface DataDropDownMultiple {
   data: Options[]
-  value?: string[]
+  value?: Options[]
   props?: object
   label: string
   errorLabel: string

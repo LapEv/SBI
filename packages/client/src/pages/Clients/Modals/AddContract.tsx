@@ -18,6 +18,7 @@ import { useClassifier } from 'hooks/classifier/useClassifier'
 import { Options } from 'components/DropDown/interface'
 import { useSLA } from 'hooks/sla/useSLA'
 import { DropDownMultiple } from 'components/DropDown'
+import { useObjects } from 'hooks/objects/useObjects'
 
 export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -26,8 +27,10 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
     const [{ contracts }, { getContracts, newContract }] = useContracts()
     const [{ equipments }, { getClassifierEquipments }] = useClassifier()
     const [{ sla }, { getSLA }] = useSLA()
+    const [{ objects }, { getObjects }] = useObjects()
     const [equipmentList, setEquipmentList] = useState<string[]>([])
     const [slaList, setSLAList] = useState<string[]>([])
+    const [objectList, setObjectList] = useState<string[]>([])
     const [_, { setMessage }] = useMessage()
     const [dateValue, setDateValue] = useState<string>('')
     const { handleSubmit, control } = useForm<AddValuesProps>({
@@ -43,7 +46,9 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
     })
 
     const changeData = ({ list }: AddValuesProps) => {
+      console.log('change')
       const isExist = contracts.find(item => item.contract === list[0].value)
+      console.log('isExist = ', isExist)
       if (isExist) {
         setMessage({
           text: 'Такой контракт уже существует',
@@ -52,14 +57,22 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
         return
       }
       console.log('list = ', list)
-      // newContract({ contract: list[0].value, number: list[1].value, date: list[2].value })
-      // handleModal(false)
+      console.log('sla = ', slaList)
+      console.log('equipment = ', equipmentList)
+      console.log('objects = ', objectList)
+      // newContract({
+      //   contract: list[0].value,
+      //   number: list[1].value,
+      //   date: list[2].value,
+      // })
+      handleModal(false)
     }
 
     useEffect(() => {
       getContracts()
       getClassifierEquipments()
       getSLA()
+      getObjects()
     }, [])
 
     const setEquipmentData = (data: Options[]) => {
@@ -68,6 +81,10 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
 
     const setSLAData = (data: Options[]) => {
       setSLAList(data.map(item => item.id as string))
+    }
+
+    const setObjectData = (data: Options[]) => {
+      setObjectList(data.map(item => item.id as string))
     }
 
     return (
@@ -124,6 +141,19 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
           value={slaList}
           label="Выберите уровни сервиса"
           errorLabel="Не выбраны уровни сервиса!"
+        />
+        <DropDownMultiple
+          data={objects.map(item => {
+            return {
+              ['label']: item.object as string,
+              ['id']: item.id as string,
+            }
+          })}
+          props={{ mt: 3 }}
+          onChange={setObjectData}
+          value={objectList}
+          label="Выберите объекты"
+          errorLabel="Не выбраны объекты!"
         />
 
         <ButtonsModalSection

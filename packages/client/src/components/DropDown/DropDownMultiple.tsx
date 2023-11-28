@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTheme } from '@mui/material'
 import { TextField } from 'components/TextFields/TextFields'
 import { Autocomplete } from 'components/Autocomplete'
@@ -17,9 +17,14 @@ export const DropDownMultiple = ({
   value,
   label,
   errorLabel,
+  error,
 }: DataDropDownMultiple) => {
   const theme = useTheme()
-  const [errors, setErrors] = useState<boolean>(false)
+  const [errors, setErrors] = useState<boolean>(error as boolean)
+
+  useEffect(() => {
+    setErrors(error as boolean)
+  }, [error])
 
   return (
     <Autocomplete
@@ -27,15 +32,18 @@ export const DropDownMultiple = ({
       disableCloseOnSelect
       sx={{ width: '90%', ...props }}
       options={data}
-      isOptionEqualToValue={(option, value): any =>
-        (option as any).id === (value as any).id
-      }
-      onChange={(_, textValue) =>
+      isOptionEqualToValue={(option, value): any => (
+        console.log('option = ', option),
+        console.log('value = ', value),
+        (option as any).id === value || value === ''
+      )}
+      onChange={(_, textValue) => (
+        console.log('textValue = ', textValue),
         textValue
           ? (onChange?.(textValue as Options[]), setErrors(false))
           : setErrors(true)
-      }
-      // value={''}
+      )}
+      value={value ?? ''}
       ListboxProps={{
         sx: {
           borderWidth: 1,
@@ -53,10 +61,10 @@ export const DropDownMultiple = ({
       }}
       renderInput={params => (
         <TextField
-          // onBlur={event => (
-          //   !event.target.value ? setErrors(true) : setErrors(false),
-          //   onBlur?.(event.target.value)
-          // )}
+          onBlur={event => (
+            !event.target.value ? setErrors(true) : setErrors(false),
+            onBlur?.(event.target.value)
+          )}
           {...params}
           required
           variant="outlined"

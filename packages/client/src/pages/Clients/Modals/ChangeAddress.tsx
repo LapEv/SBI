@@ -76,10 +76,10 @@ export const ChangeAddress = React.forwardRef<unknown, ChooseModalProps>(
       const newAddress = addresses.find(
         item => item.id === data.id
       ) as Addresses
-      const newRegion = regions.find(
-        item => item.id === newAddress.id_region
-      ) as Regions
-      setSelectedRegions({ label: newRegion.region, id: newAddress.id_region })
+      setSelectedRegions({
+        label: newAddress?.Region?.region as string,
+        id: newAddress.id_region,
+      })
     }
 
     const changeSelectedRegions = (data: Options) => {

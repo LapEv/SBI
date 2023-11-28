@@ -7,6 +7,17 @@ export interface Objects {
   internalClientID?: string
   internalClientName?: string
   active?: boolean
+  Client?: {
+    client: string
+  }
+  Address?: {
+    address: string
+  }
+  Region?: {
+    region: string
+  }
+  createdAt?: string
+  updatedAt?: string
 }
 
 export interface AnswerObjects {

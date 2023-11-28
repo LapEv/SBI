@@ -31,6 +31,7 @@ export interface answerModalAddAddressInObject {
   state: boolean
   region: Options
   address: Options
+  coordinates: string
 }
 
 export interface IModalAddAddressInObject {

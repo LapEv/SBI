@@ -13,6 +13,7 @@ import {
   changeAddress,
   changeRegion,
 } from 'api/address'
+import { addAddress } from 'store/slices/addresses'
 
 export function useAddresses(): [AddressesState, AddressesActions] {
   const addresses = useSelector((state: RootState) => state.addresses)
@@ -44,6 +45,9 @@ export function useAddresses(): [AddressesState, AddressesActions] {
       },
       changeRegion(newRegion, id) {
         dispatch(changeRegion({ newRegion, id }))
+      },
+      addAddress(address) {
+        dispatch(addAddress(address))
       },
     },
   ]

@@ -7,17 +7,12 @@ import {
   useFormState,
 } from 'react-hook-form'
 import { TextField } from 'components/TextFields'
-import {
-  ChooseModalProps,
-  AddValuesPropsTwoForms,
-  IModalAddAddressInObject,
-} from './interfaces'
-import { MapAddressInputFields, MapNewAddressModalInputFields } from '../data'
+import { AddValuesPropsTwoForms, IModalAddAddressInObject } from './interfaces'
+import { MapNewAddressModalInputFields } from '../data'
 import { modalStyle } from 'static/styles'
-import { ButtonsModalSection, ButtonsSectionNoSubmit } from 'components/Buttons'
+import { ButtonsModalSection } from 'components/Buttons'
 import { DropDown, emptyValue } from 'components/DropDown'
 import { useAddresses } from 'hooks/addresses/useAddresses'
-import { useMessage } from 'hooks/message/useMessage'
 import { Options } from 'components/DropDown/interface'
 
 export const ModalAddAddressInObject = React.forwardRef<
@@ -31,16 +26,13 @@ export const ModalAddAddressInObject = React.forwardRef<
 
     MapNewAddressModalInputFields[0].value = address
     const [region, setRegion] = useState<Options>(emptyValue)
-    const {
-      control: controlADD,
-      handleSubmit: handleSubmitAddAddress,
-      register: registerADD,
-    } = useForm<AddValuesPropsTwoForms>({
-      mode: 'onBlur',
-      defaultValues: {
-        list2: MapNewAddressModalInputFields,
-      },
-    })
+    const { control: controlADD, handleSubmit: handleSubmitAddAddress } =
+      useForm<AddValuesPropsTwoForms>({
+        mode: 'onBlur',
+        defaultValues: {
+          list2: MapNewAddressModalInputFields,
+        },
+      })
     const { errors: errorsModal } = useFormState({ control: controlADD })
     const { fields: filedsModal } = useFieldArray({
       control: controlADD,
@@ -48,15 +40,17 @@ export const ModalAddAddressInObject = React.forwardRef<
     })
 
     const AddAddress = ({ list2 }: AddValuesPropsTwoForms) => {
-      console.log('address = ', list2[0].value)
-      console.log('coordinates = ', list2[1].value)
-      console.log('id_region = ', region.id)
       newAddress({
         address: list2[0].value,
         coordinates: list2[1].value,
         id_region: region.id,
       })
-      handleModal({ state: true, region, address: { label: address, id: '' } })
+      handleModal({
+        state: true,
+        region,
+        address: { label: address, id: '' },
+        coordinates: list2[1].value,
+      })
     }
 
     useEffect(() => {
@@ -125,6 +119,7 @@ export const ModalAddAddressInObject = React.forwardRef<
               state: false,
               region,
               address: { label: address, id: '' },
+              coordinates: '',
             })
           }
           btnName="Сохранить"

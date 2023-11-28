@@ -9,4 +9,5 @@ export interface AddressesActions {
   deleteRegion: (data: string[]) => void
   changeAddress: (newAddress: Addresses, id: string) => void
   changeRegion: (region: Regions, id: string) => void
+  addAddress: (address: Addresses) => void
 }

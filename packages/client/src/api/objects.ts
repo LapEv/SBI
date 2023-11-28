@@ -48,10 +48,10 @@ export const newObject = createAsyncThunk(
 
 export const deleteObjects = createAsyncThunk(
   'objects/deleteObjects',
-  async (selectedobjects: string[], thunkAPI) => {
+  async (selectedObjects: string[], thunkAPI) => {
     try {
       const { data } = await authhost.post(ApiEndPoints.Objects.deleteObjects, {
-        selectedobjects,
+        selectedObjects,
       })
       return {
         data,
@@ -73,7 +73,15 @@ export const deleteObjects = createAsyncThunk(
 export const changeObject = createAsyncThunk(
   'objects/changeObject',
   async (
-    { object, id_address, id_region, id_client, id }: ChangeObject,
+    {
+      object,
+      id_address,
+      id_region,
+      id_client,
+      internalClientID,
+      internalClientName,
+      id,
+    }: ChangeObject,
     thunkAPI
   ) => {
     try {
@@ -82,6 +90,8 @@ export const changeObject = createAsyncThunk(
         id_address,
         id_region,
         id_client,
+        internalClientID,
+        internalClientName,
         id,
       })
       return {

@@ -37,6 +37,11 @@ export const menuData = [
     icon: <AddCircleOutlineIcon fontSize="medium" />,
   },
   {
+    name: 'changeObject',
+    title: 'Изменить объект',
+    icon: <EditIcon fontSize="medium" />,
+  },
+  {
     name: 'changeAddress',
     title: 'Изменить адрес',
     icon: <EditIcon fontSize="medium" />,
@@ -45,6 +50,11 @@ export const menuData = [
     name: 'changeRegion',
     title: 'Изменить регион',
     icon: <EditIcon fontSize="medium" />,
+  },
+  {
+    name: 'deleteObject',
+    title: 'Удалить объект',
+    icon: <RemoveCircleOutline fontSize="medium" />,
   },
   {
     name: 'deleteAddress',
@@ -63,8 +73,10 @@ export const ModalTitles = {
   newObject: 'Новый объект',
   newAddress: 'Новый адрес',
   newRegion: 'Новый регион',
+  deleteObject: 'Удалить объект',
   deleteAddress: 'Удалить адрес',
   deleteRegion: 'Удалить регион',
+  changeObject: 'Изменить объект',
   changeAddress: 'Изменить адрес',
   changeRegion: 'Изменить регион',
 }

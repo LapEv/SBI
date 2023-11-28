@@ -8,6 +8,8 @@ import {
   ChangeRegion,
   AddClient,
   AddContract,
+  DeleteObjects,
+  ChangeObject,
 } from './'
 import { ModalTitles } from '../data'
 import { ChooseModalProps } from './interfaces'
@@ -52,6 +54,13 @@ export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(
             title={ModalTitles.newRegion}
           />
         )}
+        {modalImage === 'deleteObject' && (
+          <DeleteObjects
+            ref={ref}
+            handleModal={handleModal}
+            title={ModalTitles.deleteObject}
+          />
+        )}
         {modalImage === 'deleteAddress' && (
           <DeleteAddress
             ref={ref}
@@ -64,6 +73,13 @@ export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(
             ref={ref}
             handleModal={handleModal}
             title={ModalTitles.deleteRegion}
+          />
+        )}
+        {modalImage === 'changeObject' && (
+          <ChangeObject
+            ref={ref}
+            handleModal={handleModal}
+            title={ModalTitles.changeObject}
           />
         )}
         {modalImage === 'changeAddress' && (

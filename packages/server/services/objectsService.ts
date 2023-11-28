@@ -1,4 +1,4 @@
-import { ObjectsRepos } from '../db'
+import { Addresses, Clients, ObjectsRepos, Regions } from '../db'
 import type { Request, Response } from 'express'
 const { Op } = require('sequelize')
 // interface ShortTypicalMalfunctions {
@@ -23,7 +23,22 @@ export class objectsService {
   }
 
   getAllObjects = (_req: Request, res: Response) => {
-    ObjectsRepos.findAll({})
+    ObjectsRepos.findAll({
+      include: [
+        {
+          model: Clients,
+          attributes: ['client'],
+        },
+        {
+          model: Addresses,
+          attributes: ['address'],
+        },
+        {
+          model: Regions,
+          attributes: ['region'],
+        },
+      ],
+    })
       .then(item => res.status(200).json(item))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
@@ -31,6 +46,20 @@ export class objectsService {
   getObjects = (_req: Request, res: Response) => {
     ObjectsRepos.findAll({
       where: { active: true },
+      include: [
+        {
+          model: Clients,
+          attributes: ['client'],
+        },
+        {
+          model: Addresses,
+          attributes: ['address'],
+        },
+        {
+          model: Regions,
+          attributes: ['region'],
+        },
+      ],
     })
       .then(objects => {
         res.status(200).json(objects)
@@ -98,13 +127,23 @@ export class objectsService {
   }
 
   changeObject = async (_req: Request, res: Response) => {
-    const { object, id_address, id_region, id_client, id } = _req.body
+    const {
+      object,
+      id_address,
+      id_region,
+      id_client,
+      internalClientID,
+      internalClientName,
+      id,
+    } = _req.body
     try {
       await ObjectsRepos.update(id, {
         object,
         id_address,
         id_region,
         id_client,
+        internalClientID,
+        internalClientName,
       })
       const objects = await ObjectsRepos.findAll({
         where: { active: true },

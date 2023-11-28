@@ -26,7 +26,11 @@ const initialState: AddressesState = {
 export const addressesSlise = createSlice({
   name: 'role',
   initialState,
-  reducers: {},
+  reducers: {
+    addAddress(state, action) {
+      state.addresses.push(action.payload)
+    },
+  },
   extraReducers: {
     [getAddresses.fulfilled.type]: (
       state,
@@ -149,3 +153,4 @@ export const addressesSlise = createSlice({
 })
 
 export const addressesReducer = addressesSlise.reducer
+export const { addAddress } = addressesSlise.actions

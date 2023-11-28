@@ -4,6 +4,9 @@ export interface Addresses {
   coordinates: string
   id_region: string
   active?: boolean
+  Region?: {
+    region: string
+  }
 }
 
 export interface Regions {

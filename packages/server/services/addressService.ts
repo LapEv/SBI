@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express'
-import { AddressesRepos, RegionsRepos } from '../db'
+import { AddressesRepos, Regions, RegionsRepos } from '../db'
 const { Op } = require('sequelize')
 
 export class addressService {
@@ -18,7 +18,12 @@ export class addressService {
   }
 
   getAllAddresses = (_req: Request, res: Response) => {
-    AddressesRepos.findAll({})
+    AddressesRepos.findAll({
+      include: {
+        model: Regions,
+        attributes: ['region'],
+      },
+    })
       .then(item => res.status(200).json(item))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
@@ -26,6 +31,10 @@ export class addressService {
   getAddresses = (_req: Request, res: Response) => {
     AddressesRepos.findAll({
       where: { active: true },
+      include: {
+        model: Regions,
+        attributes: ['region'],
+      },
     })
       .then(addresses => {
         res.status(200).json(addresses)

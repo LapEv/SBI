@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTheme } from '@mui/material'
 import { TextField } from 'components/TextFields/TextFields'
 import { Autocomplete } from 'components/Autocomplete'
@@ -16,6 +16,10 @@ export const DropDown = ({
 }: DataDropDown) => {
   const theme = useTheme()
   const [errors, setErrors] = useState<boolean>(error as boolean)
+
+  useEffect(() => {
+    setErrors(error as boolean)
+  }, [error])
 
   return (
     <Autocomplete

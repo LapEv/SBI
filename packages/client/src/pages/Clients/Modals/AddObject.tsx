@@ -28,7 +28,7 @@ export const AddObject = React.forwardRef<unknown, ChooseModalProps>(
   ({ handleModal, title }: ChooseModalProps, ref) => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const [{ clients }, { getClients }] = useClients()
-    const [{ regions, addresses }, { getRegions, getAddresses, newAddress }] =
+    const [{ regions, addresses }, { getRegions, getAddresses, addAddress }] =
       useAddresses()
     const [{ objects }, { getObjects, newObject }] = useObjects()
     const [_, { setMessage }] = useMessage()
@@ -40,9 +40,8 @@ export const AddObject = React.forwardRef<unknown, ChooseModalProps>(
     const [newAddressName, setNewAddress] = useState<string>('')
     const [modal, setModal] = useState<boolean>(false)
     const modalAddRef = React.createRef()
-    // const dropDownRef = React.createRef()
 
-    const { handleSubmit, control, register } = useForm<AddValuesProps>({
+    const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
       defaultValues: {
         list: MapObjectInputFields,
@@ -114,12 +113,18 @@ export const AddObject = React.forwardRef<unknown, ChooseModalProps>(
       state,
       region,
       address,
+      coordinates,
     }: answerModalAddAddressInObject) => {
       if (state) {
         setRegion(region)
         setErrRegion(false)
         setAddress(address)
         setErrAddress(false)
+        addAddress({
+          address: address.label,
+          id_region: region.id,
+          coordinates,
+        })
       }
       getAddresses()
       setModal(false)

@@ -17,8 +17,6 @@ export const DropDown = ({
   const theme = useTheme()
   const [errors, setErrors] = useState<boolean>(error as boolean)
 
-  console.log('value = ', value)
-
   return (
     <Autocomplete
       forcePopupIcon={true}

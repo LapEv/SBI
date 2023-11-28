@@ -17,6 +17,7 @@ export interface DataDropDownMultiple {
   errorLabel: string
   onChange?: (data: Options[]) => void
   onBlur?: (value: string) => void
+  error?: boolean
 }
 
 export interface Data {

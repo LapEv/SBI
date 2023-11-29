@@ -1,5 +1,11 @@
 import React, { useEffect, useState, memo, SyntheticEvent } from 'react'
-import { Box, ListItemText, ListItemButton, Modal } from '@mui/material'
+import {
+  Box,
+  ListItemText,
+  ListItemButton,
+  Modal,
+  IconButton,
+} from '@mui/material'
 import Collapse from '@mui/material/Collapse'
 import {
   ButtonsSectionNoSubmit,
@@ -21,9 +27,20 @@ import { ModalChangeName } from 'components/ModaQuestions'
 import { сheckArrObjects } from 'utils/сheckArrObjects'
 import { Contracts } from 'store/slices/contracts/interfaces'
 import { useContracts } from 'hooks/contracts/useContracts'
+import { ChooseModal } from 'pages/Users/Modals'
+import { useAuth } from 'hooks/auth/useAuth'
 
 export const ContractsList = memo(
-  ({ contract, id, number, date, sla, equipment, objects }: Contracts) => {
+  ({
+    contract,
+    id,
+    number,
+    date,
+    sla,
+    equipment,
+    objects,
+    id_client,
+  }: Contracts) => {
     const [{ activeContract }, { setActiveContract }] = useContracts()
     const theme = useTheme()
     const modalRef = React.createRef()
@@ -163,7 +180,7 @@ export const ContractsList = memo(
             answer={changeModel}
             handleModal={setModal}
             ref={modalRef}
-            question="Введите новое наименование модели"
+            question="Введите новое наименование контракта"
           />
         </Modal>
         <ListItemButton

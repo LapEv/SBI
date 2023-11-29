@@ -4,6 +4,7 @@ import {
   changeContract,
   deleteContract,
   getContracts,
+  getContractsByClientID,
   newContract,
 } from 'api/contracts'
 
@@ -34,6 +35,24 @@ export const contractsSlise = createSlice({
       state.isLoadingRoles = true
     },
     [getContracts.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingRoles = false
+      state.error = action.payload
+    },
+    [getContractsByClientID.fulfilled.type]: (
+      state,
+      action: PayloadAction<Contracts[]>
+    ) => {
+      state.isLoadingRoles = false
+      state.error = ''
+      state.contracts = action.payload
+    },
+    [getContractsByClientID.pending.type]: state => {
+      state.isLoadingRoles = true
+    },
+    [getContractsByClientID.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
       state.isLoadingRoles = false
       state.error = action.payload
     },

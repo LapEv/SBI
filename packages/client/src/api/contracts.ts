@@ -21,6 +21,25 @@ export const getContracts = createAsyncThunk(
   }
 )
 
+export const getContractsByClientID = createAsyncThunk(
+  'contracts/getContractsByClientID',
+  async (id_client: string, thunkAPI) => {
+    try {
+      const { data } = await authhost.post<Contracts>(
+        ApiEndPoints.Contracts.getContractsByClientID,
+        { id_client }
+      )
+      return data
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      return thunkAPI.rejectWithValue(
+        `Не удалось получить данные по контрактам ID клиента\n${getError(e)}`
+      )
+    }
+  }
+)
+
 export const newContract = createAsyncThunk(
   'contracts/newContract',
   async (contract: Contracts, thunkAPI) => {

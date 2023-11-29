@@ -20,7 +20,7 @@ import { useSLA } from 'hooks/sla/useSLA'
 import { DropDown, DropDownMultiple, emptyValue } from 'components/DropDown'
 import { useObjects } from 'hooks/objects/useObjects'
 import { useClients } from 'hooks/clients/useClients'
-import { convertDate } from 'utils/convertDate'
+import { convetStringToDate } from 'utils/convertDate'
 
 export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -75,10 +75,12 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
         setErrObject(true)
         return
       }
+
+      const date = convetStringToDate(dateValue, '/')
       newContract({
         contract: list[0].value,
         number: list[1].value,
-        date: convertDate(dateValue),
+        date: date,
         sla: slaList.map(item => item.id),
         equipment: equipmentList.map(item => item.id),
         objects: objectList.map(item => item.id),
@@ -94,18 +96,6 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
       getSLA()
       getObjects()
     }, [])
-
-    // const setEquipmentData = (data: Options[]) => {
-    //   setEquipmentList(data.map(item => item.id as string))
-    // }
-
-    // const setSLAData = (data: Options[]) => {
-    //   setSLAList(data)
-    // }
-
-    // const setObjectData = (data: Options[]) => {
-    //   setObjectList(data.map(item => item.id as string))
-    // }
 
     return (
       <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>

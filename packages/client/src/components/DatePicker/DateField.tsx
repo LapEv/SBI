@@ -7,7 +7,6 @@ import { TextField } from 'components/TextFields'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { CalendarIcon, ClearIconElement } from 'components/Icons'
 import dayjs from 'dayjs'
-import { useEffect } from 'react'
 
 const StyledDatePickers = styled(PickersLayout)(({ theme }) => ({
   '.MuiDateCalendar-root': {

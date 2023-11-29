@@ -94,6 +94,7 @@ export const ApiEndPoints = {
   },
   Contracts: {
     getContracts: 'contracts/getContracts',
+    getContractsByClientID: 'contracts/getContractsByClientID',
     newContract: 'contracts/newContract',
     deleteContract: 'contracts/deleteContract',
     changeContract: 'contracts/changeContract',

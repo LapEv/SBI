@@ -12,6 +12,11 @@ export const contractRouter = (apiRouter: Router) => {
     roleMiddleware(['getContracts', 'ADMIN', 'SUPERADMIN']),
     service.getContracts
   )
+  router.post(
+    '/getContractsByClientID',
+    roleMiddleware(['getContractsByClientID', 'ADMIN', 'SUPERADMIN']),
+    service.getContractsByClientID
+  )
   router.get(
     '/getAllContracts',
     roleMiddleware(['getAllContracts', 'ADMIN', 'SUPERADMIN']),

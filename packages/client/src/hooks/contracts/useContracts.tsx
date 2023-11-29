@@ -6,6 +6,7 @@ import {
   changeContract,
   deleteContract,
   getContracts,
+  getContractsByClientID,
   newContract,
 } from 'api/contracts'
 import { ContractsState } from 'store/slices/contracts/interfaces'
@@ -20,6 +21,9 @@ export function useContracts(): [ContractsState, ContractsActions] {
     {
       getContracts() {
         dispatch(getContracts())
+      },
+      getContractsByClientID(id_client) {
+        dispatch(getContractsByClientID(id_client))
       },
       newContract(data) {
         dispatch(newContract(data))

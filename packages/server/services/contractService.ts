@@ -39,6 +39,17 @@ export class contractService {
       .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
 
+  getContractsByClientID = (_req: Request, res: Response) => {
+    const { id_client } = _req.body
+    ContractsRepos.findAll({
+      where: { active: true, id_client },
+    })
+      .then(contracts => {
+        res.status(200).json(contracts)
+      })
+      .catch(err => res.status(500).json({ error: ['db error', err] }))
+  }
+
   deleteContract = async (_req: Request, res: Response) => {
     const { selectedContracts } = _req.body
     try {

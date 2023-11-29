@@ -319,6 +319,10 @@ export const rolesStartData = [
     nameRole: 'Получение списка активных контрактов',
   },
   {
+    role: 'getContractsByClientID',
+    nameRole: 'Получение списка активных контрактов по ID клиента',
+  },
+  {
     role: 'newContract',
     nameRole: 'Создание нового контракта',
   },

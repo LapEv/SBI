@@ -6,9 +6,12 @@ import { classifier, classifierComponent } from 'static/styles'
 import { ModalChangeName } from 'components/ModaQuestions'
 import { useClients } from 'hooks/clients/useClients'
 import { Clients } from 'store/slices/clients/interfaces'
+import { useContracts } from 'hooks/contracts/useContracts'
+import { ContractsList } from './'
 
 export const ClientsList = memo(({ client, legalName, id }: Clients) => {
   const [{ activeClient }, { setActiveClient, changeClient }] = useClients()
+  const [{ contracts }, { getContracts }] = useContracts()
   const modalRef = React.createRef()
   const [open, setOpen] = useState(false)
   const [modal, setModal] = useState<boolean>(false)
@@ -40,6 +43,10 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
     }
   }, [activeClient])
 
+  useEffect(() => {
+    getContracts()
+  }, [])
+
   return (
     <Box sx={classifier}>
       <Modal
@@ -66,20 +73,26 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
         <EditButton handleClick={editClient} size={'1.7rem'} />
         <RotateButton open={open} handleClick={handleClick} size={'2rem'} />
       </ListItemButton>
-      <Collapse
+      {/* <Collapse
         sx={{ width: '100%', height: 'auto' }}
         in={open}
         timeout="auto"
         unmountOnExit>
-        {/* {models.map(({ model, id, id_equipment }) => (
-          <Models
-            model={model}
-            id_equipment={id_equipment}
-            id={id as string}
-            key={`${id_equipment}${id}`}
-          />
-        ))} */}
-      </Collapse>
+        {contracts.map(
+          ({ contract, id, number, date, sla, equipment, objects }) => (
+            <ContractsList
+              contract={contract}
+              id={id as string}
+              number={number}
+              date={date}
+              sla={sla}
+              equipment={equipment}
+              objects={objects}
+              key={id}
+            />
+          )
+        )}
+      </Collapse> */}
     </Box>
   )
 })

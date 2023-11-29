@@ -3,8 +3,6 @@ import { useTheme } from '@mui/material'
 import { TextField } from 'components/TextFields/TextFields'
 import { Autocomplete } from 'components/Autocomplete'
 import { DataDropDownMultiple, Options } from './interface'
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
-import CheckBoxIcon from '@mui/icons-material/CheckBox'
 import { emptyValue } from '.'
 
 export const DropDownMultiple = ({

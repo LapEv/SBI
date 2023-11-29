@@ -17,20 +17,27 @@ import { DateField } from 'components/DatePicker'
 import { useClassifier } from 'hooks/classifier/useClassifier'
 import { Options } from 'components/DropDown/interface'
 import { useSLA } from 'hooks/sla/useSLA'
-import { DropDownMultiple } from 'components/DropDown'
+import { DropDown, DropDownMultiple, emptyValue } from 'components/DropDown'
 import { useObjects } from 'hooks/objects/useObjects'
+import { useClients } from 'hooks/clients/useClients'
+import { convertDate } from 'utils/convertDate'
 
 export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
+    const [{ clients }, { getClients }] = useClients()
     const [{ contracts }, { getContracts, newContract }] = useContracts()
     const [{ equipments }, { getClassifierEquipments }] = useClassifier()
     const [{ sla }, { getSLA }] = useSLA()
     const [{ objects }, { getObjects }] = useObjects()
+    const [client, setClient] = useState<Options>(emptyValue)
     const [equipmentList, setEquipmentList] = useState<Options[]>([])
     const [slaList, setSLAList] = useState<Options[]>([])
     const [objectList, setObjectList] = useState<Options[]>([])
+    const [errEquipment, setErrEquipment] = useState<boolean>(false)
+    const [errSLA, setErrSLA] = useState<boolean>(false)
+    const [errObject, setErrObject] = useState<boolean>(false)
     const [_, { setMessage }] = useMessage()
     const [dateValue, setDateValue] = useState<string>('')
     const { handleSubmit, control } = useForm<AddValuesProps>({
@@ -57,22 +64,32 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
         return
       }
       if (!equipmentList.length) {
-        // setErrors
+        setErrEquipment(true)
+        return
       }
-      console.log('list = ', list)
-      console.log('sla = ', slaList)
-      console.log('equipment = ', equipmentList)
-      console.log('objects = ', objectList)
-      // newContract({
-      //   contract: list[0].value,
-      //   number: list[1].value,
-      //   date: list[2].value,
-      // })
-      // handleModal(false)
+      if (!slaList.length) {
+        setErrSLA(true)
+        return
+      }
+      if (!objectList.length) {
+        setErrObject(true)
+        return
+      }
+      newContract({
+        contract: list[0].value,
+        number: list[1].value,
+        date: convertDate(dateValue),
+        sla: slaList.map(item => item.id),
+        equipment: equipmentList.map(item => item.id),
+        objects: objectList.map(item => item.id),
+        id_client: client.id,
+      })
+      handleModal(false)
     }
 
     useEffect(() => {
       getContracts()
+      getClients()
       getClassifierEquipments()
       getSLA()
       getObjects()
@@ -93,6 +110,20 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
     return (
       <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
         <Typography variant={'h6'}>{title}</Typography>
+        <DropDown
+          data={clients.map(item => {
+            return {
+              ['label']: item.client as string,
+              ['id']: item.id as string,
+            }
+          })}
+          props={{ mt: 3 }}
+          onChange={setClient}
+          value={client.label}
+          label="Выберите клиента"
+          errorLabel="Не выбран клиент!"
+        />
+
         {fields.map(({ id, label, validation, type, required }, index) => {
           return (
             <Controller
@@ -119,7 +150,7 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
           )
         })}
         <DateField dateValue={dateValue} setDateValue={setDateValue} />
-        {/* <DropDownMultiple
+        <DropDownMultiple
           data={equipments.map(item => {
             return {
               ['label']: item.equipment as string,
@@ -131,6 +162,7 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
           value={equipmentList}
           label="Выберите оборудование"
           errorLabel="Не выбрано оборудование!"
+          error={errEquipment}
         />
         <DropDownMultiple
           data={sla.map(item => {
@@ -144,7 +176,8 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
           value={slaList}
           label="Выберите уровни сервиса"
           errorLabel="Не выбраны уровни сервиса!"
-        /> */}
+          error={errSLA}
+        />
         <DropDownMultiple
           data={objects.map(item => {
             return {
@@ -157,6 +190,7 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
           value={objectList}
           label="Выберите объекты"
           errorLabel="Не выбраны объекты!"
+          error={errObject}
         />
 
         <ButtonsModalSection

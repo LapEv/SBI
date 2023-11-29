@@ -6,6 +6,7 @@ export interface Contracts {
   sla?: string[]
   equipment?: string[]
   objects?: string[]
+  id_client: string
   active?: boolean
 }
 

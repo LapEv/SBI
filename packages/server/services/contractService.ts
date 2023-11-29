@@ -7,6 +7,7 @@ const { Op } = require('sequelize')
 // }
 export class contractService {
   newContract = async (_req: Request, res: Response) => {
+    console.log('body = ', _req.body)
     try {
       await ContractsRepos.create({ ..._req.body, active: true })
       const contracts = await ContractsRepos.findAll({

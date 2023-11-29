@@ -18,28 +18,23 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { ChooseModal } from 'pages/Users/Modals'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import { useTheme } from '@mui/material/styles'
+import { AddContract } from './Modals'
+import { ModalTitles } from './data'
 
 export const ClientsList = memo(({ client, legalName, id }: Clients) => {
   const [{ activeClient }, { setActiveClient, changeClient }] = useClients()
   const [{ contracts }, { getContractsByClientID }] = useContracts()
+  const [{ admin }] = useAuth()
   const modalRef = React.createRef()
   const [open, setOpen] = useState(false)
   const [modal, setModal] = useState<boolean>(false)
   const [modalImage, setModalImage] = useState<string>('')
-  const modalContractRef = React.createRef()
-  const [modalNewContract, setModalNewContract] = useState<boolean>(false)
-  const [{ admin }] = useAuth()
   const theme = useTheme()
 
   const handleClick = () => {
     setOpen(!open)
     setActiveClient(id as string)
     getContractsByClientID(activeClient as string)
-  }
-
-  const editClient = (event: SyntheticEvent<EventTarget>) => {
-    event.stopPropagation()
-    setModal(true)
   }
 
   const changeClientName = (answer: boolean, text: string) => {
@@ -58,6 +53,16 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
     }
   }, [activeClient])
 
+  const handleModal = (bool: boolean) => {
+    setModal(bool)
+  }
+
+  const editClient = (event: SyntheticEvent<EventTarget>) => {
+    event.stopPropagation()
+    setModal(true)
+    setModalImage('')
+  }
+
   const AddNewContract = () => {
     setModal(true)
     setModalImage('newContract')
@@ -70,25 +75,21 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
         onClose={() => setModal(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
-        <ModalChangeName
-          answer={changeClientName}
-          handleModal={setModal}
-          ref={modalRef}
-          question="Введите новое наименование клиента"
-        />
+        {modalImage ? (
+          <AddContract
+            ref={modalRef}
+            handleModal={handleModal}
+            title={ModalTitles.newContract}
+          />
+        ) : (
+          <ModalChangeName
+            answer={changeClientName}
+            handleModal={handleModal}
+            ref={modalRef}
+            question="Введите новое наименование клиента"
+          />
+        )}
       </Modal>
-      <Modal
-        open={modalNewContract}
-        onClose={setModalNewContract}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description">
-        <ChooseModal
-          ref={modalContractRef}
-          modalImage={modalImage}
-          handleModal={setModalNewContract}
-        />
-      </Modal>
-
       <ListItemButton
         divider={open}
         sx={classifierComponent}
@@ -121,23 +122,25 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
             />
           )
         )}
+        {admin && (
+          <IconButton
+            onClick={AddNewContract}
+            size="medium"
+            sx={{
+              mt: 3,
+              ml: 5,
+              mb: 3,
+              width: 40,
+              height: 40,
+              borderRadius: '20%',
+              color: theme.palette.primary.contrastText,
+              backgroundColor: theme.palette.primary.main,
+              boxShadow: 5,
+            }}>
+            <AddCircleOutlineIcon />
+          </IconButton>
+        )}
       </Collapse>
-      {admin && (
-        <IconButton
-          onClick={AddNewContract}
-          size="medium"
-          sx={{
-            ml: 5,
-            width: 40,
-            height: 40,
-            borderRadius: '20%',
-            color: theme.palette.primary.contrastText,
-            backgroundColor: theme.palette.primary.main,
-            boxShadow: 5,
-          }}>
-          <AddCircleOutlineIcon />
-        </IconButton>
-      )}
     </Box>
   )
 })

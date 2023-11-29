@@ -8,15 +8,16 @@ import {
   ChangeRegion,
   AddClient,
   AddContract,
+  AddObject,
   DeleteObjects,
   ChangeObject,
 } from './'
 import { ModalTitles } from '../data'
 import { ChooseModalProps } from './interfaces'
-import { AddObject } from './AddObject'
 
 export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(
   ({ modalImage, handleModal }: ChooseModalProps, ref) => {
+    console.log('modalImage = ', modalImage)
     return (
       <>
         {modalImage === 'newClient' && (

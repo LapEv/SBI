@@ -1,7 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { authhost, ApiEndPoints } from './config'
 import { getError } from 'utils/getError'
-import { ChangeContract, Contracts } from 'store/slices/contracts/interfaces'
+import {
+  ChangeContract,
+  Contracts,
+  NewContractName,
+} from 'store/slices/contracts/interfaces'
 
 export const getContracts = createAsyncThunk(
   'contracts/getContracts',
@@ -52,6 +56,34 @@ export const newContract = createAsyncThunk(
         data,
         message: {
           text: 'Новый контракт добавлен!',
+          type: 'success',
+        },
+      }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      return thunkAPI.rejectWithValue(
+        `Не удалось создать новый контракт\n${getError(e)} `
+      )
+    }
+  }
+)
+
+export const newContractName = createAsyncThunk(
+  'contracts/newContractName',
+  async ({ contract, id }: NewContractName, thunkAPI) => {
+    try {
+      const { data } = await authhost.post(
+        ApiEndPoints.Contracts.newContractName,
+        {
+          contract,
+          id,
+        }
+      )
+      return {
+        data,
+        message: {
+          text: 'Наименование контракта изменено!',
           type: 'success',
         },
       }

@@ -7,9 +7,27 @@ const { Op } = require('sequelize')
 // }
 export class contractService {
   newContract = async (_req: Request, res: Response) => {
-    console.log('body = ', _req.body)
     try {
       await ContractsRepos.create({ ..._req.body, active: true })
+      const contracts = await ContractsRepos.findAll({
+        where: { active: true },
+      })
+      res.status(200).json(contracts)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res.status(500).json({
+        error: ['db error: unable to set new contract', err],
+      })
+    }
+  }
+
+  newContractName = async (_req: Request, res: Response) => {
+    const { contract, id } = _req.body
+    try {
+      await ContractsRepos.update(id, {
+        contract,
+      })
       const contracts = await ContractsRepos.findAll({
         where: { active: true },
       })

@@ -28,6 +28,11 @@ export const contractRouter = (apiRouter: Router) => {
     service.newContract
   )
   router.post(
+    '/newContractName',
+    roleMiddleware(['newContractName', 'ADMIN', 'SUPERADMIN']),
+    service.newContractName
+  )
+  router.post(
     '/deleteContract',
     roleMiddleware(['deleteContract', 'ADMIN', 'SUPERADMIN']),
     service.deleteContract

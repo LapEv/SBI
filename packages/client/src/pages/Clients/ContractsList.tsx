@@ -42,6 +42,7 @@ export const ContractsList = memo(
     id_client,
   }: Contracts) => {
     const [{ activeContract }, { setActiveContract }] = useContracts()
+    const [{ contracts }, { newContractName }] = useContracts()
     const theme = useTheme()
     const modalRef = React.createRef()
     const [open, setOpen] = useState(false)
@@ -146,19 +147,20 @@ export const ContractsList = memo(
       // changeModelsInTypicalMalfunction({ id_equipment, newTypicalMalfunction })
     }
 
-    const editModel = (event: SyntheticEvent<EventTarget>) => {
-      // event.stopPropagation()
-      // setModal(true)
+    const editContract = (event: SyntheticEvent<EventTarget>) => {
+      event.stopPropagation()
+      setModal(true)
     }
 
     const changeModel = (answer: boolean, text: string) => {
-      // setModal(false)
-      // if (!answer) return
-      // changeClassifierModel({
-      //   model: text,
-      //   id: id as string,
-      //   id_equipment,
-      // })
+      console.log('answer = ', answer)
+      console.log('text = ', text)
+      setModal(false)
+      if (!answer) return
+      newContractName({
+        contract: text,
+        id: id as string,
+      })
     }
 
     useEffect(() => {
@@ -192,7 +194,7 @@ export const ContractsList = memo(
             sx={{ ml: 2 }}
             primaryTypographyProps={{ fontSize: '1.175rem!important' }}
           />
-          <EditButton handleClick={editModel} size={'1.5rem'} />
+          <EditButton handleClick={editContract} size={'1.5rem'} />
           <RotateButton open={open} size={'2rem'} />
         </ListItemButton>
         <Collapse

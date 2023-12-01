@@ -31,10 +31,11 @@ export interface ChangeContract {
   equipment?: string[]
   objects?: string[]
 }
-// export interface IServiceList {
-//   name: string
-//   label: string
-// }
+export interface NewContractName {
+  contract: string
+  id: string
+}
+
 // export interface IServiceListData {
 //   sla?: string
 //   ola?: string

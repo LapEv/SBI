@@ -63,7 +63,13 @@ export const DropDownMultiple = ({
           helperText={errors ? errorLabel : ''}
           InputProps={{
             ...params.InputProps,
-            style: { padding: 0, minHeight: 40, height: 'auto' },
+            style: {
+              padding: 0,
+              minHeight: 42,
+              height: 'auto',
+              maxHeight: 200,
+              overflowY: 'auto',
+            },
           }}
         />
       )}

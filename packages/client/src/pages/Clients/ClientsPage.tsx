@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, MouseEvent } from 'react'
 import {
   Box,
   Container,
@@ -7,6 +7,7 @@ import {
   List,
   IconButton,
   useTheme,
+  Popover,
 } from '@mui/material'
 import { Message } from 'components/Message'
 import { useAuth } from 'hooks/auth/useAuth'
@@ -20,6 +21,8 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 
 export function ClientsPage() {
   const modalClientRef = React.createRef()
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
+  const openPopover = Boolean(anchorEl)
   const [{ admin }] = useAuth()
   const [{ clients }, { getClients }] = useClients()
   const theme = useTheme()
@@ -81,6 +84,10 @@ export function ClientsPage() {
       </List>
       {admin && (
         <IconButton
+          onMouseEnter={(event: MouseEvent<HTMLElement>) =>
+            setAnchorEl(event.currentTarget)
+          }
+          onMouseLeave={() => setAnchorEl(null)}
           onClick={AddNewClient}
           size="medium"
           sx={{
@@ -93,6 +100,30 @@ export function ClientsPage() {
             boxShadow: 5,
           }}>
           <AddCircleOutlineIcon />
+          <Popover
+            sx={{
+              pointerEvents: 'none',
+              background: 'none',
+            }}
+            open={openPopover}
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: 'center',
+              horizontal: 'left',
+            }}
+            transformOrigin={{
+              vertical: 'center',
+              horizontal: 'right',
+            }}
+            onClose={(event: MouseEvent<HTMLElement>) =>
+              setAnchorEl(event.currentTarget)
+            }
+            disableRestoreFocus
+            container={anchorEl}>
+            <Typography sx={{ p: 1, fontSize: 12, color: 'text.primary' }}>
+              Добавить клиента
+            </Typography>
+          </Popover>
         </IconButton>
       )}
     </Container>

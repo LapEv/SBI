@@ -1,10 +1,18 @@
-import React, { memo, useEffect, useState, SyntheticEvent } from 'react'
+import React, {
+  memo,
+  useEffect,
+  useState,
+  SyntheticEvent,
+  MouseEvent,
+} from 'react'
 import {
   Box,
   ListItemText,
   ListItemButton,
   Modal,
   IconButton,
+  Popover,
+  Typography,
 } from '@mui/material'
 import Collapse from '@mui/material/Collapse'
 import { RotateButton, EditButton } from 'components/Buttons'
@@ -15,7 +23,6 @@ import { Clients } from 'store/slices/clients/interfaces'
 import { useContracts } from 'hooks/contracts/useContracts'
 import { ContractsList } from './'
 import { useAuth } from 'hooks/auth/useAuth'
-import { ChooseModal } from 'pages/Users/Modals'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import { useTheme } from '@mui/material/styles'
 import { AddContract } from './Modals'
@@ -25,8 +32,12 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
   const [{ activeClient }, { setActiveClient, changeClient }] = useClients()
   const [{ contracts }, { getContractsByClientID }] = useContracts()
   const [{ admin }] = useAuth()
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
+  const openPopover = Boolean(anchorEl)
   const modalRef = React.createRef()
   const [open, setOpen] = useState(false)
+  // const [openPopover, setOpenPopover] = useState(false)
+
   const [modal, setModal] = useState<boolean>(false)
   const [modalImage, setModalImage] = useState<string>('')
   const theme = useTheme()
@@ -34,7 +45,7 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
   const handleClick = () => {
     setOpen(!open)
     setActiveClient(id as string)
-    getContractsByClientID(activeClient as string)
+    getContractsByClientID(id as string)
   }
 
   const changeClientName = (answer: boolean, text: string) => {
@@ -67,6 +78,8 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
     setModal(true)
     setModalImage('newContract')
   }
+
+  console.log('contracts = ', contracts)
 
   return (
     <Box sx={classifier}>
@@ -122,8 +135,13 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
             />
           )
         )}
+
         {admin && (
           <IconButton
+            onMouseEnter={(event: MouseEvent<HTMLElement>) =>
+              setAnchorEl(event.currentTarget)
+            }
+            onMouseLeave={() => setAnchorEl(null)}
             onClick={AddNewContract}
             size="medium"
             sx={{
@@ -138,6 +156,30 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
               boxShadow: 5,
             }}>
             <AddCircleOutlineIcon />
+            <Popover
+              sx={{
+                pointerEvents: 'none',
+                background: 'none',
+              }}
+              open={openPopover}
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'center',
+                horizontal: 'left',
+              }}
+              transformOrigin={{
+                vertical: 'center',
+                horizontal: 'right',
+              }}
+              onClose={(event: MouseEvent<HTMLElement>) =>
+                setAnchorEl(event.currentTarget)
+              }
+              disableRestoreFocus
+              container={anchorEl}>
+              <Typography sx={{ p: 1, fontSize: 12, color: 'text.primary' }}>
+                Добавить контракт
+              </Typography>
+            </Popover>
           </IconButton>
         )}
       </Collapse>

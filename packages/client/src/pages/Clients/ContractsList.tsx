@@ -46,7 +46,7 @@ export const ContractsList = memo(
     const theme = useTheme()
     const modalRef = React.createRef()
     const [open, setOpen] = useState(false)
-    const [data, setData] = useState<DataList[]>([])
+    const [data, setData] = useState<Contracts[]>([])
     const [modal, setModal] = useState<boolean>(false)
     const [changeActive, setChangeActive] = useState<boolean>(true)
     const [selectedTypes, setSelectedTypes] = useState<string[]>([])
@@ -60,32 +60,11 @@ export const ContractsList = memo(
 
     const handleClick = () => {
       if (!open) {
-        // getTypicalMalfunctionsById(id_equipment)
+        setData(contracts.filter(item => item.id))
         setActiveContract(id as string)
       }
       setOpen(!open)
     }
-
-    const setDataList = () => {
-      // const listData = typicalMalfunctions.map(item => {
-      //   return {
-      //     name: item.typicalMalfunction,
-      //     id: item.id as string,
-      //     initChecked: item.models.includes(id as string),
-      //   }
-      // })
-      // setData(listData)
-      // setType(typicalMalfunctions)
-      // setSelectedTypes(
-      //   listData
-      //     .map(item => (item.initChecked ? item.id : ''))
-      //     .filter(item => item !== '')
-      // )
-    }
-
-    // useEffect(() => {
-    //   setDataList()
-    // }, [typicalMalfunctions])
 
     const onChooseItems = (checked: boolean, id: string) => {
       // if (!checked) {
@@ -152,9 +131,7 @@ export const ContractsList = memo(
       setModal(true)
     }
 
-    const changeModel = (answer: boolean, text: string) => {
-      console.log('answer = ', answer)
-      console.log('text = ', text)
+    const changeContractName = (answer: boolean, text: string) => {
       setModal(false)
       if (!answer) return
       newContractName({
@@ -169,8 +146,6 @@ export const ContractsList = memo(
       }
     }, [activeContract])
 
-    console.log('contract = ', contract)
-
     return (
       <Box sx={flexColumn_FS_SA}>
         <Modal
@@ -179,7 +154,7 @@ export const ContractsList = memo(
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description">
           <ModalChangeName
-            answer={changeModel}
+            answer={changeContractName}
             handleModal={setModal}
             ref={modalRef}
             question="Введите новое наименование контракта"
@@ -202,16 +177,21 @@ export const ContractsList = memo(
           in={open}
           timeout="auto"
           unmountOnExit>
-          {data.map(({ name, id, initChecked }) => (
-            <Item
-              name={name}
-              id={`${id}`}
-              groupChecked={null}
-              onChooseItems={onChooseItems}
-              initChecked={initChecked}
-              key={id as string}
-            />
-          ))}
+          {/* {data.map(
+            ({ contract, id, initChecked }) => (
+              console.log('name = ', name),
+              (
+                <Item
+                  name={name}
+                  id={`${id}`}
+                  groupChecked={null}
+                  onChooseItems={onChooseItems}
+                  initChecked={initChecked}
+                  key={id as string}
+                />
+              )
+            )
+          )} */}
           <Box sx={{ color: theme.palette.error.main, height: 20, ml: 5 }}>
             {errSelectedItems && 'Контракт не может быть без !'}
           </Box>

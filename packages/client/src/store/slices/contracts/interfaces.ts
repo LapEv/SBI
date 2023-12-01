@@ -10,6 +10,17 @@ export interface Contracts {
   active?: boolean
 }
 
+export interface IContractData {
+  id?: string
+  contract: string
+  number: string
+  date: string
+  // sla?: string[]
+  // equipment?: string[]
+  // objects?: string[]
+  id_client: string
+}
+
 export interface AnswerContracts {
   data: Contracts[]
   type: string

@@ -7,7 +7,7 @@ import { ButtonsModalSection } from 'components/Buttons'
 import { DropDown, emptyValue } from 'components/DropDown'
 import { useAddresses } from 'hooks/addresses/useAddresses'
 import { Options } from 'components/DropDown/interface'
-import { Addresses, Regions } from 'store/slices/addresses/interfaces'
+import { Addresses } from 'store/slices/addresses/interfaces'
 import {
   useForm,
   useFieldArray,
@@ -15,11 +15,10 @@ import {
   useFormState,
 } from 'react-hook-form'
 import { TextField } from 'components/TextFields'
-import { MapNewAddressInputFields, MapNewObjectInputFields } from './data'
+import { MapNewObjectInputFields } from './data'
 import { useObjects } from 'hooks/objects/useObjects'
 import { Objects } from 'store/slices/objects/interfaces'
 import { useClients } from 'hooks/clients/useClients'
-import { Clients } from 'store/slices/clients/interfaces'
 import { deepEqual } from 'utils/deepEqual'
 import { useMessage } from 'hooks/message/useMessage'
 

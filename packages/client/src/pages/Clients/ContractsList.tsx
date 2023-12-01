@@ -8,6 +8,7 @@ import {
 } from '@mui/material'
 import Collapse from '@mui/material/Collapse'
 import {
+  ButtonsModalSection,
   ButtonsSectionNoSubmit,
   EditButton,
   RotateButton,
@@ -29,6 +30,16 @@ import { Contracts } from 'store/slices/contracts/interfaces'
 import { useContracts } from 'hooks/contracts/useContracts'
 import { ChooseModal } from 'pages/Users/Modals'
 import { useAuth } from 'hooks/auth/useAuth'
+import {
+  useForm,
+  useFieldArray,
+  Controller,
+  useFormState,
+} from 'react-hook-form'
+import { AddValuesProps } from './Modals/interfaces'
+import { MapContractInputFields } from './data'
+import { TextField } from 'components/TextFields'
+import { ContractPage } from './'
 
 export const ContractsList = memo(
   ({
@@ -56,7 +67,6 @@ export const ContractsList = memo(
     // const [newTypicalMalfunction, setNewTypicalMalfunction] = useState<
     //   ShortTypicalMalfunctions[]
     // >(EmptyTypicalMalfunctions)
-    const id_model = id
 
     const handleClick = () => {
       if (!open) {
@@ -66,60 +76,8 @@ export const ContractsList = memo(
       setOpen(!open)
     }
 
-    const onChooseItems = (checked: boolean, id: string) => {
-      // if (!checked) {
-      //   setType(
-      //     type.map(item =>
-      //       item.id !== id
-      //         ? item
-      //         : {
-      //             ...item,
-      //             models: item.models.filter(value => value !== id_model),
-      //           }
-      //     )
-      //   )
-      //   setSelectedTypes(selectedTypes.filter(value => value !== id))
-      //   return
-      // }
-      // setType(type.map(item => (item.id !== id ? item : checkArrayPush(item))))
-      // setSelectedTypes([...selectedTypes, id])
-    }
-
-    const checkArrayPush = (item: any) => {
-      const newItemModels = [...item.models]
-      if (newItemModels.includes(id_model)) return item
-      newItemModels.push(id_model)
-      return { ...item, models: newItemModels }
-    }
-
-    // useEffect(() => {
-    //   const isEqualArr = сheckArrObjects(
-    //     type,
-    //     typicalMalfunctions
-    //   ) as ShortTypicalMalfunctions[]
-    //   setChangeActive(isEqualArr.length ? false : true)
-    //   setNewTypicalMalfunction(isEqualArr)
-    //   if (!selectedTypes.length) {
-    //     setErrSelectedItems(true)
-    //     return
-    //   }
-    //   setErrSelectedItems(false)
-    // }, [type])
-
-    const undoChanges = () => {
-      // if (changeActive) return
-      // setData([{ name: '', id: '', initChecked: false }])
-      // setChangeActive(true)
-      // setErrSelectedItems(false)
-      // setResetData(true)
-    }
-
-    // useEffect(() => {
-    //   setDataList()
-    //   setResetData(false)
-    // }, [resetData])
-
-    const changeDataModels = () => {
+    const changeData = () => {
+      console.log('changeData')
       // if (errSelectedItems) return
       // console.log('newTypicalMalfunction = ', newTypicalMalfunction)
       // console.log('id_equipment = ', id_equipment)
@@ -177,31 +135,15 @@ export const ContractsList = memo(
           in={open}
           timeout="auto"
           unmountOnExit>
-          {/* {data.map(
-            ({ contract, id, initChecked }) => (
-              console.log('name = ', name),
-              (
-                <Item
-                  name={name}
-                  id={`${id}`}
-                  groupChecked={null}
-                  onChooseItems={onChooseItems}
-                  initChecked={initChecked}
-                  key={id as string}
-                />
-              )
-            )
-          )} */}
-          <Box sx={{ color: theme.palette.error.main, height: 20, ml: 5 }}>
-            {errSelectedItems && 'Контракт не может быть без !'}
-          </Box>
-          <ButtonsSectionNoSubmit
-            btnHandle={changeDataModels}
-            btnSecondHandle={undoChanges}
-            btnName="Сохранить"
-            btnDisabled={changeActive}
-            btnSecondName="Отменить"
-            btnSecondDisabled={false}
+          <ContractPage
+            contract={contract}
+            id={id}
+            number={number}
+            date={date}
+            sla={sla}
+            equipment={equipment}
+            objects={objects}
+            id_client={id_client}
           />
         </Collapse>
       </Box>

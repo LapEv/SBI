@@ -129,7 +129,10 @@ Clients.belongsToMany(Users, { through: 'ThroughUserClients' })
 Users.belongsToMany(Clients, { through: 'ThroughUserClients' })
 
 Contracts.belongsToMany(SLA, { through: 'ThroughContractsSLA' })
-SLA.belongsToMany(Contracts, { through: 'ThroughUserClients' })
+SLA.belongsToMany(Contracts, { through: 'ThroughContractsSLA' })
+
+Contracts.belongsToMany(SLA, { through: 'ThroughContractsObjects' })
+SLA.belongsToMany(Contracts, { through: 'ThroughContractsObjects' })
 
 Contracts.belongsToMany(ClassifierEquipment, {
   through: 'ThroughContractsEquipment',

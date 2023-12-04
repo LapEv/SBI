@@ -167,7 +167,7 @@ export const MapClientInputFields = [
   },
 ]
 
-export const MapContractInputFields = [
+export const MapNewContractInputFields = [
   {
     name: 'contract',
     label: 'Введите название контракта',
@@ -180,6 +180,23 @@ export const MapContractInputFields = [
     label: 'Введите номер контракта',
     validation: lightTextValidation,
     type: 'text',
+    required: true,
+  },
+]
+
+export const MapContractInputFields = [
+  {
+    name: 'number',
+    label: 'Введите номер контракта',
+    validation: lightTextValidation,
+    type: 'text',
+    required: true,
+  },
+  {
+    name: 'date',
+    label: 'Введите дату заключения контракта',
+    validation: NoRequiredValidation,
+    type: 'date',
     required: true,
   },
 ]

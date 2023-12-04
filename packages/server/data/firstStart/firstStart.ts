@@ -37,7 +37,7 @@ export const firstStart = async () => {
   try {
     const AllDelete = false
     if (AllDelete) {
-      console.log('Full Delete!')
+      console.log('Full Delete !')
       await sequelize.drop({ cascade: true })
       return
     }

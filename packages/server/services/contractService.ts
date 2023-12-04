@@ -1,4 +1,4 @@
-import { ContractsRepos } from '../db'
+import { ClassifierEquipment, ContractsRepos, Objects, SLA } from '../db'
 import type { Request, Response } from 'express'
 const { Op } = require('sequelize')
 // interface ShortTypicalMalfunctions {
@@ -42,14 +42,32 @@ export class contractService {
   }
 
   getAllContracts = (_req: Request, res: Response) => {
+    console.log('getAllContracts')
     ContractsRepos.findAll({})
       .then(item => res.status(200).json(item))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
 
   getContracts = (_req: Request, res: Response) => {
+    console.log('getContracts')
     ContractsRepos.findAll({
       where: { active: true },
+      include: [
+        {
+          model: SLA,
+          where: {
+            SLAid: 'fd3c8f5b-627a-405d-88f9-6adb25ed62d6',
+          },
+        },
+        {
+          model: ClassifierEquipment,
+          attributes: ['equipment'],
+        },
+        {
+          model: Objects,
+          attributes: ['object'],
+        },
+      ],
     })
       .then(contracts => {
         res.status(200).json(contracts)
@@ -58,11 +76,34 @@ export class contractService {
   }
 
   getContractsByClientID = (_req: Request, res: Response) => {
-    const { id_client } = _req.body
+    console.log('getContractsByClientID')
+    // const { id_client } = _req.body
     ContractsRepos.findAll({
-      where: { active: true, id_client },
+      // where: { active: true, id_client },
+      include: [
+        { all: true, nested: true },
+        // {
+        //   model: SLA,
+        //   where: {
+        //     id: 'fd3c8f5b-627a-405d-88f9-6adb25ed62d6',
+        //   },
+        // },
+        // {
+        //   model: ClassifierEquipment,
+        //   through: {
+        //     attributes: [],
+        //   },
+        // },
+        // {
+        //   model: Objects,
+        //   through: {
+        //     attributes: [],
+        //   },
+        // },
+      ],
     })
       .then(contracts => {
+        console.log('contracts = ', contracts)
         res.status(200).json(contracts)
       })
       .catch(err => res.status(500).json({ error: ['db error', err] }))

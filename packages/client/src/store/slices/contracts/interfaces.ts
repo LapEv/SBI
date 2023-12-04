@@ -8,6 +8,15 @@ export interface Contracts {
   objects?: string[]
   id_client: string
   active?: boolean
+  SLA?: {
+    sla: string
+  }
+  ClassifierEquipment?: {
+    equipment: string
+  }
+  Objects?: {
+    object: string
+  }
 }
 
 export interface IContractData {

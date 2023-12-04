@@ -8,7 +8,7 @@ import {
 } from 'react-hook-form'
 import { TextField } from 'components/TextFields'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
-import { MapContractInputFields } from '../data'
+import { MapNewContractInputFields } from '../data'
 import { modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useMessage } from 'hooks/message/useMessage'
@@ -43,7 +43,7 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
       defaultValues: {
-        list: MapContractInputFields,
+        list: MapNewContractInputFields,
       },
     })
     const { errors } = useFormState({ control })
@@ -53,9 +53,7 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
     })
 
     const changeData = ({ list }: AddValuesProps) => {
-      console.log('change')
       const isExist = contracts.find(item => item.contract === list[0].value)
-      console.log('isExist = ', isExist)
       if (isExist) {
         setMessage({
           text: 'Такой контракт уже существует',

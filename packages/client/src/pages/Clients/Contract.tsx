@@ -1,4 +1,5 @@
-import { Box, Stack } from '@mui/material'
+import { useEffect } from 'react'
+import { Box, Stack, Collapse } from '@mui/material'
 import {
   useForm,
   useFieldArray,
@@ -9,11 +10,17 @@ import { ChangeEvent, useState } from 'react'
 import { TextField } from 'components/TextFields'
 import { ButtonsSection } from 'components/Buttons'
 import { deepEqual } from 'utils/deepEqual'
-import { IServiceListData, SLAValues } from 'store/slices/sla/interfaces'
+import { SLAValues } from 'store/slices/sla/interfaces'
 import { useSLA } from 'hooks/sla/useSLA'
 import { MapContractInputFields } from './data'
 import { useAuth } from 'hooks/auth/useAuth'
 import { Contracts, IContractData } from 'store/slices/contracts/interfaces'
+import { DateField } from 'components/DatePicker'
+import {
+  convertDateToStringYYYYMMDD,
+  convetStringToDate,
+} from 'utils/convertDate'
+import { Item } from 'components/CheckBoxGroup'
 
 export function ContractPage({
   contract,
@@ -28,11 +35,14 @@ export function ContractPage({
   const [_, { changeSLA, changeOLA }] = useSLA()
   const [{ admin }] = useAuth()
   const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
+  const [slaData, setSLAData] = useState<string>('')
+  const [openSLA, setOpenSLA] = useState(false)
+
   const [contractData, setContractData] = useState<IContractData>({
     contract,
     id,
     number,
-    date,
+    date: convertDateToStringYYYYMMDD(date),
     // sla,
     // equipment,
     // objects,
@@ -69,10 +79,7 @@ export function ContractPage({
       contract,
       id,
       number,
-      date,
-      // sla,
-      // equipment,
-      // objects,
+      date: convertDateToStringYYYYMMDD(date),
       id_client,
     }
     setContractData(newSLA)
@@ -83,6 +90,35 @@ export function ContractPage({
       })),
     })
   }
+
+  const onChooseItems = (checked: boolean, id: string) => {
+    // if (!checked) {
+    //   setType(
+    //     type.map(item =>
+    //       item.id !== id
+    //         ? item
+    //         : {
+    //             ...item,
+    //             models: item.models.filter(value => value !== id_model),
+    //           }
+    //     )
+    //   )
+    //   setSelectedTypes(selectedTypes.filter(value => value !== id))
+    //   return
+    // }
+    // setType(type.map(item => (item.id !== id ? item : checkArrayPush(item))))
+    // setSelectedTypes([...selectedTypes, id])
+  }
+
+  useEffect(() => {
+    // const listData = sla.map(item => {
+    //   return {
+    //     name: item.typicalMalfunction,
+    //     id: item.id as string,
+    //     initChecked: item.models.includes(id as string),
+    //   }
+    // })
+  }, [])
 
   return (
     <Box
@@ -141,6 +177,22 @@ export function ContractPage({
           })}
         </Stack>
       </Box>
+      {/* <Collapse
+        sx={{ width: '100%', p: 2, pl: 5, pr: 5, height: 'auto' }}
+        in={openSLA}
+        timeout="auto"
+        unmountOnExit>
+        {sla?.map(({ sla, id }) => (
+          <Item
+            name={sla}
+            id={`${id}`}
+            groupChecked={null}
+            onChooseItems={onChooseItems}
+            // initChecked={initChecked}
+            key={id as string}
+          />
+        ))}
+      </Collapse> */}
       {/* <Box sx={{ color: theme.palette.error.main, height: 20, ml: 5 }}>
         {errSelectedItems && 'Контракт не может быть без !'}
       </Box> */}

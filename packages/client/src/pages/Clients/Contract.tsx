@@ -1,5 +1,11 @@
 import { useEffect } from 'react'
-import { Box, Stack, Collapse } from '@mui/material'
+import {
+  Box,
+  Stack,
+  Collapse,
+  ListItemButton,
+  ListItemText,
+} from '@mui/material'
 import {
   useForm,
   useFieldArray,
@@ -8,7 +14,7 @@ import {
 } from 'react-hook-form'
 import { ChangeEvent, useState } from 'react'
 import { TextField } from 'components/TextFields'
-import { ButtonsSection } from 'components/Buttons'
+import { ButtonsSection, RotateButton } from 'components/Buttons'
 import { deepEqual } from 'utils/deepEqual'
 import { SLAValues } from 'store/slices/sla/interfaces'
 import { useSLA } from 'hooks/sla/useSLA'
@@ -21,6 +27,8 @@ import {
   convetStringToDate,
 } from 'utils/convertDate'
 import { Item } from 'components/CheckBoxGroup'
+import { classifierChild2Component } from 'static/styles'
+import { DataList } from 'components/CheckBoxGroup/interface'
 
 export function ContractPage({
   contract,
@@ -32,10 +40,10 @@ export function ContractPage({
   Objects,
   id_client,
 }: Contracts) {
-  const [_, { changeSLA, changeOLA }] = useSLA()
+  const [{ sla }, { changeSLA, changeOLA, getSLA }] = useSLA()
   const [{ admin }] = useAuth()
   const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
-  const [slaData, setSLAData] = useState<string>('')
+  const [slaData, setSLAData] = useState<DataList[]>([])
   const [openSLA, setOpenSLA] = useState(false)
 
   const [contractData, setContractData] = useState<IContractData>({
@@ -120,6 +128,27 @@ export function ContractPage({
     // })
   }, [])
 
+  const openSLAList = () => {
+    setOpenSLA(!openSLA)
+    getSLA()
+  }
+
+  useEffect(() => {
+    const listData = sla.map(({ sla, id }) => {
+      console.log('sla = ', sla)
+      console.log('id = ', id)
+      console.log('SLAs = ', SLAs?.find(item => item.id === id) ? true : false)
+      return {
+        name: sla,
+        id: id as string,
+        initChecked: SLAs?.find(item => item.id === id) ? true : false,
+      }
+    })
+    setSLAData(listData)
+  }, [sla])
+
+  console.log('slaData = ', slaData)
+
   return (
     <Box
       component="form"
@@ -177,22 +206,33 @@ export function ContractPage({
           })}
         </Stack>
       </Box>
-      {/* <Collapse
+      <ListItemButton
+        divider={openSLA}
+        sx={classifierChild2Component}
+        onClick={openSLAList}>
+        <ListItemText
+          primary={'Уровни сервиса'}
+          sx={{ ml: 2 }}
+          primaryTypographyProps={{ fontSize: '1rem!important' }}
+        />
+        <RotateButton open={openSLA} size={'2rem'} />
+      </ListItemButton>
+      <Collapse
         sx={{ width: '100%', p: 2, pl: 5, pr: 5, height: 'auto' }}
         in={openSLA}
         timeout="auto"
         unmountOnExit>
-        {sla?.map(({ sla, id }) => (
+        {slaData?.map(({ name, id, initChecked }) => (
           <Item
-            name={sla}
+            name={name}
             id={`${id}`}
             groupChecked={null}
             onChooseItems={onChooseItems}
-            // initChecked={initChecked}
+            initChecked={initChecked}
             key={id as string}
           />
         ))}
-      </Collapse> */}
+      </Collapse>
       {/* <Box sx={{ color: theme.palette.error.main, height: 20, ml: 5 }}>
         {errSelectedItems && 'Контракт не может быть без !'}
       </Box> */}

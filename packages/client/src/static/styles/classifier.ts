@@ -32,3 +32,14 @@ export const classifierChildComponent = {
   alignItems: 'space-between',
   justifyContent: 'space-between',
 }
+
+export const classifierChild2Component = {
+  fontWeight: 'bold',
+  fontSize: '1rem',
+  width: '95%',
+  height: 45,
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'space-between',
+  justifyContent: 'space-between',
+}

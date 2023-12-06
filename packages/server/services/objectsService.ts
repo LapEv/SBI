@@ -1,16 +1,29 @@
 import { Addresses, Clients, ObjectsRepos, Regions } from '../db'
 import type { Request, Response } from 'express'
 const { Op } = require('sequelize')
-// interface ShortTypicalMalfunctions {
-//   models: string[]
-//   id: string
-// }
+
+const includes = [
+  {
+    model: Clients,
+    attributes: ['client'],
+  },
+  {
+    model: Addresses,
+    attributes: ['address'],
+  },
+  {
+    model: Regions,
+    attributes: ['region'],
+  },
+]
+
 export class objectsService {
   newObject = async (_req: Request, res: Response) => {
     try {
       await ObjectsRepos.create({ ..._req.body, active: true })
       const objects = await ObjectsRepos.findAll({
         where: { active: true },
+        include: includes,
       })
       res.status(200).json(objects)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -23,22 +36,7 @@ export class objectsService {
   }
 
   getAllObjects = (_req: Request, res: Response) => {
-    ObjectsRepos.findAll({
-      include: [
-        {
-          model: Clients,
-          attributes: ['client'],
-        },
-        {
-          model: Addresses,
-          attributes: ['address'],
-        },
-        {
-          model: Regions,
-          attributes: ['region'],
-        },
-      ],
-    })
+    ObjectsRepos.findAll({ include: includes })
       .then(item => res.status(200).json(item))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
@@ -46,20 +44,7 @@ export class objectsService {
   getObjects = (_req: Request, res: Response) => {
     ObjectsRepos.findAll({
       where: { active: true },
-      include: [
-        {
-          model: Clients,
-          attributes: ['client'],
-        },
-        {
-          model: Addresses,
-          attributes: ['address'],
-        },
-        {
-          model: Regions,
-          attributes: ['region'],
-        },
-      ],
+      include: includes,
     })
       .then(objects => {
         res.status(200).json(objects)
@@ -78,6 +63,7 @@ export class objectsService {
         }),
         await ObjectsRepos.findAll({
           where: { active: true, id: { [Op.not]: selectedObjects } },
+          include: includes,
         }),
       ])
       res.status(200).json(objects[1])
@@ -99,6 +85,7 @@ export class objectsService {
         }),
         await ObjectsRepos.findAll({
           where: { active: true, id: { [Op.not]: selectedObjects } },
+          include: includes,
         }),
       ])
       res.status(200).json(objects[1])
@@ -117,6 +104,7 @@ export class objectsService {
       })
       const objects = await ObjectsRepos.findAll({
         where: { active: true },
+        include: includes,
       })
       res.status(200).json(objects)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -147,6 +135,7 @@ export class objectsService {
       })
       const objects = await ObjectsRepos.findAll({
         where: { active: true },
+        include: includes,
       })
       res.status(200).json(objects)
       /* eslint-disable @typescript-eslint/no-explicit-any */

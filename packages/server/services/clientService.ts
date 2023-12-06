@@ -27,14 +27,12 @@ export class clientService {
   }
 
   getClients = (_req: Request, res: Response) => {
-    console.log('getClients')
     ClientsRepos.findAll({
       where: { active: true },
       // include: [{ model: Contracts, through: { attributes: [] } }],
       // include: [{ all: true, nested: true }],
     })
       .then(clients => {
-        console.log('clients = ', clients)
         res.status(200).json(clients)
       })
       .catch(err => res.status(500).json({ error: ['db error', err] }))

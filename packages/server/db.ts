@@ -145,6 +145,9 @@ Clients.belongsTo(ClientsGroup, {
 Clients.hasMany(Contracts, { foreignKey: 'id_client' })
 Contracts.belongsTo(Clients, { foreignKey: 'id_client' })
 
+Clients.hasMany(Objects, { foreignKey: 'id_client' })
+Objects.belongsTo(Clients, { foreignKey: 'id_client' })
+
 Clients.belongsToMany(Users, { through: 'ThroughUserClients' })
 Users.belongsToMany(Clients, { through: 'ThroughUserClients' })
 

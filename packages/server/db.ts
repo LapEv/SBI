@@ -19,6 +19,7 @@ import {
 } from './models/index.models'
 import { firstStart } from './data/firstStart/index.startData'
 import { addresses, regions } from './models/adresses'
+import { throughContractsSLA } from './models/contracts'
 
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
   process.env
@@ -66,6 +67,12 @@ export const TypicalMalfunctions = sequelize.define(
 
 export const SLA = sequelize.define('SLA', sla, {})
 export const OLA = sequelize.define('OLA', ola, {})
+
+export const ThroughContractsSLA = sequelize.define(
+  'ThroughContractsSLA',
+  throughContractsSLA,
+  {}
+)
 
 RolesGroup.belongsToMany(Roles, { through: 'ThroughRolesGroup' })
 Roles.belongsToMany(RolesGroup, { through: 'ThroughRolesGroup' })
@@ -128,11 +135,17 @@ Contracts.belongsTo(Clients, { foreignKey: 'id_client', targetKey: 'id' })
 Clients.belongsToMany(Users, { through: 'ThroughUserClients' })
 Users.belongsToMany(Clients, { through: 'ThroughUserClients' })
 
-Contracts.belongsToMany(SLA, { through: 'ThroughContractsSLA' })
-SLA.belongsToMany(Contracts, { through: 'ThroughContractsSLA' })
+Contracts.belongsToMany(SLA, {
+  through: ThroughContractsSLA,
+  foreignKey: 'id_contract',
+})
+SLA.belongsToMany(Contracts, {
+  through: ThroughContractsSLA,
+  foreignKey: 'id_sla',
+})
 
-Contracts.belongsToMany(SLA, { through: 'ThroughContractsObjects' })
-SLA.belongsToMany(Contracts, { through: 'ThroughContractsObjects' })
+Contracts.belongsToMany(Objects, { through: 'ThroughContractsObjects' })
+Objects.belongsToMany(Contracts, { through: 'ThroughContractsObjects' })
 
 Contracts.belongsToMany(ClassifierEquipment, {
   through: 'ThroughContractsEquipment',
@@ -168,6 +181,10 @@ export const TypicalMalfunctionsRepos = new Repository(
 
 export const SLARepos = new Repository(SLA as ModelCtor)
 export const OLARepos = new Repository(OLA as ModelCtor)
+
+export const ThroughContractsSLARepos = new Repository(
+  ThroughContractsSLA as ModelCtor
+)
 
 export async function dbConnect() {
   try {

@@ -49,3 +49,27 @@ export const contracts: ModelAttributes<Model, Contracts> = {
     allowNull: false,
   },
 }
+
+export interface IThroughContractsSLA {
+  id: string
+  id_contract: string
+  id_sla: string
+}
+
+export const throughContractsSLA: ModelAttributes<Model, IThroughContractsSLA> =
+  {
+    id: {
+      type: DataType.STRING,
+      defaultValue: DataType.UUIDV4,
+      allowNull: false,
+      primaryKey: true,
+    },
+    id_contract: {
+      type: DataType.STRING,
+      allowNull: false,
+    },
+    id_sla: {
+      type: DataType.STRING,
+      allowNull: false,
+    },
+  }

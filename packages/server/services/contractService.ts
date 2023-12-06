@@ -1,4 +1,10 @@
-import { ClassifierEquipment, ContractsRepos, Objects, SLA } from '../db'
+import {
+  ClassifierEquipment,
+  ContractsRepos,
+  Objects,
+  SLA,
+  ThroughContractsSLARepos,
+} from '../db'
 import type { Request, Response } from 'express'
 const { Op } = require('sequelize')
 // interface ShortTypicalMalfunctions {
@@ -7,8 +13,26 @@ const { Op } = require('sequelize')
 // }
 export class contractService {
   newContract = async (_req: Request, res: Response) => {
+    const { sla } = _req.body
+    console.log('sla = ', sla)
     try {
-      await ContractsRepos.create({ ..._req.body, active: true })
+      const new_contract = await ContractsRepos.create({
+        ..._req.body,
+        active: true,
+      })
+      console.log('new_contract = ', new_contract)
+      const newThroughContractSla = sla.map((item: string) => {
+        return {
+          // ContractId: new_contract.id,
+          // SLAId: item,
+          id_contract: new_contract.id,
+          id_sla: item,
+        }
+      })
+      const newThrough = await ThroughContractsSLARepos.bulkCreate(
+        newThroughContractSla
+      )
+      console.log('newThrough = ', newThrough)
       const contracts = await ContractsRepos.findAll({
         where: { active: true },
       })

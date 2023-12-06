@@ -182,6 +182,13 @@ export const MapNewContractInputFields = [
     type: 'text',
     required: true,
   },
+  // {
+  //   name: 'date',
+  //   label: 'Введите дату заключения контракта',
+  //   validation: NoRequiredValidation,
+  //   type: 'date',
+  //   required: true,
+  // },
 ]
 
 export const MapContractInputFields = [

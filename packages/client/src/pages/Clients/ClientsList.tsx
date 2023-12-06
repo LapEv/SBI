@@ -79,7 +79,7 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
     setModalImage('newContract')
   }
 
-  console.log('contracts = ', contracts)
+  // console.log('contracts = ', contracts)
 
   return (
     <Box sx={classifier}>
@@ -121,15 +121,23 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
         timeout="auto"
         unmountOnExit>
         {contracts.map(
-          ({ contract, id, number, date, sla, equipment, objects }) => (
+          ({
+            contract,
+            id,
+            number,
+            date,
+            SLAs,
+            ClassifierEquipment,
+            Objects,
+          }) => (
             <ContractsList
               contract={contract}
               id={id as string}
               number={number}
               date={date}
-              sla={sla}
-              equipment={equipment}
-              objects={objects}
+              SLAs={SLAs}
+              ClassifierEquipment={ClassifierEquipment}
+              Objects={Objects}
               id_client={id as string}
               key={id}
             />

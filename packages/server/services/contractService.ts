@@ -3,38 +3,68 @@ import {
   ContractsRepos,
   Objects,
   SLA,
+  ThroughContractsEquipmentsRepos,
+  ThroughContractsObjectsRepos,
   ThroughContractsSLARepos,
 } from '../db'
 import type { Request, Response } from 'express'
 const { Op } = require('sequelize')
-// interface ShortTypicalMalfunctions {
-//   models: string[]
-//   id: string
-// }
+
+const includes = [
+  {
+    model: SLA,
+    through: {
+      attributes: [],
+    },
+  },
+  {
+    model: Objects,
+    through: {
+      attributes: [],
+    },
+  },
+  {
+    model: ClassifierEquipment,
+    through: {
+      attributes: [],
+    },
+  },
+]
 export class contractService {
   newContract = async (_req: Request, res: Response) => {
-    const { sla } = _req.body
-    console.log('sla = ', sla)
+    const { sla, equipment, objects, ...data } = _req.body
     try {
       const new_contract = await ContractsRepos.create({
-        ..._req.body,
+        ...data,
         active: true,
       })
-      console.log('new_contract = ', new_contract)
       const newThroughContractSla = sla.map((item: string) => {
         return {
-          // ContractId: new_contract.id,
-          // SLAId: item,
           id_contract: new_contract.id,
           id_sla: item,
         }
       })
-      const newThrough = await ThroughContractsSLARepos.bulkCreate(
-        newThroughContractSla
+      await ThroughContractsSLARepos.bulkCreate(newThroughContractSla)
+      const newThroughContractEquipment = equipment.map((item: string) => {
+        return {
+          id_contract: new_contract.id,
+          id_equipment: item,
+        }
+      })
+      await ThroughContractsEquipmentsRepos.bulkCreate(
+        newThroughContractEquipment
       )
-      console.log('newThrough = ', newThrough)
+      const newThroughContractObject = objects.map((item: string) => {
+        return {
+          id_contract: new_contract.id,
+          id_object: item,
+        }
+      })
+      await ThroughContractsObjectsRepos.bulkCreate(newThroughContractObject)
+
       const contracts = await ContractsRepos.findAll({
         where: { active: true },
+        include: includes,
       })
       res.status(200).json(contracts)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -54,6 +84,7 @@ export class contractService {
       })
       const contracts = await ContractsRepos.findAll({
         where: { active: true },
+        include: includes,
       })
       res.status(200).json(contracts)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -66,32 +97,15 @@ export class contractService {
   }
 
   getAllContracts = (_req: Request, res: Response) => {
-    console.log('getAllContracts')
-    ContractsRepos.findAll({})
+    ContractsRepos.findAll({ include: includes })
       .then(item => res.status(200).json(item))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
 
   getContracts = (_req: Request, res: Response) => {
-    console.log('getContracts')
     ContractsRepos.findAll({
       where: { active: true },
-      include: [
-        {
-          model: SLA,
-          where: {
-            SLAid: 'fd3c8f5b-627a-405d-88f9-6adb25ed62d6',
-          },
-        },
-        {
-          model: ClassifierEquipment,
-          attributes: ['equipment'],
-        },
-        {
-          model: Objects,
-          attributes: ['object'],
-        },
-      ],
+      include: includes,
     })
       .then(contracts => {
         res.status(200).json(contracts)
@@ -100,34 +114,12 @@ export class contractService {
   }
 
   getContractsByClientID = (_req: Request, res: Response) => {
-    console.log('getContractsByClientID')
-    // const { id_client } = _req.body
+    const { id_client } = _req.body
     ContractsRepos.findAll({
-      // where: { active: true, id_client },
-      include: [
-        { all: true, nested: true },
-        // {
-        //   model: SLA,
-        //   where: {
-        //     id: 'fd3c8f5b-627a-405d-88f9-6adb25ed62d6',
-        //   },
-        // },
-        // {
-        //   model: ClassifierEquipment,
-        //   through: {
-        //     attributes: [],
-        //   },
-        // },
-        // {
-        //   model: Objects,
-        //   through: {
-        //     attributes: [],
-        //   },
-        // },
-      ],
+      where: { active: true, id_client },
+      include: includes,
     })
       .then(contracts => {
-        console.log('contracts = ', contracts)
         res.status(200).json(contracts)
       })
       .catch(err => res.status(500).json({ error: ['db error', err] }))
@@ -144,6 +136,7 @@ export class contractService {
         }),
         await ContractsRepos.findAll({
           where: { active: true, id: { [Op.not]: selectedContracts } },
+          include: includes,
         }),
       ])
       res.status(200).json(contracts[1])
@@ -165,6 +158,7 @@ export class contractService {
         }),
         await ContractsRepos.findAll({
           where: { active: true, id: { [Op.not]: selectedContracts } },
+          include: includes,
         }),
       ])
       res.status(200).json(contracts[1])
@@ -183,6 +177,7 @@ export class contractService {
       })
       const contracts = await ContractsRepos.findAll({
         where: { active: true },
+        include: includes,
       })
       res.status(200).json(contracts)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -205,6 +200,7 @@ export class contractService {
       })
       const contracts = await ContractsRepos.findAll({
         where: { active: true },
+        include: includes,
       })
       res.status(200).json(contracts)
       /* eslint-disable @typescript-eslint/no-explicit-any */

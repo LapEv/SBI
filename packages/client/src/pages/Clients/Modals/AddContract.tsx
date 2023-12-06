@@ -21,6 +21,7 @@ import { DropDown, DropDownMultiple, emptyValue } from 'components/DropDown'
 import { useObjects } from 'hooks/objects/useObjects'
 import { useClients } from 'hooks/clients/useClients'
 import { convetStringToDate } from 'utils/convertDate'
+import dayjs from 'dayjs'
 
 export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -73,8 +74,10 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
         setErrObject(true)
         return
       }
-
-      const date = convetStringToDate(dateValue, '/')
+      const date = convetStringToDate(
+        dayjs(dateValue).format('DD/MM/YYYY'),
+        '/'
+      )
       newContract({
         contract: list[0].value,
         number: list[1].value,

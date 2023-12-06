@@ -50,6 +50,8 @@ export function ClientsPage() {
     setModalImage('newClient')
   }
 
+  console.log('clients = ', clients)
+
   return (
     <Container component="main" maxWidth="md" sx={mainHeaderForPages}>
       <Message />

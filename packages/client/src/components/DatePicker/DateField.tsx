@@ -6,7 +6,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { TextField } from 'components/TextFields'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { CalendarIcon, ClearIconElement } from 'components/Icons'
-import dayjs from 'dayjs'
 import { IDateField } from './interface'
 
 const StyledDatePickers = styled(PickersLayout)(({ theme }) => ({
@@ -38,9 +37,9 @@ export const DateField = ({ dateValue, setDateValue, sx }: IDateField) => {
           field: { clearable: true },
         }}
         value={dateValue}
-        onChange={newValue =>
-          setDateValue(dayjs(newValue).format('DD/MM/YYYY') as string)
-        }
+        onChange={newValue => {
+          setDateValue(newValue as string)
+        }}
         views={['day', 'month', 'year']}
         label="Выберите дату"
         format="DD.MM.YYYY"

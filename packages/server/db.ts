@@ -19,7 +19,11 @@ import {
 } from './models/index.models'
 import { firstStart } from './data/firstStart/index.startData'
 import { addresses, regions } from './models/adresses'
-import { throughContractsSLA } from './models/contracts'
+import {
+  throughContractsEquipments,
+  throughContractsObjects,
+  throughContractsSLA,
+} from './models/contracts'
 
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
   process.env
@@ -71,6 +75,18 @@ export const OLA = sequelize.define('OLA', ola, {})
 export const ThroughContractsSLA = sequelize.define(
   'ThroughContractsSLA',
   throughContractsSLA,
+  {}
+)
+
+export const ThroughContractsEquipments = sequelize.define(
+  'ThroughContractsEquipments',
+  throughContractsEquipments,
+  {}
+)
+
+export const ThroughContractsObjects = sequelize.define(
+  'ThroughContractsObjects',
+  throughContractsObjects,
   {}
 )
 
@@ -129,8 +145,8 @@ Clients.belongsTo(ClientsGroup, {
   targetKey: 'id',
 })
 
-Clients.hasMany(Contracts, { foreignKey: 'id_client' })
-Contracts.belongsTo(Clients, { foreignKey: 'id_client', targetKey: 'id' })
+Clients.hasMany(Contracts, { foreignKey: 'clientID' })
+Contracts.belongsTo(Clients, { foreignKey: 'clientID' })
 
 Clients.belongsToMany(Users, { through: 'ThroughUserClients' })
 Users.belongsToMany(Clients, { through: 'ThroughUserClients' })
@@ -144,14 +160,22 @@ SLA.belongsToMany(Contracts, {
   foreignKey: 'id_sla',
 })
 
-Contracts.belongsToMany(Objects, { through: 'ThroughContractsObjects' })
-Objects.belongsToMany(Contracts, { through: 'ThroughContractsObjects' })
+Contracts.belongsToMany(Objects, {
+  through: ThroughContractsObjects,
+  foreignKey: 'id_contract',
+})
+Objects.belongsToMany(Contracts, {
+  through: ThroughContractsObjects,
+  foreignKey: 'id_object',
+})
 
 Contracts.belongsToMany(ClassifierEquipment, {
-  through: 'ThroughContractsEquipment',
+  through: ThroughContractsEquipments,
+  foreignKey: 'id_contract',
 })
 ClassifierEquipment.belongsToMany(Contracts, {
-  through: 'ThroughContractsEquipment',
+  through: ThroughContractsEquipments,
+  foreignKey: 'id_equipment',
 })
 
 export const userRepos = new Repository(Users as ModelCtor)
@@ -184,6 +208,12 @@ export const OLARepos = new Repository(OLA as ModelCtor)
 
 export const ThroughContractsSLARepos = new Repository(
   ThroughContractsSLA as ModelCtor
+)
+export const ThroughContractsEquipmentsRepos = new Repository(
+  ThroughContractsEquipments as ModelCtor
+)
+export const ThroughContractsObjectsRepos = new Repository(
+  ThroughContractsObjects as ModelCtor
 )
 
 export async function dbConnect() {

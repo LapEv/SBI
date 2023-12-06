@@ -1,3 +1,7 @@
+import { ClassifierEquipment } from '../classifier/interfaces'
+import { Objects } from '../objects/interfaces'
+import { SLA } from '../sla/interfaces'
+
 export interface Contracts {
   id?: string
   contract: string
@@ -8,15 +12,9 @@ export interface Contracts {
   objects?: string[]
   id_client: string
   active?: boolean
-  SLA?: {
-    sla: string
-  }
-  ClassifierEquipment?: {
-    equipment: string
-  }
-  Objects?: {
-    object: string
-  }
+  SLAs?: SLA[] | []
+  ClassifierEquipment?: ClassifierEquipment[] | []
+  Objects?: Objects[] | []
 }
 
 export interface IContractData {

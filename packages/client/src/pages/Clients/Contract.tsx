@@ -27,9 +27,9 @@ export function ContractPage({
   id,
   number,
   date,
-  sla,
-  equipment,
-  objects,
+  SLAs,
+  ClassifierEquipment,
+  Objects,
   id_client,
 }: Contracts) {
   const [_, { changeSLA, changeOLA }] = useSLA()

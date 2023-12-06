@@ -47,9 +47,9 @@ export const ContractsList = memo(
     id,
     number,
     date,
-    sla,
-    equipment,
-    objects,
+    SLAs,
+    ClassifierEquipment,
+    Objects,
     id_client,
   }: Contracts) => {
     const [{ activeContract }, { setActiveContract }] = useContracts()
@@ -140,9 +140,9 @@ export const ContractsList = memo(
             id={id}
             number={number}
             date={date}
-            sla={sla}
-            equipment={equipment}
-            objects={objects}
+            SLAs={SLAs}
+            ClassifierEquipment={ClassifierEquipment}
+            Objects={Objects}
             id_client={id_client}
           />
         </Collapse>

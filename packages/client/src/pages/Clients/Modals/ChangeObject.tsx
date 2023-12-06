@@ -90,7 +90,6 @@ export const ChangeObject = React.forwardRef<unknown, ChooseModalProps>(
         } = item
         return deepEqual(newitem, newObject)
       })
-      console.log('isExistObject = ', isExistObject)
       if (isExistObject.length) {
         setMessage({
           text: 'Нет изменений! Такой объект уже существуeт!',
@@ -268,6 +267,8 @@ export const ChangeObject = React.forwardRef<unknown, ChooseModalProps>(
         })
       )
     }, [regions])
+
+    console.log('objects = ', objects)
 
     return (
       <Box

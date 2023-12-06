@@ -117,9 +117,6 @@ Objects.belongsTo(Addresses, { foreignKey: 'id_address' })
 Regions.hasMany(Objects, { foreignKey: 'id_region' })
 Objects.belongsTo(Regions, { foreignKey: 'id_region' })
 
-Clients.hasMany(Objects, { foreignKey: 'id_client' })
-Objects.belongsTo(Clients, { foreignKey: 'id_client' })
-
 ClassifierEquipment.hasMany(ClassifierModels, { foreignKey: 'id_equipment' })
 ClassifierModels.belongsTo(ClassifierEquipment, {
   foreignKey: 'id_equipment',
@@ -145,8 +142,8 @@ Clients.belongsTo(ClientsGroup, {
   targetKey: 'id',
 })
 
-Clients.hasMany(Contracts, { foreignKey: 'clientID' })
-Contracts.belongsTo(Clients, { foreignKey: 'clientID' })
+Clients.hasMany(Contracts, { foreignKey: 'id_client' })
+Contracts.belongsTo(Clients, { foreignKey: 'id_client' })
 
 Clients.belongsToMany(Users, { through: 'ThroughUserClients' })
 Users.belongsToMany(Clients, { through: 'ThroughUserClients' })

@@ -6,7 +6,6 @@ export interface Clients {
   legalName: string
   client: string
   office: string
-  contracts: string[]
   contacts: string[]
   comments: string
   active: boolean
@@ -31,10 +30,6 @@ export const clients: ModelAttributes<Model, Clients> = {
   },
   office: {
     type: DataType.STRING,
-    allowNull: true,
-  },
-  contracts: {
-    type: DataType.ARRAY(DataType.STRING),
     allowNull: true,
   },
   contacts: {

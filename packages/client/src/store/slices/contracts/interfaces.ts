@@ -1,4 +1,5 @@
 import { ClassifierEquipment } from '../classifier/interfaces'
+import { Clients } from '../clients/interfaces'
 import { Objects } from '../objects/interfaces'
 import { SLA } from '../sla/interfaces'
 
@@ -15,6 +16,7 @@ export interface Contracts {
   SLAs?: SLA[] | []
   ClassifierEquipment?: ClassifierEquipment[] | []
   Objects?: Objects[] | []
+  Client?: Clients[] | []
 }
 
 export interface IContractData {

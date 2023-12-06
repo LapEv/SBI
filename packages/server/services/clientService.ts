@@ -1,17 +1,14 @@
-import { ClientsRepos, ClientsGroupRepos, Contracts } from '../db'
+import { ClientsRepos, ClientsGroupRepos } from '../db'
 import type { Request, Response } from 'express'
 const { Op } = require('sequelize')
-// interface ShortTypicalMalfunctions {
-//   models: string[]
-//   id: string
-// }
+
 export class clientService {
   newClient = async (_req: Request, res: Response) => {
     try {
       await ClientsRepos.create({ ..._req.body, active: true })
       const clients = await ClientsRepos.findAll({
         where: { active: true },
-        include: [{ model: Contracts, through: { attributes: [] } }],
+        // include: [{ model: Contracts, through: { attributes: [] } }],
       })
       res.status(200).json(clients)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -33,7 +30,8 @@ export class clientService {
     console.log('getClients')
     ClientsRepos.findAll({
       where: { active: true },
-      include: [{ model: Contracts, through: { attributes: [] } }],
+      // include: [{ model: Contracts, through: { attributes: [] } }],
+      // include: [{ all: true, nested: true }],
     })
       .then(clients => {
         console.log('clients = ', clients)

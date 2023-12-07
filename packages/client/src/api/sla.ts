@@ -1,7 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { authhost, ApiEndPoints } from './config'
 import { getError } from 'utils/getError'
-import { SLA, OLA, ChangeSLA, ChangeOLA } from 'store/slices/sla/interfaces'
+import {
+  SLA,
+  OLA,
+  ChangeSLA,
+  ChangeOLA,
+  TypesSLA,
+} from 'store/slices/sla/interfaces'
 
 export const getSLA = createAsyncThunk('sla/getSLA', async (_, thunkAPI) => {
   try {
@@ -62,7 +68,10 @@ export const deleteSLA = createAsyncThunk(
 
 export const changeSLA = createAsyncThunk(
   'sla/changeSLA',
-  async ({ sla, id, time, timeStart, timeEnd }: ChangeSLA, thunkAPI) => {
+  async (
+    { sla, id, time, timeStart, timeEnd, id_typeSLA }: ChangeSLA,
+    thunkAPI
+  ) => {
     try {
       const { data } = await authhost.post(ApiEndPoints.SLA.changeSLA, {
         sla,
@@ -70,6 +79,7 @@ export const changeSLA = createAsyncThunk(
         time,
         timeStart,
         timeEnd,
+        id_typeSLA,
       })
       return {
         data,
@@ -147,7 +157,10 @@ export const deleteOLA = createAsyncThunk(
 
 export const changeOLA = createAsyncThunk(
   'sla/changeOLA',
-  async ({ ola, id, time, timeStart, timeEnd }: ChangeOLA, thunkAPI) => {
+  async (
+    { ola, id, time, timeStart, timeEnd, id_typeSLA }: ChangeOLA,
+    thunkAPI
+  ) => {
     try {
       const { data } = await authhost.post(ApiEndPoints.SLA.changeOLA, {
         ola,
@@ -155,6 +168,7 @@ export const changeOLA = createAsyncThunk(
         time,
         timeStart,
         timeEnd,
+        id_typeSLA,
       })
       return {
         data,
@@ -168,6 +182,24 @@ export const changeOLA = createAsyncThunk(
       /* eslint-enable @typescript-eslint/no-explicit-any */
       return thunkAPI.rejectWithValue(
         `Не удалось изменить OLA!\n${getError(e)}`
+      )
+    }
+  }
+)
+
+export const getTypesSLA = createAsyncThunk(
+  'sla/getTypesSLA',
+  async (_, thunkAPI) => {
+    try {
+      const { data } = await authhost.get<TypesSLA>(
+        ApiEndPoints.SLA.getTypesSLA
+      )
+      return data
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      return thunkAPI.rejectWithValue(
+        `Не удалось получить данные по типам SLA\n${getError(e)}`
       )
     }
   }

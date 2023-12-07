@@ -1,4 +1,8 @@
-import { timeValidation, lightTextValidation } from 'utils/validatorRules'
+import {
+  timeValidation,
+  lightTextValidation,
+  NoRequiredValidation,
+} from 'utils/validatorRules'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
 
@@ -102,6 +106,13 @@ export const MapSLAViewInputFields = [
     type: 'time',
     required: true,
   },
+  {
+    name: 'TypeSLA',
+    label: 'Тип SLA',
+    validation: NoRequiredValidation,
+    type: 'text',
+    required: true,
+  },
 ]
 
 export const MapOLAInputFields = [
@@ -162,6 +173,13 @@ export const MapOLAViewInputFields = [
     label: 'Время конца',
     validation: timeValidation,
     type: 'time',
+    required: true,
+  },
+  {
+    name: 'TypeSLA',
+    label: 'Тип SLA',
+    validation: NoRequiredValidation,
+    type: 'text',
     required: true,
   },
 ]

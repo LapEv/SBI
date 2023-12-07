@@ -10,7 +10,16 @@ import { SLAPage } from './'
 import { useAuth } from 'hooks/auth/useAuth'
 
 export const SLAList = memo(
-  ({ sla, ola, time, timeStart, timeEnd, id }: IServiceListData) => {
+  ({
+    sla,
+    ola,
+    time,
+    timeStart,
+    timeEnd,
+    id,
+    id_typeSLA,
+    TypesSLA,
+  }: IServiceListData) => {
     const [{ admin }] = useAuth()
     const [{ activeSLA }, { setActiveSLA, changeSLA, changeOLA }] = useSLA()
     const modalRef = React.createRef()
@@ -31,11 +40,11 @@ export const SLAList = memo(
       setModal(false)
       if (!answer) return
       if (sla) {
-        changeSLA({ sla: text, id, time, timeStart, timeEnd })
+        changeSLA({ sla: text, id, time, timeStart, timeEnd, id_typeSLA })
         return
       }
       if (ola) {
-        changeOLA({ ola: text, id, time, timeStart, timeEnd })
+        changeOLA({ ola: text, id, time, timeStart, timeEnd, id_typeSLA })
         return
       }
     }
@@ -82,7 +91,9 @@ export const SLAList = memo(
             time={time}
             timeStart={timeStart}
             timeEnd={timeEnd}
+            id_typeSLA={id_typeSLA}
             id={id as string}
+            TypesSLA={TypesSLA}
             key={`${id}`}
           />
         </Collapse>

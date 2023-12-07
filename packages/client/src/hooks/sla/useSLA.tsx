@@ -12,6 +12,7 @@ import {
   deleteOLA,
   changeSLA,
   changeOLA,
+  getTypesSLA,
 } from 'api/sla'
 import { setActiveList, setActiveSLA } from 'store/slices/sla'
 
@@ -27,6 +28,9 @@ export function useSLA(): [SLAState, SLAActions] {
       },
       getOLA() {
         dispatch(getOLA())
+      },
+      getTypesSLA() {
+        dispatch(getTypesSLA())
       },
       newSLA(data) {
         dispatch(newSLA(data))

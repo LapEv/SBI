@@ -24,6 +24,7 @@ import {
   throughContractsObjects,
   throughContractsSLA,
 } from './models/contracts'
+import { typesSLA } from './models/sla'
 
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
   process.env
@@ -71,6 +72,7 @@ export const TypicalMalfunctions = sequelize.define(
 
 export const SLA = sequelize.define('SLA', sla, {})
 export const OLA = sequelize.define('OLA', ola, {})
+export const TypesSLA = sequelize.define('TypesSLA', typesSLA, {})
 
 export const ThroughContractsSLA = sequelize.define(
   'ThroughContractsSLA',
@@ -178,6 +180,12 @@ ClassifierEquipment.belongsToMany(Contracts, {
   foreignKey: 'id_equipment',
 })
 
+TypesSLA.hasOne(SLA, { foreignKey: 'id_typeSLA', sourceKey: 'id' })
+SLA.belongsTo(TypesSLA, { foreignKey: 'id_typeSLA', targetKey: 'id' })
+
+TypesSLA.hasOne(OLA, { foreignKey: 'id_typeSLA', sourceKey: 'id' })
+OLA.belongsTo(TypesSLA, { foreignKey: 'id_typeSLA', targetKey: 'id' })
+
 export const userRepos = new Repository(Users as ModelCtor)
 export const roleGroupRepos = new Repository(RolesGroup as ModelCtor)
 export const roleRepos = new Repository(Roles as ModelCtor)
@@ -205,6 +213,7 @@ export const TypicalMalfunctionsRepos = new Repository(
 
 export const SLARepos = new Repository(SLA as ModelCtor)
 export const OLARepos = new Repository(OLA as ModelCtor)
+export const TypesSLARepos = new Repository(TypesSLA as ModelCtor)
 
 export const ThroughContractsSLARepos = new Repository(
   ThroughContractsSLA as ModelCtor

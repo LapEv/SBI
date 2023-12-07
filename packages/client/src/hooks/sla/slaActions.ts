@@ -3,6 +3,7 @@ import { ChangeOLA, ChangeSLA, OLA, SLA } from 'store/slices/sla/interfaces'
 export interface SLAActions {
   getSLA: () => void
   getOLA: () => void
+  getTypesSLA: () => void
   newSLA: (data: SLA) => void
   newOLA: (data: OLA) => void
   deleteSLA: (data: string[]) => void

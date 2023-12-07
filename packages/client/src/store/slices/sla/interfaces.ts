@@ -1,19 +1,27 @@
-import { DataList } from 'components/CheckBoxGroup/interface'
-
 export interface SLA {
-  id?: string
+  id: string
   sla: string
   time: string
   timeStart: string
   timeEnd: string
-  active?: boolean
+  id_typeSLA: string
+  active: boolean
+  TypesSLA: TypesSLA
 }
 export interface OLA {
-  id?: string
+  id: string
   ola: string
   time: string
   timeStart: string
   timeEnd: string
+  id_typeSLA: string
+  active: boolean
+  TypesSLA: TypesSLA
+}
+
+export interface TypesSLA {
+  id: string
+  typeSLA: string
   active?: boolean
 }
 
@@ -30,6 +38,7 @@ export interface AnswerOLA {
 export type SLAState = {
   sla: SLA[]
   ola: OLA[]
+  typesSLA: TypesSLA[]
   activeSLA: string
   activeList: string
   isLoadingRoles: boolean
@@ -42,6 +51,7 @@ export interface ChangeSLA {
   time: string
   timeStart: string
   timeEnd: string
+  id_typeSLA: string
 }
 export interface ChangeOLA {
   ola: string
@@ -49,6 +59,7 @@ export interface ChangeOLA {
   time: string
   timeStart: string
   timeEnd: string
+  id_typeSLA: string
 }
 
 export interface IServiceList {
@@ -62,6 +73,19 @@ export interface IServiceListData {
   time: string
   timeStart: string
   timeEnd: string
+  id_typeSLA: string
+  TypesSLA: TypesSLA
+}
+
+export interface SLAList {
+  sla?: string
+  ola?: string
+  id?: string
+  time: string
+  timeStart: string
+  timeEnd: string
+  id_typeSLA: string
+  TypesSLA: TypesSLA
 }
 
 export interface ServiceListItem {
@@ -72,6 +96,7 @@ export interface ServiceListItem {
     time: string
     timeStart: string
     timeEnd: string
+    id_typeSLA: string
   }[]
 }
 
@@ -79,7 +104,7 @@ export interface SLAValues {
   list: {
     name: string
     label: string
-    value: string
+    value: string | TypesSLA
     validation: object
     disabled: boolean
     type: string

@@ -19,13 +19,15 @@ export const ServiceList = memo(({ name, label }: IServiceList) => {
 
   useEffect(() => {
     setData(
-      sla.map(({ sla, id, time, timeStart, timeEnd }) => {
+      sla.map(({ sla, id, time, timeStart, timeEnd, id_typeSLA, TypesSLA }) => {
         return {
           sla,
           id,
           time,
           timeStart,
           timeEnd,
+          id_typeSLA,
+          TypesSLA,
         }
       })
     )
@@ -33,13 +35,15 @@ export const ServiceList = memo(({ name, label }: IServiceList) => {
 
   useEffect(() => {
     setData(
-      ola.map(({ ola, id, time, timeStart, timeEnd }) => {
+      ola.map(({ ola, id, time, timeStart, timeEnd, id_typeSLA, TypesSLA }) => {
         return {
           ola,
           id,
           time,
           timeStart,
           timeEnd,
+          id_typeSLA,
+          TypesSLA,
         }
       })
     )
@@ -55,6 +59,8 @@ export const ServiceList = memo(({ name, label }: IServiceList) => {
     }
     getSLA()
   }, [activeList])
+
+  console.log('data = ', data)
 
   return (
     <Box sx={classifier}>
@@ -73,17 +79,30 @@ export const ServiceList = memo(({ name, label }: IServiceList) => {
         in={open}
         timeout="auto"
         unmountOnExit>
-        {data.map(({ sla, ola, time, timeStart, timeEnd, id }) => (
-          <SLAList
-            sla={sla}
-            ola={ola}
-            time={time}
-            timeStart={timeStart}
-            timeEnd={timeEnd}
-            id={id as string}
-            key={`${id}`}
-          />
-        ))}
+        {data.map(
+          ({
+            sla,
+            ola,
+            time,
+            timeStart,
+            timeEnd,
+            id,
+            id_typeSLA,
+            TypesSLA,
+          }) => (
+            <SLAList
+              sla={sla}
+              ola={ola}
+              time={time}
+              timeStart={timeStart}
+              timeEnd={timeEnd}
+              id_typeSLA={id_typeSLA}
+              TypesSLA={TypesSLA}
+              id={id as string}
+              key={`${id}`}
+            />
+          )
+        )}
       </Collapse>
     </Box>
   )

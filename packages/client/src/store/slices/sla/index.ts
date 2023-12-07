@@ -1,5 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { SLA, OLA, AnswerSLA, AnswerOLA, SLAState } from './interfaces'
+import {
+  SLA,
+  OLA,
+  AnswerSLA,
+  AnswerOLA,
+  SLAState,
+  TypesSLA,
+} from './interfaces'
 import {
   getSLA,
   getOLA,
@@ -9,11 +16,13 @@ import {
   deleteOLA,
   changeSLA,
   changeOLA,
+  getTypesSLA,
 } from 'api/sla'
 
 const initialState: SLAState = {
   sla: [],
   ola: [],
+  typesSLA: [],
   activeSLA: '',
   activeList: '',
   isLoadingRoles: false,
@@ -124,6 +133,21 @@ export const slaSlise = createSlice({
       state.isLoadingRoles = true
     },
     [changeOLA.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingRoles = false
+      state.error = action.payload
+    },
+    [getTypesSLA.fulfilled.type]: (
+      state,
+      action: PayloadAction<TypesSLA[]>
+    ) => {
+      state.isLoadingRoles = false
+      state.error = ''
+      state.typesSLA = action.payload
+    },
+    [getTypesSLA.pending.type]: state => {
+      state.isLoadingRoles = true
+    },
+    [getTypesSLA.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingRoles = false
       state.error = action.payload
     },

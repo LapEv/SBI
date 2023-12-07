@@ -14,12 +14,24 @@ export const slaStartData = [
     active: true,
   },
 ]
+
 export const olaStartData = [
   {
     ola: 'Время реакции 60/09-18',
     time: '01:00:00',
     timeEnd: '18:00:00',
     timeStart: '09:00:00',
+    active: true,
+  },
+]
+
+export const typesSLAStartData = [
+  {
+    typeSLA: 'Регистрация',
+    active: true,
+  },
+  {
+    typeSLA: 'Выполнение',
     active: true,
   },
 ]

@@ -13,6 +13,7 @@ import {
   ObjectsRepos,
   RegionsRepos,
   SLARepos,
+  TypesSLARepos,
   TypicalMalfunctionsRepos,
   UserStatusRepos,
   roleGroupRepos,
@@ -29,7 +30,7 @@ import {
   modelsStartData,
   typ_malfunctionsStartData,
 } from './classifier'
-import { olaStartData, slaStartData } from './sla'
+import { olaStartData, slaStartData, typesSLAStartData } from './sla'
 import { clientsStartData } from './clients'
 import { objectsStartData } from './objects'
 
@@ -55,6 +56,7 @@ export const firstStart = async () => {
     const typ_malfunctions = await TypicalMalfunctionsRepos.getAll()
     const sla = await SLARepos.getAll()
     const ola = await OLARepos.getAll()
+    const typesSla = await TypesSLARepos.getAll()
     const clients = await ClientsRepos.getAll()
 
     const deleteClients = false
@@ -112,14 +114,28 @@ export const firstStart = async () => {
       console.log('Delete SLA')
       await SLARepos.drop({ cascade: true })
       await OLARepos.drop({ cascade: true })
+      await TypesSLARepos.drop({ cascade: true })
     } else {
-      if (sla.length || ola.length) {
+      if (sla.length || ola.length || typesSla.length) {
         console.log(
-          'Первый запуск таблиц SLA, OLA невозможен! Какая-то из таблиц уже существует!'
+          'Первый запуск таблиц SLA, OLA, TypesSLA невозможен! Какая-то из таблиц уже существует!'
         )
       } else {
-        await SLARepos.bulkCreate(slaStartData)
-        await OLARepos.bulkCreate(olaStartData)
+        const types = await TypesSLARepos.bulkCreate(typesSLAStartData)
+        const newSLA = slaStartData.map((item, index) => {
+          return {
+            ...item,
+            id_typeSLA: types[index].id,
+          }
+        })
+        const newOLA = olaStartData.map((item, index) => {
+          return {
+            ...item,
+            id_typeSLA: types[index].id,
+          }
+        })
+        await SLARepos.bulkCreate(newSLA)
+        await OLARepos.bulkCreate(newOLA)
       }
     }
 

@@ -78,3 +78,27 @@ export const ola: ModelAttributes<Model, OLA> = {
     allowNull: false,
   },
 }
+
+export interface TypesSLA {
+  id: string
+  typeSLA: string
+  active: boolean
+}
+
+export const typesSLA: ModelAttributes<Model, TypesSLA> = {
+  id: {
+    type: DataType.STRING,
+    defaultValue: DataType.UUIDV4,
+    allowNull: false,
+    primaryKey: true,
+  },
+  typeSLA: {
+    type: DataType.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  active: {
+    type: DataType.BOOLEAN,
+    allowNull: false,
+  },
+}

@@ -9,42 +9,47 @@ import { useFilteredData } from 'hooks/useFilteredData'
 import { SearchIconElement } from 'components/Icons'
 import { TextField } from 'components/TextFields'
 import { useSLA } from 'hooks/sla/useSLA'
-import { SLA } from 'store/slices/sla/interfaces'
+import { SLA, TypesSLA } from 'store/slices/sla/interfaces'
 
-export const DeleteSLA = React.forwardRef<unknown, ChooseModalProps>(
+export const DeleteTypesSLA = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const boxRef = React.createRef<HTMLDivElement>()
     const [height, setHeight] = useState<number | any>()
-    const [{ sla }, { deleteSLA, getSLA }] = useSLA()
-    const [selectedSLA, setSelectedSLA] = useState<string[]>([])
+    const [{ typesSLA }, { deleteTypesSLA, getTypesSLA }] = useSLA()
+    const [selectedTypesSLA, setSelectedTypesSLA] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
     const [filterText, setFilterText] = useState<string>('')
-    const filteredSLA = useFilteredData<SLA>(sla, filterText, 'sla')
+    const filteredTypesSLA = useFilteredData<TypesSLA>(
+      typesSLA,
+      filterText,
+      'typeSLA'
+    )
     const theme = useTheme()
 
     const changeData = (event: SyntheticEvent<EventTarget>) => {
       event.preventDefault()
-      if (!selectedSLA.length) {
+      if (!selectedTypesSLA.length) {
         setErrSelectedItems(true)
         return
       }
       handleModal(false)
-      deleteSLA(selectedSLA)
+      deleteTypesSLA(selectedTypesSLA)
     }
 
     const onChooseItems = (checked: boolean, id: string) => {
       if (!checked) {
-        setSelectedSLA(selectedSLA.filter(value => value !== id))
+        setSelectedTypesSLA(selectedTypesSLA.filter(value => value !== id))
         return
       }
-      setSelectedSLA([...selectedSLA, id])
-      if ([...selectedSLA, id] && errSelectedItems) setErrSelectedItems(false)
+      setSelectedTypesSLA([...selectedTypesSLA, id])
+      if ([...selectedTypesSLA, id] && errSelectedItems)
+        setErrSelectedItems(false)
     }
 
     useEffect(() => {
-      getSLA()
+      getTypesSLA()
       if (boxRef.current) {
         setHeight(boxRef.current!.offsetHeight)
       }
@@ -77,9 +82,9 @@ export const DeleteSLA = React.forwardRef<unknown, ChooseModalProps>(
         <Box
           ref={boxRef}
           sx={{ ...boxDataModal, height: filterText ? height : 'auto' }}>
-          {filteredSLA.map(({ sla, id }) => (
+          {filteredTypesSLA.map(({ typeSLA, id }) => (
             <Item
-              name={sla}
+              name={typeSLA}
               id={`${id}`}
               groupChecked={false}
               onChooseItems={onChooseItems}
@@ -88,7 +93,7 @@ export const DeleteSLA = React.forwardRef<unknown, ChooseModalProps>(
           ))}
         </Box>
         <Box sx={{ color: theme.palette.error.main, height: 20 }}>
-          {errSelectedItems && 'Не выбран ни один SLA!'}
+          {errSelectedItems && 'Не выбран ни один тип SLA!'}
         </Box>
         <ButtonsModalSection
           closeModal={() => handleModal(false)}

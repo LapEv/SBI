@@ -13,6 +13,13 @@ export const slaStartData = [
     timeStart: '08:00:00',
     active: true,
   },
+  {
+    sla: 'Время выполнения 240/08-22',
+    time: '04:00:00',
+    timeEnd: '22:00:00',
+    timeStart: '08:00:00',
+    active: true,
+  },
 ]
 
 export const olaStartData = [

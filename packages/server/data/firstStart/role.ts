@@ -315,6 +315,18 @@ export const rolesStartData = [
     nameRole: 'Изменение данных OLA',
   },
   {
+    role: 'newTypesSLA',
+    nameRole: 'Создание нового типа SLA',
+  },
+  {
+    role: 'deleteTypesSLA',
+    nameRole: 'Перемещение типа SLA в архив',
+  },
+  {
+    role: 'changeTypesSLA',
+    nameRole: 'Изменение названия типа SLA',
+  },
+  {
     role: 'getContracts',
     nameRole: 'Получение списка активных контрактов',
   },

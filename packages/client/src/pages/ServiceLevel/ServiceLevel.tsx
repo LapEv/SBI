@@ -47,7 +47,7 @@ export function ServiceLevelPage() {
           <DropDownMenu
             popover={'Добавить/Удалить'}
             data={menuData}
-            divider={[2, 4]}
+            divider={[3, 6]}
             onClick={checkClickMenu}
           />
         )}

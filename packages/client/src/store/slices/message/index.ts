@@ -46,10 +46,13 @@ import {
 import {
   changeOLA,
   changeSLA,
+  changeTypesSLA,
   deleteOLA,
   deleteSLA,
+  deleteTypesSLA,
   newOLA,
   newSLA,
+  newTypesSLA,
 } from 'api/sla'
 import {
   changeClient,
@@ -743,6 +746,55 @@ export const messageSlise = createSlice({
       state.isLoadingMessage = true
     },
     [changeOLA.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [newTypesSLA.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [newTypesSLA.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [newTypesSLA.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [deleteTypesSLA.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [deleteTypesSLA.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [deleteTypesSLA.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [changeTypesSLA.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [changeTypesSLA.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [changeTypesSLA.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingMessage = false
       state.type = 'error'
       state.text = action.payload

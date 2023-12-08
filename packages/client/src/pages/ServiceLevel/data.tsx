@@ -5,6 +5,7 @@ import {
 } from 'utils/validatorRules'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
+import EditIcon from '@mui/icons-material/Edit'
 
 export const menuData = [
   {
@@ -18,6 +19,11 @@ export const menuData = [
     icon: <AddCircleOutlineIcon fontSize="medium" />,
   },
   {
+    name: 'newTypesSLA',
+    title: 'Добавить тип SLA',
+    icon: <AddCircleOutlineIcon fontSize="medium" />,
+  },
+  {
     name: 'deleteSLA',
     title: 'Удалить SLA',
     icon: <RemoveCircleOutline fontSize="medium" />,
@@ -27,12 +33,25 @@ export const menuData = [
     title: 'Удалить OLA',
     icon: <RemoveCircleOutline fontSize="medium" />,
   },
+  {
+    name: 'deleteTypesSLA',
+    title: 'Удалить тип SLA',
+    icon: <RemoveCircleOutline fontSize="medium" />,
+  },
+  {
+    name: 'changeTypesSLA',
+    title: 'Изменить тип SLA',
+    icon: <EditIcon fontSize="medium" />,
+  },
 ]
 export const ModalTitles = {
   newSLA: 'Новый SLA',
-  newOLA: 'Новая OLA',
+  newOLA: 'Новый OLA',
+  newTypesSLA: 'Новый тип SLA',
   deleteSLA: 'Удалить SLA',
   deleteOLA: 'Удалить OLA',
+  deleteTypesSLA: 'Удалить тип SLA',
+  changeTypesSLA: 'Изменить тип SLA',
 }
 
 export const ServiceDataList = [
@@ -179,6 +198,16 @@ export const MapOLAViewInputFields = [
     name: 'TypeSLA',
     label: 'Тип SLA',
     validation: NoRequiredValidation,
+    type: 'text',
+    required: true,
+  },
+]
+
+export const MapTypesSLAInputFields = [
+  {
+    name: 'ola',
+    label: 'Введите новый тип SLA',
+    validation: lightTextValidation,
     type: 'text',
     required: true,
   },

@@ -320,9 +320,9 @@ export class slaService {
   }
 
   changeTypesSLA = async (_req: Request, res: Response) => {
-    const { typesSLA, id } = _req.body
+    const { typeSLA, id } = _req.body
     try {
-      await TypesSLARepos.update(id, { typesSLA })
+      await TypesSLARepos.update(id, { typeSLA })
       const typesSLAs = await TypesSLARepos.findAll({
         where: { active: true },
       })

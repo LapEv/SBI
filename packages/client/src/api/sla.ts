@@ -7,6 +7,10 @@ import {
   ChangeSLA,
   ChangeOLA,
   TypesSLA,
+  ChangeTypesSLA,
+  AddSLA,
+  AddOLA,
+  AddTypesSLA,
 } from 'store/slices/sla/interfaces'
 
 export const getSLA = createAsyncThunk('sla/getSLA', async (_, thunkAPI) => {
@@ -24,7 +28,7 @@ export const getSLA = createAsyncThunk('sla/getSLA', async (_, thunkAPI) => {
 
 export const newSLA = createAsyncThunk(
   'sla/newSLA',
-  async (sla: SLA, thunkAPI) => {
+  async (sla: AddSLA, thunkAPI) => {
     try {
       const { data } = await authhost.post(ApiEndPoints.SLA.newSLA, sla)
       return {
@@ -113,7 +117,7 @@ export const getOLA = createAsyncThunk('sla/getOLA', async (_, thunkAPI) => {
 
 export const newOLA = createAsyncThunk(
   'sla/newOLA',
-  async (ola: OLA, thunkAPI) => {
+  async (ola: AddOLA, thunkAPI) => {
     try {
       const { data } = await authhost.post(ApiEndPoints.SLA.newOLA, ola)
       return {
@@ -200,6 +204,80 @@ export const getTypesSLA = createAsyncThunk(
       /* eslint-enable @typescript-eslint/no-explicit-any */
       return thunkAPI.rejectWithValue(
         `Не удалось получить данные по типам SLA\n${getError(e)}`
+      )
+    }
+  }
+)
+
+export const newTypesSLA = createAsyncThunk(
+  'sla/newTypesSLA',
+  async (typeSLA: AddTypesSLA, thunkAPI) => {
+    try {
+      const { data } = await authhost.post(
+        ApiEndPoints.SLA.newTypesSLA,
+        typeSLA
+      )
+      return {
+        data,
+        message: {
+          text: 'Новый тип SLA добавлен',
+          type: 'success',
+        },
+      }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      return thunkAPI.rejectWithValue(
+        `Не удалось создать новый тип SLA\n${getError(e)} `
+      )
+    }
+  }
+)
+
+export const deleteTypesSLA = createAsyncThunk(
+  'sla/deleteTypesSLA',
+  async (selectedtypesSLA: string[], thunkAPI) => {
+    try {
+      const { data } = await authhost.post(ApiEndPoints.SLA.deleteTypesSLA, {
+        selectedtypesSLA,
+      })
+      return {
+        data,
+        message: {
+          text: 'Типы SLA удалены',
+          type: 'success',
+        },
+      }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      return thunkAPI.rejectWithValue(
+        `Не удалось удалить типы SLA!\n${getError(e)}`
+      )
+    }
+  }
+)
+
+export const changeTypesSLA = createAsyncThunk(
+  'sla/changeTypesSLA',
+  async ({ typeSLA, id }: ChangeTypesSLA, thunkAPI) => {
+    try {
+      const { data } = await authhost.post(ApiEndPoints.SLA.changeTypesSLA, {
+        typeSLA,
+        id,
+      })
+      return {
+        data,
+        message: {
+          text: 'Тип SLA изменен!',
+          type: 'success',
+        },
+      }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      return thunkAPI.rejectWithValue(
+        `Не удалось изменить тип SLA!\n${getError(e)}`
       )
     }
   }

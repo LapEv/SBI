@@ -6,6 +6,7 @@ import {
   AnswerOLA,
   SLAState,
   TypesSLA,
+  AnswerTypesSLA,
 } from './interfaces'
 import {
   getSLA,
@@ -17,6 +18,9 @@ import {
   changeSLA,
   changeOLA,
   getTypesSLA,
+  newTypesSLA,
+  deleteTypesSLA,
+  changeTypesSLA,
 } from 'api/sla'
 
 const initialState: SLAState = {
@@ -148,6 +152,51 @@ export const slaSlise = createSlice({
       state.isLoadingRoles = true
     },
     [getTypesSLA.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingRoles = false
+      state.error = action.payload
+    },
+    [newTypesSLA.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerTypesSLA>
+    ) => {
+      state.isLoadingRoles = false
+      state.error = ''
+      state.typesSLA = action.payload.data
+    },
+    [newTypesSLA.pending.type]: state => {
+      state.isLoadingRoles = true
+    },
+    [newTypesSLA.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingRoles = false
+      state.error = action.payload
+    },
+    [deleteTypesSLA.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerTypesSLA>
+    ) => {
+      state.isLoadingRoles = false
+      state.error = ''
+      state.typesSLA = action.payload.data
+    },
+    [deleteTypesSLA.pending.type]: state => {
+      state.isLoadingRoles = true
+    },
+    [deleteTypesSLA.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingRoles = false
+      state.error = action.payload
+    },
+    [changeTypesSLA.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerTypesSLA>
+    ) => {
+      state.isLoadingRoles = false
+      state.error = ''
+      state.typesSLA = action.payload.data
+    },
+    [changeTypesSLA.pending.type]: state => {
+      state.isLoadingRoles = true
+    },
+    [changeTypesSLA.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingRoles = false
       state.error = action.payload
     },

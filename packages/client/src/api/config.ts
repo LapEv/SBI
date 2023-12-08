@@ -82,6 +82,9 @@ export const ApiEndPoints = {
     deleteOLA: 'SLA/deleteOLA',
     changeOLA: 'SLA/changeOLA',
     getTypesSLA: 'SLA/getTypesSLA',
+    newTypesSLA: 'SLA/newTypesSLA',
+    deleteTypesSLA: 'SLA/deleteTypesSLA',
+    changeTypesSLA: 'SLA/changeTypesSLA',
   },
   Clients: {
     getClientGroups: 'client/getClientGroups',

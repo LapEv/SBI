@@ -125,13 +125,13 @@ export const firstStart = async () => {
         const newSLA = slaStartData.map((item, index) => {
           return {
             ...item,
-            id_typeSLA: types[index].id,
+            id_typeSLA: index <= 0 ? types[index].id : types[1].id,
           }
         })
         const newOLA = olaStartData.map((item, index) => {
           return {
             ...item,
-            id_typeSLA: types[index].id,
+            id_typeSLA: index <= 0 ? types[index].id : types[1].id,
           }
         })
         await SLARepos.bulkCreate(newSLA)

@@ -88,7 +88,7 @@ export const DeleteOLA = React.forwardRef<unknown, ChooseModalProps>(
           ))}
         </Box>
         <Box sx={{ color: theme.palette.error.main, height: 20 }}>
-          {errSelectedItems && 'Не выбран ни один классификатор!'}
+          {errSelectedItems && 'Не выбран ни один OLA!'}
         </Box>
         <ButtonsModalSection
           closeModal={() => handleModal(false)}

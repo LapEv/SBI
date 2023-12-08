@@ -8,6 +8,14 @@ export interface SLA {
   active: boolean
   TypesSLA: TypesSLA
 }
+
+export interface AddSLA {
+  sla: string
+  time: string
+  timeStart: string
+  timeEnd: string
+}
+
 export interface OLA {
   id: string
   ola: string
@@ -19,10 +27,21 @@ export interface OLA {
   TypesSLA: TypesSLA
 }
 
+export interface AddOLA {
+  ola: string
+  time: string
+  timeStart: string
+  timeEnd: string
+}
+
 export interface TypesSLA {
   id: string
   typeSLA: string
   active?: boolean
+}
+
+export interface AddTypesSLA {
+  typeSLA: string
 }
 
 export interface AnswerSLA {
@@ -32,6 +51,11 @@ export interface AnswerSLA {
 
 export interface AnswerOLA {
   data: OLA[]
+  type: string
+}
+
+export interface AnswerTypesSLA {
+  data: TypesSLA[]
   type: string
 }
 
@@ -60,6 +84,11 @@ export interface ChangeOLA {
   timeStart: string
   timeEnd: string
   id_typeSLA: string
+}
+
+export interface ChangeTypesSLA {
+  typeSLA: string
+  id?: string
 }
 
 export interface IServiceList {

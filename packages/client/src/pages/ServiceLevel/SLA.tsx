@@ -1,4 +1,4 @@
-import { Box, Stack, useTheme } from '@mui/material'
+import { Box, Stack } from '@mui/material'
 import {
   useForm,
   useFieldArray,
@@ -35,7 +35,6 @@ export function SLAPage({
   const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
   const [listTypes, setListTypes] = useState<Options[]>([])
   const [selectedType, setSelectedType] = useState<Options>(emptyValue)
-  const [errSelectedItems, setErrSelectedItems] = useState<string>('')
   const [slaData, setSlaData] = useState<SLAList>(
     sla
       ? { sla, time, timeStart, timeEnd, id, id_typeSLA, TypesSLA }
@@ -43,7 +42,6 @@ export function SLAPage({
   )
 
   const fieldsData = sla ? MapSLAViewInputFields : MapOLAViewInputFields
-  const theme = useTheme()
 
   const { handleSubmit, control, reset } = useForm<SLAValues>({
     mode: 'onBlur',
@@ -61,12 +59,6 @@ export function SLAPage({
   })
 
   const changeData = ({ list }: SLAValues) => {
-    if (!selectedType) {
-      setErrSelectedItems('Не выбрана тип SLA')
-      setSelectedType(emptyValue)
-      return
-    }
-    console.log('selectedType = ', selectedType)
     if (sla) {
       changeSLA({
         sla: list[0].value as string,
@@ -184,62 +176,52 @@ export function SLAPage({
           alignItems="center"
           spacing={0}
           sx={{ flexWrap: 'wrap', width: '100%' }}>
-          {fields.map(({ id, name, label, validation, type, value }, index) => {
-            return (
-              <Controller
-                key={id}
-                control={control}
-                name={`list.${index}.value`}
-                rules={validation}
-                render={({ field }) =>
-                  name !== 'TypeSLA' ? (
-                    <TextField
-                      {...field}
-                      inputRef={field.ref}
-                      label={label}
-                      type={type}
-                      required
-                      variant="outlined"
-                      sx={{ width: '48%', height: 60 }}
-                      margin="normal"
-                      onChange={(event: ChangeEvent<HTMLInputElement>) => (
-                        field.onChange(event),
-                        checkForChange({
-                          ...slaData!,
-                          ...{ [name]: event.target.value },
-                        })
-                      )}
-                      error={!!(errors?.list ?? [])[index]?.value?.message}
-                      helperText={(errors?.list ?? [])[index]?.value?.message}
-                      inputProps={{ step: 1 }}
-                    />
-                  ) : (
-                    <DropDown
-                      data={listTypes}
-                      props={{ mt: 1, width: '48%' }}
-                      onChange={data => changeSelectedTypes(data)}
-                      value={selectedType.label || ''}
-                      label="Выберите тип SLA"
-                      errorLabel="Не выбран тип SLA!"
-                    />
-                  )
-                }
-              />
-            )
-          })}
+          {fields.map(
+            ({ id, name, label, validation, type, required }, index) => {
+              return (
+                <Controller
+                  key={id}
+                  control={control}
+                  name={`list.${index}.value`}
+                  rules={validation}
+                  render={({ field }) =>
+                    name !== 'TypeSLA' ? (
+                      <TextField
+                        {...field}
+                        inputRef={field.ref}
+                        label={label}
+                        type={type}
+                        required={required ?? true}
+                        variant="outlined"
+                        sx={{ width: '48%', height: 60 }}
+                        margin="normal"
+                        onChange={(event: ChangeEvent<HTMLInputElement>) => (
+                          field.onChange(event),
+                          checkForChange({
+                            ...slaData!,
+                            ...{ [name]: event.target.value },
+                          })
+                        )}
+                        error={!!(errors?.list ?? [])[index]?.value?.message}
+                        helperText={(errors?.list ?? [])[index]?.value?.message}
+                        inputProps={{ step: 1 }}
+                      />
+                    ) : (
+                      <DropDown
+                        data={listTypes}
+                        props={{ mt: 1, width: '48%' }}
+                        onChange={data => changeSelectedTypes(data)}
+                        value={selectedType.label || ''}
+                        label="Выберите тип SLA"
+                        errorLabel="Не выбран тип SLA!"
+                      />
+                    )
+                  }
+                />
+              )
+            }
+          )}
         </Stack>
-      </Box>
-      {/* <DropDown
-        data={listTypes}
-        props={{ mt: 1, width: '50%' }}
-        onChange={data => changeSelectedTypes(data)}
-        value={selectedType.label || ''}
-        label="Выберите тип SLA"
-        errorLabel="Не выбран тип SLA!"
-      /> */}
-
-      <Box sx={{ color: theme.palette.error.main, height: 20 }}>
-        {errSelectedItems}
       </Box>
       <ButtonsSection
         btnSecondHandle={clearChange}

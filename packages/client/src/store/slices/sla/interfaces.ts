@@ -14,6 +14,7 @@ export interface AddSLA {
   time: string
   timeStart: string
   timeEnd: string
+  id_typeSLA: string
 }
 
 export interface OLA {
@@ -32,6 +33,7 @@ export interface AddOLA {
   time: string
   timeStart: string
   timeEnd: string
+  id_typeSLA: string
 }
 
 export interface TypesSLA {
@@ -137,5 +139,6 @@ export interface SLAValues {
     validation: object
     disabled: boolean
     type: string
+    required: boolean
   }[]
 }

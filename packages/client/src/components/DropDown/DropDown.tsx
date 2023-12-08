@@ -3,6 +3,7 @@ import { useTheme } from '@mui/material'
 import { TextField } from 'components/TextFields/TextFields'
 import { Autocomplete } from 'components/Autocomplete'
 import { DataDropDown, Options } from './interface'
+import { emptyValue } from '.'
 
 export const DropDown = ({
   data,
@@ -37,7 +38,7 @@ export const DropDown = ({
       onChange={(_, textValue) =>
         textValue
           ? (onChange?.(textValue as Options), setErrors(false))
-          : setErrors(true)
+          : (onChange?.(emptyValue as Options), setErrors(true))
       }
       value={value ?? ''}
       ListboxProps={{

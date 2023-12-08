@@ -60,8 +60,6 @@ export const ServiceList = memo(({ name, label }: IServiceList) => {
     getSLA()
   }, [activeList])
 
-  console.log('data = ', data)
-
   return (
     <Box sx={classifier}>
       <ListItemButton

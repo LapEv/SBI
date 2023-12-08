@@ -94,6 +94,13 @@ export const MapSLAInputFields = [
     type: 'time',
     required: true,
   },
+  {
+    name: 'TypeSLA',
+    label: 'Выберите тип SLA',
+    validation: NoRequiredValidation,
+    type: 'text',
+    required: true,
+  },
 ]
 
 export const MapSLAViewInputFields = [
@@ -161,6 +168,13 @@ export const MapOLAInputFields = [
     label: 'Выберите время конца',
     validation: timeValidation,
     type: 'time',
+    required: true,
+  },
+  {
+    name: 'TypeSLA',
+    label: 'Выберите тип OLA',
+    validation: NoRequiredValidation,
+    type: 'text',
     required: true,
   },
 ]

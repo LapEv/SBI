@@ -3,7 +3,7 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { ISelect } from './interfaces'
-import { useTheme, styled } from '@mui/material'
+import { styled } from '@mui/material'
 import { ThemeMode } from '../../themes/themeConfig'
 
 const CustomSelect = styled(Select)(({ theme }) => ({
@@ -85,7 +85,6 @@ export const SelectMUI = ({
   onChange,
   value,
 }: ISelect) => {
-  console.log('data = ', data)
   return (
     <CustomFormControl
       sx={{
@@ -100,17 +99,14 @@ export const SelectMUI = ({
         id="select-label-id"
         value={value || ''}
         label={label}
-        onChange={(event: SelectChangeEvent) =>
-          onChange({
-            label: event.target.value as string,
-            id: event.target.name,
-          })
+        onChange={(event: SelectChangeEvent<unknown>) =>
+          onChange(event.target.value as string)
         }>
         {data &&
-          data.map(option => {
+          data.map((item, index) => {
             return (
-              <CustomMenuItem key={option.id} value={option.id}>
-                {option.label}
+              <CustomMenuItem key={`${item}${index}`} value={item}>
+                {item}
               </CustomMenuItem>
             )
           })}

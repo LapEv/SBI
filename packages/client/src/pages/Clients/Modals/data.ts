@@ -56,7 +56,4 @@ export const MapNewObjectInputFields = [
   },
 ]
 
-export const filterFirstElement = {
-  label: 'Все',
-  id: '1',
-}
+export const filterFirstElement = 'Все'

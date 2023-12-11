@@ -1,15 +1,8 @@
-import { SelectChangeEvent } from '@mui/material/Select'
-
-interface Options {
-  label: string
-  id: string
-}
-
 export interface ISelect {
   defaultData: string
   label: string
-  data: Options[]
+  data: string[]
   props: any
-  onChange: (data: Options) => void
+  onChange: (data: string) => void
   value?: string
 }

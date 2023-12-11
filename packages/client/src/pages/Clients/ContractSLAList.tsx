@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import {
   Box,
   Stack,
@@ -33,6 +33,7 @@ import { DropDown } from 'components/DropDown'
 import { Options } from 'components/DropDown/interface'
 import { filterFirstElement } from './Modals/data'
 import { SelectMUI } from 'components/Select'
+import { useFilteredData } from 'hooks/useFilteredData'
 
 interface ISLAa {
   SLAs: SLA[]
@@ -41,11 +42,15 @@ export function ContractSLAList({ SLAs }: ISLAa) {
   const [{ sla, typesSLA }, { changeSLA, changeOLA, getSLA, getTypesSLA }] =
     useSLA()
   const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
+  const boxRef = React.createRef<HTMLDivElement>()
+  const [height, setHeight] = useState<number | any>()
   const [slaData, setSLAData] = useState<DataList[]>([])
   const [openSLA, setOpenSLA] = useState(false)
-  const [filterList, setFilterList] = useState<Options[]>([])
+  const [filterList, setFilterList] = useState<string[]>([])
+  const [filterText, setFilterText] = useState<string>('')
   const [selectedFilter, setSelectedFilter] =
-    useState<Options>(filterFirstElement)
+    useState<string>(filterFirstElement)
+  const filteredData = useFilteredData<DataList>(slaData, filterText, 'comment')
 
   const onChooseItems = (checked: boolean, id: string) => {
     console.log('clearChange')
@@ -73,9 +78,6 @@ export function ContractSLAList({ SLAs }: ISLAa) {
 
   useEffect(() => {
     const listData = sla.map(({ sla, id, TypesSLA }) => {
-      console.log('sla = ', sla)
-      console.log('id = ', id)
-      console.log('SLAs = ', SLAs?.find(item => item.id === id) ? true : false)
       return {
         name: sla,
         id: id as string,
@@ -87,18 +89,17 @@ export function ContractSLAList({ SLAs }: ISLAa) {
   }, [sla])
 
   useEffect(() => {
-    const listData = typesSLA.map(item => {
-      return {
-        ['label']: item.typeSLA as string,
-        ['id']: item.id as string,
-      }
-    })
+    const listData = typesSLA.map(({ typeSLA }) => typeSLA)
     listData.unshift(filterFirstElement)
     setFilterList(listData)
   }, [typesSLA])
 
-  const changeFilter = (data: Options) => {
-    console.log('data = ', data)
+  const changeFilter = (text: string) => {
+    if (!height && boxRef.current) {
+      setHeight(boxRef.current!.offsetHeight)
+    }
+    setFilterText(text === filterFirstElement ? '' : text)
+    setSelectedFilter(text)
   }
 
   console.log('slaData = ', slaData)
@@ -117,7 +118,8 @@ export function ContractSLAList({ SLAs }: ISLAa) {
         <RotateButton open={openSLA} size={'2rem'} />
       </ListItemButton>
       <Collapse
-        sx={{ width: '100%', p: 2, pl: 5, pr: 5, height: 'auto' }}
+        ref={boxRef}
+        sx={{ width: '100%', p: 2, pl: 5, pr: 5 }}
         in={openSLA}
         timeout="auto"
         unmountOnExit>
@@ -125,21 +127,29 @@ export function ContractSLAList({ SLAs }: ISLAa) {
           data={filterList}
           props={{ mt: 4 }}
           onChange={changeFilter}
-          value={selectedFilter.label || 'Все'}
+          value={selectedFilter || filterFirstElement}
           label="Выберите фильтр"
           defaultData="Все"
         />
-        {slaData?.map(({ name, id, initChecked, comment }) => (
-          <Item
-            name={name}
-            id={`${id}`}
-            comment={comment}
-            groupChecked={null}
-            onChooseItems={onChooseItems}
-            initChecked={initChecked}
-            key={id as string}
-          />
-        ))}
+        <Box
+          sx={{
+            maxHeight: '33vH',
+            overflowX: 'hidden',
+            overflowY: 'auto',
+            height: filterText ? height : 'auto',
+          }}>
+          {filteredData?.map(({ name, id, initChecked, comment }) => (
+            <Item
+              name={name}
+              id={`${id}`}
+              comment={comment}
+              groupChecked={null}
+              onChooseItems={onChooseItems}
+              initChecked={initChecked}
+              key={id as string}
+            />
+          ))}
+        </Box>
       </Collapse>
       {/* <Box sx={{ color: theme.palette.error.main, height: 20, ml: 5 }}>
         {errSelectedItems && 'Контракт не может быть без !'}

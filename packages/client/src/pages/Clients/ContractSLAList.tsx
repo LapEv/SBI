@@ -29,15 +29,23 @@ import {
 import { Item } from 'components/CheckBoxGroup'
 import { classifierChild2Component } from 'static/styles'
 import { DataList } from 'components/CheckBoxGroup/interface'
+import { DropDown } from 'components/DropDown'
+import { Options } from 'components/DropDown/interface'
+import { filterFirstElement } from './Modals/data'
+import { SelectMUI } from 'components/Select'
 
 interface ISLAa {
   SLAs: SLA[]
 }
 export function ContractSLAList({ SLAs }: ISLAa) {
-  const [{ sla }, { changeSLA, changeOLA, getSLA }] = useSLA()
+  const [{ sla, typesSLA }, { changeSLA, changeOLA, getSLA, getTypesSLA }] =
+    useSLA()
   const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
   const [slaData, setSLAData] = useState<DataList[]>([])
   const [openSLA, setOpenSLA] = useState(false)
+  const [filterList, setFilterList] = useState<Options[]>([])
+  const [selectedFilter, setSelectedFilter] =
+    useState<Options>(filterFirstElement)
 
   const onChooseItems = (checked: boolean, id: string) => {
     console.log('clearChange')
@@ -60,21 +68,38 @@ export function ContractSLAList({ SLAs }: ISLAa) {
   const openSLAList = () => {
     setOpenSLA(!openSLA)
     getSLA()
+    getTypesSLA()
   }
 
   useEffect(() => {
-    const listData = sla.map(({ sla, id }) => {
+    const listData = sla.map(({ sla, id, TypesSLA }) => {
       console.log('sla = ', sla)
       console.log('id = ', id)
       console.log('SLAs = ', SLAs?.find(item => item.id === id) ? true : false)
       return {
         name: sla,
         id: id as string,
+        comment: TypesSLA.typeSLA,
         initChecked: SLAs?.find(item => item.id === id) ? true : false,
       }
     })
     setSLAData(listData)
   }, [sla])
+
+  useEffect(() => {
+    const listData = typesSLA.map(item => {
+      return {
+        ['label']: item.typeSLA as string,
+        ['id']: item.id as string,
+      }
+    })
+    listData.unshift(filterFirstElement)
+    setFilterList(listData)
+  }, [typesSLA])
+
+  const changeFilter = (data: Options) => {
+    console.log('data = ', data)
+  }
 
   console.log('slaData = ', slaData)
 
@@ -96,10 +121,19 @@ export function ContractSLAList({ SLAs }: ISLAa) {
         in={openSLA}
         timeout="auto"
         unmountOnExit>
-        {slaData?.map(({ name, id, initChecked }) => (
+        <SelectMUI
+          data={filterList}
+          props={{ mt: 4 }}
+          onChange={changeFilter}
+          value={selectedFilter.label || 'Все'}
+          label="Выберите фильтр"
+          defaultData="Все"
+        />
+        {slaData?.map(({ name, id, initChecked, comment }) => (
           <Item
             name={name}
             id={`${id}`}
+            comment={comment}
             groupChecked={null}
             onChooseItems={onChooseItems}
             initChecked={initChecked}

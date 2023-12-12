@@ -36,7 +36,6 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
   const openPopover = Boolean(anchorEl)
   const modalRef = React.createRef()
   const [open, setOpen] = useState(false)
-  // const [openPopover, setOpenPopover] = useState(false)
 
   const [modal, setModal] = useState<boolean>(false)
   const [modalImage, setModalImage] = useState<string>('')

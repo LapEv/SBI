@@ -85,16 +85,6 @@ export function ContractPage({
     })
   }
 
-  useEffect(() => {
-    // const listData = sla.map(item => {
-    //   return {
-    //     name: item.typicalMalfunction,
-    //     id: item.id as string,
-    //     initChecked: item.models.includes(id as string),
-    //   }
-    // })
-  }, [])
-
   return (
     <Box
       component="form"

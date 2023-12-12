@@ -1,44 +1,11 @@
 import React, { useEffect, useState, memo, SyntheticEvent } from 'react'
-import {
-  Box,
-  ListItemText,
-  ListItemButton,
-  Modal,
-  IconButton,
-} from '@mui/material'
+import { Box, ListItemText, ListItemButton, Modal } from '@mui/material'
 import Collapse from '@mui/material/Collapse'
-import {
-  ButtonsModalSection,
-  ButtonsSectionNoSubmit,
-  EditButton,
-  RotateButton,
-} from 'components/Buttons'
-import { useTheme } from '@mui/material/styles'
-import {
-  ChangeModelsInTypicalMalfunction,
-  ClassifierModels,
-  ShortTypicalMalfunctions,
-  TypicalMalfunctions,
-} from 'store/slices/classifier/interfaces'
-import { useClassifier } from 'hooks/classifier/useClassifier'
+import { EditButton, RotateButton } from 'components/Buttons'
 import { classifierChildComponent, flexColumn_FS_SA } from 'static/styles'
-import { Item } from 'components/CheckBoxGroup'
-import { DataList } from 'components/CheckBoxGroup/interface'
 import { ModalChangeName } from 'components/ModaQuestions'
-import { сheckArrObjects } from 'utils/сheckArrObjects'
 import { Contracts } from 'store/slices/contracts/interfaces'
 import { useContracts } from 'hooks/contracts/useContracts'
-import { ChooseModal } from 'pages/Users/Modals'
-import { useAuth } from 'hooks/auth/useAuth'
-import {
-  useForm,
-  useFieldArray,
-  Controller,
-  useFormState,
-} from 'react-hook-form'
-import { AddValuesProps } from './Modals/interfaces'
-import { MapContractInputFields } from './data'
-import { TextField } from 'components/TextFields'
 import { ContractPage } from './'
 
 export const ContractsList = memo(
@@ -53,35 +20,16 @@ export const ContractsList = memo(
     id_client,
   }: Contracts) => {
     const [{ activeContract }, { setActiveContract }] = useContracts()
-    const [{ contracts }, { newContractName }] = useContracts()
-    const theme = useTheme()
+    const [_, { newContractName }] = useContracts()
     const modalRef = React.createRef()
     const [open, setOpen] = useState(false)
-    const [data, setData] = useState<Contracts[]>([])
     const [modal, setModal] = useState<boolean>(false)
-    const [changeActive, setChangeActive] = useState<boolean>(true)
-    const [selectedTypes, setSelectedTypes] = useState<string[]>([])
-    const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
-    const [resetData, setResetData] = useState<boolean>(false)
-    const [type, setType] = useState<TypicalMalfunctions[]>([])
-    // const [newTypicalMalfunction, setNewTypicalMalfunction] = useState<
-    //   ShortTypicalMalfunctions[]
-    // >(EmptyTypicalMalfunctions)
 
     const handleClick = () => {
       if (!open) {
-        setData(contracts.filter(item => item.id))
         setActiveContract(id as string)
       }
       setOpen(!open)
-    }
-
-    const changeData = () => {
-      console.log('changeData')
-      // if (errSelectedItems) return
-      // console.log('newTypicalMalfunction = ', newTypicalMalfunction)
-      // console.log('id_equipment = ', id_equipment)
-      // changeModelsInTypicalMalfunction({ id_equipment, newTypicalMalfunction })
     }
 
     const editContract = (event: SyntheticEvent<EventTarget>) => {

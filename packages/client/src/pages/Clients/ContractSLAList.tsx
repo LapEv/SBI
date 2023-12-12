@@ -56,20 +56,6 @@ export function ContractSLAList({ SLAs }: ISLAa) {
     console.log('clearChange')
   }
 
-  const clearChange = () => {
-    console.log('clearChange')
-  }
-
-  useEffect(() => {
-    // const listData = sla.map(item => {
-    //   return {
-    //     name: item.typicalMalfunction,
-    //     id: item.id as string,
-    //     initChecked: item.models.includes(id as string),
-    //   }
-    // })
-  }, [])
-
   const openSLAList = () => {
     setOpenSLA(!openSLA)
     getSLA()
@@ -102,7 +88,7 @@ export function ContractSLAList({ SLAs }: ISLAa) {
     setSelectedFilter(text)
   }
 
-  console.log('slaData = ', slaData)
+  console.log('height = ', height)
 
   return (
     <Box sx={{ width: '95%' }}>

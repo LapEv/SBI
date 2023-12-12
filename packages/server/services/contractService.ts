@@ -192,24 +192,55 @@ export class contractService {
   }
 
   changeContract = async (_req: Request, res: Response) => {
-    // const { number, date, sla, equipment, objects, id } = _req.body
-    const { number, date, id } = _req.body
+    const { number, date, id, sla, equipment, objects } = _req.body
     try {
       await ContractsRepos.update(id, { number, date })
+      if (sla && sla.length) {
+        await ThroughContractsSLARepos.deleteByCustomId({
+          id_contract: id,
+        })
+        const newThroughContractSla = sla.map((item: string) => {
+          return {
+            id_contract: id,
+            id_sla: item,
+          }
+        })
+        await ThroughContractsSLARepos.bulkCreate(newThroughContractSla)
+      }
+
+      if (equipment && equipment.length) {
+        await ThroughContractsEquipmentsRepos.deleteByCustomId({
+          id_equipment: id,
+        })
+        const newThroughContractEquipment = equipment.map((item: string) => {
+          return {
+            id_contract: id,
+            id_equipment: item,
+          }
+        })
+        await ThroughContractsEquipmentsRepos.bulkCreate(
+          newThroughContractEquipment
+        )
+      }
+
+      if (objects && objects.length) {
+        await ThroughContractsObjectsRepos.deleteByCustomId({
+          id_object: id,
+        })
+        const newThroughContractObject = objects.map((item: string) => {
+          return {
+            id_contract: id,
+            id_object: item,
+          }
+        })
+        await ThroughContractsObjectsRepos.bulkCreate(newThroughContractObject)
+      }
+
       const contracts = await ContractsRepos.findAll({
         where: { active: true },
         include: includes,
       })
-      // const newThroughContractSla = sla.map((item: string) => {
-      //   return {
-      //     id_contract: new_contract.id,
-      //     id_sla: item,
-      //   }
-      // })
-      // await ThroughContractsSLARepos.bulkCreate(newThroughContractSla)
-      const all = await ThroughContractsSLARepos.findAll({})
-      console.log('all = ', all)
-      res.status(200).json({ contracts, all })
+      res.status(200).json(contracts)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */

@@ -8,15 +8,13 @@ import {
 } from 'react-hook-form'
 import { ChangeEvent, useState } from 'react'
 import { TextField } from 'components/TextFields'
-import { ButtonsSection, RotateButton } from 'components/Buttons'
+import { ButtonsSection } from 'components/Buttons'
 import { deepEqual } from 'utils/deepEqual'
-import { SLA, SLAValues } from 'store/slices/sla/interfaces'
-import { useSLA } from 'hooks/sla/useSLA'
+import { SLAValues } from 'store/slices/sla/interfaces'
 import { MapContractInputFields } from './data'
 import { useAuth } from 'hooks/auth/useAuth'
 import { Contracts, IContractData } from 'store/slices/contracts/interfaces'
 import { convertDateToStringYYYYMMDD } from 'utils/convertDate'
-import { DataList } from 'components/CheckBoxGroup/interface'
 import { ContractSLAList } from './ContractSLAList'
 import { isEqualArr } from 'utils/isEqualArr'
 import { useContracts } from 'hooks/contracts/useContracts'
@@ -180,10 +178,6 @@ export function ContractPage({
         </Stack>
       </Box>
       <ContractSLAList slaID={slaID} onChooseItems={onChooseSLAs} />
-      {/* <Box sx={{ color: theme.palette.error.main, height: 20, ml: 5 }}>
-        {errSelectedItems && 'Контракт не может быть без !'}
-      </Box> */}
-
       <ButtonsSection
         btnSecondHandle={clearChange}
         btnName="Сохранить"

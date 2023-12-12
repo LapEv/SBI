@@ -1,49 +1,21 @@
-import React, { useEffect } from 'react'
-import {
-  Box,
-  Stack,
-  Collapse,
-  ListItemButton,
-  ListItemText,
-} from '@mui/material'
-import {
-  useForm,
-  useFieldArray,
-  Controller,
-  useFormState,
-} from 'react-hook-form'
-import { ChangeEvent, useState } from 'react'
-import { TextField } from 'components/TextFields'
-import { ButtonsSection, RotateButton } from 'components/Buttons'
-import { deepEqual } from 'utils/deepEqual'
-import { SLA, SLAValues } from 'store/slices/sla/interfaces'
+import { useEffect, useState } from 'react'
+import { Box, Collapse, ListItemButton, ListItemText } from '@mui/material'
+import { RotateButton } from 'components/Buttons'
 import { useSLA } from 'hooks/sla/useSLA'
-import { MapContractInputFields } from './data'
-import { useAuth } from 'hooks/auth/useAuth'
-import { Contracts, IContractData } from 'store/slices/contracts/interfaces'
-import { DateField } from 'components/DatePicker'
-import {
-  convertDateToStringYYYYMMDD,
-  convetStringToDate,
-} from 'utils/convertDate'
 import { Item } from 'components/CheckBoxGroup'
 import { classifierChild2Component } from 'static/styles'
 import { DataList } from 'components/CheckBoxGroup/interface'
-import { DropDown } from 'components/DropDown'
-import { Options } from 'components/DropDown/interface'
 import { filterFirstElement } from './Modals/data'
 import { SelectMUI } from 'components/Select'
 import { useFilteredData } from 'hooks/useFilteredData'
 
-interface ISLAa {
-  SLAs: SLA[]
+interface ISLAList {
+  slaID: string[]
+  onChooseItems: (checked: boolean, id: string) => void
 }
-export function ContractSLAList({ SLAs }: ISLAa) {
-  const [{ sla, typesSLA }, { changeSLA, changeOLA, getSLA, getTypesSLA }] =
-    useSLA()
-  const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
-  const boxRef = React.createRef<HTMLDivElement>()
-  const [height, setHeight] = useState<number | any>()
+
+export function ContractSLAList({ slaID, onChooseItems }: ISLAList) {
+  const [{ sla, typesSLA }, { getSLA, getTypesSLA }] = useSLA()
   const [slaData, setSLAData] = useState<DataList[]>([])
   const [openSLA, setOpenSLA] = useState(false)
   const [filterList, setFilterList] = useState<string[]>([])
@@ -51,10 +23,6 @@ export function ContractSLAList({ SLAs }: ISLAa) {
   const [selectedFilter, setSelectedFilter] =
     useState<string>(filterFirstElement)
   const filteredData = useFilteredData<DataList>(slaData, filterText, 'comment')
-
-  const onChooseItems = (checked: boolean, id: string) => {
-    console.log('clearChange')
-  }
 
   const openSLAList = () => {
     setOpenSLA(!openSLA)
@@ -68,11 +36,11 @@ export function ContractSLAList({ SLAs }: ISLAa) {
         name: sla,
         id: id as string,
         comment: TypesSLA.typeSLA,
-        initChecked: SLAs?.find(item => item.id === id) ? true : false,
+        initChecked: slaID?.find(item => item === id) ? true : false,
       }
     })
     setSLAData(listData)
-  }, [sla])
+  }, [sla, slaID])
 
   useEffect(() => {
     const listData = typesSLA.map(({ typeSLA }) => typeSLA)
@@ -81,14 +49,9 @@ export function ContractSLAList({ SLAs }: ISLAa) {
   }, [typesSLA])
 
   const changeFilter = (text: string) => {
-    if (!height && boxRef.current) {
-      setHeight(boxRef.current!.offsetHeight)
-    }
     setFilterText(text === filterFirstElement ? '' : text)
     setSelectedFilter(text)
   }
-
-  console.log('height = ', height)
 
   return (
     <Box sx={{ width: '95%' }}>
@@ -104,7 +67,6 @@ export function ContractSLAList({ SLAs }: ISLAa) {
         <RotateButton open={openSLA} size={'2rem'} />
       </ListItemButton>
       <Collapse
-        ref={boxRef}
         sx={{ width: '100%', p: 2, pl: 5, pr: 5 }}
         in={openSLA}
         timeout="auto"
@@ -122,7 +84,7 @@ export function ContractSLAList({ SLAs }: ISLAa) {
             maxHeight: '33vH',
             overflowX: 'hidden',
             overflowY: 'auto',
-            height: filterText ? height : 'auto',
+            height: 'auto',
           }}>
           {filteredData?.map(({ name, id, initChecked, comment }) => (
             <Item
@@ -137,9 +99,6 @@ export function ContractSLAList({ SLAs }: ISLAa) {
           ))}
         </Box>
       </Collapse>
-      {/* <Box sx={{ color: theme.palette.error.main, height: 20, ml: 5 }}>
-        {errSelectedItems && 'Контракт не может быть без !'}
-      </Box> */}
     </Box>
   )
 }

@@ -192,21 +192,24 @@ export class contractService {
   }
 
   changeContract = async (_req: Request, res: Response) => {
-    const { contract, number, date, sla, equipment, objects, id } = _req.body
+    // const { number, date, sla, equipment, objects, id } = _req.body
+    const { number, date, id } = _req.body
     try {
-      await ContractsRepos.update(id, {
-        contract,
-        number,
-        date,
-        sla,
-        equipment,
-        objects,
-      })
+      await ContractsRepos.update(id, { number, date })
       const contracts = await ContractsRepos.findAll({
         where: { active: true },
         include: includes,
       })
-      res.status(200).json(contracts)
+      // const newThroughContractSla = sla.map((item: string) => {
+      //   return {
+      //     id_contract: new_contract.id,
+      //     id_sla: item,
+      //   }
+      // })
+      // await ThroughContractsSLARepos.bulkCreate(newThroughContractSla)
+      const all = await ThroughContractsSLARepos.findAll({})
+      console.log('all = ', all)
+      res.status(200).json({ contracts, all })
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */

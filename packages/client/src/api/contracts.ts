@@ -127,14 +127,13 @@ export const deleteContract = createAsyncThunk(
 export const changeContract = createAsyncThunk(
   'contracts/changeContract',
   async (
-    { contract, number, date, sla, equipment, objects, id }: ChangeContract,
+    { number, date, sla, equipment, objects, id }: ChangeContract,
     thunkAPI
   ) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Contracts.changeContract,
         {
-          contract,
           number,
           date,
           sla,
@@ -143,6 +142,7 @@ export const changeContract = createAsyncThunk(
           id,
         }
       )
+      console.log('data = ', data)
       return {
         data,
         message: {

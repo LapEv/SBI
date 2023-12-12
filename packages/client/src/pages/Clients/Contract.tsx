@@ -18,6 +18,8 @@ import { Contracts, IContractData } from 'store/slices/contracts/interfaces'
 import { convertDateToStringYYYYMMDD } from 'utils/convertDate'
 import { DataList } from 'components/CheckBoxGroup/interface'
 import { ContractSLAList } from './ContractSLAList'
+import { isEqualArr } from 'utils/isEqualArr'
+import { useContracts } from 'hooks/contracts/useContracts'
 
 export function ContractPage({
   contract,
@@ -30,8 +32,11 @@ export function ContractPage({
   id_client,
 }: Contracts) {
   const [{ admin }] = useAuth()
+  const [_, { changeContract }] = useContracts()
   const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
-
+  const [slaDisabled, setSLADisabled] = useState<boolean>(true)
+  const [dataDisabled, setDataDisabled] = useState<boolean>(true)
+  const [slaID, setSLAID] = useState<string[]>([])
   const [contractData, setContractData] = useState<IContractData>({
     contract,
     id,
@@ -60,11 +65,30 @@ export function ContractPage({
 
   const changeData = ({ list }: SLAValues) => {
     console.log('list = ', list)
+    changeContract({
+      id,
+      number: list[0].value as string,
+      date: list[1].value as string,
+      sla: slaID,
+    })
   }
 
   const checkForChange = (newData: IContractData) => {
     if (!admin) return
-    setbtnDisabled(deepEqual(newData, contractData))
+    setDataDisabled(deepEqual(newData, contractData))
+  }
+
+  const onChooseSLAs = (checked: boolean, id: string) => {
+    if (checked) {
+      const newSLAs = [...slaID]
+      newSLAs.push(id)
+      setSLADisabled(isEqualArr(newSLAs, SLAs?.map(({ id }) => id) as string[]))
+      setSLAID(newSLAs)
+      return
+    }
+    const newSLAs = slaID.filter(item => item !== id)
+    setSLADisabled(isEqualArr(newSLAs, SLAs?.map(({ id }) => id) as string[]))
+    setSLAID(newSLAs)
   }
 
   const clearChange = () => {
@@ -83,7 +107,20 @@ export function ContractPage({
         value: newSLA![data.name as keyof typeof newSLA],
       })),
     })
+    setSLAID(SLAs?.map(({ id }) => id) as string[])
   }
+
+  useEffect(() => {
+    setSLAID(SLAs?.map(({ id }) => id) as string[])
+  }, [])
+
+  useEffect(() => {
+    if (!slaDisabled || !dataDisabled) {
+      setbtnDisabled(false)
+      return
+    }
+    setbtnDisabled(true)
+  }, [dataDisabled, slaDisabled])
 
   return (
     <Box
@@ -142,7 +179,7 @@ export function ContractPage({
           })}
         </Stack>
       </Box>
-      <ContractSLAList SLAs={SLAs as SLA[]} />
+      <ContractSLAList slaID={slaID} onChooseItems={onChooseSLAs} />
       {/* <Box sx={{ color: theme.palette.error.main, height: 20, ml: 5 }}>
         {errSelectedItems && 'Контракт не может быть без !'}
       </Box> */}

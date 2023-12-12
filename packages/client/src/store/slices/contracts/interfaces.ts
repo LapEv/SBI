@@ -28,6 +28,9 @@ export interface IContractData {
   // equipment?: string[]
   // objects?: string[]
   id_client: string
+  // SLAs?: SLA[] | []
+  // ClassifierEquipment?: ClassifierEquipment[] | []
+  // Objects?: Objects[] | []
 }
 
 export interface AnswerContracts {
@@ -44,7 +47,7 @@ export type ContractsState = {
 
 export interface ChangeContract {
   id?: string
-  contract: string
+  contract?: string
   number: string
   date: string
   sla?: string[]

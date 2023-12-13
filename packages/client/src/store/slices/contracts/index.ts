@@ -11,7 +11,7 @@ import {
 const initialState: ContractsState = {
   contracts: [],
   activeContract: '',
-  isLoadingRoles: false,
+  isLoadingContracts: false,
 }
 
 export const contractsSlise = createSlice({
@@ -27,78 +27,78 @@ export const contractsSlise = createSlice({
       state,
       action: PayloadAction<Contracts[]>
     ) => {
-      state.isLoadingRoles = false
+      state.isLoadingContracts = false
       state.error = ''
       state.contracts = action.payload
     },
     [getContracts.pending.type]: state => {
-      state.isLoadingRoles = true
+      state.isLoadingContracts = true
     },
     [getContracts.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingRoles = false
+      state.isLoadingContracts = false
       state.error = action.payload
     },
     [getContractsByClientID.fulfilled.type]: (
       state,
       action: PayloadAction<Contracts[]>
     ) => {
-      state.isLoadingRoles = false
+      state.isLoadingContracts = false
       state.error = ''
       state.contracts = action.payload
     },
     [getContractsByClientID.pending.type]: state => {
-      state.isLoadingRoles = true
+      state.isLoadingContracts = true
     },
     [getContractsByClientID.rejected.type]: (
       state,
       action: PayloadAction<string>
     ) => {
-      state.isLoadingRoles = false
+      state.isLoadingContracts = false
       state.error = action.payload
     },
     [newContract.fulfilled.type]: (
       state,
       action: PayloadAction<AnswerContracts>
     ) => {
-      state.isLoadingRoles = false
+      state.isLoadingContracts = false
       state.error = ''
       state.contracts = action.payload.data
     },
     [newContract.pending.type]: state => {
-      state.isLoadingRoles = true
+      state.isLoadingContracts = true
     },
     [newContract.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingRoles = false
+      state.isLoadingContracts = false
       state.error = action.payload
     },
     [deleteContract.fulfilled.type]: (
       state,
       action: PayloadAction<AnswerContracts>
     ) => {
-      state.isLoadingRoles = false
+      state.isLoadingContracts = false
       state.error = ''
       state.contracts = action.payload.data
     },
     [deleteContract.pending.type]: state => {
-      state.isLoadingRoles = true
+      state.isLoadingContracts = true
     },
     [deleteContract.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingRoles = false
+      state.isLoadingContracts = false
       state.error = action.payload
     },
     [changeContract.fulfilled.type]: (
       state,
       action: PayloadAction<AnswerContracts>
     ) => {
-      state.isLoadingRoles = false
+      state.isLoadingContracts = false
       state.error = ''
       state.contracts = action.payload.data
     },
     [changeContract.pending.type]: state => {
-      state.isLoadingRoles = true
+      state.isLoadingContracts = true
     },
     [changeContract.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingRoles = false
+      state.isLoadingContracts = false
       state.error = action.payload
     },
   },

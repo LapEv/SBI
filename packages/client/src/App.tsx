@@ -9,15 +9,12 @@ import { Routes as Paths } from 'utils/routes'
 import { RequiredAuth } from 'hoks/RequiredAuth'
 import CircularProgress from '@mui/material/CircularProgress'
 import { Box } from '@mui/material'
-import { useAuth } from 'hooks/auth/useAuth'
-import { useRoles } from 'hooks/roles/useRoles'
-import { useStructure } from 'hooks/structure/useStructure'
 import { isEmptyObjField } from 'utils/isEmptyObject'
+import { checkLoading } from 'utils/checkLoading'
+import { useAuth } from 'hooks/auth/useAuth'
 
 function App() {
-  const [{ isLoadingAuth, user }] = useAuth()
-  const [{ isLoadingRoles }] = useRoles()
-  const [{ isLoadingStructure }] = useStructure()
+  const [{ user }] = useAuth()
   useEffect(() => {
     const fetchServerData = async () => {
       const url = `http://localhost:${__SERVER_PORT__}`
@@ -33,7 +30,7 @@ function App() {
       <BrowserRouter>
         <ErrorBoundary>
           <div className="App" data-testid="App">
-            {(isLoadingAuth || isLoadingRoles || isLoadingStructure) && (
+            {checkLoading() && (
               <Box
                 sx={{
                   width: '100%',

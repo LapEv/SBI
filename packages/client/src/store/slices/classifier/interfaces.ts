@@ -42,7 +42,7 @@ export type ClassifierState = {
   typicalMalfunctions: TypicalMalfunctions[]
   activeEquipment: string
   activeModel: string
-  isLoadingRoles: boolean
+  isLoadingClassifier: boolean
   error?: string
 }
 

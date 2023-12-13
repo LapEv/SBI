@@ -111,7 +111,7 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
           secondary={legalName}
           primaryTypographyProps={{ fontSize: '1.375rem!important' }}
         />
-        <EditButton handleClick={editClient} size={'1.7rem'} />
+        {admin && <EditButton handleClick={editClient} size={'1.7rem'} />}
         <RotateButton open={open} handleClick={handleClick} size={'2rem'} />
       </ListItemButton>
       <Collapse

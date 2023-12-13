@@ -7,6 +7,7 @@ import { ModalChangeName } from 'components/ModaQuestions'
 import { Contracts } from 'store/slices/contracts/interfaces'
 import { useContracts } from 'hooks/contracts/useContracts'
 import { ContractPage } from './'
+import { useAuth } from 'hooks/auth/useAuth'
 
 export const ContractsList = memo(
   ({
@@ -19,6 +20,7 @@ export const ContractsList = memo(
     Objects,
     id_client,
   }: Contracts) => {
+    const [{ admin }] = useAuth()
     const [{ activeContract }, { setActiveContract }] = useContracts()
     const [_, { newContractName }] = useContracts()
     const modalRef = React.createRef()
@@ -75,7 +77,7 @@ export const ContractsList = memo(
             sx={{ ml: 2 }}
             primaryTypographyProps={{ fontSize: '1.175rem!important' }}
           />
-          <EditButton handleClick={editContract} size={'1.5rem'} />
+          {admin && <EditButton handleClick={editContract} size={'1.5rem'} />}
           <RotateButton open={open} size={'2rem'} />
         </ListItemButton>
         <Collapse

@@ -28,7 +28,7 @@ export interface AnswerObjects {
 export type ObjectsState = {
   objects: Objects[]
   activeObject: string
-  isLoadingRoles: boolean
+  isLoadingObjects: boolean
   error?: string
 }
 

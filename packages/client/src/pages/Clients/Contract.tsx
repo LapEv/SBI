@@ -18,6 +18,7 @@ import { convertDateToStringYYYYMMDD } from 'utils/convertDate'
 import { ContractSLAList } from './ContractSLAList'
 import { isEqualArr } from 'utils/isEqualArr'
 import { useContracts } from 'hooks/contracts/useContracts'
+import { ContractEquipmentList } from './ContractEquipmentList'
 
 export function ContractPage({
   contract,
@@ -33,16 +34,15 @@ export function ContractPage({
   const [_, { changeContract }] = useContracts()
   const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
   const [slaDisabled, setSLADisabled] = useState<boolean>(true)
+  const [equipmentDisabled, setEquipmentDisabled] = useState<boolean>(true)
   const [dataDisabled, setDataDisabled] = useState<boolean>(true)
   const [slaID, setSLAID] = useState<string[]>([])
+  const [equipmentID, setEquipmentID] = useState<string[]>([])
   const [contractData, setContractData] = useState<IContractData>({
     contract,
     id,
     number,
     date: convertDateToStringYYYYMMDD(date),
-    // sla,
-    // equipment,
-    // objects,
     id_client,
   })
 
@@ -62,12 +62,12 @@ export function ContractPage({
   })
 
   const changeData = ({ list }: SLAValues) => {
-    console.log('list = ', list)
     changeContract({
       id,
       number: list[0].value as string,
       date: list[1].value as string,
       sla: slaID,
+      equipment: equipmentID,
     })
   }
 
@@ -89,6 +89,29 @@ export function ContractPage({
     setSLAID(newSLAs)
   }
 
+  const onChooseEquipments = (checked: boolean, id: string) => {
+    if (checked) {
+      const newEquipmnents = [...equipmentID]
+      newEquipmnents.push(id)
+      setSLADisabled(
+        isEqualArr(
+          newEquipmnents,
+          ClassifierEquipment?.map(({ id }) => id) as string[]
+        )
+      )
+      setSLAID(newEquipmnents)
+      return
+    }
+    const newEquipmnents = equipmentID.filter(item => item !== id)
+    setSLADisabled(
+      isEqualArr(
+        newEquipmnents,
+        ClassifierEquipment?.map(({ id }) => id) as string[]
+      )
+    )
+    setSLAID(newEquipmnents)
+  }
+
   const clearChange = () => {
     setbtnDisabled(true)
     const newSLA = {
@@ -106,19 +129,21 @@ export function ContractPage({
       })),
     })
     setSLAID(SLAs?.map(({ id }) => id) as string[])
+    setEquipmentID(ClassifierEquipment?.map(({ id }) => id) as string[])
   }
 
   useEffect(() => {
     setSLAID(SLAs?.map(({ id }) => id) as string[])
+    setEquipmentID(ClassifierEquipment?.map(({ id }) => id) as string[])
   }, [])
 
   useEffect(() => {
-    if (!slaDisabled || !dataDisabled) {
+    if (!slaDisabled || !dataDisabled || !equipmentDisabled) {
       setbtnDisabled(false)
       return
     }
     setbtnDisabled(true)
-  }, [dataDisabled, slaDisabled])
+  }, [dataDisabled, slaDisabled, equipmentDisabled])
 
   return (
     <Box
@@ -178,6 +203,10 @@ export function ContractPage({
         </Stack>
       </Box>
       <ContractSLAList slaID={slaID} onChooseItems={onChooseSLAs} />
+      <ContractEquipmentList
+        equipmentID={equipmentID}
+        onChooseItems={onChooseEquipments}
+      />
       <ButtonsSection
         btnSecondHandle={clearChange}
         btnName="Сохранить"

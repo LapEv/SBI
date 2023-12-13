@@ -67,7 +67,7 @@ export type SLAState = {
   typesSLA: TypesSLA[]
   activeSLA: string
   activeList: string
-  isLoadingRoles: boolean
+  isLoadingSLA: boolean
   error?: string
 }
 

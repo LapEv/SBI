@@ -19,48 +19,58 @@ import { filterFirstElement } from './Modals/data'
 import { SelectMUI } from 'components/Select'
 import { useFilteredData } from 'hooks/useFilteredData'
 import { useAuth } from 'hooks/auth/useAuth'
-import { NewSLA } from 'pages/ServiceLevel/Modals'
-import { ModalTitles } from 'pages/ServiceLevel/data'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
+import { NewClassifierEquipment } from 'pages/Classifier/Modals'
+import { ModalTitles } from 'pages/Classifier/data'
+import { useClassifier } from 'hooks/classifier/useClassifier'
 
-interface ISLAList {
-  slaID: string[]
+interface IEquipmentList {
+  equipmentID: string[]
   onChooseItems: (checked: boolean, id: string) => void
 }
 
-export function ContractSLAList({ slaID, onChooseItems }: ISLAList) {
+export function ContractEquipmentList({
+  equipmentID,
+  onChooseItems,
+}: IEquipmentList) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
   const modalRef = React.createRef()
   const [modal, setModal] = useState<boolean>(false)
   const openPopover = Boolean(anchorEl)
   const [{ admin }] = useAuth()
+  const [{ equipments }, { getClassifierEquipments }] = useClassifier()
   const [{ sla, typesSLA }, { getSLA, getTypesSLA }] = useSLA()
-  const [slaData, setSLAData] = useState<DataList[]>([])
-  const [openSLA, setOpenSLA] = useState(false)
+  const [equipmentData, setEquipmentData] = useState<DataList[]>([])
+  const [openEquipment, setOpenEquipment] = useState(false)
   const [filterList, setFilterList] = useState<string[]>([])
   const [filterText, setFilterText] = useState<string>('')
   const [selectedFilter, setSelectedFilter] =
     useState<string>(filterFirstElement)
-  const filteredData = useFilteredData<DataList>(slaData, filterText, 'comment')
+  const filteredData = useFilteredData<DataList>(
+    equipmentData,
+    filterText,
+    'comment'
+  )
   const theme = useTheme()
 
-  const openSLAList = () => {
-    setOpenSLA(!openSLA)
-    getSLA()
+  const openEquipmentList = () => {
+    setOpenEquipment(!openEquipment)
+    getClassifierEquipments()
     getTypesSLA()
   }
 
   useEffect(() => {
-    const listData = sla.map(({ sla, id, TypesSLA }) => {
+    console.log('equipments = ', equipments)
+    const listData = equipments.map(({ equipment, id }) => {
       return {
-        name: sla,
+        name: equipment,
         id: id as string,
-        comment: TypesSLA.typeSLA,
-        initChecked: slaID?.find(item => item === id) ? true : false,
+        // comment: TypesSLA.typeSLA,
+        initChecked: equipmentID?.find(item => item === id) ? true : false,
       }
     })
-    setSLAData(listData)
-  }, [sla, slaID])
+    setEquipmentData(listData)
+  }, [equipments, equipmentID])
 
   useEffect(() => {
     const listData = typesSLA.map(({ typeSLA }) => typeSLA)
@@ -73,7 +83,7 @@ export function ContractSLAList({ slaID, onChooseItems }: ISLAList) {
     setSelectedFilter(text)
   }
 
-  const AddNewSLA = () => {
+  const AddNewEquipment = () => {
     setModal(true)
   }
 
@@ -88,26 +98,26 @@ export function ContractSLAList({ slaID, onChooseItems }: ISLAList) {
         onClose={() => setModal(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
-        <NewSLA
+        <NewClassifierEquipment
           ref={modalRef}
           handleModal={handleModal}
-          title={ModalTitles.newSLA}
+          title={ModalTitles.newClassifierEquipment}
         />
       </Modal>
       <ListItemButton
-        divider={openSLA}
+        divider={openEquipment}
         sx={classifierChild2Component}
-        onClick={openSLAList}>
+        onClick={openEquipmentList}>
         <ListItemText
-          primary={'Уровни сервиса'}
+          primary={'Классификатор оборудования'}
           sx={{ ml: 2 }}
           primaryTypographyProps={{ fontSize: '1rem!important' }}
         />
-        <RotateButton open={openSLA} size={'2rem'} />
+        <RotateButton open={openEquipment} size={'2rem'} />
       </ListItemButton>
       <Collapse
         sx={{ width: '100%', p: 2, pl: 5, pr: 5 }}
-        in={openSLA}
+        in={openEquipment}
         timeout="auto"
         unmountOnExit>
         <Box
@@ -130,7 +140,7 @@ export function ContractSLAList({ slaID, onChooseItems }: ISLAList) {
                 setAnchorEl(event.currentTarget)
               }
               onMouseLeave={() => setAnchorEl(null)}
-              onClick={AddNewSLA}
+              onClick={AddNewEquipment}
               size="medium"
               sx={{
                 ml: 5,
@@ -163,7 +173,7 @@ export function ContractSLAList({ slaID, onChooseItems }: ISLAList) {
                 disableRestoreFocus
                 container={anchorEl}>
                 <Typography sx={{ p: 1, fontSize: 12, color: 'text.primary' }}>
-                  Добавить уровень сервиса
+                  Добавить классификатор
                 </Typography>
               </Popover>
             </IconButton>

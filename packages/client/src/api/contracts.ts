@@ -142,7 +142,6 @@ export const changeContract = createAsyncThunk(
           id,
         }
       )
-      console.log('data = ', data)
       return {
         data,
         message: {

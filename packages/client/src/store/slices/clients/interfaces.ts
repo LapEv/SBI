@@ -29,7 +29,7 @@ export type ClientsState = {
   clients: Clients[]
   clientsGroup: ClientsGroup[]
   activeClient: string
-  isLoadingRoles: boolean
+  isLoadingClients: boolean
   error?: string
 }
 

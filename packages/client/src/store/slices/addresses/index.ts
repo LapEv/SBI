@@ -20,7 +20,7 @@ import {
 const initialState: AddressesState = {
   addresses: [],
   regions: [],
-  isLoadingRoles: false,
+  isLoadingAddress: false,
 }
 
 export const addressesSlise = createSlice({
@@ -36,117 +36,117 @@ export const addressesSlise = createSlice({
       state,
       action: PayloadAction<Addresses[]>
     ) => {
-      state.isLoadingRoles = false
+      state.isLoadingAddress = false
       state.error = ''
       state.addresses = action.payload
     },
     [getAddresses.pending.type]: state => {
-      state.isLoadingRoles = true
+      state.isLoadingAddress = true
     },
     [getAddresses.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingRoles = false
+      state.isLoadingAddress = false
       state.error = action.payload
     },
     [newAddress.fulfilled.type]: (
       state,
       action: PayloadAction<AnswerAddresses>
     ) => {
-      state.isLoadingRoles = false
+      state.isLoadingAddress = false
       state.error = ''
       state.addresses = action.payload.data
     },
     [newAddress.pending.type]: state => {
-      state.isLoadingRoles = true
+      state.isLoadingAddress = true
     },
     [newAddress.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingRoles = false
+      state.isLoadingAddress = false
       state.error = action.payload
     },
     [deleteAddress.fulfilled.type]: (
       state,
       action: PayloadAction<AnswerAddresses>
     ) => {
-      state.isLoadingRoles = false
+      state.isLoadingAddress = false
       state.error = ''
       state.addresses = action.payload.data
     },
     [deleteAddress.pending.type]: state => {
-      state.isLoadingRoles = true
+      state.isLoadingAddress = true
     },
     [deleteAddress.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingRoles = false
+      state.isLoadingAddress = false
       state.error = action.payload
     },
     [changeAddress.fulfilled.type]: (
       state,
       action: PayloadAction<AnswerAddresses>
     ) => {
-      state.isLoadingRoles = false
+      state.isLoadingAddress = false
       state.error = ''
       state.addresses = action.payload.data
     },
     [changeAddress.pending.type]: state => {
-      state.isLoadingRoles = true
+      state.isLoadingAddress = true
     },
     [changeAddress.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingRoles = false
+      state.isLoadingAddress = false
       state.error = action.payload
     },
     [getRegions.fulfilled.type]: (state, action: PayloadAction<Regions[]>) => {
-      state.isLoadingRoles = false
+      state.isLoadingAddress = false
       state.error = ''
       state.regions = action.payload
     },
     [getRegions.pending.type]: state => {
-      state.isLoadingRoles = true
+      state.isLoadingAddress = true
     },
     [getRegions.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingRoles = false
+      state.isLoadingAddress = false
       state.error = action.payload
     },
     [newRegion.fulfilled.type]: (
       state,
       action: PayloadAction<AnswerRegions>
     ) => {
-      state.isLoadingRoles = false
+      state.isLoadingAddress = false
       state.error = ''
       state.regions = action.payload.data
     },
     [newRegion.pending.type]: state => {
-      state.isLoadingRoles = true
+      state.isLoadingAddress = true
     },
     [newRegion.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingRoles = false
+      state.isLoadingAddress = false
       state.error = action.payload
     },
     [deleteRegion.fulfilled.type]: (
       state,
       action: PayloadAction<AnswerRegions>
     ) => {
-      state.isLoadingRoles = false
+      state.isLoadingAddress = false
       state.error = ''
       state.regions = action.payload.data
     },
     [deleteRegion.pending.type]: state => {
-      state.isLoadingRoles = true
+      state.isLoadingAddress = true
     },
     [deleteRegion.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingRoles = false
+      state.isLoadingAddress = false
       state.error = action.payload
     },
     [changeRegion.fulfilled.type]: (
       state,
       action: PayloadAction<AnswerRegions>
     ) => {
-      state.isLoadingRoles = false
+      state.isLoadingAddress = false
       state.error = ''
       state.regions = action.payload.data
     },
     [changeRegion.pending.type]: state => {
-      state.isLoadingRoles = true
+      state.isLoadingAddress = true
     },
     [changeRegion.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingRoles = false
+      state.isLoadingAddress = false
       state.error = action.payload
     },
   },

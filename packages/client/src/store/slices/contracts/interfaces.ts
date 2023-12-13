@@ -41,7 +41,7 @@ export interface AnswerContracts {
 export type ContractsState = {
   contracts: Contracts[]
   activeContract: string
-  isLoadingRoles: boolean
+  isLoadingContracts: boolean
   error?: string
 }
 

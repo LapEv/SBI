@@ -77,14 +77,7 @@ const CustomMenuItem = styled(MenuItem)(({ theme }) => ({
   },
 }))
 
-export const SelectMUI = ({
-  defaultData,
-  label,
-  data,
-  props,
-  onChange,
-  value,
-}: ISelect) => {
+export const SelectMUI = ({ label, data, onChange, value, props }: ISelect) => {
   return (
     <CustomFormControl
       sx={{
@@ -94,7 +87,7 @@ export const SelectMUI = ({
       }}>
       <InputLabel id="select-label-id">{label}</InputLabel>
       <CustomSelect
-        sx={{ height: 50 }}
+        sx={{ ...props }}
         labelId="select-label"
         id="select-label-id"
         value={value || ''}

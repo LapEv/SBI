@@ -10,9 +10,7 @@ export const CheckBoxGroup = ({
   oneGroup,
   selectedGroup,
 }: ICheckBoxGroup) => {
-  const [checked, setChecked] = useState<boolean>(
-    data?.id === selectedGroup ? true : false
-  )
+  const [checked, setChecked] = useState<boolean>(data.checkedGroup)
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked)
@@ -36,21 +34,21 @@ export const CheckBoxGroup = ({
       maxWidth="md"
       sx={{
         display: 'flex',
-        width: '90%',
+        width: '100%',
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-around',
         alignItems: 'flex-start',
       }}>
       <>
         <FormControlLabel
-          name={data.groupName}
+          name={data.group}
           label={''}
           value={data.id}
           control={<Checkbox checked={checked} onChange={handleChange} />}
         />
         <ListBoxGroup
-          key={`${data.id}${data.groupName}`}
-          groupName={data.groupName}
+          key={`${data.id}${data.group}`}
+          groupName={data.group}
           data={data.items}
           groupId={data.id}
           groupChecked={checked}

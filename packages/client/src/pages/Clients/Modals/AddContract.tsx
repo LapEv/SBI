@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Typography } from '@mui/material'
+import {
+  Box,
+  Typography,
+  ListItemButton,
+  ListItemText,
+  Collapse,
+} from '@mui/material'
 import {
   useForm,
   useFieldArray,
@@ -9,8 +15,8 @@ import {
 import { TextField } from 'components/TextFields'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
 import { MapNewContractInputFields } from '../data'
-import { modalStyle } from 'static/styles'
-import { ButtonsModalSection } from 'components/Buttons'
+import { classifierChild2Component, modalStyle } from 'static/styles'
+import { ButtonsModalSection, RotateButton } from 'components/Buttons'
 import { useMessage } from 'hooks/message/useMessage'
 import { useContracts } from 'hooks/contracts/useContracts'
 import { DateField } from 'components/DatePicker'
@@ -28,9 +34,11 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
+    const [openList, setOpenList] = useState(false)
     const [{ clients }, { getClients }] = useClients()
     const [{ contracts }, { getContracts, newContract }] = useContracts()
-    const [{ equipments }, { getClassifierEquipments }] = useClassifier()
+    const [{ equipments, models }, { getClassifierEquipments }] =
+      useClassifier()
     const [{ sla }, { getSLA }] = useSLA()
     const [{ objects }, { getObjects }] = useObjects()
     const [client, setClient] = useState<Options>(emptyValue)
@@ -99,18 +107,14 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
       getObjects()
     }, [])
 
-    useEffect(() => {
-      const listData = equipments.map(item => {
-        return {
-          group: item.equipment,
-          // items: {
-          //   name: item.ClassifierModels.mo
-          // }
-        }
-      })
-    }, [equipments])
-
     console.log('equipment = ', equipments)
+
+    const onChooseGroup = () => {
+      console.log('onChooseGroup')
+    }
+    const onChooseItems = () => {
+      console.log('onChooseItems')
+    }
 
     return (
       <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
@@ -154,21 +158,6 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
           )
         })}
         <DateField dateValue={dateValue} setDateValue={setDateValue} />
-        {/* <DropDownMultiple
-          data={equipments.map(item => {
-            return {
-              ['label']: item.equipment as string,
-              ['id']: item.id as string,
-            }
-          })}
-          props={{ mt: 3 }}
-          onChange={setEquipmentList}
-          value={equipmentList}
-          label="Выберите оборудование"
-          errorLabel="Не выбрано оборудование!"
-          error={errEquipment}
-        /> */}
-        {/* <CheckBoxGroup /> */}
         <DropDownMultiple
           data={sla.map(item => {
             return {
@@ -183,6 +172,62 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
           errorLabel="Не выбраны уровни сервиса!"
           error={errSLA}
         />
+
+        {/* <DropDownMultiple
+          data={equipments.map(item => {
+            return {
+              ['label']: item.equipment as string,
+              ['id']: item.id as string,
+            }
+          })}
+          props={{ mt: 3 }}
+          onChange={setEquipmentList}
+          value={equipmentList}
+          label="Выберите оборудование"
+          errorLabel="Не выбрано оборудование!"
+          error={errEquipment}
+        /> */}
+        <ListItemButton
+          divider={openList}
+          sx={{ ...classifierChild2Component, mt: 1 }}
+          onClick={() => setOpenList(!openList)}>
+          <ListItemText
+            primary={'Выбор классификатора'}
+            sx={{ ml: 2 }}
+            primaryTypographyProps={{ fontSize: '1rem!important' }}
+          />
+          <RotateButton open={openList} size={'2rem'} />
+        </ListItemButton>
+        <Collapse
+          sx={{ ...classifierChild2Component, width: '85%' }}
+          in={openList}
+          timeout="auto"
+          unmountOnExit>
+          {equipments.map(({ equipment, id, ClassifierModels }) => {
+            const groupData = {
+              id: id as string,
+              group: equipment,
+              checkedGroup: false,
+              items: ClassifierModels?.map(({ model, id }) => {
+                return {
+                  item: model,
+                  id: id as string,
+                  checkedModels: false,
+                }
+              })!,
+            }
+            return (
+              <CheckBoxGroup
+                key={`${id}`}
+                data={groupData}
+                onChooseGroup={onChooseGroup}
+                onChooseItems={onChooseItems}
+                selectedGroup={'selectedGroup'}
+                oneGroup={false}
+              />
+            )
+          })}
+        </Collapse>
         <DropDownMultiple
           data={objects.map(item => {
             return {

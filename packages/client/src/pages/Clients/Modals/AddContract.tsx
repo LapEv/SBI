@@ -214,7 +214,7 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
                   id: id as string,
                   checkedModels: false,
                 }
-              })!,
+              }) as [],
             }
             return (
               <CheckBoxGroup

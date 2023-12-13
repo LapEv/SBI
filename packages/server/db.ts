@@ -23,6 +23,7 @@ import {
   throughContractsEquipments,
   throughContractsObjects,
   throughContractsSLA,
+  throughContractsModels,
 } from './models/contracts'
 import { typesSLA } from './models/sla'
 
@@ -83,6 +84,12 @@ export const ThroughContractsSLA = sequelize.define(
 export const ThroughContractsEquipments = sequelize.define(
   'ThroughContractsEquipments',
   throughContractsEquipments,
+  {}
+)
+
+export const ThroughContractsModels = sequelize.define(
+  'ThroughContractsModels',
+  throughContractsModels,
   {}
 )
 
@@ -180,6 +187,15 @@ ClassifierEquipment.belongsToMany(Contracts, {
   foreignKey: 'id_equipment',
 })
 
+Contracts.belongsToMany(ClassifierModels, {
+  through: ThroughContractsModels,
+  foreignKey: 'id_contract',
+})
+ClassifierModels.belongsToMany(Contracts, {
+  through: ThroughContractsModels,
+  foreignKey: 'id_model',
+})
+
 TypesSLA.hasOne(SLA, { foreignKey: 'id_typeSLA', sourceKey: 'id' })
 SLA.belongsTo(TypesSLA, { foreignKey: 'id_typeSLA', targetKey: 'id' })
 
@@ -220,6 +236,9 @@ export const ThroughContractsSLARepos = new Repository(
 )
 export const ThroughContractsEquipmentsRepos = new Repository(
   ThroughContractsEquipments as ModelCtor
+)
+export const ThroughContractsModelsRepos = new Repository(
+  ThroughContractsModels as ModelCtor
 )
 export const ThroughContractsObjectsRepos = new Repository(
   ThroughContractsObjects as ModelCtor

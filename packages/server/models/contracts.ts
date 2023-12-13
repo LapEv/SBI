@@ -100,6 +100,32 @@ export const throughContractsEquipments: ModelAttributes<
   },
 }
 
+export interface IThroughContractsModels {
+  id: string
+  id_contract: string
+  id_model: string
+}
+
+export const throughContractsModels: ModelAttributes<
+  Model,
+  IThroughContractsModels
+> = {
+  id: {
+    type: DataType.STRING,
+    defaultValue: DataType.UUIDV4,
+    allowNull: false,
+    primaryKey: true,
+  },
+  id_contract: {
+    type: DataType.STRING,
+    allowNull: false,
+  },
+  id_model: {
+    type: DataType.STRING,
+    allowNull: false,
+  },
+}
+
 export interface IThroughContractsObjects {
   id: string
   id_contract: string

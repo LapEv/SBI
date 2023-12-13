@@ -4,6 +4,7 @@ export interface ClassifierEquipment {
   id?: string
   equipment: string
   active?: boolean
+  ClassifierModels?: ClassifierModels[]
 }
 export interface ClassifierModels {
   id?: string

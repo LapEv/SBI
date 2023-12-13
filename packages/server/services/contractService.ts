@@ -5,6 +5,7 @@ import {
   Objects,
   SLA,
   ThroughContractsEquipmentsRepos,
+  ThroughContractsModelsRepos,
   ThroughContractsObjectsRepos,
   ThroughContractsSLARepos,
 } from '../db'
@@ -36,12 +37,13 @@ const includes = [
 ]
 export class contractService {
   newContract = async (_req: Request, res: Response) => {
-    const { sla, equipment, objects, ...data } = _req.body
+    const { sla, equipment, model, objects, ...data } = _req.body
     try {
       const new_contract = await ContractsRepos.create({
         ...data,
         active: true,
       })
+
       const newThroughContractSla = sla.map((item: string) => {
         return {
           id_contract: new_contract.id,
@@ -49,6 +51,7 @@ export class contractService {
         }
       })
       await ThroughContractsSLARepos.bulkCreate(newThroughContractSla)
+
       const newThroughContractEquipment = equipment.map((item: string) => {
         return {
           id_contract: new_contract.id,
@@ -58,6 +61,15 @@ export class contractService {
       await ThroughContractsEquipmentsRepos.bulkCreate(
         newThroughContractEquipment
       )
+
+      const newThroughContractModels = model.map((item: string) => {
+        return {
+          id_contract: new_contract.id,
+          id_model: item,
+        }
+      })
+      await ThroughContractsModelsRepos.bulkCreate(newThroughContractModels)
+
       const newThroughContractObject = objects.map((item: string) => {
         return {
           id_contract: new_contract.id,
@@ -192,7 +204,7 @@ export class contractService {
   }
 
   changeContract = async (_req: Request, res: Response) => {
-    const { number, date, id, sla, equipment, objects } = _req.body
+    const { number, date, id, sla, equipment, model, objects } = _req.body
     try {
       await ContractsRepos.update(id, { number, date })
       if (sla && sla.length) {
@@ -220,6 +232,21 @@ export class contractService {
         })
         await ThroughContractsEquipmentsRepos.bulkCreate(
           newThroughContractEquipment
+        )
+      }
+
+      if (model && model.length) {
+        await ThroughContractsModelsRepos.deleteByCustomId({
+          id_model: id,
+        })
+        const newThroughContractModel = model.map((item: string) => {
+          return {
+            id_contract: id,
+            id_model: item,
+          }
+        })
+        await ThroughContractsEquipmentsRepos.bulkCreate(
+          newThroughContractModel
         )
       }
 

@@ -40,20 +40,20 @@ export class Repository<T extends Model<T>> {
     })
   }
 
-  public async findByIDContractOrCreate(
-    id_contract:
-      | WhereAttributeHashValue<Attributes<T>['id_contract']>
-      | undefined,
-    id_sla: WhereAttributeHashValue<Attributes<T>['id_sla']> | undefined,
-    values: MakeNullishOptional<T['_creationAttributes']>
-  ) {
-    return this.model.findOrCreate({
-      where: { id_contract, id_sla },
-      defaults: {
-        ...values,
-      },
-    })
-  }
+  // public async findByIDContractOrCreate(
+  //   id_contract:
+  //     | WhereAttributeHashValue<Attributes<T>['id_contract']>
+  //     | undefined,
+  //   id_sla: WhereAttributeHashValue<Attributes<T>['id_sla']> | undefined,
+  //   values: MakeNullishOptional<T['_creationAttributes']>
+  // ) {
+  //   return this.model.findOrCreate({
+  //     where: { id_contract, id_sla },
+  //     defaults: {
+  //       ...values,
+  //     },
+  //   })
+  // }
 
   public async update(
     id: WhereAttributeHashValue<Attributes<T>['id']> | undefined,

@@ -22,6 +22,7 @@ import { useObjects } from 'hooks/objects/useObjects'
 import { useClients } from 'hooks/clients/useClients'
 import { convetStringToDate } from 'utils/convertDate'
 import dayjs from 'dayjs'
+import { CheckBoxGroup } from 'components/CheckBoxGroup'
 
 export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -62,10 +63,10 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
         })
         return
       }
-      if (!equipmentList.length) {
-        setErrEquipment(true)
-        return
-      }
+      // if (!equipmentList.length) {
+      //   setErrEquipment(true)
+      //   return
+      // }
       if (!slaList.length) {
         setErrSLA(true)
         return
@@ -78,16 +79,16 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
         dayjs(dateValue).format('DD/MM/YYYY'),
         '/'
       )
-      newContract({
-        contract: list[0].value,
-        number: list[1].value,
-        date: date,
-        sla: slaList.map(item => item.id),
-        equipment: equipmentList.map(item => item.id),
-        objects: objectList.map(item => item.id),
-        id_client: client.id,
-      })
-      handleModal(false)
+      // newContract({
+      //   contract: list[0].value,
+      //   number: list[1].value,
+      //   date: date,
+      //   sla: slaList.map(item => item.id),
+      //   // equipment: equipmentList.map(item => item.id),
+      //   objects: objectList.map(item => item.id),
+      //   id_client: client.id,
+      // })
+      // handleModal(false)
     }
 
     useEffect(() => {
@@ -97,6 +98,19 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
       getSLA()
       getObjects()
     }, [])
+
+    useEffect(() => {
+      const listData = equipments.map(item => {
+        return {
+          group: item.equipment,
+          // items: {
+          //   name: item.ClassifierModels.mo
+          // }
+        }
+      })
+    }, [equipments])
+
+    console.log('equipment = ', equipments)
 
     return (
       <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
@@ -114,7 +128,6 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
           label="Выберите клиента"
           errorLabel="Не выбран клиент!"
         />
-
         {fields.map(({ id, label, validation, type, required }, index) => {
           return (
             <Controller
@@ -141,7 +154,7 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
           )
         })}
         <DateField dateValue={dateValue} setDateValue={setDateValue} />
-        <DropDownMultiple
+        {/* <DropDownMultiple
           data={equipments.map(item => {
             return {
               ['label']: item.equipment as string,
@@ -154,7 +167,8 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
           label="Выберите оборудование"
           errorLabel="Не выбрано оборудование!"
           error={errEquipment}
-        />
+        /> */}
+        {/* <CheckBoxGroup /> */}
         <DropDownMultiple
           data={sla.map(item => {
             return {

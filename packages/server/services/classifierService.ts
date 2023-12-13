@@ -1,5 +1,6 @@
 import {
   ClassifierEquipmentRepos,
+  ClassifierModels,
   ClassifierModelsRepos,
   TypicalMalfunctionsRepos,
 } from '../db'
@@ -16,6 +17,7 @@ export class classifierService {
       await ClassifierEquipmentRepos.create({ ..._req.body, active: true })
       const classifierEquipments = await ClassifierEquipmentRepos.findAll({
         where: { active: true },
+        include: [{ model: ClassifierModels }],
       })
       res.status(200).json(classifierEquipments)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -28,7 +30,7 @@ export class classifierService {
   }
 
   getAllClassifierEquipments = (_req: Request, res: Response) => {
-    ClassifierEquipmentRepos.findAll({})
+    ClassifierEquipmentRepos.findAll({ include: [{ model: ClassifierModels }] })
       .then(item => res.status(200).json(item))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
@@ -36,6 +38,7 @@ export class classifierService {
   getClassifierEquipments = (_req: Request, res: Response) => {
     ClassifierEquipmentRepos.findAll({
       where: { active: true },
+      include: [{ model: ClassifierModels }],
     })
       .then(classifierEquipments => {
         res.status(200).json(classifierEquipments)
@@ -56,6 +59,7 @@ export class classifierService {
           where: {
             active: true,
             id: { [Op.not]: selectedClassifierEquipments },
+            include: [{ model: ClassifierModels }],
           },
         }),
       ])
@@ -80,6 +84,7 @@ export class classifierService {
           where: {
             active: true,
             id: { [Op.not]: selectedClassifierEquipments },
+            include: [{ model: ClassifierModels }],
           },
         }),
       ])
@@ -98,6 +103,7 @@ export class classifierService {
       })
       const classifierEquipments = await ClassifierEquipmentRepos.findAll({
         where: { active: true },
+        include: [{ model: ClassifierModels }],
       })
       res.status(200).json(classifierEquipments)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -113,6 +119,7 @@ export class classifierService {
       await ClassifierEquipmentRepos.update(id, { equipment })
       const classifierEquipments = await ClassifierEquipmentRepos.findAll({
         where: { active: true },
+        include: [{ model: ClassifierModels }],
       })
       res.status(200).json(classifierEquipments)
       /* eslint-disable @typescript-eslint/no-explicit-any */

@@ -89,17 +89,17 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
         '/'
       )
       console.log('selectedEquipments = ', selectedEquipments)
-      // newContract({
-      //   contract: list[0].value,
-      //   number: list[1].value,
-      //   date: date,
-      //   sla: slaList.map(item => item.id),
-      //   equipment: selectedEquipments,
-      //   model: selectedModels,
-      //   objects: objectList.map(item => item.id),
-      //   id_client: client.id,
-      // })
-      // handleModal(false)
+      newContract({
+        contract: list[0].value,
+        number: list[1].value,
+        date: date,
+        sla: slaList.map(item => item.id),
+        equipment: selectedEquipments,
+        model: selectedModels,
+        objects: objectList.map(item => item.id),
+        id_client: client.id,
+      })
+      handleModal(false)
     }
 
     useEffect(() => {

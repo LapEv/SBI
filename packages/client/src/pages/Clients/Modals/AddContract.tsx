@@ -42,9 +42,9 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
     const [{ sla }, { getSLA }] = useSLA()
     const [{ objects }, { getObjects }] = useObjects()
     const [client, setClient] = useState<Options>(emptyValue)
-    const [equipmentList, setEquipmentList] = useState<Options[]>([])
     const [slaList, setSLAList] = useState<Options[]>([])
     const [objectList, setObjectList] = useState<Options[]>([])
+    const [selectedGroup, setSelectedGroup] = useState<string[]>([])
     const [errEquipment, setErrEquipment] = useState<boolean>(false)
     const [errSLA, setErrSLA] = useState<boolean>(false)
     const [errObject, setErrObject] = useState<boolean>(false)
@@ -109,12 +109,19 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
 
     console.log('equipment = ', equipments)
 
-    const onChooseGroup = () => {
-      console.log('onChooseGroup')
+    const onChooseGroup = (checked: boolean, id: string) => {
+      if (!checked) {
+        setSelectedGroup(selectedGroup.filter(value => value !== id))
+        return
+      }
+      setSelectedGroup([...selectedGroup, id])
     }
+
     const onChooseItems = () => {
       console.log('onChooseItems')
     }
+
+    console.log('selectedGroup = ', selectedGroup)
 
     return (
       <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
@@ -172,21 +179,6 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
           errorLabel="Не выбраны уровни сервиса!"
           error={errSLA}
         />
-
-        {/* <DropDownMultiple
-          data={equipments.map(item => {
-            return {
-              ['label']: item.equipment as string,
-              ['id']: item.id as string,
-            }
-          })}
-          props={{ mt: 3 }}
-          onChange={setEquipmentList}
-          value={equipmentList}
-          label="Выберите оборудование"
-          errorLabel="Не выбрано оборудование!"
-          error={errEquipment}
-        /> */}
         <ListItemButton
           divider={openList}
           sx={{ ...classifierChild2Component, mt: 1 }}
@@ -207,7 +199,7 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
             const groupData = {
               id: id as string,
               group: equipment,
-              checkedGroup: false,
+              checkedGroup: selectedGroup.includes(id as string),
               items: ClassifierModels?.map(({ model, id }) => {
                 return {
                   item: model,
@@ -222,8 +214,6 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
                 data={groupData}
                 onChooseGroup={onChooseGroup}
                 onChooseItems={onChooseItems}
-                selectedGroup={'selectedGroup'}
-                oneGroup={false}
               />
             )
           })}

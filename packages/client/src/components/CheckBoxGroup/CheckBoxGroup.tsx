@@ -7,26 +7,13 @@ export const CheckBoxGroup = ({
   data,
   onChooseGroup,
   onChooseItems,
-  oneGroup,
-  selectedGroup,
 }: ICheckBoxGroup) => {
   const [checked, setChecked] = useState<boolean>(data.checkedGroup)
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked)
-    if (event.target.checked) {
-      onChooseGroup(event.target.value)
-      return
-    }
-    onChooseGroup('')
+    onChooseGroup(event.target.checked, event.target.value)
   }
-
-  useEffect(() => {
-    if (!oneGroup) return
-    if (!selectedGroup.includes(data.id)) {
-      setChecked(false)
-    }
-  }, [selectedGroup])
 
   return (
     <Box

@@ -36,8 +36,8 @@ export interface ICheckBoxGroup {
   data: ICheckBoxGroupData
   props?: object
   key: string
-  onChooseGroup: (data: string, id?: string) => void
+  onChooseGroup: (checked: boolean, id: string) => void
   onChooseItems: (checked: boolean, id: string) => void
-  oneGroup: boolean
-  selectedGroup: string | string[]
+  oneGroup?: boolean
+  selectedGroup?: string | string[]
 }

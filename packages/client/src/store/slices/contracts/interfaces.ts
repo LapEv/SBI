@@ -10,6 +10,7 @@ export interface Contracts {
   date: string
   sla?: string[]
   equipment?: string[]
+  model?: string[]
   objects?: string[]
   id_client: string
   active?: boolean
@@ -52,6 +53,7 @@ export interface ChangeContract {
   date: string
   sla?: string[]
   equipment?: string[]
+  model?: string[]
   objects?: string[]
 }
 export interface NewContractName {

@@ -1,6 +1,6 @@
 export interface IListBoxGroup {
   groupName: string
-  data: { item: string; id: string }[]
+  data: { item: string; id: string; checkedItems: boolean }[]
   groupId: string
   groupChecked: boolean
   onChooseItems: (checked: boolean, id: string) => void
@@ -28,7 +28,7 @@ export interface IItem extends DataList {
 
 export interface ICheckBoxGroupData {
   group: string
-  items: { item: string; id: string; checkedModels: boolean }[]
+  items: { item: string; id: string; checkedItems: boolean }[]
   id: string
   checkedGroup: boolean
 }

@@ -68,7 +68,7 @@ export const ListBoxGroup = ({
             groupChecked={groupChecked}
             onChooseItems={onChooseItems}
             initChecked={checkedItems}
-            key={`${id}${index}${name}`}
+            key={`${id}${index}`}
           />
         ))}
       </Collapse>

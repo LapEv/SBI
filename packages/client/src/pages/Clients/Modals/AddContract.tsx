@@ -110,29 +110,17 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
       getObjects()
     }, [])
 
-    const onChooseGroup = (checked: boolean, id: string) => {
-      if (!checked) {
-        const groupArr = selectedEquipments.filter(value => value !== id)
-        setSelectedEquipments(groupArr)
-        if (!groupArr.length) {
-          setSelectedModels([])
-        }
-        return
-      }
-      if (!selectedEquipments.includes(id)) {
-        setSelectedEquipments([...selectedEquipments, id])
-      }
+    const onChooseGroup = (group: string) => {
+      if (!group) return
+      setSelectedEquipments([...selectedEquipments, group])
     }
 
-    const onChooseItems = (checked: boolean, id: string) => {
-      if (!checked) {
-        setSelectedModels(selectedModels.filter(value => value !== id))
-        return
-      }
-      if (!selectedModels.includes(id)) {
-        setSelectedModels([...selectedModels, id])
-      }
+    const onChooseItems = (items: string[]) => {
+      setSelectedModels([...selectedModels, ...items])
     }
+
+    console.log('selectedEquipments = ', selectedEquipments)
+    console.log('selectedModels = ', selectedModels)
 
     return (
       <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>

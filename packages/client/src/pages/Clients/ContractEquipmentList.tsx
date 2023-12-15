@@ -12,9 +12,12 @@ import {
 } from '@mui/material'
 import { RotateButton } from 'components/Buttons'
 import { useSLA } from 'hooks/sla/useSLA'
-import { Item } from 'components/CheckBoxGroup'
+import { CheckBoxGroups, Item } from 'components/CheckBoxGroup'
 import { classifierChild2Component } from 'static/styles'
-import { DataList } from 'components/CheckBoxGroup/interface'
+import {
+  DataList,
+  ICheckBoxGroupData,
+} from 'components/CheckBoxGroup/interface'
 import { filterFirstElement } from './Modals/data'
 import { SelectMUI } from 'components/Select'
 import { useFilteredData } from 'hooks/useFilteredData'
@@ -26,11 +29,13 @@ import { useClassifier } from 'hooks/classifier/useClassifier'
 
 interface IEquipmentList {
   equipmentID: string[]
+  modelID: string[]
   onChooseItems: (checked: boolean, id: string) => void
 }
 
 export function ContractEquipmentList({
   equipmentID,
+  modelID,
   onChooseItems,
 }: IEquipmentList) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
@@ -39,48 +44,50 @@ export function ContractEquipmentList({
   const openPopover = Boolean(anchorEl)
   const [{ admin }] = useAuth()
   const [{ equipments }, { getClassifierEquipments }] = useClassifier()
-  const [{ sla, typesSLA }, { getSLA, getTypesSLA }] = useSLA()
-  const [equipmentData, setEquipmentData] = useState<DataList[]>([])
+  const [equipmentList, setEquipmentList] = useState<ICheckBoxGroupData[]>([])
+  const [selectedEquipments, setSelectedEquipments] = useState<string[]>([])
+  const [selectedModels, setSelectedModels] = useState<string[]>([])
   const [openEquipment, setOpenEquipment] = useState(false)
   const [filterList, setFilterList] = useState<string[]>([])
   const [filterText, setFilterText] = useState<string>('')
-  const [selectedFilter, setSelectedFilter] =
-    useState<string>(filterFirstElement)
-  const filteredData = useFilteredData<DataList>(
-    equipmentData,
-    filterText,
-    'comment'
-  )
+  // const [selectedFilter, setSelectedFilter] =
+  //   useState<string>(filterFirstElement)
+  // const filteredData = useFilteredData<DataList>(
+  //   equipmentList,
+  //   filterText,
+  //   'comment'
+  // )
   const theme = useTheme()
 
   const openEquipmentList = () => {
     setOpenEquipment(!openEquipment)
     getClassifierEquipments()
-    getTypesSLA()
   }
 
   useEffect(() => {
-    console.log('equipments = ', equipments)
-    const listData = equipments.map(({ equipment, id }) => {
-      return {
-        name: equipment,
-        id: id as string,
-        // comment: TypesSLA.typeSLA,
-        initChecked: equipmentID?.find(item => item === id) ? true : false,
-      }
-    })
-    setEquipmentData(listData)
-  }, [equipments, equipmentID])
-
-  useEffect(() => {
-    const listData = typesSLA.map(({ typeSLA }) => typeSLA)
+    const listData = equipments.map(({ equipment }) => equipment)
     listData.unshift(filterFirstElement)
     setFilterList(listData)
-  }, [typesSLA])
+    const data = equipments.map(({ equipment, id, ClassifierModels }) => {
+      return {
+        id: id as string,
+        group: equipment,
+        checkedGroup: equipmentID ? equipmentID.includes(id as string) : false,
+        items: ClassifierModels?.map(({ model, id }) => {
+          return {
+            item: model,
+            id: id as string,
+            checkedItems: modelID.includes(id as string),
+          }
+        }) as [],
+      }
+    })
+    setEquipmentList(data)
+  }, [equipments, equipmentID])
 
   const changeFilter = (text: string) => {
     setFilterText(text === filterFirstElement ? '' : text)
-    setSelectedFilter(text)
+    // setSelectedFilter(text)
   }
 
   const AddNewEquipment = () => {
@@ -126,14 +133,14 @@ export function ContractEquipmentList({
             justifyContent: 'flex-start',
             alignItems: 'center',
           }}>
-          <SelectMUI
+          {/* <SelectMUI
             data={filterList}
             props={{ height: 40 }}
             onChange={changeFilter}
             value={selectedFilter || filterFirstElement}
             label="Выберите фильтр"
             defaultData="Все"
-          />
+          /> */}
           {admin && (
             <IconButton
               onMouseEnter={(event: MouseEvent<HTMLElement>) =>
@@ -186,17 +193,11 @@ export function ContractEquipmentList({
             overflowY: 'auto',
             height: 'auto',
           }}>
-          {filteredData?.map(({ name, id, initChecked, comment }) => (
-            <Item
-              name={name}
-              id={`${id}`}
-              comment={comment}
-              groupChecked={null}
-              onChooseItems={onChooseItems}
-              initChecked={initChecked}
-              key={id as string}
-            />
-          ))}
+          <CheckBoxGroups
+            data={equipmentList}
+            onChooseGroup={setSelectedEquipments}
+            onChooseItems={setSelectedModels}
+          />
         </Box>
       </Collapse>
     </Box>

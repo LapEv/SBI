@@ -36,8 +36,6 @@ export const Item = memo(
       setChecked(initChecked as boolean)
     }, [initChecked])
 
-    console.log('name = ', name)
-    console.log('initChecked = ', initChecked)
     return (
       <>
         <FormControlLabel

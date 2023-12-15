@@ -1,5 +1,6 @@
 import {
   ClassifierEquipment,
+  ClassifierModels,
   Clients,
   ContractsRepos,
   Objects,
@@ -31,6 +32,13 @@ const includes = [
       attributes: [],
     },
   },
+  {
+    model: ClassifierModels,
+    through: {
+      attributes: [],
+    },
+  },
+
   {
     model: Clients,
   },

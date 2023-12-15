@@ -3,10 +3,11 @@ import { Box, FormControlLabel, Checkbox } from '@mui/material'
 import { ListBoxGroup } from './ListBoxGroup'
 import { ICheckBoxGroup, ICheckBoxGroupItems } from './interface'
 
-export const CheckBoxGroup = ({
+export const Group = ({
   data,
   onChooseGroup,
   onChooseItems,
+  onChooseItemsGroup,
 }: ICheckBoxGroup) => {
   const [checked, setChecked] = useState<boolean>(data.checkedGroup)
   const [selectedGroup, setSelectedGroup] = useState<string>('')
@@ -25,8 +26,8 @@ export const CheckBoxGroup = ({
         })
       )
       setCheckedGroup(event.target.checked)
-      onChooseGroup('')
-      onChooseItems([])
+      onChooseGroup(event.target.checked, data.id)
+      onChooseItemsGroup(event.target.checked, selectedItems)
       return
     }
     setSelectedGroup(event.target.value)
@@ -37,8 +38,11 @@ export const CheckBoxGroup = ({
       })
     )
     setCheckedGroup(event.target.checked)
-    onChooseGroup(event.target.value)
-    onChooseItems(items.map(({ id }) => id))
+    onChooseGroup(event.target.checked, data.id)
+    onChooseItemsGroup(
+      event.target.checked,
+      items.map(({ id }) => id)
+    )
   }
 
   const onItemsChange = (checked: boolean, id: string) => {
@@ -47,7 +51,7 @@ export const CheckBoxGroup = ({
       setSelectedItems(newItems)
       if (!newItems.length) {
         setSelectedGroup('')
-        onChooseGroup('')
+        onChooseGroup(checked, data.id)
         setChecked(false)
       }
       setItems(
@@ -58,14 +62,14 @@ export const CheckBoxGroup = ({
           }
         })
       )
-      onChooseItems(newItems)
+      onChooseItems(checked, id)
       return
     }
     if (!selectedItems.includes(id)) {
       setSelectedItems([...selectedItems, id])
       if (!selectedGroup) {
         setSelectedGroup(data.id)
-        onChooseGroup(data.id)
+        onChooseGroup(checked, data.id)
         setChecked(true)
       }
       setItems(
@@ -76,7 +80,7 @@ export const CheckBoxGroup = ({
           }
         })
       )
-      onChooseItems([...selectedItems, id])
+      onChooseItems(checked, id)
     }
   }
 

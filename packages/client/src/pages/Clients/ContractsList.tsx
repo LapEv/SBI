@@ -16,7 +16,8 @@ export const ContractsList = memo(
     number,
     date,
     SLAs,
-    ClassifierEquipment,
+    ClassifierEquipments,
+    ClassifierModels,
     Objects,
     id_client,
   }: Contracts) => {
@@ -91,7 +92,8 @@ export const ContractsList = memo(
             number={number}
             date={date}
             SLAs={SLAs}
-            ClassifierEquipment={ClassifierEquipment}
+            ClassifierEquipments={ClassifierEquipments}
+            ClassifierModels={ClassifierModels}
             Objects={Objects}
             id_client={id_client}
           />

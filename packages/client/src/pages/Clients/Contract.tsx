@@ -26,7 +26,8 @@ export function ContractPage({
   number,
   date,
   SLAs,
-  ClassifierEquipment,
+  ClassifierEquipments,
+  ClassifierModels,
   Objects,
   id_client,
 }: Contracts) {
@@ -38,6 +39,7 @@ export function ContractPage({
   const [dataDisabled, setDataDisabled] = useState<boolean>(true)
   const [slaID, setSLAID] = useState<string[]>([])
   const [equipmentID, setEquipmentID] = useState<string[]>([])
+  const [modelID, setModelID] = useState<string[]>([])
   const [contractData, setContractData] = useState<IContractData>({
     contract,
     id,
@@ -96,7 +98,7 @@ export function ContractPage({
       setSLADisabled(
         isEqualArr(
           newEquipmnents,
-          ClassifierEquipment?.map(({ id }) => id) as string[]
+          ClassifierEquipments?.map(({ id }) => id) as string[]
         )
       )
       setSLAID(newEquipmnents)
@@ -106,7 +108,7 @@ export function ContractPage({
     setSLADisabled(
       isEqualArr(
         newEquipmnents,
-        ClassifierEquipment?.map(({ id }) => id) as string[]
+        ClassifierEquipments?.map(({ id }) => id) as string[]
       )
     )
     setSLAID(newEquipmnents)
@@ -129,12 +131,13 @@ export function ContractPage({
       })),
     })
     setSLAID(SLAs?.map(({ id }) => id) as string[])
-    setEquipmentID(ClassifierEquipment?.map(({ id }) => id) as string[])
+    setEquipmentID(ClassifierEquipments?.map(({ id }) => id) as string[])
   }
 
   useEffect(() => {
     setSLAID(SLAs?.map(({ id }) => id) as string[])
-    setEquipmentID(ClassifierEquipment?.map(({ id }) => id) as string[])
+    setEquipmentID(ClassifierEquipments?.map(({ id }) => id) as string[])
+    setModelID(ClassifierModels?.map(({ id }) => id) as string[])
   }, [])
 
   useEffect(() => {
@@ -205,6 +208,7 @@ export function ContractPage({
       <ContractSLAList slaID={slaID} onChooseItems={onChooseSLAs} />
       <ContractEquipmentList
         equipmentID={equipmentID}
+        modelID={modelID}
         onChooseItems={onChooseEquipments}
       />
       <ButtonsSection

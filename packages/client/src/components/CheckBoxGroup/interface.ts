@@ -32,14 +32,21 @@ export interface ICheckBoxGroupData {
   id: string
   checkedGroup: boolean
 }
+export interface ICheckBoxGroups {
+  data: ICheckBoxGroupData[]
+  props?: object
+  onChooseGroup: (group: string[]) => void
+  onChooseItems: (items: string[]) => void
+  oneGroup?: boolean
+}
+
 export interface ICheckBoxGroup {
   data: ICheckBoxGroupData
   props?: object
-  key: string
-  onChooseGroup: (group: string) => void
-  onChooseItems: (items: string[]) => void
+  onChooseGroup: (checked: boolean, id: string) => void
+  onChooseItems: (checked: boolean, id: string) => void
+  onChooseItemsGroup: (checked: boolean, ids: string[]) => void
   oneGroup?: boolean
-  selectedGroup?: string | string[]
 }
 
 export interface ICheckBoxGroupItems {

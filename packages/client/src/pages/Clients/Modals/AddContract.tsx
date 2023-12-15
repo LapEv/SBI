@@ -28,7 +28,8 @@ import { useObjects } from 'hooks/objects/useObjects'
 import { useClients } from 'hooks/clients/useClients'
 import { convetStringToDate } from 'utils/convertDate'
 import dayjs from 'dayjs'
-import { CheckBoxGroup } from 'components/CheckBoxGroup'
+import { ICheckBoxGroupData } from 'components/CheckBoxGroup/interface'
+import { CheckBoxGroups } from 'components/CheckBoxGroup'
 
 export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -44,9 +45,9 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
     const [client, setClient] = useState<Options>(emptyValue)
     const [slaList, setSLAList] = useState<Options[]>([])
     const [objectList, setObjectList] = useState<Options[]>([])
+    const [equipmentList, setEquipmentList] = useState<ICheckBoxGroupData[]>([])
     const [selectedEquipments, setSelectedEquipments] = useState<string[]>([])
     const [selectedModels, setSelectedModels] = useState<string[]>([])
-    const [errEquipment, setErrEquipment] = useState<boolean>(false)
     const [errSLA, setErrSLA] = useState<boolean>(false)
     const [errObject, setErrObject] = useState<boolean>(false)
     const [_, { setMessage }] = useMessage()
@@ -110,17 +111,23 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
       getObjects()
     }, [])
 
-    const onChooseGroup = (group: string) => {
-      if (!group) return
-      setSelectedEquipments([...selectedEquipments, group])
-    }
-
-    const onChooseItems = (items: string[]) => {
-      setSelectedModels([...selectedModels, ...items])
-    }
-
-    console.log('selectedEquipments = ', selectedEquipments)
-    console.log('selectedModels = ', selectedModels)
+    useEffect(() => {
+      const data = equipments.map(({ equipment, id, ClassifierModels }) => {
+        return {
+          id: id as string,
+          group: equipment,
+          checkedGroup: false,
+          items: ClassifierModels?.map(({ model, id }) => {
+            return {
+              item: model,
+              id: id as string,
+              checkedItems: false,
+            }
+          }) as [],
+        }
+      })
+      setEquipmentList(data)
+    }, [equipments])
 
     return (
       <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
@@ -194,28 +201,11 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
           in={openList}
           timeout="auto"
           unmountOnExit>
-          {equipments.map(({ equipment, id, ClassifierModels }) => {
-            const groupData = {
-              id: id as string,
-              group: equipment,
-              checkedGroup: selectedEquipments.includes(id as string),
-              items: ClassifierModels?.map(({ model, id }) => {
-                return {
-                  item: model,
-                  id: id as string,
-                  checkedItems: selectedModels.includes(id as string),
-                }
-              }) as [],
-            }
-            return (
-              <CheckBoxGroup
-                key={`${id}`}
-                data={groupData}
-                onChooseGroup={onChooseGroup}
-                onChooseItems={onChooseItems}
-              />
-            )
-          })}
+          <CheckBoxGroups
+            data={equipmentList}
+            onChooseGroup={setSelectedEquipments}
+            onChooseItems={setSelectedModels}
+          />
         </Collapse>
         <DropDownMultiple
           data={objects.map(item => {

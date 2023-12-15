@@ -1,4 +1,4 @@
-import { ClassifierEquipment } from '../classifier/interfaces'
+import { ClassifierEquipment, ClassifierModels } from '../classifier/interfaces'
 import { Clients } from '../clients/interfaces'
 import { Objects } from '../objects/interfaces'
 import { SLA } from '../sla/interfaces'
@@ -15,7 +15,8 @@ export interface Contracts {
   id_client: string
   active?: boolean
   SLAs?: SLA[] | []
-  ClassifierEquipment?: ClassifierEquipment[] | []
+  ClassifierEquipments?: ClassifierEquipment[] | []
+  ClassifierModels?: ClassifierModels[] | []
   Objects?: Objects[] | []
   Client?: Clients[] | []
 }

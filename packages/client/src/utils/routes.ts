@@ -4,6 +4,8 @@ export enum Routes {
   SignUp = 'signup',
   Profile = 'profile',
   ControlRoom = 'controlroom',
+  Incidents = 'Incidents',
+  IncidentsConfirm = 'IncidentsConfirm',
   Warehouse = 'warehouse',
   Classifier = 'classifier',
   ServiceLevel = 'servicelevel',

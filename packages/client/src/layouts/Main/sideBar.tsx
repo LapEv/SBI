@@ -27,7 +27,40 @@ interface NanListItemProps {
   isExpanded: boolean
 }
 
-function NanListItem({ icon, text, to, isExpanded }: NanListItemProps) {
+const ControlRoomListItem = ({
+  icon,
+  text,
+  to,
+  isExpanded,
+}: NanListItemProps) => {
+  return (
+    <ListItem disablePadding sx={{ display: 'block', mt: 0.5 }}>
+      <ListItemButton
+        sx={{
+          minHeight: 48,
+          justifyContent: isExpanded ? 'initial' : 'center',
+          px: 2.5,
+        }}
+        component={Link}
+        to={to}>
+        <ListItemIcon
+          sx={{
+            minWidth: 0,
+            mr: isExpanded ? 3 : 'auto',
+            justifyContent: 'center',
+          }}>
+          {icon}
+        </ListItemIcon>
+        <ListItemText
+          primary={text}
+          sx={{ display: isExpanded ? 'block' : 'none' }}
+        />
+      </ListItemButton>
+    </ListItem>
+  )
+}
+
+const NanListItem = ({ icon, text, to, isExpanded }: NanListItemProps) => {
   return (
     <ListItem disablePadding sx={{ display: 'block', mt: 0.5 }}>
       <ListItemButton

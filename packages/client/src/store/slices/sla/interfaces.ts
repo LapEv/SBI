@@ -1,3 +1,5 @@
+import { BaseSyntheticEvent, SyntheticEvent } from 'react'
+
 export interface SLA {
   id: string
   sla: string
@@ -140,5 +142,16 @@ export interface SLAValues {
     disabled: boolean
     type: string
     required: boolean
+  }[]
+}
+
+export interface AddValuesAddContract {
+  listAddContract: {
+    name: string
+    label: string
+    value: string
+    validation: object
+    type: string
+    required?: boolean
   }[]
 }

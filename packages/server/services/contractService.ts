@@ -236,7 +236,7 @@ export class contractService {
 
       if (equipment && equipment.length) {
         await ThroughContractsEquipmentsRepos.deleteByCustomId({
-          id_equipment: id,
+          id_contract: id,
         })
         const newThroughContractEquipment = equipment.map((item: string) => {
           return {
@@ -248,10 +248,9 @@ export class contractService {
           newThroughContractEquipment
         )
       }
-
       if (model && model.length) {
         await ThroughContractsModelsRepos.deleteByCustomId({
-          id_model: id,
+          id_contract: id,
         })
         const newThroughContractModel = model.map((item: string) => {
           return {
@@ -259,14 +258,12 @@ export class contractService {
             id_model: item,
           }
         })
-        await ThroughContractsEquipmentsRepos.bulkCreate(
-          newThroughContractModel
-        )
+        await ThroughContractsModelsRepos.bulkCreate(newThroughContractModel)
       }
 
       if (objects && objects.length) {
         await ThroughContractsObjectsRepos.deleteByCustomId({
-          id_object: id,
+          id_contract: id,
         })
         const newThroughContractObject = objects.map((item: string) => {
           return {

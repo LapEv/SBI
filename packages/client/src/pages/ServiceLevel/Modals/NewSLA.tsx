@@ -7,7 +7,11 @@ import {
   useFormState,
 } from 'react-hook-form'
 import { TextField } from 'components/TextFields'
-import { ChooseModalProps, AddValuesProps } from './interfaces'
+import {
+  ChooseModalProps,
+  AddValuesProps,
+  AddValuesPropsSLA,
+} from './interfaces'
 import { MapSLAInputFields } from '../data'
 import { modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
@@ -23,24 +27,25 @@ export const NewSLA = React.forwardRef<unknown, ChooseModalProps>(
     const [selectedType, setSelectedType] = useState<Options>(emptyValue)
 
     /* eslint-enable @typescript-eslint/no-unused-vars */
-    const { handleSubmit, control } = useForm<AddValuesProps>({
-      mode: 'onBlur',
-      defaultValues: {
-        list: MapSLAInputFields,
-      },
-    })
-    const { errors } = useFormState({ control })
-    const { fields } = useFieldArray({
-      control,
-      name: 'list',
+    const { handleSubmit: handleSubmitAddSLA, control: controlAddSLA } =
+      useForm<AddValuesPropsSLA>({
+        mode: 'onBlur',
+        defaultValues: {
+          listAddSLA: MapSLAInputFields,
+        },
+      })
+    const { errors: errorsAddSLA } = useFormState({ control: controlAddSLA })
+    const { fields: fieldsAddSLA } = useFieldArray({
+      control: controlAddSLA,
+      name: 'listAddSLA',
     })
 
-    function changeData({ list }: AddValuesProps) {
+    function changeData({ listAddSLA }: AddValuesPropsSLA) {
       newSLA({
-        sla: list[0].value,
-        time: list[1].value,
-        timeStart: list[2].value,
-        timeEnd: list[3].value,
+        sla: listAddSLA[0].value,
+        time: listAddSLA[1].value,
+        timeStart: listAddSLA[2].value,
+        timeEnd: listAddSLA[3].value,
         id_typeSLA: selectedType.id,
       })
       handleModal(false)
@@ -61,15 +66,18 @@ export const NewSLA = React.forwardRef<unknown, ChooseModalProps>(
     }, [])
 
     return (
-      <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
+      <Box
+        sx={modalStyle}
+        component="form"
+        onSubmit={handleSubmitAddSLA(changeData)}>
         <Typography variant={'h6'}>{title}</Typography>
-        {fields.map(
+        {fieldsAddSLA.map(
           ({ id, name, label, validation, type, required }, index) => {
             return (
               <Controller
                 key={id}
-                control={control}
-                name={`list.${index}.value`}
+                control={controlAddSLA}
+                name={`listAddSLA.${index}.value`}
                 rules={validation}
                 render={({ field }) =>
                   name !== 'TypeSLA' ? (
@@ -83,8 +91,13 @@ export const NewSLA = React.forwardRef<unknown, ChooseModalProps>(
                       margin="normal"
                       required={required ?? true}
                       value={field.value || ''}
-                      error={!!(errors?.list ?? [])[index]?.value?.message}
-                      helperText={(errors?.list ?? [])[index]?.value?.message}
+                      error={
+                        !!(errorsAddSLA?.listAddSLA ?? [])[index]?.value
+                          ?.message
+                      }
+                      helperText={
+                        (errorsAddSLA?.listAddSLA ?? [])[index]?.value?.message
+                      }
                     />
                   ) : (
                     <DropDown

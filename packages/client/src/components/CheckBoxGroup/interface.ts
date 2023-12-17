@@ -38,6 +38,10 @@ export interface ICheckBoxGroups {
   onChooseGroup: (group: string[]) => void
   onChooseItems: (items: string[]) => void
   oneGroup?: boolean
+  startDataGroups?: string[]
+  startDataItems?: string[]
+  clearChanges?: boolean
+  onClearChanges?: (clearChanges: boolean) => void
 }
 
 export interface ICheckBoxGroup {
@@ -47,6 +51,8 @@ export interface ICheckBoxGroup {
   onChooseItems: (checked: boolean, id: string) => void
   onChooseItemsGroup: (checked: boolean, ids: string[]) => void
   oneGroup?: boolean
+  clearChanges?: boolean
+  onClearChanges?: (clearChanges: boolean) => void
 }
 
 export interface ICheckBoxGroupItems {

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { BaseSyntheticEvent, SyntheticEvent, useEffect } from 'react'
 import { Box, Stack } from '@mui/material'
 import {
   useForm,
@@ -8,17 +8,16 @@ import {
 } from 'react-hook-form'
 import { ChangeEvent, useState } from 'react'
 import { TextField } from 'components/TextFields'
-import { ButtonsSection } from 'components/Buttons'
+import { Button, ButtonsSection } from 'components/Buttons'
 import { deepEqual } from 'utils/deepEqual'
-import { SLAValues } from 'store/slices/sla/interfaces'
+import { AddValuesAddContract } from 'store/slices/sla/interfaces'
 import { MapContractInputFields } from './data'
 import { useAuth } from 'hooks/auth/useAuth'
 import { Contracts, IContractData } from 'store/slices/contracts/interfaces'
 import { convertDateToStringYYYYMMDD } from 'utils/convertDate'
-import { ContractSLAList } from './ContractSLAList'
 import { isEqualArr } from 'utils/isEqualArr'
 import { useContracts } from 'hooks/contracts/useContracts'
-import { ContractEquipmentList } from './ContractEquipmentList'
+import { ContractEquipmentList, ContractSLAList, ContractObjectList } from './'
 
 export function ContractPage({
   contract,
@@ -36,10 +35,14 @@ export function ContractPage({
   const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
   const [slaDisabled, setSLADisabled] = useState<boolean>(true)
   const [equipmentDisabled, setEquipmentDisabled] = useState<boolean>(true)
+  const [modelDisabled, setModelDisabled] = useState<boolean>(true)
   const [dataDisabled, setDataDisabled] = useState<boolean>(true)
+  const [objectDisabled, setObjectDisabled] = useState<boolean>(true)
   const [slaID, setSLAID] = useState<string[]>([])
-  const [equipmentID, setEquipmentID] = useState<string[]>([])
-  const [modelID, setModelID] = useState<string[]>([])
+  const [selectedEquipments, setSelectedEquipments] = useState<string[]>([])
+  const [selectedModels, setSelectedModels] = useState<string[]>([])
+  const [objectID, setObjectID] = useState<string[]>([])
+  const [clearChanges, setClearChanges] = useState<boolean>(false)
   const [contractData, setContractData] = useState<IContractData>({
     contract,
     id,
@@ -48,28 +51,36 @@ export function ContractPage({
     id_client,
   })
 
-  const { handleSubmit, control, reset } = useForm<SLAValues>({
+  const {
+    handleSubmit: handleSubmitAddContract,
+    control: controlAddContract,
+    reset,
+  } = useForm<AddValuesAddContract>({
     mode: 'onBlur',
     defaultValues: {
-      list: MapContractInputFields.map(data => ({
+      listAddContract: MapContractInputFields.map(data => ({
         ...data,
         value: contractData![data.name as keyof typeof contractData],
       })),
     },
   })
-  const { errors } = useFormState({ control })
-  const { fields } = useFieldArray({
-    control,
-    name: 'list',
+  const { errors: errorsAddContract } = useFormState({
+    control: controlAddContract,
+  })
+  const { fields: fieldsAddContract } = useFieldArray({
+    control: controlAddContract,
+    name: 'listAddContract',
   })
 
-  const changeData = ({ list }: SLAValues) => {
+  const changeData = ({ listAddContract }: AddValuesAddContract) => {
     changeContract({
       id,
-      number: list[0].value as string,
-      date: list[1].value as string,
+      number: listAddContract[0].value as string,
+      date: listAddContract[1].value as string,
       sla: slaID,
-      equipment: equipmentID,
+      equipment: selectedEquipments,
+      model: selectedModels,
+      objects: objectID,
     })
   }
 
@@ -91,31 +102,38 @@ export function ContractPage({
     setSLAID(newSLAs)
   }
 
-  const onChooseEquipments = (checked: boolean, id: string) => {
+  const onChooseEquipments = (data: string[]) => {
+    setEquipmentDisabled(
+      isEqualArr(data, ClassifierEquipments?.map(({ id }) => id) as string[])
+    )
+    setSelectedEquipments(data)
+  }
+
+  const onChooseModels = (data: string[]) => {
+    setModelDisabled(
+      isEqualArr(data, ClassifierModels?.map(({ id }) => id) as string[])
+    )
+    setSelectedModels(data)
+  }
+
+  const onChooseObjects = (checked: boolean, id: string) => {
     if (checked) {
-      const newEquipmnents = [...equipmentID]
-      newEquipmnents.push(id)
-      setSLADisabled(
-        isEqualArr(
-          newEquipmnents,
-          ClassifierEquipments?.map(({ id }) => id) as string[]
-        )
+      const newObjects = [...objectID]
+      newObjects.push(id)
+      setObjectDisabled(
+        isEqualArr(newObjects, Objects?.map(({ id }) => id) as string[])
       )
-      setSLAID(newEquipmnents)
+      setObjectID(newObjects)
       return
     }
-    const newEquipmnents = equipmentID.filter(item => item !== id)
-    setSLADisabled(
-      isEqualArr(
-        newEquipmnents,
-        ClassifierEquipments?.map(({ id }) => id) as string[]
-      )
+    const newObjects = objectID.filter(item => item !== id)
+    setObjectDisabled(
+      isEqualArr(newObjects, Objects?.map(({ id }) => id) as string[])
     )
-    setSLAID(newEquipmnents)
+    setObjectID(newObjects)
   }
 
   const clearChange = () => {
-    setbtnDisabled(true)
     const newSLA = {
       contract,
       id,
@@ -125,33 +143,54 @@ export function ContractPage({
     }
     setContractData(newSLA)
     reset({
-      list: MapContractInputFields.map(data => ({
+      listAddContract: MapContractInputFields.map(data => ({
         ...data,
         value: newSLA![data.name as keyof typeof newSLA],
       })),
     })
     setSLAID(SLAs?.map(({ id }) => id) as string[])
-    setEquipmentID(ClassifierEquipments?.map(({ id }) => id) as string[])
+    setSelectedEquipments(ClassifierEquipments?.map(({ id }) => id) as string[])
+    setSelectedModels(ClassifierModels?.map(({ id }) => id) as string[])
+    setObjectID(Objects?.map(({ id }) => id) as string[])
+    setbtnDisabled(true)
+    setSLADisabled(true)
+    setEquipmentDisabled(true)
+    setModelDisabled(true)
+    setDataDisabled(true)
+    setObjectDisabled(true)
+    setClearChanges(true)
   }
 
   useEffect(() => {
     setSLAID(SLAs?.map(({ id }) => id) as string[])
-    setEquipmentID(ClassifierEquipments?.map(({ id }) => id) as string[])
-    setModelID(ClassifierModels?.map(({ id }) => id) as string[])
+    setSelectedEquipments(ClassifierEquipments?.map(({ id }) => id) as string[])
+    setSelectedModels(ClassifierModels?.map(({ id }) => id) as string[])
+    setObjectID(Objects?.map(({ id }) => id) as string[])
   }, [])
 
   useEffect(() => {
-    if (!slaDisabled || !dataDisabled || !equipmentDisabled) {
+    if (
+      !slaDisabled ||
+      !dataDisabled ||
+      !equipmentDisabled ||
+      !modelDisabled ||
+      !objectDisabled
+    ) {
       setbtnDisabled(false)
       return
     }
     setbtnDisabled(true)
-  }, [dataDisabled, slaDisabled, equipmentDisabled])
+  }, [
+    dataDisabled,
+    slaDisabled,
+    equipmentDisabled,
+    modelDisabled,
+    objectDisabled,
+  ])
 
   return (
     <Box
       component="form"
-      onSubmit={handleSubmit(changeData)}
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -171,47 +210,60 @@ export function ContractPage({
           alignItems="center"
           spacing={0}
           sx={{ flexWrap: 'wrap', width: '100%' }}>
-          {fields.map(({ id, name, label, validation, type, value }, index) => {
-            return (
-              <Controller
-                key={id}
-                control={control}
-                name={`list.${index}.value`}
-                rules={validation}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    inputRef={field.ref}
-                    label={label}
-                    type={type}
-                    required
-                    variant="outlined"
-                    sx={{ width: '48%', height: 60 }}
-                    margin="normal"
-                    onChange={(event: ChangeEvent<HTMLInputElement>) => (
-                      field.onChange(event),
-                      checkForChange({
-                        ...contractData!,
-                        ...{ [name]: event.target.value },
-                      })
-                    )}
-                    error={!!(errors?.list ?? [])[index]?.value?.message}
-                    helperText={(errors?.list ?? [])[index]?.value?.message}
-                    inputProps={{ step: 1 }}
-                  />
-                )}
-              />
-            )
-          })}
+          {fieldsAddContract.map(
+            ({ id, name, label, validation, type, value }, index) => {
+              return (
+                <Controller
+                  key={id}
+                  control={controlAddContract}
+                  name={`listAddContract.${index}.value`}
+                  rules={validation}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      inputRef={field.ref}
+                      label={label}
+                      type={type}
+                      required
+                      variant="outlined"
+                      sx={{ width: '48%', height: 60 }}
+                      margin="normal"
+                      onChange={(event: ChangeEvent<HTMLInputElement>) => (
+                        field.onChange(event),
+                        checkForChange({
+                          ...contractData!,
+                          ...{ [name]: event.target.value },
+                        })
+                      )}
+                      error={
+                        !!(errorsAddContract?.listAddContract ?? [])[index]
+                          ?.value?.message
+                      }
+                      helperText={
+                        (errorsAddContract?.listAddContract ?? [])[index]?.value
+                          ?.message
+                      }
+                      inputProps={{ step: 1 }}
+                    />
+                  )}
+                />
+              )
+            }
+          )}
         </Stack>
       </Box>
       <ContractSLAList slaID={slaID} onChooseItems={onChooseSLAs} />
       <ContractEquipmentList
-        equipmentID={equipmentID}
-        modelID={modelID}
-        onChooseItems={onChooseEquipments}
+        equipmentID={selectedEquipments}
+        modelID={selectedModels}
+        onChooseGroup={onChooseEquipments}
+        onChooseItems={onChooseModels}
+        clearChanges={clearChanges}
+        onClearChanges={setClearChanges}
       />
+      <ContractObjectList objectID={objectID} onChooseItems={onChooseObjects} />
       <ButtonsSection
+        onClick={handleSubmitAddContract(changeData)}
         btnSecondHandle={clearChange}
         btnName="Сохранить"
         btnDisabled={btnDisabled}

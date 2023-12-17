@@ -78,8 +78,6 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
     setModalImage('newContract')
   }
 
-  console.log('contracts = ', contracts)
-
   return (
     <Box sx={classifier}>
       <Modal

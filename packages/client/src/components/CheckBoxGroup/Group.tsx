@@ -2,17 +2,29 @@ import { useState, ChangeEvent, useEffect } from 'react'
 import { Box, FormControlLabel, Checkbox } from '@mui/material'
 import { ListBoxGroup } from './ListBoxGroup'
 import { ICheckBoxGroup, ICheckBoxGroupItems } from './interface'
+import { isEqualArrObjects } from 'utils/isEqualArrObjects'
+import { isEqualArr } from 'utils/isEqualArr'
 
 export const Group = ({
   data,
   onChooseGroup,
   onChooseItems,
   onChooseItemsGroup,
+  clearChanges,
+  onClearChanges,
 }: ICheckBoxGroup) => {
   const [checked, setChecked] = useState<boolean>(data.checkedGroup)
-  const [selectedGroup, setSelectedGroup] = useState<string>('')
+  const [selectedGroup, setSelectedGroup] = useState<string>(
+    data.checkedGroup ? data.id : ''
+  )
   const [items, setItems] = useState<ICheckBoxGroupItems[]>(data.items)
-  const [selectedItems, setSelectedItems] = useState<string[]>([])
+  const [selectedItems, setSelectedItems] = useState<string[]>(
+    data.items.map(item => {
+      if (item.checkedItems) {
+        return item.id as string
+      }
+    }) as string[]
+  )
   const [checkedGroup, setCheckedGroup] = useState<boolean>(data.checkedGroup)
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -83,6 +95,23 @@ export const Group = ({
       onChooseItems(checked, id)
     }
   }
+
+  useEffect(() => {
+    if (!isEqualArr(data.items, items) || data.checkedGroup !== checked) {
+      setChecked(data.checkedGroup)
+      setSelectedGroup(data.checkedGroup ? data.id : '')
+      setItems(data.items)
+      setSelectedItems(
+        data.items.map(item => {
+          if (item.checkedItems) {
+            return item.id as string
+          }
+        }) as string[]
+      )
+      setCheckedGroup(data.checkedGroup)
+      onClearChanges!(false)
+    }
+  }, [clearChanges])
 
   return (
     <Box

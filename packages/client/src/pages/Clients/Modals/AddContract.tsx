@@ -73,23 +73,14 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
         })
         return
       }
-      // if (!equipmentList.length) {
-      //   setErrEquipment(true)
-      //   return
-      // }
       if (!slaList.length) {
         setErrSLA(true)
-        return
-      }
-      if (!objectList.length) {
-        setErrObject(true)
         return
       }
       const date = convetStringToDate(
         dayjs(dateValue).format('DD/MM/YYYY'),
         '/'
       )
-      console.log('selectedEquipments = ', selectedEquipments)
       newContract({
         contract: list[0].value,
         number: list[1].value,

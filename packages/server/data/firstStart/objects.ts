@@ -44,4 +44,15 @@ export const objectsStartData = [
   //   coordinates: '55.468117, 37.296497',
   //   active: true,
   // },
+  // {
+  //   object: 'Перекресток Снегири',
+  //   internalClientID: '11CTB104',
+  //   internalClientName: 'ЦФ СМ Снегири (Истра)',
+  //   id_regions: '',
+  //   region: 'Москва и МО',
+  //   id_address: '',
+  //   address: 'МО, г.о. Истра, д.п. Снегири, ул. Московская, д. 12',
+  //   coordinates: '55.887766, 37.037099',
+  //   active: true,
+  // },
 ]

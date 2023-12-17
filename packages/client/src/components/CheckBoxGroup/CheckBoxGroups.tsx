@@ -1,6 +1,4 @@
-import { useState, ChangeEvent, useEffect } from 'react'
-import { Box, FormControlLabel, Checkbox } from '@mui/material'
-import { ListBoxGroup } from './ListBoxGroup'
+import { useEffect, useState } from 'react'
 import { ICheckBoxGroups } from './interface'
 import { Group } from './Group'
 
@@ -9,9 +7,17 @@ export const CheckBoxGroups = ({
   onChooseGroup,
   onChooseItems,
   props,
+  startDataGroups,
+  startDataItems,
+  clearChanges,
+  onClearChanges,
 }: ICheckBoxGroups) => {
-  const [selectedGroups, setSelectedGroups] = useState<string[]>([])
-  const [selectedItems, setSelectedItems] = useState<string[]>([])
+  const [selectedGroups, setSelectedGroups] = useState<string[]>(
+    startDataGroups as string[]
+  )
+  const [selectedItems, setSelectedItems] = useState<string[]>(
+    startDataItems as string[]
+  )
 
   const changeGroup = (checked: boolean, id: string) => {
     if (!checked) {
@@ -20,6 +26,7 @@ export const CheckBoxGroups = ({
       onChooseGroup(newSelectedGroup)
       return
     }
+
     setSelectedGroups([...selectedGroups, id])
     onChooseGroup([...selectedGroups, id])
   }
@@ -54,9 +61,12 @@ export const CheckBoxGroups = ({
         <Group
           key={item.id}
           data={item}
+          props={props}
           onChooseGroup={changeGroup}
           onChooseItems={changeItems}
           onChooseItemsGroup={changeItemsGroup}
+          clearChanges={clearChanges}
+          onClearChanges={onClearChanges}
         />
       ))}
     </>

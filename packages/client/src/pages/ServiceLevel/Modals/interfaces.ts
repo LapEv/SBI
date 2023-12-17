@@ -15,6 +15,17 @@ export interface AddValuesProps {
   }[]
 }
 
+export interface AddValuesPropsSLA {
+  listAddSLA: {
+    name: string
+    label: string
+    value: string
+    validation: object
+    type: string
+    required: boolean
+  }[]
+}
+
 export interface TypeModels {
   id: string
   models: string[]

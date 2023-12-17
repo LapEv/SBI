@@ -11,85 +11,57 @@ import {
   Typography,
 } from '@mui/material'
 import { RotateButton } from 'components/Buttons'
-import { CheckBoxGroups } from 'components/CheckBoxGroup'
+import { Item } from 'components/CheckBoxGroup'
 import { classifierChild2Component } from 'static/styles'
-import { ICheckBoxGroupData } from 'components/CheckBoxGroup/interface'
-import { filterFirstElement } from './Modals/data'
-import { SelectMUI } from 'components/Select'
+import { DataList } from 'components/CheckBoxGroup/interface'
+import { TextField } from 'components/TextFields'
+import { useFilteredData } from 'hooks/useFilteredData'
 import { useAuth } from 'hooks/auth/useAuth'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
-import { useClassifier } from 'hooks/classifier/useClassifier'
-import { useFilteredData } from 'hooks/useFilteredData'
-import { SwitchToClassifierPage } from './'
+import { useObjects } from 'hooks/objects/useObjects'
+import { AddObject } from './Modals'
+import { SearchIconElement } from 'components/Icons'
+import { ModalTitles } from './data'
 
-interface IEquipmentList {
-  equipmentID: string[]
-  modelID: string[]
-  onChooseGroup: (data: string[]) => void
-  onChooseItems: (data: string[]) => void
-  clearChanges?: boolean
-  onClearChanges?: (clearChanges: boolean) => void
+interface IObjectList {
+  objectID: string[]
+  onChooseItems: (checked: boolean, id: string) => void
 }
 
-export function ContractEquipmentList({
-  equipmentID,
-  modelID,
-  onChooseGroup,
-  onChooseItems,
-  clearChanges,
-  onClearChanges,
-}: IEquipmentList) {
+export function ContractObjectList({ objectID, onChooseItems }: IObjectList) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
   const modalRef = React.createRef()
   const [modal, setModal] = useState<boolean>(false)
   const openPopover = Boolean(anchorEl)
   const [{ admin }] = useAuth()
-  const [{ equipments }, { getClassifierEquipments }] = useClassifier()
-  const [equipmentList, setEquipmentList] = useState<ICheckBoxGroupData[]>([])
-  const [openEquipment, setOpenEquipment] = useState(false)
-  const [filterList, setFilterList] = useState<string[]>([])
+  const [{ objects }, { getObjects }] = useObjects()
+  const [objectsData, setObjectsData] = useState<DataList[]>([])
+  const [openObject, setOpenObject] = useState(false)
   const [filterText, setFilterText] = useState<string>('')
-  const [selectedFilter, setSelectedFilter] =
-    useState<string>(filterFirstElement)
-  const filteredData = useFilteredData<ICheckBoxGroupData>(
-    equipmentList,
+  const filteredData = useFilteredData<DataList>(
+    objectsData,
     filterText,
-    'group'
+    'name'
   )
   const theme = useTheme()
 
-  const openEquipmentList = () => {
-    setOpenEquipment(!openEquipment)
-    getClassifierEquipments()
+  const openObjectList = () => {
+    setOpenObject(!openObject)
+    getObjects()
   }
 
   useEffect(() => {
-    const listData = equipments.map(({ equipment }) => equipment)
-    listData.unshift(filterFirstElement)
-    setFilterList(listData)
-    const data = equipments.map(({ equipment, id, ClassifierModels }) => {
+    const listData = objects.map(({ object, id }) => {
       return {
+        name: object,
         id: id as string,
-        group: equipment,
-        checkedGroup: equipmentID ? equipmentID.includes(id as string) : false,
-        items: ClassifierModels?.map(({ model, id }) => {
-          return {
-            item: model,
-            id: id as string,
-            checkedItems: modelID.includes(id as string),
-          }
-        }) as [],
+        initChecked: objectID?.find(item => item === id) ? true : false,
       }
     })
-    setEquipmentList(data)
-  }, [equipments, equipmentID])
+    setObjectsData(listData)
+  }, [objects, objectID])
 
-  const changeFilter = (text: string) => {
-    setFilterText(text === filterFirstElement ? '' : text)
-    setSelectedFilter(text)
-  }
-
-  const AddNewEquipment = () => {
+  const AddNewObject = () => {
     setModal(true)
   }
 
@@ -104,28 +76,26 @@ export function ContractEquipmentList({
         onClose={() => setModal(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
-        <SwitchToClassifierPage
+        <AddObject
           ref={modalRef}
           handleModal={handleModal}
-          title={
-            'Вы действительно перейти на страницу создания классифиактора? Все ваши внесенные изменения не сохранятся! Сохраните их сейчас и продолжите настройку позже!'
-          }
+          title={ModalTitles.newObject}
         />
       </Modal>
       <ListItemButton
-        divider={openEquipment}
+        divider={openObject}
         sx={classifierChild2Component}
-        onClick={openEquipmentList}>
+        onClick={openObjectList}>
         <ListItemText
-          primary={'Классификатор оборудования'}
+          primary={'Объекты'}
           sx={{ ml: 2 }}
           primaryTypographyProps={{ fontSize: '1rem!important' }}
         />
-        <RotateButton open={openEquipment} size={'2rem'} />
+        <RotateButton open={openObject} size={'2rem'} />
       </ListItemButton>
       <Collapse
         sx={{ width: '100%', p: 2, pl: 5, pr: 5 }}
-        in={openEquipment}
+        in={openObject}
         timeout="auto"
         unmountOnExit>
         <Box
@@ -134,21 +104,24 @@ export function ContractEquipmentList({
             justifyContent: 'flex-start',
             alignItems: 'center',
           }}>
-          <SelectMUI
-            data={filterList}
-            props={{ height: 40 }}
-            onChange={changeFilter}
-            value={selectedFilter || filterFirstElement}
-            label="Выберите фильтр"
-            defaultData="Все"
-          />
+          <TextField
+            variant="outlined"
+            sx={{ width: '90%', mt: 2, height: 40 }}
+            label="Введите фильтр"
+            margin="normal"
+            value={filterText || ''}
+            onChange={e => setFilterText(e.target.value ?? '')}
+            InputProps={{
+              endAdornment: <SearchIconElement />,
+            }}
+          />{' '}
           {admin && (
             <IconButton
               onMouseEnter={(event: MouseEvent<HTMLElement>) =>
                 setAnchorEl(event.currentTarget)
               }
               onMouseLeave={() => setAnchorEl(null)}
-              onClick={AddNewEquipment}
+              onClick={AddNewObject}
               size="medium"
               sx={{
                 ml: 5,
@@ -181,7 +154,7 @@ export function ContractEquipmentList({
                 disableRestoreFocus
                 container={anchorEl}>
                 <Typography sx={{ p: 1, fontSize: 12, color: 'text.primary' }}>
-                  Добавить классификатор
+                  Добавить объект
                 </Typography>
               </Popover>
             </IconButton>
@@ -194,15 +167,17 @@ export function ContractEquipmentList({
             overflowY: 'auto',
             height: 'auto',
           }}>
-          <CheckBoxGroups
-            data={filteredData}
-            onChooseGroup={onChooseGroup}
-            onChooseItems={onChooseItems}
-            startDataGroups={equipmentID}
-            startDataItems={modelID}
-            clearChanges={clearChanges}
-            onClearChanges={onClearChanges}
-          />
+          {filteredData?.map(({ name, id, initChecked, comment }) => (
+            <Item
+              name={name}
+              id={`${id}`}
+              comment={comment}
+              groupChecked={null}
+              onChooseItems={onChooseItems}
+              initChecked={initChecked}
+              key={id as string}
+            />
+          ))}
         </Box>
       </Collapse>
     </Box>

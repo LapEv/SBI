@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   Box,
@@ -9,12 +9,14 @@ import {
   ListItemText,
   Typography,
   styled,
+  Collapse,
 } from '@mui/material'
-import { menuData } from './drawerBarData'
+import { controlRoomMenuData, menuData } from './drawerBarData'
 import { Avatar } from 'layouts/Main/icons/Avatar'
 import { Routes } from 'utils/routes'
 import { useAuth } from 'hooks/auth/useAuth'
 import { LinkButton } from 'components/LinkButton'
+import { RotateButton } from 'components/Buttons'
 
 interface SideBarProps {
   open?: boolean
@@ -34,12 +36,11 @@ const ControlRoomListItem = ({
   isExpanded,
 }: NanListItemProps) => {
   return (
-    <ListItem disablePadding sx={{ display: 'block', mt: 0.5 }}>
+    <ListItem disablePadding sx={{ display: 'block', ml: 2 }}>
       <ListItemButton
         sx={{
-          minHeight: 48,
+          minHeight: 24,
           justifyContent: isExpanded ? 'initial' : 'center',
-          px: 2.5,
         }}
         component={Link}
         to={to}>
@@ -61,30 +62,75 @@ const ControlRoomListItem = ({
 }
 
 const NanListItem = ({ icon, text, to, isExpanded }: NanListItemProps) => {
+  const [openControl, setOpenControl] = useState<boolean>(false)
   return (
-    <ListItem disablePadding sx={{ display: 'block', mt: 0.5 }}>
-      <ListItemButton
-        sx={{
-          minHeight: 48,
-          justifyContent: isExpanded ? 'initial' : 'center',
-          px: 2.5,
-        }}
-        component={Link}
-        to={to}>
-        <ListItemIcon
-          sx={{
-            minWidth: 0,
-            mr: isExpanded ? 3 : 'auto',
-            justifyContent: 'center',
-          }}>
-          {icon}
-        </ListItemIcon>
-        <ListItemText
-          primary={text}
-          sx={{ display: isExpanded ? 'block' : 'none' }}
-        />
-      </ListItemButton>
-    </ListItem>
+    <>
+      {text === 'Диспетчерская' ? (
+        <Box sx={{ display: 'block', mt: 0.5, ml: 0.5 }}>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: isExpanded ? 'initial' : 'center',
+            }}
+            onClick={() => setOpenControl(!openControl)}>
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: isExpanded ? 3 : 'auto',
+                justifyContent: 'center',
+              }}>
+              {icon}
+            </ListItemIcon>
+            <ListItemText
+              primary={text}
+              sx={{ display: isExpanded ? 'block' : 'none' }}
+            />
+            <RotateButton
+              open={openControl}
+              handleClick={() => setOpenControl(!openControl)}
+              size={'1.5rem'}
+            />
+          </ListItemButton>
+          <Collapse
+            sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}
+            in={openControl}
+            timeout="auto"
+            unmountOnExit>
+            {controlRoomMenuData.map(value => (
+              <ControlRoomListItem
+                key={value.text}
+                {...value}
+                isExpanded={openControl}
+              />
+            ))}
+          </Collapse>
+        </Box>
+      ) : (
+        <ListItem disablePadding sx={{ display: 'block', mt: 0.5 }}>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: isExpanded ? 'initial' : 'center',
+              px: 2.5,
+            }}
+            component={Link}
+            to={to}>
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: isExpanded ? 3 : 'auto',
+                justifyContent: 'center',
+              }}>
+              {icon}
+            </ListItemIcon>
+            <ListItemText
+              primary={text}
+              sx={{ display: isExpanded ? 'block' : 'none' }}
+            />
+          </ListItemButton>
+        </ListItem>
+      )}
+    </>
   )
 }
 

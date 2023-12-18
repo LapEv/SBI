@@ -8,6 +8,7 @@ import { slaReducer } from './sla'
 import { clientsReducer } from './clients'
 import { contractsReducer } from './contracts'
 import { objectsReducer } from './objects'
+import { incidentsReducer } from './incidents'
 
 export const rootReducer = {
   auth: authReducer,
@@ -20,4 +21,5 @@ export const rootReducer = {
   clients: clientsReducer,
   contracts: contractsReducer,
   objects: objectsReducer,
+  incidents: incidentsReducer,
 }

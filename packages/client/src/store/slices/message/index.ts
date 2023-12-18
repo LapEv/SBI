@@ -64,6 +64,13 @@ import {
 } from 'api/clients'
 import { changeContract, deleteContract, newContract } from 'api/contracts'
 import { changeObject, deleteObjects, newObject } from 'api/objects'
+import {
+  changeINC,
+  changeIncidentStatuses,
+  deleteIncidentStatuses,
+  newINC,
+  newIncidentStatuses,
+} from 'api/incidents'
 
 const initialState: MessageState = {
   text: '',
@@ -997,6 +1004,94 @@ export const messageSlise = createSlice({
       state.isLoadingMessage = true
     },
     [changeObject.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [newINC.fulfilled.type]: (state, action: PayloadAction<AnswerMessage>) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [newINC.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [newINC.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [changeINC.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [changeINC.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [changeINC.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [newIncidentStatuses.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [newIncidentStatuses.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [newIncidentStatuses.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [deleteIncidentStatuses.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [deleteIncidentStatuses.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [deleteIncidentStatuses.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [changeIncidentStatuses.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [changeIncidentStatuses.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [changeIncidentStatuses.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
       state.isLoadingMessage = false
       state.type = 'error'
       state.text = action.payload

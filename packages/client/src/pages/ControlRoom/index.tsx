@@ -1,1 +1,2 @@
-export { ControlRoomPage } from './ControlRoom'
+export { IncidentsPage } from './Incidents/Incidents'
+export { IncidentsConfirmPage } from './IncidentsConfirm/IncidentsConfirm'

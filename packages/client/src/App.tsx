@@ -72,6 +72,22 @@ function App() {
                   }
                 />
                 <Route
+                  path={Paths.Incidents}
+                  element={
+                    <RequiredAuth>
+                      <Pages.Incidents />
+                    </RequiredAuth>
+                  }
+                />
+                <Route
+                  path={Paths.IncidentsConfirm}
+                  element={
+                    <RequiredAuth>
+                      <Pages.IncidentsConfirm />
+                    </RequiredAuth>
+                  }
+                />
+                <Route
                   path={Paths.Warehouse}
                   element={
                     <RequiredAuth>

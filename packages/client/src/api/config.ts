@@ -104,6 +104,15 @@ export const ApiEndPoints = {
     deleteContract: 'contracts/deleteContract',
     changeContract: 'contracts/changeContract',
   },
+  INC: {
+    getINC: 'incidents/getINC',
+    newINC: 'incidents/newINC',
+    changeINC: 'incidents/changeINC',
+    getIncidentStatuses: 'incidents/getIncidentStatuses',
+    newIncidentStatuses: 'incidents/newIncidentStatuses',
+    deleteIncidentStatuses: 'incidents/deleteIncidentStatuses',
+    changeIncidentStatuses: 'incidents/changeIncidentStatuses',
+  },
 }
 
 const url = `http://localhost:${__SERVER_PORT__}/api/`

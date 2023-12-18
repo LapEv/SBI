@@ -9,13 +9,16 @@ import {
 } from 'layouts/Main/icons'
 import { Routes } from 'utils/routes'
 import Diversity3Icon from '@mui/icons-material/Diversity3'
+import ListAltIcon from '@mui/icons-material/ListAlt'
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber'
 
 export const menuData = [
   { text: 'Главная', icon: <Main />, to: Routes.Index, type: 'component' },
   {
     text: 'Диспетчерская',
     icon: <ControlRoom />,
-    to: Routes.ControlRoom,
+    // to: Routes.ControlRoom,
+    to: '',
     type: 'menu',
   },
   {
@@ -57,8 +60,12 @@ export const menuData = [
 ]
 
 export const controlRoomMenuData = [
-  { text: 'Заявки', icon: <ControlRoom />, to: Routes.Incidents },
-  { text: 'Диспетчерская', icon: <ControlRoom />, to: Routes.IncidentsConfirm },
+  { text: 'Инциденты', icon: <ListAltIcon />, to: Routes.Incidents },
+  {
+    text: 'Подтверждения',
+    icon: <ConfirmationNumberIcon />,
+    to: Routes.IncidentsConfirm,
+  },
 ]
 
 export const drawerWidth = 355

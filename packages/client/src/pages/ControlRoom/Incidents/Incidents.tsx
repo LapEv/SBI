@@ -1,6 +1,6 @@
 import { Box, Container } from '@mui/material'
 
-export function ControlRoomPage() {
+export function IncidentsPage() {
   return (
     <Container component="main" maxWidth="md">
       <Box
@@ -17,7 +17,7 @@ export function ControlRoomPage() {
           borderStyle: 'solid',
           p: 3,
         }}>
-        ControlRoom
+        IncidentsPage
       </Box>
     </Container>
   )

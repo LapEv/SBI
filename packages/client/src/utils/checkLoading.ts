@@ -7,6 +7,7 @@ import { useClients } from 'hooks/clients/useClients'
 import { useContracts } from 'hooks/contracts/useContracts'
 import { useObjects } from 'hooks/objects/useObjects'
 import { useSLA } from 'hooks/sla/useSLA'
+import { useIncidents } from 'hooks/incidents/useINC'
 
 export const checkLoading = () => {
   const [{ isLoadingAuth, user }] = useAuth()
@@ -18,6 +19,7 @@ export const checkLoading = () => {
   const [{ isLoadingContracts }] = useContracts()
   const [{ isLoadingObjects }] = useObjects()
   const [{ isLoadingSLA }] = useSLA()
+  const [{ isLoadingINC }] = useIncidents()
 
   if (
     isLoadingAuth ||
@@ -28,7 +30,8 @@ export const checkLoading = () => {
     isLoadingClients ||
     isLoadingContracts ||
     isLoadingObjects ||
-    isLoadingSLA
+    isLoadingSLA ||
+    isLoadingINC
   )
     return true
   return false

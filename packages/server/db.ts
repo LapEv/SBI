@@ -26,6 +26,7 @@ import {
   throughContractsModels,
 } from './models/contracts'
 import { typesSLA } from './models/sla'
+import { incident, incindentStatuses } from './models/incidents'
 
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
   process.env
@@ -96,6 +97,13 @@ export const ThroughContractsModels = sequelize.define(
 export const ThroughContractsObjects = sequelize.define(
   'ThroughContractsObjects',
   throughContractsObjects,
+  {}
+)
+
+export const Incidents = sequelize.define('Incidents', incident, {})
+export const IncindentStatuses = sequelize.define(
+  'IncindentStatuses',
+  incindentStatuses,
   {}
 )
 
@@ -202,6 +210,30 @@ SLA.belongsTo(TypesSLA, { foreignKey: 'id_typeSLA', targetKey: 'id' })
 TypesSLA.hasOne(OLA, { foreignKey: 'id_typeSLA', sourceKey: 'id' })
 OLA.belongsTo(TypesSLA, { foreignKey: 'id_typeSLA', targetKey: 'id' })
 
+IncindentStatuses.hasOne(Incidents, {
+  foreignKey: 'id_incStatus',
+  sourceKey: 'id',
+})
+Incidents.belongsTo(IncindentStatuses, {
+  foreignKey: 'id_incStatus',
+  targetKey: 'id',
+})
+
+SLA.hasOne(Incidents, { foreignKey: 'id_incSLA', sourceKey: 'id' })
+Incidents.belongsTo(SLA, { foreignKey: 'id_incSLA', targetKey: 'id' })
+
+Clients.hasOne(Incidents, { foreignKey: 'id_incClient', sourceKey: 'id' })
+Incidents.belongsTo(Clients, { foreignKey: 'id_incClient', targetKey: 'id' })
+
+Contracts.hasOne(Incidents, { foreignKey: 'id_incClient', sourceKey: 'id' })
+Incidents.belongsTo(Contracts, { foreignKey: 'id_incClient', targetKey: 'id' })
+
+Users.hasOne(Incidents, { foreignKey: 'id_incClient', sourceKey: 'id' })
+Incidents.belongsTo(Users, { foreignKey: 'id_incClient', targetKey: 'id' })
+
+Department.hasOne(Incidents, { foreignKey: 'id_incClient', sourceKey: 'id' })
+Incidents.belongsTo(Department, { foreignKey: 'id_incClient', targetKey: 'id' })
+
 export const userRepos = new Repository(Users as ModelCtor)
 export const roleGroupRepos = new Repository(RolesGroup as ModelCtor)
 export const roleRepos = new Repository(Roles as ModelCtor)
@@ -243,6 +275,12 @@ export const ThroughContractsModelsRepos = new Repository(
 export const ThroughContractsObjectsRepos = new Repository(
   ThroughContractsObjects as ModelCtor
 )
+
+export const IncidentStatusesRepos = new Repository(
+  IncindentStatuses as ModelCtor
+)
+
+export const IncidentRepos = new Repository(Incidents as ModelCtor)
 
 export async function dbConnect() {
   try {

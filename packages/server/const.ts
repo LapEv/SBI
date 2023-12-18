@@ -271,3 +271,9 @@ export const apiConst = {
     },
   },
 }
+
+export const AppConst = {
+  attrINC: 'INC',
+  numberDigit: 9,
+  startINC: 23111,
+}

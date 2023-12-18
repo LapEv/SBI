@@ -350,4 +350,16 @@ export const rolesStartData = [
     role: 'changeContract',
     nameRole: 'Изменение данных контракта',
   },
+  {
+    role: 'getINC',
+    nameRole: 'Получение списка активных инцидентов',
+  },
+  {
+    role: 'newINC',
+    nameRole: 'Создание нового инцидента',
+  },
+  {
+    role: 'changeINC',
+    nameRole: 'Изменение данных инцидента',
+  },
 ]

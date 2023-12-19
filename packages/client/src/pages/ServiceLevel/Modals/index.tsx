@@ -1,7 +1,4 @@
 export { NewSLA } from './NewSLA'
 export { NewOLA } from './NewOLA'
-export { NewTypesSLA } from './NewTypesSLA'
 export { DeleteSLA } from './DeleteSLA'
 export { DeleteOLA } from './DeleteOLA'
-export { DeleteTypesSLA } from './DeleteTypesSLA'
-export { ChangeTypeSLA } from './ChangeTypeSLA'

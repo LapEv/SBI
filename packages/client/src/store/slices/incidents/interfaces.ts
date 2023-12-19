@@ -19,6 +19,7 @@ export interface INC {
   act: string
   active: boolean
   INCStatuses?: INCStatuses
+  TypesOfWork: TypesOfWork
 }
 
 export interface AddINC {
@@ -50,6 +51,16 @@ export interface AddINCStatuses {
   statusINC: string
 }
 
+export interface TypesOfWork {
+  id: string
+  typeOfWork: string
+  active?: boolean
+}
+
+export interface AddTypesOfWork {
+  typeOfWork: string
+}
+
 export interface AnswerINC {
   data: INC[]
   type: string
@@ -60,9 +71,15 @@ export interface AnswerINCStatuses {
   type: string
 }
 
+export interface AnswerTypesSLA {
+  data: TypesOfWork[]
+  type: string
+}
+
 export type INCState = {
   incidents: INC[]
   incStatuses: INCStatuses[]
+  typesOfWork: TypesOfWork[]
   activeINC: string
   isLoadingINC: boolean
   error?: string
@@ -89,6 +106,11 @@ export interface ChangeINC {
 
 export interface ChangeINCStatuses {
   statusINC: string
+  id?: string
+}
+
+export interface ChangeTypesOfWork {
+  typeOfWork: string
   id?: string
 }
 

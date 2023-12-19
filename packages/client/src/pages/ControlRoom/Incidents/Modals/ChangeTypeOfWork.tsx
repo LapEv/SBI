@@ -1,8 +1,5 @@
 import React from 'react'
-import {
-  AddValuesProps,
-  ChooseModalProps,
-} from '../../Clients/Modals/interfaces'
+import { AddValuesProps, ChooseModalProps } from './interfaces'
 import { useState, useEffect } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
 import { modalStyle } from 'static/styles'
@@ -16,15 +13,15 @@ import {
   useFormState,
 } from 'react-hook-form'
 import { TextField } from 'components/TextFields'
-import { MapNewRegionInputFields } from '../../Clients/Modals/data'
-import { useSLA } from 'hooks/sla/useSLA'
-import { MapTypesSLAInputFields } from '../data'
+import { MapTypesOfWorkInputFields } from '../data'
+import { useIncidents } from 'hooks/incidents/useINC'
 
-export const ChangeTypeSLA = React.forwardRef<unknown, ChooseModalProps>(
+export const ChangeTypeOfWork = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
-    const [{ typesSLA }, { getTypesSLA, changeTypesSLA }] = useSLA()
+    const [{ typesOfWork }, { getTypesOfWork, changeTypesOfWork }] =
+      useIncidents()
     const [listTypesSLA, setListTypesSLA] = useState<Options[]>([])
     const [selectedTypesSLA, setSelectedTypesSLA] =
       useState<Options>(emptyValue)
@@ -34,7 +31,7 @@ export const ChangeTypeSLA = React.forwardRef<unknown, ChooseModalProps>(
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
       defaultValues: {
-        list: MapTypesSLAInputFields,
+        list: MapTypesOfWorkInputFields,
       },
     })
     const { errors } = useFormState({ control })
@@ -49,8 +46,8 @@ export const ChangeTypeSLA = React.forwardRef<unknown, ChooseModalProps>(
         setSelectedTypesSLA(emptyValue)
         return
       }
-      changeTypesSLA({
-        typeSLA: list[0].value,
+      changeTypesOfWork({
+        typeOfWork: list[0].value,
         id: selectedTypesSLA.id,
       })
       handleModal(false)
@@ -65,26 +62,26 @@ export const ChangeTypeSLA = React.forwardRef<unknown, ChooseModalProps>(
     }
 
     const checkTypesSLAValue = (value: string) => {
-      const isNew = typesSLA.findIndex(item => item.typeSLA === value)
+      const isNew = typesOfWork.findIndex(item => item.typeOfWork === value)
       if (isNew < 0) {
         setSelectedTypesSLA(emptyValue)
       }
     }
 
     useEffect(() => {
-      getTypesSLA()
+      getTypesOfWork()
     }, [])
 
     useEffect(() => {
       setListTypesSLA(
-        typesSLA.map(item => {
+        typesOfWork.map(item => {
           return {
-            ['label']: item.typeSLA as string,
+            ['label']: item.typeOfWork as string,
             ['id']: item.id as string,
           }
         })
       )
-    }, [typesSLA])
+    }, [typesOfWork])
 
     return (
       <Box

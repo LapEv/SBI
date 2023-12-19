@@ -1,13 +1,5 @@
 import React from 'react'
-import {
-  DeleteSLA,
-  DeleteOLA,
-  NewSLA,
-  NewOLA,
-  NewTypesSLA,
-  DeleteTypesSLA,
-  ChangeTypeSLA,
-} from '.'
+import { DeleteSLA, DeleteOLA, NewSLA, NewOLA } from '.'
 import { ModalTitles } from '../data'
 import { ChooseModalProps } from './interfaces'
 
@@ -29,13 +21,6 @@ export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(
             title={ModalTitles.newOLA}
           />
         )}
-        {modalImage === 'newTypesSLA' && (
-          <NewTypesSLA
-            ref={ref}
-            handleModal={handleModal}
-            title={ModalTitles.newTypesSLA}
-          />
-        )}
         {modalImage === 'deleteSLA' && (
           <DeleteSLA
             ref={ref}
@@ -48,20 +33,6 @@ export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(
             ref={ref}
             handleModal={handleModal}
             title={ModalTitles.deleteOLA}
-          />
-        )}
-        {modalImage === 'deleteTypesSLA' && (
-          <DeleteTypesSLA
-            ref={ref}
-            handleModal={handleModal}
-            title={ModalTitles.deleteTypesSLA}
-          />
-        )}
-        {modalImage === 'changeTypesSLA' && (
-          <ChangeTypeSLA
-            ref={ref}
-            handleModal={handleModal}
-            title={ModalTitles.changeTypesSLA}
           />
         )}
       </>

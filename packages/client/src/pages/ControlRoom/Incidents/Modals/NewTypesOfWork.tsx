@@ -8,20 +8,20 @@ import {
 } from 'react-hook-form'
 import { TextField } from 'components/TextFields'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
-import { MapTypesSLAInputFields } from '../data'
 import { modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
-import { useSLA } from 'hooks/sla/useSLA'
+import { MapTypesOfWorkInputFields } from '../data'
+import { useIncidents } from 'hooks/incidents/useINC'
 
-export const NewTypesSLA = React.forwardRef<unknown, ChooseModalProps>(
+export const NewTypesOfWork = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
-    const [_, { newTypesSLA }] = useSLA()
+    const [_, { newTypesOfWork }] = useIncidents()
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
       defaultValues: {
-        list: MapTypesSLAInputFields,
+        list: MapTypesOfWorkInputFields,
       },
     })
     const { errors } = useFormState({ control })
@@ -31,8 +31,8 @@ export const NewTypesSLA = React.forwardRef<unknown, ChooseModalProps>(
     })
 
     function changeData({ list }: AddValuesProps) {
-      newTypesSLA({
-        typeSLA: list[0].value,
+      newTypesOfWork({
+        typeOfWork: list[0].value,
       })
       handleModal(false)
     }

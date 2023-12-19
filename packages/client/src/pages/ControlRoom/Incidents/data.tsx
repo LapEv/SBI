@@ -14,13 +14,28 @@ export const menuData = [
     icon: <AddCircleOutlineIcon fontSize="medium" />,
   },
   {
+    name: 'newTypesOfWork',
+    title: 'Добавить тип работ',
+    icon: <AddCircleOutlineIcon fontSize="medium" />,
+  },
+  {
     name: 'deleteIncidentStatuses',
     title: 'Удалить статус инцидента',
     icon: <RemoveCircleOutline fontSize="medium" />,
   },
   {
+    name: 'deleteTypesOfWork',
+    title: 'Удалить тип работ',
+    icon: <RemoveCircleOutline fontSize="medium" />,
+  },
+  {
     name: 'changeIncidentStatuses',
     title: 'Изменить статус инцидента',
+    icon: <EditIcon fontSize="medium" />,
+  },
+  {
+    name: 'changeTypesOfWork',
+    title: 'Изменить тип работ',
     icon: <EditIcon fontSize="medium" />,
   },
 ]
@@ -42,14 +57,27 @@ export const ModalTitles = {
   newIncident: 'Новый инцидент',
   newRequest: 'Новый запрос',
   newIncidentStatus: 'Новый статус инцидента',
+  newTypesOfWork: 'Новый тип работ',
   deleteIncidentStatuses: 'Удалить статус инцидента',
+  deleteTypesOfWork: 'Удалить тип работ',
   changeIncidentStatuses: 'Изменить статус инцидента',
+  changeTypesOfWork: 'Изменить тип работ',
 }
 
 export const MapINCStatusInputFields = [
   {
     name: 'incStatus',
     label: 'Введите новый статус инцидента',
+    validation: lightTextValidation,
+    type: 'text',
+    required: true,
+  },
+]
+
+export const MapTypesOfWorkInputFields = [
+  {
+    name: 'typesOfWork',
+    label: 'Введите новый тип работ',
     validation: lightTextValidation,
     type: 'text',
     required: true,

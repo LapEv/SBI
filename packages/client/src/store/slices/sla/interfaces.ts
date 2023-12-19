@@ -1,4 +1,4 @@
-import { BaseSyntheticEvent, SyntheticEvent } from 'react'
+import { TypesOfWork } from '../incidents/interfaces'
 
 export interface SLA {
   id: string
@@ -6,9 +6,9 @@ export interface SLA {
   time: string
   timeStart: string
   timeEnd: string
-  id_typeSLA: string
+  id_typeOfWork: string
   active: boolean
-  TypesSLA: TypesSLA
+  TypesOfWork: TypesOfWork
 }
 
 export interface AddSLA {
@@ -16,7 +16,7 @@ export interface AddSLA {
   time: string
   timeStart: string
   timeEnd: string
-  id_typeSLA: string
+  id_typeOfWork: string
 }
 
 export interface OLA {
@@ -25,9 +25,9 @@ export interface OLA {
   time: string
   timeStart: string
   timeEnd: string
-  id_typeSLA: string
+  id_typeOfWork: string
   active: boolean
-  TypesSLA: TypesSLA
+  TypesOfWork: TypesOfWork
 }
 
 export interface AddOLA {
@@ -35,17 +35,7 @@ export interface AddOLA {
   time: string
   timeStart: string
   timeEnd: string
-  id_typeSLA: string
-}
-
-export interface TypesSLA {
-  id: string
-  typeSLA: string
-  active?: boolean
-}
-
-export interface AddTypesSLA {
-  typeSLA: string
+  id_typeOfWork: string
 }
 
 export interface AnswerSLA {
@@ -58,15 +48,9 @@ export interface AnswerOLA {
   type: string
 }
 
-export interface AnswerTypesSLA {
-  data: TypesSLA[]
-  type: string
-}
-
 export type SLAState = {
   sla: SLA[]
   ola: OLA[]
-  typesSLA: TypesSLA[]
   activeSLA: string
   activeList: string
   isLoadingSLA: boolean
@@ -79,7 +63,7 @@ export interface ChangeSLA {
   time: string
   timeStart: string
   timeEnd: string
-  id_typeSLA: string
+  id_typeOfWork: string
 }
 export interface ChangeOLA {
   ola: string
@@ -87,12 +71,7 @@ export interface ChangeOLA {
   time: string
   timeStart: string
   timeEnd: string
-  id_typeSLA: string
-}
-
-export interface ChangeTypesSLA {
-  typeSLA: string
-  id?: string
+  id_typeOfWork: string
 }
 
 export interface IServiceList {
@@ -106,8 +85,8 @@ export interface IServiceListData {
   time: string
   timeStart: string
   timeEnd: string
-  id_typeSLA: string
-  TypesSLA: TypesSLA
+  id_typeOfWork: string
+  TypesOfWork: TypesOfWork
 }
 
 export interface SLAList {
@@ -117,8 +96,8 @@ export interface SLAList {
   time: string
   timeStart: string
   timeEnd: string
-  id_typeSLA: string
-  TypesSLA: TypesSLA
+  id_typeOfWork: string
+  TypesOfWork: TypesOfWork
 }
 
 export interface ServiceListItem {
@@ -129,7 +108,7 @@ export interface ServiceListItem {
     time: string
     timeStart: string
     timeEnd: string
-    id_typeSLA: string
+    id_typeOfWork: string
   }[]
 }
 
@@ -137,7 +116,7 @@ export interface SLAValues {
   list: {
     name: string
     label: string
-    value: string | TypesSLA
+    value: string | TypesOfWork
     validation: object
     disabled: boolean
     type: string

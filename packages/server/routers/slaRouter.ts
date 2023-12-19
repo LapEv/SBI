@@ -78,41 +78,41 @@ export const slaRouter = (apiRouter: Router) => {
     service.changeOLA
   )
 
-  router.get(
-    '/getTypesSLA',
-    roleMiddleware(['getTypesSLA', 'ADMIN', 'SUPERADMIN']),
-    service.getTypesSLA
-  )
-  router.get(
-    '/getAllTypesSLA',
-    roleMiddleware(['getAllTypesSLA', 'ADMIN', 'SUPERADMIN']),
-    service.getAllTypesSLA
-  )
-  router.post(
-    '/newTypesSLA',
-    roleMiddleware(['newTypesSLA', 'ADMIN', 'SUPERADMIN']),
-    service.newTypesSLA
-  )
-  router.post(
-    '/deleteTypesSLA',
-    roleMiddleware(['deleteTypesSLA', 'ADMIN', 'SUPERADMIN']),
-    service.deleteTypesSLA
-  )
-  router.delete(
-    '/fullDeleteTypesSLA',
-    roleMiddleware(['fullDeleteTypesSLA', 'ADMIN', 'SUPERADMIN']),
-    service.fullDeleteTypesSLA
-  )
-  router.post(
-    '/pullTypesSLAFromArchive',
-    roleMiddleware(['ADMIN', 'SUPERADMIN', 'pullTypesSLAFromArchive']),
-    service.pullTypesSLAFromArchive
-  )
-  router.post(
-    '/changeTypesSLA',
-    roleMiddleware(['changeTypesSLA', 'ADMIN', 'SUPERADMIN']),
-    service.changeTypesSLA
-  )
+  // router.get(
+  //   '/getTypesSLA',
+  //   roleMiddleware(['getTypesSLA', 'ADMIN', 'SUPERADMIN']),
+  //   service.getTypesSLA
+  // )
+  // router.get(
+  //   '/getAllTypesSLA',
+  //   roleMiddleware(['getAllTypesSLA', 'ADMIN', 'SUPERADMIN']),
+  //   service.getAllTypesSLA
+  // )
+  // router.post(
+  //   '/newTypesSLA',
+  //   roleMiddleware(['newTypesSLA', 'ADMIN', 'SUPERADMIN']),
+  //   service.newTypesSLA
+  // )
+  // router.post(
+  //   '/deleteTypesSLA',
+  //   roleMiddleware(['deleteTypesSLA', 'ADMIN', 'SUPERADMIN']),
+  //   service.deleteTypesSLA
+  // )
+  // router.delete(
+  //   '/fullDeleteTypesSLA',
+  //   roleMiddleware(['fullDeleteTypesSLA', 'ADMIN', 'SUPERADMIN']),
+  //   service.fullDeleteTypesSLA
+  // )
+  // router.post(
+  //   '/pullTypesSLAFromArchive',
+  //   roleMiddleware(['ADMIN', 'SUPERADMIN', 'pullTypesSLAFromArchive']),
+  //   service.pullTypesSLAFromArchive
+  // )
+  // router.post(
+  //   '/changeTypesSLA',
+  //   roleMiddleware(['changeTypesSLA', 'ADMIN', 'SUPERADMIN']),
+  //   service.changeTypesSLA
+  // )
 
   apiRouter.use('/sla', router)
 }

@@ -1,8 +1,10 @@
-import { SLARepos, OLARepos, TypesSLA, TypesSLARepos } from '../db'
+import { SLARepos, OLARepos, TypesOfWork } from '../db'
 import type { Request, Response } from 'express'
 const { Op } = require('sequelize')
 
-const includes = [{ model: TypesSLA, attributes: ['id', 'typeSLA', 'active'] }]
+const includes = [
+  { model: TypesOfWork, attributes: ['id', 'typeSLA', 'active'] },
+]
 export class slaService {
   newSLA = async (_req: Request, res: Response) => {
     try {
@@ -20,7 +22,6 @@ export class slaService {
       })
     }
   }
-
   getAllSLA = (_req: Request, res: Response) => {
     SLARepos.findAll({
       include: includes,
@@ -28,7 +29,6 @@ export class slaService {
       .then(item => res.status(200).json(item))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
-
   getSLA = (_req: Request, res: Response) => {
     SLARepos.findAll({
       where: { active: true },
@@ -39,7 +39,6 @@ export class slaService {
       })
       .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
-
   deleteSLA = async (_req: Request, res: Response) => {
     const { selectedSLA } = _req.body
     try {
@@ -61,7 +60,6 @@ export class slaService {
       res.status(500).json({ error: ['db error', err] })
     }
   }
-
   fullDeleteSLA = async (_req: Request, res: Response) => {
     const { selectedSLA } = _req.body
     try {
@@ -83,7 +81,6 @@ export class slaService {
       res.status(500).json({ error: ['db error', err] })
     }
   }
-
   pullSLAFromArchive = async (_req: Request, res: Response) => {
     const { selectedSLA } = _req.body
     try {
@@ -101,7 +98,6 @@ export class slaService {
       res.status(500).json({ error: ['db error', err] })
     }
   }
-
   changeSLA = async (_req: Request, res: Response) => {
     const { sla, id, time, timeStart, timeEnd, id_typeSLA } = _req.body
     try {
@@ -134,13 +130,11 @@ export class slaService {
       })
     }
   }
-
   getAllOLA = (_req: Request, res: Response) => {
     OLARepos.findAll({ include: includes })
       .then(item => res.status(200).json(item))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
-
   getOLA = (_req: Request, res: Response) => {
     OLARepos.findAll({
       where: { active: true },
@@ -151,7 +145,6 @@ export class slaService {
       })
       .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
-
   deleteOLA = async (_req: Request, res: Response) => {
     const { selectedOLA } = _req.body
     try {
@@ -173,7 +166,6 @@ export class slaService {
       res.status(500).json({ error: ['db error', err] })
     }
   }
-
   fullDeleteOLA = async (_req: Request, res: Response) => {
     const { selectedOLA } = _req.body
     try {
@@ -212,7 +204,6 @@ export class slaService {
       res.status(500).json({ error: ['db error', err] })
     }
   }
-
   changeOLA = async (_req: Request, res: Response) => {
     const { ola, id, time, timeStart, timeEnd, id_typeSLA } = _req.body
     try {
@@ -229,108 +220,103 @@ export class slaService {
     }
   }
 
-  newTypesSLA = async (_req: Request, res: Response) => {
-    try {
-      await TypesSLARepos.create({ ..._req.body, active: true })
-      const typesSLA = await TypesSLARepos.findAll({
-        where: { active: true },
-      })
-      res.status(200).json(typesSLA)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({
-        error: ['db error: unable to set new ola', err],
-      })
-    }
-  }
-
-  getAllTypesSLA = (_req: Request, res: Response) => {
-    TypesSLARepos.findAll({})
-      .then(item => res.status(200).json(item))
-      .catch(err => res.status(500).json({ error: ['db error', err.status] }))
-  }
-
-  getTypesSLA = (_req: Request, res: Response) => {
-    TypesSLARepos.findAll({
-      where: { active: true },
-    })
-      .then(typesSLA => {
-        res.status(200).json(typesSLA)
-      })
-      .catch(err => res.status(500).json({ error: ['db error', err] }))
-  }
-
-  deleteTypesSLA = async (_req: Request, res: Response) => {
-    const { selectedtypesSLA } = _req.body
-    try {
-      const typesSLA = await Promise.all([
-        await selectedtypesSLA.map(async (id: string) => {
-          await TypesSLARepos.update(id, {
-            active: false,
-          })
-        }),
-        await TypesSLARepos.findAll({
-          where: { active: true, id: { [Op.not]: selectedtypesSLA } },
-        }),
-      ])
-      res.status(200).json(typesSLA[1])
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
-    }
-  }
-
-  fullDeleteTypesSLA = async (_req: Request, res: Response) => {
-    const { selectedtypesSLA } = _req.body
-    try {
-      const typesSLA = await Promise.all([
-        await selectedtypesSLA.map(async (id: string) => {
-          await TypesSLARepos.destroy({
-            where: { id },
-          })
-        }),
-        await TypesSLARepos.findAll({
-          where: { active: true, id: { [Op.not]: selectedtypesSLA } },
-        }),
-      ])
-      res.status(200).json(typesSLA[1])
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
-    }
-  }
-  pullTypesSLAFromArchive = async (_req: Request, res: Response) => {
-    const { selectedtypesSLA } = _req.body
-    try {
-      await TypesSLARepos.update(selectedtypesSLA, {
-        active: true,
-      })
-      const typesSLA = await TypesSLARepos.findAll({
-        where: { active: true },
-      })
-      res.status(200).json(typesSLA)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
-    }
-  }
-
-  changeTypesSLA = async (_req: Request, res: Response) => {
-    const { typeSLA, id } = _req.body
-    try {
-      await TypesSLARepos.update(id, { typeSLA })
-      const typesSLAs = await TypesSLARepos.findAll({
-        where: { active: true },
-      })
-      res.status(200).json(typesSLAs)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
-    }
-  }
+  // newTypesSLA = async (_req: Request, res: Response) => {
+  //   try {
+  //     await TypesSLARepos.create({ ..._req.body, active: true })
+  //     const typesSLA = await TypesSLARepos.findAll({
+  //       where: { active: true },
+  //     })
+  //     res.status(200).json(typesSLA)
+  //     /* eslint-disable @typescript-eslint/no-explicit-any */
+  //   } catch (err: any) {
+  //     /* eslint-enable @typescript-eslint/no-explicit-any */
+  //     res.status(500).json({
+  //       error: ['db error: unable to set new ola', err],
+  //     })
+  //   }
+  // }
+  // getAllTypesSLA = (_req: Request, res: Response) => {
+  //   TypesSLARepos.findAll({})
+  //     .then(item => res.status(200).json(item))
+  //     .catch(err => res.status(500).json({ error: ['db error', err.status] }))
+  // }
+  // getTypesSLA = (_req: Request, res: Response) => {
+  //   TypesSLARepos.findAll({
+  //     where: { active: true },
+  //   })
+  //     .then(typesSLA => {
+  //       res.status(200).json(typesSLA)
+  //     })
+  //     .catch(err => res.status(500).json({ error: ['db error', err] }))
+  // }
+  // deleteTypesSLA = async (_req: Request, res: Response) => {
+  //   const { selectedtypesSLA } = _req.body
+  //   try {
+  //     const typesSLA = await Promise.all([
+  //       await selectedtypesSLA.map(async (id: string) => {
+  //         await TypesSLARepos.update(id, {
+  //           active: false,
+  //         })
+  //       }),
+  //       await TypesSLARepos.findAll({
+  //         where: { active: true, id: { [Op.not]: selectedtypesSLA } },
+  //       }),
+  //     ])
+  //     res.status(200).json(typesSLA[1])
+  //     /* eslint-disable @typescript-eslint/no-explicit-any */
+  //   } catch (err: any) {
+  //     /* eslint-enable @typescript-eslint/no-explicit-any */
+  //     res.status(500).json({ error: ['db error', err] })
+  //   }
+  // }
+  // fullDeleteTypesSLA = async (_req: Request, res: Response) => {
+  //   const { selectedtypesSLA } = _req.body
+  //   try {
+  //     const typesSLA = await Promise.all([
+  //       await selectedtypesSLA.map(async (id: string) => {
+  //         await TypesSLARepos.destroy({
+  //           where: { id },
+  //         })
+  //       }),
+  //       await TypesSLARepos.findAll({
+  //         where: { active: true, id: { [Op.not]: selectedtypesSLA } },
+  //       }),
+  //     ])
+  //     res.status(200).json(typesSLA[1])
+  //     /* eslint-disable @typescript-eslint/no-explicit-any */
+  //   } catch (err: any) {
+  //     /* eslint-enable @typescript-eslint/no-explicit-any */
+  //     res.status(500).json({ error: ['db error', err] })
+  //   }
+  // }
+  // pullTypesSLAFromArchive = async (_req: Request, res: Response) => {
+  //   const { selectedtypesSLA } = _req.body
+  //   try {
+  //     await TypesSLARepos.update(selectedtypesSLA, {
+  //       active: true,
+  //     })
+  //     const typesSLA = await TypesSLARepos.findAll({
+  //       where: { active: true },
+  //     })
+  //     res.status(200).json(typesSLA)
+  //     /* eslint-disable @typescript-eslint/no-explicit-any */
+  //   } catch (err: any) {
+  //     /* eslint-enable @typescript-eslint/no-explicit-any */
+  //     res.status(500).json({ error: ['db error', err] })
+  //   }
+  // }
+  // changeTypesSLA = async (_req: Request, res: Response) => {
+  //   const { typeSLA, id } = _req.body
+  //   try {
+  //     await TypesSLARepos.update(id, { typeSLA })
+  //     const typesSLAs = await TypesSLARepos.findAll({
+  //       where: { active: true },
+  //     })
+  //     res.status(200).json(typesSLAs)
+  //     /* eslint-disable @typescript-eslint/no-explicit-any */
+  //   } catch (err: any) {
+  //     /* eslint-enable @typescript-eslint/no-explicit-any */
+  //     res.status(500).json({ error: ['db error', err] })
+  //   }
+  // }
 }

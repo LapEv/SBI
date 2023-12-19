@@ -119,3 +119,27 @@ export const incindentStatuses: ModelAttributes<Model, IncindentStatuses> = {
     allowNull: false,
   },
 }
+
+export interface TypesOfWork {
+  id: string
+  typeOfWork: string
+  active: boolean
+}
+
+export const typesOfWork: ModelAttributes<Model, TypesOfWork> = {
+  id: {
+    type: DataType.STRING,
+    defaultValue: DataType.UUIDV4,
+    allowNull: false,
+    primaryKey: true,
+  },
+  typeOfWork: {
+    type: DataType.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  active: {
+    type: DataType.BOOLEAN,
+    allowNull: false,
+  },
+}

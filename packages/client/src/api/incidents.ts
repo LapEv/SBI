@@ -179,12 +179,12 @@ export const deleteIncidentStatuses = createAsyncThunk(
 
 export const changeIncidentStatuses = createAsyncThunk(
   'incidents/changeIncidentStatuses',
-  async ({ incStatuses, id }: ChangeINCStatuses, thunkAPI) => {
+  async ({ statusINC, id }: ChangeINCStatuses, thunkAPI) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.INC.changeIncidentStatuses,
         {
-          incStatuses,
+          statusINC,
           id,
         }
       )

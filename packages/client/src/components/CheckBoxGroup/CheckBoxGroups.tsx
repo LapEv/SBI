@@ -13,10 +13,10 @@ export const CheckBoxGroups = ({
   onClearChanges,
 }: ICheckBoxGroups) => {
   const [selectedGroups, setSelectedGroups] = useState<string[]>(
-    startDataGroups as string[]
+    (startDataGroups as string[]) ?? []
   )
   const [selectedItems, setSelectedItems] = useState<string[]>(
-    startDataItems as string[]
+    (startDataItems as string[]) ?? []
   )
 
   const changeGroup = (checked: boolean, id: string) => {

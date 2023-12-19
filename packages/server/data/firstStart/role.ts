@@ -362,4 +362,20 @@ export const rolesStartData = [
     role: 'changeINC',
     nameRole: 'Изменение данных инцидента',
   },
+  {
+    role: 'newTypeOfWork',
+    nameRole: 'Создание нового типа работ',
+  },
+  {
+    role: 'getTypesOfWork',
+    nameRole: 'Получение списка активных типов работ',
+  },
+  {
+    role: 'deleteTypesOfWork',
+    nameRole: 'Перемещение типа работ в архив',
+  },
+  {
+    role: 'changeTypesOfWork',
+    nameRole: 'Изменение данных типа работ',
+  },
 ]

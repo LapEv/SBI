@@ -46,7 +46,8 @@ const includes = [
 export class contractService {
   newContract = async (_req: Request, res: Response) => {
     const { sla, equipment, model, objects, ...data } = _req.body
-
+    console.log('equipment = ', equipment)
+    console.log('model = ', model)
     try {
       const new_contract = await ContractsRepos.create({
         ...data,

@@ -9,11 +9,13 @@ import {
   ClientsRepos,
   DepartmentRepos,
   DivisionRepos,
+  IncidentRepos,
+  IncidentStatusesRepos,
   OLARepos,
   ObjectsRepos,
   RegionsRepos,
   SLARepos,
-  TypesSLARepos,
+  TypesOfWorkRepos,
   TypicalMalfunctionsRepos,
   UserStatusRepos,
   roleGroupRepos,
@@ -30,20 +32,21 @@ import {
   modelsStartData,
   typ_malfunctionsStartData,
 } from './classifier'
-import { olaStartData, slaStartData, typesSLAStartData } from './sla'
+import { slaStartData } from './sla'
 import { clientsStartData } from './clients'
 import { objectsStartData } from './objects'
+import { incStatusesStartData, typesOfWorkStartData } from './incident'
 
 export const firstStart = async () => {
   try {
     const AllDelete = false
     if (AllDelete) {
-      console.log('Full Delete !')
+      console.log('Full Delete!')
       await sequelize.drop({ cascade: true })
       return
     }
 
-    console.log('Check for tables')
+    console.log('Check for tables!')
     const roles = await roleRepos.getAll()
     const rolesGroup = await roleGroupRepos.getAll()
     const divisions = await DivisionRepos.getAll()
@@ -56,19 +59,24 @@ export const firstStart = async () => {
     const typ_malfunctions = await TypicalMalfunctionsRepos.getAll()
     const sla = await SLARepos.getAll()
     const ola = await OLARepos.getAll()
-    const typesSla = await TypesSLARepos.getAll()
     const clients = await ClientsRepos.getAll()
+    const incs = await IncidentRepos.getAll()
+    const incStatuses = await IncidentStatusesRepos.getAll()
+    const typesOfWork = await TypesOfWorkRepos.getAll()
 
+    console.log('End Check for tables!')
     const deleteClients = false
     if (deleteClients) {
       console.log('Delete Clients')
       await ClientsRepos.drop({ cascade: true })
     } else {
+      console.log('Check Clients')
       if (clients.length) {
         console.log(
           'Первый запуск таблиц Clients невозможен! Какая-то из таблиц уже существует!'
         )
       } else {
+        console.log('Create Clients')
         await ClientsRepos.bulkCreate(clientsStartData)
       }
     }
@@ -80,11 +88,13 @@ export const firstStart = async () => {
       await RegionsRepos.drop({ cascade: true })
       await ObjectsRepos.drop({ cascade: true })
     } else {
+      console.log('Check Addresses')
       if (addresses.length || regions.length) {
         console.log(
           'Первый запуск таблиц Address и Regions невозможен! Какая-то из таблиц уже существует!'
         )
       } else {
+        console.log('Create Addresses')
         if (!regions.length) {
           const newRegions = await RegionsRepos.bulkCreate(regionsStartData)
           const newAddressesData = addressesStartData.map(value => {
@@ -109,35 +119,61 @@ export const firstStart = async () => {
       }
     }
 
+    const deleteINC = false
+    if (deleteINC) {
+      console.log('Delete INC')
+      await IncidentRepos.drop({ cascade: true })
+      await IncidentStatusesRepos.drop({ cascade: true })
+    } else {
+      console.log('Check INC')
+      if (incs.length || incStatuses.length) {
+        console.log(
+          'Первый запуск таблиц INC, INCStatuses невозможен! Какая-то из таблиц уже существует!'
+        )
+      } else {
+        console.log('Create INC')
+        await IncidentStatusesRepos.bulkCreate(incStatusesStartData)
+      }
+    }
+    console.log('End delete Clients!')
+
     const deleteSLA = false
     if (deleteSLA) {
       console.log('Delete SLA')
       await SLARepos.drop({ cascade: true })
       await OLARepos.drop({ cascade: true })
-      await TypesSLARepos.drop({ cascade: true })
+      await TypesOfWorkRepos.drop({ cascade: true })
     } else {
-      if (sla.length || ola.length || typesSla.length) {
+      console.log('Check SLA')
+      if (sla.length || ola.length || typesOfWork.length) {
         console.log(
-          'Первый запуск таблиц SLA, OLA, TypesSLA невозможен! Какая-то из таблиц уже существует!'
+          'Первый запуск таблиц SLA, OLA, TypesOfWork невозможен! Какая-то из таблиц уже существует!'
         )
       } else {
-        const types = await TypesSLARepos.bulkCreate(typesSLAStartData)
+        console.log('Create SLA')
+        const typesWork = await TypesOfWorkRepos.bulkCreate(
+          typesOfWorkStartData
+        )
+        console.log('typesWork = ', typesWork)
         const newSLA = slaStartData.map((item, index) => {
           return {
             ...item,
-            id_typeSLA: index <= 0 ? types[index].id : types[1].id,
+            id_typeOfWork: typesWork[index].id,
           }
         })
-        const newOLA = olaStartData.map((item, index) => {
-          return {
-            ...item,
-            id_typeSLA: index <= 0 ? types[index].id : types[1].id,
-          }
-        })
+        console.log('newSLA = ', newSLA)
+        // const newOLA = olaStartData.map((item, index) => {
+        //   return {
+        //     ...item,
+        //     id_typeOfWork: index <= 0 ? typesWork[index].id : typesWork[1].id,
+        //   }
+        // })
         await SLARepos.bulkCreate(newSLA)
-        await OLARepos.bulkCreate(newOLA)
+        // await OLARepos.bulkCreate(newOLA)
       }
     }
+
+    console.log('End delete SLA!')
 
     const deleteClassifier = false
     if (deleteClassifier) {

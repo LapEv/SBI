@@ -17,7 +17,6 @@ import { ChooseModalProps } from './interfaces'
 
 export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(
   ({ modalImage, handleModal }: ChooseModalProps, ref) => {
-    console.log('modalImage = ', modalImage)
     return (
       <>
         {modalImage === 'newClient' && (

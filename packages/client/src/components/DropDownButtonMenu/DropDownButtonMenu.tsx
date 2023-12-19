@@ -18,12 +18,14 @@ interface DropDownMenuProps {
   }[]
   divider?: number[]
   onClick: (name: string | null) => void
+  vertical?: 'top' | 'center' | 'bottom' | number
 }
 export const DropDownMenu = ({
   popover,
   data,
   divider,
   onClick,
+  vertical,
 }: DropDownMenuProps) => {
   const theme = useTheme()
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
@@ -85,7 +87,7 @@ export const DropDownMenu = ({
           open={open}
           anchorEl={anchorEl}
           anchorOrigin={{
-            vertical: 'center',
+            vertical: vertical ?? 'center',
             horizontal: 'left',
           }}
           transformOrigin={{

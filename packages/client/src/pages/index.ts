@@ -1,7 +1,6 @@
 export { LoginPage as Login } from './Login/Login'
 export { MainPage as Home } from './Main'
 export { ProfilePage as Profile } from './Profile'
-export { ControlRoomPage as ControlRoom } from './ControlRoom'
 export { IncidentsPage as Incidents } from './ControlRoom'
 export { IncidentsConfirmPage as IncidentsConfirm } from './ControlRoom'
 export { WarehousePage as Warehouse } from './Warehouse'

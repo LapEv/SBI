@@ -64,14 +64,6 @@ function App() {
                   }
                 />
                 <Route
-                  path={Paths.ControlRoom}
-                  element={
-                    <RequiredAuth>
-                      <Pages.ControlRoom />
-                    </RequiredAuth>
-                  }
-                />
-                <Route
                   path={Paths.Incidents}
                   element={
                     <RequiredAuth>

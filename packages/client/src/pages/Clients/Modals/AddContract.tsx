@@ -28,28 +28,31 @@ import { useObjects } from 'hooks/objects/useObjects'
 import { useClients } from 'hooks/clients/useClients'
 import { convetStringToDate } from 'utils/convertDate'
 import dayjs from 'dayjs'
-import { ICheckBoxGroupData } from 'components/CheckBoxGroup/interface'
-import { CheckBoxGroups } from 'components/CheckBoxGroup'
+import {
+  DataList,
+  ICheckBoxGroupData,
+} from 'components/CheckBoxGroup/interface'
+import { CheckBoxGroups, Item } from 'components/CheckBoxGroup'
 
 export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const [openList, setOpenList] = useState(false)
+    const [openListObjects, setOpenListObjects] = useState(false)
     const [{ clients }, { getClients }] = useClients()
     const [{ contracts }, { getContracts, newContract }] = useContracts()
-    const [{ equipments, models }, { getClassifierEquipments }] =
-      useClassifier()
+    const [{ equipments }, { getClassifierEquipments }] = useClassifier()
     const [{ sla }, { getSLA }] = useSLA()
     const [{ objects }, { getObjects }] = useObjects()
     const [client, setClient] = useState<Options>(emptyValue)
     const [slaList, setSLAList] = useState<Options[]>([])
-    const [objectList, setObjectList] = useState<Options[]>([])
+    const [objectList, setObjectList] = useState<DataList[]>([])
+    const [selectedObjects, setSelectedObjects] = useState<string[]>([])
     const [equipmentList, setEquipmentList] = useState<ICheckBoxGroupData[]>([])
     const [selectedEquipments, setSelectedEquipments] = useState<string[]>([])
     const [selectedModels, setSelectedModels] = useState<string[]>([])
     const [errSLA, setErrSLA] = useState<boolean>(false)
-    const [errObject, setErrObject] = useState<boolean>(false)
     const [_, { setMessage }] = useMessage()
     const [dateValue, setDateValue] = useState<string>('')
     const { handleSubmit, control } = useForm<AddValuesProps>({
@@ -88,7 +91,7 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
         sla: slaList.map(item => item.id),
         equipment: selectedEquipments,
         model: selectedModels,
-        objects: objectList.map(item => item.id),
+        objects: selectedObjects,
         id_client: client.id,
       })
       handleModal(false)
@@ -107,18 +110,37 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
         return {
           id: id as string,
           group: equipment,
-          checkedGroup: false,
+          checkedGroup: selectedEquipments.includes(id as string),
           items: ClassifierModels?.map(({ model, id }) => {
             return {
               item: model,
               id: id as string,
-              checkedItems: false,
+              checkedItems: selectedModels.includes(id as string),
             }
           }) as [],
         }
       })
       setEquipmentList(data)
-    }, [equipments])
+    }, [equipments, openList])
+
+    useEffect(() => {
+      const listData = objects.map(({ object, id }) => {
+        return {
+          name: object,
+          id: id as string,
+          initChecked: selectedObjects.includes(id as string),
+        }
+      })
+      setObjectList(listData)
+    }, [objects, openListObjects])
+
+    const onChooseObjects = (checked: boolean, id: string) => {
+      if (checked) {
+        setSelectedObjects([...selectedObjects, id])
+        return
+      }
+      setSelectedObjects(selectedObjects.filter(item => item !== id))
+    }
 
     return (
       <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
@@ -178,8 +200,8 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
         />
         <ListItemButton
           divider={openList}
-          sx={{ ...classifierChild2Component, mt: 1 }}
-          onClick={() => setOpenList(!openList)}>
+          sx={{ ...classifierChild2Component, mt: 2 }}
+          onClick={() => (setOpenList(!openList), setOpenListObjects(false))}>
           <ListItemText
             primary={'Выбор классификатора'}
             sx={{ ml: 2 }}
@@ -194,25 +216,46 @@ export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
           unmountOnExit>
           <CheckBoxGroups
             data={equipmentList}
+            startDataGroups={selectedEquipments}
+            startDataItems={selectedModels}
             onChooseGroup={setSelectedEquipments}
             onChooseItems={setSelectedModels}
           />
         </Collapse>
-        <DropDownMultiple
-          data={objects.map(item => {
-            return {
-              ['label']: item.object as string,
-              ['id']: item.id as string,
-            }
-          })}
-          props={{ mt: 3 }}
-          onChange={setObjectList}
-          value={objectList}
-          label="Выберите объекты"
-          errorLabel="Не выбраны объекты!"
-          error={errObject}
-        />
 
+        <ListItemButton
+          divider={openListObjects}
+          sx={{ ...classifierChild2Component, mt: 2 }}
+          onClick={() => (
+            setOpenListObjects(!openListObjects), setOpenList(false)
+          )}>
+          <ListItemText
+            primary={'Выбор объектов'}
+            sx={{ ml: 2 }}
+            primaryTypographyProps={{
+              fontSize: '1rem!important',
+              fontWeight: 'bold',
+            }}
+          />
+          <RotateButton open={openListObjects} size={'2rem'} />
+        </ListItemButton>
+        <Collapse
+          sx={{ ...classifierChild2Component, width: '85%' }}
+          in={openListObjects}
+          timeout="auto"
+          unmountOnExit>
+          {objectList?.map(({ name, id, initChecked, comment }) => (
+            <Item
+              name={name}
+              id={`${id}`}
+              comment={comment}
+              groupChecked={null}
+              onChooseItems={onChooseObjects}
+              initChecked={initChecked}
+              key={id as string}
+            />
+          ))}
+        </Collapse>
         <ButtonsModalSection
           closeModal={() => handleModal(false)}
           btnName="Сохранить"

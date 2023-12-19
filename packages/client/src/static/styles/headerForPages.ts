@@ -18,3 +18,9 @@ export const headerForPages = {
   pl: 5,
   pr: 2,
 }
+
+export const doubleMenuForHeader = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+}

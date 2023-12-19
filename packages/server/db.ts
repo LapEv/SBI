@@ -25,8 +25,7 @@ import {
   throughContractsSLA,
   throughContractsModels,
 } from './models/contracts'
-import { typesSLA } from './models/sla'
-import { incident, incindentStatuses } from './models/incidents'
+import { incident, incindentStatuses, typesOfWork } from './models/incidents'
 
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
   process.env
@@ -74,7 +73,6 @@ export const TypicalMalfunctions = sequelize.define(
 
 export const SLA = sequelize.define('SLA', sla, {})
 export const OLA = sequelize.define('OLA', ola, {})
-export const TypesSLA = sequelize.define('TypesSLA', typesSLA, {})
 
 export const ThroughContractsSLA = sequelize.define(
   'ThroughContractsSLA',
@@ -106,6 +104,7 @@ export const IncindentStatuses = sequelize.define(
   incindentStatuses,
   {}
 )
+export const TypesOfWork = sequelize.define('TypesOfWork', typesOfWork, {})
 
 RolesGroup.belongsToMany(Roles, { through: 'ThroughRolesGroup' })
 Roles.belongsToMany(RolesGroup, { through: 'ThroughRolesGroup' })
@@ -204,11 +203,11 @@ ClassifierModels.belongsToMany(Contracts, {
   foreignKey: 'id_model',
 })
 
-TypesSLA.hasOne(SLA, { foreignKey: 'id_typeSLA', sourceKey: 'id' })
-SLA.belongsTo(TypesSLA, { foreignKey: 'id_typeSLA', targetKey: 'id' })
+TypesOfWork.hasOne(SLA, { foreignKey: 'id_typeOfWork', sourceKey: 'id' })
+SLA.belongsTo(TypesOfWork, { foreignKey: 'id_typeOfWork', targetKey: 'id' })
 
-TypesSLA.hasOne(OLA, { foreignKey: 'id_typeSLA', sourceKey: 'id' })
-OLA.belongsTo(TypesSLA, { foreignKey: 'id_typeSLA', targetKey: 'id' })
+TypesOfWork.hasOne(OLA, { foreignKey: 'id_typeOfWork', sourceKey: 'id' })
+OLA.belongsTo(TypesOfWork, { foreignKey: 'id_typeOfWork', targetKey: 'id' })
 
 IncindentStatuses.hasOne(Incidents, {
   foreignKey: 'id_incStatus',
@@ -216,6 +215,15 @@ IncindentStatuses.hasOne(Incidents, {
 })
 Incidents.belongsTo(IncindentStatuses, {
   foreignKey: 'id_incStatus',
+  targetKey: 'id',
+})
+
+TypesOfWork.hasOne(Incidents, {
+  foreignKey: 'id_typeOfWork',
+  sourceKey: 'id',
+})
+Incidents.belongsTo(TypesOfWork, {
+  foreignKey: 'id_typeOfWork',
   targetKey: 'id',
 })
 
@@ -261,7 +269,6 @@ export const TypicalMalfunctionsRepos = new Repository(
 
 export const SLARepos = new Repository(SLA as ModelCtor)
 export const OLARepos = new Repository(OLA as ModelCtor)
-export const TypesSLARepos = new Repository(TypesSLA as ModelCtor)
 
 export const ThroughContractsSLARepos = new Repository(
   ThroughContractsSLA as ModelCtor
@@ -279,8 +286,8 @@ export const ThroughContractsObjectsRepos = new Repository(
 export const IncidentStatusesRepos = new Repository(
   IncindentStatuses as ModelCtor
 )
-
 export const IncidentRepos = new Repository(Incidents as ModelCtor)
+export const TypesOfWorkRepos = new Repository(TypesOfWork as ModelCtor)
 
 export async function dbConnect() {
   try {

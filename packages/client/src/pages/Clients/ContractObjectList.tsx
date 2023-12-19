@@ -114,7 +114,7 @@ export function ContractObjectList({ objectID, onChooseItems }: IObjectList) {
             InputProps={{
               endAdornment: <SearchIconElement />,
             }}
-          />{' '}
+          />
           {admin && (
             <IconButton
               onMouseEnter={(event: MouseEvent<HTMLElement>) =>

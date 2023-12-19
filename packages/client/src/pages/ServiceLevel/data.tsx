@@ -219,7 +219,7 @@ export const MapOLAViewInputFields = [
 
 export const MapTypesSLAInputFields = [
   {
-    name: 'ola',
+    name: 'typesSLA',
     label: 'Введите новый тип SLA',
     validation: lightTextValidation,
     type: 'text',

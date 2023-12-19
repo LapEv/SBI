@@ -42,6 +42,43 @@ export const incidentRouter = (apiRouter: Router) => {
     roleMiddleware(['changeIncidentStatuses', 'ADMIN', 'SUPERADMIN']),
     service.changeIncidentStatuses
   )
+
+  router.get(
+    '/getTypesOfWork',
+    roleMiddleware(['getTypesOfWork', 'ADMIN', 'SUPERADMIN']),
+    service.getTypesOfWork
+  )
+  router.get(
+    '/getAllTypesOfWork',
+    roleMiddleware(['getAllTypesOfWork', 'ADMIN', 'SUPERADMIN']),
+    service.getAllTypesOfWork
+  )
+  router.post(
+    '/newTypeOfWork',
+    roleMiddleware(['newTypeOfWork', 'ADMIN', 'SUPERADMIN']),
+    service.newTypeOfWork
+  )
+  router.post(
+    '/deleteTypesOfWork',
+    roleMiddleware(['deleteTypesOfWork', 'ADMIN', 'SUPERADMIN']),
+    service.deleteTypesOfWork
+  )
+  router.delete(
+    '/fullDeleteTypesOfWork',
+    roleMiddleware(['fullDeleteTypesOfWork', 'ADMIN', 'SUPERADMIN']),
+    service.fullDeleteTypesOfWork
+  )
+  router.post(
+    '/pullTypesOfWorkFromArchive',
+    roleMiddleware(['ADMIN', 'SUPERADMIN', 'pullTypesOfWorkFromArchive']),
+    service.pullTypesOfWorkFromArchive
+  )
+  router.post(
+    '/changeTypesOfWork',
+    roleMiddleware(['changeTypesOfWork', 'ADMIN', 'SUPERADMIN']),
+    service.changeTypesOfWork
+  )
+
   router.get(
     '/getINC',
     roleMiddleware(['getINC', 'ADMIN', 'SUPERADMIN']),

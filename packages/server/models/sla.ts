@@ -4,6 +4,7 @@ import { DataType, Model } from 'sequelize-typescript'
 export interface SLA {
   id: string
   sla: string
+  days: number
   time: string
   timeStart: string
   timeEnd: string
@@ -21,6 +22,10 @@ export const sla: ModelAttributes<Model, SLA> = {
     type: DataType.STRING,
     allowNull: false,
     unique: true,
+  },
+  days: {
+    type: DataType.INTEGER,
+    allowNull: false,
   },
   time: {
     type: DataType.TIME,

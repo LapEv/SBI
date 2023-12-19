@@ -88,7 +88,7 @@ export interface ChangeINC {
 }
 
 export interface ChangeINCStatuses {
-  incStatuses: string
+  statusINC: string
   id?: string
 }
 

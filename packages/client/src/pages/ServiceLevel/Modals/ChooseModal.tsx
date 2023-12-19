@@ -7,7 +7,7 @@ import {
   NewTypesSLA,
   DeleteTypesSLA,
   ChangeTypeSLA,
-} from './'
+} from '.'
 import { ModalTitles } from '../data'
 import { ChooseModalProps } from './interfaces'
 

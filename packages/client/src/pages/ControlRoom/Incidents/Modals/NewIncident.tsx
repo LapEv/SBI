@@ -94,8 +94,8 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                         props={{ mt: 1, width: '90%' }}
                         onChange={data => setSelectedClient(data)}
                         value={selectedClient.label || ''}
-                        label="Выберите тип SLA"
-                        errorLabel="Не выбран тип SLA!"
+                        label="Выберите тип работ"
+                        errorLabel="Не выбрано ни одного типа работ!"
                       />
                     )
                   }

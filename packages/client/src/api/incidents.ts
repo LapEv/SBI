@@ -228,11 +228,11 @@ export const getTypesOfWork = createAsyncThunk(
 
 export const newTypeOfWork = createAsyncThunk(
   'incidents/newTypeOfWork',
-  async (typeSLA: AddTypesOfWork, thunkAPI) => {
+  async (typeOfWork: AddTypesOfWork, thunkAPI) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.INC.newTypeOfWork,
-        typeSLA
+        typeOfWork
       )
       return {
         data,

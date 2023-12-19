@@ -1,13 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import {
-  SLA,
-  OLA,
-  AnswerSLA,
-  AnswerOLA,
-  SLAState,
-  TypesSLA,
-  AnswerTypesSLA,
-} from './interfaces'
+import { SLA, OLA, AnswerSLA, AnswerOLA, SLAState } from './interfaces'
 import {
   getSLA,
   getOLA,
@@ -17,16 +9,11 @@ import {
   deleteOLA,
   changeSLA,
   changeOLA,
-  getTypesSLA,
-  newTypesSLA,
-  deleteTypesSLA,
-  changeTypesSLA,
 } from 'api/sla'
 
 const initialState: SLAState = {
   sla: [],
   ola: [],
-  typesSLA: [],
   activeSLA: '',
   activeList: '',
   isLoadingSLA: false,
@@ -137,66 +124,6 @@ export const slaSlise = createSlice({
       state.isLoadingSLA = true
     },
     [changeOLA.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingSLA = false
-      state.error = action.payload
-    },
-    [getTypesSLA.fulfilled.type]: (
-      state,
-      action: PayloadAction<TypesSLA[]>
-    ) => {
-      state.isLoadingSLA = false
-      state.error = ''
-      state.typesSLA = action.payload
-    },
-    [getTypesSLA.pending.type]: state => {
-      state.isLoadingSLA = true
-    },
-    [getTypesSLA.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingSLA = false
-      state.error = action.payload
-    },
-    [newTypesSLA.fulfilled.type]: (
-      state,
-      action: PayloadAction<AnswerTypesSLA>
-    ) => {
-      state.isLoadingSLA = false
-      state.error = ''
-      state.typesSLA = action.payload.data
-    },
-    [newTypesSLA.pending.type]: state => {
-      state.isLoadingSLA = true
-    },
-    [newTypesSLA.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingSLA = false
-      state.error = action.payload
-    },
-    [deleteTypesSLA.fulfilled.type]: (
-      state,
-      action: PayloadAction<AnswerTypesSLA>
-    ) => {
-      state.isLoadingSLA = false
-      state.error = ''
-      state.typesSLA = action.payload.data
-    },
-    [deleteTypesSLA.pending.type]: state => {
-      state.isLoadingSLA = true
-    },
-    [deleteTypesSLA.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingSLA = false
-      state.error = action.payload
-    },
-    [changeTypesSLA.fulfilled.type]: (
-      state,
-      action: PayloadAction<AnswerTypesSLA>
-    ) => {
-      state.isLoadingSLA = false
-      state.error = ''
-      state.typesSLA = action.payload.data
-    },
-    [changeTypesSLA.pending.type]: state => {
-      state.isLoadingSLA = true
-    },
-    [changeTypesSLA.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingSLA = false
       state.error = action.payload
     },

@@ -19,33 +19,57 @@ export const ServiceList = memo(({ name, label }: IServiceList) => {
 
   useEffect(() => {
     setData(
-      sla.map(({ sla, id, time, timeStart, timeEnd, id_typeSLA, TypesSLA }) => {
-        return {
+      sla.map(
+        ({
           sla,
           id,
+          days,
           time,
           timeStart,
           timeEnd,
-          id_typeSLA,
-          TypesSLA,
+          id_typeOfWork,
+          TypesOfWork,
+        }) => {
+          return {
+            sla,
+            days,
+            id,
+            time,
+            timeStart,
+            timeEnd,
+            id_typeOfWork,
+            TypesOfWork,
+          }
         }
-      })
+      )
     )
   }, [sla])
 
   useEffect(() => {
     setData(
-      ola.map(({ ola, id, time, timeStart, timeEnd, id_typeSLA, TypesSLA }) => {
-        return {
+      ola.map(
+        ({
           ola,
           id,
+          days,
           time,
           timeStart,
           timeEnd,
-          id_typeSLA,
-          TypesSLA,
+          id_typeOfWork,
+          TypesOfWork,
+        }) => {
+          return {
+            ola,
+            id,
+            days,
+            time,
+            timeStart,
+            timeEnd,
+            id_typeOfWork,
+            TypesOfWork,
+          }
         }
-      })
+      )
     )
   }, [ola])
 
@@ -81,21 +105,23 @@ export const ServiceList = memo(({ name, label }: IServiceList) => {
           ({
             sla,
             ola,
+            days,
             time,
             timeStart,
             timeEnd,
             id,
-            id_typeSLA,
-            TypesSLA,
+            id_typeOfWork,
+            TypesOfWork,
           }) => (
             <SLAList
               sla={sla}
               ola={ola}
+              days={days}
               time={time}
               timeStart={timeStart}
               timeEnd={timeEnd}
-              id_typeSLA={id_typeSLA}
-              TypesSLA={TypesSLA}
+              id_typeOfWork={id_typeOfWork}
+              TypesOfWork={TypesOfWork}
               id={id as string}
               key={`${id}`}
             />

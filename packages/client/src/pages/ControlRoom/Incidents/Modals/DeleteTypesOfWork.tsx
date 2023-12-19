@@ -22,7 +22,7 @@ export const DeleteTypesOfWork = React.forwardRef<unknown, ChooseModalProps>(
     const [selectedTypesOfWork, setSelectedTypesOfWork] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
     const [filterText, setFilterText] = useState<string>('')
-    const filteredTypesSLA = useFilteredData<TypesOfWork>(
+    const filteredTypesOfWork = useFilteredData<TypesOfWork>(
       typesOfWork,
       filterText,
       'typeOfWork'
@@ -85,7 +85,7 @@ export const DeleteTypesOfWork = React.forwardRef<unknown, ChooseModalProps>(
         <Box
           ref={boxRef}
           sx={{ ...boxDataModal, height: filterText ? height : 'auto' }}>
-          {filteredTypesSLA.map(({ typeOfWork, id }) => (
+          {filteredTypesOfWork.map(({ typeOfWork, id }) => (
             <Item
               name={typeOfWork}
               id={`${id}`}
@@ -96,7 +96,7 @@ export const DeleteTypesOfWork = React.forwardRef<unknown, ChooseModalProps>(
           ))}
         </Box>
         <Box sx={{ color: theme.palette.error.main, height: 20 }}>
-          {errSelectedItems && 'Не выбран ни один тип SLA!'}
+          {errSelectedItems && 'Не выбрано ни одного типа работ!'}
         </Box>
         <ButtonsModalSection
           closeModal={() => handleModal(false)}

@@ -14,11 +14,13 @@ import { ButtonsModalSection } from 'components/Buttons'
 import { useSLA } from 'hooks/sla/useSLA'
 import { DropDown, emptyValue } from 'components/DropDown'
 import { Options } from 'components/DropDown/interface'
+import { useIncidents } from 'hooks/incidents/useINC'
 
 export const NewOLA = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
-    const [{ typesSLA }, { newOLA, getTypesSLA }] = useSLA()
+    const [{ typesOfWork }, { getTypesOfWork }] = useIncidents()
+    const [_, { newOLA }] = useSLA()
     const [listTypes, setListTypes] = useState<Options[]>([])
     const [selectedType, setSelectedType] = useState<Options>(emptyValue)
     /* eslint-enable @typescript-eslint/no-unused-vars */
@@ -37,26 +39,27 @@ export const NewOLA = React.forwardRef<unknown, ChooseModalProps>(
     function changeData({ list }: AddValuesProps) {
       newOLA({
         ola: list[0].value,
-        time: list[1].value,
-        timeStart: list[2].value,
-        timeEnd: list[3].value,
-        id_typeSLA: selectedType.id,
+        days: list[1].value,
+        time: list[3].value,
+        timeStart: list[4].value,
+        timeEnd: list[5].value,
+        id_typeOfWork: selectedType.id,
       })
       handleModal(false)
     }
 
     useEffect(() => {
-      const list = typesSLA.map(({ typeSLA, id }) => {
+      const list = typesOfWork.map(({ typeOfWork, id }) => {
         return {
-          label: typeSLA,
+          label: typeOfWork,
           id: id as string,
         }
       })
       setListTypes(list)
-    }, [typesSLA])
+    }, [typesOfWork])
 
     useEffect(() => {
-      getTypesSLA()
+      getTypesOfWork()
     }, [])
 
     return (
@@ -71,7 +74,7 @@ export const NewOLA = React.forwardRef<unknown, ChooseModalProps>(
                 name={`list.${index}.value`}
                 rules={validation}
                 render={({ field }) =>
-                  name !== 'TypeSLA' ? (
+                  name !== 'TypeOfWork' ? (
                     <TextField
                       {...field}
                       inputRef={field.ref}
@@ -91,8 +94,8 @@ export const NewOLA = React.forwardRef<unknown, ChooseModalProps>(
                       props={{ mt: 2, width: '90%' }}
                       onChange={setSelectedType}
                       value={selectedType.label || ''}
-                      label="Выберите тип SLA"
-                      errorLabel="Не выбран тип SLA!"
+                      label="Выберите тип работ"
+                      errorLabel="Не выбрано ни одного типа работ!"
                     />
                   )
                 }

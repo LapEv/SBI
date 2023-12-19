@@ -13,12 +13,13 @@ export const SLAList = memo(
   ({
     sla,
     ola,
+    days,
     time,
     timeStart,
     timeEnd,
     id,
-    id_typeSLA,
-    TypesSLA,
+    id_typeOfWork,
+    TypesOfWork,
   }: IServiceListData) => {
     const [{ admin }] = useAuth()
     const [{ activeSLA }, { setActiveSLA, changeSLA, changeOLA }] = useSLA()
@@ -40,11 +41,27 @@ export const SLAList = memo(
       setModal(false)
       if (!answer) return
       if (sla) {
-        changeSLA({ sla: text, id, time, timeStart, timeEnd, id_typeSLA })
+        changeSLA({
+          sla: text,
+          id,
+          days,
+          time,
+          timeStart,
+          timeEnd,
+          id_typeOfWork,
+        })
         return
       }
       if (ola) {
-        changeOLA({ ola: text, id, time, timeStart, timeEnd, id_typeSLA })
+        changeOLA({
+          ola: text,
+          id,
+          days,
+          time,
+          timeStart,
+          timeEnd,
+          id_typeOfWork,
+        })
         return
       }
     }
@@ -88,12 +105,13 @@ export const SLAList = memo(
           <SLAPage
             sla={sla}
             ola={ola}
+            days={days}
             time={time}
             timeStart={timeStart}
             timeEnd={timeEnd}
-            id_typeSLA={id_typeSLA}
+            id_typeOfWork={id_typeOfWork}
             id={id as string}
-            TypesSLA={TypesSLA}
+            TypesOfWork={TypesOfWork}
             key={`${id}`}
           />
         </Collapse>

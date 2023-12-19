@@ -73,6 +73,10 @@ export const NoRequiredValidation = {
   },
 }
 
+export const RequiredValidation = {
+  required: REQUIRED_FIELD,
+}
+
 export const textValidation = {
   required: REQUIRED_FIELD,
   validate: (value: string) => {

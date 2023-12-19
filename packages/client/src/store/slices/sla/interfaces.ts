@@ -3,6 +3,7 @@ import { TypesOfWork } from '../incidents/interfaces'
 export interface SLA {
   id: string
   sla: string
+  days: string
   time: string
   timeStart: string
   timeEnd: string
@@ -13,6 +14,7 @@ export interface SLA {
 
 export interface AddSLA {
   sla: string
+  days: string
   time: string
   timeStart: string
   timeEnd: string
@@ -22,6 +24,7 @@ export interface AddSLA {
 export interface OLA {
   id: string
   ola: string
+  days: string
   time: string
   timeStart: string
   timeEnd: string
@@ -32,6 +35,7 @@ export interface OLA {
 
 export interface AddOLA {
   ola: string
+  days: string
   time: string
   timeStart: string
   timeEnd: string
@@ -60,6 +64,7 @@ export type SLAState = {
 export interface ChangeSLA {
   sla: string
   id?: string
+  days: string
   time: string
   timeStart: string
   timeEnd: string
@@ -68,6 +73,7 @@ export interface ChangeSLA {
 export interface ChangeOLA {
   ola: string
   id?: string
+  days: string
   time: string
   timeStart: string
   timeEnd: string
@@ -82,6 +88,7 @@ export interface IServiceListData {
   sla?: string
   ola?: string
   id?: string
+  days: string
   time: string
   timeStart: string
   timeEnd: string
@@ -93,6 +100,7 @@ export interface SLAList {
   sla?: string
   ola?: string
   id?: string
+  days: string
   time: string
   timeStart: string
   timeEnd: string
@@ -105,6 +113,7 @@ export interface ServiceListItem {
     sla?: string
     ola?: string
     id?: string
+    days: string
     time: string
     timeStart: string
     timeEnd: string

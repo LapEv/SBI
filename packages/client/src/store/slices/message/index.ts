@@ -46,13 +46,10 @@ import {
 import {
   changeOLA,
   changeSLA,
-  changeTypesSLA,
   deleteOLA,
   deleteSLA,
-  deleteTypesSLA,
   newOLA,
   newSLA,
-  newTypesSLA,
 } from 'api/sla'
 import {
   changeClient,
@@ -70,6 +67,9 @@ import {
   deleteIncidentStatuses,
   newINC,
   newIncidentStatuses,
+  newTypeOfWork,
+  deleteTypesOfWork,
+  changeTypesOfWork,
 } from 'api/incidents'
 
 const initialState: MessageState = {
@@ -757,7 +757,7 @@ export const messageSlise = createSlice({
       state.type = 'error'
       state.text = action.payload
     },
-    [newTypesSLA.fulfilled.type]: (
+    [newTypeOfWork.fulfilled.type]: (
       state,
       action: PayloadAction<AnswerMessage>
     ) => {
@@ -765,15 +765,15 @@ export const messageSlise = createSlice({
       state.text = action.payload.message.text
       state.type = action.payload.message.type
     },
-    [newTypesSLA.pending.type]: state => {
+    [newTypeOfWork.pending.type]: state => {
       state.isLoadingMessage = true
     },
-    [newTypesSLA.rejected.type]: (state, action: PayloadAction<string>) => {
+    [newTypeOfWork.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingMessage = false
       state.type = 'error'
       state.text = action.payload
     },
-    [deleteTypesSLA.fulfilled.type]: (
+    [deleteTypesOfWork.fulfilled.type]: (
       state,
       action: PayloadAction<AnswerMessage>
     ) => {
@@ -781,15 +781,18 @@ export const messageSlise = createSlice({
       state.text = action.payload.message.text
       state.type = action.payload.message.type
     },
-    [deleteTypesSLA.pending.type]: state => {
+    [deleteTypesOfWork.pending.type]: state => {
       state.isLoadingMessage = true
     },
-    [deleteTypesSLA.rejected.type]: (state, action: PayloadAction<string>) => {
+    [deleteTypesOfWork.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
       state.isLoadingMessage = false
       state.type = 'error'
       state.text = action.payload
     },
-    [changeTypesSLA.fulfilled.type]: (
+    [changeTypesOfWork.fulfilled.type]: (
       state,
       action: PayloadAction<AnswerMessage>
     ) => {
@@ -798,10 +801,13 @@ export const messageSlise = createSlice({
       state.text = action.payload.message.text
       state.type = action.payload.message.type
     },
-    [changeTypesSLA.pending.type]: state => {
+    [changeTypesOfWork.pending.type]: state => {
       state.isLoadingMessage = true
     },
-    [changeTypesSLA.rejected.type]: (state, action: PayloadAction<string>) => {
+    [changeTypesOfWork.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
       state.isLoadingMessage = false
       state.type = 'error'
       state.text = action.payload

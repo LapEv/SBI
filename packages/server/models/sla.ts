@@ -48,6 +48,7 @@ export const sla: ModelAttributes<Model, SLA> = {
 export interface OLA {
   id: string
   ola: string
+  days: number
   time: string
   timeStart: string
   timeEnd: string
@@ -66,6 +67,10 @@ export const ola: ModelAttributes<Model, OLA> = {
     allowNull: false,
     unique: true,
   },
+  days: {
+    type: DataType.INTEGER,
+    allowNull: false,
+  },
   time: {
     type: DataType.STRING,
     allowNull: false,
@@ -77,30 +82,6 @@ export const ola: ModelAttributes<Model, OLA> = {
   timeEnd: {
     type: DataType.TIME,
     allowNull: false,
-  },
-  active: {
-    type: DataType.BOOLEAN,
-    allowNull: false,
-  },
-}
-
-export interface TypesSLA {
-  id: string
-  typeSLA: string
-  active: boolean
-}
-
-export const typesSLA: ModelAttributes<Model, TypesSLA> = {
-  id: {
-    type: DataType.STRING,
-    defaultValue: DataType.UUIDV4,
-    allowNull: false,
-    primaryKey: true,
-  },
-  typeSLA: {
-    type: DataType.STRING,
-    allowNull: false,
-    unique: true,
   },
   active: {
     type: DataType.BOOLEAN,

@@ -71,7 +71,7 @@ export interface AnswerINCStatuses {
   type: string
 }
 
-export interface AnswerTypesSLA {
+export interface AnswerTypesOfWork {
   data: TypesOfWork[]
   type: string
 }
@@ -118,60 +118,3 @@ export interface IServiceList {
   name: string
   label: string
 }
-
-// export interface IServiceListData {
-//   sla?: string
-//   ola?: string
-//   id?: string
-//   time: string
-//   timeStart: string
-//   timeEnd: string
-//   id_typeSLA: string
-//   TypesSLA: TypesSLA
-// }
-
-// export interface SLAList {
-//   sla?: string
-//   ola?: string
-//   id?: string
-//   time: string
-//   timeStart: string
-//   timeEnd: string
-//   id_typeSLA: string
-//   TypesSLA: TypesSLA
-// }
-
-// export interface ServiceListItem {
-//   item: {
-//     sla?: string
-//     ola?: string
-//     id?: string
-//     time: string
-//     timeStart: string
-//     timeEnd: string
-//     id_typeSLA: string
-//   }[]
-// }
-
-// export interface INCValues {
-//   list: {
-//     name: string
-//     label: string
-//     value: string | TypesSLA
-//     validation: object
-//     disabled: boolean
-//     type: string
-//     required: boolean
-//   }[]
-// }
-
-// export interface AddValuesAddContract {
-//   listAddContract: {
-//     name: string
-//     label: string
-//     value: string
-//     validation: object
-//     type: string
-//     required?: boolean
-//   }[]
-// }

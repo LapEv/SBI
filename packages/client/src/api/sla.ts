@@ -70,17 +70,18 @@ export const deleteSLA = createAsyncThunk(
 export const changeSLA = createAsyncThunk(
   'sla/changeSLA',
   async (
-    { sla, id, time, timeStart, timeEnd, id_typeSLA }: ChangeSLA,
+    { sla, id, days, time, timeStart, timeEnd, id_typeOfWork }: ChangeSLA,
     thunkAPI
   ) => {
     try {
       const { data } = await authhost.post(ApiEndPoints.SLA.changeSLA, {
         sla,
         id,
+        days,
         time,
         timeStart,
         timeEnd,
-        id_typeSLA,
+        id_typeOfWork,
       })
       return {
         data,
@@ -159,17 +160,18 @@ export const deleteOLA = createAsyncThunk(
 export const changeOLA = createAsyncThunk(
   'sla/changeOLA',
   async (
-    { ola, id, time, timeStart, timeEnd, id_typeSLA }: ChangeOLA,
+    { ola, id, days, time, timeStart, timeEnd, id_typeOfWork }: ChangeOLA,
     thunkAPI
   ) => {
     try {
       const { data } = await authhost.post(ApiEndPoints.SLA.changeOLA, {
         ola,
         id,
+        days,
         time,
         timeStart,
         timeEnd,
-        id_typeSLA,
+        id_typeOfWork,
       })
       return {
         data,

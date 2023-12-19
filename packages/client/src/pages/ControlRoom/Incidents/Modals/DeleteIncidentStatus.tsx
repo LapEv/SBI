@@ -22,7 +22,7 @@ export const DeleteIncidentStatus = React.forwardRef<unknown, ChooseModalProps>(
     const [selectedincStatuses, setSelectedincStatuses] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
     const [filterText, setFilterText] = useState<string>('')
-    const filteredTypesSLA = useFilteredData<INCStatuses>(
+    const filteredIncStatuses = useFilteredData<INCStatuses>(
       incStatuses,
       filterText,
       'statusINC'
@@ -89,7 +89,7 @@ export const DeleteIncidentStatus = React.forwardRef<unknown, ChooseModalProps>(
             height: filterText ? height : 'auto',
             width: '95%',
           }}>
-          {filteredTypesSLA.map(({ statusINC, id }) => (
+          {filteredIncStatuses.map(({ statusINC, id }) => (
             <Item
               name={statusINC}
               id={`${id}`}

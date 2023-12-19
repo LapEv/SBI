@@ -7,22 +7,20 @@ import {
   useFormState,
 } from 'react-hook-form'
 import { TextField } from 'components/TextFields'
-import {
-  ChooseModalProps,
-  AddValuesProps,
-  AddValuesPropsSLA,
-} from './interfaces'
+import { ChooseModalProps, AddValuesPropsSLA } from './interfaces'
 import { MapSLAInputFields } from '../data'
 import { modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useSLA } from 'hooks/sla/useSLA'
 import { DropDown, emptyValue } from 'components/DropDown'
 import { Options } from 'components/DropDown/interface'
+import { useIncidents } from 'hooks/incidents/useINC'
 
 export const NewSLA = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
-    const [{ typesSLA }, { newSLA, getTypesSLA }] = useSLA()
+    const [{ typesOfWork }, { getTypesOfWork }] = useIncidents()
+    const [_, { newSLA }] = useSLA()
     const [listTypes, setListTypes] = useState<Options[]>([])
     const [selectedType, setSelectedType] = useState<Options>(emptyValue)
 
@@ -43,26 +41,27 @@ export const NewSLA = React.forwardRef<unknown, ChooseModalProps>(
     function changeData({ listAddSLA }: AddValuesPropsSLA) {
       newSLA({
         sla: listAddSLA[0].value,
-        time: listAddSLA[1].value,
-        timeStart: listAddSLA[2].value,
-        timeEnd: listAddSLA[3].value,
-        id_typeSLA: selectedType.id,
+        days: listAddSLA[1].value,
+        time: listAddSLA[2].value,
+        timeStart: listAddSLA[3].value,
+        timeEnd: listAddSLA[4].value,
+        id_typeOfWork: selectedType.id,
       })
       handleModal(false)
     }
 
     useEffect(() => {
-      const list = typesSLA.map(({ typeSLA, id }) => {
+      const list = typesOfWork.map(({ typeOfWork, id }) => {
         return {
-          label: typeSLA,
+          label: typeOfWork,
           id: id as string,
         }
       })
       setListTypes(list)
-    }, [typesSLA])
+    }, [typesOfWork])
 
     useEffect(() => {
-      getTypesSLA()
+      getTypesOfWork()
     }, [])
 
     return (
@@ -80,7 +79,7 @@ export const NewSLA = React.forwardRef<unknown, ChooseModalProps>(
                 name={`listAddSLA.${index}.value`}
                 rules={validation}
                 render={({ field }) =>
-                  name !== 'TypeSLA' ? (
+                  name !== 'TypeOfWork' ? (
                     <TextField
                       {...field}
                       inputRef={field.ref}
@@ -105,8 +104,8 @@ export const NewSLA = React.forwardRef<unknown, ChooseModalProps>(
                       props={{ mt: 2, width: '90%' }}
                       onChange={setSelectedType}
                       value={selectedType.label || ''}
-                      label="Выберите тип SLA"
-                      errorLabel="Не выбран тип SLA!"
+                      label="Выберите тип работ"
+                      errorLabel="Не выбрано ни одного типа работ!"
                     />
                   )
                 }

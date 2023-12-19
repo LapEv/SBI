@@ -22,8 +22,8 @@ export const ChangeTypeOfWork = React.forwardRef<unknown, ChooseModalProps>(
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const [{ typesOfWork }, { getTypesOfWork, changeTypesOfWork }] =
       useIncidents()
-    const [listTypesSLA, setListTypesSLA] = useState<Options[]>([])
-    const [selectedTypesSLA, setSelectedTypesSLA] =
+    const [listTypesOfWork, setListTypesOfWork] = useState<Options[]>([])
+    const [selectedTypesOfWork, setSelectedTypesOfWork] =
       useState<Options>(emptyValue)
     const [errSelectedItems, setErrSelectedItems] = useState<string>('')
     const theme = useTheme()
@@ -41,30 +41,30 @@ export const ChangeTypeOfWork = React.forwardRef<unknown, ChooseModalProps>(
     })
 
     const changeData = ({ list }: AddValuesProps) => {
-      if (!selectedTypesSLA) {
-        setErrSelectedItems('Не выбран тип SLA')
-        setSelectedTypesSLA(emptyValue)
+      if (!selectedTypesOfWork) {
+        setErrSelectedItems('Не выбран тип работ')
+        setSelectedTypesOfWork(emptyValue)
         return
       }
       changeTypesOfWork({
         typeOfWork: list[0].value,
-        id: selectedTypesSLA.id,
+        id: selectedTypesOfWork.id,
       })
       handleModal(false)
     }
 
-    const changeSelectedTypesSLA = (data: Options) => {
+    const changeSelectedTypesOfWork = (data: Options) => {
       if (!data) return
-      setSelectedTypesSLA(data)
-      if (data.id && selectedTypesSLA && errSelectedItems) {
+      setSelectedTypesOfWork(data)
+      if (data.id && selectedTypesOfWork && errSelectedItems) {
         setErrSelectedItems('')
       }
     }
 
-    const checkTypesSLAValue = (value: string) => {
+    const checkTypesOfWorkValue = (value: string) => {
       const isNew = typesOfWork.findIndex(item => item.typeOfWork === value)
       if (isNew < 0) {
-        setSelectedTypesSLA(emptyValue)
+        setSelectedTypesOfWork(emptyValue)
       }
     }
 
@@ -73,7 +73,7 @@ export const ChangeTypeOfWork = React.forwardRef<unknown, ChooseModalProps>(
     }, [])
 
     useEffect(() => {
-      setListTypesSLA(
+      setListTypesOfWork(
         typesOfWork.map(item => {
           return {
             ['label']: item.typeOfWork as string,
@@ -90,13 +90,13 @@ export const ChangeTypeOfWork = React.forwardRef<unknown, ChooseModalProps>(
         onSubmit={handleSubmit(changeData)}>
         <Typography variant={'h6'}>{title}</Typography>
         <DropDown
-          data={listTypesSLA}
+          data={listTypesOfWork}
           props={{ mt: 4 }}
-          onChange={data => changeSelectedTypesSLA(data)}
-          value={selectedTypesSLA.label || ''}
-          label="Выберите тип SLA"
-          errorLabel="Не выбран тип SLA!"
-          onBlur={text => checkTypesSLAValue(text)}
+          onChange={data => changeSelectedTypesOfWork(data)}
+          value={selectedTypesOfWork.label || ''}
+          label="Выберите тип работ"
+          errorLabel="Не выбрано ни одного типа работ!"
+          onBlur={text => checkTypesOfWorkValue(text)}
         />
         <Box sx={{ mt: 2, width: '90%' }}>
           {fields.map(({ id, label, validation, type, required }, index) => {

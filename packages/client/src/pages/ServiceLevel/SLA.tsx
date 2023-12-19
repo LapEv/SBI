@@ -19,26 +19,29 @@ import { MapOLAViewInputFields, MapSLAViewInputFields } from './data'
 import { useAuth } from 'hooks/auth/useAuth'
 import { Options } from 'components/DropDown/interface'
 import { DropDown, emptyValue } from 'components/DropDown'
+import { useIncidents } from 'hooks/incidents/useINC'
 
 export function SLAPage({
   sla,
   ola,
+  days,
   time,
   timeStart,
   timeEnd,
   id,
-  id_typeSLA,
-  TypesSLA,
+  id_typeOfWork,
+  TypesOfWork,
 }: IServiceListData) {
-  const [{ typesSLA }, { changeSLA, changeOLA, getTypesSLA }] = useSLA()
+  const [{ typesOfWork }, { getTypesOfWork }] = useIncidents()
+  const [_, { changeSLA, changeOLA }] = useSLA()
   const [{ admin }] = useAuth()
   const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
   const [listTypes, setListTypes] = useState<Options[]>([])
   const [selectedType, setSelectedType] = useState<Options>(emptyValue)
   const [slaData, setSlaData] = useState<SLAList>(
     sla
-      ? { sla, time, timeStart, timeEnd, id, id_typeSLA, TypesSLA }
-      : { ola, time, timeStart, timeEnd, id, id_typeSLA, TypesSLA }
+      ? { sla, days, time, timeStart, timeEnd, id, id_typeOfWork, TypesOfWork }
+      : { ola, days, time, timeStart, timeEnd, id, id_typeOfWork, TypesOfWork }
   )
 
   const fieldsData = sla ? MapSLAViewInputFields : MapOLAViewInputFields
@@ -62,21 +65,23 @@ export function SLAPage({
     if (sla) {
       changeSLA({
         sla: list[0].value as string,
-        time: list[1].value as string,
-        timeStart: list[2].value as string,
-        timeEnd: list[3].value as string,
+        days: list[1].value as string,
+        time: list[2].value as string,
+        timeStart: list[3].value as string,
+        timeEnd: list[4].value as string,
         id,
-        id_typeSLA: selectedType.id,
+        id_typeOfWork: selectedType.id,
       })
     }
     if (ola) {
       changeOLA({
         ola: list[0].value as string,
-        time: list[1].value as string,
-        timeStart: list[2].value as string,
-        timeEnd: list[3].value as string,
+        days: list[1].value as string,
+        time: list[2].value as string,
+        timeStart: list[3].value as string,
+        timeEnd: list[4].value as string,
         id,
-        id_typeSLA: selectedType.id,
+        id_typeOfWork: selectedType.id,
       })
     }
   }
@@ -91,21 +96,23 @@ export function SLAPage({
     const newSLA = sla
       ? {
           sla,
+          days,
           time,
           timeStart,
           timeEnd,
           id,
-          id_typeSLA: selectedType.id,
-          TypesSLA,
+          id_typeOfWork: selectedType.id,
+          TypesOfWork,
         }
       : {
           ola,
+          days,
           time,
           timeStart,
           timeEnd,
           id,
-          id_typeSLA: selectedType.id,
-          TypesSLA,
+          id_typeOfWork: selectedType.id,
+          TypesOfWork,
         }
     setSlaData(newSLA)
     reset({
@@ -115,8 +122,8 @@ export function SLAPage({
       })),
     })
     setSelectedType({
-      label: TypesSLA?.typeSLA as string,
-      id: TypesSLA?.id as string,
+      label: TypesOfWork?.typeOfWork as string,
+      id: TypesOfWork?.id as string,
     })
   }
 
@@ -126,31 +133,31 @@ export function SLAPage({
     checkForChange({
       ...slaData!,
       ...{
-        TypesSLA: {
-          ...TypesSLA,
+        TypesOfWork: {
+          ...TypesOfWork,
           id: data.id,
-          typeSLA: data.label,
+          typeOfWork: data.label,
         },
       },
     })
   }
 
   useEffect(() => {
-    const list = typesSLA.map(({ typeSLA, id }) => {
+    const list = typesOfWork.map(({ typeOfWork, id }) => {
       return {
-        label: typeSLA,
+        label: typeOfWork,
         id: id as string,
       }
     })
     setListTypes(list)
     setSelectedType({
-      label: TypesSLA?.typeSLA as string,
-      id: TypesSLA?.id as string,
+      label: TypesOfWork?.typeOfWork as string,
+      id: TypesOfWork?.id as string,
     })
-  }, [typesSLA])
+  }, [typesOfWork])
 
   useEffect(() => {
-    getTypesSLA()
+    getTypesOfWork()
   }, [])
 
   return (
@@ -185,7 +192,7 @@ export function SLAPage({
                   name={`list.${index}.value`}
                   rules={validation}
                   render={({ field }) =>
-                    name !== 'TypeSLA' ? (
+                    name !== 'TypeOfWork' ? (
                       <TextField
                         {...field}
                         inputRef={field.ref}
@@ -196,10 +203,19 @@ export function SLAPage({
                         sx={{ width: '48%', height: 60 }}
                         margin="normal"
                         onChange={(event: ChangeEvent<HTMLInputElement>) => (
-                          field.onChange(event),
+                          field.onChange(
+                            name !== 'days'
+                              ? event.target.value
+                              : event.target.valueAsNumber
+                          ),
                           checkForChange({
                             ...slaData!,
-                            ...{ [name]: event.target.value },
+                            ...{
+                              [name]:
+                                name !== 'days'
+                                  ? event.target.value
+                                  : event.target.valueAsNumber,
+                            },
                           })
                         )}
                         error={!!(errors?.list ?? [])[index]?.value?.message}
@@ -209,11 +225,11 @@ export function SLAPage({
                     ) : (
                       <DropDown
                         data={listTypes}
-                        props={{ mt: 1, width: '48%' }}
+                        props={{ width: '48%', height: 55 }}
                         onChange={data => changeSelectedTypes(data)}
                         value={selectedType.label || ''}
-                        label="Выберите тип SLA"
-                        errorLabel="Не выбран тип SLA!"
+                        label="Выберите тип работ"
+                        errorLabel="Не выбран тип работ!"
                       />
                     )
                   }

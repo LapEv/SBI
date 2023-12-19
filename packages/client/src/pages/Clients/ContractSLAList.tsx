@@ -22,6 +22,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { NewSLA } from 'pages/ServiceLevel/Modals'
 import { ModalTitles } from 'pages/ServiceLevel/data'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
+import { useIncidents } from 'hooks/incidents/useINC'
 
 interface ISLAList {
   slaID: string[]
@@ -34,7 +35,8 @@ export function ContractSLAList({ slaID, onChooseItems }: ISLAList) {
   const [modal, setModal] = useState<boolean>(false)
   const openPopover = Boolean(anchorEl)
   const [{ admin }] = useAuth()
-  const [{ sla, typesSLA }, { getSLA, getTypesSLA }] = useSLA()
+  const [{ typesOfWork }, { getTypesOfWork }] = useIncidents()
+  const [{ sla }, { getSLA }] = useSLA()
   const [slaData, setSLAData] = useState<DataList[]>([])
   const [openSLA, setOpenSLA] = useState(false)
   const [filterList, setFilterList] = useState<string[]>([])
@@ -47,15 +49,15 @@ export function ContractSLAList({ slaID, onChooseItems }: ISLAList) {
   const openSLAList = () => {
     setOpenSLA(!openSLA)
     getSLA()
-    getTypesSLA()
+    getTypesOfWork()
   }
 
   useEffect(() => {
-    const listData = sla.map(({ sla, id, TypesSLA }) => {
+    const listData = sla.map(({ sla, id, TypesOfWork }) => {
       return {
         name: sla,
         id: id as string,
-        comment: TypesSLA.typeSLA,
+        comment: TypesOfWork.typeOfWork,
         initChecked: slaID?.find(item => item === id) ? true : false,
       }
     })
@@ -63,10 +65,10 @@ export function ContractSLAList({ slaID, onChooseItems }: ISLAList) {
   }, [sla, slaID])
 
   useEffect(() => {
-    const listData = typesSLA.map(({ typeSLA }) => typeSLA)
+    const listData = typesOfWork.map(({ typeOfWork }) => typeOfWork)
     listData.unshift(filterFirstElement)
     setFilterList(listData)
-  }, [typesSLA])
+  }, [typesOfWork])
 
   const changeFilter = (text: string) => {
     setFilterText(text === filterFirstElement ? '' : text)

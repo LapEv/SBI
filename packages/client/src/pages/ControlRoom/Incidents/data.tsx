@@ -1,8 +1,4 @@
-import {
-  timeValidation,
-  lightTextValidation,
-  NoRequiredValidation,
-} from 'utils/validatorRules'
+import { lightTextValidation } from 'utils/validatorRules'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
 import EditIcon from '@mui/icons-material/Edit'

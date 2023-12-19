@@ -57,7 +57,7 @@ export function IncidentsPage() {
             <DropDownMenu
               popover={'Добавить/Удалить'}
               data={menuData}
-              divider={[1, 2]}
+              divider={[2, 4, 6]}
               onClick={checkClickMenu}
               vertical={'bottom'}
             />

@@ -10,6 +10,7 @@ import {
   ThroughContractsObjectsRepos,
   ThroughContractsSLARepos,
   TypesOfWork,
+  TypicalMalfunctions,
 } from '../db'
 import type { Request, Response } from 'express'
 const { Op } = require('sequelize')
@@ -29,16 +30,25 @@ const includes = [
   },
   {
     model: ClassifierEquipment,
-    through: {
-      attributes: [],
-    },
+    include: [
+      {
+        model: ClassifierModels,
+        attributes: ['id', 'model', 'active'],
+        include: [
+          {
+            model: TypicalMalfunctions,
+            attributes: ['id', 'typicalMalfunction', 'active'],
+          },
+        ],
+      },
+    ],
   },
-  {
-    model: ClassifierModels,
-    through: {
-      attributes: [],
-    },
-  },
+  // {
+  //   model: ClassifierModels,
+  //   through: {
+  //     attributes: [],
+  //   },
+  // },
 
   {
     model: Clients,
@@ -144,7 +154,6 @@ export class contractService {
       include: includes,
     })
       .then(contracts => {
-        console.log('contracts = ', contracts)
         res.status(200).json(contracts)
       })
       .catch(err => res.status(500).json({ error: ['db error', err] }))

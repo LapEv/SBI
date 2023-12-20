@@ -26,6 +26,7 @@ import {
   throughContractsModels,
 } from './models/contracts'
 import { incident, incindentStatuses, typesOfWork } from './models/incidents'
+import { throughModelTypMalfunctions } from './models/classifier'
 
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
   process.env
@@ -68,6 +69,12 @@ export const ClassifierModels = sequelize.define(
 export const TypicalMalfunctions = sequelize.define(
   'TypicalMalfunctions',
   typicalMalfunctions,
+  {}
+)
+
+export const ThroughModelTypMalfunctions = sequelize.define(
+  'ThroughModelTypMalfunctions',
+  throughModelTypMalfunctions,
   {}
 )
 
@@ -146,10 +153,12 @@ TypicalMalfunctions.belongsTo(ClassifierEquipment, {
 })
 
 ClassifierModels.belongsToMany(TypicalMalfunctions, {
-  through: 'ThroughModelTypMalfunctions',
+  through: ThroughModelTypMalfunctions,
+  foreignKey: 'id_model',
 })
 TypicalMalfunctions.belongsToMany(ClassifierModels, {
-  through: 'ThroughModelTypMalfunctions',
+  through: ThroughModelTypMalfunctions,
+  foreignKey: 'id_typicalMalfunction',
 })
 
 ClientsGroup.hasMany(Clients, { foreignKey: 'id_clientsGroup' })
@@ -265,6 +274,9 @@ export const ClassifierModelsRepos = new Repository(
 )
 export const TypicalMalfunctionsRepos = new Repository(
   TypicalMalfunctions as ModelCtor
+)
+export const ThroughModelTypMalfunctionsRepos = new Repository(
+  ThroughModelTypMalfunctions as ModelCtor
 )
 
 export const SLARepos = new Repository(SLA as ModelCtor)

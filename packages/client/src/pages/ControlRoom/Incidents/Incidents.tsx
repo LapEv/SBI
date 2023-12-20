@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Container, Modal, Typography, useTheme } from '@mui/material'
 import { Message } from 'components/Message/Message'
 import { useAuth } from 'hooks/auth/useAuth'
@@ -10,12 +10,18 @@ import { doubleMenuForHeader } from 'static/styles/headerForPages'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate'
 import { IconPopoverButton } from 'components/Buttons'
+import { useClassifier } from 'hooks/classifier/useClassifier'
 
 export function IncidentsPage() {
   const modalClientRef = React.createRef()
   const [{ admin }] = useAuth()
   const [modal, setModal] = useState<boolean>(false)
   const [modalImage, setModalImage] = useState<string>('')
+
+  const [
+    { models, equipments, typicalMalfunctions },
+    { getClassifierModels, getClassifierEquipments, getTypicalMalfunctions },
+  ] = useClassifier()
 
   const checkClickMenu = (name: string | null) => {
     if (name) {
@@ -27,6 +33,16 @@ export function IncidentsPage() {
   const handleModal = (bool: boolean) => {
     setModal(bool)
   }
+
+  useEffect(() => {
+    getClassifierEquipments()
+    getClassifierModels()
+    getTypicalMalfunctions()
+  }, [])
+
+  console.log('equipments = ', equipments)
+  console.log('models = ', models)
+  console.log('typicalMalfunctions = ', typicalMalfunctions)
 
   return (
     <Container component="main" maxWidth="md" sx={mainHeaderForPages}>

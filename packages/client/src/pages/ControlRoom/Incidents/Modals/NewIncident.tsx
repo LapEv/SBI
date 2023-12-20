@@ -40,6 +40,16 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
     const [typeOfWorkList, setTypeOfWorkList] = useState<Options[]>([])
     const [selectedTypeOfWork, setSelectedTypeOfWork] =
       useState<Options>(emptyValue)
+    const [equipmentList, setEquipmentList] = useState<Options[]>([])
+    const [selectedEquipment, setSelectedEquipment] =
+      useState<Options>(emptyValue)
+    const [modelList, setModelList] = useState<Options[]>([])
+    const [selectedModel, setSelectedModel] = useState<Options>(emptyValue)
+    const [typicalMalfunctionList, setTypicalMalfunctionList] = useState<
+      Options[]
+    >([])
+    const [selectedTypicalMalfunction, setSelectedTypicalMalfunction] =
+      useState<Options>(emptyValue)
 
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
@@ -99,6 +109,15 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
         }
       }) as Options[]
       setSLAList(listSLAs)
+      const listEquipment = contract.ClassifierEquipments?.map(
+        ({ equipment, id }) => {
+          return {
+            label: equipment,
+            id: id as string,
+          }
+        }
+      ) as Options[]
+      setEquipmentList(listEquipment)
     }
 
     useEffect(() => {
@@ -133,6 +152,37 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
       setTypeOfWorkList(listTypesOfWork)
     }, [typesOfWork])
 
+    const setEquimpent = (data: Options) => {
+      setSelectedEquipment(data)
+      const getModels = activeContract?.ClassifierModels?.filter(
+        item => item.id_equipment === data.id
+      )
+      console.log('getModels = ', getModels)
+      const listModels = getModels?.map(({ model, id }) => {
+        return {
+          label: model,
+          id: id as string,
+        }
+      }) as Options[]
+      setModelList(listModels)
+    }
+
+    const setModel = (data: Options) => {
+      setSelectedModel(data)
+      console.log('setModel')
+      // const getTypMalfunction = activeContract?.ClassifierModels?.filter(
+      //   item => item.id_equipment === data.id
+      // )
+      // console.log('getModels = ', getModels)
+      // const listModels = getModels?.map(({ model, id }) => {
+      //   return {
+      //     label: model,
+      //     id: id as string,
+      //   }
+      // }) as Options []
+      // setModelList(listModels)
+    }
+
     console.log('contracts = ', contracts)
 
     return (
@@ -156,7 +206,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                         type={type}
                         required={required ?? true}
                         variant="outlined"
-                        sx={{ width: '90%', height: 60 }}
+                        sx={{ width: '90%', height: 60, mt: 4 }}
                         margin="normal"
                         error={!!(errors?.list ?? [])[index]?.value?.message}
                         helperText={(errors?.list ?? [])[index]?.value?.message}
@@ -221,6 +271,30 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                         value={selectedTypeOfWork.label || ''}
                         label={label}
                         errorLabel="Не выбран тип работ!"
+                      />
+                    )
+                  }
+                  if (name === 'equipment') {
+                    return (
+                      <DropDown
+                        data={equipmentList}
+                        props={{ mt: 3, width: '90%' }}
+                        onChange={setEquimpent}
+                        value={selectedEquipment.label || ''}
+                        label={label}
+                        errorLabel="Не выбран классификатор!"
+                      />
+                    )
+                  }
+                  if (name === 'model') {
+                    return (
+                      <DropDown
+                        data={modelList}
+                        props={{ mt: 4, width: '90%' }}
+                        onChange={setModel}
+                        value={selectedModel.label || ''}
+                        label={label}
+                        errorLabel="Не выбрана модель!"
                       />
                     )
                   }

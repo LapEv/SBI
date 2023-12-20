@@ -53,7 +53,6 @@ export const classifierModels: ModelAttributes<Model, ClassifierModels> = {
 export interface TypicalMalfunctions {
   id: string
   typicalMalfunction: string
-  models: string[]
   active: boolean
 }
 
@@ -70,12 +69,34 @@ export const typicalMalfunctions: ModelAttributes<Model, TypicalMalfunctions> =
       allowNull: false,
       unique: true,
     },
-    models: {
-      type: DataType.ARRAY(DataType.STRING),
-      allowNull: false,
-    },
     active: {
       type: DataType.BOOLEAN,
       allowNull: false,
     },
   }
+
+export interface IThroughModelTypMalfunctions {
+  id: string
+  id_model: string
+  id_typicalMalfunction: string
+}
+
+export const throughModelTypMalfunctions: ModelAttributes<
+  Model,
+  IThroughModelTypMalfunctions
+> = {
+  id: {
+    type: DataType.STRING,
+    defaultValue: DataType.UUIDV4,
+    allowNull: false,
+    primaryKey: true,
+  },
+  id_model: {
+    type: DataType.STRING,
+    allowNull: false,
+  },
+  id_typicalMalfunction: {
+    type: DataType.STRING,
+    allowNull: false,
+  },
+}

@@ -11,6 +11,18 @@ export const typ_malfunctionsStartData = [
     typicalMalfunction: 'Весы не включаются',
     active: true,
   },
+  {
+    typicalMalfunction: 'ФР не печатает',
+    active: true,
+  },
+  {
+    typicalMalfunction: 'ФР не режет бумагу',
+    active: true,
+  },
+  {
+    typicalMalfunction: 'ФР не включаются',
+    active: true,
+  },
 ]
 
 export const modelsStartData = [
@@ -26,11 +38,27 @@ export const modelsStartData = [
     model: 'DIBAL M-525',
     active: true,
   },
+  {
+    model: 'Атол 25Ф ',
+    active: true,
+  },
+  {
+    model: 'Атол 77Ф ',
+    active: true,
+  },
+  {
+    model: 'Штрих М',
+    active: true,
+  },
 ]
 
 export const equipmentsStartData = [
   {
     equipment: 'Весы',
+    active: true,
+  },
+  {
+    equipment: 'Фискальные регистраторы',
     active: true,
   },
 ]

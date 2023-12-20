@@ -130,11 +130,6 @@ export const classifierRouter = (apiRouter: Router) => {
     roleMiddleware(['changeTypicalMalfunction', 'ADMIN', 'SUPERADMIN']),
     service.changeTypicalMalfunction
   )
-  router.post(
-    '/changeModelsInTypicalMalfunction',
-    roleMiddleware(['changeModelsInTypicalMalfunction', 'ADMIN', 'SUPERADMIN']),
-    service.changeModelsInTypicalMalfunction
-  )
 
   apiRouter.use('/classifier', router)
 }

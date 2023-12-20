@@ -9,7 +9,6 @@ import {
   ChangeClassifierModel,
   ChangeTypicalMalfunction,
   ChangeModelsInTypicalMalfunction,
-  ShortTypicalMalfunctions,
 } from 'store/slices/classifier/interfaces'
 
 export const getClassifierEquipments = createAsyncThunk(

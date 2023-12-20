@@ -6,9 +6,6 @@ export interface Contracts {
   contract: string
   number: string
   date: string
-  // sla: string[]
-  // equipment: string[]
-  // objects: string[]
   active: boolean
 }
 
@@ -32,18 +29,6 @@ export const contracts: ModelAttributes<Model, Contracts> = {
     type: DataType.DATE,
     allowNull: false,
   },
-  // sla: {
-  //   type: DataType.ARRAY(DataType.STRING),
-  //   allowNull: true,
-  // },
-  // equipment: {
-  //   type: DataType.ARRAY(DataType.STRING),
-  //   allowNull: true,
-  // },
-  // objects: {
-  //   type: DataType.ARRAY(DataType.STRING),
-  //   allowNull: true,
-  // },
   active: {
     type: DataType.BOOLEAN,
     allowNull: false,

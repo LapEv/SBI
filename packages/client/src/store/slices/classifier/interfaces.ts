@@ -1,23 +1,22 @@
-import { DataList } from 'components/CheckBoxGroup/interface'
-
 export interface ClassifierEquipment {
   id?: string
   equipment: string
   active?: boolean
   ClassifierModels?: ClassifierModels[]
+  TypicalMalfunctions?: TypicalMalfunctions[]
 }
 export interface ClassifierModels {
   id?: string
   model: string
   id_equipment: string
   active?: boolean
-  selectedTypicalMalfunctions?: string[]
+  TypicalMalfunctions?: TypicalMalfunctions[]
+  typicalModels?: TypicalMalfunctions[]
 }
 
 export interface TypicalMalfunctions {
   id?: string
   typicalMalfunction: string
-  models: string[]
   id_equipment: string
   active?: boolean
 }

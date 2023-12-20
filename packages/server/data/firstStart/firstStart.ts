@@ -15,6 +15,7 @@ import {
   ObjectsRepos,
   RegionsRepos,
   SLARepos,
+  ThroughModelTypMalfunctionsRepos,
   TypesOfWorkRepos,
   TypicalMalfunctionsRepos,
   UserStatusRepos,
@@ -190,28 +191,61 @@ export const firstStart = async () => {
         const newEquipments = await ClassifierEquipmentRepos.bulkCreate(
           equipmentsStartData
         )
-        const newModelsStartData = modelsStartData.map(value => {
+        const newModelsStartData = modelsStartData.map((item, index) => {
           return {
-            ...value,
-            id_equipment: newEquipments[0].id,
+            ...item,
+            id_equipment: index < 3 ? newEquipments[0].id : newEquipments[1].id,
           }
         })
+
         const newModels = await ClassifierModelsRepos.bulkCreate(
           newModelsStartData
         )
-        const newModelsIDs = newModels.map(value => value.id)
-        const new_typ_malfunctions_startData = typ_malfunctionsStartData.map(
-          value => {
+
+        const newTypicalMalfunctionStartData = typ_malfunctionsStartData.map(
+          (item, index) => {
             return {
-              ...value,
-              id_equipment: newEquipments[0].id,
-              models: newModelsIDs,
+              ...item,
+              id_equipment:
+                index < 3 ? newEquipments[0].id : newEquipments[1].id,
             }
           }
         )
-        await TypicalMalfunctionsRepos.bulkCreate(
-          new_typ_malfunctions_startData
+
+        const newTypicalMalfunction = await TypicalMalfunctionsRepos.bulkCreate(
+          newTypicalMalfunctionStartData
         )
+
+        const newThroughModelTypMalfunction = newModels.map((item, index) => {
+          const temp = newTypicalMalfunction.map((value, i) => {
+            if (index < 3 && i < 3) {
+              return {
+                id_model: item.id,
+                id_typicalMalfunction: value.id,
+              }
+            }
+            if (index >= 3 && i >= 3) {
+              return {
+                id_model: item.id,
+                id_typicalMalfunction: value.id,
+              }
+            }
+            return {
+              id_model: null,
+              id_typicalMalfunction: null,
+            }
+          })
+          const temp2 = temp.filter(
+            item => item.id_model && item.id_typicalMalfunction
+          )
+          return temp2
+        })
+
+        const newArr = newThroughModelTypMalfunction.reduce((acc, arr) => [
+          ...acc,
+          ...arr,
+        ])
+        await ThroughModelTypMalfunctionsRepos.bulkCreate(newArr)
       }
     }
 

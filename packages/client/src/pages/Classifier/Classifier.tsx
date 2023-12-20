@@ -10,7 +10,7 @@ import { headerForPages, mainHeaderForPages } from 'static/styles'
 
 export function ClassifierPage() {
   const modalClientRef = React.createRef()
-  const [{ admin, user }] = useAuth()
+  const [{ admin }] = useAuth()
   const [{ equipments }, { getClassifierEquipments, setActiveEquipment }] =
     useClassifier()
   const [modal, setModal] = useState<boolean>(false)
@@ -31,6 +31,8 @@ export function ClassifierPage() {
   useEffect(() => {
     getClassifierEquipments()
   }, [])
+
+  console.log('equipments = ', equipments)
 
   return (
     <Container component="main" maxWidth="md" sx={mainHeaderForPages}>
@@ -60,9 +62,17 @@ export function ClassifierPage() {
         )}
       </Box>
       <List sx={{ width: '100%', p: 3, borderColor: 'border.default' }}>
-        {equipments.map(({ equipment, id }) => (
-          <Equipments equipment={equipment} id={id} key={id} />
-        ))}
+        {equipments.map(
+          ({ equipment, id, ClassifierModels, TypicalMalfunctions }) => (
+            <Equipments
+              equipment={equipment}
+              id={id}
+              key={id}
+              ClassifierModels={ClassifierModels}
+              TypicalMalfunctions={TypicalMalfunctions}
+            />
+          )
+        )}
       </List>
     </Container>
   )

@@ -16,19 +16,27 @@ import { DropDown, emptyValue } from 'components/DropDown'
 import { useClients } from 'hooks/clients/useClients'
 import { Options } from 'components/DropDown/interface'
 import { useContracts } from 'hooks/contracts/useContracts'
+import { useSLA } from 'hooks/sla/useSLA'
 
 export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
+    /* eslint-enable @typescript-eslint/no-unused-vars */
     const [{ clients }, { getClients }] = useClients()
     const [{ contracts }, { getContractsByClientID }] = useContracts()
+
     const [_, { newIncidentStatuses }] = useIncidents()
-    /* eslint-enable @typescript-eslint/no-unused-vars */
+    const [{ sla }, { getSLA }] = useSLA()
+
     const [clientsList, setClientsList] = useState<Options[]>([])
     const [selectedClient, setSelectedClient] = useState<Options>(emptyValue)
     const [contractList, setContractList] = useState<Options[]>([])
     const [selectedContract, setSelectedContract] =
       useState<Options>(emptyValue)
+    const [objectList, setObjectList] = useState<Options[]>([])
+    const [selectedObject, setSelectedObject] = useState<Options>(emptyValue)
+    const [slaList, setSLAList] = useState<Options[]>([])
+    const [selectedSLA, setSelectedSLA] = useState<Options>(emptyValue)
 
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
@@ -51,7 +59,14 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
 
     useEffect(() => {
       getClients()
+      getSLA()
     }, [])
+
+    const setClient = (data: Options) => {
+      if (!data) return
+      setSelectedClient(data)
+      getContractsByClientID(data.id)
+    }
 
     useEffect(() => {
       const list = clients.map(({ client, id }) => {
@@ -62,6 +77,39 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
       })
       setClientsList(list)
     }, [clients])
+
+    const setContract = (data: Options) => {
+      setSelectedContract(data)
+      const contract = contracts.filter(({ id }) => id === data.id)[0]
+      console.log('contract = ', contract)
+      const listObjects = contract.Objects?.map(({ object, id }) => {
+        return {
+          label: object,
+          id: id as string,
+        }
+      }) as Options[]
+      setObjectList(listObjects)
+      const listSLAs = contract.SLAs?.map(({ sla, id }) => {
+        return {
+          label: sla,
+          id: id as string,
+        }
+      }) as Options[]
+      setSLAList(listSLAs)
+    }
+
+    useEffect(() => {
+      const listContracts = contracts.map(({ contract, id }) => {
+        return {
+          label: contract,
+          id: id as string,
+        }
+      })
+      setContractList(listContracts)
+    }, [contracts])
+
+    console.log('contracts = ', contracts)
+    console.log('sla = ', sla)
 
     return (
       <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
@@ -96,8 +144,8 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                     return (
                       <DropDown
                         data={clientsList}
-                        props={{ mt: 1, width: '90%' }}
-                        onChange={data => setSelectedClient(data)}
+                        props={{ mt: 3, width: '90%' }}
+                        onChange={setClient}
                         value={selectedClient.label || ''}
                         label={label}
                         errorLabel="Не выбран клиент!"
@@ -108,11 +156,35 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                     return (
                       <DropDown
                         data={contractList}
-                        props={{ mt: 1, width: '90%' }}
-                        onChange={data => setSelectedClient(data)}
+                        props={{ mt: 3, width: '90%' }}
+                        onChange={setContract}
                         value={selectedContract.label || ''}
                         label={label}
                         errorLabel="Не выбран контракт!"
+                      />
+                    )
+                  }
+                  if (name === 'object') {
+                    return (
+                      <DropDown
+                        data={objectList}
+                        props={{ mt: 3, width: '90%' }}
+                        onChange={setSelectedObject}
+                        value={selectedObject.label || ''}
+                        label={label}
+                        errorLabel="Не выбран объект!"
+                      />
+                    )
+                  }
+                  if (name === 'sla') {
+                    return (
+                      <DropDown
+                        data={slaList}
+                        props={{ mt: 3, width: '90%' }}
+                        onChange={setSelectedSLA}
+                        value={selectedSLA.label || ''}
+                        label={label}
+                        errorLabel="Не выбран SLA!"
                       />
                     )
                   }

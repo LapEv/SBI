@@ -9,6 +9,7 @@ import {
   ThroughContractsModelsRepos,
   ThroughContractsObjectsRepos,
   ThroughContractsSLARepos,
+  TypesOfWork,
 } from '../db'
 import type { Request, Response } from 'express'
 const { Op } = require('sequelize')
@@ -16,9 +17,9 @@ const { Op } = require('sequelize')
 const includes = [
   {
     model: SLA,
-    through: {
-      attributes: [],
-    },
+    includes: [
+      { model: TypesOfWork, attributes: ['id', 'typeOfWork', 'active'] },
+    ],
   },
   {
     model: Objects,
@@ -46,21 +47,17 @@ const includes = [
 export class contractService {
   newContract = async (_req: Request, res: Response) => {
     const { sla, equipment, model, objects, ...data } = _req.body
-    console.log('equipment = ', equipment)
-    console.log('model = ', model)
     try {
       const new_contract = await ContractsRepos.create({
         ...data,
         active: true,
       })
-      console.log('new_contract = ', new_contract)
       const newThroughContractSla = sla.map((item: string) => {
         return {
           id_contract: new_contract.id,
           id_sla: item,
         }
       })
-      console.log('newThroughContractSla = ', newThroughContractSla)
       await ThroughContractsSLARepos.bulkCreate(newThroughContractSla)
 
       const newThroughContractEquipment = equipment.map((item: string) => {
@@ -69,7 +66,6 @@ export class contractService {
           id_equipment: item,
         }
       })
-      console.log('newThroughContractEquipment = ', newThroughContractEquipment)
       await ThroughContractsEquipmentsRepos.bulkCreate(
         newThroughContractEquipment
       )
@@ -80,7 +76,6 @@ export class contractService {
           id_model: item,
         }
       })
-      console.log('newThroughContractModels = ', newThroughContractModels)
       await ThroughContractsModelsRepos.bulkCreate(newThroughContractModels)
 
       const newThroughContractObject = objects.map((item: string) => {
@@ -89,14 +84,12 @@ export class contractService {
           id_object: item,
         }
       })
-      console.log('newThroughContractObject = ', newThroughContractObject)
       await ThroughContractsObjectsRepos.bulkCreate(newThroughContractObject)
 
       const contracts = await ContractsRepos.findAll({
         where: { active: true },
         include: includes,
       })
-      console.log('contracts = ', contracts)
       res.status(200).json(contracts)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
@@ -151,6 +144,7 @@ export class contractService {
       include: includes,
     })
       .then(contracts => {
+        console.log('contracts = ', contracts)
         res.status(200).json(contracts)
       })
       .catch(err => res.status(500).json({ error: ['db error', err] }))

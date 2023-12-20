@@ -36,12 +36,14 @@ export const menuData = [
   },
 ]
 
-export const menuDispatcher = [
+export const createIncident = [
   {
     name: 'newIncident',
     title: 'Добавить новый инцидент',
     icon: <AddCircleOutlineIcon fontSize="medium" />,
   },
+]
+export const createRequest = [
   {
     name: 'newRequest',
     title: 'Добавить новый запрос',

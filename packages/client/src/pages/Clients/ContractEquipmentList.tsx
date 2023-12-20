@@ -1,18 +1,14 @@
-import React, { useEffect, useState, MouseEvent } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   Collapse,
   ListItemButton,
   ListItemText,
-  IconButton,
-  useTheme,
-  Popover,
   Modal,
-  Typography,
 } from '@mui/material'
-import { RotateButton } from 'components/Buttons'
+import { IconPopoverButton, RotateButton } from 'components/Buttons'
 import { CheckBoxGroups } from 'components/CheckBoxGroup'
-import { classifierChild2Component } from 'static/styles'
+import { classifierChild2Component, popoverIcon } from 'static/styles'
 import { ICheckBoxGroupData } from 'components/CheckBoxGroup/interface'
 import { filterFirstElement } from './Modals/data'
 import { SelectMUI } from 'components/Select'
@@ -39,10 +35,8 @@ export function ContractEquipmentList({
   clearChanges,
   onClearChanges,
 }: IEquipmentList) {
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
   const modalRef = React.createRef()
   const [modal, setModal] = useState<boolean>(false)
-  const openPopover = Boolean(anchorEl)
   const [{ admin }] = useAuth()
   const [{ equipments }, { getClassifierEquipments }] = useClassifier()
   const [equipmentList, setEquipmentList] = useState<ICheckBoxGroupData[]>([])
@@ -56,8 +50,6 @@ export function ContractEquipmentList({
     filterText,
     'group'
   )
-  const theme = useTheme()
-
   const openEquipmentList = () => {
     setOpenEquipment(!openEquipment)
     getClassifierEquipments()
@@ -143,48 +135,13 @@ export function ContractEquipmentList({
             defaultData="Все"
           />
           {admin && (
-            <IconButton
-              onMouseEnter={(event: MouseEvent<HTMLElement>) =>
-                setAnchorEl(event.currentTarget)
-              }
-              onMouseLeave={() => setAnchorEl(null)}
+            <IconPopoverButton
+              popover={'Добавить классификатор'}
               onClick={AddNewEquipment}
-              size="medium"
-              sx={{
-                ml: 5,
-                width: 40,
-                height: 40,
-                borderRadius: '20%',
-                color: theme.palette.primary.contrastText,
-                backgroundColor: theme.palette.primary.main,
-                boxShadow: 5,
-              }}>
-              <AddCircleOutlineIcon />
-              <Popover
-                sx={{
-                  pointerEvents: 'none',
-                  background: 'none',
-                }}
-                open={openPopover}
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'center',
-                  horizontal: 'left',
-                }}
-                transformOrigin={{
-                  vertical: 'center',
-                  horizontal: 'right',
-                }}
-                onClose={(event: MouseEvent<HTMLElement>) =>
-                  setAnchorEl(event.currentTarget)
-                }
-                disableRestoreFocus
-                container={anchorEl}>
-                <Typography sx={{ p: 1, fontSize: 12, color: 'text.primary' }}>
-                  Добавить классификатор
-                </Typography>
-              </Popover>
-            </IconButton>
+              icon={<AddCircleOutlineIcon />}
+              propsPopover={{ ml: -1 }}
+              sx={{ ...popoverIcon, mb: 0 }}
+            />
           )}
         </Box>
         <Box

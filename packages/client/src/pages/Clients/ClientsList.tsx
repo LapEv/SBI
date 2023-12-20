@@ -1,21 +1,7 @@
-import React, {
-  memo,
-  useEffect,
-  useState,
-  SyntheticEvent,
-  MouseEvent,
-} from 'react'
-import {
-  Box,
-  ListItemText,
-  ListItemButton,
-  Modal,
-  IconButton,
-  Popover,
-  Typography,
-} from '@mui/material'
+import React, { memo, useEffect, useState, SyntheticEvent } from 'react'
+import { Box, ListItemText, ListItemButton, Modal } from '@mui/material'
 import Collapse from '@mui/material/Collapse'
-import { RotateButton, EditButton } from 'components/Buttons'
+import { RotateButton, EditButton, IconPopoverButton } from 'components/Buttons'
 import { classifier, classifierComponent } from 'static/styles'
 import { ModalChangeName } from 'components/ModaQuestions'
 import { useClients } from 'hooks/clients/useClients'
@@ -24,22 +10,19 @@ import { useContracts } from 'hooks/contracts/useContracts'
 import { ContractsList } from './'
 import { useAuth } from 'hooks/auth/useAuth'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
-import { useTheme } from '@mui/material/styles'
 import { AddContract } from './Modals'
 import { ModalTitles } from './data'
+import { popoverIcon } from 'static/styles'
 
 export const ClientsList = memo(({ client, legalName, id }: Clients) => {
   const [{ activeClient }, { setActiveClient, changeClient }] = useClients()
   const [{ contracts }, { getContractsByClientID }] = useContracts()
   const [{ admin }] = useAuth()
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
-  const openPopover = Boolean(anchorEl)
   const modalRef = React.createRef()
   const [open, setOpen] = useState(false)
 
   const [modal, setModal] = useState<boolean>(false)
   const [modalImage, setModalImage] = useState<string>('')
-  const theme = useTheme()
 
   const handleClick = () => {
     setOpen(!open)
@@ -142,52 +125,14 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
             />
           )
         )}
-
         {admin && (
-          <IconButton
-            onMouseEnter={(event: MouseEvent<HTMLElement>) =>
-              setAnchorEl(event.currentTarget)
-            }
-            onMouseLeave={() => setAnchorEl(null)}
+          <IconPopoverButton
+            popover={'Создать контракт'}
             onClick={AddNewContract}
-            size="medium"
-            sx={{
-              mt: 3,
-              ml: 5,
-              mb: 3,
-              width: 40,
-              height: 40,
-              borderRadius: '20%',
-              color: theme.palette.primary.contrastText,
-              backgroundColor: theme.palette.primary.main,
-              boxShadow: 5,
-            }}>
-            <AddCircleOutlineIcon />
-            <Popover
-              sx={{
-                pointerEvents: 'none',
-                background: 'none',
-              }}
-              open={openPopover}
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: 'center',
-                horizontal: 'left',
-              }}
-              transformOrigin={{
-                vertical: 'center',
-                horizontal: 'right',
-              }}
-              onClose={(event: MouseEvent<HTMLElement>) =>
-                setAnchorEl(event.currentTarget)
-              }
-              disableRestoreFocus
-              container={anchorEl}>
-              <Typography sx={{ p: 1, fontSize: 12, color: 'text.primary' }}>
-                Добавить контракт
-              </Typography>
-            </Popover>
-          </IconButton>
+            icon={<AddCircleOutlineIcon />}
+            propsPopover={{ ml: -1 }}
+            sx={popoverIcon}
+          />
         )}
       </Collapse>
     </Box>

@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
-import { Box, Container, Modal, Typography, List } from '@mui/material'
+import { Box, Container, Modal, Typography, useTheme } from '@mui/material'
 import { Message } from 'components/Message/Message'
 import { useAuth } from 'hooks/auth/useAuth'
 import { DropDownMenu } from 'components/DropDownButtonMenu'
 import { menuData } from '.'
 import { ChooseModal } from './Modals/ChooseModal'
 import { headerForPages, mainHeaderForPages } from 'static/styles'
-import { menuDispatcher } from './data'
 import { doubleMenuForHeader } from 'static/styles/headerForPages'
-// import { ServiceDataList } from './data'
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
+import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate'
+import { IconPopoverButton } from 'components/Buttons'
 
 export function IncidentsPage() {
   const modalClientRef = React.createRef()
@@ -17,13 +18,6 @@ export function IncidentsPage() {
   const [modalImage, setModalImage] = useState<string>('')
 
   const checkClickMenu = (name: string | null) => {
-    if (name) {
-      setModal(true)
-      setModalImage(name)
-    }
-  }
-
-  const checkClickMenuDispatcher = (name: string | null) => {
     if (name) {
       setModal(true)
       setModalImage(name)
@@ -62,12 +56,19 @@ export function IncidentsPage() {
               vertical={'bottom'}
             />
           )}
-          <DropDownMenu
-            popover={'Меню диспетчера'}
-            data={menuDispatcher}
-            divider={[1, 2]}
-            onClick={checkClickMenuDispatcher}
+          <IconPopoverButton
+            popover={'Создать инцидент'}
+            onClick={() => checkClickMenu('newIncident')}
             vertical={'bottom'}
+            propsPopover={{ ml: -1, mt: 1 }}
+            icon={<AddCircleOutlineIcon />}
+          />
+          <IconPopoverButton
+            popover={'Создать запрос'}
+            onClick={() => checkClickMenu('newRequest')}
+            vertical={'bottom'}
+            propsPopover={{ ml: -1, mt: 1 }}
+            icon={<ControlPointDuplicateIcon />}
           />
         </Box>
       </Box>

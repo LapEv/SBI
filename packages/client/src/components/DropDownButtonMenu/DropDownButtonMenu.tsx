@@ -7,7 +7,7 @@ import { Box, useTheme } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import Popover from '@mui/material/Popover'
 import Typography from '@mui/material/Typography'
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
+import MenuIcon from '@mui/icons-material/Menu'
 
 interface DropDownMenuProps {
   popover: string
@@ -19,6 +19,7 @@ interface DropDownMenuProps {
   divider?: number[]
   onClick: (name: string | null) => void
   vertical?: 'top' | 'center' | 'bottom' | number
+  icon?: JSX.Element
 }
 export const DropDownMenu = ({
   popover,
@@ -26,6 +27,7 @@ export const DropDownMenu = ({
   divider,
   onClick,
   vertical,
+  icon,
 }: DropDownMenuProps) => {
   const theme = useTheme()
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
@@ -75,7 +77,7 @@ export const DropDownMenu = ({
           aria-controls={open ? 'account-menu' : undefined}
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}>
-          <AddCircleOutlineIcon />
+          {icon ?? <MenuIcon />}
         </IconButton>
       </Box>
       {popover.length > 0 && (

@@ -1,18 +1,14 @@
-import React, { useEffect, useState, MouseEvent } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   Collapse,
   ListItemButton,
   ListItemText,
-  IconButton,
-  useTheme,
-  Popover,
   Modal,
-  Typography,
 } from '@mui/material'
-import { RotateButton } from 'components/Buttons'
+import { IconPopoverButton, RotateButton } from 'components/Buttons'
 import { Item } from 'components/CheckBoxGroup'
-import { classifierChild2Component } from 'static/styles'
+import { classifierChild2Component, popoverIcon } from 'static/styles'
 import { DataList } from 'components/CheckBoxGroup/interface'
 import { TextField } from 'components/TextFields'
 import { useFilteredData } from 'hooks/useFilteredData'
@@ -43,7 +39,6 @@ export function ContractObjectList({ objectID, onChooseItems }: IObjectList) {
     filterText,
     'name'
   )
-  const theme = useTheme()
 
   const openObjectList = () => {
     setOpenObject(!openObject)
@@ -116,48 +111,13 @@ export function ContractObjectList({ objectID, onChooseItems }: IObjectList) {
             }}
           />
           {admin && (
-            <IconButton
-              onMouseEnter={(event: MouseEvent<HTMLElement>) =>
-                setAnchorEl(event.currentTarget)
-              }
-              onMouseLeave={() => setAnchorEl(null)}
+            <IconPopoverButton
+              popover={'Добавить объект'}
               onClick={AddNewObject}
-              size="medium"
-              sx={{
-                ml: 5,
-                width: 40,
-                height: 40,
-                borderRadius: '20%',
-                color: theme.palette.primary.contrastText,
-                backgroundColor: theme.palette.primary.main,
-                boxShadow: 5,
-              }}>
-              <AddCircleOutlineIcon />
-              <Popover
-                sx={{
-                  pointerEvents: 'none',
-                  background: 'none',
-                }}
-                open={openPopover}
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'center',
-                  horizontal: 'left',
-                }}
-                transformOrigin={{
-                  vertical: 'center',
-                  horizontal: 'right',
-                }}
-                onClose={(event: MouseEvent<HTMLElement>) =>
-                  setAnchorEl(event.currentTarget)
-                }
-                disableRestoreFocus
-                container={anchorEl}>
-                <Typography sx={{ p: 1, fontSize: 12, color: 'text.primary' }}>
-                  Добавить объект
-                </Typography>
-              </Popover>
-            </IconButton>
+              icon={<AddCircleOutlineIcon />}
+              propsPopover={{ ml: -1 }}
+              sx={{ ...popoverIcon, mb: -1 }}
+            />
           )}
         </Box>
         <Box

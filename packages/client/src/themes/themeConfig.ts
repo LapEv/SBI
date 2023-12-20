@@ -29,6 +29,7 @@ export const ThemeConfig = (mode: PaletteMode) =>
             },
             icon: {
               default: '#1E515D',
+              secondary: '#def0eb',
             },
             background: {
               default: '#C1EEE1',
@@ -64,6 +65,7 @@ export const ThemeConfig = (mode: PaletteMode) =>
             },
             icon: {
               default: '#C1EEE1',
+              secondary: '#def0eb',
             },
             background: {
               default: '#1E515D',

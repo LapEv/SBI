@@ -12,4 +12,5 @@ export interface ContractsActions {
   deleteContract: (data: string[]) => void
   changeContract: (data: ChangeContract) => void
   setActiveContract: (id: string) => void
+  resetContracts: () => void
 }

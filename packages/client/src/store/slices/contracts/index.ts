@@ -21,6 +21,9 @@ export const contractsSlise = createSlice({
     setActiveContract(state, action) {
       state.activeContract = action.payload
     },
+    resetContracts(state) {
+      state.contracts = []
+    },
   },
   extraReducers: {
     [getContracts.fulfilled.type]: (
@@ -105,4 +108,4 @@ export const contractsSlise = createSlice({
 })
 
 export const contractsReducer = contractsSlise.reducer
-export const { setActiveContract } = contractsSlise.actions
+export const { setActiveContract, resetContracts } = contractsSlise.actions

@@ -112,6 +112,13 @@ export const MapINCInputFields = [
     required: true,
   },
   {
+    name: 'typeOfWrok',
+    label: 'Выберите тип работ',
+    validation: lightTextValidation,
+    type: 'dropdown',
+    required: true,
+  },
+  {
     name: 'cientINC',
     label: 'Введите клиентский номер',
     validation: lightTextValidation,

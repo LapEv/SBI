@@ -16,20 +16,20 @@ import { DropDown, emptyValue } from 'components/DropDown'
 import { useClients } from 'hooks/clients/useClients'
 import { Options } from 'components/DropDown/interface'
 import { useContracts } from 'hooks/contracts/useContracts'
-import { useSLA } from 'hooks/sla/useSLA'
+import { Contracts } from 'store/slices/contracts/interfaces'
 
 export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const [{ clients }, { getClients }] = useClients()
-    const [{ contracts }, { getContractsByClientID }] = useContracts()
-
-    const [_, { newIncidentStatuses }] = useIncidents()
-    const [{ sla }, { getSLA }] = useSLA()
-
+    const [{ contracts }, { getContractsByClientID, resetContracts }] =
+      useContracts()
+    const [{ typesOfWork }, { newIncidentStatuses, getTypesOfWork }] =
+      useIncidents()
     const [clientsList, setClientsList] = useState<Options[]>([])
     const [selectedClient, setSelectedClient] = useState<Options>(emptyValue)
+    const [activeContract, setActiveContract] = useState<Contracts>()
     const [contractList, setContractList] = useState<Options[]>([])
     const [selectedContract, setSelectedContract] =
       useState<Options>(emptyValue)
@@ -37,6 +37,9 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
     const [selectedObject, setSelectedObject] = useState<Options>(emptyValue)
     const [slaList, setSLAList] = useState<Options[]>([])
     const [selectedSLA, setSelectedSLA] = useState<Options>(emptyValue)
+    const [typeOfWorkList, setTypeOfWorkList] = useState<Options[]>([])
+    const [selectedTypeOfWork, setSelectedTypeOfWork] =
+      useState<Options>(emptyValue)
 
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
@@ -59,7 +62,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
 
     useEffect(() => {
       getClients()
-      getSLA()
+      resetContracts()
     }, [])
 
     const setClient = (data: Options) => {
@@ -81,7 +84,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
     const setContract = (data: Options) => {
       setSelectedContract(data)
       const contract = contracts.filter(({ id }) => id === data.id)[0]
-      console.log('contract = ', contract)
+      setActiveContract(contract)
       const listObjects = contract.Objects?.map(({ object, id }) => {
         return {
           label: object,
@@ -108,8 +111,29 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
       setContractList(listContracts)
     }, [contracts])
 
+    const setSLA = (data: Options) => {
+      setSelectedSLA(data)
+      const getTypeOfWork = activeContract?.SLAs?.find(
+        item => item.id === data.id
+      )?.TypesOfWork
+      setSelectedTypeOfWork({
+        label: getTypeOfWork?.typeOfWork as string,
+        id: getTypeOfWork?.id as string,
+      })
+      getTypesOfWork()
+    }
+
+    useEffect(() => {
+      const listTypesOfWork = typesOfWork.map(({ typeOfWork, id }) => {
+        return {
+          label: typeOfWork,
+          id: id as string,
+        }
+      })
+      setTypeOfWorkList(listTypesOfWork)
+    }, [typesOfWork])
+
     console.log('contracts = ', contracts)
-    console.log('sla = ', sla)
 
     return (
       <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
@@ -144,7 +168,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                     return (
                       <DropDown
                         data={clientsList}
-                        props={{ mt: 3, width: '90%' }}
+                        props={{ mt: 4, width: '90%' }}
                         onChange={setClient}
                         value={selectedClient.label || ''}
                         label={label}
@@ -156,7 +180,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                     return (
                       <DropDown
                         data={contractList}
-                        props={{ mt: 3, width: '90%' }}
+                        props={{ mt: 4, width: '90%' }}
                         onChange={setContract}
                         value={selectedContract.label || ''}
                         label={label}
@@ -168,7 +192,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                     return (
                       <DropDown
                         data={objectList}
-                        props={{ mt: 3, width: '90%' }}
+                        props={{ mt: 4, width: '90%' }}
                         onChange={setSelectedObject}
                         value={selectedObject.label || ''}
                         label={label}
@@ -180,14 +204,27 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                     return (
                       <DropDown
                         data={slaList}
-                        props={{ mt: 3, width: '90%' }}
-                        onChange={setSelectedSLA}
+                        props={{ mt: 4, width: '90%' }}
+                        onChange={setSLA}
                         value={selectedSLA.label || ''}
                         label={label}
                         errorLabel="Не выбран SLA!"
                       />
                     )
                   }
+                  if (name === 'typeOfWrok') {
+                    return (
+                      <DropDown
+                        data={typeOfWorkList}
+                        props={{ mt: 4, width: '90%' }}
+                        onChange={setSelectedTypeOfWork}
+                        value={selectedTypeOfWork.label || ''}
+                        label={label}
+                        errorLabel="Не выбран тип работ!"
+                      />
+                    )
+                  }
+
                   return <></>
                 }}
               />

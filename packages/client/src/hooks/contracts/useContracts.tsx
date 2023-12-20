@@ -11,7 +11,7 @@ import {
   newContractName,
 } from 'api/contracts'
 import { ContractsState } from 'store/slices/contracts/interfaces'
-import { setActiveContract } from 'store/slices/contracts'
+import { resetContracts, setActiveContract } from 'store/slices/contracts'
 
 export function useContracts(): [ContractsState, ContractsActions] {
   const contracts = useSelector((state: RootState) => state.contracts)
@@ -40,6 +40,9 @@ export function useContracts(): [ContractsState, ContractsActions] {
       },
       setActiveContract(id) {
         dispatch(setActiveContract(id))
+      },
+      resetContracts() {
+        dispatch(resetContracts())
       },
     },
   ]

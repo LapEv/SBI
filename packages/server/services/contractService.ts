@@ -17,7 +17,7 @@ const { Op } = require('sequelize')
 const includes = [
   {
     model: SLA,
-    includes: [
+    include: [
       { model: TypesOfWork, attributes: ['id', 'typeOfWork', 'active'] },
     ],
   },

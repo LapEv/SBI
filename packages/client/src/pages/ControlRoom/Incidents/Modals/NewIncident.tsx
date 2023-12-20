@@ -15,15 +15,20 @@ import { useIncidents } from 'hooks/incidents/useINC'
 import { DropDown, emptyValue } from 'components/DropDown'
 import { useClients } from 'hooks/clients/useClients'
 import { Options } from 'components/DropDown/interface'
+import { useContracts } from 'hooks/contracts/useContracts'
 
 export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
     const [{ clients }, { getClients }] = useClients()
+    const [{ contracts }, { getContractsByClientID }] = useContracts()
     const [_, { newIncidentStatuses }] = useIncidents()
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const [clientsList, setClientsList] = useState<Options[]>([])
     const [selectedClient, setSelectedClient] = useState<Options>(emptyValue)
+    const [contractList, setContractList] = useState<Options[]>([])
+    const [selectedContract, setSelectedContract] =
+      useState<Options>(emptyValue)
 
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
@@ -94,8 +99,20 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                         props={{ mt: 1, width: '90%' }}
                         onChange={data => setSelectedClient(data)}
                         value={selectedClient.label || ''}
-                        label="Выберите тип работ"
-                        errorLabel="Не выбрано ни одного типа работ!"
+                        label={label}
+                        errorLabel="Не выбран клиент!"
+                      />
+                    )
+                  }
+                  if (name === 'contract') {
+                    return (
+                      <DropDown
+                        data={contractList}
+                        props={{ mt: 1, width: '90%' }}
+                        onChange={data => setSelectedClient(data)}
+                        value={selectedContract.label || ''}
+                        label={label}
+                        errorLabel="Не выбран контракт!"
                       />
                     )
                   }

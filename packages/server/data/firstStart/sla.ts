@@ -16,7 +16,7 @@ export const slaStartData = [
     active: true,
   },
   {
-    sla: 'Замена ФН 30/08-22',
+    sla: 'Замена ФН 30дн/08-22',
     days: 30,
     time: '00:00:00',
     timeEnd: '23:59:59',

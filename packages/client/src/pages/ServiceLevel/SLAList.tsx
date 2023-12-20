@@ -92,6 +92,7 @@ export const SLAList = memo(
           onClick={handleClick}>
           <ListItemText
             primary={sla ?? ola}
+            secondary={TypesOfWork.typeOfWork}
             primaryTypographyProps={{ fontSize: '1.375rem!important' }}
           />
           {admin ? <EditButton handleClick={editSLA} size={'1.7rem'} /> : <></>}

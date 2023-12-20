@@ -77,9 +77,10 @@ export const DeleteOLA = React.forwardRef<unknown, ChooseModalProps>(
         <Box
           ref={boxRef}
           sx={{ ...boxDataModal, height: filterText ? height : 'auto' }}>
-          {filteredOLA.map(({ ola, id }) => (
+          {filteredOLA.map(({ ola, id, TypesOfWork }) => (
             <Item
               name={ola}
+              comment={TypesOfWork.typeOfWork}
               id={`${id}`}
               groupChecked={false}
               onChooseItems={onChooseItems}

@@ -16,19 +16,19 @@ const includesEquipment = [
     model: ClassifierModels,
     attributes: ['id', 'model', 'id_equipment', 'active'],
     where: { active: true },
-    order: [
-      ['id', 'ASC'],
-      ['model', 'DESC'],
-    ] as Order,
+    // order: [
+    //   ['id', 'ASC'],
+    //   ['model', 'DESC'],
+    // ] as Order,
     include: [
       {
         model: TypicalMalfunctions,
         attributes: ['id', 'typicalMalfunction', 'id_equipment', 'active'],
         where: { active: true },
-        order: [
-          ['id', 'ASC'],
-          ['typicalMalfunction', 'DESC'],
-        ] as Order,
+        // order: [
+        //   ['id', 'ASC'],
+        //   ['typicalMalfunction', 'DESC'],
+        // ] as Order,
       },
     ],
   },
@@ -36,10 +36,10 @@ const includesEquipment = [
     model: TypicalMalfunctions,
     attributes: ['id', 'typicalMalfunction', 'id_equipment', 'active'],
     where: { active: true },
-    order: [
-      ['id', 'ASC'],
-      ['typicalMalfunction', 'DESC'],
-    ] as Order,
+    // order: [
+    //   ['id', 'ASC'],
+    //   ['typicalMalfunction', 'DESC'],
+    // ] as Order,
   },
 ]
 
@@ -76,18 +76,27 @@ const includesAllModel = [
 ]
 
 const order = [
-  ['id', 'ASC'],
-  ['equipment', 'DESC'],
+  ['equipment', 'ASC'],
+  [ClassifierModels, 'model', 'ASC'],
+  [TypicalMalfunctions, 'typicalMalfunction', 'ASC'],
 ] as Order
+
+const orderModel = [
+  ['model', 'ASC'],
+  [TypicalMalfunctions, 'typicalMalfunction', 'ASC'],
+] as Order
+
+const orderTypicalMalfunction = [['typicalMalfunction', 'ASC']] as Order
 
 export class classifierService {
   newClassifierEquipment = async (_req: Request, res: Response) => {
+    console.log('_req = ', _req.body)
     try {
       await ClassifierEquipmentRepos.create({ ..._req.body, active: true })
       const classifierEquipments = await ClassifierEquipmentRepos.findAll({
         where: { active: true },
         include: includesEquipment,
-        order: [['id', 'DESC']],
+        order,
       })
       res.status(200).json(classifierEquipments)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -101,7 +110,7 @@ export class classifierService {
   getAllClassifierEquipments = (_req: Request, res: Response) => {
     ClassifierEquipmentRepos.findAll({
       include: includesAllEquipment,
-      order: [['id', 'DESC']],
+      order,
     })
       .then(item => res.status(200).json(item))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
@@ -131,7 +140,7 @@ export class classifierService {
             active: true,
             id: { [Op.not]: selectedClassifierEquipments },
             include: includesEquipment,
-            order: [['id', 'DESC']],
+            order,
           },
         }),
       ])
@@ -156,7 +165,7 @@ export class classifierService {
             active: true,
             id: { [Op.not]: selectedClassifierEquipments },
             include: includesEquipment,
-            order: [['id', 'DESC']],
+            order,
           },
         }),
       ])
@@ -176,7 +185,7 @@ export class classifierService {
       const classifierEquipments = await ClassifierEquipmentRepos.findAll({
         where: { active: true },
         include: includesEquipment,
-        order: [['id', 'DESC']],
+        order,
       })
       res.status(200).json(classifierEquipments)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -192,7 +201,7 @@ export class classifierService {
       const classifierEquipments = await ClassifierEquipmentRepos.findAll({
         where: { active: true },
         include: includesEquipment,
-        order: [['id', 'DESC']],
+        order,
       })
       res.status(200).json(classifierEquipments)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -210,12 +219,12 @@ export class classifierService {
         model,
         active: true,
       })
-      const classifierModels = await ClassifierModelsRepos.findAll({
+      const classifierEquipments = await ClassifierEquipmentRepos.findAll({
         where: { active: true },
-        include: includesModel,
-        order: [['id', 'DESC']],
+        include: includesEquipment,
+        order,
       })
-      res.status(200).json(classifierModels)
+      res.status(200).json(classifierEquipments)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -227,7 +236,7 @@ export class classifierService {
   getAllClassifierModels = (_req: Request, res: Response) => {
     ClassifierModelsRepos.findAll({
       include: includesAllModel,
-      order: [['id', 'DESC']],
+      order: orderModel,
     })
       .then(item => res.status(200).json(item))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
@@ -236,10 +245,10 @@ export class classifierService {
     ClassifierModelsRepos.findAll({
       where: { active: true },
       include: includesModel,
-      order: [['id', 'DESC']],
+      order: orderModel,
     })
-      .then(classifierModels => {
-        res.status(200).json(classifierModels)
+      .then(models => {
+        res.status(200).json(models)
       })
       .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
@@ -248,7 +257,7 @@ export class classifierService {
     ClassifierModelsRepos.findAll({
       where: { active: true, id_equipment },
       include: includesModel,
-      order: [['id', 'DESC']],
+      order: orderModel,
     })
       .then(classifierModels => {
         res.status(200).json(classifierModels)
@@ -267,7 +276,7 @@ export class classifierService {
         await ClassifierModelsRepos.findAll({
           where: { active: true, id: { [Op.not]: selectedClassifierModels } },
           include: includesModel,
-          order: [['id', 'DESC']],
+          order: orderModel,
         }),
       ])
       res.status(200).json(classifierModels[1])
@@ -289,7 +298,7 @@ export class classifierService {
         await ClassifierModelsRepos.findAll({
           where: { active: true, id: { [Op.not]: selectedСlassifierModels } },
           include: includesModel,
-          order: [['id', 'DESC']],
+          order: orderModel,
         }),
       ])
       res.status(200).json(classifierModels[1])
@@ -308,7 +317,7 @@ export class classifierService {
       const classifierModels = await ClassifierModelsRepos.findAll({
         where: { active: true },
         include: includesModel,
-        order: [['id', 'DESC']],
+        order: orderModel,
       })
       res.status(200).json(classifierModels)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -357,7 +366,6 @@ export class classifierService {
         ...data,
         active: true,
       })
-
       const newThroughModelTypMalfunctions = selectedModels.map(
         (item: string) => {
           return {
@@ -369,11 +377,12 @@ export class classifierService {
       await ThroughModelTypMalfunctionsRepos.bulkCreate(
         newThroughModelTypMalfunctions
       )
-      const typicalMalfunctions = await TypicalMalfunctionsRepos.findAll({
+      const equipments = await ClassifierEquipmentRepos.findAll({
         where: { active: true },
-        order: [['id', 'DESC']],
+        include: includesEquipment,
+        order,
       })
-      res.status(200).json(typicalMalfunctions)
+      res.status(200).json(equipments)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -383,14 +392,14 @@ export class classifierService {
     }
   }
   getAllTypicalMalfunctions = (_req: Request, res: Response) => {
-    TypicalMalfunctionsRepos.findAll({ order: [['id', 'DESC']] })
+    TypicalMalfunctionsRepos.findAll({ order: orderTypicalMalfunction })
       .then(item => res.status(200).json(item))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
   getTypicalMalfunctions = (_req: Request, res: Response) => {
     TypicalMalfunctionsRepos.findAll({
       where: { active: true },
-      order: [['id', 'DESC']],
+      order: orderTypicalMalfunction,
     })
       .then(typicalMalfunctions => {
         res.status(200).json(typicalMalfunctions)
@@ -401,7 +410,7 @@ export class classifierService {
     const { id_equipment } = _req.body
     TypicalMalfunctionsRepos.findAll({
       where: { active: true, id_equipment },
-      order: [['id', 'DESC']],
+      order: orderTypicalMalfunction,
     })
       .then(typicalMalfunctions => {
         res.status(200).json(typicalMalfunctions)
@@ -421,7 +430,7 @@ export class classifierService {
           where: {
             active: true,
             id: { [Op.not]: selectedtypicalMalfunctions },
-            order: [['id', 'DESC']],
+            order: orderTypicalMalfunction,
           },
         }),
       ])
@@ -445,7 +454,7 @@ export class classifierService {
           where: {
             active: true,
             id: { [Op.not]: selectedtypicalMalfunctions },
-            order: [['id', 'DESC']],
+            order: orderTypicalMalfunction,
           },
         }),
       ])
@@ -464,7 +473,7 @@ export class classifierService {
       })
       const typicalMalfunctions = await TypicalMalfunctionsRepos.findAll({
         where: { active: true },
-        order: [['id', 'DESC']],
+        order: orderTypicalMalfunction,
       })
       res.status(200).json(typicalMalfunctions)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -477,11 +486,12 @@ export class classifierService {
     const { typicalMalfunction, id } = _req.body
     try {
       await TypicalMalfunctionsRepos.update(id, { typicalMalfunction })
-      const typicalMalfunctions = await TypicalMalfunctionsRepos.findAll({
+      const equipments = await ClassifierEquipmentRepos.findAll({
         where: { active: true },
-        order: [['id', 'DESC']],
+        include: includesEquipment,
+        order,
       })
-      res.status(200).json(typicalMalfunctions)
+      res.status(200).json(equipments)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */

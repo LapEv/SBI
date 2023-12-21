@@ -48,7 +48,7 @@ export const NewTypicalMalfunction = React.forwardRef<
       newTypicalMalfunction({
         id_equipment: equipment.id,
         typicalMalfunction: list[0].value,
-        models: selectedModels,
+        selectedModels,
       })
       handleModal(false)
     }

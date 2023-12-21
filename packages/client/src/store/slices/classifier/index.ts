@@ -193,11 +193,11 @@ export const classifierSlise = createSlice({
     },
     [changeClassifierModel.fulfilled.type]: (
       state,
-      action: PayloadAction<AnswerClassifierModels>
+      action: PayloadAction<AnswerClassifierEquipment>
     ) => {
       state.isLoadingClassifier = false
       state.error = ''
-      state.models = action.payload.data
+      state.equipments = action.payload.data
     },
     [changeClassifierModel.pending.type]: state => {
       state.isLoadingClassifier = true

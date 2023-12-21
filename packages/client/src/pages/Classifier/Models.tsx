@@ -8,9 +8,7 @@ import {
 } from 'components/Buttons'
 import { useTheme } from '@mui/material/styles'
 import {
-  ChangeModelsInTypicalMalfunction,
   ClassifierModels,
-  ShortTypicalMalfunctions,
   TypicalMalfunctions,
 } from 'store/slices/classifier/interfaces'
 import { useClassifier } from 'hooks/classifier/useClassifier'
@@ -18,17 +16,10 @@ import { classifierChildComponent, flexColumn_FS_SA } from 'static/styles'
 import { Item } from 'components/CheckBoxGroup'
 import { DataList } from 'components/CheckBoxGroup/interface'
 import { ModalChangeName } from 'components/ModaQuestions'
-import { сheckArrObjects } from 'utils/сheckArrObjects'
-import { EmptyTypicalMalfunctions } from './data'
+import { isEqualArrObjects } from 'utils/isEqualArrObjects'
 
 export const Models = memo(
-  ({
-    model,
-    id_equipment,
-    id,
-    typicalModels,
-    TypicalMalfunctions,
-  }: ClassifierModels) => {
+  ({ model, id, typicalModels, TypicalMalfunctions }: ClassifierModels) => {
     const [{ activeModel }, { setActiveModel, changeClassifierModel }] =
       useClassifier()
     const theme = useTheme()
@@ -36,10 +27,10 @@ export const Models = memo(
     const [open, setOpen] = useState(false)
     const [data, setData] = useState<DataList[]>([])
     const [modal, setModal] = useState<boolean>(false)
-    const [changeActive, setChangeActive] = useState<boolean>(true)
-    const [selectedModels, setSelectedModels] = useState
+    const [selectedTypicalMalfunction, setSelectedTypicalMalfunction] =
+      useState<TypicalMalfunctions[]>(typicalModels as [])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
-    // const [resetData, setResetData] = useState<boolean>(false)
+    const [disabled, setDisabled] = useState<boolean>(true)
 
     const handleClick = () => {
       if (!open) {
@@ -48,30 +39,70 @@ export const Models = memo(
       setOpen(!open)
     }
 
-    const undoChanges = () => {
-      if (changeActive) return
-      setData([{ name: '', id: '', initChecked: false }])
-      setChangeActive(true)
-      setErrSelectedItems(false)
-      // setResetData(true)
+    const onChangeModels = () => {
+      if (errSelectedItems) return
+      changeClassifierModel({
+        model,
+        id: id as string,
+        selectedTypicalMalfunction: selectedTypicalMalfunction.map(
+          ({ id }) => id
+        ) as string[],
+      })
+      setDisabled(true)
     }
 
-    // useEffect(() => {
-    //   // setDataList()
-    //   setResetData(false)
-    // }, [resetData])
+    const undoChanges = () => {
+      const listData = TypicalMalfunctions?.map(item => {
+        return {
+          name: item.typicalMalfunction,
+          id: item.id as string,
+          initChecked: typicalModels?.find(value => item.id === value.id)
+            ? true
+            : false,
+        }
+      }) as DataList[]
+      setData(listData)
+      setSelectedTypicalMalfunction(typicalModels as TypicalMalfunctions[])
+      setDisabled(true)
+    }
 
-    const onChooseModels = (checked: boolean, id: string) => {
-      // if (checked) {
-      //   const newSLAs = [...slaID]
-      //   newSLAs.push(id)
-      //   setSLADisabled(isEqualArr(newSLAs, SLAs?.map(({ id }) => id) as string[]))
-      //   setSLAID(newSLAs)
-      //   return
-      // }
-      // const newSLAs = slaID.filter(item => item !== id)
-      // setSLADisabled(isEqualArr(newSLAs, SLAs?.map(({ id }) => id) as string[]))
-      // setSLAID(newSLAs)
+    const onChooseItems = (checked: boolean, id: string) => {
+      if (checked) {
+        const modelList = [...selectedTypicalMalfunction]
+        const newModel = TypicalMalfunctions?.find(
+          item => item.id === id
+        ) as TypicalMalfunctions
+        modelList.push(newModel)
+        const isEq = isEqualArrObjects(typicalModels, modelList, 'id')
+        const listData = data.map(item => {
+          if (item.id === id) {
+            return { ...item, initChecked: true }
+          }
+          return item
+        }) as []
+        setData(listData)
+        setDisabled(isEq)
+        setSelectedTypicalMalfunction([...selectedTypicalMalfunction, newModel])
+        setErrSelectedItems(false)
+        return
+      }
+      const newModelList = selectedTypicalMalfunction?.filter(
+        item => item.id !== id
+      )
+      const isEq = isEqualArrObjects(typicalModels, newModelList, 'id')
+      const listData = data.map(item => {
+        if (item.id === id) {
+          return { ...item, initChecked: false }
+        }
+        return item
+      }) as []
+      setData(listData)
+      setDisabled(isEq)
+      setSelectedTypicalMalfunction(newModelList)
+      if (!newModelList || !newModelList.length) {
+        setErrSelectedItems(true)
+        setDisabled(true)
+      }
     }
 
     useEffect(() => {
@@ -84,7 +115,6 @@ export const Models = memo(
             : false,
         }
       }) as DataList[]
-      console.log('listData = ', listData)
       setData(listData)
     }, [])
 
@@ -99,7 +129,6 @@ export const Models = memo(
       changeClassifierModel({
         model: text,
         id: id as string,
-        id_equipment,
       })
     }
 
@@ -155,12 +184,12 @@ export const Models = memo(
               'Модель не может быть без типовых неисправностей!'}
           </Box>
           <ButtonsSectionNoSubmit
-            btnHandle={onChooseModels}
+            btnHandle={onChangeModels}
             btnSecondHandle={undoChanges}
             btnName="Сохранить"
-            btnDisabled={changeActive}
+            btnDisabled={disabled}
             btnSecondName="Отменить"
-            btnSecondDisabled={false}
+            btnSecondDisabled={disabled}
           />
         </Collapse>
       </Box>

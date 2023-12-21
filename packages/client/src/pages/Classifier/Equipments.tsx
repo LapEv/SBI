@@ -30,8 +30,7 @@ export const Equipments = memo(
     const handleClick = () => {
       setOpen(!open)
       setActiveEquipment(id as string)
-      const data = ClassifierModels?.filter(item => item.id_equipment === id)
-      setModelData(data)
+      setDataModels()
     }
 
     const editEquipment = (event: SyntheticEvent<EventTarget>) => {
@@ -47,6 +46,19 @@ export const Equipments = memo(
         id: id as string,
       })
     }
+
+    const setDataModels = () => {
+      const data = ClassifierModels?.filter(
+        item => item.id_equipment === id
+      ).map(item => {
+        return { ...item, typicalModels: item.TypicalMalfunctions }
+      })
+      setModelData(data)
+    }
+
+    useEffect(() => {
+      setDataModels()
+    }, [ClassifierModels])
 
     useEffect(() => {
       if (activeEquipment !== id) {
@@ -84,23 +96,16 @@ export const Equipments = memo(
           in={open}
           timeout="auto"
           unmountOnExit>
-          {modelData?.map(
-            ({
-              model,
-              id,
-              id_equipment,
-              typicalModels = TypicalMalfunctions,
-            }) => (
-              <Models
-                model={model}
-                id_equipment={id_equipment}
-                id={id as string}
-                typicalModels={typicalModels}
-                TypicalMalfunctions={TypicalMalfunctions}
-                key={`${id_equipment}${id}`}
-              />
-            )
-          )}
+          {modelData?.map(({ model, id, id_equipment, typicalModels }) => (
+            <Models
+              model={model}
+              id_equipment={id_equipment}
+              id={id as string}
+              typicalModels={typicalModels}
+              TypicalMalfunctions={TypicalMalfunctions}
+              key={`${id_equipment}${id}`}
+            />
+          ))}
         </Collapse>
       </Box>
     )

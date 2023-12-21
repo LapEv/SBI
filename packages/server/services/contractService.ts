@@ -18,6 +18,55 @@ const { Op } = require('sequelize')
 const includes = [
   {
     model: SLA,
+    where: { active: true },
+    include: [
+      {
+        model: TypesOfWork,
+        attributes: ['id', 'typeOfWork', 'active'],
+        where: { active: true },
+      },
+    ],
+  },
+  {
+    model: Objects,
+    where: { active: true },
+    through: {
+      attributes: [],
+    },
+  },
+  {
+    model: ClassifierEquipment,
+    include: [
+      {
+        model: ClassifierModels,
+        attributes: ['id', 'model', 'active'],
+        where: { active: true },
+        include: [
+          {
+            model: TypicalMalfunctions,
+            attributes: ['id', 'typicalMalfunction', 'active'],
+            where: { active: true },
+          },
+        ],
+      },
+    ],
+  },
+  // {
+  //   model: ClassifierModels,
+  //   through: {
+  //     attributes: [],
+  //   },
+  // },
+
+  {
+    model: Clients,
+    where: { active: true },
+  },
+]
+
+const includesAll = [
+  {
+    model: SLA,
     include: [
       { model: TypesOfWork, attributes: ['id', 'typeOfWork', 'active'] },
     ],
@@ -54,6 +103,7 @@ const includes = [
     model: Clients,
   },
 ]
+
 export class contractService {
   newContract = async (_req: Request, res: Response) => {
     const { sla, equipment, model, objects, ...data } = _req.body
@@ -131,7 +181,7 @@ export class contractService {
   }
 
   getAllContracts = (_req: Request, res: Response) => {
-    ContractsRepos.findAll({ include: includes })
+    ContractsRepos.findAll({ include: includesAll })
       .then(item => res.status(200).json(item))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }

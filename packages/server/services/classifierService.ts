@@ -12,6 +12,34 @@ const includesEquipment = [
   {
     model: ClassifierModels,
     attributes: ['id', 'model', 'id_equipment', 'active'],
+    where: { active: true },
+    include: [
+      {
+        model: TypicalMalfunctions,
+        attributes: ['id', 'typicalMalfunction', 'id_equipment', 'active'],
+        where: { active: true },
+      },
+    ],
+  },
+  {
+    model: TypicalMalfunctions,
+    attributes: ['id', 'typicalMalfunction', 'id_equipment', 'active'],
+    where: { active: true },
+  },
+]
+
+const includesModel = [
+  {
+    model: TypicalMalfunctions,
+    attributes: ['id', 'typicalMalfunction', 'id_equipment', 'active'],
+    where: { active: true },
+  },
+]
+
+const includesAllEquipment = [
+  {
+    model: ClassifierModels,
+    attributes: ['id', 'model', 'id_equipment', 'active'],
     include: [
       {
         model: TypicalMalfunctions,
@@ -25,7 +53,7 @@ const includesEquipment = [
   },
 ]
 
-const includesModel = [
+const includesAllModel = [
   {
     model: TypicalMalfunctions,
     attributes: ['id', 'typicalMalfunction', 'id_equipment', 'active'],
@@ -50,7 +78,7 @@ export class classifierService {
     }
   }
   getAllClassifierEquipments = (_req: Request, res: Response) => {
-    ClassifierEquipmentRepos.findAll({ include: includesEquipment })
+    ClassifierEquipmentRepos.findAll({ include: includesAllEquipment })
       .then(item => res.status(200).json(item))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
@@ -167,7 +195,7 @@ export class classifierService {
     }
   }
   getAllClassifierModels = (_req: Request, res: Response) => {
-    ClassifierModelsRepos.findAll({ include: includesModel })
+    ClassifierModelsRepos.findAll({ include: includesAllModel })
       .then(item => res.status(200).json(item))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }

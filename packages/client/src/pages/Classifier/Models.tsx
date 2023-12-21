@@ -37,92 +37,41 @@ export const Models = memo(
     const [data, setData] = useState<DataList[]>([])
     const [modal, setModal] = useState<boolean>(false)
     const [changeActive, setChangeActive] = useState<boolean>(true)
-    const [selectedTypes, setSelectedTypes] = useState<string[]>([])
+    const [selectedModels, setSelectedModels] = useState
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
-    const [resetData, setResetData] = useState<boolean>(false)
-    const [type, setType] = useState<TypicalMalfunctions[]>([])
+    // const [resetData, setResetData] = useState<boolean>(false)
 
     const handleClick = () => {
       if (!open) {
-        // getTypicalMalfunctionsById(id_equipment)
         setActiveModel(id as string)
       }
       setOpen(!open)
     }
-
-    // const setDataList = () => {
-    //   const listData = typicalMalfunctions.map(item => {
-    //     return {
-    //       name: item.typicalMalfunction,
-    //       id: item.id as string,
-    //       initChecked: item.models.includes(id as string),
-    //     }
-    //   })
-    //   setData(listData)
-    //   setType(typicalMalfunctions)
-    //   setSelectedTypes(
-    //     listData
-    //       .map(item => (item.initChecked ? item.id : ''))
-    //       .filter(item => item !== '')
-    //   )
-    // }
-
-    const onChooseItems = (checked: boolean, id: string) => {
-      // if (!checked) {
-      //   setType(
-      //     type.map(item =>
-      //       item.id !== id
-      //         ? item
-      //         : {
-      //             ...item,
-      //             models: item.models.filter(value => value !== id_model),
-      //           }
-      //     )
-      //   )
-      //   setSelectedTypes(selectedTypes.filter(value => value !== id))
-      //   return
-      // }
-      // setType(type.map(item => (item.id !== id ? item : checkArrayPush(item))))
-      // setSelectedTypes([...selectedTypes, id])
-    }
-
-    const checkArrayPush = (item: any) => {
-      // const newItemModels = [...item.models]
-      // if (newItemModels.includes(id_model)) return item
-      // newItemModels.push(id_model)
-      // return { ...item, models: newItemModels }
-    }
-
-    useEffect(() => {
-      // const isEqualArr = сheckArrObjects(
-      //   type,
-      //   typicalMalfunctions
-      // ) as ShortTypicalMalfunctions[]
-      // setChangeActive(isEqualArr.length ? false : true)
-      // setNewTypicalMalfunction(isEqualArr)
-      // if (!selectedTypes.length) {
-      //   setErrSelectedItems(true)
-      //   return
-      // }
-      // setErrSelectedItems(false)
-    }, [type])
 
     const undoChanges = () => {
       if (changeActive) return
       setData([{ name: '', id: '', initChecked: false }])
       setChangeActive(true)
       setErrSelectedItems(false)
-      setResetData(true)
+      // setResetData(true)
     }
 
-    useEffect(() => {
-      // setDataList()
-      setResetData(false)
-    }, [resetData])
+    // useEffect(() => {
+    //   // setDataList()
+    //   setResetData(false)
+    // }, [resetData])
 
-    const changeDataModels = () => {
-      // if (errSelectedItems) return
-      // changeModelsInTypicalMalfunction({ id_equipment, newTypicalMalfunction })
+    const onChooseModels = (checked: boolean, id: string) => {
+      // if (checked) {
+      //   const newSLAs = [...slaID]
+      //   newSLAs.push(id)
+      //   setSLADisabled(isEqualArr(newSLAs, SLAs?.map(({ id }) => id) as string[]))
+      //   setSLAID(newSLAs)
+      //   return
+      // }
+      // const newSLAs = slaID.filter(item => item !== id)
+      // setSLADisabled(isEqualArr(newSLAs, SLAs?.map(({ id }) => id) as string[]))
+      // setSLAID(newSLAs)
     }
 
     useEffect(() => {
@@ -206,7 +155,7 @@ export const Models = memo(
               'Модель не может быть без типовых неисправностей!'}
           </Box>
           <ButtonsSectionNoSubmit
-            btnHandle={changeDataModels}
+            btnHandle={onChooseModels}
             btnSecondHandle={undoChanges}
             btnName="Сохранить"
             btnDisabled={changeActive}

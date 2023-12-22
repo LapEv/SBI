@@ -15,6 +15,7 @@ import { DropDown, emptyValue } from 'components/DropDown'
 import { Options } from 'components/DropDown/interface'
 import { useClassifier } from 'hooks/classifier/useClassifier'
 import { Item } from 'components/CheckBoxGroup'
+import { ClassifierModels } from 'store/slices/classifier/interfaces'
 
 export const NewTypicalMalfunction = React.forwardRef<
   unknown,
@@ -22,15 +23,14 @@ export const NewTypicalMalfunction = React.forwardRef<
 >(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
-    const [
-      { equipments, models },
-      { newTypicalMalfunction, getClassifierModelsById },
-    ] = useClassifier()
+    const [{ equipments }, { newTypicalMalfunction, resetModels }] =
+      useClassifier()
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const boxRef = React.createRef<HTMLDivElement>()
     const [equipment, setEquipment] = useState<Options>(emptyValue)
-    const [selectedModels, setModels] = useState<string[]>([])
+    const [selectedModels, setSelectedModels] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
+    const [models, setModels] = useState<ClassifierModels[]>([])
 
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
@@ -54,26 +54,28 @@ export const NewTypicalMalfunction = React.forwardRef<
     }
 
     const chooseClassifierEquipment = (data: Options) => {
-      getClassifierModelsById(data.id)
+      const newModel = equipments.filter(({ id }) => id === data.id)[0]
+        .ClassifierModels as ClassifierModels[]
+      setModels(newModel)
       setEquipment(data)
     }
 
     const onChooseItems = (checked: boolean, id: string) => {
       if (!checked) {
-        setModels(selectedModels.filter(value => value !== id))
+        setSelectedModels(selectedModels.filter(value => value !== id))
         return
       }
-      setModels([...selectedModels, id])
+      setSelectedModels([...selectedModels, id])
       if ([...selectedModels, id] && errSelectedItems)
         setErrSelectedItems(false)
     }
 
     useEffect(() => {
-      getClassifierModelsById('')
+      resetModels()
     }, [])
 
     useEffect(() => {
-      setModels(models.map(item => item.id as string))
+      setSelectedModels(models.map(item => item.id as string))
     }, [models])
 
     return (

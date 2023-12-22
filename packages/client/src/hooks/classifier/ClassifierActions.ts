@@ -4,9 +4,9 @@ import {
   ChangeClassifierModel,
   ChangeTypicalMalfunction,
   ClassifierEquipment,
-  ClassifierModels,
   ChangeModelsInTypicalMalfunction,
   AddTypicalMalfunctions,
+  AddClassifierModels,
 } from 'store/slices/classifier/interfaces'
 
 export interface ClassifierActions {
@@ -16,7 +16,7 @@ export interface ClassifierActions {
   getTypicalMalfunctions: () => void
   getTypicalMalfunctionsById: (id_equipment: string) => void
   newClassifierEquipment: (data: ClassifierEquipment) => void
-  newClassifierModel: (data: ClassifierModels) => void
+  newClassifierModel: (data: AddClassifierModels) => void
   newTypicalMalfunction: (data: AddTypicalMalfunctions) => void
   deleteClassifierEquipment: (data: string[]) => void
   deleteClassifierModel: (data: string[]) => void
@@ -30,4 +30,6 @@ export interface ClassifierActions {
   }: ChangeModelsInTypicalMalfunction) => void
   setActiveEquipment: (id: string) => void
   setActiveModel: (id: string) => void
+  resetTypicalMalfunction: () => void
+  resetModels: () => void
 }

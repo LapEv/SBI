@@ -3,8 +3,13 @@ import type { Request, Response } from 'express'
 const { Op } = require('sequelize')
 
 const includes = [
-  { model: TypesOfWork, attributes: ['id', 'typeOfWork', 'active'] },
+  {
+    model: TypesOfWork,
+    required: false,
+    attributes: ['id', 'typeOfWork', 'active'],
+  },
 ]
+
 export class slaService {
   newSLA = async (_req: Request, res: Response) => {
     try {

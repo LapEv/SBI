@@ -15,19 +15,23 @@ import { useClassifier } from 'hooks/classifier/useClassifier'
 import { DropDown, emptyValue } from 'components/DropDown'
 import { Options } from 'components/DropDown/interface'
 import { Item } from 'components/CheckBoxGroup'
+import { resetTypicalMalfunction } from 'store/slices/classifier'
+import { TypicalMalfunctions } from 'store/slices/classifier/interfaces'
 
 export const NewClassifierModel = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
-    const [
-      { equipments, typicalMalfunctions },
-      { newClassifierModel, getTypicalMalfunctionsById },
-    ] = useClassifier()
+    const [{ equipments }, { newClassifierModel, resetTypicalMalfunction }] =
+      useClassifier()
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const boxRef = React.createRef<HTMLDivElement>()
     const [equipment, setEquipment] = useState<Options>(emptyValue)
+    const [typicalMalfunctions, setTypicalMalfunctions] = useState<
+      TypicalMalfunctions[]
+    >([])
     const [selectedTypicalMalfunctions, setGroup] = useState<string[]>([])
     const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
+    const [noTypical, setNoTypical] = useState<boolean>(false)
 
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
@@ -51,7 +55,9 @@ export const NewClassifierModel = React.forwardRef<unknown, ChooseModalProps>(
     }
 
     const chooseClassifierEquipment = (data: Options) => {
-      getTypicalMalfunctionsById(data.id)
+      const typical = equipments.filter(({ id }) => id === data.id)[0]
+        .TypicalMalfunctions as TypicalMalfunctions[]
+      setTypicalMalfunctions(typical)
       setEquipment(data)
     }
 
@@ -66,8 +72,19 @@ export const NewClassifierModel = React.forwardRef<unknown, ChooseModalProps>(
     }
 
     useEffect(() => {
-      getTypicalMalfunctionsById('')
+      resetTypicalMalfunction()
     }, [])
+
+    useEffect(() => {
+      if (
+        (!typicalMalfunctions || !typicalMalfunctions.length) &&
+        equipment.id
+      ) {
+        setNoTypical(true)
+        return
+      }
+      setNoTypical(false)
+    }, [typicalMalfunctions])
 
     return (
       <Box
@@ -113,9 +130,18 @@ export const NewClassifierModel = React.forwardRef<unknown, ChooseModalProps>(
             />
           )
         })}
-        <Typography sx={{ fontSize: 14 }}>
+        <Typography sx={{ fontSize: 14, mt: 2 }}>
           Выберите типовые неисправности для этой модели:
         </Typography>
+        {noTypical ? (
+          <Typography sx={{ fontSize: 14, mt: 2, width: '85%', height: 40 }}>
+            Для этого классификатора нет типовых неисправностей. Необходимо
+            сначала их внести!
+          </Typography>
+        ) : (
+          <Typography
+            sx={{ fontSize: 14, mt: 2, width: '85%', height: 10 }}></Typography>
+        )}
         <Box
           ref={boxRef}
           sx={{

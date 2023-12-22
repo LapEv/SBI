@@ -44,7 +44,7 @@ export const Models = memo(
       changeClassifierModel({
         model,
         id: id as string,
-        selectedTypicalMalfunction: selectedTypicalMalfunction.map(
+        selectedTypicalMalfunctions: selectedTypicalMalfunction.map(
           ({ id }) => id
         ) as string[],
       })

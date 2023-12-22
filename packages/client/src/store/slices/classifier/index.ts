@@ -45,6 +45,12 @@ export const classifierSlise = createSlice({
     setActiveModel(state, action) {
       state.activeModel = action.payload
     },
+    resetTypicalMalfunction(state) {
+      state.typicalMalfunctions = []
+    },
+    resetModels(state) {
+      state.models = []
+    },
   },
   extraReducers: {
     [getClassifierEquipments.fulfilled.type]: (
@@ -157,11 +163,11 @@ export const classifierSlise = createSlice({
     },
     [newClassifierModel.fulfilled.type]: (
       state,
-      action: PayloadAction<AnswerClassifierModels>
+      action: PayloadAction<AnswerClassifierEquipment>
     ) => {
       state.isLoadingClassifier = false
       state.error = ''
-      state.models = action.payload.data
+      state.equipments = action.payload.data
     },
     [newClassifierModel.pending.type]: state => {
       state.isLoadingClassifier = true
@@ -175,11 +181,11 @@ export const classifierSlise = createSlice({
     },
     [deleteClassifierModel.fulfilled.type]: (
       state,
-      action: PayloadAction<AnswerClassifierModels>
+      action: PayloadAction<AnswerClassifierEquipment>
     ) => {
       state.isLoadingClassifier = false
       state.error = ''
-      state.models = action.payload.data
+      state.equipments = action.payload.data
     },
     [deleteClassifierModel.pending.type]: state => {
       state.isLoadingClassifier = true
@@ -248,11 +254,11 @@ export const classifierSlise = createSlice({
 
     [newTypicalMalfunction.fulfilled.type]: (
       state,
-      action: PayloadAction<AnswerTypicalMalfunctions>
+      action: PayloadAction<AnswerClassifierEquipment>
     ) => {
       state.isLoadingClassifier = false
       state.error = ''
-      state.typicalMalfunctions = action.payload.data
+      state.equipments = action.payload.data
     },
     [newTypicalMalfunction.pending.type]: state => {
       state.isLoadingClassifier = true
@@ -266,11 +272,11 @@ export const classifierSlise = createSlice({
     },
     [deleteTypicalMalfunction.fulfilled.type]: (
       state,
-      action: PayloadAction<AnswerTypicalMalfunctions>
+      action: PayloadAction<AnswerClassifierEquipment>
     ) => {
       state.isLoadingClassifier = false
       state.error = ''
-      state.typicalMalfunctions = action.payload.data
+      state.equipments = action.payload.data
     },
     [deleteTypicalMalfunction.pending.type]: state => {
       state.isLoadingClassifier = true
@@ -322,4 +328,9 @@ export const classifierSlise = createSlice({
 })
 
 export const classifierReducer = classifierSlise.reducer
-export const { setActiveEquipment, setActiveModel } = classifierSlise.actions
+export const {
+  setActiveEquipment,
+  setActiveModel,
+  resetTypicalMalfunction,
+  resetModels,
+} = classifierSlise.actions

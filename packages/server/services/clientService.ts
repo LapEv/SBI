@@ -8,7 +8,6 @@ export class clientService {
       await ClientsRepos.create({ ..._req.body, active: true })
       const clients = await ClientsRepos.findAll({
         where: { active: true },
-        // include: [{ model: Contracts, through: { attributes: [] } }],
       })
       res.status(200).json(clients)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -29,8 +28,6 @@ export class clientService {
   getClients = (_req: Request, res: Response) => {
     ClientsRepos.findAll({
       where: { active: true },
-      // include: [{ model: Contracts, through: { attributes: [] } }],
-      // include: [{ all: true, nested: true }],
     })
       .then(clients => {
         res.status(200).json(clients)

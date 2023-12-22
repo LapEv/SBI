@@ -5,14 +5,17 @@ const { Op } = require('sequelize')
 const includes = [
   {
     model: Clients,
+    required: false,
     attributes: ['client'],
   },
   {
     model: Addresses,
+    required: false,
     attributes: ['address'],
   },
   {
     model: Regions,
+    required: false,
     attributes: ['region'],
   },
 ]

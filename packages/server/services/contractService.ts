@@ -19,26 +19,31 @@ const includes = [
   {
     model: SLA,
     where: { active: true },
+    required: false,
     include: [
       {
         model: TypesOfWork,
         attributes: ['id', 'typeOfWork', 'active'],
         where: { active: true },
+        required: false,
       },
     ],
   },
   {
     model: Objects,
     where: { active: true },
+    required: false,
     through: {
       attributes: [],
     },
   },
   {
     model: ClassifierEquipment,
+    required: false,
     include: [
       {
         model: ClassifierModels,
+        required: false,
         attributes: ['id', 'model', 'active'],
         where: { active: true },
         include: [
@@ -60,6 +65,7 @@ const includes = [
 
   {
     model: Clients,
+    required: false,
     where: { active: true },
   },
 ]
@@ -67,25 +73,30 @@ const includes = [
 const includesAll = [
   {
     model: SLA,
+    required: false,
     include: [
       { model: TypesOfWork, attributes: ['id', 'typeOfWork', 'active'] },
     ],
   },
   {
     model: Objects,
+    required: false,
     through: {
       attributes: [],
     },
   },
   {
     model: ClassifierEquipment,
+    required: false,
     include: [
       {
         model: ClassifierModels,
+        required: false,
         attributes: ['id', 'model', 'active'],
         include: [
           {
             model: TypicalMalfunctions,
+            required: false,
             attributes: ['id', 'typicalMalfunction', 'active'],
           },
         ],
@@ -101,6 +112,7 @@ const includesAll = [
 
   {
     model: Clients,
+    required: false,
   },
 ]
 

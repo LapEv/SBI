@@ -1,6 +1,5 @@
 import type { Request, Response } from 'express'
 import { AddressesRepos, Regions, RegionsRepos } from '../db'
-const { Op } = require('sequelize')
 
 export class addressService {
   newAddress = async (_req: Request, res: Response) => {
@@ -22,6 +21,7 @@ export class addressService {
       include: {
         model: Regions,
         attributes: ['region'],
+        required: false,
       },
     })
       .then(item => res.status(200).json(item))
@@ -34,6 +34,7 @@ export class addressService {
       include: {
         model: Regions,
         attributes: ['region'],
+        required: false,
       },
     })
       .then(addresses => {
@@ -45,17 +46,13 @@ export class addressService {
   deleteAddress = async (_req: Request, res: Response) => {
     const { selectedAddresses } = _req.body
     try {
-      const addresses = await Promise.all([
-        await selectedAddresses.map(async (id: string) => {
-          await AddressesRepos.update(id, {
-            active: false,
-          })
-        }),
-        await AddressesRepos.findAll({
-          where: { id: { [Op.not]: selectedAddresses } },
-        }),
-      ])
-      res.status(200).json(addresses[1])
+      await AddressesRepos.update(selectedAddresses, {
+        active: false,
+      })
+      const addresses = await AddressesRepos.findAll({
+        where: { active: true },
+      })
+      res.status(200).json(addresses)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -66,17 +63,11 @@ export class addressService {
   fullDeleteAddress = async (_req: Request, res: Response) => {
     const { selectedAddresses } = _req.body
     try {
-      const addresses = await Promise.all([
-        await selectedAddresses.map(async (id: string) => {
-          await AddressesRepos.destroy({
-            where: { id },
-          })
-        }),
-        await AddressesRepos.findAll({
-          where: { id: { [Op.not]: selectedAddresses } },
-        }),
-      ])
-      res.status(200).json(addresses[1])
+      await AddressesRepos.destroy({
+        where: { id: selectedAddresses },
+      })
+      const addresses = await AddressesRepos.findAll({})
+      res.status(200).json(addresses)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -143,17 +134,13 @@ export class addressService {
   deleteRegion = async (_req: Request, res: Response) => {
     const { selectedRegions } = _req.body
     try {
-      const regions = await Promise.all([
-        await selectedRegions.map(async (id: string) => {
-          await RegionsRepos.update(id, {
-            active: false,
-          })
-        }),
-        await RegionsRepos.findAll({
-          where: { id: { [Op.not]: selectedRegions } },
-        }),
-      ])
-      res.status(200).json(regions[1])
+      await RegionsRepos.update(selectedRegions, {
+        active: false,
+      })
+      const regions = await RegionsRepos.findAll({
+        where: { active: true },
+      })
+      res.status(200).json(regions)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -164,17 +151,11 @@ export class addressService {
   fullDeleteRegion = async (_req: Request, res: Response) => {
     const { selectedRegions } = _req.body
     try {
-      const regions = await Promise.all([
-        await selectedRegions.map(async (id: string) => {
-          await RegionsRepos.destroy({
-            where: { id },
-          })
-        }),
-        await RegionsRepos.findAll({
-          where: { id: { [Op.not]: selectedRegions } },
-        }),
-      ])
-      res.status(200).json(regions[1])
+      await RegionsRepos.destroy({
+        where: { id: selectedRegions },
+      })
+      const regions = await RegionsRepos.findAll({})
+      res.status(200).json(regions)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */

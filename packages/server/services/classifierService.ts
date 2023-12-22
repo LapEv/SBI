@@ -16,19 +16,13 @@ const includesEquipment = [
     model: ClassifierModels,
     attributes: ['id', 'model', 'id_equipment', 'active'],
     where: { active: true },
-    order: [
-      ['id', 'ASC'],
-      ['model', 'DESC'],
-    ] as Order,
+    required: false,
     include: [
       {
         model: TypicalMalfunctions,
         attributes: ['id', 'typicalMalfunction', 'id_equipment', 'active'],
         where: { active: true },
-        order: [
-          ['id', 'ASC'],
-          ['typicalMalfunction', 'DESC'],
-        ] as Order,
+        required: false,
       },
     ],
   },
@@ -36,10 +30,7 @@ const includesEquipment = [
     model: TypicalMalfunctions,
     attributes: ['id', 'typicalMalfunction', 'id_equipment', 'active'],
     where: { active: true },
-    order: [
-      ['id', 'ASC'],
-      ['typicalMalfunction', 'DESC'],
-    ] as Order,
+    required: false,
   },
 ]
 
@@ -95,7 +86,6 @@ const orderTypicalMalfunction = [['typicalMalfunction', 'ASC']] as Order
 
 export class classifierService {
   newClassifierEquipment = async (_req: Request, res: Response) => {
-    console.log('_req = ', _req.body)
     try {
       await ClassifierEquipmentRepos.create({ ..._req.body, active: true })
       const classifierEquipments = await ClassifierEquipmentRepos.findAll({
@@ -224,12 +214,24 @@ export class classifierService {
         model,
         active: true,
       })
-      const classifierModels = await ClassifierModelsRepos.findAll({
+      if (selectedTypicalMalfunctions && selectedTypicalMalfunctions.length) {
+        const newThroughModelTypicalMalfunction =
+          selectedTypicalMalfunctions.map((item: string) => {
+            return {
+              id_model: newModel.id,
+              id_typicalMalfunction: item,
+            }
+          })
+        await ThroughModelTypMalfunctionsRepos.bulkCreate(
+          newThroughModelTypicalMalfunction
+        )
+      }
+      const classifierEquipment = await ClassifierEquipmentRepos.findAll({
         where: { active: true },
         include: includesEquipment,
         order,
       })
-      res.status(200).json(classifierModels)
+      res.status(200).json(classifierEquipment)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -252,8 +254,8 @@ export class classifierService {
       include: includesModel,
       order: orderModel,
     })
-      .then(models => {
-        res.status(200).json(models)
+      .then(classifierModels => {
+        res.status(200).json(classifierModels)
       })
       .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
@@ -280,8 +282,8 @@ export class classifierService {
         }),
         await ClassifierEquipmentRepos.findAll({
           where: { active: true, id: { [Op.not]: selectedClassifierModels } },
-          include: includesModel,
-          order: [['id', 'DESC']],
+          include: includesEquipment,
+          order,
         }),
       ])
       res.status(200).json(classifierEquipment[1])
@@ -371,19 +373,20 @@ export class classifierService {
         ...data,
         active: true,
       })
-
-      const newThroughModelTypMalfunctions = selectedModels.map(
-        (item: string) => {
-          return {
-            id_typicalMalfunction: typMalfunction.id,
-            id_model: item,
+      if (selectedModels && selectedModels.length) {
+        const newThroughModelTypMalfunctions = selectedModels.map(
+          (item: string) => {
+            return {
+              id_typicalMalfunction: typMalfunction.id,
+              id_model: item,
+            }
           }
-        }
-      )
-      await ThroughModelTypMalfunctionsRepos.bulkCreate(
-        newThroughModelTypMalfunctions
-      )
-      const typicalMalfunctions = await TypicalMalfunctionsRepos.findAll({
+        )
+        await ThroughModelTypMalfunctionsRepos.bulkCreate(
+          newThroughModelTypMalfunctions
+        )
+      }
+      const equipments = await ClassifierEquipmentRepos.findAll({
         where: { active: true },
         include: includesEquipment,
         order,
@@ -426,21 +429,15 @@ export class classifierService {
   deleteTypicalMalfunction = async (_req: Request, res: Response) => {
     const { selectedtypicalMalfunctions } = _req.body
     try {
-      const typicalMalfunctions = await Promise.all([
-        await selectedtypicalMalfunctions.map(async (id: string) => {
-          await TypicalMalfunctionsRepos.update(id, {
-            active: false,
-          })
-        }),
-        await TypicalMalfunctionsRepos.findAll({
-          where: {
-            active: true,
-            id: { [Op.not]: selectedtypicalMalfunctions },
-            order: [['id', 'DESC']],
-          },
-        }),
-      ])
-      res.status(200).json(typicalMalfunctions[1])
+      await TypicalMalfunctionsRepos.update(selectedtypicalMalfunctions, {
+        active: false,
+      })
+      const equipments = await ClassifierEquipmentRepos.findAll({
+        where: { active: true },
+        include: includesEquipment,
+        order,
+      })
+      res.status(200).json(equipments)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -450,21 +447,11 @@ export class classifierService {
   fullDeleteTypicalMalfunction = async (_req: Request, res: Response) => {
     const { selectedtypicalMalfunctions } = _req.body
     try {
-      const typicalMalfunctions = await Promise.all([
-        await selectedtypicalMalfunctions.map(async (id: string) => {
-          await TypicalMalfunctionsRepos.destroy({
-            where: { id },
-          })
-        }),
-        await TypicalMalfunctionsRepos.findAll({
-          where: {
-            active: true,
-            id: { [Op.not]: selectedtypicalMalfunctions },
-            order: [['id', 'DESC']],
-          },
-        }),
-      ])
-      res.status(200).json(typicalMalfunctions[1])
+      await TypicalMalfunctionsRepos.destroy({
+        where: { id: selectedtypicalMalfunctions },
+      })
+      const typicalMalfunctions = await TypicalMalfunctionsRepos.findAll({})
+      res.status(200).json(typicalMalfunctions)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */

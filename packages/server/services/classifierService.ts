@@ -9,7 +9,6 @@ import {
   TypicalMalfunctionsRepos,
 } from '../db'
 import type { Request, Response } from 'express'
-const { Op } = require('sequelize')
 
 const includesEquipment = [
   {
@@ -124,22 +123,17 @@ export class classifierService {
   deleteClassifierEquipment = async (_req: Request, res: Response) => {
     const { selectedClassifierEquipments } = _req.body
     try {
-      const classifierEquipments = await Promise.all([
-        await selectedClassifierEquipments.map(async (id: string) => {
-          await ClassifierEquipmentRepos.update(id, {
-            active: false,
-          })
-        }),
-        await ClassifierEquipmentRepos.findAll({
-          where: {
-            active: true,
-            id: { [Op.not]: selectedClassifierEquipments },
-            include: includesEquipment,
-            order,
-          },
-        }),
-      ])
-      res.status(200).json(classifierEquipments[1])
+      await ClassifierEquipmentRepos.update(selectedClassifierEquipments, {
+        active: false,
+      })
+      const classifierEquipments = await ClassifierEquipmentRepos.findAll({
+        where: {
+          active: true,
+          include: includesEquipment,
+          order,
+        },
+      })
+      res.status(200).json(classifierEquipments)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -149,21 +143,15 @@ export class classifierService {
   fullDeleteClassifierEquipment = async (_req: Request, res: Response) => {
     const { selectedClassifierEquipments } = _req.body
     try {
-      const classifierEquipments = await Promise.all([
-        await selectedClassifierEquipments.map(async (id: string) => {
-          await ClassifierEquipmentRepos.destroy({
-            where: { id },
-          })
-        }),
-        await ClassifierEquipmentRepos.findAll({
-          where: {
-            active: true,
-            id: { [Op.not]: selectedClassifierEquipments },
-            include: includesEquipment,
-            order,
-          },
-        }),
-      ])
+      await ClassifierEquipmentRepos.destroy({
+        where: { id: selectedClassifierEquipments },
+      })
+      const classifierEquipments = await ClassifierEquipmentRepos.findAll({
+        where: {
+          include: includesEquipment,
+          order,
+        },
+      })
       res.status(200).json(classifierEquipments[1])
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
@@ -274,19 +262,15 @@ export class classifierService {
   deleteClassifierModel = async (_req: Request, res: Response) => {
     const { selectedClassifierModels } = _req.body
     try {
-      const classifierEquipment = await Promise.all([
-        await selectedClassifierModels.map(async (id: string) => {
-          await ClassifierModelsRepos.update(id, {
-            active: false,
-          })
-        }),
-        await ClassifierEquipmentRepos.findAll({
-          where: { active: true, id: { [Op.not]: selectedClassifierModels } },
-          include: includesEquipment,
-          order,
-        }),
-      ])
-      res.status(200).json(classifierEquipment[1])
+      await ClassifierModelsRepos.update(selectedClassifierModels, {
+        active: false,
+      })
+      const classifierEquipment = await ClassifierEquipmentRepos.findAll({
+        where: { active: true },
+        include: includesEquipment,
+        order,
+      })
+      res.status(200).json(classifierEquipment)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -296,19 +280,15 @@ export class classifierService {
   fullDeleteClassifierModel = async (_req: Request, res: Response) => {
     const { selectedСlassifierModels } = _req.body
     try {
-      const classifierModels = await Promise.all([
-        await selectedСlassifierModels.map(async (id: string) => {
-          await ClassifierModelsRepos.destroy({
-            where: { id },
-          })
-        }),
-        await ClassifierModelsRepos.findAll({
-          where: { active: true, id: { [Op.not]: selectedСlassifierModels } },
-          include: includesModel,
-          order: orderModel,
-        }),
-      ])
-      res.status(200).json(classifierModels[1])
+      await ClassifierModelsRepos.destroy({
+        where: { id: selectedСlassifierModels },
+      })
+      const classifierModels = await ClassifierModelsRepos.findAll({
+        where: { active: true },
+        include: includesModel,
+        order: orderModel,
+      })
+      res.status(200).json(classifierModels)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */

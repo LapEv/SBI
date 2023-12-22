@@ -1,6 +1,5 @@
 import { IncidentRepos, IncidentStatusesRepos, TypesOfWorkRepos } from './../db'
 import type { Request, Response } from 'express'
-const { Op } = require('sequelize')
 
 export class incidentService {
   newIncidentStatuses = async (_req: Request, res: Response) => {
@@ -35,17 +34,13 @@ export class incidentService {
   deleteIncidentStatuses = async (_req: Request, res: Response) => {
     const { selectedINCStatuses } = _req.body
     try {
-      const incStatuses = await Promise.all([
-        await selectedINCStatuses.map(async (id: string) => {
-          await IncidentStatusesRepos.update(id, {
-            active: false,
-          })
-        }),
-        await IncidentStatusesRepos.findAll({
-          where: { active: true, id: { [Op.not]: selectedINCStatuses } },
-        }),
-      ])
-      res.status(200).json(incStatuses[1])
+      await IncidentStatusesRepos.update(selectedINCStatuses, {
+        active: false,
+      })
+      const incStatuses = await IncidentStatusesRepos.findAll({
+        where: { active: true },
+      })
+      res.status(200).json(incStatuses)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -55,17 +50,11 @@ export class incidentService {
   fullDeleteIncidentStatuses = async (_req: Request, res: Response) => {
     const { selectedINCStatuses } = _req.body
     try {
-      const incStatuses = await Promise.all([
-        await selectedINCStatuses.map(async (id: string) => {
-          await IncidentStatusesRepos.destroy({
-            where: { id },
-          })
-        }),
-        await IncidentStatusesRepos.findAll({
-          where: { active: true, id: { [Op.not]: selectedINCStatuses } },
-        }),
-      ])
-      res.status(200).json(incStatuses[1])
+      await IncidentStatusesRepos.destroy({
+        where: { id: selectedINCStatuses },
+      })
+      const incStatuses = await IncidentStatusesRepos.findAll({})
+      res.status(200).json(incStatuses)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -135,17 +124,13 @@ export class incidentService {
   deleteTypesOfWork = async (_req: Request, res: Response) => {
     const { selectedTypesOfWork } = _req.body
     try {
-      const typesOfWork = await Promise.all([
-        await selectedTypesOfWork.map(async (id: string) => {
-          await TypesOfWorkRepos.update(id, {
-            active: false,
-          })
-        }),
-        await TypesOfWorkRepos.findAll({
-          where: { active: true, id: { [Op.not]: selectedTypesOfWork } },
-        }),
-      ])
-      res.status(200).json(typesOfWork[1])
+      await TypesOfWorkRepos.update(selectedTypesOfWork, {
+        active: false,
+      })
+      const typesOfWork = await TypesOfWorkRepos.findAll({
+        where: { active: true },
+      })
+      res.status(200).json(typesOfWork)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -155,17 +140,11 @@ export class incidentService {
   fullDeleteTypesOfWork = async (_req: Request, res: Response) => {
     const { selectedTypesOfWork } = _req.body
     try {
-      const typesOfWork = await Promise.all([
-        await selectedTypesOfWork.map(async (id: string) => {
-          await TypesOfWorkRepos.destroy({
-            where: { id },
-          })
-        }),
-        await TypesOfWorkRepos.findAll({
-          where: { active: true, id: { [Op.not]: selectedTypesOfWork } },
-        }),
-      ])
-      res.status(200).json(typesOfWork[1])
+      await TypesOfWorkRepos.destroy({
+        where: { id: selectedTypesOfWork },
+      })
+      const typesOfWork = await TypesOfWorkRepos.findAll({})
+      res.status(200).json(typesOfWork)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -235,17 +214,13 @@ export class incidentService {
   deleteINC = async (_req: Request, res: Response) => {
     const { selectedINCs } = _req.body
     try {
-      const incs = await Promise.all([
-        await selectedINCs.map(async (id: string) => {
-          await IncidentRepos.update(id, {
-            active: false,
-          })
-        }),
-        await IncidentRepos.findAll({
-          where: { active: true, id: { [Op.not]: selectedINCs } },
-        }),
-      ])
-      res.status(200).json(incs[1])
+      await IncidentRepos.update(selectedINCs, {
+        active: false,
+      })
+      const incs = await IncidentRepos.findAll({
+        where: { active: true },
+      })
+      res.status(200).json(incs)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -255,17 +230,11 @@ export class incidentService {
   fullDeleteINC = async (_req: Request, res: Response) => {
     const { selectedINCs } = _req.body
     try {
-      const incs = await Promise.all([
-        await selectedINCs.map(async (id: string) => {
-          await IncidentRepos.destroy({
-            where: { id },
-          })
-        }),
-        await IncidentRepos.findAll({
-          where: { active: true, id: { [Op.not]: selectedINCs } },
-        }),
-      ])
-      res.status(200).json(incs[1])
+      await IncidentRepos.destroy({
+        where: { id: selectedINCs },
+      })
+      const incs = await IncidentRepos.findAll({})
+      res.status(200).json(incs)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */

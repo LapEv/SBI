@@ -1,6 +1,5 @@
 import type { Request, Response } from 'express'
 import { DepartmentRepos } from '../db'
-const { Op } = require('sequelize')
 
 export class departmentService {
   newDepartment = async (_req: Request, res: Response) => {
@@ -35,19 +34,30 @@ export class departmentService {
   }
 
   deleteDepartment = async (_req: Request, res: Response) => {
-    const { data } = _req.body
+    const { selectedDepartments } = _req.body
     try {
-      const departaments = await Promise.all([
-        await data.map(async (id: string) => {
-          await DepartmentRepos.destroy({
-            where: { id },
-          })
-        }),
-        await DepartmentRepos.findAll({
-          where: { active: true, id: { [Op.not]: data } },
-        }),
-      ])
+      await DepartmentRepos.update(selectedDepartments, {
+        active: false,
+      })
+      const departaments = await DepartmentRepos.findAll({
+        where: { active: true },
+      })
       res.status(200).json(departaments[1])
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res.status(500).json({ error: ['db error', err] })
+    }
+  }
+
+  fullDeleteDepartment = async (_req: Request, res: Response) => {
+    const { selectedDepartments } = _req.body
+    try {
+      await DepartmentRepos.destroy({
+        where: { id: selectedDepartments },
+      })
+      const departaments = await DepartmentRepos.findAll({})
+      res.status(200).json(departaments)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */

@@ -13,7 +13,6 @@ import {
   TypicalMalfunctions,
 } from '../db'
 import type { Request, Response } from 'express'
-const { Op } = require('sequelize')
 
 const includes = [
   {
@@ -56,13 +55,6 @@ const includes = [
       },
     ],
   },
-  // {
-  //   model: ClassifierModels,
-  //   through: {
-  //     attributes: [],
-  //   },
-  // },
-
   {
     model: Clients,
     required: false,
@@ -103,13 +95,6 @@ const includesAll = [
       },
     ],
   },
-  // {
-  //   model: ClassifierModels,
-  //   through: {
-  //     attributes: [],
-  //   },
-  // },
-
   {
     model: Clients,
     required: false,
@@ -224,18 +209,13 @@ export class contractService {
   deleteContract = async (_req: Request, res: Response) => {
     const { selectedContracts } = _req.body
     try {
-      const contracts = await Promise.all([
-        await selectedContracts.map(async (id: string) => {
-          await ContractsRepos.update(id, {
-            active: false,
-          })
-        }),
-        await ContractsRepos.findAll({
-          where: { active: true, id: { [Op.not]: selectedContracts } },
-          include: includes,
-        }),
-      ])
-      res.status(200).json(contracts[1])
+      await ContractsRepos.update(selectedContracts, {
+        active: false,
+      })
+      const contracts = await ContractsRepos.findAll({
+        where: { active: true },
+      })
+      res.status(200).json(contracts)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -246,18 +226,11 @@ export class contractService {
   fullDeleteContract = async (_req: Request, res: Response) => {
     const { selectedContracts } = _req.body
     try {
-      const contracts = await Promise.all([
-        await selectedContracts.map(async (id: string) => {
-          await ContractsRepos.destroy({
-            where: { id },
-          })
-        }),
-        await ContractsRepos.findAll({
-          where: { active: true, id: { [Op.not]: selectedContracts } },
-          include: includes,
-        }),
-      ])
-      res.status(200).json(contracts[1])
+      await ContractsRepos.destroy({
+        where: { id: selectedContracts },
+      })
+      const contracts = await ContractsRepos.findAll({})
+      res.status(200).json(contracts)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */

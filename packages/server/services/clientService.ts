@@ -1,6 +1,5 @@
 import { ClientsRepos, ClientsGroupRepos } from '../db'
 import type { Request, Response } from 'express'
-const { Op } = require('sequelize')
 
 export class clientService {
   newClient = async (_req: Request, res: Response) => {
@@ -36,19 +35,15 @@ export class clientService {
   }
 
   deleteClient = async (_req: Request, res: Response) => {
-    const { selectedClients } = _req.body
     try {
-      const clients = await Promise.all([
-        await selectedClients.map(async (id: string) => {
-          await ClientsRepos.update(id, {
-            active: false,
-          })
-        }),
-        await ClientsRepos.findAll({
-          where: { active: true, id: { [Op.not]: selectedClients } },
-        }),
-      ])
-      res.status(200).json(clients[1])
+      const { selectedClients } = _req.body
+      await ClientsRepos.update(selectedClients, {
+        active: false,
+      })
+      const clients = await ClientsRepos.findAll({
+        where: { active: true },
+      })
+      res.status(200).json(clients)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -59,17 +54,11 @@ export class clientService {
   fulldeleteClient = async (_req: Request, res: Response) => {
     const { selectedClients } = _req.body
     try {
-      const clients = await Promise.all([
-        await selectedClients.map(async (id: string) => {
-          await ClientsRepos.destroy({
-            where: { id },
-          })
-        }),
-        await ClientsRepos.findAll({
-          where: { active: true, id: { [Op.not]: selectedClients } },
-        }),
-      ])
-      res.status(200).json(clients[1])
+      await ClientsRepos.destroy({
+        where: { id: selectedClients },
+      })
+      const clients = await ClientsRepos.findAll({})
+      res.status(200).json(clients)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -150,17 +139,13 @@ export class clientService {
   deleteClientGroup = async (_req: Request, res: Response) => {
     const { selectedClientsGroup } = _req.body
     try {
-      const clientsGroup = await Promise.all([
-        await selectedClientsGroup.map(async (id: string) => {
-          await ClientsGroupRepos.update(id, {
-            active: false,
-          })
-        }),
-        await ClientsGroupRepos.findAll({
-          where: { active: true, id: { [Op.not]: selectedClientsGroup } },
-        }),
-      ])
-      res.status(200).json(clientsGroup[1])
+      await ClientsGroupRepos.update(selectedClientsGroup, {
+        active: false,
+      })
+      const clientsGroup = await ClientsGroupRepos.findAll({
+        where: { active: true },
+      })
+      res.status(200).json(clientsGroup)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -171,17 +156,11 @@ export class clientService {
   fulldeleteClientsGroup = async (_req: Request, res: Response) => {
     const { selectedClientsGroup } = _req.body
     try {
-      const clientsGroup = await Promise.all([
-        await selectedClientsGroup.map(async (id: string) => {
-          await ClientsGroupRepos.destroy({
-            where: { id },
-          })
-        }),
-        await ClientsGroupRepos.findAll({
-          where: { active: true, id: { [Op.not]: selectedClientsGroup } },
-        }),
-      ])
-      res.status(200).json(clientsGroup[1])
+      await ClientsGroupRepos.destroy({
+        where: { id: selectedClientsGroup },
+      })
+      const clientsGroup = await ClientsGroupRepos.findAll({})
+      res.status(200).json(clientsGroup)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */

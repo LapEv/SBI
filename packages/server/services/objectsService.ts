@@ -1,6 +1,5 @@
 import { Addresses, Clients, ObjectsRepos, Regions } from '../db'
 import type { Request, Response } from 'express'
-const { Op } = require('sequelize')
 
 const includes = [
   {
@@ -58,18 +57,13 @@ export class objectsService {
   deleteObjects = async (_req: Request, res: Response) => {
     const { selectedObjects } = _req.body
     try {
-      const objects = await Promise.all([
-        await selectedObjects.map(async (id: string) => {
-          await ObjectsRepos.update(id, {
-            active: false,
-          })
-        }),
-        await ObjectsRepos.findAll({
-          where: { active: true, id: { [Op.not]: selectedObjects } },
-          include: includes,
-        }),
-      ])
-      res.status(200).json(objects[1])
+      await ObjectsRepos.update(selectedObjects, {
+        active: false,
+      })
+      const objects = await ObjectsRepos.findAll({
+        where: { active: true },
+      })
+      res.status(200).json(objects)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -80,18 +74,11 @@ export class objectsService {
   fullDeleteObjects = async (_req: Request, res: Response) => {
     const { selectedObjects } = _req.body
     try {
-      const objects = await Promise.all([
-        await selectedObjects.map(async (id: string) => {
-          await ObjectsRepos.destroy({
-            where: { id },
-          })
-        }),
-        await ObjectsRepos.findAll({
-          where: { active: true, id: { [Op.not]: selectedObjects } },
-          include: includes,
-        }),
-      ])
-      res.status(200).json(objects[1])
+      await ObjectsRepos.destroy({
+        where: { id: selectedObjects },
+      })
+      const objects = await ObjectsRepos.findAll({})
+      res.status(200).json(objects)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */

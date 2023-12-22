@@ -4,7 +4,6 @@ import { Result, validationResult } from 'express-validator'
 import bcrypt from 'bcryptjs'
 import { auth } from '../data/auth'
 import { generateAccessToken } from '../utils/generateAccessToken'
-const { Op } = require('sequelize')
 
 export class userService {
   setUser = async (_req: Request, res: Response) => {
@@ -42,7 +41,6 @@ export class userService {
         .json({ error: [auth.notification.errorRegistration, err] })
     }
   }
-
   login = (_req: Request, res: Response) => {
     const { username, password } = _req.body
     userRepos
@@ -73,7 +71,6 @@ export class userService {
           .json({ message: `${auth.notification.userNotFound}, ${err}` })
       )
   }
-
   changePassword = async (_req: Request, res: Response) => {
     const { oldPassword, newPassword, id } = _req.body
     const user = await userRepos.findAll({
@@ -105,7 +102,6 @@ export class userService {
         .json({ error: [auth.notification.errorChangePassword, err] })
     }
   }
-
   changeAvatar = async (_req: Request, res: Response) => {
     const { oldPassword, newPassword, id } = _req.body
     const user = await userRepos.findAll({
@@ -137,7 +133,6 @@ export class userService {
         .json({ error: [auth.notification.errorChangePassword, err] })
     }
   }
-
   check = (_req: Request, res: Response) => {
     const { username, id, roles } = _req.body
     try {
@@ -168,7 +163,6 @@ export class userService {
       }
     }
   }
-
   getActiveUsers = (_req: Request, res: Response) => {
     const dataFind = { ..._req.body, active: true }
     userRepos
@@ -180,7 +174,6 @@ export class userService {
       })
       .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
-
   getUsers = (_req: Request, res: Response) => {
     userRepos
       .findAll({
@@ -191,7 +184,6 @@ export class userService {
       })
       .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
-
   getUserInfo = (_req: Request, res: Response) => {
     const { id } = _req.body
     userRepos
@@ -204,25 +196,23 @@ export class userService {
       })
       .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
-
   deleteUser = async (_req: Request, res: Response) => {
-    console.log('req = ', _req.body)
     const { id, reasonOfDelete } = _req.body
     try {
-      const user = await userRepos.update(id, {
+      await userRepos.update(id, {
         active: false,
         reasonOfDelete,
       })
-      res
-        .status(200)
-        .json(`User ${id} with id=${user} has acquired the inactive status!`)
+      const users = await userRepos.findAll({
+        where: { active: true },
+      })
+      res.status(200).json(users)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
       res.status(500).json({ error: ['db error', err] })
     }
   }
-
   pullUserInArchive = async (_req: Request, res: Response) => {
     const { selectedUsers } = _req.body
     try {
@@ -239,26 +229,20 @@ export class userService {
       res.status(500).json({ error: ['db error', err] })
     }
   }
-
   fullDeleteUser = async (_req: Request, res: Response) => {
     const { selectedUsers } = _req.body
     try {
-      const users = await Promise.all([
-        await selectedUsers.map(async (id: string) => {
-          await userRepos.destroy({
-            where: { id },
-          })
-        }),
-        await userRepos.findAll({ where: { id: { [Op.not]: selectedUsers } } }),
-      ])
-      res.status(200).json(users[1])
+      await userRepos.destroy({
+        where: { id: selectedUsers },
+      })
+      const users = await userRepos.findAll({})
+      res.status(200).json(users)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
       res.status(500).json({ error: ['db error', err] })
     }
   }
-
   changeTheme = (_req: Request, res: Response) => {
     const { id, theme } = _req.body
     userRepos
@@ -270,7 +254,6 @@ export class userService {
       )
       .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
-
   updateUser = async (_req: Request, res: Response) => {
     const { id, userData } = _req.body
     try {
@@ -285,7 +268,6 @@ export class userService {
       res.status(500).json({ error: ['db error', err] })
     }
   }
-
   updateProfile = async (_req: Request, res: Response) => {
     const { id, userData } = _req.body
     try {

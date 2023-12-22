@@ -22,6 +22,11 @@ export const userStatusRouter = (apiRouter: Router) => {
     roleMiddleware(['deleteUserStatus', 'ADMIN', 'SUPERADMIN']),
     service.deleteUserStatus
   )
+  router.delete(
+    '/fullDeleteUserStatus',
+    roleMiddleware(['fullDeleteUserStatus', 'ADMIN', 'SUPERADMIN']),
+    service.fullDeleteUserStatus
+  )
 
   apiRouter.use('/user', router)
 }

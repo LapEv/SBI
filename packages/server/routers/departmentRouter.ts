@@ -26,12 +26,16 @@ export const departmentRouter = (apiRouter: Router) => {
     roleMiddleware(['getAllDepartments', 'ADMIN', 'SUPERADMIN']),
     service.getAllDepartments
   )
-  router.delete(
+  router.post(
     '/deleteDepartment',
-    roleMiddleware(['deleteDepartment', 'SUPERADMIN']),
+    roleMiddleware(['deleteDepartment', 'SUPERADMIN', 'ADMIN']),
     service.deleteDepartment
   )
-
+  router.delete(
+    '/fullDeleteDepartment',
+    roleMiddleware(['fullDeleteDepartment', 'ADMIN', 'SUPERADMIN']),
+    service.fullDeleteDepartment
+  )
   router.post(
     '/updateDepartment',
     roleMiddleware(['updateDepartment', 'SUPERADMIN']),

@@ -1,6 +1,5 @@
 import { SLARepos, OLARepos, TypesOfWork } from '../db'
 import type { Request, Response } from 'express'
-const { Op } = require('sequelize')
 
 const includes = [
   {
@@ -47,18 +46,13 @@ export class slaService {
   deleteSLA = async (_req: Request, res: Response) => {
     const { selectedSLA } = _req.body
     try {
-      const sla = await Promise.all([
-        await selectedSLA.map(async (id: string) => {
-          await SLARepos.update(id, {
-            active: false,
-          })
-        }),
-        await SLARepos.findAll({
-          where: { active: true, id: { [Op.not]: selectedSLA } },
-          include: includes,
-        }),
-      ])
-      res.status(200).json(sla[1])
+      await SLARepos.update(selectedSLA, {
+        active: false,
+      })
+      const sla = await SLARepos.findAll({
+        where: { active: true },
+      })
+      res.status(200).json(sla)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -68,18 +62,11 @@ export class slaService {
   fullDeleteSLA = async (_req: Request, res: Response) => {
     const { selectedSLA } = _req.body
     try {
-      const sla = await Promise.all([
-        await selectedSLA.map(async (id: string) => {
-          await SLARepos.destroy({
-            where: { id },
-          })
-        }),
-        await SLARepos.findAll({
-          where: { active: true, id: { [Op.not]: selectedSLA } },
-          include: includes,
-        }),
-      ])
-      res.status(200).json(sla[1])
+      await SLARepos.destroy({
+        where: { id: selectedSLA },
+      })
+      const sla = await SLARepos.findAll({})
+      res.status(200).json(sla)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -160,18 +147,13 @@ export class slaService {
   deleteOLA = async (_req: Request, res: Response) => {
     const { selectedOLA } = _req.body
     try {
-      const ola = await Promise.all([
-        await selectedOLA.map(async (id: string) => {
-          await OLARepos.update(id, {
-            active: false,
-          })
-        }),
-        await OLARepos.findAll({
-          where: { active: true, id: { [Op.not]: selectedOLA } },
-          include: includes,
-        }),
-      ])
-      res.status(200).json(ola[1])
+      await OLARepos.update(selectedOLA, {
+        active: false,
+      })
+      const ola = await OLARepos.findAll({
+        where: { active: true },
+      })
+      res.status(200).json(ola)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -181,18 +163,11 @@ export class slaService {
   fullDeleteOLA = async (_req: Request, res: Response) => {
     const { selectedOLA } = _req.body
     try {
-      const ola = await Promise.all([
-        await selectedOLA.map(async (id: string) => {
-          await OLARepos.destroy({
-            where: { id },
-          })
-        }),
-        await OLARepos.findAll({
-          where: { active: true, id: { [Op.not]: selectedOLA } },
-          include: includes,
-        }),
-      ])
-      res.status(200).json(ola[1])
+      await OLARepos.destroy({
+        where: { id: selectedOLA },
+      })
+      const ola = await OLARepos.findAll({})
+      res.status(200).json(ola)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */

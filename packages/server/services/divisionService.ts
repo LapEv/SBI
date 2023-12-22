@@ -1,6 +1,5 @@
 import type { Request, Response } from 'express'
 import { DivisionRepos } from '../db'
-const { Op } = require('sequelize')
 
 export class divisionService {
   newDivision = async (_req: Request, res: Response) => {
@@ -33,19 +32,29 @@ export class divisionService {
   }
 
   deleteDivision = async (_req: Request, res: Response) => {
-    const { data } = _req.body
+    const { selectedDivisions } = _req.body
     try {
-      const divisions = await Promise.all([
-        await data.map(async (id: string) => {
-          await DivisionRepos.destroy({
-            where: { id },
-          })
-        }),
-        await DivisionRepos.findAll({
-          where: { active: true, id: { [Op.not]: data } },
-        }),
-      ])
-      res.status(200).json(divisions[1])
+      await DivisionRepos.update(selectedDivisions, {
+        active: false,
+      })
+      const divisions = await DivisionRepos.findAll({
+        where: { active: true },
+      })
+      res.status(200).json(divisions)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res.status(500).json({ error: ['db error', err] })
+    }
+  }
+  fullDeleteDivision = async (_req: Request, res: Response) => {
+    const { selectedDivisions } = _req.body
+    try {
+      await DivisionRepos.destroy({
+        where: { id: selectedDivisions },
+      })
+      const divisions = await DivisionRepos.findAll({})
+      res.status(200).json(divisions)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */

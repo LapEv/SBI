@@ -1,6 +1,5 @@
 import type { Request, Response } from 'express'
 import { roleRepos, roleGroupRepos } from '../db'
-const { Op } = require('sequelize')
 
 export class roleService {
   newRolesGroup = async (_req: Request, res: Response) => {
@@ -28,15 +27,28 @@ export class roleService {
     console.log('нельзя удалить SUPERADMIN ? ADMIN = ')
     const data = _req.body
     try {
-      const rolesGroup = await Promise.all([
-        await data.map(async (id: string) => {
-          await roleGroupRepos.destroy({
-            where: { id },
-          })
-        }),
-        await roleGroupRepos.findAll({ where: { id: { [Op.not]: data } } }),
-      ])
-      res.status(200).json(rolesGroup[1])
+      await roleGroupRepos.update(data, {
+        active: false,
+      })
+      const rolesGroup = await roleGroupRepos.findAll({
+        where: { active: true },
+      })
+      res.status(200).json(rolesGroup)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res.status(500).json({ error: ['db error', err] })
+    }
+  }
+
+  fullDeleteRolesGroup = async (_req: Request, res: Response) => {
+    const { selectedRolesGroup } = _req.body
+    try {
+      await roleGroupRepos.destroy({
+        where: { id: selectedRolesGroup },
+      })
+      const rolesGroup = await roleGroupRepos.findAll({})
+      res.status(200).json(rolesGroup)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -92,21 +104,34 @@ export class roleService {
   deleteRole = async (_req: Request, res: Response) => {
     const data = _req.body
     try {
-      const roles = await Promise.all([
-        await data.map(async (id: string) => {
-          await roleRepos.destroy({
-            where: { id },
-          })
-        }),
-        await roleRepos.findAll({ where: { id: { [Op.not]: data } } }),
-      ])
-      res.status(200).json(roles[1])
+      await roleRepos.update(data, {
+        active: false,
+      })
+      const roles = await roleRepos.findAll({
+        where: { active: true },
+      })
+      res.status(200).json(roles)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
       res.status(500).json({ error: ['db error', err] })
     }
   }
+  fullDeleteRole = async (_req: Request, res: Response) => {
+    const { selectedRoles } = _req.body
+    try {
+      await roleRepos.destroy({
+        where: { id: selectedRoles },
+      })
+      const roles = await roleRepos.findAll({})
+      res.status(200).json(roles)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res.status(500).json({ error: ['db error', err] })
+    }
+  }
+
   getAllRoles = () => {
     roleRepos
       .findAll({})

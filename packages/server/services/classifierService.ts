@@ -127,11 +127,9 @@ export class classifierService {
         active: false,
       })
       const classifierEquipments = await ClassifierEquipmentRepos.findAll({
-        where: {
-          active: true,
-          include: includesEquipment,
-          order,
-        },
+        where: { active: true },
+        include: includesEquipment,
+        order,
       })
       res.status(200).json(classifierEquipments)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -459,7 +457,9 @@ export class classifierService {
   changeTypicalMalfunction = async (_req: Request, res: Response) => {
     const { typicalMalfunction, id } = _req.body
     try {
-      await TypicalMalfunctionsRepos.update(id, { typicalMalfunction })
+      await TypicalMalfunctionsRepos.update(id, {
+        typicalMalfunction,
+      })
       const equipments = await ClassifierEquipmentRepos.findAll({
         where: { active: true },
         include: includesEquipment,

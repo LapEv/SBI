@@ -290,11 +290,11 @@ export const classifierSlise = createSlice({
     },
     [changeTypicalMalfunction.fulfilled.type]: (
       state,
-      action: PayloadAction<AnswerTypicalMalfunctions>
+      action: PayloadAction<AnswerClassifierEquipment>
     ) => {
       state.isLoadingClassifier = false
       state.error = ''
-      state.typicalMalfunctions = action.payload.data
+      state.equipments = action.payload.data
     },
     [changeTypicalMalfunction.pending.type]: state => {
       state.isLoadingClassifier = true

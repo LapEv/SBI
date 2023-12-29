@@ -38,17 +38,19 @@ const includes = [
   },
   {
     model: ClassifierEquipment,
+    where: { active: true },
     required: false,
     include: [
       {
         model: ClassifierModels,
         required: false,
-        attributes: ['id', 'model', 'active'],
+        attributes: ['id', 'model', 'id_equipment', 'active'],
         where: { active: true },
         include: [
           {
             model: TypicalMalfunctions,
-            attributes: ['id', 'typicalMalfunction', 'active'],
+            required: false,
+            attributes: ['id', 'typicalMalfunction', 'id_equipment', 'active'],
             where: { active: true },
           },
         ],
@@ -89,7 +91,7 @@ const includesAll = [
           {
             model: TypicalMalfunctions,
             required: false,
-            attributes: ['id', 'typicalMalfunction', 'active'],
+            // attributes: ['id', 'typicalMalfunction', 'active'],
           },
         ],
       },

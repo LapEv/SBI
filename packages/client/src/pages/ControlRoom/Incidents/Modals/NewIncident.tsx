@@ -154,33 +154,39 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
 
     const setEquimpent = (data: Options) => {
       setSelectedEquipment(data)
-      const getModels = activeContract?.ClassifierModels?.filter(
-        item => item.id_equipment === data.id
-      )
-      console.log('getModels = ', getModels)
-      const listModels = getModels?.map(({ model, id }) => {
-        return {
-          label: model,
-          id: id as string,
+      const activeEquipment = activeContract?.ClassifierEquipments?.filter(
+        item => item.id === data.id
+      )[0]
+      const listModels = activeEquipment?.ClassifierModels?.map(
+        ({ model, id }) => {
+          return {
+            label: model,
+            id: id as string,
+          }
         }
-      }) as Options[]
+      ) as Options[]
       setModelList(listModels)
     }
 
     const setModel = (data: Options) => {
       setSelectedModel(data)
-      console.log('setModel')
-      // const getTypMalfunction = activeContract?.ClassifierModels?.filter(
-      //   item => item.id_equipment === data.id
-      // )
-      // console.log('getModels = ', getModels)
-      // const listModels = getModels?.map(({ model, id }) => {
-      //   return {
-      //     label: model,
-      //     id: id as string,
-      //   }
-      // }) as Options []
-      // setModelList(listModels)
+      const activeEquipment = activeContract?.ClassifierEquipments?.filter(
+        item => item.id === selectedEquipment.id
+      )[0]
+      console.log('activeEquipment = ', activeEquipment)
+      const activeModel = activeEquipment?.ClassifierModels?.filter(
+        item => item.id === data.id
+      )[0]
+      const listTypical = activeModel?.TypicalMalfunctions?.map(
+        ({ typicalMalfunction, id }) => {
+          return {
+            label: typicalMalfunction,
+            id: id as string,
+          }
+        }
+      ) as Options[]
+      console.log('list = ', listTypical)
+      setTypicalMalfunctionList(listTypical)
     }
 
     console.log('contracts = ', contracts)
@@ -295,6 +301,18 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                         value={selectedModel.label || ''}
                         label={label}
                         errorLabel="Не выбрана модель!"
+                      />
+                    )
+                  }
+                  if (name === 'typicalMalfunction') {
+                    return (
+                      <DropDown
+                        data={typicalMalfunctionList}
+                        props={{ mt: 4, width: '90%' }}
+                        onChange={setSelectedTypicalMalfunction}
+                        value={selectedTypicalMalfunction.label || ''}
+                        label={label}
+                        errorLabel="Не выбрана типовая неисправность!"
                       />
                     )
                   }

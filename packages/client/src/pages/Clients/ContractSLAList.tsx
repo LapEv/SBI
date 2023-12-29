@@ -125,7 +125,7 @@ export function ContractSLAList({ slaID, onChooseItems }: ISLAList) {
               onClick={AddNewSLA}
               icon={<AddCircleOutlineIcon />}
               propsPopover={{ ml: -1 }}
-              sx={{ ...popoverIcon, mb: -1 }}
+              sx={popoverIcon}
             />
           )}
         </Box>

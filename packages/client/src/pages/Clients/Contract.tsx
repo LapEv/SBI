@@ -164,7 +164,11 @@ export function ContractPage({
   useEffect(() => {
     setSLAID(SLAs?.map(({ id }) => id) as string[])
     setSelectedEquipments(ClassifierEquipments?.map(({ id }) => id) as string[])
-    setSelectedModels(ClassifierModels?.map(({ id }) => id) as string[])
+    const temp = ClassifierEquipments?.map(item => [
+      ...(item.ClassifierModels?.map(({ id }) => id) as string[]),
+    ])[0]
+    console.log('temp = ', temp)
+    setSelectedModels(temp as string[])
     setObjectID(Objects?.map(({ id }) => id) as string[])
   }, [])
 
@@ -188,6 +192,8 @@ export function ContractPage({
     objectDisabled,
   ])
 
+  console.log('selectedEquipments = ', selectedEquipments)
+  console.log('selectedModels = ', selectedModels)
   return (
     <Box
       component="form"

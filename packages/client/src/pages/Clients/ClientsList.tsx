@@ -61,6 +61,7 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
     setModalImage('newContract')
   }
 
+  console.log('contracts = ', contracts)
   return (
     <Box sx={classifier}>
       <Modal
@@ -131,7 +132,7 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
             onClick={AddNewContract}
             icon={<AddCircleOutlineIcon />}
             propsPopover={{ ml: -1 }}
-            sx={popoverIcon}
+            sx={{ ...popoverIcon, mt: 1 }}
           />
         )}
       </Collapse>

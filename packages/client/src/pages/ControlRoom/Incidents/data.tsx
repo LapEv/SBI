@@ -1,4 +1,4 @@
-import { lightTextValidation } from 'utils/validatorRules'
+import { NoRequiredValidation, lightTextValidation } from 'utils/validatorRules'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
 import EditIcon from '@mui/icons-material/Edit'
@@ -86,35 +86,35 @@ export const MapINCInputFields = [
   {
     name: 'client',
     label: 'Выберите клиента',
-    validation: lightTextValidation,
-    type: 'dropdown',
+    validation: NoRequiredValidation,
+    type: 'text',
     required: true,
   },
   {
     name: 'contract',
     label: 'Выберите контракт',
-    validation: lightTextValidation,
+    validation: NoRequiredValidation,
     type: 'dropdown',
     required: true,
   },
   {
     name: 'object',
     label: 'Выберите объект',
-    validation: lightTextValidation,
+    validation: NoRequiredValidation,
     type: 'dropdown',
     required: true,
   },
   {
     name: 'sla',
     label: 'Выберите SLA',
-    validation: lightTextValidation,
+    validation: NoRequiredValidation,
     type: 'dropdown',
     required: true,
   },
   {
     name: 'typeOfWrok',
     label: 'Выберите тип работ',
-    validation: lightTextValidation,
+    validation: NoRequiredValidation,
     type: 'dropdown',
     required: true,
   },
@@ -128,35 +128,35 @@ export const MapINCInputFields = [
   {
     name: 'equipment',
     label: 'Выберите классификатор',
-    validation: lightTextValidation,
+    validation: NoRequiredValidation,
     type: 'dropdown',
     required: true,
   },
   {
     name: 'model',
     label: 'Выберите модель',
-    validation: lightTextValidation,
+    validation: NoRequiredValidation,
     type: 'dropdown',
     required: true,
   },
   {
     name: 'typicalMalfunction',
     label: 'Выберите типовую неисправность',
-    validation: lightTextValidation,
+    validation: NoRequiredValidation,
     type: 'dropdown',
     required: true,
   },
   {
     name: 'description',
     label: 'Введите описание к инциденту',
-    validation: lightTextValidation,
+    validation: NoRequiredValidation,
     type: 'text',
     required: false,
   },
   {
     name: 'comments',
     label: 'Введите комментарии',
-    validation: lightTextValidation,
+    validation: NoRequiredValidation,
     type: 'text',
     required: false,
   },

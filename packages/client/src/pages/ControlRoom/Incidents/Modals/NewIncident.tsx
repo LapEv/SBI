@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ChangeEvent } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Typography } from '@mui/material'
 import {
   useForm,
@@ -64,10 +64,11 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
     })
 
     function changeData({ list }: AddValuesProps) {
-      newIncidentStatuses({
-        statusINC: list[0].value,
-      })
-      handleModal(false)
+      console.log('list = ', list)
+      // newIncidentStatuses({
+      //   statusINC: list[0].value,
+      // })
+      // handleModal(false)
     }
 
     useEffect(() => {
@@ -173,7 +174,6 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
       const activeEquipment = activeContract?.ClassifierEquipments?.filter(
         item => item.id === selectedEquipment.id
       )[0]
-      console.log('activeEquipment = ', activeEquipment)
       const activeModel = activeEquipment?.ClassifierModels?.filter(
         item => item.id === data.id
       )[0]
@@ -185,7 +185,6 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
           }
         }
       ) as Options[]
-      console.log('list = ', listTypical)
       setTypicalMalfunctionList(listTypical)
     }
 
@@ -203,23 +202,6 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                 name={`list.${index}.value`}
                 rules={validation}
                 render={({ field }) => {
-                  if (type === 'text') {
-                    return (
-                      <TextField
-                        {...field}
-                        inputRef={field.ref}
-                        label={label}
-                        type={type}
-                        required={required ?? true}
-                        variant="outlined"
-                        sx={{ width: '90%', height: 60, mt: 4 }}
-                        margin="normal"
-                        error={!!(errors?.list ?? [])[index]?.value?.message}
-                        helperText={(errors?.list ?? [])[index]?.value?.message}
-                        inputProps={{ step: 1 }}
-                      />
-                    )
-                  }
                   if (name === 'client') {
                     return (
                       <DropDown
@@ -316,8 +298,21 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                       />
                     )
                   }
-
-                  return <></>
+                  return (
+                    <TextField
+                      {...field}
+                      inputRef={field.ref}
+                      label={label}
+                      type={type}
+                      required={required ?? true}
+                      variant="outlined"
+                      sx={{ width: '90%', height: 60, mt: 4 }}
+                      margin="normal"
+                      error={!!(errors?.list ?? [])[index]?.value?.message}
+                      helperText={(errors?.list ?? [])[index]?.value?.message}
+                      inputProps={{ step: 1 }}
+                    />
+                  )
                 }}
               />
             )

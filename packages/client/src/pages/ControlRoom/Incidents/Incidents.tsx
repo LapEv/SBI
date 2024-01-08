@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Container, Modal, Typography, useTheme } from '@mui/material'
+import { Box, Container, Modal, Typography } from '@mui/material'
 import { Message } from 'components/Message/Message'
 import { useAuth } from 'hooks/auth/useAuth'
 import { DropDownMenu } from 'components/DropDownButtonMenu'
@@ -40,9 +40,9 @@ export function IncidentsPage() {
     getTypicalMalfunctions()
   }, [])
 
-  console.log('equipments = ', equipments)
-  console.log('models = ', models)
-  console.log('typicalMalfunctions = ', typicalMalfunctions)
+  // console.log('equipments = ', equipments)
+  // console.log('models = ', models)
+  // console.log('typicalMalfunctions = ', typicalMalfunctions)
 
   return (
     <Container component="main" maxWidth="md" sx={mainHeaderForPages}>

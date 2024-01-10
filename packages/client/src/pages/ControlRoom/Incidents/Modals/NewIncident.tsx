@@ -62,7 +62,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
     const [selectedTypicalMalfunction, setSelectedTypicalMalfunction] =
       useState<Options>(emptyValue)
 
-    const { handleSubmit, control, setValue } = useForm<AddValuesProps>({
+    const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
       defaultValues: {
         list: MapINCInputFields,
@@ -174,7 +174,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
 
     const getTime = ({ days, time, timeStart, timeEnd }: IGetTime) => {
       const now = new Date()
-      var nowDateTime = now.toISOString().split('T')[0]
+      const nowDateTime = now.toISOString().split('T')[0]
       const DateTimeStart = new Date(nowDateTime + 'T' + timeStart)
       const DateTimeEnd = new Date(nowDateTime + 'T' + timeEnd)
       const newTimeStart = timeStart.split(':')
@@ -208,7 +208,6 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
         ? 1000 * 60 * 60 * Number(newTime[0])
         : 0
       const timeOffsetMM = hoursOffset + minutesOffset + secondsOffset
-      const diff = timeEndMM - timeStartMM
       const slaTime = now.getTime() + timeOffsetMM
       const endTime = DateTimeEnd.getTime()
       const diffTime = slaTime - endTime

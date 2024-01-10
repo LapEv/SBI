@@ -112,6 +112,14 @@ export const MapINCInputFields = [
     required: true,
   },
   {
+    name: 'timeSLA',
+    label: 'Выберите время SLA',
+    validation: NoRequiredValidation,
+    type: 'datetime',
+    required: true,
+  },
+
+  {
     name: 'typeOfWrok',
     label: 'Выберите тип работ',
     validation: NoRequiredValidation,

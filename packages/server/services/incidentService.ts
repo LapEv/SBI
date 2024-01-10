@@ -4,7 +4,6 @@ import type { Request, Response } from 'express'
 export class incidentService {
   newIncidentStatuses = async (_req: Request, res: Response) => {
     try {
-      console.log('_req.body = ', _req.body)
       await IncidentStatusesRepos.create({ ..._req.body, active: true })
       const incStatuses = await IncidentStatusesRepos.findAll({
         where: { active: true },
@@ -184,8 +183,9 @@ export class incidentService {
   }
 
   newINC = async (_req: Request, res: Response) => {
+    console.log('_req.body = ', _req.body)
     try {
-      await IncidentRepos.create({ ..._req.body, active: true })
+      // await IncidentRepos.create({ ..._req.body, active: true })
       const incs = await IncidentRepos.findAll({
         where: { active: true },
       })

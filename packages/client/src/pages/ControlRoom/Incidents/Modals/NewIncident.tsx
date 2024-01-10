@@ -17,6 +17,16 @@ import { useClients } from 'hooks/clients/useClients'
 import { Options } from 'components/DropDown/interface'
 import { useContracts } from 'hooks/contracts/useContracts'
 import { Contracts } from 'store/slices/contracts/interfaces'
+import { SLA } from 'store/slices/sla/interfaces'
+import { DateTimeField } from 'components/DatePicker'
+import dayjs, { Dayjs } from 'dayjs'
+
+interface IGetTime {
+  days: string
+  time: string
+  timeStart: string
+  timeEnd: string
+}
 
 export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -35,6 +45,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
       useState<Options>(emptyValue)
     const [objectList, setObjectList] = useState<Options[]>([])
     const [selectedObject, setSelectedObject] = useState<Options>(emptyValue)
+    const [dateValue, setDateValue] = useState<Dayjs>()
     const [slaList, setSLAList] = useState<Options[]>([])
     const [selectedSLA, setSelectedSLA] = useState<Options>(emptyValue)
     const [typeOfWorkList, setTypeOfWorkList] = useState<Options[]>([])
@@ -51,7 +62,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
     const [selectedTypicalMalfunction, setSelectedTypicalMalfunction] =
       useState<Options>(emptyValue)
 
-    const { handleSubmit, control } = useForm<AddValuesProps>({
+    const { handleSubmit, control, setValue } = useForm<AddValuesProps>({
       mode: 'onBlur',
       defaultValues: {
         list: MapINCInputFields,
@@ -132,15 +143,85 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
     }, [contracts])
 
     const setSLA = (data: Options) => {
+      console.log('data = ', data)
       setSelectedSLA(data)
-      const getTypeOfWork = activeContract?.SLAs?.find(
-        item => item.id === data.id
-      )?.TypesOfWork
+      if (!data.id) {
+        setSelectedTypeOfWork({
+          label: '',
+          id: '',
+        })
+        return
+      }
+      const slaData = activeContract?.SLAs?.find(item => item.id === data.id)
+      const getTypeOfWork = slaData?.TypesOfWork
+      const { days, time, timeEnd, timeStart } = slaData as SLA
       setSelectedTypeOfWork({
         label: getTypeOfWork?.typeOfWork as string,
         id: getTypeOfWork?.id as string,
       })
       getTypesOfWork()
+      const timeSLA = getTime({ days, time, timeEnd, timeStart })
+
+      const newdate = dayjs()
+        .set('date', timeSLA.getDate())
+        .set('month', timeSLA.getMonth())
+        .set('year', timeSLA.getFullYear())
+        .set('hour', timeSLA.getHours())
+        .set('minute', timeSLA.getMinutes())
+        .set('second', timeSLA.getSeconds())
+      setDateValue(newdate)
+    }
+
+    const getTime = ({ days, time, timeStart, timeEnd }: IGetTime) => {
+      const now = new Date()
+      var nowDateTime = now.toISOString().split('T')[0]
+      const DateTimeStart = new Date(nowDateTime + 'T' + timeStart)
+      const DateTimeEnd = new Date(nowDateTime + 'T' + timeEnd)
+      const newTimeStart = timeStart.split(':')
+      const secondsStart = Number(newTimeStart[2])
+        ? 1000 * Number(newTimeStart[2])
+        : 0
+      const minutesStart = Number(newTimeStart[1])
+        ? 1000 * 60 * Number(newTimeStart[1])
+        : 0
+      const hoursStart = Number(newTimeStart[0])
+        ? 1000 * 60 * 60 * Number(newTimeStart[0])
+        : 0
+      const timeStartMM = hoursStart + minutesStart + secondsStart
+      const newTimeEnd = timeEnd.split(':')
+      const secondsEnd = Number(newTimeEnd[2])
+        ? 1000 * Number(newTimeEnd[2])
+        : 0
+      const minutesEnd = Number(newTimeEnd[1])
+        ? 1000 * 60 * Number(newTimeEnd[1])
+        : 0
+      const hoursEnd = Number(newTimeEnd[0])
+        ? 1000 * 60 * 60 * Number(newTimeEnd[0])
+        : 0
+      const timeEndMM = hoursEnd + minutesEnd + secondsEnd
+      const newTime = time.split(':')
+      const secondsOffset = Number(newTime[2]) ? 1000 * Number(newTime[2]) : 0
+      const minutesOffset = Number(newTime[1])
+        ? 1000 * 60 * Number(newTime[1])
+        : 0
+      const hoursOffset = Number(newTime[0])
+        ? 1000 * 60 * 60 * Number(newTime[0])
+        : 0
+      const timeOffsetMM = hoursOffset + minutesOffset + secondsOffset
+      const diff = timeEndMM - timeStartMM
+      const slaTime = now.getTime() + timeOffsetMM
+      const endTime = DateTimeEnd.getTime()
+      const diffTime = slaTime - endTime
+      const daysNumbers = diffTime > 0 ? Number(days) + 1 : Number(days)
+
+      if (diffTime > 0) {
+        DateTimeStart.setDate(DateTimeStart.getDate() + daysNumbers)
+        DateTimeStart.setTime(DateTimeStart.getTime() + diffTime)
+        return DateTimeStart
+      }
+      now.setTime(slaTime)
+      now.setDate(now.getDate() + Number(days))
+      return now
     }
 
     useEffect(() => {
@@ -189,6 +270,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
     }
 
     console.log('contracts = ', contracts)
+    console.log('dateValue = ', dateValue)
 
     return (
       <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
@@ -295,6 +377,14 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                         value={selectedTypicalMalfunction.label || ''}
                         label={label}
                         errorLabel="Не выбрана типовая неисправность!"
+                      />
+                    )
+                  }
+                  if (name === 'timeSLA') {
+                    return (
+                      <DateTimeField
+                        dateValue={dateValue!}
+                        setDateValue={setDateValue}
                       />
                     )
                   }

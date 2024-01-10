@@ -246,11 +246,41 @@ Incidents.belongsTo(Clients, { foreignKey: 'id_incClient', targetKey: 'id' })
 Contracts.hasOne(Incidents, { foreignKey: 'id_incClient', sourceKey: 'id' })
 Incidents.belongsTo(Contracts, { foreignKey: 'id_incClient', targetKey: 'id' })
 
+Objects.hasOne(Incidents, { foreignKey: 'id_incObject', sourceKey: 'id' })
+Incidents.belongsTo(Objects, { foreignKey: 'id_incObject', targetKey: 'id' })
+
 Users.hasOne(Incidents, { foreignKey: 'id_incClient', sourceKey: 'id' })
 Incidents.belongsTo(Users, { foreignKey: 'id_incClient', targetKey: 'id' })
 
 Department.hasOne(Incidents, { foreignKey: 'id_incClient', sourceKey: 'id' })
 Incidents.belongsTo(Department, { foreignKey: 'id_incClient', targetKey: 'id' })
+
+ClassifierEquipment.hasOne(Incidents, {
+  foreignKey: 'id_incEquipment',
+  sourceKey: 'id',
+})
+Incidents.belongsTo(ClassifierEquipment, {
+  foreignKey: 'id_incEquipment',
+  targetKey: 'id',
+})
+
+ClassifierModels.hasOne(Incidents, {
+  foreignKey: 'id_incModel',
+  sourceKey: 'id',
+})
+Incidents.belongsTo(ClassifierModels, {
+  foreignKey: 'id_incModel',
+  targetKey: 'id',
+})
+
+TypicalMalfunctions.hasOne(Incidents, {
+  foreignKey: 'id_incTypicalMalfunction',
+  sourceKey: 'id',
+})
+Incidents.belongsTo(TypicalMalfunctions, {
+  foreignKey: 'id_incTypicalMalfunction',
+  targetKey: 'id',
+})
 
 export const userRepos = new Repository(Users as ModelCtor)
 export const roleGroupRepos = new Repository(RolesGroup as ModelCtor)

@@ -12,6 +12,8 @@ export interface Incindent {
   timeCloseCheck: string
   timeClose: string
   responsible: string
+  responsibleDepartment: string
+  responsibleClosing: string
   executor: string
   description: string
   comment: string
@@ -19,6 +21,11 @@ export interface Incindent {
   spaceParts: string[]
   act: string[]
   active: boolean
+  methodsReuqest: string
+  actionsComments: string
+  rating: number
+  parentalIncident: string
+  relatedIncident: string
 }
 
 export const incident: ModelAttributes<Model, Incindent> = {
@@ -62,13 +69,21 @@ export const incident: ModelAttributes<Model, Incindent> = {
     type: DataType.TIME,
     allowNull: true,
   },
-  executor: {
-    type: DataType.STRING,
-    allowNull: true,
-  },
   responsible: {
     type: DataType.STRING,
     allowNull: false,
+  },
+  responsibleDepartment: {
+    type: DataType.STRING,
+    allowNull: true,
+  },
+  responsibleClosing: {
+    type: DataType.STRING,
+    allowNull: true,
+  },
+  executor: {
+    type: DataType.STRING,
+    allowNull: true,
   },
   description: {
     type: DataType.STRING,
@@ -93,6 +108,26 @@ export const incident: ModelAttributes<Model, Incindent> = {
   active: {
     type: DataType.BOOLEAN,
     allowNull: false,
+  },
+  methodsReuqest: {
+    type: DataType.STRING,
+    allowNull: false,
+  },
+  actionsComments: {
+    type: DataType.STRING,
+    allowNull: false,
+  },
+  rating: {
+    type: DataType.INTEGER,
+    allowNull: true,
+  },
+  parentalIncident: {
+    type: DataType.INTEGER,
+    allowNull: true,
+  },
+  relatedIncident: {
+    type: DataType.INTEGER,
+    allowNull: true,
   },
 }
 

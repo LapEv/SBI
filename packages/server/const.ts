@@ -276,4 +276,9 @@ export const AppConst = {
   attrINC: 'INC',
   numberDigit: 9,
   startINC: 23111,
+  methodsReuqest: {
+    manually: 'manually',
+    email: 'manually',
+    web: 'web',
+  },
 }

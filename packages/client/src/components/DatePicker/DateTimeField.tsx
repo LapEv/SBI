@@ -7,6 +7,7 @@ import { TextField } from 'components/TextFields'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 import { CalendarIcon, ClearIconElement } from 'components/Icons'
 import { IDateTimeField } from './interface'
+import { Dayjs } from 'dayjs'
 
 const StyledDatePickers = styled(PickersLayout)(({ theme }) => ({
   '.MuiDateCalendar-root': {
@@ -40,9 +41,9 @@ export const DateTimeField = ({
         slotProps={{
           field: { clearable: true },
         }}
-        value={dateValue ?? null}
+        value={dateValue ?? ''}
         onChange={newValue => {
-          setDateValue(newValue!)
+          setDateValue(newValue as Dayjs)
         }}
         views={['day', 'month', 'year', 'hours', 'minutes', 'seconds']}
         label="Выберите дату"

@@ -29,4 +29,5 @@ export interface Data {
 export interface Options {
   label: string
   id: string
+  description?: string
 }

@@ -91,22 +91,16 @@ export const MapINCInputFields = [
     required: true,
   },
   {
-    name: 'contract',
-    label: 'Выберите контракт',
-    validation: NoRequiredValidation,
-    type: 'dropdown',
-    required: true,
-  },
-  {
-    name: 'object',
-    label: 'Выберите объект',
-    validation: NoRequiredValidation,
-    type: 'dropdown',
-    required: true,
-  },
-  {
     name: 'sla',
     label: 'Выберите SLA',
+    validation: NoRequiredValidation,
+    type: 'dropdown',
+    required: true,
+  },
+
+  {
+    name: 'contract',
+    label: 'Выберите контракт',
     validation: NoRequiredValidation,
     type: 'dropdown',
     required: true,
@@ -120,8 +114,23 @@ export const MapINCInputFields = [
   },
 
   {
+    name: 'object',
+    label: 'Выберите объект',
+    validation: NoRequiredValidation,
+    type: 'dropdown',
+    required: true,
+  },
+
+  {
     name: 'typeOfWrok',
     label: 'Выберите тип работ',
+    validation: NoRequiredValidation,
+    type: 'dropdown',
+    required: true,
+  },
+  {
+    name: 'equipment',
+    label: 'Выберите классификатор',
     validation: NoRequiredValidation,
     type: 'dropdown',
     required: true,
@@ -134,22 +143,8 @@ export const MapINCInputFields = [
     required: false,
   },
   {
-    name: 'equipment',
-    label: 'Выберите классификатор',
-    validation: NoRequiredValidation,
-    type: 'dropdown',
-    required: true,
-  },
-  {
     name: 'model',
     label: 'Выберите модель',
-    validation: NoRequiredValidation,
-    type: 'dropdown',
-    required: true,
-  },
-  {
-    name: 'typicalMalfunction',
-    label: 'Выберите типовую неисправность',
     validation: NoRequiredValidation,
     type: 'dropdown',
     required: true,
@@ -160,6 +155,14 @@ export const MapINCInputFields = [
     validation: NoRequiredValidation,
     type: 'text',
     required: false,
+  },
+
+  {
+    name: 'typicalMalfunction',
+    label: 'Выберите типовую неисправность',
+    validation: NoRequiredValidation,
+    type: 'dropdown',
+    required: true,
   },
   {
     name: 'comments',

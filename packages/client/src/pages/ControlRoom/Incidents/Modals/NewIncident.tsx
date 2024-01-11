@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Typography } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 import {
   useForm,
   useFieldArray,
@@ -107,12 +107,15 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
       setSelectedContract(data)
       const contract = contracts.filter(({ id }) => id === data.id)[0]
       setActiveContract(contract)
-      const listObjects = contract.Objects?.map(({ object, id }) => {
-        return {
-          label: object,
-          id: id as string,
+      const listObjects = contract.Objects?.map(
+        ({ object, id, internalClientID }) => {
+          return {
+            label: object,
+            id: id as string,
+            description: internalClientID ?? '',
+          }
         }
-      }) as Options[]
+      ) as Options[]
       setObjectList(listObjects)
       const listSLAs = contract.SLAs?.map(({ sla, id }) => {
         return {
@@ -143,13 +146,13 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
     }, [contracts])
 
     const setSLA = (data: Options) => {
-      console.log('data = ', data)
       setSelectedSLA(data)
       if (!data.id) {
         setSelectedTypeOfWork({
           label: '',
           id: '',
         })
+        setDateValue(undefined)
         return
       }
       const slaData = activeContract?.SLAs?.find(item => item.id === data.id)
@@ -177,28 +180,6 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
       const nowDateTime = now.toISOString().split('T')[0]
       const DateTimeStart = new Date(nowDateTime + 'T' + timeStart)
       const DateTimeEnd = new Date(nowDateTime + 'T' + timeEnd)
-      const newTimeStart = timeStart.split(':')
-      const secondsStart = Number(newTimeStart[2])
-        ? 1000 * Number(newTimeStart[2])
-        : 0
-      const minutesStart = Number(newTimeStart[1])
-        ? 1000 * 60 * Number(newTimeStart[1])
-        : 0
-      const hoursStart = Number(newTimeStart[0])
-        ? 1000 * 60 * 60 * Number(newTimeStart[0])
-        : 0
-      const timeStartMM = hoursStart + minutesStart + secondsStart
-      const newTimeEnd = timeEnd.split(':')
-      const secondsEnd = Number(newTimeEnd[2])
-        ? 1000 * Number(newTimeEnd[2])
-        : 0
-      const minutesEnd = Number(newTimeEnd[1])
-        ? 1000 * 60 * Number(newTimeEnd[1])
-        : 0
-      const hoursEnd = Number(newTimeEnd[0])
-        ? 1000 * 60 * 60 * Number(newTimeEnd[0])
-        : 0
-      const timeEndMM = hoursEnd + minutesEnd + secondsEnd
       const newTime = time.split(':')
       const secondsOffset = Number(newTime[2]) ? 1000 * Number(newTime[2]) : 0
       const minutesOffset = Number(newTime[1])
@@ -211,9 +192,9 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
       const slaTime = now.getTime() + timeOffsetMM
       const endTime = DateTimeEnd.getTime()
       const diffTime = slaTime - endTime
-      const daysNumbers = diffTime > 0 ? Number(days) + 1 : Number(days)
 
       if (diffTime > 0) {
+        const daysNumbers = diffTime > 0 ? Number(days) + 1 : Number(days)
         DateTimeStart.setDate(DateTimeStart.getDate() + daysNumbers)
         DateTimeStart.setTime(DateTimeStart.getTime() + diffTime)
         return DateTimeStart
@@ -272,141 +253,152 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
     console.log('dateValue = ', dateValue)
 
     return (
-      <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
+      <Box
+        sx={{ ...modalStyle, width: '80%', minHeight: 500 }}
+        component="form"
+        onSubmit={handleSubmit(changeData)}>
         <Typography variant={'h6'}>{title}</Typography>
-        {fields.map(
-          ({ id, name, label, validation, type, required }, index) => {
-            return (
-              <Controller
-                key={id}
-                control={control}
-                name={`list.${index}.value`}
-                rules={validation}
-                render={({ field }) => {
-                  if (name === 'client') {
+        <Stack
+          direction={{ xs: 'column', sm: 'row' }}
+          justifyContent="space-around"
+          alignItems="center"
+          sx={{ flexWrap: 'wrap' }}>
+          {fields.map(
+            ({ id, name, label, validation, type, required }, index) => {
+              return (
+                <Controller
+                  key={id}
+                  control={control}
+                  name={`list.${index}.value`}
+                  rules={validation}
+                  render={({ field }) => {
+                    if (name === 'client') {
+                      return (
+                        <DropDown
+                          data={clientsList}
+                          props={{ width: '45%', m: 2 }}
+                          onChange={setClient}
+                          value={selectedClient.label || ''}
+                          label={label}
+                          errorLabel="Не выбран клиент!"
+                        />
+                      )
+                    }
+                    if (name === 'contract') {
+                      return (
+                        <DropDown
+                          data={contractList}
+                          props={{ width: '45%', m: 2 }}
+                          onChange={setContract}
+                          value={selectedContract.label || ''}
+                          label={label}
+                          errorLabel="Не выбран контракт!"
+                        />
+                      )
+                    }
+                    if (name === 'object') {
+                      return (
+                        <DropDown
+                          data={objectList}
+                          props={{ width: '45%', m: 2 }}
+                          onChange={setSelectedObject}
+                          value={selectedObject.label || ''}
+                          label={label}
+                          errorLabel="Не выбран объект!"
+                        />
+                      )
+                    }
+                    if (name === 'sla') {
+                      return (
+                        <DropDown
+                          data={slaList}
+                          props={{ width: '45%', m: 2 }}
+                          onChange={setSLA}
+                          value={selectedSLA.label || ''}
+                          label={label}
+                          errorLabel="Не выбран SLA!"
+                        />
+                      )
+                    }
+                    if (name === 'typeOfWrok') {
+                      return (
+                        <DropDown
+                          data={typeOfWorkList}
+                          props={{ width: '45%', m: 2 }}
+                          onChange={setSelectedTypeOfWork}
+                          value={selectedTypeOfWork.label || ''}
+                          label={label}
+                          errorLabel="Не выбран тип работ!"
+                        />
+                      )
+                    }
+                    if (name === 'equipment') {
+                      return (
+                        <DropDown
+                          data={equipmentList}
+                          props={{ width: '45%', m: 2 }}
+                          onChange={setEquimpent}
+                          value={selectedEquipment.label || ''}
+                          label={label}
+                          errorLabel="Не выбран классификатор!"
+                        />
+                      )
+                    }
+                    if (name === 'model') {
+                      return (
+                        <DropDown
+                          data={modelList}
+                          props={{ width: '45%', m: 2 }}
+                          onChange={setModel}
+                          value={selectedModel.label || ''}
+                          label={label}
+                          errorLabel="Не выбрана модель!"
+                        />
+                      )
+                    }
+                    if (name === 'typicalMalfunction') {
+                      return (
+                        <DropDown
+                          data={typicalMalfunctionList}
+                          props={{ width: '45%', m: 2 }}
+                          onChange={setSelectedTypicalMalfunction}
+                          value={selectedTypicalMalfunction.label || ''}
+                          label={label}
+                          errorLabel="Не выбрана типовая неисправность!"
+                        />
+                      )
+                    }
+                    if (name === 'timeSLA') {
+                      return (
+                        <DateTimeField
+                          dateValue={dateValue as Dayjs}
+                          setDateValue={setDateValue}
+                          sx={{ width: '45%', m: 2 }}
+                        />
+                      )
+                    }
                     return (
-                      <DropDown
-                        data={clientsList}
-                        props={{ mt: 4, width: '90%' }}
-                        onChange={setClient}
-                        value={selectedClient.label || ''}
+                      <TextField
+                        {...field}
+                        inputRef={field.ref}
                         label={label}
-                        errorLabel="Не выбран клиент!"
+                        type={type}
+                        required={required ?? true}
+                        variant="outlined"
+                        sx={{ width: '45%', m: 2 }}
+                        margin="normal"
+                        value={field.value || ''}
+                        error={!!(errors?.list ?? [])[index]?.value?.message}
+                        helperText={(errors?.list ?? [])[index]?.value?.message}
+                        inputProps={{ step: 1 }}
                       />
                     )
-                  }
-                  if (name === 'contract') {
-                    return (
-                      <DropDown
-                        data={contractList}
-                        props={{ mt: 4, width: '90%' }}
-                        onChange={setContract}
-                        value={selectedContract.label || ''}
-                        label={label}
-                        errorLabel="Не выбран контракт!"
-                      />
-                    )
-                  }
-                  if (name === 'object') {
-                    return (
-                      <DropDown
-                        data={objectList}
-                        props={{ mt: 4, width: '90%' }}
-                        onChange={setSelectedObject}
-                        value={selectedObject.label || ''}
-                        label={label}
-                        errorLabel="Не выбран объект!"
-                      />
-                    )
-                  }
-                  if (name === 'sla') {
-                    return (
-                      <DropDown
-                        data={slaList}
-                        props={{ mt: 4, width: '90%' }}
-                        onChange={setSLA}
-                        value={selectedSLA.label || ''}
-                        label={label}
-                        errorLabel="Не выбран SLA!"
-                      />
-                    )
-                  }
-                  if (name === 'typeOfWrok') {
-                    return (
-                      <DropDown
-                        data={typeOfWorkList}
-                        props={{ mt: 4, width: '90%' }}
-                        onChange={setSelectedTypeOfWork}
-                        value={selectedTypeOfWork.label || ''}
-                        label={label}
-                        errorLabel="Не выбран тип работ!"
-                      />
-                    )
-                  }
-                  if (name === 'equipment') {
-                    return (
-                      <DropDown
-                        data={equipmentList}
-                        props={{ mt: 3, width: '90%' }}
-                        onChange={setEquimpent}
-                        value={selectedEquipment.label || ''}
-                        label={label}
-                        errorLabel="Не выбран классификатор!"
-                      />
-                    )
-                  }
-                  if (name === 'model') {
-                    return (
-                      <DropDown
-                        data={modelList}
-                        props={{ mt: 4, width: '90%' }}
-                        onChange={setModel}
-                        value={selectedModel.label || ''}
-                        label={label}
-                        errorLabel="Не выбрана модель!"
-                      />
-                    )
-                  }
-                  if (name === 'typicalMalfunction') {
-                    return (
-                      <DropDown
-                        data={typicalMalfunctionList}
-                        props={{ mt: 4, width: '90%' }}
-                        onChange={setSelectedTypicalMalfunction}
-                        value={selectedTypicalMalfunction.label || ''}
-                        label={label}
-                        errorLabel="Не выбрана типовая неисправность!"
-                      />
-                    )
-                  }
-                  if (name === 'timeSLA') {
-                    return (
-                      <DateTimeField
-                        dateValue={dateValue!}
-                        setDateValue={setDateValue}
-                      />
-                    )
-                  }
-                  return (
-                    <TextField
-                      {...field}
-                      inputRef={field.ref}
-                      label={label}
-                      type={type}
-                      required={required ?? true}
-                      variant="outlined"
-                      sx={{ width: '90%', height: 60, mt: 4 }}
-                      margin="normal"
-                      error={!!(errors?.list ?? [])[index]?.value?.message}
-                      helperText={(errors?.list ?? [])[index]?.value?.message}
-                      inputProps={{ step: 1 }}
-                    />
-                  )
-                }}
-              />
-            )
-          }
-        )}
+                  }}
+                />
+              )
+            }
+          )}
+        </Stack>
         <ButtonsModalSection
           closeModal={() => handleModal(false)}
           btnName="Сохранить"

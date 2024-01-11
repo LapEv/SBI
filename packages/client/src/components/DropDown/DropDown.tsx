@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useTheme } from '@mui/material'
+import { Box, useTheme } from '@mui/material'
 import { TextField } from 'components/TextFields/TextFields'
 import { Autocomplete } from 'components/Autocomplete'
 import { DataDropDown, Options } from './interface'
@@ -30,17 +30,55 @@ export const DropDown = ({
       sx={{ width: '90%', height: 40, ...props }}
       options={data}
       noOptionsText={'Нет данных'}
-      isOptionEqualToValue={(option, value): any =>
-        (option as any).label === value ||
-        (option as any).id === value ||
-        value === ''
-      }
+      filterOptions={(option, { inputValue }): any => {
+        console.log('option = ', option)
+        console.log('inputValue = ', inputValue)
+        if (inputValue === '') return option
+        const displayOptions = option.filter((item): any =>
+          (item as any).label.toLowerCase().trim().includes(inputValue) ||
+          (item as any).description
+            ? (item as any).description
+                .toLowerCase()
+                .trim()
+                .includes(inputValue)
+            : null
+        )
+        return displayOptions ?? []
+      }}
+      isOptionEqualToValue={(option, value): any => {
+        return (
+          (option as any).label === value ||
+          (option as any).id === value ||
+          (option as any).description === value ||
+          value === ''
+        )
+      }}
       onChange={(_, textValue) =>
         textValue
           ? (onChange?.(textValue as Options), setErrors(false))
           : (onChange?.(emptyValue as Options), setErrors(true))
       }
       value={value ?? ''}
+      renderOption={(props, option, { selected }) => (
+        <li {...props}>
+          <Box
+            component="span"
+            sx={{
+              width: 14,
+              height: 14,
+              flexShrink: 0,
+              borderRadius: '3px',
+              mr: 1,
+              mt: '2px',
+            }}
+          />
+          <Box sx={{ flexGrow: 1 }}>
+            {(option as any).label}
+            <br />
+            <span>{(option as any).description}</span>
+          </Box>
+        </li>
+      )}
       ListboxProps={{
         sx: {
           borderWidth: 1,

@@ -23,22 +23,22 @@ export interface INC {
 }
 
 export interface AddINC {
-  numberINC: string
-  incident: string
-  clientINC: string
-  timeRegistration: string
-  timeInWork: string
+  clientID: string
+  contractID: string
+  objectID: string
+  SLAID: string
+  typeOfWorkID: string
   timeSLA: string
-  timeCloseCheck: string
-  timeClose: string
-  executor: string
-  responsible: string
+  clientINC: string
+  responsibleID: string
+  equipmentId: string
+  modelId: string
+  typicalMalfunctionID: string
   description: string
   comment: string
-  report: string
-  spaceParts: string
-  act: string
-  statusINC: string
+  applicant: string
+  applicantContacts: string
+  methodsReuqest: string
 }
 
 export interface INCStatuses {

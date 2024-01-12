@@ -26,6 +26,8 @@ export interface Incindent {
   rating: number
   parentalIncident: string
   relatedIncident: string
+  applicant: string
+  applicantContacts: string
 }
 
 export const incident: ModelAttributes<Model, Incindent> = {
@@ -122,11 +124,19 @@ export const incident: ModelAttributes<Model, Incindent> = {
     allowNull: true,
   },
   parentalIncident: {
-    type: DataType.INTEGER,
+    type: DataType.STRING,
     allowNull: true,
   },
   relatedIncident: {
-    type: DataType.INTEGER,
+    type: DataType.STRING,
+    allowNull: true,
+  },
+  applicant: {
+    type: DataType.STRING,
+    allowNull: true,
+  },
+  applicantContacts: {
+    type: DataType.STRING,
     allowNull: true,
   },
 }

@@ -1,5 +1,6 @@
 import { IncidentRepos, IncidentStatusesRepos, TypesOfWorkRepos } from './../db'
 import type { Request, Response } from 'express'
+import { AppConst } from '../const'
 
 export class incidentService {
   newIncidentStatuses = async (_req: Request, res: Response) => {
@@ -185,6 +186,20 @@ export class incidentService {
   newINC = async (_req: Request, res: Response) => {
     console.log('_req.body = ', _req.body)
     try {
+      const lastINC = await IncidentRepos.findAll({
+        limit: 1,
+        order: [['createdAt', 'DESC']],
+      })
+      console.log('lastINC = ', lastINC)
+
+      let numberINC, incident
+      if (!lastINC) {
+        numberINC = AppConst.startINC
+        incident = `0000${numberINC}`
+      }
+      console.log('numberINC = ', numberINC)
+      console.log('incident = ', incident)
+      // const numberINC = getINCstring(AppConst.)
       // await IncidentRepos.create({ ..._req.body, active: true })
       const incs = await IncidentRepos.findAll({
         where: { active: true },

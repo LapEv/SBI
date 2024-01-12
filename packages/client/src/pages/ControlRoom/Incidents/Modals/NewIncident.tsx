@@ -6,7 +6,7 @@ import {
   Controller,
   useFormState,
 } from 'react-hook-form'
-import { TextField } from 'components/TextFields'
+import { MultiTextField, TextField } from 'components/TextFields'
 import { ChooseModalProps, AddValuesProps } from './interfaces'
 import { modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
@@ -20,23 +20,19 @@ import { Contracts } from 'store/slices/contracts/interfaces'
 import { SLA } from 'store/slices/sla/interfaces'
 import { DateTimeField } from 'components/DatePicker'
 import dayjs, { Dayjs } from 'dayjs'
-
-interface IGetTime {
-  days: string
-  time: string
-  timeStart: string
-  timeEnd: string
-}
+import { getSLATime } from 'utils/getSLATime'
+import { useAuth } from 'hooks/auth/useAuth'
+import { convertDateToStringDDMMYYYYHHMMSS } from 'utils/convertDate'
 
 export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title }: ChooseModalProps, ref) => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
+    const [{ user }] = useAuth()
     const [{ clients }, { getClients }] = useClients()
     const [{ contracts }, { getContractsByClientID, resetContracts }] =
       useContracts()
-    const [{ typesOfWork }, { newIncidentStatuses, getTypesOfWork }] =
-      useIncidents()
+    const [{ typesOfWork }, { getTypesOfWork, newINC }] = useIncidents()
     const [clientsList, setClientsList] = useState<Options[]>([])
     const [selectedClient, setSelectedClient] = useState<Options>(emptyValue)
     const [activeContract, setActiveContract] = useState<Contracts>()
@@ -75,10 +71,28 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
     })
 
     function changeData({ list }: AddValuesProps) {
-      console.log('list = ', list)
-      // newIncidentStatuses({
-      //   statusINC: list[0].value,
-      // })
+      const newINCobject = {
+        clientID: selectedClient.id,
+        contractID: selectedContract.id,
+        objectID: selectedObject.id,
+        SLAID: selectedSLA.id,
+        typeOfWorkID: selectedTypeOfWork.id,
+        timeSLA: convertDateToStringDDMMYYYYHHMMSS(
+          dayjs(dateValue).format('DD/MM/YYYYTHH:mm:ss')
+        ),
+        clientINC: list[7].value,
+        responsibleID: user.id as string,
+        equipmentId: selectedEquipment.id,
+        modelId: selectedModel.id,
+        typicalMalfunctionID: selectedTypicalMalfunction.id,
+        description: list[12].value,
+        comment: list[13].value,
+        applicant: list[9].value,
+        applicantContacts: list[11].value,
+        methodsReuqest: 'manually',
+      }
+      console.log('newINCobject = ', newINCobject)
+      newINC(newINCobject)
       // handleModal(false)
     }
 
@@ -164,7 +178,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
         id: getTypeOfWork?.id as string,
       })
       getTypesOfWork()
-      const timeSLA = getTime({ days, time, timeEnd, timeStart })
+      const timeSLA = getSLATime({ days, time, timeEnd, timeStart })
 
       const newdate = dayjs()
         .set('date', timeSLA.getDate())
@@ -174,35 +188,6 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
         .set('minute', timeSLA.getMinutes())
         .set('second', timeSLA.getSeconds())
       setDateValue(newdate)
-    }
-
-    const getTime = ({ days, time, timeStart, timeEnd }: IGetTime) => {
-      const now = new Date()
-      const nowDateTime = now.toISOString().split('T')[0]
-      const DateTimeStart = new Date(nowDateTime + 'T' + timeStart)
-      const DateTimeEnd = new Date(nowDateTime + 'T' + timeEnd)
-      const newTime = time.split(':')
-      const secondsOffset = Number(newTime[2]) ? 1000 * Number(newTime[2]) : 0
-      const minutesOffset = Number(newTime[1])
-        ? 1000 * 60 * Number(newTime[1])
-        : 0
-      const hoursOffset = Number(newTime[0])
-        ? 1000 * 60 * 60 * Number(newTime[0])
-        : 0
-      const timeOffsetMM = hoursOffset + minutesOffset + secondsOffset
-      const slaTime = now.getTime() + timeOffsetMM
-      const endTime = DateTimeEnd.getTime()
-      const diffTime = slaTime - endTime
-
-      if (diffTime > 0) {
-        const daysNumbers = diffTime > 0 ? Number(days) + 1 : Number(days)
-        DateTimeStart.setDate(DateTimeStart.getDate() + daysNumbers)
-        DateTimeStart.setTime(DateTimeStart.getTime() + diffTime)
-        return DateTimeStart
-      }
-      now.setTime(slaTime)
-      now.setDate(now.getDate() + Number(days))
-      return now
     }
 
     useEffect(() => {
@@ -261,7 +246,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
         <Stack
           direction={{ xs: 'column', sm: 'row' }}
           justifyContent="space-around"
-          alignItems="center"
+          alignItems="flex-start"
           sx={{ flexWrap: 'wrap' }}>
           {fields.map(
             ({ id, name, label, validation, type, required }, index) => {
@@ -374,6 +359,28 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                           dateValue={dateValue as Dayjs}
                           setDateValue={setDateValue}
                           sx={{ width: '45%', m: 2 }}
+                        />
+                      )
+                    }
+                    if (name === 'description' || name === 'comments') {
+                      return (
+                        <MultiTextField
+                          {...field}
+                          inputRef={field.ref}
+                          label={label}
+                          type={type}
+                          required={required ?? true}
+                          variant="outlined"
+                          sx={{ width: '45%', m: 2 }}
+                          margin="normal"
+                          multiline
+                          maxRows={3}
+                          value={field.value || ''}
+                          error={!!(errors?.list ?? [])[index]?.value?.message}
+                          helperText={
+                            (errors?.list ?? [])[index]?.value?.message
+                          }
+                          inputProps={{ step: 1 }}
                         />
                       )
                     }

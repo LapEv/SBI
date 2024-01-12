@@ -97,7 +97,6 @@ export const MapINCInputFields = [
     type: 'dropdown',
     required: true,
   },
-
   {
     name: 'contract',
     label: 'Выберите контракт',
@@ -112,7 +111,6 @@ export const MapINCInputFields = [
     type: 'datetime',
     required: true,
   },
-
   {
     name: 'object',
     label: 'Выберите объект',
@@ -120,7 +118,6 @@ export const MapINCInputFields = [
     type: 'dropdown',
     required: true,
   },
-
   {
     name: 'typeOfWrok',
     label: 'Выберите тип работ',
@@ -138,7 +135,7 @@ export const MapINCInputFields = [
   {
     name: 'cientINC',
     label: 'Введите клиентский номер',
-    validation: lightTextValidation,
+    validation: NoRequiredValidation,
     type: 'text',
     required: false,
   },
@@ -150,19 +147,32 @@ export const MapINCInputFields = [
     required: true,
   },
   {
-    name: 'description',
-    label: 'Введите описание к инциденту',
+    name: 'applicant',
+    label: 'Введите заявителя',
     validation: NoRequiredValidation,
     type: 'text',
     required: false,
   },
-
   {
     name: 'typicalMalfunction',
     label: 'Выберите типовую неисправность',
     validation: NoRequiredValidation,
     type: 'dropdown',
     required: true,
+  },
+  {
+    name: 'applicantContacts',
+    label: 'Введите контакты заявителя',
+    validation: NoRequiredValidation,
+    type: 'text',
+    required: false,
+  },
+  {
+    name: 'description',
+    label: 'Введите описание к инциденту',
+    validation: NoRequiredValidation,
+    type: 'text',
+    required: false,
   },
   {
     name: 'comments',

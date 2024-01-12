@@ -11,6 +11,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate'
 import { IconPopoverButton } from 'components/Buttons'
 import { useClassifier } from 'hooks/classifier/useClassifier'
+import { useIncidents } from 'hooks/incidents/useINC'
 
 export function IncidentsPage() {
   const modalClientRef = React.createRef()
@@ -18,10 +19,7 @@ export function IncidentsPage() {
   const [modal, setModal] = useState<boolean>(false)
   const [modalImage, setModalImage] = useState<string>('')
 
-  const [
-    { models, equipments, typicalMalfunctions },
-    { getClassifierModels, getClassifierEquipments, getTypicalMalfunctions },
-  ] = useClassifier()
+  const [{ incidents }, { getINC }] = useIncidents()
 
   const checkClickMenu = (name: string | null) => {
     if (name) {
@@ -35,14 +33,10 @@ export function IncidentsPage() {
   }
 
   useEffect(() => {
-    getClassifierEquipments()
-    getClassifierModels()
-    getTypicalMalfunctions()
+    getINC()
   }, [])
 
-  // console.log('equipments = ', equipments)
-  // console.log('models = ', models)
-  // console.log('typicalMalfunctions = ', typicalMalfunctions)
+  console.log('incidents = ', incidents)
 
   return (
     <Container component="main" maxWidth="md" sx={mainHeaderForPages}>

@@ -30,4 +30,5 @@ export interface Options {
   label: string
   id: string
   description?: string
+  descriptionID?: string
 }

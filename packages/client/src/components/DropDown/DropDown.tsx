@@ -31,18 +31,27 @@ export const DropDown = ({
       options={data}
       noOptionsText={'Нет данных'}
       filterOptions={(option, { inputValue }): any => {
-        console.log('option = ', option)
-        console.log('inputValue = ', inputValue)
         if (inputValue === '') return option
-        const displayOptions = option.filter((item): any =>
-          (item as any).label.toLowerCase().trim().includes(inputValue) ||
-          (item as any).description
-            ? (item as any).description
-                .toLowerCase()
-                .trim()
-                .includes(inputValue)
-            : null
-        )
+        const value = inputValue.toLowerCase().trim()
+        const displayOptions = option.filter((item): any => {
+          if ((item as any).label.toLowerCase().trim().includes(value)) {
+            return item
+          }
+          if (
+            (item as any).description &&
+            (item as any).description.length &&
+            (item as any).description.toLowerCase().trim().includes(value)
+          ) {
+            return item
+          }
+          if (
+            (item as any).descriptionID &&
+            (item as any).descriptionID.length &&
+            (item as any).descriptionID.toLowerCase().trim().includes(value)
+          ) {
+            return item
+          }
+        })
         return displayOptions ?? []
       }}
       isOptionEqualToValue={(option, value): any => {
@@ -50,6 +59,7 @@ export const DropDown = ({
           (option as any).label === value ||
           (option as any).id === value ||
           (option as any).description === value ||
+          (option as any).descriptionID === value ||
           value === ''
         )
       }}
@@ -76,6 +86,8 @@ export const DropDown = ({
             {(option as any).label}
             <br />
             <span>{(option as any).description}</span>
+            <br />
+            <span>{(option as any).descriptionID}</span>
           </Box>
         </li>
       )}

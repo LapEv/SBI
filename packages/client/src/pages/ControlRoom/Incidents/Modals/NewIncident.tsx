@@ -108,11 +108,12 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
       const contract = contracts.filter(({ id }) => id === data.id)[0]
       setActiveContract(contract)
       const listObjects = contract.Objects?.map(
-        ({ object, id, internalClientID }) => {
+        ({ object, id, internalClientName, internalClientID }) => {
           return {
             label: object,
             id: id as string,
-            description: internalClientID ?? '',
+            description: internalClientName ?? '',
+            descriptionID: internalClientID ?? '',
           }
         }
       ) as Options[]
@@ -250,7 +251,6 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
     }
 
     console.log('contracts = ', contracts)
-    console.log('dateValue = ', dateValue)
 
     return (
       <Box

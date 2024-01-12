@@ -84,10 +84,16 @@ export const DropDown = ({
           />
           <Box sx={{ flexGrow: 1 }}>
             {(option as any).label}
-            <br />
-            <span>{(option as any).description}</span>
-            <br />
-            <span>{(option as any).descriptionID}</span>
+            {(option as any).description && (
+              <div>
+                <span>{(option as any).description}</span>
+              </div>
+            )}
+            {(option as any).descriptionID && (
+              <div>
+                <span>{(option as any).descriptionID}</span>
+              </div>
+            )}
           </Box>
         </li>
       )}

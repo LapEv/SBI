@@ -185,29 +185,65 @@ export class incidentService {
 
   newINC = async (_req: Request, res: Response) => {
     console.log('_req.body = ', _req.body)
+    const {
+      clientINC,
+      timeSLA,
+      description,
+      comment,
+      methodsReuqest,
+      parentalIncident,
+      relatedIncident,
+      applicant,
+      applicantContacts,
+      responsibleID,
+    } = _req.body
     try {
       const lastINC = await IncidentRepos.findAll({
         limit: 1,
         order: [['createdAt', 'DESC']],
       })
-      console.log('lastINC = ', lastINC)
+      console.log('lastINC  = ', lastINC[0].numberINC)
 
-      let numberINC, incident
-      if (!lastINC) {
-        numberINC = AppConst.startINC
-        incident = `0000${numberINC}`
-      }
+      const numberINC =
+        !lastINC || !lastINC.length
+          ? AppConst.startINC
+          : lastINC[0].numberINC + 1
+      const incident = `${AppConst.attrINC}0000${numberINC}`
+
       console.log('numberINC = ', numberINC)
       console.log('incident = ', incident)
-      // const numberINC = getINCstring(AppConst.)
-      // await IncidentRepos.create({ ..._req.body, active: true })
-      const incs = await IncidentRepos.findAll({
+      const timeRegistration = new Date()
+      const actionsComments = `${timeRegistration}: ${AppConst.ActionComment.incidentRegistration}${incident}`
+      // const actionsComments = ` ${AppConst.ActionComment.incidentRegistration}${incident}`
+      console.log('actionsComments = ', actionsComments)
+      console.log('timeRegistration = ', timeRegistration)
+      console.log('responsibleID = ', responsibleID)
+      await IncidentRepos.create({
+        numberINC,
+        incident,
+        clientINC,
+        timeSLA,
+        timeRegistration,
+        description,
+        comment,
+        methodsReuqest,
+        actionsComments,
+        parentalIncident,
+        relatedIncident,
+        applicant,
+        applicantContacts,
+        active: true,
+        responsible: responsibleID,
+      })
+      const newINC = await IncidentRepos.findAll({
         where: { active: true },
       })
-      res.status(200).json(incs)
+      console.log('newINC = ', newINC)
+      res.status(200).json(newINC)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
+      console.log('err = ', err)
       res.status(500).json({
         error: ['db error: unable to set new incident statuses', err],
       })

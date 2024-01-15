@@ -281,4 +281,7 @@ export const AppConst = {
     email: 'email',
     web: 'web',
   },
+  ActionComment: {
+    incidentRegistration: 'Зарегистрирован инцидент под номером ',
+  },
 }

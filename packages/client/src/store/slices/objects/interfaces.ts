@@ -41,37 +41,21 @@ export interface ChangeObject {
   internalClientID?: string
   internalClientName?: string
 }
-// export interface IServiceList {
-//   name: string
-//   label: string
-// }
-// export interface IServiceListData {
-//   sla?: string
-//   ola?: string
-//   id?: string
-//   time: string
-//   timeStart: string
-//   timeEnd: string
-// }
-
-// export interface ServiceListItem {
-//   item: {
-//     sla?: string
-//     ola?: string
-//     id?: string
-//     time: string
-//     timeStart: string
-//     timeEnd: string
-//   }[]
-// }
-
-// export interface SLAValues {
-//   list: {
-//     name: string
-//     label: string
-//     value: string
-//     validation: object
-//     disabled: boolean
-//     type: string
-//   }[]
-// }
+export interface ObjectsForINC {
+  id: string
+  object: string
+  internalClientID: string
+  internalClientName: string
+  active: boolean
+  Address?: {
+    id: string
+    address: string
+    coordinates: string
+    active: boolean
+  }
+  Region?: {
+    id: string
+    region: string
+    active: boolean
+  }
+}

@@ -84,7 +84,15 @@ export type AuthState = {
   userStatus: UserStatus[]
   admin: boolean
   superAdmin: boolean
-  // editStatus: string
   isLoadingAuth: boolean
   error?: string
+}
+
+export interface UserForINC {
+  id: string
+  username: string
+  firstName: string
+  lastName: string
+  middleName: string
+  active: boolean
 }

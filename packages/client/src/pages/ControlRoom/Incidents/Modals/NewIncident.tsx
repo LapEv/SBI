@@ -32,7 +32,10 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
     const [{ clients }, { getClients }] = useClients()
     const [{ contracts }, { getContractsByClientID, resetContracts }] =
       useContracts()
-    const [{ typesOfWork }, { getTypesOfWork, newINC }] = useIncidents()
+    const [
+      { typesOfWork, incStatuses },
+      { getTypesOfWork, newINC, getIncidentStatuses },
+    ] = useIncidents()
     const [clientsList, setClientsList] = useState<Options[]>([])
     const [selectedClient, setSelectedClient] = useState<Options>(emptyValue)
     const [activeContract, setActiveContract] = useState<Contracts>()
@@ -71,6 +74,9 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
     })
 
     function changeData({ list }: AddValuesProps) {
+      const id_incStatus = incStatuses.find(item =>
+        item.statusINC.includes('Зарегистрирован')
+      )?.id as string
       const newINCobject = {
         clientID: selectedClient.id,
         contractID: selectedContract.id,
@@ -80,6 +86,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
         timeSLA: convertDateToStringDDMMYYYYHHMMSS(
           dayjs(dateValue).format('DD/MM/YYYYTHH:mm:ss')
         ),
+        id_incStatus,
         clientINC: list[7].value,
         responsibleID: user.id as string,
         equipmentId: selectedEquipment.id,
@@ -93,10 +100,11 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
       }
       console.log('newINCobject = ', newINCobject)
       newINC(newINCobject)
-      // handleModal(false)
+      handleModal(false)
     }
 
     useEffect(() => {
+      getIncidentStatuses()
       getClients()
       resetContracts()
     }, [])
@@ -234,8 +242,6 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
       ) as Options[]
       setTypicalMalfunctionList(listTypical)
     }
-
-    console.log('contracts = ', contracts)
 
     return (
       <Box

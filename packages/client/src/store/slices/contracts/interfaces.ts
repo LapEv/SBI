@@ -62,33 +62,8 @@ export interface NewContractName {
   id: string
 }
 
-// export interface IServiceListData {
-//   sla?: string
-//   ola?: string
-//   id?: string
-//   time: string
-//   timeStart: string
-//   timeEnd: string
-// }
-
-// export interface ServiceListItem {
-//   item: {
-//     sla?: string
-//     ola?: string
-//     id?: string
-//     time: string
-//     timeStart: string
-//     timeEnd: string
-//   }[]
-// }
-
-// export interface SLAValues {
-//   list: {
-//     name: string
-//     label: string
-//     value: string
-//     validation: object
-//     disabled: boolean
-//     type: string
-//   }[]
-// }
+export interface ContractsForINC {
+  id: string
+  contract: string
+  active: true
+}

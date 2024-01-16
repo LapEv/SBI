@@ -85,3 +85,21 @@ export interface ChangeModelsInTypicalMalfunction {
   newTypicalMalfunction: ShortTypicalMalfunctions[]
   id_equipment: string
 }
+
+export interface ClassifierEquipmentForINC {
+  id: string
+  equipment: string
+  active: boolean
+}
+
+export interface ClassifierModelForINC {
+  id: string
+  model: string
+  active: boolean
+}
+
+export interface TypicalMalfunctionForINC {
+  id: string
+  typicalMalfunction: string
+  active: boolean
+}

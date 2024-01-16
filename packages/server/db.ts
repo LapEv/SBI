@@ -243,14 +243,17 @@ Incidents.belongsTo(SLA, { foreignKey: 'id_incSLA', targetKey: 'id' })
 Clients.hasOne(Incidents, { foreignKey: 'id_incClient', sourceKey: 'id' })
 Incidents.belongsTo(Clients, { foreignKey: 'id_incClient', targetKey: 'id' })
 
-Contracts.hasOne(Incidents, { foreignKey: 'id_incClient', sourceKey: 'id' })
-Incidents.belongsTo(Contracts, { foreignKey: 'id_incClient', targetKey: 'id' })
+Contracts.hasOne(Incidents, { foreignKey: 'id_incContract', sourceKey: 'id' })
+Incidents.belongsTo(Contracts, {
+  foreignKey: 'id_incContract',
+  targetKey: 'id',
+})
 
 Objects.hasOne(Incidents, { foreignKey: 'id_incObject', sourceKey: 'id' })
 Incidents.belongsTo(Objects, { foreignKey: 'id_incObject', targetKey: 'id' })
 
-Users.hasOne(Incidents, { foreignKey: 'id_incClient', sourceKey: 'id' })
-Incidents.belongsTo(Users, { foreignKey: 'id_incClient', targetKey: 'id' })
+Users.hasOne(Incidents, { foreignKey: 'id_incUser', sourceKey: 'id' })
+Incidents.belongsTo(Users, { foreignKey: 'id_incUser', targetKey: 'id' })
 
 Department.hasOne(Incidents, { foreignKey: 'id_incClient', sourceKey: 'id' })
 Incidents.belongsTo(Department, { foreignKey: 'id_incClient', targetKey: 'id' })

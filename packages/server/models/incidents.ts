@@ -55,24 +55,24 @@ export const incident: ModelAttributes<Model, Incindent> = {
     allowNull: true,
   },
   timeInWork: {
-    type: DataType.TIME,
+    type: DataType.DATE,
     allowNull: true,
   },
   timeSLA: {
-    type: DataType.TIME,
+    type: DataType.DATE,
     allowNull: false,
   },
   timeCloseCheck: {
-    type: DataType.TIME,
+    type: DataType.DATE,
     allowNull: true,
   },
   timeClose: {
-    type: DataType.TIME,
+    type: DataType.DATE,
     allowNull: true,
   },
   responsible: {
     type: DataType.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   responsibleClosing: {
     type: DataType.STRING,

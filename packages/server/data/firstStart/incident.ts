@@ -1,18 +1,20 @@
+import { AppConst } from '../../const'
+
 export const incStatusesStartData = [
   {
-    statusINC: 'Зарегистрирован',
+    statusINC: AppConst.Statuses.registered,
     active: true,
   },
   {
-    statusINC: 'В работе',
+    statusINC: AppConst.Statuses.inWork,
     active: true,
   },
   {
-    statusINC: 'Выполнено',
+    statusINC: AppConst.Statuses.resolved,
     active: true,
   },
   {
-    statusINC: 'Закрыто',
+    statusINC: AppConst.Statuses.closed,
     active: true,
   },
 ]

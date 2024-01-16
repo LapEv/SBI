@@ -42,7 +42,28 @@ export const incidentsSlise = createSlice({
     [getINC.fulfilled.type]: (state, action: PayloadAction<INC[]>) => {
       state.isLoadingINC = false
       state.error = ''
-      state.incidents = action.payload
+      state.incidents = action.payload.map(item => {
+        return {
+          ...item,
+          status: item.IncindentStatus?.statusINC as string,
+          client: item.Client?.client as string,
+          contract: item.Contract?.contract as string,
+          object: item.Object?.object as string,
+          address: item.Object?.Address?.address as string,
+          coordinates: item.Object?.Address?.coordinates as string,
+          region: item.Object?.Region?.region as string,
+          sla: item.SLA?.sla as string,
+          typeOfWork: item.TypesOfWork?.typeOfWork as string,
+          userAccepted: `${item.User?.lastName} ${item.User?.firstName.slice(
+            0,
+            1
+          )}.${item.User?.middleName.slice(0, 1)}.` as string,
+          equipment: item.ClassifierEquipment?.equipment as string,
+          model: item.ClassifierModel?.model as string,
+          typicalMalfunction: item.TypicalMalfunction
+            ?.typicalMalfunction as string,
+        }
+      })
     },
     [getINC.pending.type]: state => {
       state.isLoadingINC = true

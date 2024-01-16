@@ -284,4 +284,10 @@ export const AppConst = {
   ActionComment: {
     incidentRegistration: 'Зарегистрирован инцидент под номером ',
   },
+  Statuses: {
+    registered: 'Зарегистрирован',
+    inWork: 'В работе',
+    resolved: 'Решён',
+    closed: 'Закрыт',
+  },
 }

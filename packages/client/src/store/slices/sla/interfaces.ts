@@ -143,3 +143,12 @@ export interface AddValuesAddContract {
     required?: boolean
   }[]
 }
+
+export interface SLAforINC {
+  id: string
+  sla: string
+  days: string
+  time: string
+  timeStart: string
+  active: boolean
+}

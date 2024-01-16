@@ -1,7 +1,102 @@
-import { IncidentRepos, IncidentStatusesRepos, TypesOfWorkRepos } from './../db'
+import {
+  Addresses,
+  ClassifierEquipment,
+  ClassifierModels,
+  Clients,
+  Contracts,
+  IncidentRepos,
+  IncidentStatusesRepos,
+  IncindentStatuses,
+  Objects,
+  Regions,
+  SLA,
+  TypesOfWork,
+  TypesOfWorkRepos,
+  TypicalMalfunctions,
+  Users,
+} from './../db'
 import type { Request, Response } from 'express'
 import { AppConst } from '../const'
 
+const includes = [
+  {
+    model: IncindentStatuses,
+    required: true,
+    attributes: ['id', 'statusINC', 'active'],
+  },
+  {
+    model: TypesOfWork,
+    required: true,
+    attributes: ['id', 'typeOfWork', 'active'],
+  },
+  {
+    model: SLA,
+    required: true,
+    attributes: ['id', 'sla', 'days', 'time', 'timeStart', 'timeEnd', 'active'],
+  },
+  {
+    model: Clients,
+    required: true,
+    attributes: ['id', 'legalName', 'client', 'active'],
+  },
+  {
+    model: Contracts,
+    required: true,
+    attributes: ['id', 'contract', 'active'],
+  },
+  {
+    model: Objects,
+    required: true,
+    attributes: [
+      'id',
+      'object',
+      'internalClientID',
+      'internalClientName',
+      'active',
+    ],
+    include: [
+      {
+        model: Addresses,
+        required: true,
+        attributes: ['id', 'address', 'coordinates', 'active'],
+        where: { active: true },
+      },
+      {
+        model: Regions,
+        required: true,
+        attributes: ['id', 'region', 'active'],
+        where: { active: true },
+      },
+    ],
+  },
+  {
+    model: Users,
+    required: true,
+    attributes: [
+      'id',
+      'username',
+      'firstName',
+      'lastName',
+      'middleName',
+      'active',
+    ],
+  },
+  {
+    model: ClassifierEquipment,
+    required: true,
+    attributes: ['id', 'equipment', 'active'],
+  },
+  {
+    model: ClassifierModels,
+    required: true,
+    attributes: ['id', 'model', 'active'],
+  },
+  {
+    model: TypicalMalfunctions,
+    required: true,
+    attributes: ['id', 'typicalMalfunction', 'active'],
+  },
+]
 export class incidentService {
   newIncidentStatuses = async (_req: Request, res: Response) => {
     try {
@@ -184,8 +279,8 @@ export class incidentService {
   }
 
   newINC = async (_req: Request, res: Response) => {
-    console.log('_req.body = ', _req.body)
     const {
+      id_incStatus,
       clientINC,
       timeSLA,
       description,
@@ -195,29 +290,28 @@ export class incidentService {
       relatedIncident,
       applicant,
       applicantContacts,
+      clientID,
+      typeOfWorkID,
+      SLAID,
+      contractID,
+      objectID,
       responsibleID,
+      equipmentId,
+      modelId,
+      typicalMalfunctionID,
     } = _req.body
     try {
       const lastINC = await IncidentRepos.findAll({
         limit: 1,
         order: [['createdAt', 'DESC']],
       })
-      console.log('lastINC  = ', lastINC[0].numberINC)
-
       const numberINC =
         !lastINC || !lastINC.length
           ? AppConst.startINC
           : lastINC[0].numberINC + 1
       const incident = `${AppConst.attrINC}0000${numberINC}`
-
-      console.log('numberINC = ', numberINC)
-      console.log('incident = ', incident)
       const timeRegistration = new Date()
       const actionsComments = `${timeRegistration}: ${AppConst.ActionComment.incidentRegistration}${incident}`
-      // const actionsComments = ` ${AppConst.ActionComment.incidentRegistration}${incident}`
-      console.log('actionsComments = ', actionsComments)
-      console.log('timeRegistration = ', timeRegistration)
-      console.log('responsibleID = ', responsibleID)
       await IncidentRepos.create({
         numberINC,
         incident,
@@ -233,12 +327,21 @@ export class incidentService {
         applicant,
         applicantContacts,
         active: true,
-        responsible: responsibleID,
+        id_incClient: clientID,
+        id_incStatus,
+        id_typeOfWork: typeOfWorkID,
+        id_incSLA: SLAID,
+        id_incContract: contractID,
+        id_incObject: objectID,
+        id_incUser: responsibleID,
+        id_incEquipment: equipmentId,
+        id_incModel: modelId,
+        id_incTypicalMalfunction: typicalMalfunctionID,
       })
       const newINC = await IncidentRepos.findAll({
         where: { active: true },
+        include: includes,
       })
-      console.log('newINC = ', newINC)
       res.status(200).json(newINC)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
@@ -250,13 +353,15 @@ export class incidentService {
     }
   }
   getAllINC = (_req: Request, res: Response) => {
-    IncidentRepos.findAll({})
+    IncidentRepos.findAll({ include: includes })
       .then(item => res.status(200).json(item))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
   getINC = (_req: Request, res: Response) => {
     IncidentRepos.findAll({
       where: { active: true },
+      // include: { all: true, nested: true },
+      include: includes,
     })
       .then(incs => {
         res.status(200).json(incs)
@@ -271,6 +376,7 @@ export class incidentService {
       })
       const incs = await IncidentRepos.findAll({
         where: { active: true },
+        include: includes,
       })
       res.status(200).json(incs)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -285,7 +391,7 @@ export class incidentService {
       await IncidentRepos.destroy({
         where: { id: selectedINCs },
       })
-      const incs = await IncidentRepos.findAll({})
+      const incs = await IncidentRepos.findAll({ include: includes })
       res.status(200).json(incs)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
@@ -301,6 +407,7 @@ export class incidentService {
       })
       const incs = await IncidentRepos.findAll({
         where: { active: true },
+        include: includes,
       })
       res.status(200).json(incs)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -315,6 +422,7 @@ export class incidentService {
       await IncidentRepos.update(id, { inc })
       const incs = await IncidentRepos.findAll({
         where: { active: true },
+        include: includes,
       })
       res.status(200).json(incs)
       /* eslint-disable @typescript-eslint/no-explicit-any */

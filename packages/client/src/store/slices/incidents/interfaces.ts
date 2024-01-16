@@ -1,10 +1,32 @@
-import { BaseSyntheticEvent, SyntheticEvent } from 'react'
+import { UserForINC } from 'storeAuth/interfaces'
+import { Clients } from '../clients/interfaces'
+import { ContractsForINC } from '../contracts/interfaces'
+import { ObjectsForINC } from '../objects/interfaces'
+import { SLAforINC } from '../sla/interfaces'
+import {
+  ClassifierEquipmentForINC,
+  ClassifierModelForINC,
+  TypicalMalfunctionForINC,
+} from '../classifier/interfaces'
 
 export interface INC {
   id: string
   numberINC: string
   incident: string
   clientINC: string
+  status: string
+  client: string
+  contract: string
+  sla: string
+  typeOfWork: string
+  object: string
+  address: string
+  coordinates: string
+  region: string
+  userAccepted: string
+  equipment: string
+  model: string
+  typicalMalfunction: string
   timeRegistration: string
   timeInWork: string
   timeSLA: string
@@ -18,11 +40,64 @@ export interface INC {
   spaceParts: string
   act: string
   active: boolean
-  INCStatuses?: INCStatuses
-  TypesOfWork: TypesOfWork
+  IncindentStatus?: INCStatuses
+  TypesOfWork?: TypesOfWork
+  SLA?: SLAforINC
+  Client?: Clients
+  Contract?: ContractsForINC
+  Object?: ObjectsForINC
+  User?: UserForINC
+  ClassifierEquipment?: ClassifierEquipmentForINC
+  ClassifierModel?: ClassifierModelForINC
+  TypicalMalfunction?: TypicalMalfunctionForINC
 }
 
+// export interface INCList {
+//   id: string
+//   numberINC: string
+//   incident: string
+//   clientINC: string
+//   status: string
+//   client: string
+//   contract: string
+//   sla: string
+//   typeOfWork: string
+//   object: string
+//   address: string
+//   coordinates: string
+//   region: string
+//   userAccepted: string
+//   equipment: string
+//   model: string
+//   typicalMalfunction: string
+//   timeRegistration: string
+//   timeInWork: string
+//   timeSLA: string
+//   timeCloseCheck: string
+//   timeClose: string
+//   executor: string
+//   responsible: string
+//   description: string
+//   comment: string
+//   report: string
+//   spaceParts: string
+//   act: string
+//   active: boolean
+//   INCStatuses?: INCStatuses
+//   TypesOfWork?: TypesOfWork
+//   SLA?: SLAforINC
+//   Client?: Clients
+//   Contract?: ContractsForINC
+//   Object?: ObjectsForINC
+//   User?: UserForINC
+//   ClassifierEquipment?: ClassifierEquipmentForINC
+//   ClassifierModel?: ClassifierModelForINC
+//   TypicalMalfunction?: TypicalMalfunctionForINC
+
+// }
+
 export interface AddINC {
+  id_incStatus: string
   clientID: string
   contractID: string
   objectID: string

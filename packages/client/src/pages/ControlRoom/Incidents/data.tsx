@@ -2,6 +2,7 @@ import { NoRequiredValidation, lightTextValidation } from 'utils/validatorRules'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
 import EditIcon from '@mui/icons-material/Edit'
+import { INCCell } from './interfaces'
 
 export const menuData = [
   {
@@ -180,5 +181,86 @@ export const MapINCInputFields = [
     validation: NoRequiredValidation,
     type: 'text',
     required: false,
+  },
+]
+
+export const INCCells: readonly INCCell[] = [
+  {
+    id: 'incident',
+    numeric: false,
+    disablePadding: true,
+    label: 'Инцидент',
+  },
+  {
+    id: 'numberINC',
+    numeric: true,
+    disablePadding: false,
+    label: 'Номер',
+  },
+  {
+    id: 'clientINC',
+    numeric: false,
+    disablePadding: false,
+    label: 'Номер Клиента',
+  },
+  {
+    id: 'status',
+    numeric: true,
+    disablePadding: false,
+    label: 'Статус',
+  },
+  {
+    id: 'client',
+    numeric: true,
+    disablePadding: false,
+    label: 'Клиент',
+  },
+  {
+    id: 'contract',
+    numeric: true,
+    disablePadding: false,
+    label: 'Контракт',
+  },
+  {
+    id: 'object',
+    numeric: true,
+    disablePadding: false,
+    label: 'Объект',
+  },
+  {
+    id: 'address',
+    numeric: true,
+    disablePadding: false,
+    label: 'Адрес',
+  },
+  {
+    id: 'region',
+    numeric: true,
+    disablePadding: false,
+    label: 'Регион',
+  },
+  {
+    id: 'userAccepted',
+    numeric: true,
+    disablePadding: false,
+    label: 'Кто принял',
+  },
+  {
+    id: 'equipment',
+    numeric: true,
+    disablePadding: false,
+    label: 'Оборудование',
+  },
+  {
+    id: 'model',
+    numeric: true,
+    disablePadding: false,
+    label: 'Модель',
+  },
+  {
+    id: 'typicalMalfunction',
+    numeric: true,
+    disablePadding: false,
+    label: 'Неисправность',
   },
 ]

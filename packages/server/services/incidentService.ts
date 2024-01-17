@@ -355,7 +355,7 @@ export class incidentService {
   getAllINC = (_req: Request, res: Response) => {
     IncidentRepos.findAll({ include: includes })
       .then(item => res.status(200).json(item))
-      .catch(err => res.status(500).json({ error: ['db error:', err.status] }))
+      .catch(err => res.status(500).json({ error: ['db error: ', err.status] }))
   }
   getINC = (_req: Request, res: Response) => {
     IncidentRepos.findAll({

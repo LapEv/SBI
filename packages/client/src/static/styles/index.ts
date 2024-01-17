@@ -1,5 +1,9 @@
 export { modalStyle, boxDataModal } from './modals'
-export { headerForPages, mainHeaderForPages } from './headerForPages'
+export {
+  headerForPages,
+  mainHeaderForPages,
+  mainHeaderForINCPage,
+} from './headerForPages'
 export {
   classifier,
   classifierComponent,

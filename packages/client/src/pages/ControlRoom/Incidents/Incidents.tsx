@@ -5,7 +5,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { DropDownMenu } from 'components/DropDownButtonMenu'
 import { TableIncidents, menuData } from '.'
 import { ChooseModal } from './Modals/ChooseModal'
-import { headerForPages, mainHeaderForPages } from 'static/styles'
+import { headerForPages, mainHeaderForINCPage } from 'static/styles'
 import { doubleMenuForHeader } from 'static/styles/headerForPages'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate'
@@ -35,10 +35,10 @@ export function IncidentsPage() {
     getINC()
   }, [])
 
-  console.log('incidents = ', incidents)
+  console.log('incidentss = ', incidents)
 
   return (
-    <Container component="main" maxWidth="md" sx={mainHeaderForPages}>
+    <Container component="main" maxWidth="md" sx={mainHeaderForINCPage}>
       <Message />
       <Modal
         open={modal}

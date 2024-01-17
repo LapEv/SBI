@@ -2,7 +2,7 @@ import { NoRequiredValidation, lightTextValidation } from 'utils/validatorRules'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
 import EditIcon from '@mui/icons-material/Edit'
-import { INCCell } from './interfaces'
+import { INC_Column } from './interfaces'
 
 export const menuData = [
   {
@@ -184,83 +184,109 @@ export const MapINCInputFields = [
   },
 ]
 
-export const INCCells: readonly INCCell[] = [
+export const INCColumn: INC_Column[] = [
   {
-    id: 'incident',
-    numeric: false,
-    disablePadding: true,
+    name: 'incident',
     label: 'Инцидент',
+    options: {
+      filter: true,
+      sort: true,
+    },
   },
   {
-    id: 'numberINC',
-    numeric: true,
-    disablePadding: false,
+    name: 'numberINC',
     label: 'Номер',
+    options: {
+      filter: true,
+      sort: true,
+    },
   },
   {
-    id: 'clientINC',
-    numeric: false,
-    disablePadding: false,
+    name: 'clientINC',
     label: 'Номер Клиента',
+    options: {
+      filter: true,
+      sort: true,
+    },
   },
   {
-    id: 'status',
-    numeric: true,
-    disablePadding: false,
+    name: 'status',
     label: 'Статус',
+    options: {
+      filter: true,
+      sort: true,
+    },
   },
   {
-    id: 'client',
-    numeric: true,
-    disablePadding: false,
+    name: 'client',
     label: 'Клиент',
+    options: {
+      filter: true,
+      sort: true,
+    },
   },
   {
-    id: 'contract',
-    numeric: true,
-    disablePadding: false,
+    name: 'contract',
     label: 'Контракт',
+    options: {
+      filter: true,
+      sort: true,
+    },
   },
   {
-    id: 'object',
-    numeric: true,
-    disablePadding: false,
+    name: 'object',
     label: 'Объект',
+    options: {
+      filter: true,
+      sort: true,
+    },
   },
   {
-    id: 'address',
-    numeric: true,
-    disablePadding: false,
+    name: 'address',
     label: 'Адрес',
+    options: {
+      filter: true,
+      sort: true,
+    },
   },
   {
-    id: 'region',
-    numeric: true,
-    disablePadding: false,
+    name: 'region',
     label: 'Регион',
+    options: {
+      filter: true,
+      sort: true,
+    },
   },
   {
-    id: 'userAccepted',
-    numeric: true,
-    disablePadding: false,
+    name: 'userAccepted',
     label: 'Кто принял',
+    options: {
+      filter: true,
+      sort: true,
+    },
   },
   {
-    id: 'equipment',
-    numeric: true,
-    disablePadding: false,
+    name: 'equipment',
     label: 'Оборудование',
+    options: {
+      filter: true,
+      sort: true,
+    },
   },
   {
-    id: 'model',
-    numeric: true,
-    disablePadding: false,
+    name: 'model',
     label: 'Модель',
+    options: {
+      filter: true,
+      sort: true,
+    },
   },
   {
-    id: 'typicalMalfunction',
-    numeric: true,
-    disablePadding: false,
+    name: 'typicalMalfunction',
     label: 'Неисправность',
+    options: {
+      filter: true,
+      sort: true,
+    },
   },
 ]

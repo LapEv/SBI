@@ -15,9 +15,11 @@ export interface EnhancedTableToolbarProps {
   numSelected: number
 }
 
-export interface INCCell {
-  disablePadding: boolean
-  id: keyof INC
+export interface INC_Column {
+  name: string
   label: string
-  numeric: boolean
+  options: {
+    filter: boolean
+    sort: boolean
+  }
 }

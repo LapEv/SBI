@@ -11,7 +11,7 @@ import {
 
 export interface INC {
   id: string
-  numberINC: string
+  numberINC: number
   incident: string
   clientINC: string
   status: string
@@ -51,50 +51,6 @@ export interface INC {
   ClassifierModel?: ClassifierModelForINC
   TypicalMalfunction?: TypicalMalfunctionForINC
 }
-
-// export interface INCList {
-//   id: string
-//   numberINC: string
-//   incident: string
-//   clientINC: string
-//   status: string
-//   client: string
-//   contract: string
-//   sla: string
-//   typeOfWork: string
-//   object: string
-//   address: string
-//   coordinates: string
-//   region: string
-//   userAccepted: string
-//   equipment: string
-//   model: string
-//   typicalMalfunction: string
-//   timeRegistration: string
-//   timeInWork: string
-//   timeSLA: string
-//   timeCloseCheck: string
-//   timeClose: string
-//   executor: string
-//   responsible: string
-//   description: string
-//   comment: string
-//   report: string
-//   spaceParts: string
-//   act: string
-//   active: boolean
-//   INCStatuses?: INCStatuses
-//   TypesOfWork?: TypesOfWork
-//   SLA?: SLAforINC
-//   Client?: Clients
-//   Contract?: ContractsForINC
-//   Object?: ObjectsForINC
-//   User?: UserForINC
-//   ClassifierEquipment?: ClassifierEquipmentForINC
-//   ClassifierModel?: ClassifierModelForINC
-//   TypicalMalfunction?: TypicalMalfunctionForINC
-
-// }
 
 export interface AddINC {
   id_incStatus: string
@@ -162,7 +118,7 @@ export type INCState = {
 
 export interface ChangeINC {
   id?: string
-  numberINC: string
+  numberINC: number
   incident: string
   clientINC: string
   timeRegistration: string

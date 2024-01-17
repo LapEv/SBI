@@ -98,7 +98,6 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
         applicantContacts: list[11].value,
         methodsReuqest: 'manually',
       }
-      console.log('newINCobject = ', newINCobject)
       newINC(newINCobject)
       handleModal(false)
     }

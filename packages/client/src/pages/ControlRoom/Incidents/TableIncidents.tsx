@@ -134,7 +134,11 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
   )
 }
 
-export const TableIncidents = memo(({ incidents }: any) => {
+interface INCTable {
+  incidents: INC[]
+}
+
+export const TableIncidents = memo(({ incidents }: INCTable) => {
   const [order, setOrder] = React.useState<Order>('asc')
   const [orderBy, setOrderBy] = React.useState<keyof INC>('incident')
   const [selected, setSelected] = React.useState<readonly number[]>([])
@@ -153,7 +157,7 @@ export const TableIncidents = memo(({ incidents }: any) => {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = incidents.map((n: any) => n.id)
+      const newSelected = incidents.map((n: INC) => n.numberINC)
       setSelected(newSelected)
       return
     }
@@ -200,14 +204,12 @@ export const TableIncidents = memo(({ incidents }: any) => {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - incidents.length) : 0
 
-  const visibleRows = React.useMemo(
-    () =>
-      stableSort(incidents, getComparator(order, orderBy)).slice(
-        page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage
-      ),
-    [order, orderBy, page, rowsPerPage]
-  )
+  const visibleRows = React.useMemo(() => {
+    stableSort(incidents, getComparator(order, orderBy)).slice(
+      page * rowsPerPage,
+      page * rowsPerPage + rowsPerPage
+    )
+  }, [order, orderBy, page, rowsPerPage])
 
   return (
     <Box sx={{ width: '100%' }}>

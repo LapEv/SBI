@@ -12,6 +12,8 @@ import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate
 import { IconPopoverButton } from 'components/Buttons'
 import { useIncidents } from 'hooks/incidents/useINC'
 
+import ExampleCardjs from './Example'
+
 export function IncidentsPage() {
   const modalClientRef = React.createRef()
   const [{ admin }] = useAuth()
@@ -81,7 +83,8 @@ export function IncidentsPage() {
           />
         </Box>
       </Box>
-      <TableIncidents incidents={incidents} />
+      {/* <TableIncidents incidents={incidents} /> */}
+      <ExampleCardjs />
     </Container>
   )
 }

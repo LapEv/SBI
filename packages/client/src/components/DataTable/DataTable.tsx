@@ -2,8 +2,9 @@ import { styled } from '@mui/material'
 import MUIDataTable, { MUIDataTableOptions } from 'mui-datatables'
 
 import { ThemeMode } from '../../themes/themeConfig'
+import { IDataTable } from './interface'
 
-export const DataTable = styled(MUIDataTable)(({ theme }) => ({
+const StyledDataTable = styled(MUIDataTable)(({ theme }) => ({
   '&.MuiPaper-root': {
     width: '98%',
     marginTop: 10,
@@ -23,11 +24,6 @@ export const DataTable = styled(MUIDataTable)(({ theme }) => ({
     backgroundColor:
       theme.palette.mode === ThemeMode.dark ? '#1E515D' : '#C1EEE1',
     color: theme.palette.mode === ThemeMode.light ? '#000000' : '#FFFFFF',
-    height: 20,
-
-    // borderColor: theme.palette.mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
-    // borderWidth: 1,
-    // borderStyle: 'solid',
   },
   '.MuiTable-root': {
     borderRadius: 8,
@@ -45,19 +41,15 @@ export const DataTable = styled(MUIDataTable)(({ theme }) => ({
     minHeight: 20,
     maxHeight: 20,
   },
-  // '.MUIDataTable-root': {
-  //   backgroundColor:
-  //     theme.palette.mode === ThemeMode.dark ? '#1E515D' : '#C1EEE1',
-  //   color: theme.palette.mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
-  // },
-  // '.MUIDataTableHeadCell-sortActive': {
-  //   fontSize: 'bold',
-  //   backgroundColor:
-  //     theme.palette.mode === ThemeMode.light ? '#000000' : '#FFFFFF',
-  // },
-  // '.tss-14rrrq1-MUIDataTableResize-resizer': {
-  //   // borderColor: theme.palette.mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
-  //   // borderWidth: 1,
-  //   // borderStyle: 'solid',
-  // },
 }))
+
+export const DataTable = ({ title, data, options, columns }: IDataTable) => {
+  return (
+    <StyledDataTable
+      title={title}
+      data={data}
+      columns={columns}
+      options={options}
+    />
+  )
+}

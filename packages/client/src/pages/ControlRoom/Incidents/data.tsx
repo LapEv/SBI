@@ -241,52 +241,52 @@ export const INCColumn: INC_Column[] = [
       sort: true,
     },
   },
-  // {
-  //   name: 'address',
-  //   label: 'Адрес',
-  //   options: {
-  //     filter: true,
-  //     sort: true,
-  //   },
-  // },
-  // {
-  //   name: 'region',
-  //   label: 'Регион',
-  //   options: {
-  //     filter: true,
-  //     sort: true,
-  //   },
-  // },
-  // {
-  //   name: 'userAccepted',
-  //   label: 'Кто принял',
-  //   options: {
-  //     filter: true,
-  //     sort: true,
-  //   },
-  // },
-  // {
-  //   name: 'equipment',
-  //   label: 'Оборудование',
-  //   options: {
-  //     filter: true,
-  //     sort: true,
-  //   },
-  // },
-  // {
-  //   name: 'model',
-  //   label: 'Модель',
-  //   options: {
-  //     filter: true,
-  //     sort: true,
-  //   },
-  // },
-  // {
-  //   name: 'typicalMalfunction',
-  //   label: 'Неисправность',
-  //   options: {
-  //     filter: true,
-  //     sort: true,
-  //   },
-  // },
+  {
+    name: 'address',
+    label: 'Адрес',
+    options: {
+      filter: true,
+      sort: true,
+    },
+  },
+  {
+    name: 'region',
+    label: 'Регион',
+    options: {
+      filter: true,
+      sort: true,
+    },
+  },
+  {
+    name: 'userAccepted',
+    label: 'Кто принял',
+    options: {
+      filter: true,
+      sort: true,
+    },
+  },
+  {
+    name: 'equipment',
+    label: 'Оборудование',
+    options: {
+      filter: true,
+      sort: true,
+    },
+  },
+  {
+    name: 'model',
+    label: 'Модель',
+    options: {
+      filter: true,
+      sort: true,
+    },
+  },
+  {
+    name: 'typicalMalfunction',
+    label: 'Неисправность',
+    options: {
+      filter: true,
+      sort: true,
+    },
+  },
 ]

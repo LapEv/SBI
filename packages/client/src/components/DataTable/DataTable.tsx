@@ -1,45 +1,45 @@
 import { styled } from '@mui/material'
-import MUIDataTable, { MUIDataTableOptions } from 'mui-datatables'
+import MUIDataTable from 'mui-datatables'
 
 import { ThemeMode } from '../../themes/themeConfig'
 import { IDataTable } from './interface'
 
 const StyledDataTable = styled(MUIDataTable)(({ theme }) => ({
   '&.MuiPaper-root': {
-    width: '98%',
+    width: '100%',
     marginTop: 10,
     borderColor: theme.palette.mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
     borderWidth: 2,
     borderStyle: 'solid',
     borderRadius: 8,
-  },
-  '.MuiToolbar-root': {
     backgroundColor:
       theme.palette.mode === ThemeMode.dark ? '#1E515D' : '#C1EEE1',
-    color: theme.palette.mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
-    borderTopRightRadius: 8,
-    borderTopLeftRadius: 8,
   },
+  '.MuiTableHead-root': {
+    width: '100%',
+    backgroundColor:
+      theme.palette.mode === ThemeMode.dark ? '#1E515D' : '#C1EEE1',
+    '.MuiTableCell-root': {
+      '.MuiButtonBase-root': {
+        fontSize: 16,
+        fontWeight: 'bold',
+        '.MUIDataTableHeadCell-sortAction': {
+          '.MUIDataTableHeadCell-sortActive': {
+            color:
+              theme.palette.mode === ThemeMode.light ? '#011000' : '#FF00FF',
+          },
+        },
+      },
+    },
+  },
+
   '.MuiTableCell-root': {
     backgroundColor:
       theme.palette.mode === ThemeMode.dark ? '#1E515D' : '#C1EEE1',
     color: theme.palette.mode === ThemeMode.light ? '#000000' : '#FFFFFF',
   },
-  '.MuiTable-root': {
-    borderRadius: 8,
-  },
-  '.MuiTableFooter-root': {
-    borderRadius: 8,
-  },
-  '.MuiTableCell-footer': {
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8,
-  },
-  '.MuiTableHead-root': {
-    fontWeight: 'bold',
-    height: 20,
-    minHeight: 20,
-    maxHeight: 20,
+  '.MUIDataTableResize-root': {
+    fontSize: 16,
   },
 }))
 

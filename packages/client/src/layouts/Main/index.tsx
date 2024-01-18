@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { styled, Theme, CSSObject } from '@mui/material/styles'
-import { Box, Divider, Drawer as MuiDrawer } from '@mui/material'
+import { Box, Divider, Drawer as MuiDrawer, useTheme } from '@mui/material'
 import { NavBar } from './navBar'
 import { SideBar } from './sideBar'
 import { drawerWidth } from './drawerBarData'
@@ -48,13 +48,14 @@ const Drawer = styled(MuiDrawer, {
 }))
 
 export const MainLayout = () => {
+  const theme = useTheme()
   const [open, setOpen] = useState<boolean>(true)
   const toggleDrawer = () => {
     setOpen(prev => !prev)
   }
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', width: '100%' }}>
       <NavBar />
       <Drawer
         sx={{ display: { xs: 'flex', md: 'flex' } }}
@@ -66,7 +67,9 @@ export const MainLayout = () => {
       </Drawer>
       <Box
         sx={{
-          width: '100%',
+          width: open
+            ? `calc(100% - ${drawerWidth}px)`
+            : `calc(100% - ${theme.spacing(8)} - 1px)`,
           minHeight: '100vh',
           display: 'flex',
           justifyContent: 'center',

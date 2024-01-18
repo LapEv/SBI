@@ -1,35 +1,15 @@
-import React, { memo, useEffect, useState } from 'react'
-import { alpha } from '@mui/material/styles'
-import {
-  useTheme,
-  Box,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TablePagination,
-  TableRow,
-  TableSortLabel,
-  Toolbar,
-  Typography,
-  Paper,
-  Checkbox,
-  IconButton,
-  Tooltip,
-  FormControlLabel,
-  Switch,
-} from '@mui/material'
+import { memo, useState } from 'react'
 import { INC } from 'store/slices/incidents/interfaces'
-import MUIDataTable, { MUIDataTableOptions } from 'mui-datatables'
+import { MUIDataTableOptions } from 'mui-datatables'
 import { INCColumn } from './data'
 import { DataTable } from 'components/DataTable'
+import { DenseTable } from './CustomToolbar'
 interface INCTable {
   incidents: INC[]
 }
 
 export const TableIncidents = memo(({ incidents }: INCTable) => {
-  const theme = useTheme()
+  const [denseTable, setDenseTable] = useState(false)
   const options: MUIDataTableOptions = {
     filter: true,
     // onFilterChange: (changedColumn, filterList) => {
@@ -39,12 +19,27 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
     // filterType: 'dropdown',
     rowsPerPage: 10,
     // expandableRows: true,
-    filterType: 'checkbox',
+    filterType: 'textField',
     resizableColumns: true,
+    // setTableProps: () => {
+    //   return {
+    //     padding: 'none', // 'default
+    //     size: 'small', // medium
+    //   }
+    // },
+    customToolbar: () => {
+      return (
+        <DenseTable denseTable={denseTable} setDenseTable={setDenseTable} />
+      )
+    },
+    // setRowProps: (row, dataIndex, rowIndex) => {
+    //   return {
+    //     style: { border: '3px solid blue' },
+    //   }
+    // },
     setTableProps: () => {
       return {
-        padding: 'none', // 'default
-        size: 'small', // medium
+        padding: denseTable ? 'none' : 'normal',
       }
     },
   }

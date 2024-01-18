@@ -92,7 +92,12 @@ const NanListItem = ({ icon, text, to, isExpanded }: NanListItemProps) => {
             />
           </ListItemButton>
           <Collapse
-            sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}
+            sx={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              ml: -1,
+            }}
             in={openControl}
             timeout="auto"
             unmountOnExit>

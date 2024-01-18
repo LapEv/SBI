@@ -54,13 +54,15 @@ class Example extends React.Component {
           styleOverrides: {
             head: {
               backgroundColor: 'purple',
+              fontSize: 16,
+              fontWeight: 'bold',
             },
           },
         },
         MUIDataTableSelectCell: {
           styleOverrides: {
             headerCell: {
-              backgroundColor: 'blue',
+              backgroundColor: 'green',
             },
           },
         },

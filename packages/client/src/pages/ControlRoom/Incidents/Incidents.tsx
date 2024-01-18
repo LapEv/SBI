@@ -83,8 +83,10 @@ export function IncidentsPage() {
           />
         </Box>
       </Box>
-      {/* <TableIncidents incidents={incidents} /> */}
-      <ExampleCardjs />
+      <Box sx={{ width: '100%', padding: 2 }}>
+        <TableIncidents incidents={incidents} />
+        {/* <ExampleCardjs /> */}
+      </Box>
     </Container>
   )
 }

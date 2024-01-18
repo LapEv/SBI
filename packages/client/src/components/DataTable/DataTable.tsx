@@ -23,6 +23,7 @@ const StyledDataTable = styled(MUIDataTable)(({ theme }) => ({
       '.MuiButtonBase-root': {
         fontSize: 16,
         fontWeight: 'bold',
+        color: theme.palette.mode === ThemeMode.light ? '#011000' : '#FF00FF',
         '.MUIDataTableHeadCell-sortAction': {
           '.MUIDataTableHeadCell-sortActive': {
             color:

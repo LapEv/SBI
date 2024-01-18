@@ -12,21 +12,12 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
   const [denseTable, setDenseTable] = useState(false)
   const options: MUIDataTableOptions = {
     filter: true,
-    // onFilterChange: (changedColumn, filterList) => {
-    //   console.log(changedColumn, filterList)
-    // },
-    // selectableRows: 'single',
-    // filterType: 'dropdown',
     rowsPerPage: 10,
-    // expandableRows: true,
     filterType: 'textField',
     resizableColumns: true,
-    // setTableProps: () => {
-    //   return {
-    //     padding: 'none', // 'default
-    //     size: 'small', // medium
-    //   }
-    // },
+    draggableColumns: {
+      enabled: true,
+    },
     customToolbar: () => {
       return (
         <DenseTable denseTable={denseTable} setDenseTable={setDenseTable} />
@@ -40,6 +31,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
     setTableProps: () => {
       return {
         padding: denseTable ? 'none' : 'normal',
+        style: { border: '3px solid blue' },
       }
     },
   }

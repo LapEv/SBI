@@ -122,7 +122,7 @@ export const firstStart = async () => {
 
     const deleteINC = false
     if (deleteINC) {
-      console.log('Delete INC')
+      console.log('Delete INC!')
       await IncidentRepos.drop({ cascade: true })
       await IncidentStatusesRepos.drop({ cascade: true })
     } else {

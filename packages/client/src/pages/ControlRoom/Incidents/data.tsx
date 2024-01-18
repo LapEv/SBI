@@ -191,6 +191,8 @@ export const INCColumn: INC_Column[] = [
     options: {
       filter: true,
       sort: true,
+      // hint: '?',
+      // setCellProps: () => ({ style: { whiteSpace: 'nowrap' } }),
     },
   },
   {
@@ -199,6 +201,32 @@ export const INCColumn: INC_Column[] = [
     options: {
       filter: true,
       sort: true,
+      // hint: '?',
+      //   customBodyRender: val => {
+      //     let parentStyle = {
+      //       position: 'absolute',
+      //       top: 0,
+      //       right: 0,
+      //       bottom: 0,
+      //       left: 0,
+      //       boxSizing: 'border-box',
+      //       display: 'block',
+      //       width: '100%',
+      //     }
+      //     let cellStyle = {
+      //       boxSizing: 'border-box',
+      //       overflow: 'hidden',
+      //       textOverflow: 'ellipsis',
+      //       whiteSpace: 'nowrap',
+      //     }
+      //     return (
+      //       <div style={{ position: 'relative', height: '20px' }}>
+      //         <div style={parentStyle}>
+      //           <div style={cellStyle}>{val}</div>
+      //         </div>
+      //       </div>
+      //     )
+      //   },
     },
   },
   {

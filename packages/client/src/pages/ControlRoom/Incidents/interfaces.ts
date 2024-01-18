@@ -21,5 +21,8 @@ export interface INC_Column {
   options: {
     filter: boolean
     sort: boolean
+    hint?: any
+    setCellProps?: any
+    customBodyRender?: any
   }
 }

@@ -22,6 +22,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
     draggableColumns: {
       enabled: true,
     },
+    tableBodyHeight: '100%',
     customToolbar: () => {
       return (
         <DenseTable denseTable={denseTable} setDenseTable={setDenseTable} />
@@ -33,13 +34,12 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
     //   }
     // },
     setRowProps: (row, dataIndex, rowIndex) => {
-      console.log('row = ', row)
-      console.log('dataIndex = ', dataIndex)
-      console.log('rowIndex = ', rowIndex)
       return {
         style: {
+          height: 40,
+          maxHeight: 40,
           backgroundColor:
-            rowIndex % 2 === 0
+            rowIndex % 2 !== 0
               ? theme.palette.mode === 'dark'
                 ? '#1E515D'
                 : '#C1EEE1'

@@ -92,6 +92,18 @@ export const ThemeConfig = (mode: PaletteMode) =>
           }),
     },
     components: {
+      MuiTableHead: {
+        styleOverrides: {
+          root: {
+            color: mode === ThemeMode.dark ? '#000000' : '#FFFFFF',
+            backgroundColor:
+              mode === ThemeMode.dark
+                ? '#1E515D!important'
+                : '#C1EEE1!important',
+          },
+        },
+      },
+
       MuiTypography: {
         defaultProps: {
           fontWeight: 'bold',

@@ -2,142 +2,97 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import MUIDataTable, { MUIDataTableOptions } from 'mui-datatables'
 
-import FormControl from '@mui/material/FormControl'
-import TextField from '@mui/material/TextField'
-import Switch from '@mui/material/Switch'
-import FormGroup from '@mui/material/FormGroup'
-import FormControlLabel from '@mui/material/FormControlLabel'
+// import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core'
+import { Switch, FormControlLabel, Typography, Card } from '@mui/material'
 
-function Example(props) {
-  const [marginLeft, setMarginLeft] = useState(10)
-  const [selectableRows, setSelectableRows] = useState('multiple')
-
-  const [counter, setCounter] = useState(1)
-  const incrCount = () => {
-    // We update an arbitrary value here to test table resizing on state updates
-    setCounter(counter + 1)
-  }
-
-  const columns = [
-    {
-      name: 'Counter',
-      options: {
-        sort: false,
-        empty: true,
-        customBodyRender: value => <button onClick={incrCount}>+</button>,
-      },
-    },
-    {
-      name: 'Name',
-      options: {
-        hint: '?',
-        setCellProps: () => ({ style: { whiteSpace: 'nowrap' } }),
-      },
-    },
-    {
-      name: 'Business Title',
-      options: {
-        hint: '?',
-        // customBodyRender: val => {
-        //   let parentStyle = {
-        //     position: 'absolute',
-        //     top: 0,
-        //     right: 0,
-        //     bottom: 0,
-        //     left: 0,
-        //     boxSizing: 'border-box',
-        //     display: 'block',
-        //     width: '100%',
-        //   }
-        //   let cellStyle = {
-        //     boxSizing: 'border-box',
-        //     overflow: 'hidden',
-        //     textOverflow: 'ellipsis',
-        //     whiteSpace: 'nowrap',
-        //   }
-        //   return (
-        //     <div style={{ position: 'relative', height: '20px' }}>
-        //       <div style={parentStyle}>
-        //         <div style={cellStyle}>{val}</div>
-        //       </div>
-        //     </div>
-        //   )
-        // },
-      },
-    },
-    'Location',
-  ]
-
-  const data = [
-    ['Gabby George ', 'Business Analyst', 'Minneapolis'],
-    [
-      'Aiden Lloyd',
-      "Business Consultant at Tony's Burger Palace and CEO of Johnny's Blueberry Sundaes",
-      'Dallas',
-    ],
-    ['Jaden Collins', 'Attorney', 'Santa Ana'],
-    ['Franky Rees', 'Business Analyst', 'St. Petersburg'],
-    ['Aaren Rose', null, 'Toledo'],
-  ]
-
-  const options = {
-    filter: true,
-    filterType: 'dropdown',
-    resizableColumns: true,
-    selectableRows: selectableRows,
-    draggableColumns: {
-      enabled: true,
-    },
-  }
+function UserCard(props) {
+  const { name, cardNumber, cvc, expiry } = props
 
   return (
-    <>
-      <FormGroup row>
-        <FormControl>
-          <TextField
-            label="Left Margin"
-            type="number"
-            value={marginLeft}
-            onChange={e => setMarginLeft(e.target.value)}
-          />
-        </FormControl>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={selectableRows === 'multiple'}
-              onChange={e =>
-                setSelectableRows(event.target.checked ? 'multiple' : 'none')
+    <Card number={cardNumber} name={name} expiry={expiry} cvc={cvc} preview />
+  )
+}
+
+const cards = [
+  {
+    name: 'Tom Tallis',
+    cardNumber: '5500005555555559',
+    cvc: '582',
+    expiry: '02/24',
+  },
+  {
+    name: 'Rich Harris',
+    cardNumber: '4444444444444448',
+    cvc: '172',
+    expiry: '03/22',
+  },
+  {
+    name: 'Moby Dixon',
+    cardNumber: '3566003566003566',
+    cvc: '230',
+    expiry: '12/25',
+  },
+]
+
+function customRowRender({ data }) {
+  const [name, cardNumber, cvc, expiry] = data
+  return (
+    <tr key={cardNumber}>
+      <td colSpan={4} style={{ paddingTop: '10px' }}>
+        <UserCard {...{ name, cardNumber, cvc, expiry }} />
+      </td>
+    </tr>
+  )
+}
+
+function Example() {
+  // const isNarrow = useMediaQuery('(max-width:600px)')
+  const [enableStacked, setEnableStacked] = React.useState(false)
+
+  return (
+    <div className="App">
+      <MUIDataTable
+        key={'' + '' + enableStacked}
+        title={
+          <>
+            <Typography>Cards</Typography>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={enableStacked}
+                  onChange={v => setEnableStacked(v.target.checked)}
+                />
               }
-              value="true"
-              color="primary"
+              label="use 'stacked' mode"
             />
-          }
-          label="Selectable Rows"
-        />
-      </FormGroup>
-      <div style={{ marginLeft: marginLeft + 'px' }}>
-        <MUIDataTable
-          title={'ACME Employee list' + ' [' + counter + ']'}
-          data={data}
-          columns={columns}
-          options={options}
-        />
-        <div>
-          <MUIDataTable
-            title={'ACME Employee list'}
-            data={data}
-            columns={columns}
-            options={options}
-          />
-        </div>
-        <MUIDataTable
-          title={'ACME Employee list'}
-          data={data}
-          columns={columns}
-          options={options}
-        />
-      </div>
-    </>
+          </>
+        }
+        data={cards}
+        columns={[
+          {
+            name: 'name',
+            label: 'Name',
+          },
+          {
+            name: 'cardNumber',
+            label: 'Card Number',
+          },
+          {
+            name: 'cvc',
+            label: 'CVC',
+          },
+          {
+            name: 'expiry',
+            label: 'Expiry',
+          },
+        ]}
+        options={{
+          selectableRows: 'none',
+          responsive: enableStacked ? 'stacked' : 'scroll',
+          customRowRender: enableStacked ? undefined : customRowRender,
+        }}
+      />
+    </div>
   )
 }
 

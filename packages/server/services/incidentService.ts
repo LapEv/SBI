@@ -125,7 +125,7 @@ export class incidentService {
       .then(incStatuses => {
         res.status(200).json(incStatuses)
       })
-      .catch(err => res.status(500).json({ error: ['db error', err] }))
+      .catch(err => res.status(500).json({ error: ['db error:', err] }))
   }
   deleteIncidentStatuses = async (_req: Request, res: Response) => {
     const { selectedINCStatuses } = _req.body

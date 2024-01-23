@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import MUIDataTable, { MUIDataTableOptions } from 'mui-datatables'
+import Cards from 'react-credit-cards'
 
 // import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core'
 import { Switch, FormControlLabel, Typography, Card } from '@mui/material'
@@ -9,7 +10,7 @@ function UserCard(props) {
   const { name, cardNumber, cvc, expiry } = props
 
   return (
-    <Card number={cardNumber} name={name} expiry={expiry} cvc={cvc} preview />
+    <Cards number={cardNumber} name={name} expiry={expiry} cvc={cvc} preview />
   )
 }
 
@@ -35,6 +36,7 @@ const cards = [
 ]
 
 function customRowRender({ data }) {
+  console.log('data = ', data)
   const [name, cardNumber, cvc, expiry] = data
   return (
     <tr key={cardNumber}>
@@ -88,8 +90,8 @@ function Example() {
         ]}
         options={{
           selectableRows: 'none',
-          responsive: enableStacked ? 'stacked' : 'scroll',
-          customRowRender: enableStacked ? undefined : customRowRender,
+          responsive: enableStacked ? 'stacked' : 'standard',
+          customRowRender: data => customRowRender(data),
         }}
       />
     </div>

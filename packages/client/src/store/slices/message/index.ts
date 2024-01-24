@@ -70,6 +70,10 @@ import {
   newTypeOfWork,
   deleteTypesOfWork,
   changeTypesOfWork,
+  changeExecutor,
+  changeResponsible,
+  changeUserClosingCheck,
+  changeUserClosing,
 } from 'api/incidents'
 
 const initialState: MessageState = {
@@ -1044,6 +1048,84 @@ export const messageSlise = createSlice({
       state.type = 'error'
       state.text = action.payload
     },
+    [changeExecutor.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [changeExecutor.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [changeExecutor.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [changeResponsible.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [changeResponsible.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [changeResponsible.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [changeUserClosingCheck.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [changeUserClosingCheck.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [changeUserClosingCheck.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [changeUserClosing.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [changeUserClosing.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [changeUserClosing.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+
     [newIncidentStatuses.fulfilled.type]: (
       state,
       action: PayloadAction<AnswerMessage>

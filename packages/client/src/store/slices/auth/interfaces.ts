@@ -1,5 +1,5 @@
 export interface User {
-  id?: string
+  id: string
   username?: string
   firstName?: string
   lastName?: string
@@ -82,6 +82,9 @@ export type AuthState = {
   userData: User
   users: User[]
   userStatus: UserStatus[]
+  fieldEngineers: User[]
+  dispatchers: User[]
+  userByDepartment: User[]
   admin: boolean
   superAdmin: boolean
   isLoadingAuth: boolean

@@ -12,6 +12,14 @@ export const rolesStartData = [
     nameRole: 'Получение списка пользователей',
   },
   {
+    role: 'getFieldEngineers',
+    nameRole: 'Получение списка выездных инженеров',
+  },
+  {
+    role: 'getDispatchers',
+    nameRole: 'Получение списка диспетчеров',
+  },
+  {
     role: 'getRoles',
     nameRole: 'Получение списка ролей',
   },
@@ -349,6 +357,22 @@ export const rolesStartData = [
   {
     role: 'changeINC',
     nameRole: 'Изменение данных инцидента',
+  },
+  {
+    role: 'changeExecutor',
+    nameRole: 'Изменение исполнителя инцидента',
+  },
+  {
+    role: 'changeUserClosingCheck',
+    nameRole: 'Изменение ответсвенного за инцидент',
+  },
+  {
+    role: 'changeUserClosing',
+    nameRole: 'Изменение ответсвенного за перевод в статус проверки инцидента',
+  },
+  {
+    role: 'changeUserClosing',
+    nameRole: 'Изменение ответсвенного за закрытие инцидента',
   },
   {
     role: 'newTypeOfWork',

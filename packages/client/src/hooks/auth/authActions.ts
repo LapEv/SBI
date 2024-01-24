@@ -15,6 +15,8 @@ export interface AuthActions {
   changePassword: (data: ChangePasswordProps) => void
   changeThemeOnServer: (data: ChangeThemeProps) => void
   getUser: (id: string) => void
+  getFieldEngineers: () => void
+  getDispatchers: () => void
   getActiveUsers: (data: User) => void
   checkUser: () => void
   updateUserData: (data: User) => void

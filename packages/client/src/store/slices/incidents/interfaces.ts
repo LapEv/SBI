@@ -34,6 +34,8 @@ export interface INC {
   timeClose: string
   executor: string
   responsible: string
+  userClosingCheck: string
+  userClosing: string
   description: string
   comment: string
   report: string
@@ -47,6 +49,10 @@ export interface INC {
   Contract?: ContractsForINC
   Object?: ObjectsForINC
   User?: UserForINC
+  UserExecutor?: UserForINC
+  UserResponsible?: UserForINC
+  UserClosing?: UserForINC
+  UserClosingCheck?: UserForINC
   ClassifierEquipment?: ClassifierEquipmentForINC
   ClassifierModel?: ClassifierModelForINC
   TypicalMalfunction?: TypicalMalfunctionForINC
@@ -133,6 +139,26 @@ export interface ChangeINC {
   report: string
   spaceParts: string
   act: string
+}
+
+export interface ChangeExecutor {
+  id: string
+  id_incExecutor: string
+}
+
+export interface ChangeResponsible {
+  id: string
+  id_incResponsible: string
+}
+
+export interface ChangeClosingCheck {
+  id: string
+  id_incClosingCheck: string
+}
+
+export interface ChangeClosing {
+  id: string
+  id_incClosing: string
 }
 
 export interface ChangeINCStatuses {

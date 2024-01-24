@@ -1,3 +1,6 @@
 export { menuData } from './data'
 export { TableIncidents } from './TableIncidents'
 export { IncidentsPage } from './Incidents'
+export { Executor } from './UserActions/Executor'
+export { UserResponsible } from './UserActions/UserResponsible'
+export { CustomCell } from './CustomCell'

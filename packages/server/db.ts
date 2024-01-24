@@ -252,6 +252,50 @@ Incidents.belongsTo(Contracts, {
 Objects.hasOne(Incidents, { foreignKey: 'id_incObject', sourceKey: 'id' })
 Incidents.belongsTo(Objects, { foreignKey: 'id_incObject', targetKey: 'id' })
 
+Users.hasOne(Incidents, {
+  foreignKey: 'id_incExecutor',
+  sourceKey: 'id',
+  as: 'UserExecutor',
+})
+Incidents.belongsTo(Users, {
+  foreignKey: 'id_incExecutor',
+  targetKey: 'id',
+  as: 'UserExecutor',
+})
+
+Users.hasOne(Incidents, {
+  foreignKey: 'id_incResponsible',
+  sourceKey: 'id',
+  as: 'UserResponsible',
+})
+Incidents.belongsTo(Users, {
+  foreignKey: 'id_incResponsible',
+  targetKey: 'id',
+  as: 'UserResponsible',
+})
+
+Users.hasOne(Incidents, {
+  foreignKey: 'id_incClosingCheck',
+  sourceKey: 'id',
+  as: 'UserClosingCheck',
+})
+Incidents.belongsTo(Users, {
+  foreignKey: 'id_incClosingCheck',
+  targetKey: 'id',
+  as: 'UserClosingCheck',
+})
+
+Users.hasOne(Incidents, {
+  foreignKey: 'id_incClosing',
+  sourceKey: 'id',
+  as: 'UserClosing',
+})
+Incidents.belongsTo(Users, {
+  foreignKey: 'id_incClosing',
+  targetKey: 'id',
+  as: 'UserClosing',
+})
+
 Users.hasOne(Incidents, { foreignKey: 'id_incUser', sourceKey: 'id' })
 Incidents.belongsTo(Users, { foreignKey: 'id_incUser', targetKey: 'id' })
 

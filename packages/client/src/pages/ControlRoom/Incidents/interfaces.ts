@@ -24,5 +24,16 @@ export interface INC_Column {
     hint?: any
     setCellProps?: any
     customBodyRender?: any
+    display?: boolean
+    viewColumns?: boolean
   }
+}
+
+export interface IExecutor {
+  value: string
+  id: string
+}
+
+export interface ITableMeta {
+  rowData: string[]
 }

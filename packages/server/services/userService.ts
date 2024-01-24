@@ -1,9 +1,10 @@
 import type { Request, Response } from 'express'
-import { userRepos } from '../db'
+import { DepartmentRepos, userRepos } from '../db'
 import { Result, validationResult } from 'express-validator'
 import bcrypt from 'bcryptjs'
 import { auth } from '../data/auth'
 import { generateAccessToken } from '../utils/generateAccessToken'
+import { Op } from 'sequelize'
 
 export class userService {
   setUser = async (_req: Request, res: Response) => {
@@ -184,6 +185,44 @@ export class userService {
       })
       .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
+  getFieldEngineers = async (_req: Request, res: Response) => {
+    const departments = await DepartmentRepos.findAll({
+      where: { active: true },
+    })
+    const id_department = departments.find(
+      item => item.department === 'FieldEngineers'
+    )?.id
+    userRepos
+      .findAll({
+        where: { id_department, active: true },
+      })
+      .then(user => {
+        res.status(200).json(user)
+      })
+      .catch(err => res.status(500).json({ error: ['db error', err] }))
+  }
+  getDispatchers = async (_req: Request, res: Response) => {
+    const departments = await DepartmentRepos.findAll({
+      where: { active: true },
+    })
+    const id_department = departments.find(
+      item => item.department === 'Dispatcher'
+    )?.id
+    userRepos
+      .findAll({
+        where: {
+          [Op.or]: [
+            { id_department, active: true },
+            { rolesGroup: 'SUPERADMIN' },
+          ],
+        },
+      })
+      .then(user => {
+        res.status(200).json(user)
+      })
+      .catch(err => res.status(500).json({ error: ['db error', err] }))
+  }
+
   getUserInfo = (_req: Request, res: Response) => {
     const { id } = _req.body
     userRepos

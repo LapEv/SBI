@@ -2,7 +2,10 @@ import { NoRequiredValidation, lightTextValidation } from 'utils/validatorRules'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
 import EditIcon from '@mui/icons-material/Edit'
-import { INC_Column } from './interfaces'
+import { INC_Column, ITableMeta } from './interfaces'
+import { Executor } from './UserActions/Executor'
+import { UserResponsible } from './UserActions/UserResponsible'
+import { CustomCell } from './CustomCell'
 
 export const menuData = [
   {
@@ -186,13 +189,24 @@ export const MapINCInputFields = [
 
 export const INCColumn: INC_Column[] = [
   {
+    name: 'id',
+    label: 'ID',
+    options: {
+      filter: false,
+      sort: false,
+      display: false,
+      viewColumns: false,
+    },
+  },
+  {
     name: 'incident',
     label: 'Инцидент',
     options: {
       filter: true,
       sort: true,
-      // hint: '?',
-      // setCellProps: () => ({ style: { whiteSpace: 'nowrap' } }),
+      customBodyRender: (value: string, { rowData }: ITableMeta) => {
+        return <CustomCell value={value ?? ''} id={rowData[0]} />
+      },
     },
   },
   {
@@ -201,32 +215,9 @@ export const INCColumn: INC_Column[] = [
     options: {
       filter: true,
       sort: true,
-      // hint: '?',
-      //   customBodyRender: val => {
-      //     let parentStyle = {
-      //       position: 'absolute',
-      //       top: 0,
-      //       right: 0,
-      //       bottom: 0,
-      //       left: 0,
-      //       boxSizing: 'border-box',
-      //       display: 'block',
-      //       width: '100%',
-      //     }
-      //     let cellStyle = {
-      //       boxSizing: 'border-box',
-      //       overflow: 'hidden',
-      //       textOverflow: 'ellipsis',
-      //       whiteSpace: 'nowrap',
-      //     }
-      //     return (
-      //       <div style={{ position: 'relative', height: '20px' }}>
-      //         <div style={parentStyle}>
-      //           <div style={cellStyle}>{val}</div>
-      //         </div>
-      //       </div>
-      //     )
-      //   },
+      customBodyRender: (value: string, { rowData }: ITableMeta) => {
+        return <CustomCell value={value ?? ''} id={rowData[0]} />
+      },
     },
   },
   {
@@ -235,6 +226,9 @@ export const INCColumn: INC_Column[] = [
     options: {
       filter: true,
       sort: true,
+      customBodyRender: (value: string, { rowData }: ITableMeta) => {
+        return <CustomCell value={value ?? ''} id={rowData[0]} />
+      },
     },
   },
   {
@@ -243,6 +237,9 @@ export const INCColumn: INC_Column[] = [
     options: {
       filter: true,
       sort: true,
+      customBodyRender: (value: string, { rowData }: ITableMeta) => {
+        return <CustomCell value={value ?? ''} id={rowData[0]} />
+      },
     },
   },
   {
@@ -251,6 +248,9 @@ export const INCColumn: INC_Column[] = [
     options: {
       filter: true,
       sort: true,
+      customBodyRender: (value: string, { rowData }: ITableMeta) => {
+        return <CustomCell value={value ?? ''} id={rowData[0]} />
+      },
     },
   },
   {
@@ -259,6 +259,9 @@ export const INCColumn: INC_Column[] = [
     options: {
       filter: true,
       sort: true,
+      customBodyRender: (value: string, { rowData }: ITableMeta) => {
+        return <CustomCell value={value ?? ''} id={rowData[0]} />
+      },
     },
   },
   {
@@ -267,6 +270,9 @@ export const INCColumn: INC_Column[] = [
     options: {
       filter: true,
       sort: true,
+      customBodyRender: (value: string, { rowData }: ITableMeta) => {
+        return <CustomCell value={value ?? ''} id={rowData[0]} />
+      },
     },
   },
   {
@@ -275,6 +281,9 @@ export const INCColumn: INC_Column[] = [
     options: {
       filter: true,
       sort: true,
+      customBodyRender: (value: string, { rowData }: ITableMeta) => {
+        return <CustomCell value={value ?? ''} id={rowData[0]} />
+      },
     },
   },
   {
@@ -283,6 +292,9 @@ export const INCColumn: INC_Column[] = [
     options: {
       filter: true,
       sort: true,
+      customBodyRender: (value: string, { rowData }: ITableMeta) => {
+        return <CustomCell value={value ?? ''} id={rowData[0]} />
+      },
     },
   },
   {
@@ -291,6 +303,9 @@ export const INCColumn: INC_Column[] = [
     options: {
       filter: true,
       sort: true,
+      customBodyRender: (value: string, { rowData }: ITableMeta) => {
+        return <CustomCell value={value ?? ''} id={rowData[0]} />
+      },
     },
   },
   {
@@ -299,6 +314,9 @@ export const INCColumn: INC_Column[] = [
     options: {
       filter: true,
       sort: true,
+      customBodyRender: (value: string, { rowData }: ITableMeta) => {
+        return <CustomCell value={value ?? ''} id={rowData[0]} />
+      },
     },
   },
   {
@@ -307,6 +325,9 @@ export const INCColumn: INC_Column[] = [
     options: {
       filter: true,
       sort: true,
+      customBodyRender: (value: string, { rowData }: ITableMeta) => {
+        return <CustomCell value={value ?? ''} id={rowData[0]} />
+      },
     },
   },
   {
@@ -315,6 +336,33 @@ export const INCColumn: INC_Column[] = [
     options: {
       filter: true,
       sort: true,
+      customBodyRender: (value: string, { rowData }: ITableMeta) => {
+        return <CustomCell value={value ?? ''} id={rowData[0]} />
+      },
+    },
+  },
+  {
+    name: 'executor',
+    label: 'Исполнитель',
+    options: {
+      filter: true,
+      sort: true,
+      customBodyRender: (value: string, { rowData }: ITableMeta) => {
+        return <Executor value={value ?? ''} id={rowData[0]} />
+      },
+    },
+  },
+  {
+    name: 'responsible',
+    label: 'Ответственный',
+    options: {
+      filter: true,
+      sort: true,
+      customBodyRender: (value: string, { rowData }: ITableMeta) => {
+        return <UserResponsible value={value ?? ''} id={rowData[0]} />
+      },
     },
   },
 ]
+
+export const customCellHeight = 40

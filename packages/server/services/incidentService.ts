@@ -82,6 +82,58 @@ const includes = [
     ],
   },
   {
+    model: Users,
+    as: 'UserExecutor',
+    required: false,
+    attributes: [
+      'id',
+      'username',
+      'firstName',
+      'lastName',
+      'middleName',
+      'active',
+    ],
+  },
+  {
+    model: Users,
+    as: 'UserResponsible',
+    required: false,
+    attributes: [
+      'id',
+      'username',
+      'firstName',
+      'lastName',
+      'middleName',
+      'active',
+    ],
+  },
+  {
+    model: Users,
+    as: 'UserClosingCheck',
+    required: false,
+    attributes: [
+      'id',
+      'username',
+      'firstName',
+      'lastName',
+      'middleName',
+      'active',
+    ],
+  },
+  {
+    model: Users,
+    as: 'UserClosing',
+    required: false,
+    attributes: [
+      'id',
+      'username',
+      'firstName',
+      'lastName',
+      'middleName',
+      'active',
+    ],
+  },
+  {
     model: ClassifierEquipment,
     required: true,
     attributes: ['id', 'equipment', 'active'],
@@ -337,6 +389,10 @@ export class incidentService {
         id_incEquipment: equipmentId,
         id_incModel: modelId,
         id_incTypicalMalfunction: typicalMalfunctionID,
+        id_executor: '',
+        id_responsible: '',
+        id_closingCheck: '',
+        id_closing: '',
       })
       const newINC = await IncidentRepos.findAll({
         where: { active: true },
@@ -361,6 +417,7 @@ export class incidentService {
     IncidentRepos.findAll({
       where: { active: true },
       // include: { all: true, nested: true },
+      // include: { all: true },
       include: includes,
     })
       .then(incs => {
@@ -417,11 +474,76 @@ export class incidentService {
     }
   }
   changeINC = async (_req: Request, res: Response) => {
-    const { inc, id } = _req.body
+    const { id, ...data } = _req.body
     try {
-      await IncidentRepos.update(id, { inc })
+      await IncidentRepos.update(id, { data })
       const incs = await IncidentRepos.findAll({
         where: { active: true },
+        include: includes,
+      })
+      res.status(200).json(incs)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res.status(500).json({ error: ['db error', err] })
+    }
+  }
+  changeExecutor = async (_req: Request, res: Response) => {
+    const { id, id_incExecutor } = _req.body
+    try {
+      await IncidentRepos.update(id, { id_incExecutor })
+      const incs = await IncidentRepos.findAll({
+        where: { active: true },
+        include: includes,
+      })
+      res.status(200).json(incs)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res.status(500).json({ error: ['db error: ', err] })
+    }
+  }
+  changeResponsible = async (_req: Request, res: Response) => {
+    const { id, id_incResponsible } = _req.body
+    console.log('id = ', id)
+    console.log('id_incResponsible = ', id_incResponsible)
+    try {
+      await IncidentRepos.update(id, { id_incResponsible })
+      const incs = await IncidentRepos.findAll({
+        where: { active: true },
+        // include: { all: true },
+        include: includes,
+      })
+      res.status(200).json(incs)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res.status(500).json({ error: ['db error', err] })
+    }
+  }
+  changeUserClosingCheck = async (_req: Request, res: Response) => {
+    const { id, id_incClosingCheck } = _req.body
+    try {
+      await IncidentRepos.update(id, { id_incClosingCheck })
+      const incs = await IncidentRepos.findAll({
+        where: { active: true },
+        // include: { all: true },
+        include: includes,
+      })
+      res.status(200).json(incs)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res.status(500).json({ error: ['db error', err] })
+    }
+  }
+  changeUserClosing = async (_req: Request, res: Response) => {
+    const { id, id_incClosing } = _req.body
+    try {
+      await IncidentRepos.update(id, { id_incClosing })
+      const incs = await IncidentRepos.findAll({
+        where: { active: true },
+        // include: { all: true },
         include: includes,
       })
       res.status(200).json(incs)

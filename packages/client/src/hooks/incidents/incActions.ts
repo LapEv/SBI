@@ -2,8 +2,12 @@ import {
   AddINC,
   AddINCStatuses,
   AddTypesOfWork,
+  ChangeClosing,
+  ChangeClosingCheck,
+  ChangeExecutor,
   ChangeINC,
   ChangeINCStatuses,
+  ChangeResponsible,
   ChangeTypesOfWork,
 } from 'store/slices/incidents/interfaces'
 
@@ -17,6 +21,10 @@ export interface INCActions {
   deleteIncidentStatuses: (data: string[]) => void
   deleteTypesOfWork: (data: string[]) => void
   changeINC: (data: ChangeINC) => void
+  changeExecutor: (data: ChangeExecutor) => void
+  changeResponsible: (data: ChangeResponsible) => void
+  changeUserClosingCheck: (data: ChangeClosingCheck) => void
+  changeUserClosing: (data: ChangeClosing) => void
   changeIncidentStatuses: (data: ChangeINCStatuses) => void
   changeTypesOfWork: (data: ChangeTypesOfWork) => void
   setActiveINC: (id: string) => void

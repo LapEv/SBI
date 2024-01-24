@@ -113,6 +113,46 @@ export const GetActiveUsers = createAsyncThunk(
   }
 )
 
+export const GetDispatchers = createAsyncThunk(
+  'user/getDispatchers',
+  async (_, thunkAPI) => {
+    try {
+      const { data } = await authhost.post<User>(
+        ApiEndPoints.User.GetDispatchers
+      )
+      return data
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      return thunkAPI.rejectWithValue(
+        `Не удалось получить данные пользователей по департаменту!\n${getError(
+          e
+        )}`
+      )
+    }
+  }
+)
+
+export const GetFieldEngineers = createAsyncThunk(
+  'user/getFieldEngineers',
+  async (_, thunkAPI) => {
+    try {
+      const { data } = await authhost.post<User>(
+        ApiEndPoints.User.GetFieldEngineers
+      )
+      return data
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      return thunkAPI.rejectWithValue(
+        `Не удалось получить данные пользователей по департаменту!\n${getError(
+          e
+        )}`
+      )
+    }
+  }
+)
+
 export const CheckUser = createAsyncThunk(
   'user/checkUser',
   async (_, thunkAPI) => {

@@ -20,6 +20,10 @@ import {
   newTypeOfWork,
   deleteTypesOfWork,
   changeTypesOfWork,
+  changeExecutor,
+  changeResponsible,
+  changeUserClosingCheck,
+  changeUserClosing,
 } from 'api/incidents'
 
 const initialState: INCState = {
@@ -28,6 +32,60 @@ const initialState: INCState = {
   typesOfWork: [],
   activeINC: '',
   isLoadingINC: false,
+}
+
+const createINCData = (data: INC[]) => {
+  return data.map(item => {
+    return {
+      ...item,
+      status: item.IncindentStatus?.statusINC as string,
+      client: item.Client?.client as string,
+      contract: item.Contract?.contract as string,
+      object: item.Object?.object as string,
+      address: item.Object?.Address?.address as string,
+      coordinates: item.Object?.Address?.coordinates as string,
+      region: item.Object?.Region?.region as string,
+      sla: item.SLA?.sla as string,
+      typeOfWork: item.TypesOfWork?.typeOfWork as string,
+      userAccepted: item.User
+        ? `${item.User?.lastName} ${item.User?.firstName.slice(
+            0,
+            1
+          )}.${item.User?.middleName.slice(0, 1)}.`
+        : ('' as string),
+      executor: item.UserExecutor
+        ? `${item.UserExecutor?.lastName} ${item.UserExecutor?.firstName.slice(
+            0,
+            1
+          )}.${item.UserExecutor?.middleName.slice(0, 1)}.`
+        : ('' as string),
+      responsible: item.UserResponsible
+        ? `${
+            item.UserResponsible?.lastName
+          } ${item.UserResponsible?.firstName.slice(
+            0,
+            1
+          )}.${item.UserResponsible?.middleName.slice(0, 1)}.`
+        : ('' as string),
+      userClosingCheck: item.UserClosingCheck
+        ? `${
+            item.UserClosingCheck?.lastName
+          } ${item.UserClosingCheck?.firstName.slice(
+            0,
+            1
+          )}.${item.UserClosingCheck?.middleName.slice(0, 1)}.`
+        : ('' as string),
+      userClosing: item.UserClosing
+        ? `${item.UserClosing?.lastName} ${item.UserClosing?.firstName.slice(
+            0,
+            1
+          )}.${item.UserClosing?.middleName.slice(0, 1)}.`
+        : ('' as string),
+      equipment: item.ClassifierEquipment?.equipment as string,
+      model: item.ClassifierModel?.model as string,
+      typicalMalfunction: item.TypicalMalfunction?.typicalMalfunction as string,
+    }
+  })
 }
 
 export const incidentsSlise = createSlice({
@@ -42,28 +100,7 @@ export const incidentsSlise = createSlice({
     [getINC.fulfilled.type]: (state, action: PayloadAction<INC[]>) => {
       state.isLoadingINC = false
       state.error = ''
-      state.incidents = action.payload.map(item => {
-        return {
-          ...item,
-          status: item.IncindentStatus?.statusINC as string,
-          client: item.Client?.client as string,
-          contract: item.Contract?.contract as string,
-          object: item.Object?.object as string,
-          address: item.Object?.Address?.address as string,
-          coordinates: item.Object?.Address?.coordinates as string,
-          region: item.Object?.Region?.region as string,
-          sla: item.SLA?.sla as string,
-          typeOfWork: item.TypesOfWork?.typeOfWork as string,
-          userAccepted: `${item.User?.lastName} ${item.User?.firstName.slice(
-            0,
-            1
-          )}.${item.User?.middleName.slice(0, 1)}.` as string,
-          equipment: item.ClassifierEquipment?.equipment as string,
-          model: item.ClassifierModel?.model as string,
-          typicalMalfunction: item.TypicalMalfunction
-            ?.typicalMalfunction as string,
-        }
-      })
+      state.incidents = createINCData(action.payload)
     },
     [getINC.pending.type]: state => {
       state.isLoadingINC = true
@@ -75,28 +112,7 @@ export const incidentsSlise = createSlice({
     [newINC.fulfilled.type]: (state, action: PayloadAction<AnswerINC>) => {
       state.isLoadingINC = false
       state.error = ''
-      state.incidents = action.payload.data.map(item => {
-        return {
-          ...item,
-          status: item.IncindentStatus?.statusINC as string,
-          client: item.Client?.client as string,
-          contract: item.Contract?.contract as string,
-          object: item.Object?.object as string,
-          address: item.Object?.Address?.address as string,
-          coordinates: item.Object?.Address?.coordinates as string,
-          region: item.Object?.Region?.region as string,
-          sla: item.SLA?.sla as string,
-          typeOfWork: item.TypesOfWork?.typeOfWork as string,
-          userAccepted: `${item.User?.lastName} ${item.User?.firstName.slice(
-            0,
-            1
-          )}.${item.User?.middleName.slice(0, 1)}.` as string,
-          equipment: item.ClassifierEquipment?.equipment as string,
-          model: item.ClassifierModel?.model as string,
-          typicalMalfunction: item.TypicalMalfunction
-            ?.typicalMalfunction as string,
-        }
-      })
+      state.incidents = createINCData(action.payload.data)
     },
     [newINC.pending.type]: state => {
       state.isLoadingINC = true
@@ -108,28 +124,76 @@ export const incidentsSlise = createSlice({
     [changeINC.fulfilled.type]: (state, action: PayloadAction<AnswerINC>) => {
       state.isLoadingINC = false
       state.error = ''
-      state.incidents = action.payload.data.map(item => {
-        return {
-          ...item,
-          status: item.IncindentStatus?.statusINC as string,
-          client: item.Client?.client as string,
-          contract: item.Contract?.contract as string,
-          object: item.Object?.object as string,
-          address: item.Object?.Address?.address as string,
-          coordinates: item.Object?.Address?.coordinates as string,
-          region: item.Object?.Region?.region as string,
-          sla: item.SLA?.sla as string,
-          typeOfWork: item.TypesOfWork?.typeOfWork as string,
-          userAccepted: `${item.User?.lastName} ${item.User?.firstName.slice(
-            0,
-            1
-          )}.${item.User?.middleName.slice(0, 1)}.` as string,
-          equipment: item.ClassifierEquipment?.equipment as string,
-          model: item.ClassifierModel?.model as string,
-          typicalMalfunction: item.TypicalMalfunction
-            ?.typicalMalfunction as string,
-        }
-      })
+      state.incidents = createINCData(action.payload.data)
+    },
+    [changeExecutor.pending.type]: state => {
+      state.isLoadingINC = true
+    },
+    [changeExecutor.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingINC = false
+      state.error = action.payload
+    },
+    [changeExecutor.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerINC>
+    ) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.incidents = createINCData(action.payload.data)
+    },
+    [changeResponsible.pending.type]: state => {
+      state.isLoadingINC = true
+    },
+    [changeResponsible.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingINC = false
+      state.error = action.payload
+    },
+    [changeResponsible.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerINC>
+    ) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.incidents = createINCData(action.payload.data)
+    },
+    [changeUserClosingCheck.pending.type]: state => {
+      state.isLoadingINC = true
+    },
+    [changeUserClosingCheck.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingINC = false
+      state.error = action.payload
+    },
+    [changeUserClosingCheck.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerINC>
+    ) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.incidents = createINCData(action.payload.data)
+    },
+    [changeUserClosing.pending.type]: state => {
+      state.isLoadingINC = true
+    },
+    [changeUserClosing.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingINC = false
+      state.error = action.payload
+    },
+    [changeUserClosing.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerINC>
+    ) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.incidents = createINCData(action.payload.data)
     },
     [changeINC.pending.type]: state => {
       state.isLoadingINC = true

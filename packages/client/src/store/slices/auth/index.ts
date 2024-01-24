@@ -7,6 +7,8 @@ import {
   GetActiveUsers,
   getUserStatus,
   updateUser,
+  GetFieldEngineers,
+  GetDispatchers,
 } from 'api/user'
 import { signin, signout, signup } from 'api/user'
 import { AnswerUser, AuthState, User, UserStatus } from './interfaces'
@@ -16,6 +18,9 @@ const initialState: AuthState = {
   userData: {},
   users: [],
   userStatus: [],
+  fieldEngineers: [],
+  dispatchers: [],
+  userByDepartment: [],
   admin: false,
   superAdmin: false,
   isLoadingAuth: false,
@@ -86,6 +91,36 @@ export const authSlise = createSlice({
       state.isLoadingAuth = true
     },
     [GetUser.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingAuth = false
+      state.error = action.payload
+    },
+    [GetFieldEngineers.fulfilled.type]: (
+      state,
+      action: PayloadAction<User[]>
+    ) => {
+      state.isLoadingAuth = false
+      state.error = ''
+      state.fieldEngineers = action.payload
+    },
+    [GetFieldEngineers.pending.type]: state => {
+      state.isLoadingAuth = true
+    },
+    [GetFieldEngineers.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingAuth = false
+      state.error = action.payload
+    },
+    [GetDispatchers.fulfilled.type]: (state, action: PayloadAction<User[]>) => {
+      state.isLoadingAuth = false
+      state.error = ''
+      state.dispatchers = action.payload
+    },
+    [GetDispatchers.pending.type]: state => {
+      state.isLoadingAuth = true
+    },
+    [GetDispatchers.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingAuth = false
       state.error = action.payload
     },

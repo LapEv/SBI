@@ -4,9 +4,13 @@ import { useAppDispatch } from 'store/hooks'
 import { INCActions } from './incActions'
 import { INCState } from 'store/slices/incidents/interfaces'
 import {
+  changeExecutor,
   changeINC,
   changeIncidentStatuses,
+  changeResponsible,
   changeTypesOfWork,
+  changeUserClosing,
+  changeUserClosingCheck,
   deleteIncidentStatuses,
   deleteTypesOfWork,
   getINC,
@@ -48,6 +52,18 @@ export function useIncidents(): [INCState, INCActions] {
       },
       changeINC(data) {
         dispatch(changeINC(data))
+      },
+      changeExecutor(data) {
+        dispatch(changeExecutor(data))
+      },
+      changeResponsible(data) {
+        dispatch(changeResponsible(data))
+      },
+      changeUserClosingCheck(data) {
+        dispatch(changeUserClosingCheck(data))
+      },
+      changeUserClosing(data) {
+        dispatch(changeUserClosing(data))
       },
       deleteTypesOfWork(data) {
         dispatch(deleteTypesOfWork(data))

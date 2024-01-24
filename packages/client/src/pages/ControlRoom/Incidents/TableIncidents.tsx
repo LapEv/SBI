@@ -17,7 +17,9 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
   const options: MUIDataTableOptions = {
     filter: true,
     rowsPerPage: 10,
-    filterType: 'textField',
+    // filterType: 'textField',
+    filterType: 'checkbox',
+
     resizableColumns: true,
     draggableColumns: {
       enabled: true,

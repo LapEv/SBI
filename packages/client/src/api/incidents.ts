@@ -11,6 +11,10 @@ import {
   TypesOfWork,
   AddTypesOfWork,
   ChangeTypesOfWork,
+  ChangeExecutor,
+  ChangeResponsible,
+  ChangeClosingCheck,
+  ChangeClosing,
 } from 'store/slices/incidents/interfaces'
 
 export const getINC = createAsyncThunk(
@@ -105,6 +109,112 @@ export const changeINC = createAsyncThunk(
       /* eslint-enable @typescript-eslint/no-explicit-any */
       return thunkAPI.rejectWithValue(
         `Не удалось изменить инцидент!\n${getError(e)}`
+      )
+    }
+  }
+)
+
+export const changeExecutor = createAsyncThunk(
+  'incidents/changeExecutor',
+  async ({ id, id_incExecutor }: ChangeExecutor, thunkAPI) => {
+    try {
+      const { data } = await authhost.post(ApiEndPoints.INC.changeExecutor, {
+        id,
+        id_incExecutor,
+      })
+      return {
+        data,
+        message: {
+          text: `Назначен исполнитель ""!`,
+          type: 'success',
+        },
+      }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      return thunkAPI.rejectWithValue(
+        `Не удалось назначить исполнителя!\n${getError(e)}`
+      )
+    }
+  }
+)
+
+export const changeResponsible = createAsyncThunk(
+  'incidents/changeResponsible',
+  async ({ id, id_incResponsible }: ChangeResponsible, thunkAPI) => {
+    try {
+      const { data } = await authhost.post(ApiEndPoints.INC.changeResponsible, {
+        id,
+        id_incResponsible,
+      })
+      return {
+        data,
+        message: {
+          text: `Назначен ответственный!`,
+          type: 'success',
+        },
+      }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      return thunkAPI.rejectWithValue(
+        `Не удалось назначить ответственного!\n${getError(e)}`
+      )
+    }
+  }
+)
+
+export const changeUserClosingCheck = createAsyncThunk(
+  'incidents/changeUserClosingCheck',
+  async ({ id, id_incClosingCheck }: ChangeClosingCheck, thunkAPI) => {
+    try {
+      const { data } = await authhost.post(
+        ApiEndPoints.INC.changeUserClosingCheck,
+        {
+          id,
+          id_incClosingCheck,
+        }
+      )
+      return {
+        data,
+        message: {
+          text: `Назначен ответственный за выполнение!`,
+          type: 'success',
+        },
+      }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      return thunkAPI.rejectWithValue(
+        `Не удалось назначить ответственного за выполнение!\n${getError(e)}`
+      )
+    }
+  }
+)
+
+export const changeUserClosing = createAsyncThunk(
+  'incidents/changeUserClosing',
+  async ({ id, id_incClosing }: ChangeClosing, thunkAPI) => {
+    try {
+      const { data } = await authhost.post(
+        ApiEndPoints.INC.changeUserClosingCheck,
+        {
+          id,
+          id_incClosing,
+        }
+      )
+      return {
+        data,
+        message: {
+          text: `Назначен ответственный за закрытие!`,
+          type: 'success',
+        },
+      }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      return thunkAPI.rejectWithValue(
+        `Не удалось назначить ответственного за закрытие!\n${getError(e)}`
       )
     }
   }

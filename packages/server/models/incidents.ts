@@ -11,9 +11,6 @@ export interface Incindent {
   timeSLA: string
   timeCloseCheck: string
   timeClose: string
-  responsible: string
-  responsibleClosing: string
-  executor: string
   description: string
   comment: string
   report: string
@@ -70,18 +67,10 @@ export const incident: ModelAttributes<Model, Incindent> = {
     type: DataType.DATE,
     allowNull: true,
   },
-  responsible: {
-    type: DataType.STRING,
-    allowNull: true,
-  },
-  responsibleClosing: {
-    type: DataType.STRING,
-    allowNull: true,
-  },
-  executor: {
-    type: DataType.STRING,
-    allowNull: true,
-  },
+  // responsibleClosing: {
+  //   type: DataType.STRING,
+  //   allowNull: true,
+  // },
   description: {
     type: DataType.STRING,
     allowNull: true,

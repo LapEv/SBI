@@ -16,7 +16,7 @@ import ExampleCardjs from './Example'
 
 export function IncidentsPage() {
   const modalClientRef = React.createRef()
-  const [{ admin }] = useAuth()
+  const [{ admin }, { getFieldEngineers, getDispatchers }] = useAuth()
   const [modal, setModal] = useState<boolean>(false)
   const [modalImage, setModalImage] = useState<string>('')
 
@@ -35,6 +35,8 @@ export function IncidentsPage() {
 
   useEffect(() => {
     getINC()
+    getFieldEngineers()
+    getDispatchers()
   }, [])
 
   console.log('incidentss = ', incidents)

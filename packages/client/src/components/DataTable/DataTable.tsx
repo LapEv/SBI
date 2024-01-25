@@ -24,6 +24,7 @@ const StyledDataTable = styled(MUIDataTable)(({ theme }) => ({
     borderBottomColor: theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
     borderBottomStyle: 'solid',
     maxHeight: 20,
+    heigth: 20,
 
     '.MuiTableCell-root': {
       backgroundColor:

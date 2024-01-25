@@ -17,8 +17,8 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
   const options: MUIDataTableOptions = {
     filter: true,
     rowsPerPage: 10,
-    // filterType: 'textField',
-    filterType: 'checkbox',
+    filterType: 'textField',
+    // filterType: 'checkbox',
 
     resizableColumns: true,
     draggableColumns: {
@@ -30,11 +30,6 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
         <DenseTable denseTable={denseTable} setDenseTable={setDenseTable} />
       )
     },
-    // setRowProps: (row, dataIndex, rowIndex) => {
-    //   return {
-    //     style: { border: '3px solid blue' },
-    //   }
-    // },
     setRowProps: (row, dataIndex, rowIndex) => {
       return {
         style: {
@@ -54,15 +49,8 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
     setTableProps: () => {
       return {
         padding: denseTable ? 'none' : 'normal',
-        // style: {
-        //   borderTopWidth: 2,
-        //   borderColor: theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
-        //   borderStyle: 'solid',
-        // },
       }
     },
-    // setCellHeaderProps: () => {
-    // },
   }
   return (
     <DataTable

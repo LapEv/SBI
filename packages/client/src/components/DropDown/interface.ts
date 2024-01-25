@@ -7,6 +7,7 @@ export interface DataDropDown {
   onChange?: (value: Options) => void
   onBlur?: (value: string) => void
   error?: boolean
+  textProps?: object
 }
 
 export interface DataDropDownMultiple {

@@ -26,3 +26,34 @@ export const Autocomplete = styled(MuiAutocomplete)(({ theme }) => ({
     },
   },
 }))
+
+export const AutocompleteIncidents = styled(MuiAutocomplete)(({ theme }) => ({
+  '& input': {
+    padding: '0!important',
+    fontSize: 14,
+  },
+  '.MuiAutocomplete-input': {
+    width: '100%',
+  },
+  '.MuiAutocomplete-endAdornment': {
+    top: -2,
+    right: '0!important',
+  },
+  '.MuiAutocomplete-clearIndicator': {
+    color: theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
+    '& .MuiSvgIcon-root': {
+      width: 15,
+      height: 15,
+    },
+  },
+  '.MuiAutocomplete-popupIndicator': {
+    color: theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
+    '.MuiSvgIcon-root': {
+      width: 28,
+      height: 28,
+    },
+  },
+  '.MuiAutocomplete-popper': {
+    width: '120%',
+  },
+}))

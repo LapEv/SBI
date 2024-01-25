@@ -24,6 +24,7 @@ export interface INC_Column {
     hint?: any
     setCellProps?: any
     customBodyRender?: any
+    customHeadRender?: any
     display?: boolean
     viewColumns?: boolean
   }
@@ -32,6 +33,10 @@ export interface INC_Column {
 export interface IExecutor {
   value: string
   id: string
+}
+
+export interface ICustomCell {
+  value: string
 }
 
 export interface ITableMeta {

@@ -1,10 +1,10 @@
 import { memo, useEffect, useState } from 'react'
 import { useAuth } from 'hooks/auth/useAuth'
-import { DropDown } from 'components/DropDown'
+import { DropDownIncidents } from 'components/DropDown'
 import { Options } from 'components/DropDown/interface'
 import { useIncidents } from 'hooks/incidents/useINC'
 import { IExecutor } from '../interfaces'
-import { customCellHeight } from '../data'
+import { customDropDownCell } from '../data'
 
 export const UserResponsible = memo(({ value, id }: IExecutor) => {
   const [{ dispatchers }] = useAuth()
@@ -27,7 +27,7 @@ export const UserResponsible = memo(({ value, id }: IExecutor) => {
   }, [value])
 
   return (
-    <DropDown
+    <DropDownIncidents
       data={dispatchers.map(({ lastName, firstName, middleName, id }) => {
         return {
           ['label']: `${lastName} ${firstName?.slice(0, 1)}.${middleName?.slice(
@@ -37,7 +37,8 @@ export const UserResponsible = memo(({ value, id }: IExecutor) => {
           ['id']: id as string,
         }
       })}
-      props={{ width: 300, height: customCellHeight }}
+      props={customDropDownCell}
+      textProps={{ fontSize: '0.775rem' }}
       onChange={setData}
       value={responsible.label}
       label="Выберите ответственного"

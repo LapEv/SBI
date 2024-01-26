@@ -47,40 +47,11 @@ const createINCData = (data: INC[]) => {
       region: item.Object?.Region?.region as string,
       sla: item.SLA?.sla as string,
       typeOfWork: item.TypesOfWork?.typeOfWork as string,
-      userAccepted: item.User
-        ? `${item.User?.lastName} ${item.User?.firstName.slice(
-            0,
-            1
-          )}.${item.User?.middleName.slice(0, 1)}.`
-        : ('' as string),
-      executor: item.UserExecutor
-        ? `${item.UserExecutor?.lastName} ${item.UserExecutor?.firstName.slice(
-            0,
-            1
-          )}.${item.UserExecutor?.middleName.slice(0, 1)}.`
-        : ('' as string),
-      responsible: item.UserResponsible
-        ? `${
-            item.UserResponsible?.lastName
-          } ${item.UserResponsible?.firstName.slice(
-            0,
-            1
-          )}.${item.UserResponsible?.middleName.slice(0, 1)}.`
-        : ('' as string),
-      userClosingCheck: item.UserClosingCheck
-        ? `${
-            item.UserClosingCheck?.lastName
-          } ${item.UserClosingCheck?.firstName.slice(
-            0,
-            1
-          )}.${item.UserClosingCheck?.middleName.slice(0, 1)}.`
-        : ('' as string),
-      userClosing: item.UserClosing
-        ? `${item.UserClosing?.lastName} ${item.UserClosing?.firstName.slice(
-            0,
-            1
-          )}.${item.UserClosing?.middleName.slice(0, 1)}.`
-        : ('' as string),
+      userAccepted: item.User?.shortName as string,
+      executor: item.UserExecutor?.shortName as string,
+      responsible: item.UserResponsible?.shortName as string,
+      userClosingCheck: item.UserClosingCheck?.shortName as string,
+      userClosing: item.UserClosing?.shortName as string,
       equipment: item.ClassifierEquipment?.equipment as string,
       model: item.ClassifierModel?.model as string,
       typicalMalfunction: item.TypicalMalfunction?.typicalMalfunction as string,

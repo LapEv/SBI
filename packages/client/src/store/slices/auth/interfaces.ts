@@ -1,9 +1,10 @@
 export interface User {
-  id: string
+  id?: string
   username?: string
   firstName?: string
   lastName?: string
   middleName?: string
+  shortName?: string
   phone?: string
   email?: string
   avatar?: string
@@ -24,6 +25,7 @@ export interface Users {
     firstName?: string
     lastName?: string
     middleName?: string
+    shortName?: string
     phone?: string
     email?: string
     avatar?: string
@@ -97,5 +99,6 @@ export interface UserForINC {
   firstName: string
   lastName: string
   middleName: string
+  shortName: string
   active: boolean
 }

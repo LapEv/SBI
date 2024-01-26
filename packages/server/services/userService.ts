@@ -17,10 +17,18 @@ export class userService {
       })
     }
     const id = _req.body.id ?? 0
-    const { password } = _req.body
+    const { password, firstName, lastName, middleName } = _req.body
+    const shortName = `${lastName} ${firstName.slice(0, 1)}.${middleName.slice(
+      0,
+      1
+    )}.`
     const hashPassword = bcrypt.hashSync(password, 7)
     const newUser = {
       ..._req.body,
+      shortName,
+      firstName,
+      lastName,
+      middleName,
       password: hashPassword,
       active: true,
       theme: 'light',
@@ -169,11 +177,12 @@ export class userService {
     userRepos
       .findAll({
         where: dataFind,
+        include: { all: true },
       })
       .then(user => {
         res.status(200).json(user)
       })
-      .catch(err => res.status(500).json({ error: ['db error', err] }))
+      .catch(err => res.status(500).json({ error: ['db error: ', err] }))
   }
   getUsers = (_req: Request, res: Response) => {
     userRepos
@@ -222,7 +231,6 @@ export class userService {
       })
       .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
-
   getUserInfo = (_req: Request, res: Response) => {
     const { id } = _req.body
     userRepos
@@ -295,8 +303,12 @@ export class userService {
   }
   updateUser = async (_req: Request, res: Response) => {
     const { id, userData } = _req.body
+    const shortName = `${userData.lastName} ${userData.firstName.slice(
+      0,
+      1
+    )}.${userData.middleName.slice(0, 1)}.`
     try {
-      await userRepos.update(id, userData)
+      await userRepos.update(id, { ...userData, shortName })
       const { id_division, id_department } = userData
       const dataFind = { id_division, id_department, active: true }
       const rolesGroup = await userRepos.findAll({ where: dataFind })
@@ -309,8 +321,12 @@ export class userService {
   }
   updateProfile = async (_req: Request, res: Response) => {
     const { id, userData } = _req.body
+    const shortName = `${userData.lastName} ${userData.firstName.slice(
+      0,
+      1
+    )}.${userData.middleName.slice(0, 1)}.`
     try {
-      await userRepos.update(id, userData)
+      await userRepos.update(id, { ...userData, shortName })
       const { id_division, id_department } = userData
       const dataFind = { id_division, id_department, active: true }
       const rolesGroup = await userRepos.findAll({ where: dataFind })

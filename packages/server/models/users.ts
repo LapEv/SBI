@@ -8,6 +8,7 @@ export interface User {
   firstName: string
   lastName: string
   middleName: string
+  shortName: string
   email: string
   phone?: string
   rolesGroup: string
@@ -46,6 +47,10 @@ export const users: ModelAttributes<Model, User> = {
     allowNull: false,
   },
   middleName: {
+    type: DataType.STRING,
+    allowNull: false,
+  },
+  shortName: {
     type: DataType.STRING,
     allowNull: false,
   },

@@ -31,6 +31,8 @@ export const Departments = ({
     }
   }, [activeDepartment])
 
+  console.log('users = ', users)
+
   return (
     <Box sx={flexColumn_FS_SA}>
       <ListItemButton

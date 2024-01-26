@@ -185,192 +185,13 @@ export const MapINCInputFields = [
   },
 ]
 
-export const INCColumn: INC_Column[] = [
-  {
-    name: 'id',
-    label: 'ID',
-    options: {
-      filter: false,
-      sort: false,
-      display: false,
-      viewColumns: false,
-    },
-  },
-  {
-    name: 'incident',
-    label: 'Инцидент',
-    options: {
-      filter: true,
-      sort: true,
-
-      customBodyRender: (value: string, { rowData }: ITableMeta) => {
-        return <CustomCell value={value ?? ''} />
-      },
-    },
-  },
-  {
-    name: 'numberINC',
-    label: 'Номер',
-    options: {
-      filter: true,
-      sort: true,
-      customBodyRender: (value: string, { rowData }: ITableMeta) => {
-        return <CustomCell value={value ?? ''} />
-      },
-    },
-  },
-  {
-    name: 'clientINC',
-    label: 'Номер Клиента',
-    options: {
-      filter: true,
-      sort: true,
-      customBodyRender: (value: string, { rowData }: ITableMeta) => {
-        return <CustomCell value={value ?? ''} />
-      },
-    },
-  },
-  {
-    name: 'status',
-    label: 'Статус',
-    options: {
-      filter: true,
-      sort: true,
-      customBodyRender: (value: string, { rowData }: ITableMeta) => {
-        return <CustomCell value={value ?? ''} />
-      },
-    },
-  },
-  {
-    name: 'client',
-    label: 'Клиент',
-    options: {
-      filter: true,
-      sort: true,
-      customBodyRender: (value: string, { rowData }: ITableMeta) => {
-        return <CustomCell value={value ?? ''} />
-      },
-    },
-  },
-  {
-    name: 'contract',
-    label: 'Контракт',
-    options: {
-      filter: true,
-      sort: true,
-      customBodyRender: (value: string, { rowData }: ITableMeta) => {
-        return <CustomCell value={value ?? ''} />
-      },
-    },
-  },
-  {
-    name: 'object',
-    label: 'Объект',
-    options: {
-      filter: true,
-      sort: true,
-      customBodyRender: (value: string, { rowData }: ITableMeta) => {
-        return <CustomCell value={value ?? ''} />
-      },
-    },
-  },
-  {
-    name: 'address',
-    label: 'Адрес',
-    options: {
-      filter: true,
-      sort: true,
-      customBodyRender: (value: string, { rowData }: ITableMeta) => {
-        return <CustomCell value={value ?? ''} />
-      },
-    },
-  },
-  {
-    name: 'region',
-    label: 'Регион',
-    options: {
-      filter: true,
-      sort: true,
-      customBodyRender: (value: string, { rowData }: ITableMeta) => {
-        return <CustomCell value={value ?? ''} />
-      },
-    },
-  },
-  {
-    name: 'userAccepted',
-    label: 'Кто принял',
-    options: {
-      filter: true,
-      sort: true,
-      customBodyRender: (value: string, { rowData }: ITableMeta) => {
-        return <CustomCell value={value ?? ''} />
-      },
-    },
-  },
-  {
-    name: 'equipment',
-    label: 'Оборудование',
-    options: {
-      filter: true,
-      sort: true,
-      customBodyRender: (value: string, { rowData }: ITableMeta) => {
-        return <CustomCell value={value ?? ''} />
-      },
-    },
-  },
-  {
-    name: 'model',
-    label: 'Модель',
-    options: {
-      filter: true,
-      sort: true,
-      customBodyRender: (value: string, { rowData }: ITableMeta) => {
-        return <CustomCell value={value ?? ''} />
-      },
-    },
-  },
-  {
-    name: 'typicalMalfunction',
-    label: 'Неисправность',
-    options: {
-      filter: true,
-      sort: true,
-      customBodyRender: (value: string, { rowData }: ITableMeta) => {
-        return <CustomCell value={value ?? ''} />
-      },
-    },
-  },
-  {
-    name: 'executor',
-    label: 'Исполнитель',
-    options: {
-      filter: true,
-      sort: true,
-      customBodyRender: (value: string, { rowData }: ITableMeta) => {
-        return <Executor value={value ?? ''} id={rowData[0]} />
-      },
-    },
-  },
-  {
-    name: 'responsible',
-    label: 'Ответственный',
-    options: {
-      filter: true,
-      sort: true,
-      customBodyRender: (value: string, { rowData }: ITableMeta) => {
-        return <UserResponsible value={value ?? ''} id={rowData[0]} />
-      },
-    },
-  },
-]
-
 export const customCell = {
   width: 'auto',
   maxWidth: 150,
-  height: 40,
-  p: 1,
+  height: 30,
+  p: 0,
   display: 'flex',
-  justifyContent: 'flex-start',
+  justifyContent: 'center',
   alignItems: 'flex-start',
   whiteSpace: 'nowrap',
   overflow: 'hidden',
@@ -382,7 +203,7 @@ export const customDropDownCell = {
   maxWidth: 300,
   height: 30,
   display: 'flex',
-  justifyContent: 'flex-start',
+  justifyContent: 'center',
   alignItems: 'flex-start',
   whiteSpace: 'nowrap',
   overflow: 'hidden',
@@ -390,4 +211,8 @@ export const customDropDownCell = {
   p: 0,
   pl: 1,
   pr: 1,
+}
+
+export const customHedearCell = {
+  paddingLeft: 20,
 }

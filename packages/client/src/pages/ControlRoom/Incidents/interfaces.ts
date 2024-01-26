@@ -25,6 +25,8 @@ export interface INC_Column {
     setCellProps?: any
     customBodyRender?: any
     customHeadRender?: any
+    customHeadLabelRender?: any
+    setCellHeaderProps?: any
     display?: boolean
     viewColumns?: boolean
   }
@@ -37,6 +39,11 @@ export interface IExecutor {
 
 export interface ICustomCell {
   value: string
+  denseTable: boolean
+}
+
+export interface ICustomHeaderCell {
+  label: string
 }
 
 export interface ITableMeta {

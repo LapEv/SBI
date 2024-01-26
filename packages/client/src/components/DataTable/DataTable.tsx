@@ -5,6 +5,20 @@ import { ThemeMode } from '../../themes/themeConfig'
 import { IDataTable } from './interface'
 
 const StyledDataTable = styled(MUIDataTable)(({ theme }) => ({
+  '& .MuiTableRow-head': {
+    height: 10,
+    minHeight: 10,
+  },
+  '.MuiTableCell-head': {
+    height: 10,
+    minHeight: 10,
+    padding: 0,
+    paddingLeft: 5,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    width: '100%!important',
+  },
   '&.MuiPaper-root': {
     width: '100%',
     marginTop: 10,
@@ -23,14 +37,18 @@ const StyledDataTable = styled(MUIDataTable)(({ theme }) => ({
     borderBottomWidth: 2,
     borderBottomColor: theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
     borderBottomStyle: 'solid',
-    maxHeight: 20,
-    heigth: 20,
+    minHeight: 10,
+    height: 10,
+    // display: 'flex',
+    // justifyContent: 'center',
+    // alignItems: 'center',
 
     '.MuiTableCell-root': {
       backgroundColor:
         theme.palette.mode === ThemeMode.dark ? '#1E515D' : '#C1EEE1',
       color: theme.palette.mode === ThemeMode.dark ? '#000000' : '#FFFFFF',
-      maxHeight: 20,
+      maxHeight: 30,
+      padding: 5,
 
       '.MuiButtonBase-root': {
         fontSize: 16,

@@ -18,7 +18,18 @@ const StyledDataTable = styled(MUIDataTable)(({ theme }) => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     width: '100%!important',
+    '& [class*="MUIDataTableHeadCell-sortAction"]': {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      fontSize: 15,
+    },
+    '& [class*="MUIDataTableHeadCell-sortActive"]': {
+      color: theme.palette.mode === ThemeMode.light ? '#000000' : '#FFFFFF',
+      textDecoration: 'underLine',
+    },
   },
+
   '&.MuiPaper-root': {
     width: '100%',
     marginTop: 10,
@@ -39,9 +50,6 @@ const StyledDataTable = styled(MUIDataTable)(({ theme }) => ({
     borderBottomStyle: 'solid',
     minHeight: 10,
     height: 10,
-    // display: 'flex',
-    // justifyContent: 'center',
-    // alignItems: 'center',
 
     '.MuiTableCell-root': {
       backgroundColor:
@@ -49,7 +57,6 @@ const StyledDataTable = styled(MUIDataTable)(({ theme }) => ({
       color: theme.palette.mode === ThemeMode.dark ? '#000000' : '#FFFFFF',
       maxHeight: 30,
       padding: 5,
-
       '.MuiButtonBase-root': {
         fontSize: 16,
         fontWeight: 'bold',

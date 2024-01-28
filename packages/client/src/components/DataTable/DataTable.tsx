@@ -29,6 +29,29 @@ const StyledDataTable = styled(MUIDataTable)(({ theme }) => ({
       textDecoration: 'underLine',
     },
   },
+  '& [class*="MUIDataTableResize-resizer"]': {
+    borderColor: theme.palette.mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+  },
+  '.MuiToolbar-root': {
+    height: 50,
+    minHeight: 50,
+    maxHeight: 50,
+  },
+  '& [class*="MUIDataTableToolbarSelect-root"]': {
+    height: 50,
+    minHeight: 50,
+    maxHeight: 50,
+  },
+  '& [class*="MUIDataTableToolbar-filterPaper"]': {
+    backgroundColor:
+      theme.palette.mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+    color: theme.palette.mode === ThemeMode.light ? '#000000' : '#FFFFFF',
+  },
+  // '& [class*=MUIDataTableFilter-root"] ': {
+  //   backgroundColor:
+  //     theme.palette.mode === ThemeMode.dark ? '#1E515D' : '#C1EEE1',
+  //   color: theme.palette.mode === ThemeMode.dark ? '#000000' : '#FFFFFF',
+  // },
 
   '&.MuiPaper-root': {
     width: '100%',

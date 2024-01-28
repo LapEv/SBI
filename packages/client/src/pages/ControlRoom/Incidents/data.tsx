@@ -216,3 +216,38 @@ export const customDropDownCell = {
 export const customHedearCell = {
   paddingLeft: 20,
 }
+
+export const textLabels = {
+  body: {
+    noMatch: 'Извините, нет ни одной записи!',
+    toolTip: 'Сортировка',
+    // columnHeaderTooltip: column => `Sort for ${column.label}`
+  },
+  pagination: {
+    next: 'Следующая',
+    previous: 'Предыдущая',
+    rowsPerPage: 'Показывать строк:',
+    displayRows: 'из',
+  },
+  toolbar: {
+    search: 'Поиск',
+    downloadCsv: 'Скачать CSV',
+    print: 'Печать',
+    viewColumns: 'Просмотр столбцов',
+    filterTable: 'Фильтр',
+  },
+  filter: {
+    all: 'Все',
+    title: 'ФИЛЬТР',
+    reset: 'СБРОС',
+  },
+  viewColumns: {
+    title: 'Показывать столбцы',
+    titleAria: 'Показать/скрыть столбцы',
+  },
+  selectedRows: {
+    text: 'строк(а)',
+    delete: 'Удалить',
+    deleteAria: 'Удалить',
+  },
+}

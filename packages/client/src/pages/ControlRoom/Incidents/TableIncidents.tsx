@@ -1,7 +1,7 @@
 import { memo, useState } from 'react'
 import { INC } from 'store/slices/incidents/interfaces'
 import { MUIDataTableOptions } from 'mui-datatables'
-import { customHedearCell } from './data'
+import { customHedearCell, textLabels } from './data'
 import { DataTable } from 'components/DataTable'
 import { DenseTable } from './CustomToolbar'
 import { useTheme } from '@mui/material'
@@ -253,6 +253,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
     draggableColumns: {
       enabled: true,
     },
+    textLabels: textLabels,
     tableBodyHeight: '100%',
     customToolbar: () => {
       return (

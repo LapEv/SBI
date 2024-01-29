@@ -1,6 +1,8 @@
+import { styleINC } from './../pages/ControlRoom/Incidents/data'
 import { ThemeOptions } from '@mui/material/styles'
 import { red } from '@mui/material/colors'
 import { PaletteMode } from '@mui/material'
+import { style } from 'pages/ControlRoom/Incidents/data'
 
 export const ThemeMode = {
   light: 'light',
@@ -92,18 +94,6 @@ export const ThemeConfig = (mode: PaletteMode) =>
           }),
     },
     components: {
-      MuiTableHead: {
-        styleOverrides: {
-          root: {
-            color: mode === ThemeMode.dark ? '#000000' : '#FFFFFF',
-            backgroundColor:
-              mode === ThemeMode.dark
-                ? '#1E515D!important'
-                : '#C1EEE1!important',
-          },
-        },
-      },
-
       MuiTypography: {
         defaultProps: {
           fontWeight: 'bold',

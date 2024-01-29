@@ -109,6 +109,7 @@ export const DropDown = ({
           },
           '& :hover': {
             color: theme.palette.mode === 'dark' ? '#1E515D' : '#C1EEE1',
+            fontWeight: 'bold',
           },
         },
       }}
@@ -234,12 +235,19 @@ export const DropDownIncidents = ({
           minHeight: 30,
           maxHeight: 225,
           fontSize: 14,
-          color: theme.palette.mode === 'dark' ? '#1E515D' : '#C1EEE1',
+          color:
+            theme.palette.mode === 'dark'
+              ? '#1E515D!important'
+              : '#C1EEE1!important',
           '& li': {
-            borderColor: theme.palette.mode === 'dark' ? '#1E515D' : '#C1EEE1',
+            borderColor:
+              theme.palette.mode === 'dark'
+                ? '#1E515D!important'
+                : '#C1EEE1!important',
           },
           '& :hover': {
             color: theme.palette.mode === 'light' ? '#FFFFFF' : '#000000',
+            fontWeight: 'bold',
           },
         },
       }}

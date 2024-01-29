@@ -1,7 +1,7 @@
 import { memo, useState } from 'react'
 import { INC } from 'store/slices/incidents/interfaces'
 import { MUIDataTableOptions } from 'mui-datatables'
-import { customHedearCell, textLabels } from './data'
+import { textLabels } from './data'
 import { DataTable } from 'components/DataTable'
 import { DenseTable } from './CustomToolbar'
 import { useTheme } from '@mui/material'
@@ -15,8 +15,8 @@ interface INCTable {
 }
 
 export const TableIncidents = memo(({ incidents }: INCTable) => {
-  const theme = useTheme()
   const [denseTable, setDenseTable] = useState(false)
+  const theme = useTheme()
 
   const INCColumn: INC_Column[] = [
     {
@@ -244,11 +244,11 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
   const options: MUIDataTableOptions = {
     filter: true,
     rowsPerPage: 10,
-    filterType: 'dropdown',
+    filterType: 'multiselect',
     resizableColumns: true,
     responsive: 'vertical',
-    // fixedHeader: true,
-    // fixedSelectColumn: true,
+    fixedHeader: true,
+    fixedSelectColumn: true,
     // resizableColumns: true,
     draggableColumns: {
       enabled: true,
@@ -263,16 +263,14 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
     setRowProps: (row, dataIndex, rowIndex) => {
       return {
         style: {
-          height: 40,
-          maxHeight: 40,
           backgroundColor:
             rowIndex % 2 !== 0
               ? theme.palette.mode === 'dark'
-                ? '#1E515D'
-                : '#C1EEE1'
+                ? '#1d4751'
+                : '#9ed3c4'
               : theme.palette.mode === 'dark'
-              ? '#1d4751'
-              : '#9ed3c4',
+              ? '#1E515D'
+              : '#C1EEE1',
         },
       }
     },

@@ -246,7 +246,7 @@ export const textLabels = {
     titleAria: 'Показать/скрыть столбцы',
   },
   selectedRows: {
-    text: 'строк(а)',
+    text: 'строк(и,а)',
     delete: 'Удалить',
     deleteAria: 'Удалить',
   },

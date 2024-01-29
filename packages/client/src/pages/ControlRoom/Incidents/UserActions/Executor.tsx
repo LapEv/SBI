@@ -14,7 +14,7 @@ export const Executor = memo(({ value, id }: IExecutor) => {
   const setData = (data: Options) => {
     setExecutor(data)
     changeExecutor({ id, id_incExecutor: data.id })
-    changeResponsible({ id, id_incResponsible: user.id })
+    changeResponsible({ id, id_incResponsible: user.id as string })
   }
 
   return (

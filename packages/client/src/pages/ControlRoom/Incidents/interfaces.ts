@@ -18,6 +18,7 @@ export interface EnhancedTableToolbarProps {
 export interface INC_Column {
   name: string
   label: string
+  index?: number
   options: {
     filter: boolean
     sort: boolean

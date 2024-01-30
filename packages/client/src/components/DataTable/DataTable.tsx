@@ -16,12 +16,19 @@ const StyledDataTable = styled(MUIDataTable)(({ theme }) => ({
   },
 }))
 
+declare module '@mui/material/styles' {
+  interface Components {
+    [key: string]: any
+  }
+}
 export const DataTable = ({ title, data, options, columns }: IDataTable) => {
   return (
     <ThemeProvider
       theme={(theme: Theme) =>
         createTheme({
+          ...theme,
           components: {
+            ...theme.components,
             MuiPopover: {
               styleOverrides: {
                 paper: {
@@ -135,10 +142,12 @@ export const DataTable = ({ title, data, options, columns }: IDataTable) => {
                   minHeight: 10,
                   padding: 0,
                   paddingLeft: 5,
+                  // display: 'block',
+                  boxSizing: 'border-box',
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
-                  width: '100%!important',
+                  // width: '100%!important',
                   backgroundColor:
                     theme.palette.mode === ThemeMode.dark
                       ? '#1d4751'
@@ -178,6 +187,17 @@ export const DataTable = ({ title, data, options, columns }: IDataTable) => {
                     theme.palette.mode === ThemeMode.light
                       ? '#000000'
                       : '#FFFFFF',
+                },
+              },
+            },
+            MuiTableCell: {
+              styleOverrides: {
+                root: {
+                  // display: 'block',
+                  boxSizing: 'border-box',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
                 },
               },
             },

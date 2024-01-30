@@ -186,13 +186,13 @@ export const MapINCInputFields = [
 ]
 
 export const customCell = {
-  width: 'auto',
+  // width: 'auto',
   maxWidth: 150,
   height: 30,
   p: 0,
-  display: 'flex',
-  justifyContent: 'flex-start',
-  alignItems: 'center',
+  // display: 'flex',
+  // justifyContent: 'flex-start',
+  // alignItems: 'center',
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
@@ -215,6 +215,9 @@ export const customDropDownCell = {
 
 export const customHedearCell = {
   paddingLeft: 20,
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
 }
 
 export const textLabels = {

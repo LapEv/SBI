@@ -1,8 +1,6 @@
-import { styleINC } from './../pages/ControlRoom/Incidents/data'
 import { ThemeOptions } from '@mui/material/styles'
 import { red } from '@mui/material/colors'
 import { PaletteMode } from '@mui/material'
-import { style } from 'pages/ControlRoom/Incidents/data'
 
 export const ThemeMode = {
   light: 'light',

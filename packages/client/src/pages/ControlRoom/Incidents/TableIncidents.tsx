@@ -4,13 +4,11 @@ import { MUIDataTableOptions, MUIDataTableState } from 'mui-datatables'
 import { textLabels } from './data'
 import { DataTable } from 'components/DataTable'
 import { DenseTable } from './CustomToolbar'
-import { useTheme } from '@mui/material'
+import { TableRow, TableCell, useTheme } from '@mui/material'
 import { Executor } from './UserActions/Executor'
 import { INC_Column, ITableMeta } from './interfaces'
 import { CustomCell } from './CustomCell'
 import { UserResponsible } from './UserActions/UserResponsible'
-import { sortArrayOfObjects } from 'utils/sortArrayOfObjects'
-
 interface INCTable {
   incidents: INC[]
 }
@@ -278,14 +276,6 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
   }
 
   const handleTableChange = (action: string, tableState: MUIDataTableState) => {
-    if (action === 'propsUpdate') return
-    if (action === 'columnOrderChange') {
-      localStorage.setItem(
-        'IncidentsColumnOrder',
-        tableState.columnOrder.toString()
-      )
-      return
-    }
     if (action === 'viewColumnsChange') {
       const display = tableState.columns
         .map(({ display, name }) => (display === 'false' ? name : null))
@@ -310,6 +300,21 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
     tableBodyHeight: '100%',
     rowsPerPageOptions: [10, 25, 50],
     columnOrder: getcolumnOrderStorage(),
+    expandableRows: true,
+    renderExpandableRow: (rowData, rowMeta) => {
+      const colSpan = rowData.length + 1
+      return (
+        <TableRow>
+          <TableCell colSpan={colSpan}>
+            Custom expandable row option. Data: {JSON.stringify(rowData)}
+          </TableCell>
+        </TableRow>
+      )
+    },
+    onColumnOrderChange: newColumnOrder =>
+      localStorage.setItem('IncidentsColumnOrder', newColumnOrder.toString()),
+    // onViewColumnsChange: (changedColumn, action) =>
+    //   console.log(' action= ', action),
     onTableChange: handleTableChange,
     onTableInit: handleTableInit,
     customToolbar: () => {

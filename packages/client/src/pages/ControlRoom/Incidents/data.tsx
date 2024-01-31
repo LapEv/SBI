@@ -2,8 +2,6 @@ import { NoRequiredValidation, lightTextValidation } from 'utils/validatorRules'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
 import EditIcon from '@mui/icons-material/Edit'
-import { INC_Column, ITableMeta } from './interfaces'
-import { CustomCell, UserResponsible, Executor } from './'
 
 export const menuData = [
   {
@@ -45,6 +43,7 @@ export const createIncident = [
     icon: <AddCircleOutlineIcon fontSize="medium" />,
   },
 ]
+
 export const createRequest = [
   {
     name: 'newRequest',
@@ -97,6 +96,107 @@ export const MapINCInputFields = [
     label: 'Выберите SLA',
     validation: NoRequiredValidation,
     type: 'dropdown',
+    required: true,
+  },
+  {
+    name: 'contract',
+    label: 'Выберите контракт',
+    validation: NoRequiredValidation,
+    type: 'dropdown',
+    required: true,
+  },
+  {
+    name: 'timeSLA',
+    label: 'Выберите время SLA',
+    validation: NoRequiredValidation,
+    type: 'datetime',
+    required: true,
+  },
+  {
+    name: 'object',
+    label: 'Выберите объект',
+    validation: NoRequiredValidation,
+    type: 'dropdown',
+    required: true,
+  },
+  {
+    name: 'typeOfWrok',
+    label: 'Выберите тип работ',
+    validation: NoRequiredValidation,
+    type: 'dropdown',
+    required: true,
+  },
+  {
+    name: 'equipment',
+    label: 'Выберите классификатор',
+    validation: NoRequiredValidation,
+    type: 'dropdown',
+    required: true,
+  },
+  {
+    name: 'cientINC',
+    label: 'Введите клиентский номер',
+    validation: NoRequiredValidation,
+    type: 'text',
+    required: false,
+  },
+  {
+    name: 'model',
+    label: 'Выберите модель',
+    validation: NoRequiredValidation,
+    type: 'dropdown',
+    required: true,
+  },
+  {
+    name: 'applicant',
+    label: 'Введите заявителя',
+    validation: NoRequiredValidation,
+    type: 'text',
+    required: false,
+  },
+  {
+    name: 'typicalMalfunction',
+    label: 'Выберите типовую неисправность',
+    validation: NoRequiredValidation,
+    type: 'dropdown',
+    required: true,
+  },
+  {
+    name: 'applicantContacts',
+    label: 'Введите контакты заявителя',
+    validation: NoRequiredValidation,
+    type: 'text',
+    required: false,
+  },
+  {
+    name: 'description',
+    label: 'Введите описание к инциденту',
+    validation: NoRequiredValidation,
+    type: 'text',
+    required: false,
+  },
+  {
+    name: 'comments',
+    label: 'Введите комментарии',
+    validation: NoRequiredValidation,
+    type: 'text',
+    required: false,
+  },
+]
+
+export const MapIncidentFields = [
+  {
+    name: 'client',
+    label: 'Выберите клиента',
+    validation: NoRequiredValidation,
+    type: 'text',
+    required: true,
+  },
+  {
+    name: 'sla',
+    label: 'Выберите SLA',
+    validation: NoRequiredValidation,
+    type: 'text',
     required: true,
   },
   {

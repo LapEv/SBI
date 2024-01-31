@@ -1,17 +1,27 @@
 import { memo, useState } from 'react'
 import { INC } from 'store/slices/incidents/interfaces'
 import { MUIDataTableOptions, MUIDataTableState } from 'mui-datatables'
-import { textLabels } from './data'
+import { MapIncidentFields, textLabels } from './data'
 import { DataTable } from 'components/DataTable'
-import { DenseTable } from './CustomToolbar'
-import { TableRow, TableCell, useTheme } from '@mui/material'
-import { Executor } from './UserActions/Executor'
+import { TableRow, TableCell, useTheme, Box, styled } from '@mui/material'
 import { INC_Column, ITableMeta } from './interfaces'
-import { CustomCell } from './CustomCell'
-import { UserResponsible } from './UserActions/UserResponsible'
+import {
+  DenseTable,
+  CustomCell,
+  Executor,
+  UserResponsible,
+  IncidentData,
+} from './'
+import { customCell } from './data'
+import { TextField } from 'components/TextFields'
+
 interface INCTable {
   incidents: INC[]
 }
+
+const StyledBox = styled(Box)({
+  width: '100%',
+})
 
 export const TableIncidents = memo(({ incidents }: INCTable) => {
   const [denseTable, setDenseTable] = useState<boolean>(
@@ -304,11 +314,25 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
     renderExpandableRow: (rowData, rowMeta) => {
       const colSpan = rowData.length + 1
       return (
-        <TableRow>
-          <TableCell colSpan={colSpan}>
-            Custom expandable row option. Data: {JSON.stringify(rowData)}
-          </TableCell>
-        </TableRow>
+        <>
+          <TableRow></TableRow>
+          {MapIncidentFields.map(value => {
+            return (
+              <TextField
+                key={value.name}
+                type={value.type}
+                required={value.required ?? true}
+                variant="outlined"
+                sx={{ width: '45%', m: 2 }}
+                margin="normal"
+                value={value.name || ''}
+                // error={!!(errors?.list ?? [])[index]?.value?.message}
+                // helperText={(errors?.list ?? [])[index]?.value?.message}
+                // inputProps={{ step: 1 }}
+              />
+            )
+          })}
+        </>
       )
     },
     onColumnOrderChange: newColumnOrder =>

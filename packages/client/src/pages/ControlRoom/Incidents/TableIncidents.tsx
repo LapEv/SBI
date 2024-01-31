@@ -314,25 +314,28 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
     renderExpandableRow: (rowData, rowMeta) => {
       const colSpan = rowData.length + 1
       return (
-        <>
-          <TableRow></TableRow>
-          {MapIncidentFields.map(value => {
-            return (
-              <TextField
-                key={value.name}
-                type={value.type}
-                required={value.required ?? true}
-                variant="outlined"
-                sx={{ width: '45%', m: 2 }}
-                margin="normal"
-                value={value.name || ''}
-                // error={!!(errors?.list ?? [])[index]?.value?.message}
-                // helperText={(errors?.list ?? [])[index]?.value?.message}
-                // inputProps={{ step: 1 }}
-              />
-            )
-          })}
-        </>
+        <TableRow>
+          <TableCell sx={{ height: 700 }}>
+            <Box sx={{ position: 'absolute' }}>
+              {MapIncidentFields.map(value => {
+                return (
+                  <TextField
+                    key={value.name}
+                    type={value.type}
+                    required={value.required ?? true}
+                    variant="outlined"
+                    sx={{ width: '45%', m: 2 }}
+                    margin="normal"
+                    value={value.name || ''}
+                    // error={!!(errors?.list ?? [])[index]?.value?.message}
+                    // helperText={(errors?.list ?? [])[index]?.value?.message}
+                    // inputProps={{ step: 1 }}
+                  />
+                )
+              })}
+            </Box>
+          </TableCell>
+        </TableRow>
       )
     },
     onColumnOrderChange: newColumnOrder =>

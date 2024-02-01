@@ -19,10 +19,6 @@ interface INCTable {
   incidents: INC[]
 }
 
-const StyledBox = styled(Box)({
-  width: '100%',
-})
-
 export const TableIncidents = memo(({ incidents }: INCTable) => {
   const [denseTable, setDenseTable] = useState<boolean>(
     localStorage.getItem('IncidentsDenseTable') === '1' ? true : false
@@ -315,25 +311,8 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       const colSpan = rowData.length + 1
       return (
         <TableRow>
-          <TableCell sx={{ height: 700 }}>
-            <Box sx={{ position: 'absolute' }}>
-              {MapIncidentFields.map(value => {
-                return (
-                  <TextField
-                    key={value.name}
-                    type={value.type}
-                    required={value.required ?? true}
-                    variant="outlined"
-                    sx={{ width: '45%', m: 2 }}
-                    margin="normal"
-                    value={value.name || ''}
-                    // error={!!(errors?.list ?? [])[index]?.value?.message}
-                    // helperText={(errors?.list ?? [])[index]?.value?.message}
-                    // inputProps={{ step: 1 }}
-                  />
-                )
-              })}
-            </Box>
+          <TableCell sx={{ height: 'auto' }}>
+            <IncidentData />
           </TableCell>
         </TableRow>
       )

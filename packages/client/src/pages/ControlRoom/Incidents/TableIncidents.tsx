@@ -1,7 +1,7 @@
 import { memo, useState } from 'react'
 import { INC } from 'store/slices/incidents/interfaces'
 import { MUIDataTableOptions, MUIDataTableState } from 'mui-datatables'
-import { MapIncidentFields, textLabels } from './data'
+import { textLabels } from './data'
 import { DataTable } from 'components/DataTable'
 import { TableRow, TableCell, useTheme, Box, styled } from '@mui/material'
 import { INC_Column, ITableMeta } from './interfaces'
@@ -14,12 +14,14 @@ import {
 } from './'
 import { customCell } from './data'
 import { TextField } from 'components/TextFields'
+import { height } from '@mui/system'
 
 interface INCTable {
   incidents: INC[]
 }
 
 export const TableIncidents = memo(({ incidents }: INCTable) => {
+  const [heightINCData, setHeightINCData] = useState<number>(0)
   const [denseTable, setDenseTable] = useState<boolean>(
     localStorage.getItem('IncidentsDenseTable') === '1' ? true : false
   )
@@ -307,13 +309,14 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
     rowsPerPageOptions: [10, 25, 50],
     columnOrder: getcolumnOrderStorage(),
     expandableRows: true,
-    renderExpandableRow: (rowData, rowMeta) => {
-      const colSpan = rowData.length + 1
+    renderExpandableRow: (rowData, { dataIndex }) => {
+      // console.log('values = ', incidents[dataIndex])
       return (
-        <TableRow>
-          <TableCell sx={{ height: 'auto' }}>
-            <IncidentData />
-          </TableCell>
+        <TableRow sx={{ height: heightINCData }}>
+          <IncidentData
+            values={incidents[dataIndex]}
+            setHeight={setHeightINCData}
+          />
         </TableRow>
       )
     },

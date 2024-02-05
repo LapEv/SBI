@@ -248,6 +248,35 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
         },
       },
     },
+    {
+      name: 'description',
+      label: 'Описание',
+      options: {
+        filter: true,
+        sort: true,
+        setCellHeaderProps: () => ({
+          style: { padding: !denseTable ? 15 : 8 },
+        }),
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
+      },
+    },
+
+    {
+      name: 'comment',
+      label: 'Комментарий',
+      options: {
+        filter: true,
+        sort: true,
+        setCellHeaderProps: () => ({
+          style: { padding: !denseTable ? 15 : 8 },
+        }),
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
+      },
+    },
   ]
 
   const [tableColumn, setTableColumn] = useState<INC_Column[]>(INCColumn)
@@ -310,7 +339,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
     columnOrder: getcolumnOrderStorage(),
     expandableRows: true,
     renderExpandableRow: (rowData, { dataIndex }) => {
-      // console.log('values = ', incidents[dataIndex])
+      console.log('values = ', incidents[dataIndex])
       return (
         <TableRow sx={{ height: heightINCData }}>
           <IncidentData

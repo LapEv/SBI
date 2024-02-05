@@ -37,6 +37,7 @@ const StyledBoxContainer = styled(Box)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'row',
     color: theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
+    width: '100%',
   },
 }))
 
@@ -78,63 +79,81 @@ export const IncidentData =
           position: 'absolute',
           display: 'flex',
           flexWrap: 'wrap',
+          flexDirection: 'row',
+          width: '100%',
           justifyContent: 'space-between',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           // top,
           p: 1,
           pl: 2,
         }}>
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{ width: '50%' }}>
           <StyledBoxContainer>
             <StyledBoxLabel>Инцидент: </StyledBoxLabel>
-            <StyledBox>{`  ${values.incident}`}</StyledBox>
+            <StyledBox>{`  ${values.incident ?? ''}`}</StyledBox>
           </StyledBoxContainer>
           <StyledBoxContainer>
             <StyledBoxLabel>Номер: </StyledBoxLabel>
-            <StyledBox>{`  ${values.numberINC}`}</StyledBox>
+            <StyledBox>{`  ${values.numberINC ?? ''}`}</StyledBox>
           </StyledBoxContainer>
           <StyledBoxContainer>
             <StyledBoxLabel>Номер клиента: </StyledBoxLabel>
-            <StyledBox>{`  ${values.clientINC}`}</StyledBox>
+            <StyledBox>{`  ${values.clientINC ?? ''}`}</StyledBox>
           </StyledBoxContainer>
           <StyledBoxContainer>
             <StyledBoxLabel>Клиент: </StyledBoxLabel>
-            <StyledBox>{`  ${values.client}`}</StyledBox>
+            <StyledBox>{`  ${values.client ?? ''}`}</StyledBox>
           </StyledBoxContainer>
           <StyledBoxContainer>
             <StyledBoxLabel>Контракт: </StyledBoxLabel>
-            <StyledBox>{`  ${values.contract}`}</StyledBox>
+            <StyledBox>{`  ${values.contract ?? ''}`}</StyledBox>
           </StyledBoxContainer>
           <StyledBoxContainer>
             <StyledBoxLabel>Объект: </StyledBoxLabel>
-            <StyledBox>{`  ${values.object}`}</StyledBox>
+            <StyledBox>{`  ${values.object ?? ''}`}</StyledBox>
           </StyledBoxContainer>
           <StyledBoxContainer>
             <StyledBoxLabel>Регион: </StyledBoxLabel>
-            <StyledBox>{`  ${values.region}`}</StyledBox>
+            <StyledBox>{`  ${values.region ?? ''}`}</StyledBox>
           </StyledBoxContainer>
 
           <StyledBoxContainer>
             <StyledBoxLabel>Адрес: </StyledBoxLabel>
-            <StyledBox>{`  ${values.address}`}</StyledBox>
+            <StyledBox>{`  ${values.address ?? ''}`}</StyledBox>
           </StyledBoxContainer>
         </Box>
-        {/* {MapIncidentFields.map((value, index) => {
-          return (
-            <TextField
-              key={value.name}
-              type={value.type}
-              required={value.required ?? true}
-              variant="outlined"
-              sx={{ width: '28%', m: 1 }}
-              margin="normal"
-              value={values[index + 1].props.value || ''}
-              // error={!!(errors?.list ?? [])[index]?.value?.message}
-              // helperText={(errors?.list ?? [])[index]?.value?.message}
-              // inputProps={{ step: 1 }}
-            />
-          )
-        })} */}
+        <Box sx={{ width: '50%' }}>
+          <StyledBoxContainer>
+            <StyledBoxLabel>Категория: </StyledBoxLabel>
+            <StyledBox>{`  ${values.equipment ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+          <StyledBoxContainer>
+            <StyledBoxLabel>Модель: </StyledBoxLabel>
+            <StyledBox>{`  ${values.model ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+          <StyledBoxContainer>
+            <StyledBoxLabel>Неисправность: </StyledBoxLabel>
+            <StyledBox>{`  ${values.typicalMalfunction ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+          <StyledBoxContainer>
+            <StyledBoxLabel>Описание: </StyledBoxLabel>
+            <StyledBox
+              sx={{
+                overflowY: 'auto',
+                height: 'auto',
+                maxHeight: 125,
+              }}>{`  ${values.description ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+          <StyledBoxContainer>
+            <StyledBoxLabel>Комментарий: </StyledBoxLabel>
+            <StyledBox
+              sx={{
+                overflowY: 'auto',
+                height: 'auto',
+                maxHeight: 125,
+              }}>{`  ${values.comment ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+        </Box>
       </Box>
     )
   }

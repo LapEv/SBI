@@ -34,7 +34,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       options: {
         filter: false,
         sort: false,
-        display: false,
+        // display: false,
         viewColumns: false,
       },
     },
@@ -301,18 +301,20 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
     const columnViewStorage = localStorage
       .getItem('IncidentsViewColumns')
       ?.split(',')
-
-    if (columnViewStorage && columnViewStorage?.length > 1) {
-      tableColumn.map(
-        item =>
-          (item.options.display = !columnViewStorage?.includes(item.name)
-            ? true
-            : false)
-      )
-    }
+    console.log('columnViewStorage = ', columnViewStorage)
+    // if (columnViewStorage && columnViewStorage?.length > 1) {
+    //   const temp = tableColumn.map(
+    //     item =>
+    //       (item.options.display = !columnViewStorage?.includes(item.name)
+    //         ? true
+    //         : false)
+    //   )
+    //   console.log('temp = ', temp)
+    // }
   }
 
   const handleTableChange = (action: string, tableState: MUIDataTableState) => {
+    console.log('handleTableChange')
     if (action === 'viewColumnsChange') {
       const display = tableState.columns
         .map(({ display, name }) => (display === 'false' ? name : null))
@@ -380,6 +382,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       }
     },
   }
+
   return (
     <DataTable
       title={'Инциденты'}

@@ -72,11 +72,11 @@ export const incident: ModelAttributes<Model, Incindent> = {
   //   allowNull: true,
   // },
   description: {
-    type: DataType.STRING,
+    type: DataType.STRING(1024),
     allowNull: true,
   },
   comment: {
-    type: DataType.STRING,
+    type: DataType.STRING(1024),
     allowNull: true,
   },
   report: {

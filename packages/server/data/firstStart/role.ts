@@ -368,10 +368,6 @@ export const rolesStartData = [
   },
   {
     role: 'changeUserClosing',
-    nameRole: 'Изменение ответсвенного за перевод в статус проверки инцидента',
-  },
-  {
-    role: 'changeUserClosing',
     nameRole: 'Изменение ответсвенного за закрытие инцидента',
   },
   {

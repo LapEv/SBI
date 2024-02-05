@@ -34,7 +34,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       options: {
         filter: false,
         sort: false,
-        // display: false,
+        display: false,
         viewColumns: false,
       },
     },
@@ -44,6 +44,8 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       options: {
         filter: true,
         sort: true,
+        display: true,
+        viewColumns: true,
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -58,6 +60,8 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       options: {
         filter: true,
         sort: true,
+        display: true,
+        viewColumns: true,
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -72,6 +76,8 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       options: {
         filter: true,
         sort: true,
+        display: true,
+        viewColumns: true,
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -86,6 +92,8 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       options: {
         filter: true,
         sort: true,
+        display: true,
+        viewColumns: true,
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -100,6 +108,8 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       options: {
         filter: true,
         sort: true,
+        display: true,
+        viewColumns: true,
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -114,6 +124,8 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       options: {
         filter: true,
         sort: true,
+        display: true,
+        viewColumns: true,
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -128,6 +140,8 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       options: {
         filter: true,
         sort: true,
+        display: true,
+        viewColumns: true,
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -142,6 +156,8 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       options: {
         filter: true,
         sort: true,
+        display: true,
+        viewColumns: true,
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -156,6 +172,8 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       options: {
         filter: true,
         sort: true,
+        display: true,
+        viewColumns: true,
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -170,6 +188,8 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       options: {
         filter: true,
         sort: true,
+        display: true,
+        viewColumns: true,
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -184,6 +204,8 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       options: {
         filter: true,
         sort: true,
+        display: true,
+        viewColumns: true,
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -198,6 +220,8 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       options: {
         filter: true,
         sort: true,
+        display: true,
+        viewColumns: true,
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -212,6 +236,8 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       options: {
         filter: true,
         sort: true,
+        display: true,
+        viewColumns: true,
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -226,6 +252,8 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       options: {
         filter: true,
         sort: true,
+        display: true,
+        viewColumns: true,
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -240,6 +268,8 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       options: {
         filter: true,
         sort: true,
+        display: true,
+        viewColumns: true,
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -254,6 +284,8 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       options: {
         filter: true,
         sort: true,
+        display: true,
+        viewColumns: true,
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -269,6 +301,8 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       options: {
         filter: true,
         sort: true,
+        display: true,
+        viewColumns: true,
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -291,6 +325,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       .getItem('IncidentsColumnOrder')
       ?.split(',')
       .map(Number)
+
     if (columnOrderStorage && columnOrderStorage?.length > 1) {
       return columnOrderStorage
     }
@@ -302,15 +337,15 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       .getItem('IncidentsViewColumns')
       ?.split(',')
     console.log('columnViewStorage = ', columnViewStorage)
-    // if (columnViewStorage && columnViewStorage?.length > 1) {
-    //   const temp = tableColumn.map(
-    //     item =>
-    //       (item.options.display = !columnViewStorage?.includes(item.name)
-    //         ? true
-    //         : false)
-    //   )
-    //   console.log('temp = ', temp)
-    // }
+    if (columnViewStorage && columnViewStorage?.length > 1) {
+      const temp = tableColumn.map(
+        item =>
+          (item.options.display = !columnViewStorage?.includes(item.name)
+            ? true
+            : false)
+      )
+      console.log('temp = ', temp)
+    }
   }
 
   const handleTableChange = (action: string, tableState: MUIDataTableState) => {

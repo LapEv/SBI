@@ -83,6 +83,17 @@ const StyledBox = styled(Box)(({ theme }) => ({
       width: '75%',
       minWidth: '75%',
     },
+    '&::-webkit-scrollbar': {
+      backgroundColor: '#2b2b2b',
+      borderRadius: 8,
+      width: 10,
+    },
+    '&::-webkit-scrollbar-thumb': {
+      borderRadius: 8,
+      backgroundColor: '#6b6b6b',
+      minHeight: 24,
+      border: '3px solid #2b2b2b',
+    },
   },
 }))
 
@@ -171,6 +182,8 @@ export const IncidentData =
                 overflowY: 'auto',
                 height: 75,
                 maxHeight: 75,
+                scrollbarColor: '#6b6b6b #2b2b2b',
+                scrollbarWidth: 'thin',
               }}>{`  ${values.description ?? ''}`}</StyledBox>
           </StyledBoxContainer>
           <StyledBoxContainer>
@@ -180,6 +193,8 @@ export const IncidentData =
                 overflowY: 'auto',
                 height: 75,
                 maxHeight: 75,
+                scrollbarColor: '#6b6b6b #2b2b2b',
+                scrollbarWidth: 'thin',
               }}>{`  ${values.comment ?? ''}`}</StyledBox>
           </StyledBoxContainer>
         </Box>

@@ -137,8 +137,13 @@ export const ThemeConfig = (mode: PaletteMode) =>
       },
       MuiCssBaseline: {
         styleOverrides: {
+          html: {
+            scrollbarColor: '#6b6b6b #2b2b2b',
+            scrollbarWidth: 'thin',
+          },
           body: {
             scrollbarColor: '#6b6b6b #2b2b2b',
+            scrollbarWidth: 'thin',
             '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
               backgroundColor: '#2b2b2b',
               borderRadius: 8,

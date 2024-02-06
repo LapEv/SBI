@@ -4,6 +4,8 @@ import {
   ClassifierModels,
   Clients,
   Contracts,
+  IncidentLogs,
+  IncidentLogsRepos,
   IncidentRepos,
   IncidentStatusesRepos,
   IncindentStatuses,
@@ -17,6 +19,22 @@ import {
 } from './../db'
 import type { Request, Response } from 'express'
 import { AppConst } from '../const'
+
+const incLogs = [
+  {
+    model: Users,
+    required: true,
+    attributes: [
+      'id',
+      'username',
+      'firstName',
+      'lastName',
+      'middleName',
+      'shortName',
+      'active',
+    ],
+  },
+]
 
 const includes = [
   {
@@ -59,13 +77,11 @@ const includes = [
         model: Addresses,
         required: true,
         attributes: ['id', 'address', 'coordinates', 'active'],
-        where: { active: true },
       },
       {
         model: Regions,
         required: true,
         attributes: ['id', 'region', 'active'],
-        where: { active: true },
       },
     ],
   },
@@ -153,7 +169,14 @@ const includes = [
     required: true,
     attributes: ['id', 'typicalMalfunction', 'active'],
   },
+  {
+    model: IncidentLogs,
+    required: true,
+    attributes: ['time', 'log'],
+    include: incLogs,
+  },
 ]
+
 export class incidentService {
   newIncidentStatuses = async (_req: Request, res: Response) => {
     try {
@@ -368,8 +391,8 @@ export class incidentService {
           : lastINC[0].numberINC + 1
       const incident = `${AppConst.attrINC}0000${numberINC}`
       const timeRegistration = new Date()
-      const actionsComments = `${timeRegistration}: ${AppConst.ActionComment.incidentRegistration}${incident}`
-      await IncidentRepos.create({
+
+      const newINCdb = await IncidentRepos.create({
         numberINC,
         incident,
         clientINC,
@@ -378,7 +401,6 @@ export class incidentService {
         description,
         comment,
         methodsReuqest,
-        actionsComments,
         parentalIncident,
         relatedIncident,
         applicant,
@@ -398,6 +420,12 @@ export class incidentService {
         id_responsible: '',
         id_closingCheck: '',
         id_closing: '',
+      })
+      await IncidentLogsRepos.create({
+        id_incLog: newINCdb.id,
+        time: new Date(),
+        log: `${AppConst.ActionComment.incidentRegistration}${incident}`,
+        id_incLogUser: responsibleID,
       })
       const newINC = await IncidentRepos.findAll({
         where: { active: true },
@@ -494,9 +522,16 @@ export class incidentService {
     }
   }
   changeExecutor = async (_req: Request, res: Response) => {
-    const { id, id_incExecutor } = _req.body
+    const { id, id_incExecutor, incident, executor, userID } = _req.body
     try {
       await IncidentRepos.update(id, { id_incExecutor })
+      await IncidentLogsRepos.create({
+        id_incLog: id,
+        time: new Date(),
+        log: `${AppConst.ActionComment.changeExecutor.first}${incident}${AppConst.ActionComment.changeExecutor.second}${executor}`,
+        id_incLogUser: userID,
+      })
+
       const incs = await IncidentRepos.findAll({
         where: { active: true },
         include: includes,
@@ -509,11 +544,16 @@ export class incidentService {
     }
   }
   changeResponsible = async (_req: Request, res: Response) => {
-    const { id, id_incResponsible } = _req.body
-    console.log('id = ', id)
-    console.log('id_incResponsible = ', id_incResponsible)
+    const { id, id_incResponsible, incident, responsible, userID } = _req.body
     try {
       await IncidentRepos.update(id, { id_incResponsible })
+      await IncidentLogsRepos.create({
+        id_incLog: id,
+        time: new Date(),
+        log: `${AppConst.ActionComment.changeResponsible.first}${incident}${AppConst.ActionComment.changeResponsible.second}${responsible}`,
+        id_incLogUser: userID,
+      })
+
       const incs = await IncidentRepos.findAll({
         where: { active: true },
         // include: { all: true },
@@ -557,5 +597,21 @@ export class incidentService {
       /* eslint-enable @typescript-eslint/no-explicit-any */
       res.status(500).json({ error: ['db error', err] })
     }
+  }
+
+  getAllINCLogs = (_req: Request, res: Response) => {
+    IncidentLogsRepos.findAll({ include: incLogs })
+      .then(item => res.status(200).json(item))
+      .catch(err => res.status(500).json({ error: ['db error', err.status] }))
+  }
+  getINCLogs = (_req: Request, res: Response) => {
+    IncidentLogsRepos.findAll({
+      where: { active: true },
+      include: incLogs,
+    })
+      .then(logs => {
+        res.status(200).json(logs)
+      })
+      .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
 }

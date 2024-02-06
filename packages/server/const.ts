@@ -283,6 +283,14 @@ export const AppConst = {
   },
   ActionComment: {
     incidentRegistration: 'Зарегистрирован инцидент под номером ',
+    changeExecutor: {
+      first: 'Для инцидента под номером ',
+      second: ' изменен исполнитель ',
+    },
+    changeResponsible: {
+      first: 'Для инцидента под номером ',
+      second: ' изменен ответственный ',
+    },
   },
   Statuses: {
     registered: 'Зарегистрирован',

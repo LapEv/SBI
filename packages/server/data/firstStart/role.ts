@@ -386,4 +386,8 @@ export const rolesStartData = [
     role: 'changeTypesOfWork',
     nameRole: 'Изменение данных типа работ',
   },
+  {
+    role: 'getINCLogs',
+    nameRole: 'Получение логов инцидентов',
+  },
 ]

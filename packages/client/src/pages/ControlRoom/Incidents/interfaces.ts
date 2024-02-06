@@ -36,6 +36,7 @@ export interface INC_Column {
 export interface IExecutor {
   value: string
   id: string
+  incident: string
 }
 
 export interface ICustomCell {

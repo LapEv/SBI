@@ -6,15 +6,27 @@ import { useIncidents } from 'hooks/incidents/useINC'
 import { IExecutor } from '../interfaces'
 import { customDropDownCell } from '../data'
 
-export const Executor = memo(({ value, id }: IExecutor) => {
+export const Executor = memo(({ value, id, incident }: IExecutor) => {
   const [{ fieldEngineers, user }] = useAuth()
   const [_, { changeExecutor, changeResponsible }] = useIncidents()
   const [executor, setExecutor] = useState<Options>({ label: value, id: '' })
 
   const setData = (data: Options) => {
     setExecutor(data)
-    changeExecutor({ id, id_incExecutor: data.id })
-    changeResponsible({ id, id_incResponsible: user.id as string })
+    changeExecutor({
+      id,
+      id_incExecutor: data.id,
+      incident,
+      executor: data.label,
+      userID: user.id as string,
+    })
+    changeResponsible({
+      id,
+      id_incResponsible: user.id as string,
+      incident,
+      responsible: user.shortName as string,
+      userID: user.id as string,
+    })
   }
 
   return (

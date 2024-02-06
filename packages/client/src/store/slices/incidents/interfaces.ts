@@ -56,6 +56,7 @@ export interface INC {
   ClassifierEquipment?: ClassifierEquipmentForINC
   ClassifierModel?: ClassifierModelForINC
   TypicalMalfunction?: TypicalMalfunctionForINC
+  IncidentLogs?: IncidentLogsForINC[]
 }
 
 export interface AddINC {
@@ -86,6 +87,20 @@ export interface INCStatuses {
 
 export interface AddINCStatuses {
   statusINC: string
+}
+
+export interface IncidentLogsForINC {
+  time: string
+  log: string
+  User: {
+    id: string
+    username: string
+    firstName: string
+    lastname: string
+    middleName: string
+    shortName: string
+    active: boolean
+  }
 }
 
 export interface TypesOfWork {
@@ -144,11 +159,17 @@ export interface ChangeINC {
 export interface ChangeExecutor {
   id: string
   id_incExecutor: string
+  incident: string
+  executor: string
+  userID: string
 }
 
 export interface ChangeResponsible {
   id: string
   id_incResponsible: string
+  incident: string
+  responsible: string
+  userID: string
 }
 
 export interface ChangeClosingCheck {

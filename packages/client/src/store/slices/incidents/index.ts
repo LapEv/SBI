@@ -55,6 +55,7 @@ const createINCData = (data: INC[]) => {
       equipment: item.ClassifierEquipment?.equipment as string,
       model: item.ClassifierModel?.model as string,
       typicalMalfunction: item.TypicalMalfunction?.typicalMalfunction as string,
+      logs: item.IncidentLogs,
     }
   })
 }

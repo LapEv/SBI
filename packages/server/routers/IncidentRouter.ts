@@ -135,5 +135,16 @@ export const incidentRouter = (apiRouter: Router) => {
     service.changeUserClosing
   )
 
+  router.get(
+    '/getINCLogs',
+    roleMiddleware(['getINCLogs', 'ADMIN', 'SUPERADMIN']),
+    service.getINCLogs
+  )
+  router.get(
+    '/getAllINCLogs',
+    roleMiddleware(['getAllINCLogs', 'ADMIN', 'SUPERADMIN']),
+    service.getAllINCLogs
+  )
+
   apiRouter.use('/incidents', router)
 }

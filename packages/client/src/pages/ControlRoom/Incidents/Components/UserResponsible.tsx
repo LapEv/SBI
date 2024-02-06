@@ -6,8 +6,8 @@ import { useIncidents } from 'hooks/incidents/useINC'
 import { IExecutor } from '../interfaces'
 import { customDropDownCell } from '../data'
 
-export const UserResponsible = memo(({ value, id }: IExecutor) => {
-  const [{ dispatchers }] = useAuth()
+export const UserResponsible = memo(({ value, id, incident }: IExecutor) => {
+  const [{ dispatchers, user }] = useAuth()
   const [_, { changeResponsible }] = useIncidents()
   const [responsible, setResposible] = useState<Options>({
     label: value,
@@ -16,7 +16,13 @@ export const UserResponsible = memo(({ value, id }: IExecutor) => {
 
   const setData = (data: Options) => {
     setResposible(data)
-    changeResponsible({ id, id_incResponsible: data.id })
+    changeResponsible({
+      id,
+      id_incResponsible: data.id as string,
+      incident,
+      responsible: data.label,
+      userID: user.id as string,
+    })
   }
 
   useEffect(() => {

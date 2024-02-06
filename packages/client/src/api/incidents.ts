@@ -116,11 +116,17 @@ export const changeINC = createAsyncThunk(
 
 export const changeExecutor = createAsyncThunk(
   'incidents/changeExecutor',
-  async ({ id, id_incExecutor }: ChangeExecutor, thunkAPI) => {
+  async (
+    { id, id_incExecutor, incident, executor, userID }: ChangeExecutor,
+    thunkAPI
+  ) => {
     try {
       const { data } = await authhost.post(ApiEndPoints.INC.changeExecutor, {
         id,
         id_incExecutor,
+        incident,
+        executor,
+        userID,
       })
       return {
         data,
@@ -141,11 +147,17 @@ export const changeExecutor = createAsyncThunk(
 
 export const changeResponsible = createAsyncThunk(
   'incidents/changeResponsible',
-  async ({ id, id_incResponsible }: ChangeResponsible, thunkAPI) => {
+  async (
+    { id, id_incResponsible, incident, responsible, userID }: ChangeResponsible,
+    thunkAPI
+  ) => {
     try {
       const { data } = await authhost.post(ApiEndPoints.INC.changeResponsible, {
         id,
         id_incResponsible,
+        incident,
+        responsible,
+        userID,
       })
       return {
         data,

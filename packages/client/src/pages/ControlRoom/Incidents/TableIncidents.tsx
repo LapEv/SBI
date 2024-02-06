@@ -3,7 +3,14 @@ import { INC } from 'store/slices/incidents/interfaces'
 import { MUIDataTableOptions, MUIDataTableState } from 'mui-datatables'
 import { textLabels } from './data'
 import { DataTable } from 'components/DataTable'
-import { TableRow, TableCell, useTheme, Box, styled } from '@mui/material'
+import {
+  TableRow,
+  TableCell,
+  useTheme,
+  Box,
+  styled,
+  touchRippleClasses,
+} from '@mui/material'
 import { INC_Column, ITableMeta } from './interfaces'
 import {
   DenseTable,
@@ -12,9 +19,6 @@ import {
   UserResponsible,
   IncidentData,
 } from './'
-import { customCell } from './data'
-import { TextField } from 'components/TextFields'
-import { height } from '@mui/system'
 
 interface INCTable {
   incidents: INC[]
@@ -35,7 +39,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
         filter: false,
         sort: false,
         display: false,
-        viewColumns: false,
+        viewColumns: true,
       },
     },
     {
@@ -258,7 +262,13 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
           style: { padding: !denseTable ? 15 : 8 },
         }),
         customBodyRender: (value: string, { rowData }: ITableMeta) => {
-          return <Executor value={value ?? ''} id={rowData[0]} />
+          return (
+            <Executor
+              value={value ?? ''}
+              id={rowData[0]}
+              incident={rowData[1]}
+            />
+          )
         },
       },
     },
@@ -274,7 +284,13 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
           style: { padding: !denseTable ? 15 : 8 },
         }),
         customBodyRender: (value: string, { rowData }: ITableMeta) => {
-          return <UserResponsible value={value ?? ''} id={rowData[0]} />
+          return (
+            <UserResponsible
+              value={value ?? ''}
+              id={rowData[0]}
+              incident={rowData[1]}
+            />
+          )
         },
       },
     },
@@ -352,7 +368,9 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
     console.log('handleTableChange')
     if (action === 'viewColumnsChange') {
       const display = tableState.columns
-        .map(({ display, name }) => (display === 'false' ? name : null))
+        .map(({ display, name }) =>
+          display === 'false' ? name : null || name === 'id' ? name : null
+        )
         .filter(item => item)
       localStorage.setItem('IncidentsViewColumns', display.toString())
       return

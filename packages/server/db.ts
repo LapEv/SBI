@@ -25,7 +25,12 @@ import {
   throughContractsSLA,
   throughContractsModels,
 } from './models/contracts'
-import { incident, incindentStatuses, typesOfWork } from './models/incidents'
+import {
+  incident,
+  incidentLogs,
+  incindentStatuses,
+  typesOfWork,
+} from './models/incidents'
 import { throughModelTypMalfunctions } from './models/classifier'
 
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
@@ -72,40 +77,33 @@ export const TypicalMalfunctions = sequelize.define(
   typicalMalfunctions,
   {}
 )
-
 export const ThroughModelTypMalfunctions = sequelize.define(
   'ThroughModelTypMalfunctions',
   throughModelTypMalfunctions,
   {}
 )
-
 export const SLA = sequelize.define('SLA', sla, {})
 export const OLA = sequelize.define('OLA', ola, {})
-
 export const ThroughContractsSLA = sequelize.define(
   'ThroughContractsSLA',
   throughContractsSLA,
   {}
 )
-
 export const ThroughContractsEquipments = sequelize.define(
   'ThroughContractsEquipments',
   throughContractsEquipments,
   {}
 )
-
 export const ThroughContractsModels = sequelize.define(
   'ThroughContractsModels',
   throughContractsModels,
   {}
 )
-
 export const ThroughContractsObjects = sequelize.define(
   'ThroughContractsObjects',
   throughContractsObjects,
   {}
 )
-
 export const Incidents = sequelize.define('Incidents', incident, {})
 export const IncindentStatuses = sequelize.define(
   'IncindentStatuses',
@@ -113,6 +111,7 @@ export const IncindentStatuses = sequelize.define(
   {}
 )
 export const TypesOfWork = sequelize.define('TypesOfWork', typesOfWork, {})
+export const IncidentLogs = sequelize.define('IncidentLogs', incidentLogs, {})
 
 RolesGroup.belongsToMany(Roles, { through: 'ThroughRolesGroup' })
 Roles.belongsToMany(RolesGroup, { through: 'ThroughRolesGroup' })
@@ -329,6 +328,12 @@ Incidents.belongsTo(TypicalMalfunctions, {
   targetKey: 'id',
 })
 
+Users.hasOne(IncidentLogs, { foreignKey: 'id_incLogUser', sourceKey: 'id' })
+IncidentLogs.belongsTo(Users, { foreignKey: 'id_incLogUser', targetKey: 'id' })
+
+Incidents.hasMany(IncidentLogs, { foreignKey: 'id_incLog' })
+IncidentLogs.belongsTo(Incidents, { foreignKey: 'id_incLog' })
+
 export const userRepos = new Repository(Users as ModelCtor)
 export const roleGroupRepos = new Repository(RolesGroup as ModelCtor)
 export const roleRepos = new Repository(Roles as ModelCtor)
@@ -378,6 +383,7 @@ export const IncidentStatusesRepos = new Repository(
 )
 export const IncidentRepos = new Repository(Incidents as ModelCtor)
 export const TypesOfWorkRepos = new Repository(TypesOfWork as ModelCtor)
+export const IncidentLogsRepos = new Repository(IncidentLogs as ModelCtor)
 
 export async function dbConnect() {
   try {

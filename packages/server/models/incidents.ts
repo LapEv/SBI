@@ -18,7 +18,7 @@ export interface Incindent {
   act: string[]
   active: boolean
   methodsReuqest: string
-  actionsComments: string
+  // actionsComments: string
   rating: number
   parentalIncident: string
   relatedIncident: string
@@ -80,7 +80,7 @@ export const incident: ModelAttributes<Model, Incindent> = {
     allowNull: true,
   },
   report: {
-    type: DataType.STRING,
+    type: DataType.STRING(1024),
     allowNull: true,
   },
   spaceParts: {
@@ -99,10 +99,10 @@ export const incident: ModelAttributes<Model, Incindent> = {
     type: DataType.STRING,
     allowNull: false,
   },
-  actionsComments: {
-    type: DataType.STRING,
-    allowNull: false,
-  },
+  // actionsComments: {
+  //   type: DataType.STRING,
+  //   allowNull: false,
+  // },
   rating: {
     type: DataType.INTEGER,
     allowNull: true,
@@ -171,4 +171,28 @@ export const typesOfWork: ModelAttributes<Model, TypesOfWork> = {
     type: DataType.BOOLEAN,
     allowNull: false,
   },
+}
+
+export interface IncidentLogs {
+  id: string
+  time: string
+  log: string
+}
+
+export const incidentLogs: ModelAttributes<Model, IncidentLogs> = {
+  id: {
+    type: DataType.STRING,
+    defaultValue: DataType.UUIDV4,
+    allowNull: false,
+    primaryKey: true,
+  },
+  time: {
+    type: DataType.DATE,
+    allowNull: false,
+  },
+  log: {
+    type: DataType.STRING,
+    allowNull: false,
+  },
+  // кто
 }

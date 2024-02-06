@@ -51,6 +51,8 @@ export function ContractPage({
     id_client,
   })
 
+  console.log('contract = ', contract)
+
   const {
     handleSubmit: handleSubmitAddContract,
     control: controlAddContract,
@@ -167,7 +169,6 @@ export function ContractPage({
     const temp = ClassifierEquipments?.map(item => [
       ...(item.ClassifierModels?.map(({ id }) => id) as string[]),
     ])[0]
-    console.log('temp = ', temp)
     setSelectedModels(temp as string[])
     setObjectID(Objects?.map(({ id }) => id) as string[])
   }, [])

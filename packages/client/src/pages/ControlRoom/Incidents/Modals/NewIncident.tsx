@@ -126,35 +126,42 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
 
     const setContract = (data: Options) => {
       setSelectedContract(data)
-      const contract = contracts.filter(({ id }) => id === data.id)[0]
-      setActiveContract(contract)
-      const listObjects = contract.Objects?.map(
-        ({ object, id, internalClientName, internalClientID }) => {
-          return {
-            label: object,
-            id: id as string,
-            description: internalClientName ?? '',
-            descriptionID: internalClientID ?? '',
+      if (data.id) {
+        const contract = contracts.filter(({ id }) => id === data.id)[0]
+        setActiveContract(contract)
+        const listObjects = contract.Objects?.map(
+          ({ object, id, internalClientName, internalClientID }) => {
+            return {
+              label: object,
+              id: id as string,
+              description: internalClientName ?? '',
+              descriptionID: internalClientID ?? '',
+            }
           }
-        }
-      ) as Options[]
-      setObjectList(listObjects)
-      const listSLAs = contract.SLAs?.map(({ sla, id }) => {
-        return {
-          label: sla,
-          id: id as string,
-        }
-      }) as Options[]
-      setSLAList(listSLAs)
-      const listEquipment = contract.ClassifierEquipments?.map(
-        ({ equipment, id }) => {
+        ) as Options[]
+        setObjectList(listObjects)
+        const listSLAs = contract.SLAs?.map(({ sla, id }) => {
           return {
-            label: equipment,
+            label: sla,
             id: id as string,
           }
-        }
-      ) as Options[]
-      setEquipmentList(listEquipment)
+        }) as Options[]
+        setSLAList(listSLAs)
+        const listEquipment = contract.ClassifierEquipments?.map(
+          ({ equipment, id }) => {
+            return {
+              label: equipment,
+              id: id as string,
+            }
+          }
+        ) as Options[]
+        setEquipmentList(listEquipment)
+      } else {
+        setActiveContract(undefined)
+        setObjectList([])
+        setObjectList([])
+        setEquipmentList([])
+      }
     }
 
     useEffect(() => {
@@ -209,37 +216,45 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
 
     const setEquimpent = (data: Options) => {
       setSelectedEquipment(data)
-      const activeEquipment = activeContract?.ClassifierEquipments?.filter(
-        item => item.id === data.id
-      )[0]
-      const listModels = activeEquipment?.ClassifierModels?.map(
-        ({ model, id }) => {
-          return {
-            label: model,
-            id: id as string,
+      if (data.id) {
+        const activeEquipment = activeContract?.ClassifierEquipments?.filter(
+          item => item.id === data.id
+        )[0]
+        const listModels = activeEquipment?.ClassifierModels?.map(
+          ({ model, id }) => {
+            return {
+              label: model,
+              id: id as string,
+            }
           }
-        }
-      ) as Options[]
-      setModelList(listModels)
+        ) as Options[]
+        setModelList(listModels)
+      } else {
+        setModelList([])
+      }
     }
 
     const setModel = (data: Options) => {
       setSelectedModel(data)
-      const activeEquipment = activeContract?.ClassifierEquipments?.filter(
-        item => item.id === selectedEquipment.id
-      )[0]
-      const activeModel = activeEquipment?.ClassifierModels?.filter(
-        item => item.id === data.id
-      )[0]
-      const listTypical = activeModel?.TypicalMalfunctions?.map(
-        ({ typicalMalfunction, id }) => {
-          return {
-            label: typicalMalfunction,
-            id: id as string,
+      if (data.id) {
+        const activeEquipment = activeContract?.ClassifierEquipments?.filter(
+          item => item.id === selectedEquipment.id
+        )[0]
+        const activeModel = activeEquipment?.ClassifierModels?.filter(
+          item => item.id === data.id
+        )[0]
+        const listTypical = activeModel?.TypicalMalfunctions?.map(
+          ({ typicalMalfunction, id }) => {
+            return {
+              label: typicalMalfunction,
+              id: id as string,
+            }
           }
-        }
-      ) as Options[]
-      setTypicalMalfunctionList(listTypical)
+        ) as Options[]
+        setTypicalMalfunctionList(listTypical)
+      } else {
+        setTypicalMalfunctionList([])
+      }
     }
 
     return (

@@ -45,7 +45,21 @@ const StyledBoxLabel = styled(Box)(({ theme }) => ({
   '&.MuiBox-root': {
     fontSize: '0.875rem',
     margin: 5,
-    width: 130,
+    width: '35%',
+    minWidth: '35%',
+
+    [theme.breakpoints.up('md')]: {
+      width: '33%',
+      minWidth: '33%',
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: '27%',
+      minWidth: '27%',
+    },
+    [theme.breakpoints.up('xl')]: {
+      width: '20%',
+      minWidth: '20%',
+    },
   },
 }))
 
@@ -54,6 +68,21 @@ const StyledBox = styled(Box)(({ theme }) => ({
     fontSize: '0.925rem',
     fontWeight: 'bold',
     margin: 5,
+    width: '60%',
+    minWidth: '60%',
+
+    [theme.breakpoints.up('md')]: {
+      width: '62%',
+      minWidth: '62%',
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: '69%',
+      minWidth: '69%',
+    },
+    [theme.breakpoints.up('xl')]: {
+      width: '75%',
+      minWidth: '75%',
+    },
   },
 }))
 
@@ -83,7 +112,7 @@ export const IncidentData =
           width: '100%',
           justifyContent: 'space-between',
           alignItems: 'flex-start',
-          // top,
+          minWidth: 625,
           p: 1,
           pl: 2,
         }}>
@@ -140,8 +169,8 @@ export const IncidentData =
             <StyledBox
               sx={{
                 overflowY: 'auto',
-                height: 'auto',
-                maxHeight: 125,
+                height: 75,
+                maxHeight: 75,
               }}>{`  ${values.description ?? ''}`}</StyledBox>
           </StyledBoxContainer>
           <StyledBoxContainer>
@@ -149,8 +178,8 @@ export const IncidentData =
             <StyledBox
               sx={{
                 overflowY: 'auto',
-                height: 'auto',
-                maxHeight: 125,
+                height: 75,
+                maxHeight: 75,
               }}>{`  ${values.comment ?? ''}`}</StyledBox>
           </StyledBoxContainer>
         </Box>

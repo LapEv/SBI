@@ -18,7 +18,6 @@ export interface Incindent {
   act: string[]
   active: boolean
   methodsReuqest: string
-  // actionsComments: string
   rating: number
   parentalIncident: string
   relatedIncident: string
@@ -67,10 +66,6 @@ export const incident: ModelAttributes<Model, Incindent> = {
     type: DataType.DATE,
     allowNull: true,
   },
-  // responsibleClosing: {
-  //   type: DataType.STRING,
-  //   allowNull: true,
-  // },
   description: {
     type: DataType.STRING(1024),
     allowNull: true,

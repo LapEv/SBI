@@ -31,6 +31,7 @@ export const rolesGroupStartData = [
       'getContracts',
       'changeExecutor',
       'changeResponsible',
+      'changeStatus',
       'changeUserClosingCheck',
       'changeUserClosing',
     ],

@@ -132,8 +132,10 @@ export const changeExecutor = createAsyncThunk(
       return {
         data,
         message: {
-          text: `Назначен исполнитель ""!`,
-          type: 'success',
+          text: id_incExecutor.length
+            ? `${incident}: Назначен исполнитель "${executor}"`
+            : `${incident}: Удален исполнитель!`,
+          type: id_incExecutor.length ? 'success' : 'info',
         },
       }
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -163,8 +165,10 @@ export const changeResponsible = createAsyncThunk(
       return {
         data,
         message: {
-          text: `Назначен ответственный!`,
-          type: 'success',
+          text: id_incResponsible.length
+            ? `${incident}: Назначен ответственный "${responsible}"`
+            : `${incident}: Удален ответственный!`,
+          type: id_incResponsible.length ? 'success' : 'info',
         },
       }
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -180,13 +184,13 @@ export const changeResponsible = createAsyncThunk(
 export const changeStatus = createAsyncThunk(
   'incidents/changeStatus',
   async (
-    { id, id_incResponsible, incident, status, userID }: ChangeStatus,
+    { id, id_incStatus, incident, status, userID }: ChangeStatus,
     thunkAPI
   ) => {
     try {
-      const { data } = await authhost.post(ApiEndPoints.INC.changeResponsible, {
+      const { data } = await authhost.post(ApiEndPoints.INC.changeStatus, {
         id,
-        id_incResponsible,
+        id_incStatus,
         incident,
         status,
         userID,
@@ -194,7 +198,7 @@ export const changeStatus = createAsyncThunk(
       return {
         data,
         message: {
-          text: `Назначен ответственный!`,
+          text: `${incident}: Назначен статус "${status}"`,
           type: 'success',
         },
       }

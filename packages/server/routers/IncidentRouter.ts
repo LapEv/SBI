@@ -125,6 +125,11 @@ export const incidentRouter = (apiRouter: Router) => {
     service.changeResponsible
   )
   router.post(
+    '/changeStatus',
+    roleMiddleware(['changeStatus', 'ADMIN', 'SUPERADMIN']),
+    service.changeStatus
+  )
+  router.post(
     '/changeUserClosingCheck',
     roleMiddleware(['changeUserClosingCheck', 'ADMIN', 'SUPERADMIN']),
     service.changeUserClosingCheck

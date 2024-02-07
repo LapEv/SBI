@@ -172,7 +172,7 @@ const includes = [
   {
     model: IncidentLogs,
     required: true,
-    attributes: ['time', 'log'],
+    attributes: ['id', 'time', 'log'],
     include: incLogs,
   },
 ]
@@ -524,7 +524,9 @@ export class incidentService {
   changeExecutor = async (_req: Request, res: Response) => {
     const { id, id_incExecutor, incident, executor, userID } = _req.body
     try {
-      await IncidentRepos.update(id, { id_incExecutor })
+      await IncidentRepos.update(id, {
+        id_incExecutor: id_incExecutor.length ? id_incExecutor : null,
+      })
       await IncidentLogsRepos.create({
         id_incLog: id,
         time: new Date(),
@@ -546,11 +548,62 @@ export class incidentService {
   changeResponsible = async (_req: Request, res: Response) => {
     const { id, id_incResponsible, incident, responsible, userID } = _req.body
     try {
-      await IncidentRepos.update(id, { id_incResponsible })
+      await IncidentRepos.update(id, {
+        id_incResponsible: id_incResponsible.length ? id_incResponsible : null,
+      })
       await IncidentLogsRepos.create({
         id_incLog: id,
         time: new Date(),
         log: `${AppConst.ActionComment.changeResponsible.first}${incident}${AppConst.ActionComment.changeResponsible.second}${responsible}`,
+        id_incLogUser: userID,
+      })
+
+      const incs = await IncidentRepos.findAll({
+        where: { active: true },
+        // include: { all: true },
+        include: includes,
+      })
+      res.status(200).json(incs)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res.status(500).json({ error: ['db error', err] })
+    }
+  }
+  changeStatus = async (_req: Request, res: Response) => {
+    const { id, id_incStatus, incident, status, userID } = _req.body
+    try {
+      const incStatuses = await IncidentStatusesRepos.findAll({
+        where: { active: true },
+      })
+      const inc = await IncidentRepos.findAll({
+        where: { id },
+      })
+      const newStatus = incStatuses.findIndex(item => item.id === id_incStatus)
+      const currentDate = new Date(Date.now())
+      const timeInWork = newStatus === 1 ? currentDate : inc[0].timeInWork
+      const timeCloseCheck =
+        newStatus === 2 ? currentDate : inc[0].timeCloseCheck
+      const timeClose = newStatus === 3 ? currentDate : inc[0].timeClose
+      const id_incResponsible =
+        newStatus === 1 ? userID : inc[0].id_incResponsible
+      const id_incClosingCheck =
+        newStatus === 2 ? userID : inc[0].id_incClosingCheck
+      const id_incClosing = newStatus === 3 ? userID : inc[0].id_incClosing
+
+      await IncidentRepos.update(id, {
+        id_incStatus,
+        timeInWork,
+        timeCloseCheck,
+        timeClose,
+        id_incResponsible,
+        id_incClosingCheck,
+        id_incClosing,
+      })
+      await IncidentLogsRepos.create({
+        id_incLog: id,
+        time: new Date(),
+        log: `${AppConst.ActionComment.changeStatus.first}${incident}${AppConst.ActionComment.changeStatus.second}${status}`,
         id_incLogUser: userID,
       })
 

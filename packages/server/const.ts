@@ -291,6 +291,10 @@ export const AppConst = {
       first: 'Для инцидента под номером ',
       second: ' изменен ответственный ',
     },
+    changeStatus: {
+      first: 'Для инцидента под номером ',
+      second: ' изменен статус ',
+    },
   },
   Statuses: {
     registered: 'Зарегистрирован',

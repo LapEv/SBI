@@ -1,28 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Box, Stack, Typography, styled, TableRow } from '@mui/material'
-import {
-  useForm,
-  useFieldArray,
-  Controller,
-  useFormState,
-} from 'react-hook-form'
-import { MultiTextField, TextField } from 'components/TextFields'
-import { modalStyle } from 'static/styles'
-import { ButtonsModalSection } from 'components/Buttons'
-import { MapIncidentFields } from '../data'
-import { useIncidents } from 'hooks/incidents/useINC'
-import { DropDown, emptyValue } from 'components/DropDown'
-import { useClients } from 'hooks/clients/useClients'
-import { Options } from 'components/DropDown/interface'
-import { useContracts } from 'hooks/contracts/useContracts'
-import { Contracts } from 'store/slices/contracts/interfaces'
-import { SLA } from 'store/slices/sla/interfaces'
-import { DateTimeField } from 'components/DatePicker'
-import dayjs, { Dayjs } from 'dayjs'
-import { getSLATime } from 'utils/getSLATime'
-import { useAuth } from 'hooks/auth/useAuth'
-import { convertDateToStringDDMMYYYYHHMMSS } from 'utils/convertDate'
-import { AddValuesProps, ChooseModalProps } from '../Modals/interfaces'
+import React, { useEffect } from 'react'
+import { Box, styled } from '@mui/material'
 import { ThemeMode } from '../../../../themes/themeConfig'
 
 export interface IncidentDataProps {
@@ -109,9 +86,6 @@ export const IncidentData =
       // setTop(Number(boxRef?.current?.clientHeight) / 2)
     }, [])
 
-    console.log('values = ', values.incident)
-    console.log('values = ', values)
-
     return (
       <Box
         ref={boxRef}
@@ -127,7 +101,7 @@ export const IncidentData =
           p: 1,
           pl: 2,
         }}>
-        <Box sx={{ width: '50%' }}>
+        <Box sx={{ width: '33%' }}>
           <StyledBoxContainer>
             <StyledBoxLabel>Инцидент: </StyledBoxLabel>
             <StyledBox>{`  ${values.incident ?? ''}`}</StyledBox>
@@ -156,13 +130,16 @@ export const IncidentData =
             <StyledBoxLabel>Регион: </StyledBoxLabel>
             <StyledBox>{`  ${values.region ?? ''}`}</StyledBox>
           </StyledBoxContainer>
-
           <StyledBoxContainer>
             <StyledBoxLabel>Адрес: </StyledBoxLabel>
             <StyledBox>{`  ${values.address ?? ''}`}</StyledBox>
           </StyledBoxContainer>
+          <StyledBoxContainer>
+            <StyledBoxLabel>Координаты: </StyledBoxLabel>
+            <StyledBox>{`  ${values.coordinates ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
         </Box>
-        <Box sx={{ width: '50%' }}>
+        <Box sx={{ width: '33%' }}>
           <StyledBoxContainer>
             <StyledBoxLabel>Категория: </StyledBoxLabel>
             <StyledBox>{`  ${values.equipment ?? ''}`}</StyledBox>
@@ -172,7 +149,7 @@ export const IncidentData =
             <StyledBox>{`  ${values.model ?? ''}`}</StyledBox>
           </StyledBoxContainer>
           <StyledBoxContainer>
-            <StyledBoxLabel>Неисправность: </StyledBoxLabel>
+            <StyledBoxLabel>Проблема: </StyledBoxLabel>
             <StyledBox>{`  ${values.typicalMalfunction ?? ''}`}</StyledBox>
           </StyledBoxContainer>
           <StyledBoxContainer>
@@ -196,6 +173,44 @@ export const IncidentData =
                 scrollbarColor: '#6b6b6b #2b2b2b',
                 scrollbarWidth: 'thin',
               }}>{`  ${values.comment ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+        </Box>
+        <Box sx={{ width: '33%' }}>
+          <StyledBoxContainer>
+            <StyledBoxLabel>Время регистрации: </StyledBoxLabel>
+            <StyledBox>{`  ${values.timeRegistration ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+          <StyledBoxContainer>
+            <StyledBoxLabel>Кто принял: </StyledBoxLabel>
+            <StyledBox>{`  ${values.userAccepted ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+          <StyledBoxContainer>
+            <StyledBoxLabel>Время в работу: </StyledBoxLabel>
+            <StyledBox>{`  ${values.timeInWork ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+          <StyledBoxContainer>
+            <StyledBoxLabel>Исполнитель: </StyledBoxLabel>
+            <StyledBox>{`  ${values.executor ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+          <StyledBoxContainer>
+            <StyledBoxLabel>Ответственный: </StyledBoxLabel>
+            <StyledBox>{`  ${values.responsible ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+          <StyledBoxContainer>
+            <StyledBoxLabel>Время выполнения: </StyledBoxLabel>
+            <StyledBox>{`  ${values.timeCloseCheck ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+          <StyledBoxContainer>
+            <StyledBoxLabel>Перевел в выполнение: </StyledBoxLabel>
+            <StyledBox>{`  ${values.userClosing ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+          <StyledBoxContainer>
+            <StyledBoxLabel>Время закрытия: </StyledBoxLabel>
+            <StyledBox>{`  ${values.timeClose ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+          <StyledBoxContainer>
+            <StyledBoxLabel>Закрыл: </StyledBoxLabel>
+            <StyledBox>{`  ${values.userClosing ?? ''}`}</StyledBox>
           </StyledBoxContainer>
         </Box>
       </Box>

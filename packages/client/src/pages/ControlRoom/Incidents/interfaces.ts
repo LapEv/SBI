@@ -21,6 +21,7 @@ export interface INC_Column {
   index?: number
   options: {
     filter: boolean
+    filterList?: string[]
     sort: boolean
     hint?: any
     setCellProps?: any
@@ -37,6 +38,15 @@ export interface IExecutor {
   value: string
   id: string
   incident: string
+  responsible: string
+}
+
+export interface IStatus {
+  value: string
+  id: string
+  incident: string
+  responsible: string
+  currentStatus: string
 }
 
 export interface ICustomCell {

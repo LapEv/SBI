@@ -112,6 +112,13 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
       if (!data) return
       setSelectedClient(data)
       getContractsByClientID(data.id)
+      setSelectedContract(emptyValue)
+      setSelectedObject(emptyValue)
+      setSelectedEquipment(emptyValue)
+      setSelectedModel(emptyValue)
+      setSelectedTypicalMalfunction(emptyValue)
+      setSelectedSLA(emptyValue)
+      setSelectedTypeOfWork(emptyValue)
     }
 
     useEffect(() => {
@@ -156,6 +163,12 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
           }
         ) as Options[]
         setEquipmentList(listEquipment)
+        setSelectedObject(emptyValue)
+        setSelectedEquipment(emptyValue)
+        setSelectedModel(emptyValue)
+        setSelectedTypicalMalfunction(emptyValue)
+        setSelectedSLA(emptyValue)
+        setSelectedTypeOfWork(emptyValue)
       } else {
         setActiveContract(undefined)
         setObjectList([])
@@ -229,6 +242,8 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
           }
         ) as Options[]
         setModelList(listModels)
+        setSelectedModel(emptyValue)
+        setSelectedTypicalMalfunction(emptyValue)
       } else {
         setModelList([])
       }
@@ -252,6 +267,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
           }
         ) as Options[]
         setTypicalMalfunctionList(listTypical)
+        setSelectedTypicalMalfunction(emptyValue)
       } else {
         setTypicalMalfunctionList([])
       }

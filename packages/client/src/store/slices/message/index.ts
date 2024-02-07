@@ -74,6 +74,7 @@ import {
   changeResponsible,
   changeUserClosingCheck,
   changeUserClosing,
+  changeStatus,
 } from 'api/incidents'
 
 const initialState: MessageState = {
@@ -1085,6 +1086,24 @@ export const messageSlise = createSlice({
       state.type = 'error'
       state.text = action.payload
     },
+    [changeStatus.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [changeStatus.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [changeStatus.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+
     [changeUserClosingCheck.fulfilled.type]: (
       state,
       action: PayloadAction<AnswerMessage>

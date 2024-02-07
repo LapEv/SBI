@@ -174,7 +174,7 @@ export interface ChangeResponsible {
 
 export interface ChangeStatus {
   id: string
-  id_incResponsible: string
+  id_incStatus: string
   incident: string
   status: string
   userID: string

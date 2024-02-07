@@ -16,7 +16,28 @@ export const DenseTable = ({ denseTable, setDenseTable }: IDenseTable) => {
           color="primary"
         />
       }
-      label="Dense Table"
+      label="Сжать"
+    />
+  )
+}
+
+interface IIsDragTable {
+  dragTable: boolean
+  setDragTable: (data: boolean) => void
+}
+
+export const IsDragTable = ({ dragTable, setDragTable }: IIsDragTable) => {
+  return (
+    <FormControlLabel
+      control={
+        <Switch
+          checked={dragTable}
+          onChange={event => setDragTable(event.target.checked)}
+          value="dragTable"
+          color="primary"
+        />
+      }
+      label="Перетащить"
     />
   )
 }

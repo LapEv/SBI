@@ -8,6 +8,7 @@ export interface DataDropDown {
   onBlur?: (value: string) => void
   error?: boolean
   textProps?: object
+  disableClearable?: boolean
 }
 
 export interface DataDropDownMultiple {

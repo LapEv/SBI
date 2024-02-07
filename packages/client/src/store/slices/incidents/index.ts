@@ -24,7 +24,9 @@ import {
   changeResponsible,
   changeUserClosingCheck,
   changeUserClosing,
+  changeStatus,
 } from 'api/incidents'
+import { convertDateToStringFromDB } from 'utils/convertDate'
 
 const initialState: INCState = {
   incidents: [],
@@ -56,6 +58,12 @@ const createINCData = (data: INC[]) => {
       model: item.ClassifierModel?.model as string,
       typicalMalfunction: item.TypicalMalfunction?.typicalMalfunction as string,
       logs: item.IncidentLogs,
+      timeRegistration: convertDateToStringFromDB(
+        item.timeRegistration
+      ) as string,
+      timeInWork: convertDateToStringFromDB(item.timeInWork) as string,
+      timeCloseCheck: convertDateToStringFromDB(item.timeCloseCheck) as string,
+      timeClose: convertDateToStringFromDB(item.timeClose) as string,
     }
   })
 }
@@ -124,6 +132,21 @@ export const incidentsSlise = createSlice({
       state.error = action.payload
     },
     [changeResponsible.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerINC>
+    ) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.incidents = createINCData(action.payload.data)
+    },
+    [changeStatus.pending.type]: state => {
+      state.isLoadingINC = true
+    },
+    [changeStatus.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingINC = false
+      state.error = action.payload
+    },
+    [changeStatus.fulfilled.type]: (
       state,
       action: PayloadAction<AnswerINC>
     ) => {

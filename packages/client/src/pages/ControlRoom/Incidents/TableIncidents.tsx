@@ -3,14 +3,7 @@ import { INC } from 'store/slices/incidents/interfaces'
 import { MUIDataTableOptions, MUIDataTableState } from 'mui-datatables'
 import { textLabels } from './data'
 import { DataTable } from 'components/DataTable'
-import {
-  TableRow,
-  TableCell,
-  useTheme,
-  Box,
-  styled,
-  touchRippleClasses,
-} from '@mui/material'
+import { TableRow, useTheme } from '@mui/material'
 import { INC_Column, ITableMeta } from './interfaces'
 import {
   DenseTable,
@@ -18,6 +11,8 @@ import {
   Executor,
   UserResponsible,
   IncidentData,
+  Status,
+  DragTable,
 } from './'
 
 interface INCTable {
@@ -29,6 +24,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
   const [denseTable, setDenseTable] = useState<boolean>(
     localStorage.getItem('IncidentsDenseTable') === '1' ? true : false
   )
+  // const [dragTable, setDragTable] = useState<boolean>(false)
   const theme = useTheme()
 
   const INCColumn: INC_Column[] = [
@@ -62,7 +58,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       name: 'numberINC',
       label: 'Номер',
       options: {
-        filter: true,
+        filter: false,
         sort: true,
         display: true,
         viewColumns: true,
@@ -101,8 +97,16 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        customBodyRender: (value: string) => {
-          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        customBodyRender: (value: string, { rowData }: ITableMeta) => {
+          return (
+            <Status
+              value={value ?? ''}
+              id={rowData[0]}
+              incident={rowData[1]}
+              responsible={rowData[18]}
+              currentStatus={rowData[4]}
+            />
+          )
         },
       },
     },
@@ -158,7 +162,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       name: 'address',
       label: 'Адрес',
       options: {
-        filter: true,
+        filter: false,
         sort: true,
         display: true,
         viewColumns: true,
@@ -170,6 +174,23 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
         },
       },
     },
+    {
+      name: 'coordinates',
+      label: 'Координаты',
+      options: {
+        filter: false,
+        sort: true,
+        display: true,
+        viewColumns: true,
+        setCellHeaderProps: () => ({
+          style: { padding: !denseTable ? 15 : 8 },
+        }),
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
+      },
+    },
+
     {
       name: 'region',
       label: 'Регион',
@@ -189,6 +210,38 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
     {
       name: 'userAccepted',
       label: 'Кто принял',
+      options: {
+        filter: true,
+        sort: true,
+        display: true,
+        viewColumns: true,
+        setCellHeaderProps: () => ({
+          style: { padding: !denseTable ? 15 : 8 },
+        }),
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
+      },
+    },
+    {
+      name: 'timeRegistration',
+      label: 'Время регистрации',
+      options: {
+        filter: false,
+        sort: true,
+        display: true,
+        viewColumns: true,
+        setCellHeaderProps: () => ({
+          style: { padding: !denseTable ? 15 : 8 },
+        }),
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
+      },
+    },
+    {
+      name: 'methodsReuqest',
+      label: 'Тип регистрации',
       options: {
         filter: true,
         sort: true,
@@ -267,6 +320,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
               value={value ?? ''}
               id={rowData[0]}
               incident={rowData[1]}
+              responsible={rowData[18]}
             />
           )
         },
@@ -289,14 +343,63 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
               value={value ?? ''}
               id={rowData[0]}
               incident={rowData[1]}
+              responsible={rowData[18]}
             />
           )
         },
       },
     },
     {
+      name: 'timeInWork',
+      label: 'Время в работу',
+      options: {
+        filter: false,
+        sort: true,
+        display: true,
+        viewColumns: true,
+        setCellHeaderProps: () => ({
+          style: { padding: !denseTable ? 15 : 8 },
+        }),
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
+      },
+    },
+    {
       name: 'description',
       label: 'Описание',
+      options: {
+        filter: false,
+        sort: true,
+        display: true,
+        viewColumns: true,
+        setCellHeaderProps: () => ({
+          style: { padding: !denseTable ? 15 : 8 },
+        }),
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
+      },
+    },
+    {
+      name: 'comment',
+      label: 'Комментарий',
+      options: {
+        filter: false,
+        sort: true,
+        display: true,
+        viewColumns: true,
+        setCellHeaderProps: () => ({
+          style: { padding: !denseTable ? 15 : 8 },
+        }),
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
+      },
+    },
+    {
+      name: 'userClosingCheck',
+      label: 'Перевел в выполнение',
       options: {
         filter: true,
         sort: true,
@@ -310,12 +413,43 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
         },
       },
     },
-
     {
-      name: 'comment',
-      label: 'Комментарий',
+      name: 'timeCloseCheck',
+      label: 'Время выполнения',
+      options: {
+        filter: false,
+        sort: true,
+        display: true,
+        viewColumns: true,
+        setCellHeaderProps: () => ({
+          style: { padding: !denseTable ? 15 : 8 },
+        }),
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
+      },
+    },
+    {
+      name: 'userClosing',
+      label: 'Закрыл',
       options: {
         filter: true,
+        sort: true,
+        display: true,
+        viewColumns: true,
+        setCellHeaderProps: () => ({
+          style: { padding: !denseTable ? 15 : 8 },
+        }),
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
+      },
+    },
+    {
+      name: 'timeClose',
+      label: 'Время закрытия',
+      options: {
+        filter: false,
         sort: true,
         display: true,
         viewColumns: true,
@@ -352,20 +486,21 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
     const columnViewStorage = localStorage
       .getItem('IncidentsViewColumns')
       ?.split(',')
-    console.log('columnViewStorage = ', columnViewStorage)
     if (columnViewStorage && columnViewStorage?.length > 1) {
-      const temp = tableColumn.map(
+      tableColumn.map(
         item =>
           (item.options.display = !columnViewStorage?.includes(item.name)
             ? true
             : false)
       )
-      console.log('temp = ', temp)
     }
+    const filterList = JSON.parse(localStorage.getItem('filterList') as string)
+    tableColumn.map(
+      (item, index) => (item.options.filterList = filterList[index])
+    )
   }
 
   const handleTableChange = (action: string, tableState: MUIDataTableState) => {
-    console.log('handleTableChange')
     if (action === 'viewColumnsChange') {
       const display = tableState.columns
         .map(({ display, name }) =>
@@ -383,18 +518,24 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
     filterType: 'multiselect',
     resizableColumns: true,
     responsive: 'standard',
-    fixedHeader: true,
-    fixedSelectColumn: true,
+    fixedHeader: false,
+    fixedSelectColumn: false,
+    // expandableRows: !dragTable ?? false,
+    expandableRows: true,
     draggableColumns: {
       enabled: true,
+      transitionTime: 300,
     },
+    // selectableRows: dragTable ? 'none' : 'multiple',
+    // selectableRowsOnClick: !dragTable ?? false,
+    selectableRows: 'none',
+    selectableRowsOnClick: false,
     textLabels: textLabels,
     tableBodyHeight: '100%',
     rowsPerPageOptions: [10, 25, 50],
     columnOrder: getcolumnOrderStorage(),
-    expandableRows: true,
+    sortOrder: JSON.parse(localStorage.getItem('sortColumn') as string),
     renderExpandableRow: (rowData, { dataIndex }) => {
-      console.log('values = ', incidents[dataIndex])
       return (
         <TableRow sx={{ height: heightINCData }}>
           <IncidentData
@@ -404,12 +545,40 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
         </TableRow>
       )
     },
+    onFilterChange: (
+      changedColumn,
+      filterList,
+      type,
+      changedColumnIndex,
+      displayData
+    ) => {
+      console.log('changedColumn = ', changedColumn)
+      console.log('filterList = ', filterList)
+      console.log('type = ', type)
+      console.log('changedColumnIndex = ', changedColumnIndex)
+      console.log('displayData = ', displayData)
+      localStorage.setItem('filterList', JSON.stringify(filterList))
+    },
+    onColumnSortChange: (column, direction) =>
+      localStorage.setItem(
+        'sortColumn',
+        JSON.stringify({ name: column, direction })
+      ),
     onColumnOrderChange: newColumnOrder =>
       localStorage.setItem('IncidentsColumnOrder', newColumnOrder.toString()),
-    // onViewColumnsChange: (changedColumn, action) =>
-    //   console.log(' action= ', action),
     onTableChange: handleTableChange,
     onTableInit: handleTableInit,
+    downloadOptions: {
+      filename: 'incidents.csv',
+      separator: ';',
+      filterOptions: {
+        useDisplayedColumnsOnly: true,
+        useDisplayedRowsOnly: false,
+      },
+    },
+    onDownload: (buildHead, buildBody, columns, data) => {
+      return '\uFEFF' + buildHead(columns) + buildBody(data)
+    },
     customToolbar: () => {
       return (
         <DenseTable denseTable={denseTable} setDenseTable={setDenseTableFunc} />

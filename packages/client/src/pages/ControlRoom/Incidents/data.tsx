@@ -308,13 +308,10 @@ export const customDropDownCell = {
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
-  p: 0,
-  pl: 1,
-  pr: 1,
 }
 
 export const customHedearCell = {
-  paddingLeft: 20,
+  paddingLeft: 10,
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   textOverflow: 'ellipsis',

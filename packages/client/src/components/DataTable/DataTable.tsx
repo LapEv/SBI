@@ -14,6 +14,21 @@ const StyledDataTable = styled(MUIDataTable)(({ theme }) => ({
     borderColor: theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
     borderStyle: 'solid',
   },
+  '.MuiSwitch-track': {
+    backgroundColor:
+      theme.palette.mode === ThemeMode.light
+        ? '#7fa99d!important'
+        : '#9ed3c4!important',
+  },
+  '.Mui-checked+.MuiSwitch-track': {
+    backgroundColor:
+      theme.palette.mode === ThemeMode.light
+        ? '#033f17!important'
+        : '#179b75!important',
+  },
+  '&.MuiTableCell-head, .MuiTableCell-paddingNone': {
+    padding: '5px!important',
+  },
 }))
 
 declare module '@mui/material/styles' {
@@ -132,6 +147,8 @@ export const DataTable = ({ title, data, options, columns }: IDataTable) => {
                     theme.palette.mode === ThemeMode.dark
                       ? '#1E515D'
                       : '#C1EEE1',
+                  height: 10,
+                  minHeight: 10,
                 },
               },
             },
@@ -140,7 +157,7 @@ export const DataTable = ({ title, data, options, columns }: IDataTable) => {
                 root: {
                   height: 10,
                   minHeight: 10,
-                  padding: 0,
+                  padding: '10px!important',
                   paddingLeft: 5,
                   // display: 'block',
                   boxSizing: 'border-box',
@@ -160,6 +177,10 @@ export const DataTable = ({ title, data, options, columns }: IDataTable) => {
                   borderBottomColor:
                     theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
                   borderBottomStyle: 'solid',
+                  borderLeftWidth: 1,
+                  borderLeftColor:
+                    theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
+                  borderLeftStyle: 'solid',
                 },
                 data: {
                   fontSize: '0.935rem',
@@ -192,12 +213,27 @@ export const DataTable = ({ title, data, options, columns }: IDataTable) => {
             },
             MuiTableCell: {
               styleOverrides: {
+                paddingNone: {
+                  padding: 3,
+                },
                 root: {
-                  // display: 'block',
+                  padding: 10,
                   boxSizing: 'border-box',
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
+                  borderLeftWidth: 1,
+                  borderLeftColor:
+                    theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
+                  borderLeftStyle: 'solid',
+                  borderBottomWidth: 1,
+                  borderBottomColor:
+                    theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
+                  borderBottomStyle: 'solid',
+                  borderTopWidth: 1,
+                  borderTopColor:
+                    theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
+                  borderTopStyle: 'solid',
                 },
               },
             },

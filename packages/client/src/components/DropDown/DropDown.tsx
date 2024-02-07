@@ -146,6 +146,7 @@ export const DropDownIncidents = ({
   errorLabel,
   error,
   textProps,
+  disableClearable,
 }: DataDropDown) => {
   const theme = useTheme()
   const [errors, setErrors] = useState<boolean>(error as boolean)
@@ -158,6 +159,7 @@ export const DropDownIncidents = ({
     <AutocompleteIncidents
       forcePopupIcon={true}
       clearOnEscape
+      disableClearable={disableClearable ?? false}
       autoSelect={false}
       sx={{ width: '90%', height: 40, ...props }}
       options={data}

@@ -6,45 +6,49 @@ import { useIncidents } from 'hooks/incidents/useINC'
 import { IExecutor } from '../interfaces'
 import { customDropDownCell } from '../data'
 
-export const Executor = memo(({ value, id, incident }: IExecutor) => {
-  const [{ fieldEngineers, user }] = useAuth()
-  const [_, { changeExecutor, changeResponsible }] = useIncidents()
-  const [executor, setExecutor] = useState<Options>({ label: value, id: '' })
+export const Executor = memo(
+  ({ value, id, incident, responsible }: IExecutor) => {
+    const [{ fieldEngineers, user }] = useAuth()
+    const [_, { changeExecutor, changeResponsible }] = useIncidents()
+    const [executor, setExecutor] = useState<Options>({ label: value, id: '' })
 
-  const setData = (data: Options) => {
-    setExecutor(data)
-    changeExecutor({
-      id,
-      id_incExecutor: data.id,
-      incident,
-      executor: data.label,
-      userID: user.id as string,
-    })
-    changeResponsible({
-      id,
-      id_incResponsible: user.id as string,
-      incident,
-      responsible: user.shortName as string,
-      userID: user.id as string,
-    })
+    const setData = (data: Options) => {
+      setExecutor(data)
+      changeExecutor({
+        id,
+        id_incExecutor: data.id,
+        incident,
+        executor: data.label,
+        userID: user.id as string,
+      })
+      if (!responsible) {
+        changeResponsible({
+          id,
+          id_incResponsible: user.id as string,
+          incident,
+          responsible: user.shortName as string,
+          userID: user.id as string,
+        })
+      }
+    }
+
+    return (
+      <DropDownIncidents
+        data={fieldEngineers.map(({ lastName, firstName, middleName, id }) => {
+          return {
+            ['label']: `${lastName} ${firstName?.slice(
+              0,
+              1
+            )}.${middleName?.slice(0, 1)}.` as string,
+            ['id']: id as string,
+          }
+        })}
+        props={customDropDownCell}
+        onChange={setData}
+        value={executor.label}
+        label="Выберите исполнителя"
+        errorLabel="Не выбран исполнитель!"
+      />
+    )
   }
-
-  return (
-    <DropDownIncidents
-      data={fieldEngineers.map(({ lastName, firstName, middleName, id }) => {
-        return {
-          ['label']: `${lastName} ${firstName?.slice(0, 1)}.${middleName?.slice(
-            0,
-            1
-          )}.` as string,
-          ['id']: id as string,
-        }
-      })}
-      props={customDropDownCell}
-      onChange={setData}
-      value={executor.label}
-      label="Выберите исполнителя"
-      errorLabel="Не выбран исполнитель!"
-    />
-  )
-})
+)

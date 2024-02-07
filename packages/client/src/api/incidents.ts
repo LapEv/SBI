@@ -15,6 +15,7 @@ import {
   ChangeResponsible,
   ChangeClosingCheck,
   ChangeClosing,
+  ChangeStatus,
 } from 'store/slices/incidents/interfaces'
 
 export const getINC = createAsyncThunk(
@@ -157,6 +158,37 @@ export const changeResponsible = createAsyncThunk(
         id_incResponsible,
         incident,
         responsible,
+        userID,
+      })
+      return {
+        data,
+        message: {
+          text: `Назначен ответственный!`,
+          type: 'success',
+        },
+      }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      return thunkAPI.rejectWithValue(
+        `Не удалось назначить ответственного!\n${getError(e)}`
+      )
+    }
+  }
+)
+
+export const changeStatus = createAsyncThunk(
+  'incidents/changeStatus',
+  async (
+    { id, id_incResponsible, incident, status, userID }: ChangeStatus,
+    thunkAPI
+  ) => {
+    try {
+      const { data } = await authhost.post(ApiEndPoints.INC.changeResponsible, {
+        id,
+        id_incResponsible,
+        incident,
+        status,
         userID,
       })
       return {

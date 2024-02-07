@@ -172,6 +172,14 @@ export interface ChangeResponsible {
   userID: string
 }
 
+export interface ChangeStatus {
+  id: string
+  id_incResponsible: string
+  incident: string
+  status: string
+  userID: string
+}
+
 export interface ChangeClosingCheck {
   id: string
   id_incClosingCheck: string

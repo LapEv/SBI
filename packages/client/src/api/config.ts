@@ -108,6 +108,7 @@ export const ApiEndPoints = {
     changeINC: 'incidents/changeINC',
     changeExecutor: 'incidents/changeExecutor',
     changeResponsible: 'incidents/changeResponsible',
+    changeStatus: 'incidents/changeStatus',
     changeUserClosingCheck: 'incidents/changeUserClosingCheck',
     changeUserClosing: 'incidents/changeUserClosing',
     getIncidentStatuses: 'incidents/getIncidentStatuses',

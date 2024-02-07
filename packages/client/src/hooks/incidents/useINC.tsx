@@ -8,6 +8,7 @@ import {
   changeINC,
   changeIncidentStatuses,
   changeResponsible,
+  changeStatus,
   changeTypesOfWork,
   changeUserClosing,
   changeUserClosingCheck,
@@ -59,6 +60,10 @@ export function useIncidents(): [INCState, INCActions] {
       changeResponsible(data) {
         dispatch(changeResponsible(data))
       },
+      changeStatus(data) {
+        dispatch(changeStatus(data))
+      },
+
       changeUserClosingCheck(data) {
         dispatch(changeUserClosingCheck(data))
       },

@@ -14,7 +14,7 @@ const StyledBoxContainer = styled(Box)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'row',
     color: theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
-    width: '100%',
+    width: 'auto',
   },
 }))
 
@@ -22,21 +22,21 @@ const StyledBoxLabel = styled(Box)(({ theme }) => ({
   '&.MuiBox-root': {
     fontSize: '0.875rem',
     margin: 5,
-    width: '35%',
-    minWidth: '35%',
+    width: 150,
+    // minWidth: 150,
 
-    [theme.breakpoints.up('md')]: {
-      width: '33%',
-      minWidth: '33%',
-    },
-    [theme.breakpoints.up('lg')]: {
-      width: '27%',
-      minWidth: '27%',
-    },
-    [theme.breakpoints.up('xl')]: {
-      width: '20%',
-      minWidth: '20%',
-    },
+    // [theme.breakpoints.up('md')]: {
+    //   width: '33%',
+    //   minWidth: '33%',
+    // },
+    // [theme.breakpoints.up('lg')]: {
+    //   width: '27%',
+    //   minWidth: '27%',
+    // },
+    // [theme.breakpoints.up('xl')]: {
+    //   width: '20%',
+    //   minWidth: '20%',
+    // },
   },
 }))
 
@@ -45,21 +45,21 @@ const StyledBox = styled(Box)(({ theme }) => ({
     fontSize: '0.925rem',
     fontWeight: 'bold',
     margin: 5,
-    width: '60%',
-    minWidth: '60%',
-
-    [theme.breakpoints.up('md')]: {
-      width: '62%',
-      minWidth: '62%',
-    },
-    [theme.breakpoints.up('lg')]: {
-      width: '69%',
-      minWidth: '69%',
-    },
-    [theme.breakpoints.up('xl')]: {
-      width: '75%',
-      minWidth: '75%',
-    },
+    width: '50%',
+    // minWidth: '60%',
+    // maxWidth: '67%',
+    // [theme.breakpoints.up('md')]: {
+    //   width: '62%',
+    //   minWidth: '62%',
+    // },
+    // [theme.breakpoints.up('lg')]: {
+    //   width: '69%',
+    //   minWidth: '69%',
+    // },
+    // [theme.breakpoints.up('xl')]: {
+    //   width: '75%',
+    //   minWidth: '75%',
+    // },
     '&::-webkit-scrollbar': {
       backgroundColor: '#2b2b2b',
       borderRadius: 8,
@@ -90,18 +90,21 @@ export const IncidentData =
       <Box
         ref={boxRef}
         sx={{
-          position: 'absolute',
+          position: 'fixed',
           display: 'flex',
           flexWrap: 'wrap',
           flexDirection: 'row',
-          width: '100%',
-          justifyContent: 'space-between',
+          width: 'auto',
+          justifyContent: 'flex-start',
           alignItems: 'flex-start',
           minWidth: 625,
-          p: 1,
-          pl: 2,
+          // p: 1,
+          pl: 1,
+          pt: 1,
+          pb: 2,
+          pr: 5,
         }}>
-        <Box sx={{ width: '33%' }}>
+        <Box sx={{ width: 'auto' }}>
           <StyledBoxContainer>
             <StyledBoxLabel>Инцидент: </StyledBoxLabel>
             <StyledBox>{`  ${values.incident ?? ''}`}</StyledBox>
@@ -139,7 +142,7 @@ export const IncidentData =
             <StyledBox>{`  ${values.coordinates ?? ''}`}</StyledBox>
           </StyledBoxContainer>
         </Box>
-        <Box sx={{ width: '33%' }}>
+        <Box sx={{ width: 'auto' }}>
           <StyledBoxContainer>
             <StyledBoxLabel>Категория: </StyledBoxLabel>
             <StyledBox>{`  ${values.equipment ?? ''}`}</StyledBox>
@@ -152,30 +155,30 @@ export const IncidentData =
             <StyledBoxLabel>Проблема: </StyledBoxLabel>
             <StyledBox>{`  ${values.typicalMalfunction ?? ''}`}</StyledBox>
           </StyledBoxContainer>
-          <StyledBoxContainer>
-            <StyledBoxLabel>Описание: </StyledBoxLabel>
-            <StyledBox
-              sx={{
-                overflowY: 'auto',
-                height: 75,
-                maxHeight: 75,
-                scrollbarColor: '#6b6b6b #2b2b2b',
-                scrollbarWidth: 'thin',
-              }}>{`  ${values.description ?? ''}`}</StyledBox>
-          </StyledBoxContainer>
-          <StyledBoxContainer>
-            <StyledBoxLabel>Комментарий: </StyledBoxLabel>
-            <StyledBox
-              sx={{
-                overflowY: 'auto',
-                height: 75,
-                maxHeight: 75,
-                scrollbarColor: '#6b6b6b #2b2b2b',
-                scrollbarWidth: 'thin',
-              }}>{`  ${values.comment ?? ''}`}</StyledBox>
-          </StyledBoxContainer>
+          {/* <StyledBoxContainer>
+          <StyledBoxLabel>Описание: </StyledBoxLabel>
+          <StyledBox
+            sx={{
+              overflowY: 'auto',
+              height: 75,
+              maxHeight: 75,
+              scrollbarColor: '#6b6b6b #2b2b2b',
+              scrollbarWidth: 'thin',
+            }}>{`  ${values.description ?? ''}`}</StyledBox>
+        </StyledBoxContainer>
+        <StyledBoxContainer>
+          <StyledBoxLabel>Комментарий: </StyledBoxLabel>
+          <StyledBox
+            sx={{
+              overflowY: 'auto',
+              height: 75,
+              maxHeight: 75,
+              scrollbarColor: '#6b6b6b #2b2b2b',
+              scrollbarWidth: 'thin',
+            }}>{`  ${values.comment ?? ''}`}</StyledBox>
+        </StyledBoxContainer> */}
         </Box>
-        <Box sx={{ width: '33%' }}>
+        <Box sx={{ width: 'auto' }}>
           <StyledBoxContainer>
             <StyledBoxLabel>Время регистрации: </StyledBoxLabel>
             <StyledBox>{`  ${values.timeRegistration ?? ''}`}</StyledBox>

@@ -3,7 +3,7 @@ import { INC } from 'store/slices/incidents/interfaces'
 import { MUIDataTableOptions, MUIDataTableState } from 'mui-datatables'
 import { textLabels } from './data'
 import { DataTable } from 'components/DataTable'
-import { TableRow, useTheme } from '@mui/material'
+import { TableCell, TableRow, useTheme } from '@mui/material'
 import { INC_Column, ITableMeta } from './interfaces'
 import {
   DenseTable,
@@ -475,14 +475,21 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       .getItem('IncidentsColumnOrder')
       ?.split(',')
       .map(Number)
-
     if (columnOrderStorage && columnOrderStorage?.length > 1) {
+      if (INCColumn.length !== columnOrderStorage.length) {
+        const newOrder = INCColumn.map((item, index) =>
+          columnOrderStorage.findIndex(value => value === index) >= 0
+            ? columnOrderStorage.findIndex(value => value === index)
+            : index
+        )
+        return newOrder
+      }
       return columnOrderStorage
     }
     return INCColumn.map((item, index) => index)
   }
 
-  const handleTableInit = (action: string, tableState: MUIDataTableState) => {
+  const handleTableInit = () => {
     const columnViewStorage = localStorage
       .getItem('IncidentsViewColumns')
       ?.split(',')
@@ -494,10 +501,14 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
             : false)
       )
     }
-    const filterList = JSON.parse(localStorage.getItem('filterList') as string)
-    tableColumn.map(
-      (item, index) => (item.options.filterList = filterList[index])
+    const filterListStorage = JSON.parse(
+      localStorage.getItem('filterList') as string
     )
+    if (filterListStorage && filterListStorage?.length > 1) {
+      tableColumn.map(
+        (item, index) => (item.options.filterList = filterListStorage[index])
+      )
+    }
   }
 
   const handleTableChange = (action: string, tableState: MUIDataTableState) => {
@@ -538,25 +549,16 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
     renderExpandableRow: (rowData, { dataIndex }) => {
       return (
         <TableRow sx={{ height: heightINCData }}>
-          <IncidentData
-            values={incidents[dataIndex]}
-            setHeight={setHeightINCData}
-          />
+          <TableCell colSpan={7} sx={{ verticalAlign: 'baseline' }}>
+            <IncidentData
+              values={incidents[dataIndex]}
+              setHeight={setHeightINCData}
+            />
+          </TableCell>
         </TableRow>
       )
     },
-    onFilterChange: (
-      changedColumn,
-      filterList,
-      type,
-      changedColumnIndex,
-      displayData
-    ) => {
-      console.log('changedColumn = ', changedColumn)
-      console.log('filterList = ', filterList)
-      console.log('type = ', type)
-      console.log('changedColumnIndex = ', changedColumnIndex)
-      console.log('displayData = ', displayData)
+    onFilterChange: (_, filterList) => {
       localStorage.setItem('filterList', JSON.stringify(filterList))
     },
     onColumnSortChange: (column, direction) =>

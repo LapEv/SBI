@@ -85,7 +85,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
         typeOfWorkID: selectedTypeOfWork.id,
         timeSLA: convertDateToStringDDMMYYYYHHMMSS(
           dayjs(dateValue).format('DD/MM/YYYYTHH:mm:ss')
-        ),
+        ) as string,
         id_incStatus,
         clientINC: list[7].value,
         responsibleID: user.id as string,

@@ -87,6 +87,39 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       },
     },
     {
+      name: 'statusIndicator',
+      label: 'Индикатор',
+      options: {
+        filter: true,
+        sort: true,
+        display: true,
+        viewColumns: true,
+        setCellHeaderProps: () => ({
+          style: { padding: !denseTable ? 15 : 8 },
+        }),
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
+      },
+    },
+    {
+      name: 'timeSLA',
+      label: 'SLA',
+      options: {
+        filter: true,
+        sort: true,
+        display: true,
+        viewColumns: true,
+        setCellHeaderProps: () => ({
+          style: { padding: !denseTable ? 15 : 8 },
+        }),
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
+      },
+    },
+
+    {
       name: 'status',
       label: 'Статус',
       options: {
@@ -103,8 +136,8 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
               value={value ?? ''}
               id={rowData[0]}
               incident={rowData[1]}
-              responsible={rowData[18]}
-              currentStatus={rowData[4]}
+              responsible={rowData[20]}
+              currentStatus={rowData[6]}
             />
           )
         },
@@ -320,7 +353,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
               value={value ?? ''}
               id={rowData[0]}
               incident={rowData[1]}
-              responsible={rowData[18]}
+              responsible={rowData[20]}
             />
           )
         },
@@ -343,7 +376,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
               value={value ?? ''}
               id={rowData[0]}
               incident={rowData[1]}
-              responsible={rowData[18]}
+              responsible={rowData[20]}
             />
           )
         },
@@ -429,6 +462,71 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
         },
       },
     },
+    {
+      name: 'commentCloseCheck',
+      label: 'Комментарии к выполнению',
+      options: {
+        filter: false,
+        sort: true,
+        display: true,
+        viewColumns: true,
+        setCellHeaderProps: () => ({
+          style: { padding: !denseTable ? 15 : 8 },
+        }),
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
+      },
+    },
+    {
+      name: 'act',
+      label: 'Акты',
+      options: {
+        filter: true,
+        sort: true,
+        display: true,
+        viewColumns: true,
+        setCellHeaderProps: () => ({
+          style: { padding: !denseTable ? 15 : 8 },
+        }),
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
+      },
+    },
+    {
+      name: 'spaceParts',
+      label: 'ЗИП',
+      options: {
+        filter: true,
+        sort: true,
+        display: true,
+        viewColumns: true,
+        setCellHeaderProps: () => ({
+          style: { padding: !denseTable ? 15 : 8 },
+        }),
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
+      },
+    },
+    {
+      name: 'commentClose',
+      label: 'Комментарии к закрытию',
+      options: {
+        filter: false,
+        sort: true,
+        display: true,
+        viewColumns: true,
+        setCellHeaderProps: () => ({
+          style: { padding: !denseTable ? 15 : 8 },
+        }),
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
+      },
+    },
+
     {
       name: 'userClosing',
       label: 'Закрыл',

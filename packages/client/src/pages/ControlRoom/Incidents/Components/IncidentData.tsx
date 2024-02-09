@@ -118,6 +118,14 @@ export const IncidentData =
             <StyledBox>{`  ${values.clientINC ?? ''}`}</StyledBox>
           </StyledBoxContainer>
           <StyledBoxContainer>
+            <StyledBoxLabel>Индикатор: </StyledBoxLabel>
+            <StyledBox>{`  ${values.statusIndicator ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+          <StyledBoxContainer>
+            <StyledBoxLabel>SLA: </StyledBoxLabel>
+            <StyledBox>{`  ${values.timeSLA ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+          <StyledBoxContainer>
             <StyledBoxLabel>Клиент: </StyledBoxLabel>
             <StyledBox>{`  ${values.client ?? ''}`}</StyledBox>
           </StyledBoxContainer>
@@ -208,12 +216,28 @@ export const IncidentData =
             <StyledBox>{`  ${values.userClosing ?? ''}`}</StyledBox>
           </StyledBoxContainer>
           <StyledBoxContainer>
+            <StyledBoxLabel>Комментарии к выполнению: </StyledBoxLabel>
+            <StyledBox>{`  ${values.commentCloseCheck ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+          <StyledBoxContainer>
+            <StyledBoxLabel>Акты: </StyledBoxLabel>
+            <StyledBox>{`  ${values.act ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+          <StyledBoxContainer>
+            <StyledBoxLabel>ЗИП: </StyledBoxLabel>
+            <StyledBox>{`  ${values.spaceParts ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+          <StyledBoxContainer>
             <StyledBoxLabel>Время закрытия: </StyledBoxLabel>
             <StyledBox>{`  ${values.timeClose ?? ''}`}</StyledBox>
           </StyledBoxContainer>
           <StyledBoxContainer>
             <StyledBoxLabel>Закрыл: </StyledBoxLabel>
             <StyledBox>{`  ${values.userClosing ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+          <StyledBoxContainer>
+            <StyledBoxLabel>Комментарии к закрытию: </StyledBoxLabel>
+            <StyledBox>{`  ${values.commentClose ?? ''}`}</StyledBox>
           </StyledBoxContainer>
         </Box>
       </Box>

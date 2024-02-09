@@ -12,7 +12,8 @@ export interface Incindent {
   timeCloseCheck: string
   timeClose: string
   description: string
-  comment: string
+  commentCloseCheck: string
+  commentClose: string
   report: string
   spaceParts: string[]
   act: string[]
@@ -70,7 +71,11 @@ export const incident: ModelAttributes<Model, Incindent> = {
     type: DataType.STRING(1024),
     allowNull: true,
   },
-  comment: {
+  commentCloseCheck: {
+    type: DataType.STRING(1024),
+    allowNull: true,
+  },
+  commentClose: {
     type: DataType.STRING(1024),
     allowNull: true,
   },
@@ -94,10 +99,6 @@ export const incident: ModelAttributes<Model, Incindent> = {
     type: DataType.STRING,
     allowNull: false,
   },
-  // actionsComments: {
-  //   type: DataType.STRING,
-  //   allowNull: false,
-  // },
   rating: {
     type: DataType.INTEGER,
     allowNull: true,

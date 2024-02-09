@@ -110,6 +110,14 @@ export const IncidentData =
             <StyledBox>{`  ${values.incident ?? ''}`}</StyledBox>
           </StyledBoxContainer>
           <StyledBoxContainer>
+            <StyledBoxLabel>Родительский: </StyledBoxLabel>
+            <StyledBox>{`  ${values.parentalIncident ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+          <StyledBoxContainer>
+            <StyledBoxLabel>Связанный: </StyledBoxLabel>
+            <StyledBox>{`  ${values.relatedIncident ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+          <StyledBoxContainer>
             <StyledBoxLabel>Номер: </StyledBoxLabel>
             <StyledBox>{`  ${values.numberINC ?? ''}`}</StyledBox>
           </StyledBoxContainer>
@@ -238,6 +246,10 @@ export const IncidentData =
           <StyledBoxContainer>
             <StyledBoxLabel>Комментарии к закрытию: </StyledBoxLabel>
             <StyledBox>{`  ${values.commentClose ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+          <StyledBoxContainer>
+            <StyledBoxLabel>Оценка: </StyledBoxLabel>
+            <StyledBox>{`  ${values.rating ?? ''}`}</StyledBox>
           </StyledBoxContainer>
         </Box>
       </Box>

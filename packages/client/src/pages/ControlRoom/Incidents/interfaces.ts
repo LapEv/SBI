@@ -31,6 +31,7 @@ export interface INC_Column {
     setCellHeaderProps?: any
     display?: boolean
     viewColumns?: boolean
+    draggable?: boolean
   }
 }
 
@@ -52,6 +53,11 @@ export interface IStatus {
 export interface ICustomCell {
   value: string
   denseTable: boolean
+}
+
+export interface IIndicatorCell {
+  timeSLA: string
+  timeReg: string
 }
 
 export interface ICustomHeaderCell {

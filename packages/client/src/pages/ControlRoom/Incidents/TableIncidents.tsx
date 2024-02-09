@@ -13,6 +13,7 @@ import {
   IncidentData,
   Status,
   DragTable,
+  IndicatorCell,
 } from './'
 
 interface INCTable {
@@ -98,7 +99,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
           style: { padding: !denseTable ? 15 : 8 },
         }),
         customBodyRender: (value: string) => {
-          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+          return <IndicatorCell value={value ?? ''} denseTable={denseTable} />
         },
       },
     },

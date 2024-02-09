@@ -12,6 +12,7 @@ export interface AddValuesProps {
     validation: object
     type: string
     required: boolean
+    tabIndex: number
   }[]
 }
 

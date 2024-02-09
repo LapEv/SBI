@@ -58,7 +58,7 @@ const createINCData = (data: INC[]) => {
       model: item.ClassifierModel?.model as string,
       typicalMalfunction: item.TypicalMalfunction?.typicalMalfunction as string,
       logs: item.IncidentLogs,
-      timeSLA: convertDateToStringFromDB(item.timeSLA) as string,
+      // timeSLA: convertDateToStringFromDB(item.timeSLA) as string,
       timeRegistration: convertDateToStringFromDB(
         item.timeRegistration
       ) as string,

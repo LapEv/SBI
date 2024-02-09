@@ -9,6 +9,7 @@ export interface DataDropDown {
   error?: boolean
   textProps?: object
   disableClearable?: boolean
+  tabIndex?: number
 }
 
 export interface DataDropDownMultiple {

@@ -12,6 +12,7 @@ export interface Incindent {
   timeCloseCheck: string
   timeClose: string
   description: string
+  comment: string
   commentCloseCheck: string
   commentClose: string
   report: string
@@ -24,6 +25,7 @@ export interface Incindent {
   relatedIncident: string
   applicant: string
   applicantContacts: string
+  overdue: boolean
 }
 
 export const incident: ModelAttributes<Model, Incindent> = {
@@ -56,7 +58,7 @@ export const incident: ModelAttributes<Model, Incindent> = {
     allowNull: true,
   },
   timeSLA: {
-    type: DataType.DATE,
+    type: DataType.STRING,
     allowNull: false,
   },
   timeCloseCheck: {
@@ -68,6 +70,10 @@ export const incident: ModelAttributes<Model, Incindent> = {
     allowNull: true,
   },
   description: {
+    type: DataType.STRING(1024),
+    allowNull: true,
+  },
+  comment: {
     type: DataType.STRING(1024),
     allowNull: true,
   },
@@ -118,6 +124,10 @@ export const incident: ModelAttributes<Model, Incindent> = {
   applicantContacts: {
     type: DataType.STRING,
     allowNull: true,
+  },
+  overdue: {
+    type: DataType.BOOLEAN,
+    allowNull: false,
   },
 }
 

@@ -58,6 +58,8 @@ export interface ICustomCell {
 export interface IIndicatorCell {
   timeSLA: string
   timeReg: string
+  timeCloseCheck: string
+  inc?: string
 }
 
 export interface ICustomHeaderCell {

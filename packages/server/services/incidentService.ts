@@ -176,7 +176,6 @@ const includes = [
     include: incLogs,
   },
 ]
-
 export class incidentService {
   newIncidentStatuses = async (_req: Request, res: Response) => {
     try {
@@ -220,7 +219,7 @@ export class incidentService {
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+      res.status(500).json({ error: ['db error: ', err] })
     }
   }
   fullDeleteIncidentStatuses = async (_req: Request, res: Response) => {
@@ -390,8 +389,10 @@ export class incidentService {
           ? AppConst.startINC
           : lastINC[0].numberINC + 1
       const incident = `${AppConst.attrINC}0000${numberINC}`
-      const timeRegistration = new Date()
-
+      const timeRegistration = new Date(
+        new Date().getTime() +
+          Math.abs(new Date().getTimezoneOffset() * 60 * 1000)
+      )
       const newINCdb = await IncidentRepos.create({
         numberINC,
         incident,
@@ -423,7 +424,7 @@ export class incidentService {
       })
       await IncidentLogsRepos.create({
         id_incLog: newINCdb.id,
-        time: new Date(),
+        time: timeRegistration,
         log: `${AppConst.ActionComment.incidentRegistration}${incident}`,
         id_incLogUser: responsibleID,
       })
@@ -437,7 +438,7 @@ export class incidentService {
       /* eslint-enable @typescript-eslint/no-explicit-any */
       console.log('err = ', err)
       res.status(500).json({
-        error: ['db error: unable to set new incident statuses', err],
+        error: ['db error: unable to set new incident statuses ', err],
       })
     }
   }
@@ -527,9 +528,13 @@ export class incidentService {
       await IncidentRepos.update(id, {
         id_incExecutor: id_incExecutor.length ? id_incExecutor : null,
       })
+      const currentDate = new Date(
+        new Date().getTime() +
+          Math.abs(new Date().getTimezoneOffset() * 60 * 1000)
+      )
       await IncidentLogsRepos.create({
         id_incLog: id,
-        time: new Date(),
+        time: currentDate,
         log: `${AppConst.ActionComment.changeExecutor.first}${incident}${AppConst.ActionComment.changeExecutor.second}${executor}`,
         id_incLogUser: userID,
       })
@@ -551,9 +556,13 @@ export class incidentService {
       await IncidentRepos.update(id, {
         id_incResponsible: id_incResponsible.length ? id_incResponsible : null,
       })
+      const currentDate = new Date(
+        new Date().getTime() +
+          Math.abs(new Date().getTimezoneOffset() * 60 * 1000)
+      )
       await IncidentLogsRepos.create({
         id_incLog: id,
-        time: new Date(),
+        time: currentDate,
         log: `${AppConst.ActionComment.changeResponsible.first}${incident}${AppConst.ActionComment.changeResponsible.second}${responsible}`,
         id_incLogUser: userID,
       })
@@ -580,7 +589,10 @@ export class incidentService {
         where: { id },
       })
       const newStatus = incStatuses.findIndex(item => item.id === id_incStatus)
-      const currentDate = new Date(Date.now())
+      const currentDate = new Date(
+        new Date().getTime() +
+          Math.abs(new Date().getTimezoneOffset() * 60 * 1000)
+      )
       const timeInWork = newStatus === 1 ? currentDate : inc[0].timeInWork
       const timeCloseCheck =
         newStatus === 2 ? currentDate : inc[0].timeCloseCheck
@@ -590,7 +602,7 @@ export class incidentService {
       const id_incClosingCheck =
         newStatus === 2 ? userID : inc[0].id_incClosingCheck
       const id_incClosing = newStatus === 3 ? userID : inc[0].id_incClosing
-
+      // overdue
       await IncidentRepos.update(id, {
         id_incStatus,
         timeInWork,
@@ -602,7 +614,7 @@ export class incidentService {
       })
       await IncidentLogsRepos.create({
         id_incLog: id,
-        time: new Date(),
+        time: currentDate,
         log: `${AppConst.ActionComment.changeStatus.first}${incident}${AppConst.ActionComment.changeStatus.second}${status}`,
         id_incLogUser: userID,
       })

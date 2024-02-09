@@ -55,9 +55,14 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        customBodyRender: (value: string, { rowData }: MUIDataTableMeta) => {
+        customBodyRender: (_: string, { rowData }: MUIDataTableMeta) => {
           return (
-            <IndicatorCell timeSLA={rowData[7] ?? ''} timeReg={rowData[16]} />
+            <IndicatorCell
+              timeSLA={rowData[7] ?? ''}
+              timeReg={rowData[16]}
+              timeCloseCheck={rowData[27]}
+              inc={rowData[2]}
+            />
           )
         },
       },
@@ -394,7 +399,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
             <Executor
               value={value ?? ''}
               id={rowData[0]}
-              incident={rowData[1]}
+              incident={rowData[2]}
               responsible={rowData[22]}
             />
           )
@@ -417,7 +422,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
             <UserResponsible
               value={value ?? ''}
               id={rowData[0]}
-              incident={rowData[1]}
+              incident={rowData[2]}
               responsible={rowData[22]}
             />
           )
@@ -680,7 +685,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
 
   const options: MUIDataTableOptions = {
     filter: true,
-    rowsPerPage: 10,
+    rowsPerPage: 20,
     filterType: 'multiselect',
     resizableColumns: true,
     responsive: 'standard',
@@ -698,7 +703,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
     selectableRowsOnClick: false,
     textLabels: textLabels,
     tableBodyHeight: '100%',
-    rowsPerPageOptions: [10, 25, 50],
+    rowsPerPageOptions: [20, 50, 100],
     columnOrder: getcolumnOrderStorage(),
     sortOrder: JSON.parse(localStorage.getItem('sortColumn') as string),
     renderExpandableRow: (rowData, { dataIndex }) => {

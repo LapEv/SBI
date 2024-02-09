@@ -15,6 +15,7 @@ export const DropDown = ({
   errorLabel,
   error,
   textProps,
+  tabIndex,
 }: DataDropDown) => {
   const theme = useTheme()
   const [errors, setErrors] = useState<boolean>(error as boolean)
@@ -129,6 +130,7 @@ export const DropDown = ({
           helperText={errors ? errorLabel : ''}
           InputProps={{
             ...params.InputProps,
+            tabIndex,
           }}
         />
       )}
@@ -147,6 +149,7 @@ export const DropDownIncidents = ({
   error,
   textProps,
   disableClearable,
+  tabIndex,
 }: DataDropDown) => {
   const theme = useTheme()
   const [errors, setErrors] = useState<boolean>(error as boolean)
@@ -269,6 +272,7 @@ export const DropDownIncidents = ({
           helperText={errors ? errorLabel : ''}
           InputProps={{
             ...params.InputProps,
+            tabIndex,
           }}
         />
       )}

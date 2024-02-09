@@ -98,6 +98,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
         applicantContacts: list[11].value,
         methodsReuqest: 'manually',
       }
+      console.log('newINCobject = ', newINCobject)
       newINC(newINCobject)
       handleModal(false)
     }
@@ -283,9 +284,18 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
           direction={{ xs: 'column', sm: 'row' }}
           justifyContent="space-around"
           alignItems="flex-start"
-          sx={{ flexWrap: 'wrap' }}>
+          sx={{
+            flexWrap: 'wrap',
+            height: 570,
+            flexDirection: 'column!important',
+            width: '100%',
+            ml: 2,
+          }}>
           {fields.map(
-            ({ id, name, label, validation, type, required }, index) => {
+            (
+              { id, name, label, validation, type, required, tabIndex },
+              index
+            ) => {
               return (
                 <Controller
                   key={id}
@@ -301,6 +311,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                           onChange={setClient}
                           value={selectedClient.label || ''}
                           label={label}
+                          tabIndex={tabIndex}
                           errorLabel="Не выбран клиент!"
                         />
                       )
@@ -313,6 +324,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                           onChange={setContract}
                           value={selectedContract.label || ''}
                           label={label}
+                          tabIndex={tabIndex}
                           errorLabel="Не выбран контракт!"
                         />
                       )
@@ -325,6 +337,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                           onChange={setSelectedObject}
                           value={selectedObject.label || ''}
                           label={label}
+                          tabIndex={tabIndex}
                           errorLabel="Не выбран объект!"
                         />
                       )
@@ -337,6 +350,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                           onChange={setSLA}
                           value={selectedSLA.label || ''}
                           label={label}
+                          tabIndex={tabIndex}
                           errorLabel="Не выбран SLA!"
                         />
                       )
@@ -349,6 +363,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                           onChange={setSelectedTypeOfWork}
                           value={selectedTypeOfWork.label || ''}
                           label={label}
+                          tabIndex={tabIndex}
                           errorLabel="Не выбран тип работ!"
                         />
                       )
@@ -361,6 +376,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                           onChange={setEquimpent}
                           value={selectedEquipment.label || ''}
                           label={label}
+                          tabIndex={tabIndex}
                           errorLabel="Не выбран классификатор!"
                         />
                       )
@@ -373,6 +389,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                           onChange={setModel}
                           value={selectedModel.label || ''}
                           label={label}
+                          tabIndex={tabIndex}
                           errorLabel="Не выбрана модель!"
                         />
                       )
@@ -385,6 +402,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                           onChange={setSelectedTypicalMalfunction}
                           value={selectedTypicalMalfunction.label || ''}
                           label={label}
+                          tabIndex={tabIndex}
                           errorLabel="Не выбрана типовая неисправность!"
                         />
                       )
@@ -416,7 +434,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                           helperText={
                             (errors?.list ?? [])[index]?.value?.message
                           }
-                          inputProps={{ step: 1 }}
+                          inputProps={{ step: 1, tabIndex }}
                         />
                       )
                     }
@@ -433,7 +451,7 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
                         value={field.value || ''}
                         error={!!(errors?.list ?? [])[index]?.value?.message}
                         helperText={(errors?.list ?? [])[index]?.value?.message}
-                        inputProps={{ step: 1 }}
+                        inputProps={{ step: 1, tabIndex }}
                       />
                     )
                   }}

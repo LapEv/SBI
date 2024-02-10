@@ -109,8 +109,18 @@ export interface TypesOfWork {
   active?: boolean
 }
 
+export interface TypesCompletedWork {
+  id: string
+  typeCompletedWork: string
+  active?: boolean
+}
+
 export interface AddTypesOfWork {
   typeOfWork: string
+}
+
+export interface AddTypesCompletedWork {
+  typeCompletedWork: string
 }
 
 export interface AnswerINC {
@@ -128,10 +138,16 @@ export interface AnswerTypesOfWork {
   type: string
 }
 
+export interface AnswerTypesCompletedWork {
+  data: TypesCompletedWork[]
+  type: string
+}
+
 export type INCState = {
   incidents: INC[]
   incStatuses: INCStatuses[]
   typesOfWork: TypesOfWork[]
+  typesCompletedWork: TypesCompletedWork[]
   activeINC: string
   isLoadingINC: boolean
   error?: string
@@ -178,6 +194,10 @@ export interface ChangeStatus {
   incident: string
   status: string
   userID: string
+  timeSLA: string
+  commentCloseCheck?: string
+  act?: string
+  spaceParts?: string
 }
 
 export interface ChangeClosingCheck {
@@ -197,6 +217,11 @@ export interface ChangeINCStatuses {
 
 export interface ChangeTypesOfWork {
   typeOfWork: string
+  id?: string
+}
+
+export interface ChangeTypesCompletedWork {
+  typeCompletedWork: string
   id?: string
 }
 

@@ -41,3 +41,26 @@ export const typesOfWorkStartData = [
     active: true,
   },
 ]
+
+export const typesCompletedWorkStartData = [
+  {
+    typeCompletedWork: 'Ремонт с запчастями',
+    active: true,
+  },
+  {
+    typeCompletedWork: 'Ремонт без запчастей',
+    active: true,
+  },
+  {
+    typeCompletedWork: 'Диагностика',
+    active: true,
+  },
+  {
+    typeCompletedWork: 'Неисправность не обнаружена',
+    active: true,
+  },
+  {
+    typeCompletedWork: 'Выполнена поверка оборудования',
+    active: true,
+  },
+]

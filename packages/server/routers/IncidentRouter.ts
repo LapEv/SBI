@@ -80,6 +80,46 @@ export const incidentRouter = (apiRouter: Router) => {
   )
 
   router.get(
+    '/getTypesCompletedWork',
+    roleMiddleware(['getTypesCompletedWork', 'ADMIN', 'SUPERADMIN']),
+    service.getTypesCompletedWork
+  )
+  router.get(
+    '/getAllTypesCompletedWork',
+    roleMiddleware(['getAllTypesCompletedWork', 'ADMIN', 'SUPERADMIN']),
+    service.getAllTypesCompletedWork
+  )
+  router.post(
+    '/newTypeCompletedWork',
+    roleMiddleware(['newTypeCompletedWork', 'ADMIN', 'SUPERADMIN']),
+    service.newTypeCompletedWork
+  )
+  router.post(
+    '/deleteTypesCompletedWork',
+    roleMiddleware(['deleteTypesCompletedWork', 'ADMIN', 'SUPERADMIN']),
+    service.deleteTypesCompletedWork
+  )
+  router.delete(
+    '/fullDeleteTypesCompletedWork',
+    roleMiddleware(['fullDeleteTypesCompletedWork', 'ADMIN', 'SUPERADMIN']),
+    service.fullDeleteTypesCompletedWork
+  )
+  router.post(
+    '/pullTypesCompletedWorkFromArchive',
+    roleMiddleware([
+      'ADMIN',
+      'SUPERADMIN',
+      'pullTypesCompletedWorkFromArchive',
+    ]),
+    service.pullTypesCompletedWorkFromArchive
+  )
+  router.post(
+    '/changeTypesCompletedWork',
+    roleMiddleware(['changeTypesCompletedWork', 'ADMIN', 'SUPERADMIN']),
+    service.changeTypesCompletedWork
+  )
+
+  router.get(
     '/getINC',
     roleMiddleware(['getINC', 'ADMIN', 'SUPERADMIN']),
     service.getINC

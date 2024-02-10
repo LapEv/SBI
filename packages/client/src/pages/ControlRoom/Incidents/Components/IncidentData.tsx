@@ -171,6 +171,14 @@ export const IncidentData =
             <StyledBoxLabel>Проблема: </StyledBoxLabel>
             <StyledBox>{`  ${values.typicalMalfunction ?? ''}`}</StyledBox>
           </StyledBoxContainer>
+          <StyledBoxContainer>
+            <StyledBoxLabel>Заявитель: </StyledBoxLabel>
+            <StyledBox>{`  ${values.applicant ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+          <StyledBoxContainer>
+            <StyledBoxLabel>Контакты заявителя: </StyledBoxLabel>
+            <StyledBox>{`  ${values.applicantContacts ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
           {/* <StyledBoxContainer>
           <StyledBoxLabel>Описание: </StyledBoxLabel>
           <StyledBox
@@ -226,6 +234,10 @@ export const IncidentData =
           <StyledBoxContainer>
             <StyledBoxLabel>Комментарии к выполнению: </StyledBoxLabel>
             <StyledBox>{`  ${values.commentCloseCheck ?? ''}`}</StyledBox>
+          </StyledBoxContainer>
+          <StyledBoxContainer>
+            <StyledBoxLabel>Статус SLA: </StyledBoxLabel>
+            <StyledBox>{`  ${values.overdue ?? ''}`}</StyledBox>
           </StyledBoxContainer>
           <StyledBoxContainer>
             <StyledBoxLabel>Акты: </StyledBoxLabel>

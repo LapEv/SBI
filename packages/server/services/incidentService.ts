@@ -12,6 +12,7 @@ import {
   Objects,
   Regions,
   SLA,
+  TypesCompletedWorkRepos,
   TypesOfWork,
   TypesOfWorkRepos,
   TypicalMalfunctions,
@@ -19,6 +20,7 @@ import {
 } from './../db'
 import type { Request, Response } from 'express'
 import { AppConst } from '../const'
+import { convertINCStringToDateTime } from '../utils/convertDate'
 
 const incLogs = [
   {
@@ -357,6 +359,96 @@ export class incidentService {
     }
   }
 
+  newTypeCompletedWork = async (_req: Request, res: Response) => {
+    try {
+      await TypesCompletedWorkRepos.create({ ..._req.body, active: true })
+      const typesCompletedWork = await TypesCompletedWorkRepos.findAll({
+        where: { active: true },
+      })
+      res.status(200).json(typesCompletedWork)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res.status(500).json({
+        error: ['db error: unable to set new incident statuses', err],
+      })
+    }
+  }
+  getAllTypesCompletedWork = (_req: Request, res: Response) => {
+    TypesCompletedWorkRepos.findAll({})
+      .then(item => res.status(200).json(item))
+      .catch(err => res.status(500).json({ error: ['db error', err.status] }))
+  }
+  getTypesCompletedWork = (_req: Request, res: Response) => {
+    TypesCompletedWorkRepos.findAll({
+      where: { active: true },
+    })
+      .then(typesCompletedWork => {
+        res.status(200).json(typesCompletedWork)
+      })
+      .catch(err => res.status(500).json({ error: ['db error', err] }))
+  }
+  deleteTypesCompletedWork = async (_req: Request, res: Response) => {
+    const { selectedTypeCompletedWork } = _req.body
+    try {
+      await TypesCompletedWorkRepos.update(selectedTypeCompletedWork, {
+        active: false,
+      })
+      const typesCompletedWork = await TypesCompletedWorkRepos.findAll({
+        where: { active: true },
+      })
+      res.status(200).json(typesCompletedWork)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res.status(500).json({ error: ['db error', err] })
+    }
+  }
+  fullDeleteTypesCompletedWork = async (_req: Request, res: Response) => {
+    const { selectedTypeCompletedWork } = _req.body
+    try {
+      await TypesCompletedWorkRepos.destroy({
+        where: { id: selectedTypeCompletedWork },
+      })
+      const typesCompletedWork = await TypesCompletedWorkRepos.findAll({})
+      res.status(200).json(typesCompletedWork)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res.status(500).json({ error: ['db error', err] })
+    }
+  }
+  pullTypesCompletedWorkFromArchive = async (_req: Request, res: Response) => {
+    const { selectedTypeCompletedWork } = _req.body
+    try {
+      await TypesCompletedWorkRepos.update(selectedTypeCompletedWork, {
+        active: true,
+      })
+      const typesCompletedWork = await TypesCompletedWorkRepos.findAll({
+        where: { active: true },
+      })
+      res.status(200).json(typesCompletedWork)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res.status(500).json({ error: ['db error', err] })
+    }
+  }
+  changeTypesCompletedWork = async (_req: Request, res: Response) => {
+    const { typeCompletedWork, id } = _req.body
+    try {
+      await TypesCompletedWorkRepos.update(id, { typeCompletedWork })
+      const typesCompletedWork = await TypesCompletedWorkRepos.findAll({
+        where: { active: true },
+      })
+      res.status(200).json(typesCompletedWork)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res.status(500).json({ error: ['db error', err] })
+    }
+  }
+
   newINC = async (_req: Request, res: Response) => {
     const {
       id_incStatus,
@@ -580,7 +672,17 @@ export class incidentService {
     }
   }
   changeStatus = async (_req: Request, res: Response) => {
-    const { id, id_incStatus, incident, status, userID } = _req.body
+    const {
+      id,
+      id_incStatus,
+      incident,
+      status,
+      userID,
+      timeSLA,
+      commentCloseCheck,
+      act,
+      spaceParts,
+    } = _req.body
     try {
       const incStatuses = await IncidentStatusesRepos.findAll({
         where: { active: true },
@@ -594,15 +696,18 @@ export class incidentService {
           Math.abs(new Date().getTimezoneOffset() * 60 * 1000)
       )
       const timeInWork = newStatus === 1 ? currentDate : inc[0].timeInWork
-      const timeCloseCheck =
-        newStatus === 2 ? currentDate : inc[0].timeCloseCheck
-      const timeClose = newStatus === 3 ? currentDate : inc[0].timeClose
       const id_incResponsible =
         newStatus === 1 ? userID : inc[0].id_incResponsible
+      const timeCloseCheck =
+        newStatus === 2 ? currentDate : inc[0].timeCloseCheck
       const id_incClosingCheck =
         newStatus === 2 ? userID : inc[0].id_incClosingCheck
+      const sla = new Date(convertINCStringToDateTime(timeSLA)).getTime()
+      const now = currentDate.getTime()
+      const overdue = newStatus === 2 && now > sla ? true : inc[0].overdue
+      const timeClose = newStatus === 3 ? currentDate : inc[0].timeClose
       const id_incClosing = newStatus === 3 ? userID : inc[0].id_incClosing
-      // overdue
+      overdue
       await IncidentRepos.update(id, {
         id_incStatus,
         timeInWork,
@@ -611,6 +716,10 @@ export class incidentService {
         id_incResponsible,
         id_incClosingCheck,
         id_incClosing,
+        overdue,
+        commentCloseCheck,
+        act,
+        spaceParts,
       })
       await IncidentLogsRepos.create({
         id_incLog: id,

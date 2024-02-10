@@ -16,8 +16,8 @@ import {
   UserResponsible,
   IncidentData,
   Status,
-  DragTable,
   IndicatorCell,
+  StatusSLACell,
 } from './'
 
 interface INCTable {
@@ -60,7 +60,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
             <IndicatorCell
               timeSLA={rowData[7] ?? ''}
               timeReg={rowData[16]}
-              timeCloseCheck={rowData[27]}
+              timeCloseCheck={rowData[29]}
               inc={rowData[2]}
             />
           )
@@ -182,9 +182,10 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
             <Status
               value={value ?? ''}
               id={rowData[0]}
-              incident={rowData[1]}
+              incident={rowData[2]}
               responsible={rowData[22]}
               currentStatus={rowData[8]}
+              timeSLA={rowData[7] ?? ''}
             />
           )
         },
@@ -478,6 +479,39 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       },
     },
     {
+      name: 'applicant',
+      label: 'Заявитель',
+      options: {
+        filter: false,
+        sort: true,
+        display: true,
+        viewColumns: true,
+        setCellHeaderProps: () => ({
+          style: { padding: !denseTable ? 15 : 8 },
+        }),
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
+      },
+    },
+    {
+      name: 'applicantContacts',
+      label: 'Контакты заявителя',
+      options: {
+        filter: false,
+        sort: true,
+        display: true,
+        viewColumns: true,
+        setCellHeaderProps: () => ({
+          style: { padding: !denseTable ? 15 : 8 },
+        }),
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
+      },
+    },
+
+    {
       name: 'userClosingCheck',
       label: 'Перевел в выполнение',
       options: {
@@ -525,6 +559,23 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
         },
       },
     },
+    {
+      name: 'overdue',
+      label: 'Статус SLA',
+      options: {
+        filter: false,
+        sort: true,
+        display: true,
+        viewColumns: true,
+        setCellHeaderProps: () => ({
+          style: { padding: !denseTable ? 15 : 8 },
+        }),
+        customBodyRender: (value: string) => {
+          return <StatusSLACell value={value ?? ''} denseTable={denseTable} />
+        },
+      },
+    },
+
     {
       name: 'act',
       label: 'Акты',
@@ -649,7 +700,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
     return INCColumn.map((item, index) => index)
   }
 
-  const handleTableInit = () => {
+  const handleTableInit = (data: any, value: any) => {
     const columnViewStorage = localStorage
       .getItem('IncidentsViewColumns')
       ?.split(',')

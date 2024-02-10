@@ -16,6 +16,7 @@ import {
   RegionsRepos,
   SLARepos,
   ThroughModelTypMalfunctionsRepos,
+  TypesCompletedWorkRepos,
   TypesOfWorkRepos,
   TypicalMalfunctionsRepos,
   UserStatusRepos,
@@ -36,7 +37,11 @@ import {
 import { slaStartData } from './sla'
 import { clientsStartData } from './clients'
 import { objectsStartData } from './objects'
-import { incStatusesStartData, typesOfWorkStartData } from './incident'
+import {
+  incStatusesStartData,
+  typesOfWorkStartData,
+  typesCompletedWorkStartData,
+} from './incident'
 
 export const firstStart = async () => {
   try {
@@ -64,6 +69,7 @@ export const firstStart = async () => {
     const incs = await IncidentRepos.getAll()
     const incStatuses = await IncidentStatusesRepos.getAll()
     const typesOfWork = await TypesOfWorkRepos.getAll()
+    const typesCompletedWork = await TypesCompletedWorkRepos.getAll()
 
     console.log('End Check for tables!')
     const deleteClients = false
@@ -117,6 +123,22 @@ export const firstStart = async () => {
             await ObjectsRepos.bulkCreate(objectdata)
           }
         }
+      }
+    }
+
+    const deleteTypesCompletedWork = false
+    if (deleteTypesCompletedWork) {
+      console.log('Delete TypesCompletedWork!')
+      await TypesCompletedWorkRepos.drop({ cascade: true })
+    } else {
+      console.log('Check TypesCompletedWork')
+      if (typesCompletedWork.length) {
+        console.log(
+          'Первый запуск таблиц TypesCompletedWork невозможен! Какая-то из таблиц уже существует!'
+        )
+      } else {
+        console.log('Create TypesCompletedWork!')
+        await TypesCompletedWorkRepos.bulkCreate(typesCompletedWorkStartData)
       }
     }
 

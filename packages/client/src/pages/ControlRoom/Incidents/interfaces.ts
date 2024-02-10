@@ -1,3 +1,4 @@
+import { Options } from 'components/DropDown/interface'
 import { INC } from 'store/slices/incidents/interfaces'
 
 export type Order = 'asc' | 'desc'
@@ -48,6 +49,12 @@ export interface IStatus {
   incident: string
   responsible: string
   currentStatus: string
+  timeSLA: string
+}
+
+export interface IModal {
+  status: boolean
+  data: Options
 }
 
 export interface ICustomCell {

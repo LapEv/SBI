@@ -29,6 +29,7 @@ import {
   incident,
   incidentLogs,
   incindentStatuses,
+  typesCompletedWork,
   typesOfWork,
 } from './models/incidents'
 import { throughModelTypMalfunctions } from './models/classifier'
@@ -108,6 +109,11 @@ export const Incidents = sequelize.define('Incidents', incident, {})
 export const IncindentStatuses = sequelize.define(
   'IncindentStatuses',
   incindentStatuses,
+  {}
+)
+export const TypesCompletedWork = sequelize.define(
+  'TypesCompletedWork',
+  typesCompletedWork,
   {}
 )
 export const TypesOfWork = sequelize.define('TypesOfWork', typesOfWork, {})
@@ -233,6 +239,15 @@ TypesOfWork.hasOne(Incidents, {
 })
 Incidents.belongsTo(TypesOfWork, {
   foreignKey: 'id_typeOfWork',
+  targetKey: 'id',
+})
+
+TypesCompletedWork.hasOne(Incidents, {
+  foreignKey: 'id_typeCompletedWork',
+  sourceKey: 'id',
+})
+Incidents.belongsTo(TypesCompletedWork, {
+  foreignKey: 'id_typeCompletedWork',
   targetKey: 'id',
 })
 
@@ -383,6 +398,9 @@ export const IncidentStatusesRepos = new Repository(
 )
 export const IncidentRepos = new Repository(Incidents as ModelCtor)
 export const TypesOfWorkRepos = new Repository(TypesOfWork as ModelCtor)
+export const TypesCompletedWorkRepos = new Repository(
+  TypesCompletedWork as ModelCtor
+)
 export const IncidentLogsRepos = new Repository(IncidentLogs as ModelCtor)
 
 export async function dbConnect() {

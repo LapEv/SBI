@@ -398,4 +398,16 @@ export const rolesStartData = [
     role: 'getINCLogs',
     nameRole: 'Получение логов инцидентов',
   },
+  {
+    role: 'getTypesCompletedWork',
+    nameRole: 'Получение списка активных типов выполненных работ',
+  },
+  {
+    role: 'deleteTypesCompletedWork',
+    nameRole: 'Перемещение типа выполненных работ в архив',
+  },
+  {
+    role: 'changeTypesCompletedWork',
+    nameRole: 'Изменение данных типа выполненных работ',
+  },
 ]

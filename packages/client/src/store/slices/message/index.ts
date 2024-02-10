@@ -75,6 +75,9 @@ import {
   changeUserClosingCheck,
   changeUserClosing,
   changeStatus,
+  newTypeCompletedWork,
+  deleteTypesCompletedWork,
+  changeTypesCompletedWork,
 } from 'api/incidents'
 
 const initialState: MessageState = {
@@ -817,6 +820,66 @@ export const messageSlise = createSlice({
       state.type = 'error'
       state.text = action.payload
     },
+
+    [newTypeCompletedWork.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [newTypeCompletedWork.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [newTypeCompletedWork.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [deleteTypesCompletedWork.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [deleteTypesCompletedWork.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [deleteTypesCompletedWork.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [changeTypesCompletedWork.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [changeTypesCompletedWork.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [changeTypesCompletedWork.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+
     [newClientGroup.fulfilled.type]: (
       state,
       action: PayloadAction<AnswerMessage>

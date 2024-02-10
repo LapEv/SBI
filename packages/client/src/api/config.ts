@@ -119,6 +119,10 @@ export const ApiEndPoints = {
     newTypeOfWork: 'incidents/newTypeOfWork',
     deleteTypesOfWork: 'incidents/deleteTypesOfWork',
     changeTypesOfWork: 'incidents/changeTypesOfWork',
+    getTypesCompletedWork: 'incidents/getTypesCompletedWork',
+    newTypeCompletedWork: 'incidents/newTypeCompletedWork',
+    deleteTypesCompletedWork: 'incidents/deleteTypesCompletedWork',
+    changeTypesCompletedWork: 'incidents/changeTypesCompletedWork',
   },
 }
 

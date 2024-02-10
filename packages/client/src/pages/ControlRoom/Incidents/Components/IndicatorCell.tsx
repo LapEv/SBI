@@ -6,7 +6,6 @@ import { convertINCStringToDateTime } from 'utils/convertDate'
 export const IndicatorCell = memo(
   ({ timeSLA, timeReg, timeCloseCheck, inc }: IIndicatorCell) => {
     const [progress, setProgress] = useState(0)
-
     const check = () => {
       if (progress >= 100) return
       if (timeCloseCheck && timeCloseCheck.length && progress > 0) {

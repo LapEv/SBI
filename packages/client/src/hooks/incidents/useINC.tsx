@@ -10,16 +10,20 @@ import {
   changeResponsible,
   changeStatus,
   changeTypesOfWork,
+  changeTypesCompletedWork,
   changeUserClosing,
   changeUserClosingCheck,
   deleteIncidentStatuses,
   deleteTypesOfWork,
+  deleteTypesCompletedWork,
   getINC,
   getIncidentStatuses,
   getTypesOfWork,
+  getTypesCompletedWork,
   newINC,
   newIncidentStatuses,
   newTypeOfWork,
+  newTypeCompletedWork,
 } from 'api/incidents'
 import { setActiveINC } from 'store/slices/incidents'
 
@@ -39,6 +43,9 @@ export function useIncidents(): [INCState, INCActions] {
       getTypesOfWork() {
         dispatch(getTypesOfWork())
       },
+      getTypesCompletedWork() {
+        dispatch(getTypesCompletedWork())
+      },
       newINC(data) {
         dispatch(newINC(data))
       },
@@ -47,6 +54,9 @@ export function useIncidents(): [INCState, INCActions] {
       },
       newTypesOfWork(data) {
         dispatch(newTypeOfWork(data))
+      },
+      newTypeCompletedWork(data) {
+        dispatch(newTypeCompletedWork(data))
       },
       deleteIncidentStatuses(data) {
         dispatch(deleteIncidentStatuses(data))
@@ -73,11 +83,17 @@ export function useIncidents(): [INCState, INCActions] {
       deleteTypesOfWork(data) {
         dispatch(deleteTypesOfWork(data))
       },
+      deleteTypesCompletedWork(data) {
+        dispatch(deleteTypesCompletedWork(data))
+      },
       changeIncidentStatuses(data) {
         dispatch(changeIncidentStatuses(data))
       },
       changeTypesOfWork(data) {
         dispatch(changeTypesOfWork(data))
+      },
+      changeTypesCompletedWork(data) {
+        dispatch(changeTypesCompletedWork(data))
       },
       setActiveINC(id) {
         dispatch(setActiveINC(id))

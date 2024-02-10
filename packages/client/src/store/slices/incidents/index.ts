@@ -7,6 +7,8 @@ import {
   TypesOfWork,
   AnswerTypesOfWork,
   INCState,
+  TypesCompletedWork,
+  AnswerTypesCompletedWork,
 } from './interfaces'
 import {
   getINC,
@@ -25,6 +27,10 @@ import {
   changeUserClosingCheck,
   changeUserClosing,
   changeStatus,
+  getTypesCompletedWork,
+  newTypeCompletedWork,
+  deleteTypesCompletedWork,
+  changeTypesCompletedWork,
 } from 'api/incidents'
 import { convertDateToStringFromDB } from 'utils/convertDate'
 
@@ -32,6 +38,7 @@ const initialState: INCState = {
   incidents: [],
   incStatuses: [],
   typesOfWork: [],
+  typesCompletedWork: [],
   activeINC: '',
   isLoadingINC: false,
 }
@@ -330,6 +337,79 @@ export const incidentsSlise = createSlice({
       state.isLoadingINC = true
     },
     [changeTypesOfWork.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingINC = false
+      state.error = action.payload
+    },
+
+    [getTypesCompletedWork.fulfilled.type]: (
+      state,
+      action: PayloadAction<TypesCompletedWork[]>
+    ) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.typesCompletedWork = action.payload
+    },
+    [getTypesCompletedWork.pending.type]: state => {
+      state.isLoadingINC = true
+    },
+    [getTypesCompletedWork.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingINC = false
+      state.error = action.payload
+    },
+    [newTypeCompletedWork.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerTypesCompletedWork>
+    ) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.typesCompletedWork = action.payload.data
+    },
+    [newTypeCompletedWork.pending.type]: state => {
+      state.isLoadingINC = true
+    },
+    [newTypeCompletedWork.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingINC = false
+      state.error = action.payload
+    },
+    [deleteTypesCompletedWork.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerTypesCompletedWork>
+    ) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.typesCompletedWork = action.payload.data
+    },
+    [deleteTypesCompletedWork.pending.type]: state => {
+      state.isLoadingINC = true
+    },
+    [deleteTypesCompletedWork.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoadingINC = false
+      state.error = action.payload
+    },
+    [changeTypesCompletedWork.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerTypesCompletedWork>
+    ) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.typesCompletedWork = action.payload.data
+    },
+    [changeTypesCompletedWork.pending.type]: state => {
+      state.isLoadingINC = true
+    },
+    [changeTypesCompletedWork.rejected.type]: (
       state,
       action: PayloadAction<string>
     ) => {

@@ -1,7 +1,24 @@
+import { Options } from 'components/DropDown/interface'
+
 export interface ChooseModalProps {
   modalImage?: string
   handleModal: (state: boolean) => void
   title?: string
+}
+
+export interface DataCloseINC {
+  state: boolean
+  commentCloseCheck?: string
+  act?: string
+  spaceParts?: string
+  data: Options
+}
+
+export interface CloseINCProps {
+  modalImage?: string
+  handleModal: (data: DataCloseINC) => void
+  title?: string
+  data: Options
 }
 
 export interface AddValuesProps {

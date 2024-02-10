@@ -87,15 +87,15 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
           dayjs(dateValue).format('DD/MM/YYYYTHH:mm:ss')
         ) as string,
         id_incStatus,
-        clientINC: list[7].value,
+        clientINC: list[10].value,
         responsibleID: user.id as string,
         equipmentId: selectedEquipment.id,
         modelId: selectedModel.id,
         typicalMalfunctionID: selectedTypicalMalfunction.id,
-        description: list[12].value,
+        description: list[6].value,
         comment: list[13].value,
-        applicant: list[9].value,
-        applicantContacts: list[11].value,
+        applicant: list[11].value,
+        applicantContacts: list[12].value,
         methodsReuqest: 'manually',
       }
       console.log('newINCobject = ', newINCobject)

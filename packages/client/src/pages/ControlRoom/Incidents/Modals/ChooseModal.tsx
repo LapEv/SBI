@@ -1,12 +1,16 @@
 import React from 'react'
 import {
   ChangeIncidentStatuses,
+  ChangeStatus,
+  ChangeTypeCompletedWork,
   ChangeTypeOfWork,
   DeleteIncidentStatus,
+  DeleteTypesCompletedWork,
   DeleteTypesOfWork,
   NewIncident,
   NewIncidentStatus,
   NewRequest,
+  NewTypeCompletedWork,
   NewTypesOfWork,
 } from '.'
 import { ModalTitles } from '../data'
@@ -44,6 +48,14 @@ export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(
             title={ModalTitles.newTypesOfWork}
           />
         )}
+        {modalImage === 'newTypeCompletedWork' && (
+          <NewTypeCompletedWork
+            ref={ref}
+            handleModal={handleModal}
+            title={ModalTitles.newTypeCompletedWork}
+          />
+        )}
+
         {modalImage === 'deleteIncidentStatuses' && (
           <DeleteIncidentStatus
             ref={ref}
@@ -58,6 +70,14 @@ export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(
             title={ModalTitles.deleteTypesOfWork}
           />
         )}
+        {modalImage === 'deleteTypesCompletedWork' && (
+          <DeleteTypesCompletedWork
+            ref={ref}
+            handleModal={handleModal}
+            title={ModalTitles.deleteTypesCompletedWork}
+          />
+        )}
+
         {modalImage === 'changeIncidentStatuses' && (
           <ChangeIncidentStatuses
             ref={ref}
@@ -70,6 +90,13 @@ export const ChooseModal = React.forwardRef<unknown, ChooseModalProps>(
             ref={ref}
             handleModal={handleModal}
             title={ModalTitles.changeTypesOfWork}
+          />
+        )}
+        {modalImage === 'changeTypesCompletedWork' && (
+          <ChangeTypeCompletedWork
+            ref={ref}
+            handleModal={handleModal}
+            title={ModalTitles.changeTypesCompletedWork}
           />
         )}
       </>

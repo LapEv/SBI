@@ -73,6 +73,15 @@ export const NoRequiredValidation = {
   },
 }
 
+export const commentINCValidation = {
+  validate: (value: string) => {
+    if (value && value.length > 20) {
+      return 'Превышен лимит в 1024 символа'
+    }
+    return true
+  },
+}
+
 export const RequiredValidation = {
   required: REQUIRED_FIELD,
 }

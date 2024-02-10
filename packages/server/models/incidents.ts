@@ -127,7 +127,7 @@ export const incident: ModelAttributes<Model, Incindent> = {
   },
   overdue: {
     type: DataType.BOOLEAN,
-    allowNull: false,
+    allowNull: true,
   },
 }
 
@@ -169,6 +169,30 @@ export const typesOfWork: ModelAttributes<Model, TypesOfWork> = {
     primaryKey: true,
   },
   typeOfWork: {
+    type: DataType.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  active: {
+    type: DataType.BOOLEAN,
+    allowNull: false,
+  },
+}
+
+export interface TypesCompletedWork {
+  id: string
+  typeCompletedWork: string
+  active: boolean
+}
+
+export const typesCompletedWork: ModelAttributes<Model, TypesCompletedWork> = {
+  id: {
+    type: DataType.STRING,
+    defaultValue: DataType.UUIDV4,
+    allowNull: false,
+    primaryKey: true,
+  },
+  typeCompletedWork: {
     type: DataType.STRING,
     allowNull: false,
     unique: true,

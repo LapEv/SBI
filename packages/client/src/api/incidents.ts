@@ -16,6 +16,9 @@ import {
   ChangeClosingCheck,
   ChangeClosing,
   ChangeStatus,
+  TypesCompletedWork,
+  AddTypesCompletedWork,
+  ChangeTypesCompletedWork,
 } from 'store/slices/incidents/interfaces'
 
 export const getINC = createAsyncThunk(
@@ -184,7 +187,17 @@ export const changeResponsible = createAsyncThunk(
 export const changeStatus = createAsyncThunk(
   'incidents/changeStatus',
   async (
-    { id, id_incStatus, incident, status, userID }: ChangeStatus,
+    {
+      id,
+      id_incStatus,
+      incident,
+      status,
+      userID,
+      timeSLA,
+      commentCloseCheck,
+      act,
+      spaceParts,
+    }: ChangeStatus,
     thunkAPI
   ) => {
     try {
@@ -194,6 +207,10 @@ export const changeStatus = createAsyncThunk(
         incident,
         status,
         userID,
+        timeSLA,
+        commentCloseCheck,
+        act,
+        spaceParts,
       })
       return {
         data,
@@ -453,6 +470,104 @@ export const changeTypesOfWork = createAsyncThunk(
       /* eslint-enable @typescript-eslint/no-explicit-any */
       return thunkAPI.rejectWithValue(
         `Не удалось изменить тип работ!\n${getError(e)}`
+      )
+    }
+  }
+)
+
+export const getTypesCompletedWork = createAsyncThunk(
+  'incidents/getTypesCompletedWork',
+  async (_, thunkAPI) => {
+    try {
+      const { data } = await authhost.get<TypesCompletedWork>(
+        ApiEndPoints.INC.getTypesCompletedWork
+      )
+      return data
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      return thunkAPI.rejectWithValue(
+        `Не удалось получить данные по типам выполненных работ\n${getError(e)}`
+      )
+    }
+  }
+)
+
+export const newTypeCompletedWork = createAsyncThunk(
+  'incidents/newTypeCompletedWork',
+  async (typeCompletedWork: AddTypesCompletedWork, thunkAPI) => {
+    try {
+      const { data } = await authhost.post(
+        ApiEndPoints.INC.newTypeCompletedWork,
+        typeCompletedWork
+      )
+      return {
+        data,
+        message: {
+          text: 'Новый тип выполненных работ добавлен',
+          type: 'success',
+        },
+      }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      return thunkAPI.rejectWithValue(
+        `Не удалось создать новый тип выполненных работ\n${getError(e)} `
+      )
+    }
+  }
+)
+
+export const deleteTypesCompletedWork = createAsyncThunk(
+  'incidents/deleteTypesCompletedWork',
+  async (selectedTypeCompletedWork: string[], thunkAPI) => {
+    try {
+      const { data } = await authhost.post(
+        ApiEndPoints.INC.deleteTypesCompletedWork,
+        {
+          selectedTypeCompletedWork,
+        }
+      )
+      return {
+        data,
+        message: {
+          text: 'Типы выполненных работ удалены',
+          type: 'success',
+        },
+      }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      return thunkAPI.rejectWithValue(
+        `Не удалось удалить типы выполненных работ!\n${getError(e)}`
+      )
+    }
+  }
+)
+
+export const changeTypesCompletedWork = createAsyncThunk(
+  'incidents/changeTypesCompletedWork',
+  async ({ typeCompletedWork, id }: ChangeTypesCompletedWork, thunkAPI) => {
+    try {
+      const { data } = await authhost.post(
+        ApiEndPoints.INC.changeTypesCompletedWork,
+        {
+          typeCompletedWork,
+          id,
+        }
+      )
+      return {
+        data,
+        message: {
+          text: 'Тип выполненных работ изменен!',
+          type: 'success',
+        },
+      }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      return thunkAPI.rejectWithValue(
+        `Не удалось изменить тип выполненных работ!\n${getError(e)}`
       )
     }
   }

@@ -1,4 +1,8 @@
-import { NoRequiredValidation, lightTextValidation } from 'utils/validatorRules'
+import {
+  NoRequiredValidation,
+  commentINCValidation,
+  lightTextValidation,
+} from 'utils/validatorRules'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
 import EditIcon from '@mui/icons-material/Edit'
@@ -15,6 +19,11 @@ export const menuData = [
     icon: <AddCircleOutlineIcon fontSize="medium" />,
   },
   {
+    name: 'newTypeCompletedWork',
+    title: 'Добавить тип выполненных работ',
+    icon: <AddCircleOutlineIcon fontSize="medium" />,
+  },
+  {
     name: 'deleteIncidentStatuses',
     title: 'Удалить статус инцидента',
     icon: <RemoveCircleOutline fontSize="medium" />,
@@ -25,6 +34,11 @@ export const menuData = [
     icon: <RemoveCircleOutline fontSize="medium" />,
   },
   {
+    name: 'deleteTypesCompletedWork',
+    title: 'Удалить тип выполненных работ',
+    icon: <RemoveCircleOutline fontSize="medium" />,
+  },
+  {
     name: 'changeIncidentStatuses',
     title: 'Изменить статус инцидента',
     icon: <EditIcon fontSize="medium" />,
@@ -32,6 +46,11 @@ export const menuData = [
   {
     name: 'changeTypesOfWork',
     title: 'Изменить тип работ',
+    icon: <EditIcon fontSize="medium" />,
+  },
+  {
+    name: 'changeTypesCompletedWork',
+    title: 'Изменить тип выполненных работ',
     icon: <EditIcon fontSize="medium" />,
   },
 ]
@@ -57,11 +76,52 @@ export const ModalTitles = {
   newRequest: 'Новый запрос',
   newIncidentStatus: 'Новый статус инцидента',
   newTypesOfWork: 'Новый тип работ',
+  newTypeCompletedWork: 'Новый тип выполненных работ',
   deleteIncidentStatuses: 'Удалить статус инцидента',
   deleteTypesOfWork: 'Удалить тип работ',
+  deleteTypesCompletedWork: 'Удалить тип выполненных работ',
   changeIncidentStatuses: 'Изменить статус инцидента',
   changeTypesOfWork: 'Изменить тип работ',
+  changeTypesCompletedWork: 'Изменить тип выполненных работ',
+  closeINC: 'Закрытие инцидента',
 }
+
+export const statusSLATitles = {
+  yes: 'Просрочен',
+  no: 'В срок',
+}
+
+export const MapINCStatusCloseInputFields = [
+  {
+    name: 'typeCompletedWork',
+    label: 'Выберите тип выполненных работ',
+    validation: NoRequiredValidation,
+    type: 'dropdown',
+    required: true,
+  },
+  {
+    name: 'commentCloseCheck',
+    label: 'Введите комментарии к закрытию инцидента',
+    validation: commentINCValidation,
+    type: 'text',
+    required: true,
+  },
+  {
+    name: 'act',
+    label: 'Приложите акт',
+    validation: NoRequiredValidation,
+    type: 'file',
+    required: false,
+  },
+
+  {
+    name: 'spaceParts',
+    label: 'Выберите ЗИП и подмену',
+    validation: NoRequiredValidation,
+    type: 'text',
+    required: false,
+  },
+]
 
 export const MapINCStatusInputFields = [
   {
@@ -83,120 +143,15 @@ export const MapTypesOfWorkInputFields = [
   },
 ]
 
-// export const MapINCInputFields = [
-//   {
-//     name: 'client',
-//     label: 'Выберите клиента',
-//     validation: NoRequiredValidation,
-//     type: 'text',
-//     required: true,
-//     tabIndex: 1,
-//   },
-//   {
-//     name: 'sla',
-//     label: 'Выберите SLA',
-//     validation: NoRequiredValidation,
-//     type: 'dropdown',
-//     required: true,
-//     tabIndex: 8,
-//   },
-//   {
-//     name: 'contract',
-//     label: 'Выберите контракт',
-//     validation: NoRequiredValidation,
-//     type: 'dropdown',
-//     required: true,
-//     tabIndex: 2,
-//   },
-//   {
-//     name: 'timeSLA',
-//     label: 'Выберите время SLA',
-//     validation: NoRequiredValidation,
-//     type: 'datetime',
-//     required: true,
-//     tabIndex: 9,
-//   },
-//   {
-//     name: 'object',
-//     label: 'Выберите объект',
-//     validation: NoRequiredValidation,
-//     type: 'dropdown',
-//     required: true,
-//     tabIndex: 3,
-//   },
-//   {
-//     name: 'typeOfWrok',
-//     label: 'Выберите тип работ',
-//     validation: NoRequiredValidation,
-//     type: 'dropdown',
-//     required: true,
-//     tabIndex: 10,
-//   },
-//   {
-//     name: 'equipment',
-//     label: 'Выберите классификатор',
-//     validation: NoRequiredValidation,
-//     type: 'dropdown',
-//     required: true,
-//     tabIndex: 4,
-//   },
-//   {
-//     name: 'cientINC',
-//     label: 'Введите клиентский номер',
-//     validation: NoRequiredValidation,
-//     type: 'text',
-//     required: false,
-//     tabIndex: 11,
-//   },
-//   {
-//     name: 'model',
-//     label: 'Выберите модель',
-//     validation: NoRequiredValidation,
-//     type: 'dropdown',
-//     required: true,
-//     tabIndex: 5,
-//   },
-//   {
-//     name: 'applicant',
-//     label: 'Введите заявителя',
-//     validation: NoRequiredValidation,
-//     type: 'text',
-//     required: false,
-//     tabIndex: 12,
-//   },
-//   {
-//     name: 'typicalMalfunction',
-//     label: 'Выберите типовую неисправность',
-//     validation: NoRequiredValidation,
-//     type: 'dropdown',
-//     required: true,
-//     tabIndex: 6,
-//   },
-//   {
-//     name: 'applicantContacts',
-//     label: 'Введите контакты заявителя',
-//     validation: NoRequiredValidation,
-//     type: 'text',
-//     required: false,
-//     tabIndex: 13,
-//   },
-//   {
-//     name: 'description',
-//     label: 'Введите описание к инциденту',
-//     validation: NoRequiredValidation,
-//     type: 'text',
-//     required: false,
-//     tabIndex: 7,
-//   },
-//   {
-//     name: 'comments',
-//     label: 'Введите комментарии',
-//     validation: NoRequiredValidation,
-//     type: 'text',
-//     required: false,
-//     tabIndex: 14,
-//   },
-// ]
+export const MapTypesCompletedWorkInputFields = [
+  {
+    name: 'typeCompletedWork',
+    label: 'Введите новый тип выполненных работ',
+    validation: lightTextValidation,
+    type: 'text',
+    required: true,
+  },
+]
 
 export const MapINCInputFields = [
   {

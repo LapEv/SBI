@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Box, useTheme } from '@mui/material'
+import { Box, Popper, useTheme } from '@mui/material'
 import { TextField, TextFieldIncidents } from 'components/TextFields/TextFields'
 import { Autocomplete, AutocompleteIncidents } from 'components/Autocomplete'
 import { DataDropDown, Options } from './interface'
@@ -158,6 +158,16 @@ export const DropDownIncidents = ({
     setErrors(error as boolean)
   }, [error])
 
+  const CustomPopper = (props: any) => {
+    return (
+      <Popper
+        {...props}
+        placement="bottom"
+        sx={{ height: '10px' }}
+        style={{ width: props.anchorEl.clientWidth, height: '5px', zIndex: 1 }}
+      />
+    )
+  }
   return (
     <AutocompleteIncidents
       forcePopupIcon={true}
@@ -234,6 +244,15 @@ export const DropDownIncidents = ({
           </Box>
         </li>
       )}
+      PopperComponent={CustomPopper}
+      componentsProps={{
+        paper: {
+          style: {
+            backgroundColor:
+              theme.palette.mode === 'light' ? '#C1EEE1' : '#1E515D',
+          },
+        },
+      }}
       ListboxProps={{
         sx: {
           borderWidth: 1,
@@ -241,17 +260,23 @@ export const DropDownIncidents = ({
           maxHeight: 225,
           fontSize: 14,
           color:
-            theme.palette.mode === 'dark'
-              ? '#1E515D!important'
-              : '#C1EEE1!important',
+            theme.palette.mode === 'light'
+              ? '#000000!important'
+              : '#FFFFFF!important',
           '& li': {
             borderColor:
-              theme.palette.mode === 'dark'
-                ? '#1E515D!important'
+              theme.palette.mode === 'light'
+                ? '#000000!important'
                 : '#C1EEE1!important',
           },
           '& :hover': {
-            color: theme.palette.mode === 'light' ? '#FFFFFF' : '#000000',
+            color: theme.palette.mode === 'light' ? '#000000' : '#FFFFFF',
+            fontWeight: 'bold',
+          },
+          '& [aria-selected="true"]': {
+            color: theme.palette.mode === 'light' ? '#000000' : '#FFFFFF',
+            backgroundColor:
+              theme.palette.mode === 'light' ? '#a8dfcf!important' : '#1E515D',
             fontWeight: 'bold',
           },
         },

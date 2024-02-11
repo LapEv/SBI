@@ -49,6 +49,7 @@ export const UserResponsible = memo(({ value, id, incident }: IExecutor) => {
       value={responsible.label}
       label="Выберите ответственного"
       errorLabel="Не выбран ответственный!"
+      disableClearable={false}
     />
   )
 })

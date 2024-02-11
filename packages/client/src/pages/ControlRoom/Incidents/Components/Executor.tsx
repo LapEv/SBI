@@ -48,6 +48,7 @@ export const Executor = memo(
         value={executor.label}
         label="Выберите исполнителя"
         errorLabel="Не выбран исполнитель!"
+        disableClearable={false}
       />
     )
   }

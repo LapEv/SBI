@@ -251,3 +251,33 @@ export const timeValidation = {
     return true
   },
 }
+
+export const fileValidation = (files: FileList) => {
+  const requiredTypes = ['image', 'application/pdf']
+  const requiredSize = 1024 * 1024 * 2
+  const valError = []
+
+  if (files.length > 10) {
+    return {
+      status: false,
+      error: `Не более 10 файлов!`,
+    }
+  }
+
+  for (let file of files) {
+    const checkType = !requiredTypes.find(item => file.type.includes(item))
+    if (checkType) {
+      valError.push(file.name)
+    }
+    if (file.size > requiredSize) {
+      valError.push(file.name)
+    }
+  }
+  if (valError.length > 0) {
+    return {
+      status: false,
+      error: `Некоторые файлы не поддерживаются (только картинки или pdf) или превышен лимит на размер файла (2Mb)!`,
+    }
+  }
+  return { status: true, error: '' }
+}

@@ -5,15 +5,6 @@ import { ThemeMode } from '../../themes/themeConfig'
 import { IDataTable } from './interface'
 
 const StyledDataTable = styled(MUIDataTable)(({ theme }) => ({
-  '&.MuiPaper-root.MuiAutocomplete-paper': {
-    backgroundColor:
-      theme.palette.mode === ThemeMode.dark ? '#1E515D' : '#C1EEE1',
-  },
-  '&.MuiPaper-root.MuiAutocomplete-root': {
-    borderWidth: 2,
-    borderColor: theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
-    borderStyle: 'solid',
-  },
   '.MuiSwitch-track': {
     backgroundColor:
       theme.palette.mode === ThemeMode.light
@@ -59,63 +50,6 @@ export const DataTable = ({ title, data, options, columns }: IDataTable) => {
                     theme.palette.mode === ThemeMode.light
                       ? '#000000!important'
                       : '#FFFFFF!important',
-                },
-              },
-            },
-            MuiAutocomplete: {
-              styleOverrides: {
-                paper: {
-                  backgroundColor:
-                    theme.palette.mode === ThemeMode.dark
-                      ? '#1E515D!important'
-                      : '#C1EEE1!important',
-                  boxShadow:
-                    theme.palette.mode === 'light'
-                      ? '1px 2px 16px 3px #1E515D'
-                      : '0px 0px 6px 0px #C1EEE1',
-                },
-                option: {
-                  color:
-                    theme.palette.mode === ThemeMode.light
-                      ? '#000000!important'
-                      : '#FFFFFF!important',
-                  borderColor:
-                    theme.palette.mode === 'dark'
-                      ? '#1E515D!important'
-                      : '#C1EEE1!important',
-                },
-                listbox: {
-                  '& :hover': {
-                    color:
-                      theme.palette.mode === 'light'
-                        ? '#1E515D!important'
-                        : '#C1EEE1!important',
-                    fontWeight: 'bold',
-                  },
-                  '& li': {
-                    borderColor:
-                      theme.palette.mode === 'dark' ? '#1E515D' : '#C1EEE1',
-                  },
-                },
-                inputRoot: {
-                  borderColor:
-                    theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
-                  color:
-                    theme.palette.mode === ThemeMode.light
-                      ? '#000000!important'
-                      : '#FFFFFF!important',
-                },
-                clearIndicator: {
-                  color:
-                    theme.palette.mode === ThemeMode.light
-                      ? '#1E515D!important'
-                      : '#C1EEE1!important',
-                },
-                popupIndicator: {
-                  color:
-                    theme.palette.mode === ThemeMode.light
-                      ? '#1E515D!important'
-                      : '#C1EEE1!important',
                 },
               },
             },

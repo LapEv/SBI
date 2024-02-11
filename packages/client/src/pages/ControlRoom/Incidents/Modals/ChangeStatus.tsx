@@ -1,6 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, {
+  useEffect,
+  useState,
+  ChangeEvent,
+  useCallback,
+  DragEvent,
+} from 'react'
 import { AddValuesProps, CloseINCProps } from './interfaces'
-import { Box, Typography } from '@mui/material'
+import { Box, IconButton, useTheme, Typography } from '@mui/material'
 import { modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import {
@@ -9,22 +15,82 @@ import {
   Controller,
   useFormState,
 } from 'react-hook-form'
-import { TextField } from 'components/TextFields'
+import { MultiTextField, TextField } from 'components/TextFields'
 import { MapINCStatusCloseInputFields } from '../data'
 import { DropDown, emptyValue } from 'components/DropDown'
 import { Options } from 'components/DropDown/interface'
 import { useIncidents } from 'hooks/incidents/useINC'
+import AttachFileIcon from '@mui/icons-material/AttachFile'
+import { fileValidation } from 'utils/validatorRules'
+import { useMessage } from 'hooks/message/useMessage'
 
 export const ChangeStatus = React.forwardRef<unknown, CloseINCProps>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   ({ handleModal, title, data }: CloseINCProps, ref) => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
+    const theme = useTheme()
     const [{ typesCompletedWork }, { getTypesCompletedWork }] = useIncidents()
+    const [_, { setMessage }] = useMessage()
     const [typeCompletedWorkList, setTypeCompletedWorkList] = useState<
       Options[]
     >([])
     const [selectedTypeCompletedWork, setSelectedTypeCompletedWork] =
       useState<Options>(emptyValue)
+
+    const [selectedFiles, setSelectedFiles] = useState<FileList | null>()
+    const [selectedNameFiles, setSelectedNameFiles] = useState<string>('')
+    const [dragOver, setDragOver] = useState<boolean>(false)
+
+    const handleDragOver = useCallback((event: DragEvent<HTMLDivElement>) => {
+      event.preventDefault()
+      setDragOver(true)
+    }, [])
+
+    const handleDragLeave = useCallback((event: DragEvent<HTMLDivElement>) => {
+      event.preventDefault()
+      setDragOver(false)
+    }, [])
+
+    const handleDrop = useCallback((event: DragEvent<HTMLDivElement>) => {
+      event.preventDefault()
+      setDragOver(false)
+      const files = event.dataTransfer.files
+      if (files) {
+        handleFileDragChange(files)
+      }
+    }, [])
+
+    const handleFileDragChange = (files: FileList) => {
+      const checkFiles = fileValidation(files)
+      if (!checkFiles.status) {
+        setMessage({
+          type: 'error',
+          text: checkFiles.error,
+        })
+        return
+      }
+      setSelectedFiles(files)
+      const names = Array.from(files as FileList)
+        .map(item => item.name)
+        .join(', ')
+      setSelectedNameFiles(names)
+    }
+
+    const handleFileChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+      const checkFiles = fileValidation(target?.files as FileList)
+      if (!checkFiles.status) {
+        setMessage({
+          type: 'error',
+          text: checkFiles.error,
+        })
+        return
+      }
+      setSelectedFiles(target?.files)
+      const names = Array.from(target?.files as FileList)
+        .map(item => item.name)
+        .join(', ')
+      setSelectedNameFiles(names)
+    }
 
     const { handleSubmit, control } = useForm<AddValuesProps>({
       mode: 'onBlur',
@@ -90,6 +156,79 @@ export const ChangeStatus = React.forwardRef<unknown, CloseINCProps>(
                         />
                       )
                     }
+                    if (name === 'commentCloseCheck') {
+                      return (
+                        <MultiTextField
+                          {...field}
+                          inputRef={field.ref}
+                          label={label}
+                          type={type}
+                          required={required ?? true}
+                          variant="outlined"
+                          sx={{ width: '100%' }}
+                          margin="normal"
+                          multiline
+                          maxRows={3}
+                          value={field.value || ''}
+                          error={!!(errors?.list ?? [])[index]?.value?.message}
+                          helperText={
+                            (errors?.list ?? [])[index]?.value?.message
+                          }
+                          inputProps={{ step: 1 }}
+                        />
+                      )
+                    }
+                    if (name === 'act') {
+                      return (
+                        <TextField
+                          {...field}
+                          inputRef={field.ref}
+                          label={label}
+                          type={type}
+                          variant="outlined"
+                          required={required ?? true}
+                          sx={{
+                            width: '100%',
+                            mt: 2,
+                            height: 40,
+                            pl: 0,
+                          }}
+                          onDragOver={handleDragOver}
+                          onDragLeave={handleDragLeave}
+                          onDrop={handleDrop}
+                          margin="normal"
+                          value={selectedNameFiles || ''}
+                          error={!!(errors?.list ?? [])[index]?.value?.message}
+                          helperText={
+                            (errors?.list ?? [])[index]?.value?.message
+                          }
+                          InputProps={{
+                            fullWidth: true,
+                            startAdornment: (
+                              <IconButton component="label">
+                                <AttachFileIcon
+                                  sx={{
+                                    color:
+                                      theme.palette.mode === 'dark'
+                                        ? '#1E515D'
+                                        : '#C1EEE1',
+                                  }}
+                                />
+                                <input
+                                  type="file"
+                                  accept="image/jpeg,application/pdf"
+                                  hidden
+                                  onChange={handleFileChange}
+                                  name="files[]"
+                                  multiple
+                                  style={{ display: 'none' }}
+                                />
+                              </IconButton>
+                            ),
+                          }}
+                        />
+                      )
+                    }
                     return (
                       <TextField
                         {...field}
@@ -98,7 +237,11 @@ export const ChangeStatus = React.forwardRef<unknown, CloseINCProps>(
                         type={type}
                         variant="outlined"
                         required={required ?? true}
-                        sx={{ width: '100%', mt: 2, height: 40 }}
+                        sx={{
+                          width: '100%',
+                          mt: 2,
+                          height: 40,
+                        }}
                         margin="normal"
                         value={field.value || ''}
                         error={!!(errors?.list ?? [])[index]?.value?.message}

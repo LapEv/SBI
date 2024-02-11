@@ -104,16 +104,15 @@ export const MapINCStatusCloseInputFields = [
     label: 'Введите комментарии к закрытию инцидента',
     validation: commentINCValidation,
     type: 'text',
-    required: true,
+    required: false,
   },
   {
     name: 'act',
     label: 'Приложите акт',
     validation: NoRequiredValidation,
-    type: 'file',
+    type: 'text',
     required: false,
   },
-
   {
     name: 'spaceParts',
     label: 'Выберите ЗИП и подмену',

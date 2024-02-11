@@ -68,7 +68,7 @@ export const lightTextValidation = {
 }
 
 export const NoRequiredValidation = {
-  validate: (value: string) => {
+  validate: () => {
     return true
   },
 }
@@ -264,7 +264,7 @@ export const fileValidation = (files: FileList) => {
     }
   }
 
-  for (let file of files) {
+  for (const file of files) {
     const checkType = !requiredTypes.find(item => file.type.includes(item))
     if (checkType) {
       valError.push(file.name)

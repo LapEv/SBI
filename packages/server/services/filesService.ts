@@ -42,6 +42,8 @@ export class filesService {
         console.log('temp = ', temp)
       })
 
+      // https://www.dhiwise.com/post/how-to-implement-react-mui-file-upload-in-your-applications
+      // https://www.bezkoder.com/material-ui-file-upload/
       console.log('temp = ', temp)
       res.status(200).json('temp')
       /* eslint-disable @typescript-eslint/no-explicit-any */

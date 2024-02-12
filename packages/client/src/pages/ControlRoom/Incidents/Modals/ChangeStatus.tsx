@@ -77,6 +77,8 @@ export const ChangeStatus = React.forwardRef<unknown, CloseINCProps>(
     }
 
     const handleFileChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+      console.log('target = ', target.files)
+      console.log('target = ', target?.files?.[0])
       const checkFiles = fileValidation(target?.files as FileList)
       if (!checkFiles.status) {
         setMessage({

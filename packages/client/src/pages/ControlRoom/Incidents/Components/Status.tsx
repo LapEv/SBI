@@ -9,6 +9,7 @@ import { useMessage } from 'hooks/message/useMessage'
 import { Modal } from '@mui/material'
 import { ChangeStatus } from '../Modals'
 import { DataCloseINC } from '../Modals/interfaces'
+import { useFiles } from 'hooks/files/useFiles'
 
 export const Status = memo(
   ({ value, id, incident, currentStatus, timeSLA }: IStatus) => {
@@ -19,6 +20,8 @@ export const Status = memo(
     })
 
     const [{ user }] = useAuth()
+    const [{ files }, { uploadFiles }] = useFiles()
+
     const [_, { setMessage }] = useMessage()
     const [{ incStatuses }, { changeStatus, getIncidentStatuses }] =
       useIncidents()
@@ -79,19 +82,20 @@ export const Status = memo(
         return
       }
       console.log('YES')
-      setStatus(data)
-      changeStatus({
-        id,
-        id_incStatus: data.id as string,
-        incident,
-        status: data.label,
-        userID: user.id as string,
-        timeSLA,
-        commentCloseCheck,
-        act,
-        spaceParts,
-      })
-      setModal({ status: false, data: emptyValue })
+      // setStatus(data)
+      uploadFiles({ type: 'incidentActs', files: act as FileList, incident })
+      // changeStatus({
+      //   id,
+      //   id_incStatus: data.id as string,
+      //   incident,
+      //   status: data.label,
+      //   userID: user.id as string,
+      //   timeSLA,
+      //   commentCloseCheck,
+      //   act,
+      //   spaceParts,
+      // })
+      // setModal({ status: false, data: emptyValue })
     }
 
     useEffect(() => {

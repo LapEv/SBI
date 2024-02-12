@@ -11,6 +11,7 @@ import { slaRouter } from './slaRouter'
 import { contractRouter } from './contractRouter'
 import { objectsRouter } from './objectsRouter'
 import { incidentRouter } from './IncidentRouter'
+import { filesRouter } from './filesRouter'
 
 export const apiRouter: Router = Router()
 
@@ -27,3 +28,4 @@ slaRouter(apiRouter)
 contractRouter(apiRouter)
 objectsRouter(apiRouter)
 incidentRouter(apiRouter)
+filesRouter(apiRouter)

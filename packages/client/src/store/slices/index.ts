@@ -9,6 +9,7 @@ import { clientsReducer } from './clients'
 import { contractsReducer } from './contracts'
 import { objectsReducer } from './objects'
 import { incidentsReducer } from './incidents'
+import { filesReducer } from './files'
 
 export const rootReducer = {
   auth: authReducer,
@@ -22,4 +23,5 @@ export const rootReducer = {
   contracts: contractsReducer,
   objects: objectsReducer,
   incidents: incidentsReducer,
+  files: filesReducer,
 }

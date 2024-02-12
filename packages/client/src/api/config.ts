@@ -124,6 +124,10 @@ export const ApiEndPoints = {
     deleteTypesCompletedWork: 'incidents/deleteTypesCompletedWork',
     changeTypesCompletedWork: 'incidents/changeTypesCompletedWork',
   },
+  Files: {
+    getFiles: 'files/getFiles',
+    uploadFiles: 'files/uploadFiles',
+  },
 }
 
 const url = `http://localhost:${__SERVER_PORT__}/api/`
@@ -133,6 +137,14 @@ const authhost = axios.create({
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',
+  },
+})
+
+const authhFileHost = axios.create({
+  baseURL: url,
+  timeout: 5000,
+  headers: {
+    'Content-Type': 'multipart/form-data',
   },
 })
 
@@ -152,5 +164,6 @@ const authInterceptor = (
 }
 
 authhost.interceptors.request.use(authInterceptor)
+authhFileHost.interceptors.request.use(authInterceptor)
 
-export { host, authhost }
+export { host, authhost, authhFileHost }

@@ -79,6 +79,7 @@ import {
   deleteTypesCompletedWork,
   changeTypesCompletedWork,
 } from 'api/incidents'
+import { getFiles, uploadFiles } from 'api/files'
 
 const initialState: MessageState = {
   text: '',
@@ -1262,6 +1263,39 @@ export const messageSlise = createSlice({
       state,
       action: PayloadAction<string>
     ) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+
+    [getFiles.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [getFiles.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [getFiles.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [uploadFiles.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [uploadFiles.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [uploadFiles.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingMessage = false
       state.type = 'error'
       state.text = action.payload

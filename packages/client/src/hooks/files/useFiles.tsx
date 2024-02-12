@@ -1,0 +1,23 @@
+import { useSelector } from 'react-redux'
+import { RootState } from 'store'
+import { useAppDispatch } from 'store/hooks'
+import { FilesState } from 'store/slices/files/interfaces'
+import { FilesActions } from './filesActions'
+import { getFiles, uploadFiles } from 'api/files'
+
+export function useFiles(): [FilesState, FilesActions] {
+  const files = useSelector((state: RootState) => state.files)
+  const dispatch = useAppDispatch()
+
+  return [
+    files,
+    {
+      getFiles() {
+        dispatch(getFiles())
+      },
+      uploadFiles(data) {
+        dispatch(uploadFiles(data))
+      },
+    },
+  ]
+}

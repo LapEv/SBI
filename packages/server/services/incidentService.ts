@@ -707,7 +707,7 @@ export class incidentService {
       const overdue = newStatus === 2 && now > sla ? true : inc[0].overdue
       const timeClose = newStatus === 3 ? currentDate : inc[0].timeClose
       const id_incClosing = newStatus === 3 ? userID : inc[0].id_incClosing
-      overdue
+
       await IncidentRepos.update(id, {
         id_incStatus,
         timeInWork,

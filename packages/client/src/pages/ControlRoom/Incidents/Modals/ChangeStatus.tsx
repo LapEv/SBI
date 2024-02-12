@@ -108,7 +108,7 @@ export const ChangeStatus = React.forwardRef<unknown, CloseINCProps>(
       handleModal({
         state: true,
         commentCloseCheck: list[0].value,
-        act: list[1].value,
+        act: selectedFiles as FileList,
         spaceParts: list[2].value,
         data,
       })

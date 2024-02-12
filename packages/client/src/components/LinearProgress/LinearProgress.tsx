@@ -16,7 +16,7 @@ export const StyledLinearProgress = styled(LinearProgress)(
     [`& .${linearProgressClasses.bar}`]: {
       borderRadius: 5,
       backgroundColor:
-        (value as number) >= 100
+        (value as number) >= 95
           ? '#ff2c2c'
           : (value as number) >= 75
           ? '#f1a605'

@@ -196,7 +196,7 @@ export interface ChangeStatus {
   userID: string
   timeSLA: string
   commentCloseCheck?: string
-  act?: string
+  act?: FileList
   spaceParts?: string
 }
 

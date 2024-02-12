@@ -75,7 +75,6 @@ export const Status = memo(
       console.log('spaceParts = ', spaceParts)
       console.log('data = ', data)
       if (!state) {
-        console.log('NO')
         setModal({ status: false, data: emptyValue })
         return
       }

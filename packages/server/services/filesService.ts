@@ -4,6 +4,7 @@ import type { Request, Response } from 'express'
 const path = require('path')
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Express {
     interface Request {
       files: {

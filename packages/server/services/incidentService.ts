@@ -20,7 +20,8 @@ import {
 } from './../db'
 import type { Request, Response } from 'express'
 import { AppConst } from '../const'
-import { convertINCStringToDateTime } from '../utils/convertDate'
+// import { convertINCStringToDateTime } from '../utils/convertDate'
+const fs = require('fs')
 
 const incLogs = [
   {
@@ -178,6 +179,7 @@ const includes = [
     include: incLogs,
   },
 ]
+
 export class incidentService {
   newIncidentStatuses = async (_req: Request, res: Response) => {
     try {
@@ -673,60 +675,73 @@ export class incidentService {
   }
   changeStatus = async (_req: Request, res: Response) => {
     const {
-      id,
-      id_incStatus,
+      // id,
+      // id_incStatus,
       incident,
-      status,
-      userID,
-      timeSLA,
-      commentCloseCheck,
-      act,
-      spaceParts,
+      // status,
+      // userID,
+      // timeSLA,
+      // commentCloseCheck,
+      // act,
+      // spaceParts,
+      files,
     } = _req.body
     try {
-      const incStatuses = await IncidentStatusesRepos.findAll({
-        where: { active: true },
-      })
-      const inc = await IncidentRepos.findAll({
-        where: { id },
-      })
-      const newStatus = incStatuses.findIndex(item => item.id === id_incStatus)
-      const currentDate = new Date(
-        new Date().getTime() +
-          Math.abs(new Date().getTimezoneOffset() * 60 * 1000)
-      )
-      const timeInWork = newStatus === 1 ? currentDate : inc[0].timeInWork
-      const id_incResponsible =
-        newStatus === 1 ? userID : inc[0].id_incResponsible
-      const timeCloseCheck =
-        newStatus === 2 ? currentDate : inc[0].timeCloseCheck
-      const id_incClosingCheck =
-        newStatus === 2 ? userID : inc[0].id_incClosingCheck
-      const sla = new Date(convertINCStringToDateTime(timeSLA)).getTime()
-      const now = currentDate.getTime()
-      const overdue = newStatus === 2 && now > sla ? true : inc[0].overdue
-      const timeClose = newStatus === 3 ? currentDate : inc[0].timeClose
-      const id_incClosing = newStatus === 3 ? userID : inc[0].id_incClosing
+      // const incStatuses = await IncidentStatusesRepos.findAll({
+      //   where: { active: true },
+      // })
+      // const inc = await IncidentRepos.findAll({
+      //   where: { id },
+      // })
+      // const newStatus = incStatuses.findIndex(item => item.id === id_incStatus)
+      // const currentDate = new Date(
+      //   new Date().getTime() +
+      //     Math.abs(new Date().getTimezoneOffset() * 60 * 1000)
+      // )
+      // const timeInWork = newStatus === 1 ? currentDate : inc[0].timeInWork
+      // const id_incResponsible =
+      //   newStatus === 1 ? userID : inc[0].id_incResponsible
+      // const timeCloseCheck =
+      //   newStatus === 2 ? currentDate : inc[0].timeCloseCheck
+      // const id_incClosingCheck =
+      //   newStatus === 2 ? userID : inc[0].id_incClosingCheck
+      // const sla = new Date(convertINCStringToDateTime(timeSLA)).getTime()
+      // const now = currentDate.getTime()
+      // const overdue = newStatus === 2 && now > sla ? true : inc[0].overdue
+      // const timeClose = newStatus === 3 ? currentDate : inc[0].timeClose
+      // const id_incClosing = newStatus === 3 ? userID : inc[0].id_incClosing
 
-      await IncidentRepos.update(id, {
-        id_incStatus,
-        timeInWork,
-        timeCloseCheck,
-        timeClose,
-        id_incResponsible,
-        id_incClosingCheck,
-        id_incClosing,
-        overdue,
-        commentCloseCheck,
-        act,
-        spaceParts,
-      })
-      await IncidentLogsRepos.create({
-        id_incLog: id,
-        time: currentDate,
-        log: `${AppConst.ActionComment.changeStatus.first}${incident}${AppConst.ActionComment.changeStatus.second}${status}`,
-        id_incLogUser: userID,
-      })
+      const filePath = `${process.env.FILE_PATH}\\${AppConst.path.incidentsActs}\\${incident}`
+      if (fs.existsSync(filePath)) {
+        return res.status(400).json({
+          message: AppConst.fileNotification.errorFileExists,
+        })
+      }
+
+      console.log('filePath = ', filePath)
+      const temp = files.map((item: any) => item.mv(filePath))
+
+      console.log('temp = ', temp)
+
+      // await IncidentRepos.update(id, {
+      //   id_incStatus,
+      //   timeInWork,
+      //   timeCloseCheck,
+      //   timeClose,
+      //   id_incResponsible,
+      //   id_incClosingCheck,
+      //   id_incClosing,
+      //   overdue,
+      //   commentCloseCheck,
+      //   act,
+      //   spaceParts,
+      // })
+      // await IncidentLogsRepos.create({
+      //   id_incLog: id,
+      //   time: currentDate,
+      //   log: `${AppConst.ActionComment.changeStatus.first}${incident}${AppConst.ActionComment.changeStatus.second}${status}`,
+      //   id_incLogUser: userID,
+      // })
 
       const incs = await IncidentRepos.findAll({
         where: { active: true },
@@ -737,7 +752,7 @@ export class incidentService {
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+      res.status(500).json({ error: ['db error ', err] })
     }
   }
   changeUserClosingCheck = async (_req: Request, res: Response) => {

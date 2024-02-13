@@ -113,24 +113,12 @@ export const ChangeStatus = React.forwardRef<unknown, CloseINCProps>(
     })
 
     const changeData = ({ list }: AddValuesProps) => {
-      const config = {
-        onUploadProgress: function (progressEvent: any) {
-          console.log('onUploadProgress')
-          const percentCompleted = Math.round(
-            (progressEvent.loaded * 100) / progressEvent.total
-          )
-          console.log('percentCompleted = ', percentCompleted)
-          setUploadProgress(percentCompleted)
-          throw new Error(JSON.stringify(progressEvent))
-        },
-      }
       handleModal({
         state: true,
-        commentCloseCheck: list[0].value,
-        act: selectedFiles as FileList,
-        spaceParts: list[2].value,
+        commentCloseCheck: list[1].value,
+        files: selectedFiles as FileList,
+        spaceParts: list[3].value,
         data,
-        config,
       })
     }
 
@@ -147,8 +135,6 @@ export const ChangeStatus = React.forwardRef<unknown, CloseINCProps>(
     useEffect(() => {
       getTypesCompletedWork()
     }, [])
-
-    console.log('uploadProgress = ', uploadProgress)
 
     return (
       <Box

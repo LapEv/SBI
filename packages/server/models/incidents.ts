@@ -17,7 +17,6 @@ export interface Incindent {
   commentClose: string
   report: string
   spaceParts: string[]
-  act: string[]
   active: boolean
   methodsReuqest: string
   rating: number
@@ -90,10 +89,6 @@ export const incident: ModelAttributes<Model, Incindent> = {
     allowNull: true,
   },
   spaceParts: {
-    type: DataType.ARRAY(DataType.STRING),
-    allowNull: true,
-  },
-  act: {
     type: DataType.ARRAY(DataType.STRING),
     allowNull: true,
   },
@@ -224,5 +219,4 @@ export const incidentLogs: ModelAttributes<Model, IncidentLogs> = {
     type: DataType.STRING,
     allowNull: false,
   },
-  // кто
 }

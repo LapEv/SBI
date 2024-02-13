@@ -78,7 +78,6 @@ export const changeINC = createAsyncThunk(
       comment,
       report,
       spaceParts,
-      act,
     }: ChangeINC,
     thunkAPI
   ) => {
@@ -99,7 +98,6 @@ export const changeINC = createAsyncThunk(
         comment,
         report,
         spaceParts,
-        act,
       })
       return {
         data,
@@ -195,12 +193,15 @@ export const changeStatus = createAsyncThunk(
       userID,
       timeSLA,
       commentCloseCheck,
-      act,
       spaceParts,
     }: ChangeStatus,
     thunkAPI
   ) => {
     try {
+      console.log('changeStatus')
+      console.log('id = ', id)
+      console.log('id_incStatus = ', id_incStatus)
+      console.log('incident = ', incident)
       const { data } = await authhost.post(ApiEndPoints.INC.changeStatus, {
         id,
         id_incStatus,
@@ -209,9 +210,9 @@ export const changeStatus = createAsyncThunk(
         userID,
         timeSLA,
         commentCloseCheck,
-        act,
         spaceParts,
       })
+      console.log('data = ', data)
       return {
         data,
         message: {

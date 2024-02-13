@@ -21,7 +21,7 @@ export const getFiles = createAsyncThunk(
 
 export const uploadFiles = createAsyncThunk(
   'files/uploadFiles',
-  async ({ type, files, incident, config }: UploadFiles, thunkAPI) => {
+  async ({ type, files, incident, id_incFiles }: UploadFiles, thunkAPI) => {
     try {
       const formData = new FormData()
       Array.from(files).forEach(file => {
@@ -30,11 +30,10 @@ export const uploadFiles = createAsyncThunk(
       })
       formData.append('type', type)
       formData.append('incident', incident as string)
-      console.log('config = ', config)
+      formData.append('id_incFiles', id_incFiles)
       const { data } = await authFileHost.post(
         ApiEndPoints.Files.uploadFiles,
-        formData,
-        config
+        formData
       )
       return {
         data,

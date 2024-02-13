@@ -52,6 +52,18 @@ export interface IStatus {
   timeSLA: string
 }
 
+export interface IStatusTemp {
+  id: string
+  incident: string
+  timeSLA: string
+  data: Options
+  id_incStatus: string
+  status: string
+  userID: string
+  commentCloseCheck: string
+  spaceParts: string
+}
+
 export interface IModal {
   status: boolean
   data: Options

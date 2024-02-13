@@ -4,6 +4,7 @@ import { useAppDispatch } from 'store/hooks'
 import { FilesState } from 'store/slices/files/interfaces'
 import { FilesActions } from './filesActions'
 import { getFiles, uploadFiles } from 'api/files'
+import { resetUploadFiles } from 'store/slices/files'
 
 export function useFiles(): [FilesState, FilesActions] {
   const files = useSelector((state: RootState) => state.files)
@@ -17,6 +18,9 @@ export function useFiles(): [FilesState, FilesActions] {
       },
       uploadFiles(data) {
         dispatch(uploadFiles(data))
+      },
+      resetUploadFiles() {
+        dispatch(resetUploadFiles())
       },
     },
   ]

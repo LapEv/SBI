@@ -9,6 +9,7 @@ import {
   ClientsRepos,
   DepartmentRepos,
   DivisionRepos,
+  // FilesRepos,
   IncidentRepos,
   IncidentStatusesRepos,
   OLARepos,
@@ -70,6 +71,7 @@ export const firstStart = async () => {
     const incStatuses = await IncidentStatusesRepos.getAll()
     const typesOfWork = await TypesOfWorkRepos.getAll()
     const typesCompletedWork = await TypesCompletedWorkRepos.getAll()
+    // const files = await FilesRepos.getAll()
 
     console.log('End Check for tables!')
     const deleteClients = false
@@ -126,6 +128,22 @@ export const firstStart = async () => {
       }
     }
 
+    // const deleteFiles = false
+    // if (deleteFiles) {
+    //   console.log('Delete Files!')
+    //   await FilesRepos.drop({ cascade: true })
+    // } else {
+    //   console.log('Check Files')
+    //   if (files.length) {
+    //     console.log(
+    //       'Первый запуск таблиц Files невозможен! Какая-то из таблиц уже существует!'
+    //     )
+    //   } else {
+    //     console.log('Create Files!')
+    //     await FilesRepos.bulkCreate(typesCompletedWorkStartData)
+    //   }
+    // }
+
     const deleteTypesCompletedWork = false
     if (deleteTypesCompletedWork) {
       console.log('Delete TypesCompletedWork!')
@@ -158,7 +176,7 @@ export const firstStart = async () => {
         await IncidentStatusesRepos.bulkCreate(incStatusesStartData)
       }
     }
-    console.log('End delete Clients!')
+    console.log('End delete Clients! ')
 
     const deleteSLA = false
     if (deleteSLA) {

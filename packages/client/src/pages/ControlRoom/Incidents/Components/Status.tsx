@@ -3,8 +3,8 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { DropDownIncidents, emptyValue } from 'components/DropDown'
 import { Options } from 'components/DropDown/interface'
 import { useIncidents } from 'hooks/incidents/useINC'
-import { IModal, IStatus } from '../interfaces'
-import { ModalTitles, customDropDownCell } from '../data'
+import { IModal, IStatus, IStatusTemp } from '../interfaces'
+import { ModalTitles, customDropDownCell, emptyStatusTemp } from '../data'
 import { useMessage } from 'hooks/message/useMessage'
 import { Modal } from '@mui/material'
 import { ChangeStatus } from '../Modals'
@@ -20,7 +20,7 @@ export const Status = memo(
     })
 
     const [{ user }] = useAuth()
-    const [{ files }, { uploadFiles }] = useFiles()
+    const [{ uploadedFiles }, { uploadFiles, resetUploadFiles }] = useFiles()
 
     const [_, { setMessage }] = useMessage()
     const [{ incStatuses }, { changeStatus, getIncidentStatuses }] =
@@ -29,6 +29,7 @@ export const Status = memo(
       label: value,
       id: '',
     })
+    const [tempData, setTempData] = useState<IStatusTemp>(emptyStatusTemp)
 
     const setData = (data: Options) => {
       const newStatus = incStatuses.findIndex(item => item.id === data.id)
@@ -68,7 +69,7 @@ export const Status = memo(
     const handleModal = ({
       state,
       commentCloseCheck,
-      act,
+      files,
       spaceParts,
       data,
       config,
@@ -77,25 +78,29 @@ export const Status = memo(
         setModal({ status: false, data: emptyValue })
         return
       }
-      // setStatus(data)
-      uploadFiles({
-        type: 'incidentActs',
-        files: act as FileList,
-        incident,
-        config,
-      })
-      // changeStatus({
+      const temp = spaceParts
+        ?.split(/,| |;|./)
+        .join('')
+        .split('')
+      console.log('temp = ', temp)
+      // setTempData({
+      //   data,
       //   id,
       //   id_incStatus: data.id as string,
       //   incident,
       //   status: data.label,
       //   userID: user.id as string,
       //   timeSLA,
-      //   commentCloseCheck,
-      //   act,
-      //   spaceParts,
+      //   commentCloseCheck: commentCloseCheck as string,
+      //   spaceParts: spaceParts as string,
       // })
-      // setModal({ status: false, data: emptyValue })
+      // uploadFiles({
+      //   id_incFiles: id,
+      //   type: 'IncidentActs',
+      //   files: files as FileList,
+      //   incident,
+      //   config,
+      // })
     }
 
     useEffect(() => {
@@ -108,6 +113,35 @@ export const Status = memo(
     useEffect(() => {
       getIncidentStatuses()
     }, [value])
+
+    useEffect(() => {
+      if (uploadedFiles && uploadedFiles.length > 0) {
+        const {
+          data,
+          id,
+          id_incStatus,
+          incident,
+          status,
+          userID,
+          timeSLA,
+          commentCloseCheck,
+          spaceParts,
+        } = tempData
+        setStatus(data)
+        changeStatus({
+          id,
+          id_incStatus,
+          incident,
+          status,
+          userID,
+          timeSLA,
+          commentCloseCheck,
+          spaceParts,
+        })
+        setModal({ status: false, data: emptyValue })
+        resetUploadFiles()
+      }
+    }, [uploadedFiles])
 
     return (
       <>

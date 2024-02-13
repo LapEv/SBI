@@ -33,6 +33,7 @@ import {
   typesOfWork,
 } from './models/incidents'
 import { throughModelTypMalfunctions } from './models/classifier'
+import { files } from './models/files'
 
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
   process.env
@@ -118,6 +119,8 @@ export const TypesCompletedWork = sequelize.define(
 )
 export const TypesOfWork = sequelize.define('TypesOfWork', typesOfWork, {})
 export const IncidentLogs = sequelize.define('IncidentLogs', incidentLogs, {})
+
+export const Files = sequelize.define('Files', files, {})
 
 RolesGroup.belongsToMany(Roles, { through: 'ThroughRolesGroup' })
 Roles.belongsToMany(RolesGroup, { through: 'ThroughRolesGroup' })
@@ -346,6 +349,9 @@ Incidents.belongsTo(TypicalMalfunctions, {
 Users.hasOne(IncidentLogs, { foreignKey: 'id_incLogUser', sourceKey: 'id' })
 IncidentLogs.belongsTo(Users, { foreignKey: 'id_incLogUser', targetKey: 'id' })
 
+Incidents.hasMany(Files, { foreignKey: 'id_incFiles' })
+Files.belongsTo(Incidents, { foreignKey: 'id_incFiles' })
+
 Incidents.hasMany(IncidentLogs, { foreignKey: 'id_incLog' })
 IncidentLogs.belongsTo(Incidents, { foreignKey: 'id_incLog' })
 
@@ -402,6 +408,8 @@ export const TypesCompletedWorkRepos = new Repository(
   TypesCompletedWork as ModelCtor
 )
 export const IncidentLogsRepos = new Repository(IncidentLogs as ModelCtor)
+
+export const FilesRepos = new Repository(Files as ModelCtor)
 
 export async function dbConnect() {
   try {

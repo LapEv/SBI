@@ -4,6 +4,7 @@ import {
   ClassifierModels,
   Clients,
   Contracts,
+  Files,
   IncidentLogs,
   IncidentLogsRepos,
   IncidentRepos,
@@ -176,6 +177,10 @@ const includes = [
     required: true,
     attributes: ['id', 'time', 'log'],
     include: incLogs,
+  },
+  {
+    model: Files,
+    attributes: ['id', 'name', 'size', 'mimetype', 'path'],
   },
 ]
 
@@ -531,7 +536,7 @@ export class incidentService {
       /* eslint-enable @typescript-eslint/no-explicit-any */
       console.log('err = ', err)
       res.status(500).json({
-        error: ['db error: unable to set new incident statuses ', err],
+        error: ['db error: unable to set new incident statuses: ', err],
       })
     }
   }
@@ -550,7 +555,7 @@ export class incidentService {
       .then(incs => {
         res.status(200).json(incs)
       })
-      .catch(err => res.status(500).json({ error: ['db error', err] }))
+      .catch(err => res.status(500).json({ error: ['db error:  ', err] }))
   }
   deleteINC = async (_req: Request, res: Response) => {
     const { selectedINCs } = _req.body
@@ -681,21 +686,25 @@ export class incidentService {
       userID,
       timeSLA,
       commentCloseCheck,
-      act,
       spaceParts,
     } = _req.body
     try {
+      console.log('_req.body = ', _req.body)
       const incStatuses = await IncidentStatusesRepos.findAll({
         where: { active: true },
       })
       const inc = await IncidentRepos.findAll({
         where: { id },
       })
+      console.log('inc = ', inc)
+
       const newStatus = incStatuses.findIndex(item => item.id === id_incStatus)
+      console.log('newStatus = ', newStatus)
       const currentDate = new Date(
         new Date().getTime() +
           Math.abs(new Date().getTimezoneOffset() * 60 * 1000)
       )
+      console.log('currentDate = ', currentDate)
       const timeInWork = newStatus === 1 ? currentDate : inc[0].timeInWork
       const id_incResponsible =
         newStatus === 1 ? userID : inc[0].id_incResponsible
@@ -708,27 +717,52 @@ export class incidentService {
       const overdue = newStatus === 2 && now > sla ? true : inc[0].overdue
       const timeClose = newStatus === 3 ? currentDate : inc[0].timeClose
       const id_incClosing = newStatus === 3 ? userID : inc[0].id_incClosing
+      console.log('id_incStatus = ', id_incStatus)
+      console.log('timeInWork = ', timeInWork)
+      console.log('timeCloseCheck = ', timeCloseCheck)
+      console.log('timeClose = ', timeClose)
+      console.log('id_incClosingCheck = ', id_incClosingCheck)
+      console.log('overdue = ', overdue)
+      console.log('commentCloseCheck = ', commentCloseCheck)
+      console.log('spaceParts = ', spaceParts)
+      console.log('id_incResponsible = ', id_incResponsible)
+      console.log('id_incClosing = ', id_incClosing)
+      console.log('id = ', id)
 
-      await IncidentRepos.update(id, {
-        id_incStatus,
-        timeInWork,
-        timeCloseCheck,
-        timeClose,
-        id_incResponsible,
-        id_incClosingCheck,
-        id_incClosing,
-        overdue,
-        commentCloseCheck,
-        act,
+      // const temp = {
+      //   id_incStatus,
+      //   timeInWork,
+      //   timeCloseCheck,
+      //   timeClose,
+      //   id_incResponsible,
+      //   id_incClosingCheck,
+      //   id_incClosing,
+      //   overdue,
+      //   commentCloseCheck,
+      //   spaceParts,
+      // }
+      // console.log('temp = ', temp)
+
+      const temp = await IncidentRepos.update(id, {
+        // id_incStatus,
+        // timeInWork,
+        // timeCloseCheck,
+        // timeClose,
+        // id_incResponsible,
+        // id_incClosingCheck,
+        // id_incClosing,
+        // overdue,
+        // commentCloseCheck,
         spaceParts,
       })
-      await IncidentLogsRepos.create({
+      console.log('temp = ', temp)
+      const temp2 = await IncidentLogsRepos.create({
         id_incLog: id,
         time: currentDate,
         log: `${AppConst.ActionComment.changeStatus.first}${incident}${AppConst.ActionComment.changeStatus.second}${status}`,
         id_incLogUser: userID,
       })
-
+      console.log('temp2 = ', temp2)
       const incs = await IncidentRepos.findAll({
         where: { active: true },
         // include: { all: true },
@@ -738,7 +772,8 @@ export class incidentService {
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error ', err] })
+      console.log('errr = ', err)
+      res.status(500).json({ error: ['db error: ', err] })
     }
   }
   changeUserClosingCheck = async (_req: Request, res: Response) => {

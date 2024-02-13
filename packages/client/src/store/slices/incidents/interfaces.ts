@@ -8,6 +8,7 @@ import {
   ClassifierModelForINC,
   TypicalMalfunctionForINC,
 } from '../classifier/interfaces'
+import { Files } from '../files/interfaces'
 
 export interface INC {
   id: string
@@ -57,6 +58,7 @@ export interface INC {
   ClassifierModel?: ClassifierModelForINC
   TypicalMalfunction?: TypicalMalfunctionForINC
   IncidentLogs?: IncidentLogsForINC[]
+  Files?: Files[]
 }
 
 export interface AddINC {
@@ -169,7 +171,6 @@ export interface ChangeINC {
   comment: string
   report: string
   spaceParts: string
-  act: string
 }
 
 export interface ChangeExecutor {
@@ -196,7 +197,7 @@ export interface ChangeStatus {
   userID: string
   timeSLA: string
   commentCloseCheck?: string
-  act?: FileList
+  act?: string[]
   spaceParts?: string
 }
 

@@ -6,6 +6,7 @@ import {
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
 import EditIcon from '@mui/icons-material/Edit'
+import { emptyValue } from 'components/DropDown'
 
 export const menuData = [
   {
@@ -435,4 +436,16 @@ export const textLabels = {
     delete: 'Удалить',
     deleteAria: 'Удалить',
   },
+}
+
+export const emptyStatusTemp = {
+  id: '',
+  incident: '',
+  timeSLA: '',
+  data: emptyValue,
+  id_incStatus: '',
+  status: '',
+  userID: '',
+  commentCloseCheck: '',
+  spaceParts: '',
 }

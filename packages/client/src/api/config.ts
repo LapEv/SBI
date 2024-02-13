@@ -140,7 +140,7 @@ const authhost = axios.create({
   },
 })
 
-const authhFileHost = axios.create({
+const authFileHost = axios.create({
   baseURL: url,
   timeout: 5000,
   headers: {
@@ -164,6 +164,6 @@ const authInterceptor = (
 }
 
 authhost.interceptors.request.use(authInterceptor)
-authhFileHost.interceptors.request.use(authInterceptor)
+authFileHost.interceptors.request.use(authInterceptor)
 
-export { host, authhost, authhFileHost }
+export { host, authhost, authFileHost }

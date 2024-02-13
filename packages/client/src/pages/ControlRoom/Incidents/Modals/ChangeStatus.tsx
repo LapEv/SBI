@@ -6,7 +6,13 @@ import React, {
   DragEvent,
 } from 'react'
 import { AddValuesProps, CloseINCProps } from './interfaces'
-import { Box, IconButton, useTheme, Typography } from '@mui/material'
+import {
+  Box,
+  IconButton,
+  useTheme,
+  Typography,
+  LinearProgress,
+} from '@mui/material'
 import { modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import {
@@ -40,6 +46,8 @@ export const ChangeStatus = React.forwardRef<unknown, CloseINCProps>(
     const [selectedFiles, setSelectedFiles] = useState<FileList | null>()
     const [selectedNameFiles, setSelectedNameFiles] = useState<string>('')
     const [dragOver, setDragOver] = useState<boolean>(false)
+
+    const [uploadProgress, setUploadProgress] = useState(0)
 
     const handleDragOver = useCallback((event: DragEvent<HTMLDivElement>) => {
       event.preventDefault()
@@ -77,8 +85,6 @@ export const ChangeStatus = React.forwardRef<unknown, CloseINCProps>(
     }
 
     const handleFileChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
-      console.log('target = ', target.files)
-      console.log('target = ', target?.files?.[0])
       const checkFiles = fileValidation(target?.files as FileList)
       if (!checkFiles.status) {
         setMessage({
@@ -107,12 +113,24 @@ export const ChangeStatus = React.forwardRef<unknown, CloseINCProps>(
     })
 
     const changeData = ({ list }: AddValuesProps) => {
+      const config = {
+        onUploadProgress: function (progressEvent: any) {
+          console.log('onUploadProgress')
+          const percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          )
+          console.log('percentCompleted = ', percentCompleted)
+          setUploadProgress(percentCompleted)
+          throw new Error(JSON.stringify(progressEvent))
+        },
+      }
       handleModal({
         state: true,
         commentCloseCheck: list[0].value,
         act: selectedFiles as FileList,
         spaceParts: list[2].value,
         data,
+        config,
       })
     }
 
@@ -130,12 +148,15 @@ export const ChangeStatus = React.forwardRef<unknown, CloseINCProps>(
       getTypesCompletedWork()
     }, [])
 
+    console.log('uploadProgress = ', uploadProgress)
+
     return (
       <Box
         sx={{ ...modalStyle, paddingLeft: 5 }}
         component="form"
         onSubmit={handleSubmit(changeData)}>
         <Typography variant={'h6'}>{title}</Typography>
+        <LinearProgress variant="determinate" value={uploadProgress} />
         <Box sx={{ mt: 2, width: '90%' }}>
           {fields.map(
             ({ id, label, validation, type, required, name }, index) => {

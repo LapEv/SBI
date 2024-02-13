@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { authhost, ApiEndPoints, authhFileHost } from './config'
+import { authhost, ApiEndPoints, authFileHost } from './config'
 import { getError } from 'utils/getError'
 import { Files, UploadFiles } from 'store/slices/files/interfaces'
 
@@ -21,7 +21,7 @@ export const getFiles = createAsyncThunk(
 
 export const uploadFiles = createAsyncThunk(
   'files/uploadFiles',
-  async ({ type, files, incident }: UploadFiles, thunkAPI) => {
+  async ({ type, files, incident, config }: UploadFiles, thunkAPI) => {
     try {
       const formData = new FormData()
       Array.from(files).forEach(file => {
@@ -30,9 +30,11 @@ export const uploadFiles = createAsyncThunk(
       })
       formData.append('type', type)
       formData.append('incident', incident as string)
-      const { data } = await authhFileHost.post(
+      console.log('config = ', config)
+      const { data } = await authFileHost.post(
         ApiEndPoints.Files.uploadFiles,
-        formData
+        formData,
+        config
       )
       return {
         data,

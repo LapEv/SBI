@@ -9,6 +9,7 @@ export interface UploadFiles {
   type: string
   files: FileList
   incident?: string
+  config?: any
 }
 
 export interface AnswerFiles {

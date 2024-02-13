@@ -71,19 +71,19 @@ export const Status = memo(
       act,
       spaceParts,
       data,
+      config,
     }: DataCloseINC) => {
-      console.log('state = ', state)
-      console.log('commentCloseCheck = ', commentCloseCheck)
-      console.log('act = ', act)
-      console.log('spaceParts = ', spaceParts)
-      console.log('data = ', data)
       if (!state) {
         setModal({ status: false, data: emptyValue })
         return
       }
-      console.log('YES')
       // setStatus(data)
-      uploadFiles({ type: 'incidentActs', files: act as FileList, incident })
+      uploadFiles({
+        type: 'incidentActs',
+        files: act as FileList,
+        incident,
+        config,
+      })
       // changeStatus({
       //   id,
       //   id_incStatus: data.id as string,

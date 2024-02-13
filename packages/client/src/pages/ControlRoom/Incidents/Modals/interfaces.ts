@@ -12,6 +12,7 @@ export interface DataCloseINC {
   act?: FileList
   spaceParts?: string
   data: Options
+  config?: any
 }
 
 export interface CloseINCProps {

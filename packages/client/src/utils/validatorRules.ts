@@ -168,12 +168,10 @@ export const phoneValidation = {
 }
 
 export const forSpacePartsValidation = {
-  required: REQUIRED_FIELD,
   validate: (value: string) => {
-    if (!value.match('^(?!s*$)[., 0-9а-яА-Яa-zA-z]+$')) {
+    if (value && !value.match('^(?!s*$)[., 0-9а-яА-Яa-zA-z]+$')) {
       return 'Можно только буквы, цифры, ".", ",", пробел! '
     }
-
     return true
   },
 }

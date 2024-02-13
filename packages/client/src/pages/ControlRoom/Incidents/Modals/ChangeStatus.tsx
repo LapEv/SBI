@@ -117,7 +117,9 @@ export const ChangeStatus = React.forwardRef<unknown, CloseINCProps>(
         state: true,
         commentCloseCheck: list[1].value,
         files: selectedFiles as FileList,
-        spaceParts: list[3].value,
+        spaceParts: list[3].value
+          ?.split(/,| |;|\|./)
+          .filter(item => item !== ''),
         data,
       })
     }

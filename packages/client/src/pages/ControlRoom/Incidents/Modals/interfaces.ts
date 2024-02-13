@@ -10,7 +10,7 @@ export interface DataCloseINC {
   state: boolean
   commentCloseCheck?: string
   files?: FileList
-  spaceParts?: string
+  spaceParts?: string[]
   data: Options
   config?: any
 }

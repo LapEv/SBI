@@ -61,7 +61,7 @@ export interface IStatusTemp {
   status: string
   userID: string
   commentCloseCheck: string
-  spaceParts: string
+  spaceParts: string[]
 }
 
 export interface IModal {
@@ -71,6 +71,11 @@ export interface IModal {
 
 export interface ICustomCell {
   value: string
+  denseTable: boolean
+}
+
+export interface ISpacePart {
+  value: string[]
   denseTable: boolean
 }
 

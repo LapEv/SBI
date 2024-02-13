@@ -78,27 +78,39 @@ export const Status = memo(
         setModal({ status: false, data: emptyValue })
         return
       }
-      console.log('spaceParts = ', spaceParts)
-      const temp = spaceParts?.split(/,| |;|\|./).filter(item => item !== '')
-      console.log('temp = ', temp)
-      // setTempData({
-      //   data,
-      //   id,
-      //   id_incStatus: data.id as string,
-      //   incident,
-      //   status: data.label,
-      //   userID: user.id as string,
-      //   timeSLA,
-      //   commentCloseCheck: commentCloseCheck as string,
-      //   spaceParts: spaceParts as string,
-      // })
-      // uploadFiles({
-      //   id_incFiles: id,
-      //   type: 'IncidentActs',
-      //   files: files as FileList,
-      //   incident,
-      //   config,
-      // })
+      if (files) {
+        setTempData({
+          data,
+          id,
+          id_incStatus: data.id as string,
+          incident,
+          status: data.label,
+          userID: user.id as string,
+          timeSLA,
+          commentCloseCheck: commentCloseCheck as string,
+          spaceParts: spaceParts as string[],
+        })
+        uploadFiles({
+          id_incFiles: id,
+          type: 'IncidentActs',
+          files: files as FileList,
+          incident,
+          config,
+        })
+        return
+      }
+      setStatus(data)
+      changeStatus({
+        id,
+        id_incStatus: data.id as string,
+        incident,
+        status: data.label,
+        userID: user.id as string,
+        timeSLA,
+        commentCloseCheck,
+        spaceParts,
+      })
+      setModal({ status: false, data: emptyValue })
     }
 
     useEffect(() => {
@@ -106,14 +118,11 @@ export const Status = memo(
         label: value,
         id: '',
       })
-    }, [value])
-
-    useEffect(() => {
       getIncidentStatuses()
     }, [value])
 
     useEffect(() => {
-      if (uploadedFiles && uploadedFiles.length > 0) {
+      if (uploadedFiles && uploadedFiles.length > 0 && id === tempData.id) {
         const {
           data,
           id,

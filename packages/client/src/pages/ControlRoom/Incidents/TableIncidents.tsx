@@ -18,6 +18,7 @@ import {
   Status,
   IndicatorCell,
   StatusSLACell,
+  SpacePartCell,
 } from './'
 
 interface INCTable {
@@ -603,8 +604,8 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        customBodyRender: (value: string) => {
-          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        customBodyRender: (value: string[]) => {
+          return <SpacePartCell value={value ?? ''} denseTable={denseTable} />
         },
       },
     },

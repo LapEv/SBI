@@ -448,5 +448,5 @@ export const emptyStatusTemp = {
   status: '',
   userID: '',
   commentCloseCheck: '',
-  spaceParts: '',
+  spaceParts: [],
 }

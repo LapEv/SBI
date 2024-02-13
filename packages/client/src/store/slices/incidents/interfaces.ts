@@ -198,7 +198,7 @@ export interface ChangeStatus {
   timeSLA: string
   commentCloseCheck?: string
   act?: string[]
-  spaceParts?: string
+  spaceParts?: string[]
 }
 
 export interface ChangeClosingCheck {

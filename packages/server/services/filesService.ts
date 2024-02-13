@@ -20,10 +20,31 @@ export class filesService {
   uploadFiles = async (_req: Request, res: Response) => {
     const { incident, type, filesName, id_incFiles } = _req.body
     const { files } = _req.files
-    console.log('files = ', files)
-    console.log('id_incFiles = ', id_incFiles)
     try {
       const typeDir = type === 'IncidentActs' ? type : ''
+      if (files.constructor !== Array) {
+        const filePath = path.join(
+          __dirname,
+          `../Files/${typeDir}/${incident}/${filesName}`
+        )
+        if (!fs.existsSync(filePath)) {
+          files.mv(filePath)
+        }
+        const uploadedFiles = [
+          {
+            name: filesName,
+            size: files.size,
+            mimetype: files.mimetype,
+            path: `${typeDir}/${incident}/${filesName}`,
+            id_incFiles,
+          },
+        ]
+        console.log('uploadedFiles  = ', uploadedFiles)
+        await FilesRepos.bulkCreate(uploadedFiles)
+        res.status(200).json(uploadedFiles)
+        return
+      }
+
       const uploadedFiles = files.map((item: any, index: number) => {
         const filePath = path.join(
           __dirname,
@@ -40,7 +61,7 @@ export class filesService {
           id_incFiles,
         }
       })
-      console.log('uploadedFiles = ', uploadedFiles)
+      console.log('uploadedFiles  = ', uploadedFiles)
       await FilesRepos.bulkCreate(uploadedFiles)
       res.status(200).json(uploadedFiles)
       /* eslint-disable @typescript-eslint/no-explicit-any */

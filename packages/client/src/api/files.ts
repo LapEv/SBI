@@ -24,7 +24,7 @@ export const uploadFiles = createAsyncThunk(
   async ({ type, files, incident, id_incFiles }: UploadFiles, thunkAPI) => {
     try {
       const formData = new FormData()
-      Array.from(files).forEach(file => {
+      Array.from(files).map(file => {
         formData.append('files', file, file.name)
         formData.append('filesName', file.name)
       })

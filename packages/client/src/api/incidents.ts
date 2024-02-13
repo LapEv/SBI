@@ -198,10 +198,6 @@ export const changeStatus = createAsyncThunk(
     thunkAPI
   ) => {
     try {
-      console.log('changeStatus')
-      console.log('id = ', id)
-      console.log('id_incStatus = ', id_incStatus)
-      console.log('incident = ', incident)
       const { data } = await authhost.post(ApiEndPoints.INC.changeStatus, {
         id,
         id_incStatus,

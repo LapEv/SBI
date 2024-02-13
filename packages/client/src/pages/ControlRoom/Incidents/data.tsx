@@ -1,6 +1,7 @@
 import {
   NoRequiredValidation,
   commentINCValidation,
+  forSpacePartsValidation,
   lightTextValidation,
 } from 'utils/validatorRules'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
@@ -117,7 +118,7 @@ export const MapINCStatusCloseInputFields = [
   {
     name: 'spaceParts',
     label: 'Выберите ЗИП и подмену',
-    validation: NoRequiredValidation,
+    validation: forSpacePartsValidation,
     type: 'text',
     required: false,
   },

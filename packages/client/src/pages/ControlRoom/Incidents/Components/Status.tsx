@@ -78,10 +78,8 @@ export const Status = memo(
         setModal({ status: false, data: emptyValue })
         return
       }
-      const temp = spaceParts
-        ?.split(/,| |;|./)
-        .join('')
-        .split('')
+      console.log('spaceParts = ', spaceParts)
+      const temp = spaceParts?.split(/,| |;|\|./).filter(item => item !== '')
       console.log('temp = ', temp)
       // setTempData({
       //   data,

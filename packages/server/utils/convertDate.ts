@@ -11,3 +11,13 @@ export const convertINCStringToDateTime = (date: string) => {
     +timeParts[2]
   )
 }
+
+export const convertDateToStringFromDB = (dateTime: string) => {
+  if (!dateTime) return
+  const dateTimeArr = dateTime.split(/T/)
+  const dateArr = dateTimeArr[0].split('-')
+  const timeArr = dateTimeArr[1].split(':')
+  return `${dateArr[2]}.${dateArr[1]}.${dateArr[0]} ${timeArr[0]}:${
+    timeArr[1]
+  }:${timeArr[2].split('.')[0]}`
+}

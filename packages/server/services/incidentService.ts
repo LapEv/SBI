@@ -24,6 +24,67 @@ import { AppConst } from '../const'
 import { convertINCStringToDateTime } from '../utils/convertDate'
 import { mailer } from '../Mailer'
 
+export interface INC {
+  id: string
+  numberINC: number
+  incident: string
+  clientINC: string
+  status: string
+  client: string
+  contract: string
+  sla: string
+  typeOfWork: string
+  object: string
+  address: string
+  coordinates: string
+  region: string
+  userAccepted: string
+  equipment: string
+  model: string
+  typicalMalfunction: string
+  timeRegistration: string
+  timeInWork: string
+  timeSLA: string
+  timeCloseCheck: string
+  timeClose: string
+  executor: string
+  responsible: string
+  userClosingCheck: string
+  userClosing: string
+  description: string
+  comment: string
+  report: string
+  spaceParts: string
+  act: string
+  active: boolean
+  // IncindentStatus?: INCStatuses
+  // TypesOfWork?: TypesOfWork
+  // SLA?: SLAforINC
+  Client?: Clients
+  // Contract?: ContractsForINC
+  // Object?: ObjectsForINC
+  // User?: UserForINC
+  // UserExecutor?: UserForINC
+  // UserResponsible?: UserForINC
+  // UserClosing?: UserForINC
+  // UserClosingCheck?: UserForINC
+  // ClassifierEquipment?: ClassifierEquipmentForINC
+  // ClassifierModel?: ClassifierModelForINC
+  // TypicalMalfunction?: TypicalMalfunctionForINC
+  // IncidentLogs?: IncidentLogsForINC[]
+  // Files?: Files[]
+}
+export interface Clients {
+  id?: string
+  legalName: string
+  client: string
+  office?: string
+  contracts?: string[]
+  contacts?: string[]
+  comments?: string
+  active?: boolean
+}
+
 const incLogs = [
   {
     model: Users,
@@ -527,13 +588,41 @@ export class incidentService {
         log: `${AppConst.ActionComment.incidentRegistration}${incident}`,
         id_incLogUser: responsibleID,
       })
+      const inc = await IncidentRepos.findAll({
+        where: { id: newINCdb.id },
+        include: includes,
+      })
+      // const incData = inc.map(
+      //   item => item.Client && item.timeRegistration
+      // ) as INC
+
+      console.log('inc = ', inc)
+      const status = 'Зарегистрирован'
+      const info = mailer({
+        incident,
+        status,
+        clientINC,
+        timeRegistration: inc[0]?.timeRegistration as string,
+        timeSLA,
+        client: inc[0]?.Client?.client as string,
+        object: inc[0]?.Object?.object as string,
+        objectClientID: inc[0]?.Object?.internalClientID as string,
+        objectClientName: inc[0]?.Object?.internalClientName as string,
+        address: inc[0]?.Object?.Address?.address as string,
+        equipment: inc[0]?.ClassifierEquipment?.equipment as string,
+        model: inc[0]?.ClassifierModel?.model as string,
+        malfunction: inc[0]?.TypicalMalfunction?.typicalMalfunction as string,
+        description,
+        applicant,
+        applicantContacts,
+        userAccepted: inc[0]?.User?.shortname as string,
+      })
+      console.log('info = ', info)
+
       const newINC = await IncidentRepos.findAll({
         where: { active: true },
         include: includes,
       })
-      const info = mailer()
-      console.log('info = ', info)
-
       res.status(200).json(newINC)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {

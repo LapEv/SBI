@@ -1,35 +1,26 @@
-export const apiConst = {
-  APInotifications: {
-    mailMessages: {
-      addRequest: {
-        subject: {
-          RUS: 'Ваще обращение принято под номером № ',
-          ENG: 'Your request has been accepted under the number ',
-        },
-      },
-      changeStatusRequest: {
-        subject: {
-          RUS: 'Изменен статус обращения ',
-          ENG: 'The status of the request has been changed ',
-        },
-      },
-      footer: {
-        appName: 'stressOff',
-        RUS() {
-          return `Вы получили это сообщение, потому что пользуетесь услугами проекта "${this.appName}". Вы всегда можете настроить получение уведомлений в настройках своего личного кабинета в мобильжном приложении "${this.appName}", перейдя в раздел «Настройки» и изменив настройку рассылки уведомлений.`
-        },
-        ENG() {
-          return `You received this message because you use the services of the project "${this.appName}". You can always configure receiving notifications in the settings of your personal account in the mobile application "${this.appName}" by going to the "Settings" section and changing the notification distribution setting.`
-        },
-      },
-    },
-    mailConstants: {
-      request: { RUS: 'Обращение № ', ENG: 'Request № ' },
-      status: { RUS: 'Статус: ', ENG: 'Status: ' },
-      topic: { RUS: 'Тема: ', ENG: 'Topic: ' },
-      description: { RUS: 'Описание: ', ENG: 'Description: ' },
-      solution: { RUS: 'Комментарии: ', ENG: 'Comments: ' },
-      date: { RUS: 'Дата: ', ENG: 'Date: ' },
+export const mailConst = {
+  mailMessages: {
+    footer:
+      'Данное сообщение отправлено автоматически, не надо на него отвечать.',
+    Incidents: {
+      titleRegistration: 'Уведолмение о регистрации обращения под номером ',
+      addRequest: 'Зарегистровано обращение:',
+      client: 'Клиент:',
+      clientINC: 'Номер клиента:',
+      object: 'Объект:',
+      objectClientID: 'ID объекта клиента:',
+      objectClientName: 'Название объекта клиента:',
+      address: 'Адрес объекта:',
+      equipment: 'Классификатор оборудования:',
+      model: 'Модель оборудования:',
+      malfunction: 'Неисправность:',
+      status: 'Статус:',
+      timeRegistration: 'Время регистрации:',
+      timeSLA: 'Крайний срок выполнения:',
+      description: 'Описание проблемы:',
+      applicant: 'Заявитель:',
+      applicantContacts: 'Контакты заявителя:',
+      userAccepted: 'Принял:',
     },
   },
 }

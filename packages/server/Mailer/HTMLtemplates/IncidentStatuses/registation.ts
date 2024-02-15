@@ -23,117 +23,61 @@ export const htmlRegistration = ({
   const message = `
   <html>
 
-<head>
-  <base target="_top">
-</head>
-
-<body>
-  <div
-    style="width: auto; height: auto; padding: 10px; font-size: 11px; font-weight: 100;font-family: 'Calibri', sans-serif;color: #000000;">
-    <div style="display: flex; font-size: 14px; font-weight: 700;">
-      <div style="width: auto">
-        ${mailConst.mailMessages.Incidents.addRequest}
-      </div>
-      <div>${incident}</div>
-    </div>
-  </div>
-  <div style="display: flex;">
+  <head>
+    <base target="_top">
+  </head>
+  
+  <body>
     <div
-      style="width: 200px; display: flex; flex-direction: column; font-size: 12px; font-weight: 100; margin-top: 10px;  height: auto; padding: 10px;">
-      <div style="width: auto; font-weight: 700">
-        ${mailConst.mailMessages.Incidents.status}
+      style="width: auto; height: auto; padding: 10px; font-size: 11px; font-weight: 100;font-family: 'Calibri', sans-serif;color: #000000;">
+      <div style="display: flex; font-size: 14px; font-weight: 700;">
+        ${mailConst.mailMessages.Incidents.addRequest} ${incident}
       </div>
-      <div style="width: auto; font-weight: 700">
-        ${mailConst.mailMessages.Incidents.client}
-      </div>
-      ${
-        clientINC
-          ? `
-      <div style="width: auto; font-weight: 700">
-        ${mailConst.mailMessages.Incidents.clientINC}
-      </div>`
-          : ``
-      }
-      <div style="width: auto; font-weight: 700">
-        ${mailConst.mailMessages.Incidents.timeRegistration}
-      </div>
-      <div style="width: auto; font-weight: 700">
-        ${mailConst.mailMessages.Incidents.timeSLA}
-      </div>
-      <div style="width: auto; font-weight: 700">
-        ${mailConst.mailMessages.Incidents.object}
-      </div>
-      <div style="width: auto; font-weight: 700">
-        ${mailConst.mailMessages.Incidents.address}
-      </div>
-      ${
-        objectClientID
-          ? `
-      <div style="width: auto; font-weight: 700">
-        ${mailConst.mailMessages.Incidents.objectClientID}
-      </div>`
-          : ``
-      }
-      ${
-        objectClientName
-          ? `
-      <div style="width: auto; font-weight: 700">
-        ${mailConst.mailMessages.Incidents.objectClientName}
-      </div>`
-          : ``
-      }
-      <div style="width: auto; font-weight: 700">
-        ${mailConst.mailMessages.Incidents.equipment}
-      </div>
-      <div style="width: auto; font-weight: 700">
-        ${mailConst.mailMessages.Incidents.model}
-      </div>
-      <div style="width: auto; font-weight: 700">
-        ${mailConst.mailMessages.Incidents.malfunction}
-      </div>
-      <div style="width: auto; font-weight: 700">
-        ${mailConst.mailMessages.Incidents.description}
-      </div>
-      <div style="width: auto; font-weight: 700">
-        ${mailConst.mailMessages.Incidents.applicant}
-      </div>
-      <div style="width: auto; font-weight: 700">
-        ${mailConst.mailMessages.Incidents.applicantContacts}
-      </div>
-      <div style="width: auto; font-weight: 700">
-        ${mailConst.mailMessages.Incidents.userAccepted}
+      <div style="margin-top: 10px; font-size: 13px">
+        <b style="font-size: 12px;">${
+          mailConst.mailMessages.Incidents.status
+        }</b> ${status}<br>
+        <b>${mailConst.mailMessages.Incidents.client}</b> ${client}<br>
+        ${
+          clientINC
+            ? `<b>${mailConst.mailMessages.Incidents.clientINC}</b>`
+            : ``
+        } ${clientINC}<br>
+        <b>${
+          mailConst.mailMessages.Incidents.timeRegistration
+        }</b> ${timeRegistration}<br>
+        <b>${mailConst.mailMessages.Incidents.timeSLA}</b> ${timeSLA}<br>
+        <b>${mailConst.mailMessages.Incidents.address}</b> ${object}<br>
+        <b>${mailConst.mailMessages.Incidents.address}</b> ${address}<br>
+        ${
+          objectClientID
+            ? `<b>${mailConst.mailMessages.Incidents.objectClientID}</b>`
+            : ``
+        } ${objectClientID}<br>
+        ${
+          objectClientName
+            ? `<b>${mailConst.mailMessages.Incidents.objectClientName}</b>`
+            : ``
+        } ${objectClientName}<br>
+        <b>${mailConst.mailMessages.Incidents.equipment}</b> ${equipment}<br>
+        <b>${mailConst.mailMessages.Incidents.model}</b> ${model}<br>
+        <b>${
+          mailConst.mailMessages.Incidents.malfunction
+        }</b> ${malfunction}<br>
+        <b>${
+          mailConst.mailMessages.Incidents.description
+        }</b> ${description}<br>
+        <b>${mailConst.mailMessages.Incidents.applicant}</b> ${applicant}<br>
+        <b>${
+          mailConst.mailMessages.Incidents.applicantContacts
+        }</b> ${applicantContacts}<br>
+        <b>${
+          mailConst.mailMessages.Incidents.userAccepted
+        }</b> ${userAccepted}<br>
       </div>
     </div>
-    <div
-      style="width: auto; display: flex; flex-direction: column; font-size: 12px; font-weight: 100; margin-top: 10px;  height: auto; padding: 10px;">
-      <div style=" margin-left: 10px">${status}</div>
-      <div style=" margin-left: 10px">${client}</div>
-      ${clientINC ? `<div style=" margin-left: 10px">${clientINC}</div>` : ``}
-      <div style=" margin-left: 10px">${timeRegistration}</div>
-      <div style=" margin-left: 10px">${timeSLA}</div>
-      <div style=" margin-left: 10px">${object}</div>
-      <div style=" margin-left: 10px">${address}</div>
-      ${
-        objectClientID
-          ? `<div style=" margin-left: 10px">${objectClientID}</div>`
-          : ``
-      }
-      ${
-        objectClientName
-          ? `<div style=" margin-left: 10px">${objectClientName}</div>`
-          : ``
-      }
-      <div style=" margin-left: 10px">${equipment}</div>
-      <div style=" margin-left: 10px">${model}</div>
-      <div style=" margin-left: 10px">${malfunction}</div>
-      <div style=" margin-left: 10px">${description}</div>
-      <div style=" margin-left: 10px">${applicant}</div>
-      <div style=" margin-left: 10px">${applicantContacts}</div>
-      <div style=" margin-left: 10px">${userAccepted}</div>
-    </div>
-  </div>
-</body>
-
-</html>`
+  </body>
+  
+  </html>`
   return message
 }

@@ -106,6 +106,7 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
             contract,
             id,
             number,
+            notificationEmail,
             date,
             SLAs,
             ClassifierEquipments,
@@ -116,6 +117,7 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
               contract={contract}
               id={id as string}
               number={number}
+              notificationEmail={notificationEmail}
               date={date}
               SLAs={SLAs}
               ClassifierEquipments={ClassifierEquipments}

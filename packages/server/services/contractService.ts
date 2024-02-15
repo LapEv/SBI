@@ -259,9 +259,19 @@ export class contractService {
   }
 
   changeContract = async (_req: Request, res: Response) => {
-    const { number, date, id, sla, equipment, model, objects } = _req.body
+    const {
+      number,
+      date,
+      id,
+      sla,
+      equipment,
+      model,
+      objects,
+      notificationEmail,
+    } = _req.body
     try {
-      await ContractsRepos.update(id, { number, date })
+      console.log('notificationEmail = ', notificationEmail)
+      await ContractsRepos.update(id, { number, date, notificationEmail })
       if (sla && sla.length) {
         await ThroughContractsSLARepos.deleteByCustomId({
           id_contract: id,

@@ -20,6 +20,7 @@ export const htmlRegistration = ({
   applicantContacts,
   userAccepted,
 }: MailData) => {
+  console.log('clientINC = ', clientINC)
   const message = `
   <html>
 
@@ -40,9 +41,9 @@ export const htmlRegistration = ({
         <b>${mailConst.mailMessages.Incidents.client}</b> ${client}<br>
         ${
           clientINC
-            ? `<b>${mailConst.mailMessages.Incidents.clientINC}</b>`
+            ? `<b>${mailConst.mailMessages.Incidents.clientINC}</b> ${clientINC}<br>`
             : ``
-        } ${clientINC}<br>
+        }
         <b>${
           mailConst.mailMessages.Incidents.timeRegistration
         }</b> ${timeRegistration}<br>
@@ -51,14 +52,14 @@ export const htmlRegistration = ({
         <b>${mailConst.mailMessages.Incidents.address}</b> ${address}<br>
         ${
           objectClientID
-            ? `<b>${mailConst.mailMessages.Incidents.objectClientID}</b>`
+            ? `<b>${mailConst.mailMessages.Incidents.objectClientID}</b> ${objectClientID}<br>`
             : ``
-        } ${objectClientID}<br>
+        }
         ${
           objectClientName
-            ? `<b>${mailConst.mailMessages.Incidents.objectClientName}</b>`
+            ? `<b>${mailConst.mailMessages.Incidents.objectClientName}</b> ${objectClientName}<br>`
             : ``
-        } ${objectClientName}<br>
+        }
         <b>${mailConst.mailMessages.Incidents.equipment}</b> ${equipment}<br>
         <b>${mailConst.mailMessages.Incidents.model}</b> ${model}<br>
         <b>${

@@ -21,3 +21,24 @@ export const convertDateToStringFromDB = (dateTime: string) => {
     timeArr[1]
   }:${timeArr[2].split('.')[0]}`
 }
+
+export const convertDateToString = (date: Date) => {
+  const dateValues = [
+    date.getFullYear().toString(),
+    date.getMonth() + 1 < 10
+      ? `0${date.getMonth() + 1}`
+      : (date.getMonth() + 1).toString(),
+    date.getDate() < 10 ? `0${date.getDate()}` : date.getDate().toString(),
+    date.getHours() < 10 ? `0${date.getHours()}` : date.getHours().toString(),
+    date.getMinutes() < 10
+      ? `0${date.getMinutes()}`
+      : date.getMinutes().toString(),
+    date.getSeconds() < 10
+      ? `0${date.getSeconds()}`
+      : date.getSeconds().toString(),
+  ]
+
+  return `${dateValues[2]}.${dateValues[1]}.${dateValues[0]} ${dateValues[3]}:${
+    dateValues[3]
+  }:${dateValues[5].toString().split('.')[0]}`
+}

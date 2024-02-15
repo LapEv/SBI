@@ -1,4 +1,4 @@
-import { BaseSyntheticEvent, SyntheticEvent, useEffect } from 'react'
+import { useEffect } from 'react'
 import { Box, Stack } from '@mui/material'
 import {
   useForm,
@@ -8,7 +8,7 @@ import {
 } from 'react-hook-form'
 import { ChangeEvent, useState } from 'react'
 import { TextField } from 'components/TextFields'
-import { Button, ButtonsSection } from 'components/Buttons'
+import { ButtonsSection } from 'components/Buttons'
 import { deepEqual } from 'utils/deepEqual'
 import { AddValuesAddContract } from 'store/slices/sla/interfaces'
 import { MapContractInputFields } from './data'
@@ -24,6 +24,7 @@ export function ContractPage({
   id,
   number,
   date,
+  notificationEmail,
   SLAs,
   ClassifierEquipments,
   ClassifierModels,
@@ -47,6 +48,7 @@ export function ContractPage({
     contract,
     id,
     number,
+    notificationEmail,
     date: convertDateToStringYYYYMMDD(date),
     id_client,
   })
@@ -79,11 +81,28 @@ export function ContractPage({
       id,
       number: listAddContract[0].value as string,
       date: listAddContract[1].value as string,
+      notificationEmail: listAddContract[2].value as string,
       sla: slaID,
       equipment: selectedEquipments,
       model: selectedModels,
       objects: objectID,
     })
+    const newSLA = {
+      contract,
+      id,
+      number: listAddContract[0].value as string,
+      date: listAddContract[1].value as string,
+      notificationEmail: listAddContract[2].value as string,
+      id_client,
+    }
+    setContractData(newSLA)
+    setbtnDisabled(true)
+    setSLADisabled(true)
+    setEquipmentDisabled(true)
+    setModelDisabled(true)
+    setDataDisabled(true)
+    setObjectDisabled(true)
+    setClearChanges(true)
   }
 
   const checkForChange = (newData: IContractData) => {
@@ -140,6 +159,7 @@ export function ContractPage({
       contract,
       id,
       number,
+      notificationEmail,
       date: convertDateToStringYYYYMMDD(date),
       id_client,
     }
@@ -193,8 +213,6 @@ export function ContractPage({
     objectDisabled,
   ])
 
-  console.log('selectedEquipments = ', selectedEquipments)
-  console.log('selectedModels = ', selectedModels)
   return (
     <Box
       component="form"
@@ -218,7 +236,7 @@ export function ContractPage({
           spacing={0}
           sx={{ flexWrap: 'wrap', width: '100%' }}>
           {fieldsAddContract.map(
-            ({ id, name, label, validation, type, value }, index) => {
+            ({ id, name, label, validation, type, required }, index) => {
               return (
                 <Controller
                   key={id}
@@ -231,7 +249,7 @@ export function ContractPage({
                       inputRef={field.ref}
                       label={label}
                       type={type}
-                      required
+                      required={required}
                       variant="outlined"
                       sx={{ width: '48%', height: 60 }}
                       margin="normal"

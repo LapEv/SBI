@@ -1,6 +1,8 @@
 import {
   NoRequiredValidation,
   coordinatesValidation,
+  emailValidation,
+  emailValidationNoRequired,
   lightTextValidation,
   textValidation,
   textValidationlowercase,
@@ -205,5 +207,12 @@ export const MapContractInputFields = [
     validation: NoRequiredValidation,
     type: 'date',
     required: true,
+  },
+  {
+    name: 'notificationEmail',
+    label: 'Введите email для уведомлений',
+    validation: emailValidationNoRequired,
+    type: 'text',
+    required: false,
   },
 ]

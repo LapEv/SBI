@@ -21,7 +21,10 @@ import {
 } from './../db'
 import type { Request, Response } from 'express'
 import { AppConst } from '../const'
-import { convertINCStringToDateTime } from '../utils/convertDate'
+import {
+  convertDateToString,
+  convertINCStringToDateTime,
+} from '../utils/convertDate'
 import { mailer } from '../Mailer'
 
 const incLogs = [
@@ -64,7 +67,7 @@ const includes = [
   {
     model: Contracts,
     required: true,
-    attributes: ['id', 'contract', 'active'],
+    attributes: ['id', 'contract', 'active', 'notificationEmail'],
   },
   {
     model: Objects,
@@ -531,20 +534,16 @@ export class incidentService {
         where: { id: newINCdb.id },
         include: includes,
       })
-      // const incData = inc.map(
-      //   item => item.Client && item.timeRegistration
-      // ) as INC
 
-      console.log('inc = ', inc)
-      const status = 'Зарегистрирован'
-      const info = mailer({
+      const info = await mailer({
+        mailTo: inc[0]?.Contract.notificationEmail ?? '',
         incident,
-        status,
+        status: inc[0]?.IncindentStatus.statusINC ?? '',
         clientINC,
-        timeRegistration: inc[0]?.timeRegistration as string,
+        timeRegistration: convertDateToString(timeRegistration) ?? '',
         timeSLA,
-        client: inc[0]?.Client?.client as string,
-        object: inc[0]?.Object?.object as string,
+        client: inc[0]?.Client?.client ?? '',
+        object: inc[0]?.Object?.object ?? '',
         objectClientID: inc[0]?.Object?.internalClientID ?? '',
         objectClientName: inc[0]?.Object?.internalClientName ?? '',
         address: inc[0]?.Object?.Address?.address as string,
@@ -554,9 +553,10 @@ export class incidentService {
         description: description ?? '',
         applicant: applicant ?? '',
         applicantContacts: applicantContacts ?? '',
-        userAccepted: inc[0]?.User?.shortname ?? '',
+        userAccepted: inc[0]?.User?.shortName ?? '',
       })
-      console.log('info = ', info)
+
+      console.log('infoMailer Reg = ', info)
 
       const newINC = await IncidentRepos.findAll({
         where: { active: true },

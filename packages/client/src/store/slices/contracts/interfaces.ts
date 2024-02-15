@@ -8,6 +8,7 @@ export interface Contracts {
   contract: string
   number: string
   date: string
+  notificationEmail: string
   sla?: string[]
   equipment?: string[]
   model?: string[]
@@ -26,6 +27,7 @@ export interface IContractData {
   contract: string
   number: string
   date: string
+  notificationEmail: string
   // sla?: string[]
   // equipment?: string[]
   // objects?: string[]
@@ -51,6 +53,7 @@ export interface ChangeContract {
   id?: string
   contract?: string
   number: string
+  notificationEmail: string
   date: string
   sla?: string[]
   equipment?: string[]

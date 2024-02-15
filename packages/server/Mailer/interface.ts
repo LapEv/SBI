@@ -1,4 +1,5 @@
 export interface MailData {
+  mailTo: string
   incident: string
   status: string
   clientINC: string

@@ -182,7 +182,16 @@ export const emailValidation = {
     if (!value.match('^[a-zA-z0-9]+[a-zA-Z\\d-_.]*@[a-z\\d-_]+\\.')) {
       return 'Неправильный email'
     }
+    return true
+  },
+}
 
+export const emailValidationNoRequired = {
+  validate: (value: string) => {
+    if (!value.length) return true
+    if (!value.match('^[a-zA-z0-9]+[a-zA-Z\\d-_.]*@[a-z\\d-_]+\\.')) {
+      return 'Неправильный email'
+    }
     return true
   },
 }

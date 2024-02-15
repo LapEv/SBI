@@ -737,7 +737,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
 
   const options: MUIDataTableOptions = {
     filter: true,
-    rowsPerPage: 20,
+    rowsPerPage: 15,
     filterType: 'multiselect',
     resizableColumns: true,
     responsive: 'standard',
@@ -755,7 +755,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
     selectableRowsOnClick: false,
     textLabels: textLabels,
     tableBodyHeight: '100%',
-    rowsPerPageOptions: [20, 50, 100],
+    rowsPerPageOptions: [15, 30, 50],
     columnOrder: getcolumnOrderStorage(),
     sortOrder: JSON.parse(localStorage.getItem('sortColumn') as string),
     renderExpandableRow: (rowData, { dataIndex }) => {

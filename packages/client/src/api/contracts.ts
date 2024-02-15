@@ -127,7 +127,16 @@ export const deleteContract = createAsyncThunk(
 export const changeContract = createAsyncThunk(
   'contracts/changeContract',
   async (
-    { number, date, sla, equipment, model, objects, id }: ChangeContract,
+    {
+      number,
+      date,
+      sla,
+      equipment,
+      model,
+      objects,
+      id,
+      notificationEmail,
+    }: ChangeContract,
     thunkAPI
   ) => {
     try {
@@ -136,6 +145,7 @@ export const changeContract = createAsyncThunk(
         {
           number,
           date,
+          notificationEmail,
           sla,
           equipment,
           model,

@@ -14,6 +14,7 @@ export const ContractsList = memo(
     contract,
     id,
     number,
+    notificationEmail,
     date,
     SLAs,
     ClassifierEquipments,
@@ -90,6 +91,7 @@ export const ContractsList = memo(
             contract={contract}
             id={id}
             number={number}
+            notificationEmail={notificationEmail}
             date={date}
             SLAs={SLAs}
             ClassifierEquipments={ClassifierEquipments}

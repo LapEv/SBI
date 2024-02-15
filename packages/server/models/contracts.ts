@@ -6,6 +6,7 @@ export interface Contracts {
   contract: string
   number: string
   date: string
+  notificationEmail: string
   active: boolean
 }
 
@@ -28,6 +29,10 @@ export const contracts: ModelAttributes<Model, Contracts> = {
   date: {
     type: DataType.DATE,
     allowNull: false,
+  },
+  notificationEmail: {
+    type: DataType.STRING,
+    allowNull: true,
   },
   active: {
     type: DataType.BOOLEAN,

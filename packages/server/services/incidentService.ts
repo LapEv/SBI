@@ -24,67 +24,6 @@ import { AppConst } from '../const'
 import { convertINCStringToDateTime } from '../utils/convertDate'
 import { mailer } from '../Mailer'
 
-export interface INC {
-  id: string
-  numberINC: number
-  incident: string
-  clientINC: string
-  status: string
-  client: string
-  contract: string
-  sla: string
-  typeOfWork: string
-  object: string
-  address: string
-  coordinates: string
-  region: string
-  userAccepted: string
-  equipment: string
-  model: string
-  typicalMalfunction: string
-  timeRegistration: string
-  timeInWork: string
-  timeSLA: string
-  timeCloseCheck: string
-  timeClose: string
-  executor: string
-  responsible: string
-  userClosingCheck: string
-  userClosing: string
-  description: string
-  comment: string
-  report: string
-  spaceParts: string
-  act: string
-  active: boolean
-  // IncindentStatus?: INCStatuses
-  // TypesOfWork?: TypesOfWork
-  // SLA?: SLAforINC
-  Client?: Clients
-  // Contract?: ContractsForINC
-  // Object?: ObjectsForINC
-  // User?: UserForINC
-  // UserExecutor?: UserForINC
-  // UserResponsible?: UserForINC
-  // UserClosing?: UserForINC
-  // UserClosingCheck?: UserForINC
-  // ClassifierEquipment?: ClassifierEquipmentForINC
-  // ClassifierModel?: ClassifierModelForINC
-  // TypicalMalfunction?: TypicalMalfunctionForINC
-  // IncidentLogs?: IncidentLogsForINC[]
-  // Files?: Files[]
-}
-export interface Clients {
-  id?: string
-  legalName: string
-  client: string
-  office?: string
-  contracts?: string[]
-  contacts?: string[]
-  comments?: string
-  active?: boolean
-}
-
 const incLogs = [
   {
     model: Users,
@@ -606,16 +545,16 @@ export class incidentService {
         timeSLA,
         client: inc[0]?.Client?.client as string,
         object: inc[0]?.Object?.object as string,
-        objectClientID: inc[0]?.Object?.internalClientID as string,
-        objectClientName: inc[0]?.Object?.internalClientName as string,
+        objectClientID: inc[0]?.Object?.internalClientID ?? '',
+        objectClientName: inc[0]?.Object?.internalClientName ?? '',
         address: inc[0]?.Object?.Address?.address as string,
         equipment: inc[0]?.ClassifierEquipment?.equipment as string,
         model: inc[0]?.ClassifierModel?.model as string,
         malfunction: inc[0]?.TypicalMalfunction?.typicalMalfunction as string,
-        description,
-        applicant,
-        applicantContacts,
-        userAccepted: inc[0]?.User?.shortname as string,
+        description: description ?? '',
+        applicant: applicant ?? '',
+        applicantContacts: applicantContacts ?? '',
+        userAccepted: inc[0]?.User?.shortname ?? '',
       })
       console.log('info = ', info)
 

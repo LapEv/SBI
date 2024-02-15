@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 
 <head>
@@ -6,47 +5,114 @@
 </head>
 
 <body>
-  <table
+  <div
     style="width: auto; height: auto; padding: 10px; font-size: 11px; font-weight: 100;font-family: 'Calibri', sans-serif;color: #000000;">
-    <tr style="font-size: 14px; font-weight: 700;">
-      <td style="width: 40%">
-        Зарегистровано обращение:
-      </td>
-      <td>INC_0001223</td>
-    </tr>
-    <table style="width: auto; font-size: 12px; font-weight: 100; margin-top: 10px;  height: auto; padding: 10px;">
-      <tr>
-        <td style="font-weight: 700; vertical-align: top">
-          Клиент:
-        </td>
-        <td>Перекресток</td>
-      </tr>
-      <tr>
-        <td style="font-weight: 700; vertical-align: top">
-          Объект:
-        </td>
-        <td style="margin-left: 10px">Перекресток Удальцова</td>
-      </tr>
-      <tr>
-        <td style="font-weight: 700; vertical-align: top">
-          Адрес:
-        </td>
-        <td style="margin-left: 10px">г. Москва, Удальцова 42</td>
-      </tr>
-      <tr>
-        <td style="font-weight: 700; vertical-align: top">
-          Описание:
-        </td>
-        <td style="margin-left: 10px">Плохо пропечатывается этикткаПлохо пропечатывается этикткаПлохо пропечатывается
-          этикткаПлохо пропечатывается этикткаПлохо пропечатывается этикткаПлохо пропечатывается этикткаПлохо
-          пропечатывается этикткаПлохо пропечатывается этикткаПлохо пропечатывается этикткаПлохо пропечатывается
-          этикткаПлохо пропечатывается этикткаПлохо пропечатывается этикткаПлохо пропечатывается этикткаПлохо
-          пропечатывается этикткаПлохо пропечатывается этикткаПлохо пропечатывается этикткаПлохо пропечатывается
-          этикткаПлохо пропечатывается этиктка</td>
-      </tr>
-
-    </table>
-  </table>
+    <div style="display: flex; font-size: 14px; font-weight: 700;">
+      <div style="width: 25%">
+        ${mailConst.mailMessages.Incidents.addRequest}
+      </div>
+      <div>${incident}</div>
+    </div>
+  </div>
+  <div style="display: flex;">
+    <div
+      style="width: auto; display: flex; flex-direction: column; font-size: 12px; font-weight: 100; margin-top: 10px;  height: auto; padding: 10px;">
+      <div style="width: 25%; font-weight: 700">
+        ${mailConst.mailMessages.Incidents.status}
+      </div>
+      <div style="width: 25%; font-weight: 700">
+        ${mailConst.mailMessages.Incidents.client}
+      </div>
+      ${
+      clientINC
+      ? `
+      <div style="width: 25%; font-weight: 700">
+        ${mailConst.mailMessages.Incidents.clientINC}
+      </div>`
+      : ``
+      }
+      <div style="width: 25%; font-weight: 700">
+        ${mailConst.mailMessages.Incidents.timeRegistration}
+      </div>
+      <div style="width: 25%; font-weight: 700">
+        ${mailConst.mailMessages.Incidents.timeSLA}
+      </div>
+      <div style="width: 25%; font-weight: 700">
+        ${mailConst.mailMessages.Incidents.object}
+      </div>
+      <div style="width: 25%; font-weight: 700">
+        ${mailConst.mailMessages.Incidents.address}
+      </div>
+      ${
+      objectClientID
+      ? `
+      <div style="width: 25%; font-weight: 700">
+        ${mailConst.mailMessages.Incidents.objectClientID}
+      </div>`
+      : ``
+      }
+      ${
+      objectClientName
+      ? `
+      <div style="width: 25%; font-weight: 700">
+        ${mailConst.mailMessages.Incidents.objectClientName}
+      </div>`
+      : ``
+      }
+      <div style="width: 25%; font-weight: 700">
+        ${mailConst.mailMessages.Incidents.equipment}
+      </div>
+      <div style="width: 25%; font-weight: 700">
+        ${mailConst.mailMessages.Incidents.model}
+      </div>
+      <div style="width: 25%; font-weight: 700">
+        ${mailConst.mailMessages.Incidents.malfunction}
+      </div>
+      <div style="width: 25%; font-weight: 700">
+        ${mailConst.mailMessages.Incidents.description}
+      </div>
+      <div style="width: 25%; font-weight: 700">
+        ${mailConst.mailMessages.Incidents.applicant}
+      </div>
+      <div style="width: 25%; font-weight: 700">
+        ${mailConst.mailMessages.Incidents.applicantContacts}
+      </div>
+      <div style="width: 25%; font-weight: 700">
+        ${mailConst.mailMessages.Incidents.userAccepted}
+      </div>
+    </div>
+    <div
+      style="width: auto; display: flex; flex-direction: column; font-size: 12px; font-weight: 100; margin-top: 10px;  height: auto; padding: 10px;">
+      <div style=" margin-left: 10px">${status}</div>
+      <div style=" margin-left: 10px">${client}</div>
+      ${
+      clientINC
+      ? `<div style=" margin-left: 10px">${clientINC}</div>`
+      : ``
+      }
+      <div style=" margin-left: 10px">${timeRegistration}</div>
+      <div style=" margin-left: 10px">${timeSLA}</div>
+      <div style=" margin-left: 10px">${object}</div>
+      <div style=" margin-left: 10px">${address}</div>
+      ${
+      objectClientID
+      ? `<div style=" margin-left: 10px">${objectClientID}</div>`
+      : ``
+      }
+      ${
+      objectClientName
+      ? `<div style=" margin-left: 10px">${objectClientName}</div>`
+      : ``
+      }
+      <div style=" margin-left: 10px">${equipment}</div>
+      <div style=" margin-left: 10px">${model}</div>
+      <div style=" margin-left: 10px">${malfunction}</div>
+      <div style=" margin-left: 10px">${description}</div>
+      <div style=" margin-left: 10px">${applicant}</div>
+      <div style=" margin-left: 10px">${applicantContacts}</div>
+      <div style=" margin-left: 10px">${${userAccepted}}</div>
+    </div>
+  </div>
 </body>
 
-</html>`
+</html>

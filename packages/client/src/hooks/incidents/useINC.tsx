@@ -24,8 +24,9 @@ import {
   newIncidentStatuses,
   newTypeOfWork,
   newTypeCompletedWork,
+  getINCs,
 } from 'api/incidents'
-import { setActiveINC } from 'store/slices/incidents'
+import { setActiveINC, setLoadingINC } from 'store/slices/incidents'
 
 export function useIncidents(): [INCState, INCActions] {
   const incidents = useSelector((state: RootState) => state.incidents)
@@ -36,6 +37,9 @@ export function useIncidents(): [INCState, INCActions] {
     {
       getINC() {
         dispatch(getINC())
+      },
+      getINCs(data) {
+        dispatch(getINCs(data))
       },
       getIncidentStatuses() {
         dispatch(getIncidentStatuses())
@@ -97,6 +101,9 @@ export function useIncidents(): [INCState, INCActions] {
       },
       setActiveINC(id) {
         dispatch(setActiveINC(id))
+      },
+      setLoadingINC(data) {
+        dispatch(setLoadingINC(data))
       },
     },
   ]

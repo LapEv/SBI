@@ -190,7 +190,7 @@ const includes = [
   },
   {
     model: IncidentLogs,
-    required: true,
+    required: false,
     attributes: ['id', 'time', 'log'],
     include: incLogs,
   },
@@ -492,6 +492,9 @@ export class incidentService {
       equipmentId,
       modelId,
       typicalMalfunctionID,
+      nameSort,
+      direction,
+      limit,
     } = _req.body
     try {
       const lastINC = await IncidentRepos.findAll({
@@ -576,8 +579,13 @@ export class incidentService {
         console.log('infoMailer Reg = ', info)
       }
 
+      console.log('nameSort = ', nameSort)
+      console.log('direction = ', direction)
+      console.log('limit = ', limit)
       const newINC = await IncidentRepos.findAll({
         where: { active: true },
+        order: [[nameSort as string, direction as string]],
+        limit: Number(limit),
         include: includes,
       })
       res.status(200).json(newINC)
@@ -586,7 +594,7 @@ export class incidentService {
       /* eslint-enable @typescript-eslint/no-explicit-any */
       console.log('err = ', err)
       res.status(500).json({
-        error: ['db error: unable to set new incident statuses: ', err],
+        error: ['db error: unable to set new incident: ', err],
       })
     }
   }
@@ -607,6 +615,31 @@ export class incidentService {
       })
       .catch(err => res.status(500).json({ error: ['db error:  ', err] }))
   }
+  getINCs = async (_req: Request, res: Response) => {
+    try {
+      console.log('_req = ', _req.query)
+      const { limit, nameSort, direction } = _req.query
+      console.log('limit = ', limit)
+      console.log('nameSort = ', nameSort)
+      console.log('direction = ', direction)
+      const incs = await IncidentRepos.findAll({
+        where: { active: true },
+        // include: { all: true, nested: true },
+        // include: { all: true },
+        order: [[nameSort as string, direction as string]],
+        limit: Number(limit),
+        include: includes,
+      })
+      // console.log('incs = ', incs)
+      res.status(200).json(incs)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      console.log('err = ', err)
+      res.status(500).json({ error: ['db error', err] })
+    }
+  }
+
   deleteINC = async (_req: Request, res: Response) => {
     const { selectedINCs } = _req.body
     try {

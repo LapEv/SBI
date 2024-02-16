@@ -32,12 +32,12 @@ export function IncidentsPage() {
   }
 
   useEffect(() => {
-    getINC()
+    // getINC()
     getFieldEngineers()
     getDispatchers()
   }, [])
 
-  console.log('incidentss = ', incidents)
+  // console.log('incidentss = ', incidents)
 
   return (
     <Container component="main" maxWidth="md" sx={mainHeaderForINCPage}>
@@ -84,7 +84,7 @@ export function IncidentsPage() {
         </Box>
       </Box>
       <Box sx={{ width: '100%', padding: 2 }}>
-        <TableIncidents incidents={incidents} />
+        <TableIncidents />
       </Box>
     </Container>
   )

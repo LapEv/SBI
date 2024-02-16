@@ -351,6 +351,10 @@ export const rolesStartData = [
     nameRole: 'Получение списка активных инцидентов',
   },
   {
+    role: 'getINCs',
+    nameRole: 'Получение списка активных инцидентов по параметрам',
+  },
+  {
     role: 'newINC',
     nameRole: 'Создание нового инцидента',
   },

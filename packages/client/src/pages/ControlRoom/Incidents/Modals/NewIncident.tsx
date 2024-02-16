@@ -77,6 +77,16 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
       const id_incStatus = incStatuses.find(item =>
         item.statusINC.includes('Зарегистрирован')
       )?.id as string
+      const { nameSort, direction } = JSON.parse(
+        localStorage.getItem('sortColumn') as string
+      )
+      const limit =
+        JSON.parse(localStorage.getItem('limitColumns') as string) ?? 15
+
+      console.log('name = ', name)
+      console.log('direction = ', direction)
+      console.log('limit = ', limit)
+
       const newINCobject = {
         clientID: selectedClient.id,
         contractID: selectedContract.id,
@@ -97,6 +107,9 @@ export const NewIncident = React.forwardRef<unknown, ChooseModalProps>(
         applicant: list[11].value,
         applicantContacts: list[12].value,
         methodsReuqest: 'manually',
+        nameSort: nameSort ?? 'incident',
+        direction: direction ?? 'asc',
+        limit,
       }
       console.log('newINCobject = ', newINCobject)
       newINC(newINCobject)

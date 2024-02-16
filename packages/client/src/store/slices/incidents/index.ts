@@ -31,6 +31,7 @@ import {
   newTypeCompletedWork,
   deleteTypesCompletedWork,
   changeTypesCompletedWork,
+  getINCs,
 } from 'api/incidents'
 import { convertDateToStringFromDB } from 'utils/convertDate'
 
@@ -86,6 +87,10 @@ export const incidentsSlise = createSlice({
     setActiveINC(state, action) {
       state.activeINC = action.payload
     },
+    setLoadingINC(state, action) {
+      console.log('action = ', action)
+      state.isLoadingINC = action.payload
+    },
   },
   extraReducers: {
     [getINC.fulfilled.type]: (state, action: PayloadAction<INC[]>) => {
@@ -97,6 +102,18 @@ export const incidentsSlise = createSlice({
       state.isLoadingINC = true
     },
     [getINC.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingINC = false
+      state.error = action.payload
+    },
+    [getINCs.fulfilled.type]: (state, action: PayloadAction<INC[]>) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.incidents = createINCData(action.payload)
+    },
+    [getINCs.pending.type]: state => {
+      state.isLoadingINC = true
+    },
+    [getINCs.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingINC = false
       state.error = action.payload
     },
@@ -423,4 +440,4 @@ export const incidentsSlise = createSlice({
 })
 
 export const incidentsReducer = incidentsSlise.reducer
-export const { setActiveINC } = incidentsSlise.actions
+export const { setActiveINC, setLoadingINC } = incidentsSlise.actions

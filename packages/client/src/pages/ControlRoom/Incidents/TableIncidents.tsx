@@ -1,13 +1,14 @@
-import { memo, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { INC } from 'store/slices/incidents/interfaces'
 import {
   MUIDataTableMeta,
   MUIDataTableOptions,
   MUIDataTableState,
+  MUISortOptions,
 } from 'mui-datatables'
 import { textLabels } from './data'
 import { DataTable } from 'components/DataTable'
-import { TableCell, TableRow, useTheme } from '@mui/material'
+import { TableCell, TableRow, tableBodyClasses, useTheme } from '@mui/material'
 import { INC_Column, ITableMeta } from './interfaces'
 import {
   DenseTable,
@@ -20,12 +21,15 @@ import {
   StatusSLACell,
   SpacePartCell,
 } from './'
+import { useIncidents } from 'hooks/incidents/useINC'
 
 interface INCTable {
   incidents: INC[]
 }
 
-export const TableIncidents = memo(({ incidents }: INCTable) => {
+export const TableIncidents = memo(() => {
+  const [{ incidents }, { getINCs, setLoadingINC }] = useIncidents()
+
   const [heightINCData, setHeightINCData] = useState<number>(0)
   const [denseTable, setDenseTable] = useState<boolean>(
     localStorage.getItem('IncidentsDenseTable') === '1' ? true : false
@@ -718,6 +722,7 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
   }
 
   const handleTableInit = (data: any, value: any) => {
+    console.log('handleTableInit')
     const columnViewStorage = localStorage
       .getItem('IncidentsViewColumns')
       ?.split(',')
@@ -739,6 +744,16 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
     }
   }
 
+  const changePage = (page: number, sortOrder: MUISortOptions) => {
+    console.log('changePage')
+    setLoadingINC(true)
+    // getINCs({ size: page })
+  }
+
+  const sort = (page: number, sortOrder: MUISortOptions) => {
+    console.log('Sort')
+  }
+
   const handleTableChange = (action: string, tableState: MUIDataTableState) => {
     if (action === 'viewColumnsChange') {
       const display = tableState.columns
@@ -749,6 +764,18 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       localStorage.setItem('IncidentsViewColumns', display.toString())
       return
     }
+    // console.log('action = ', action)
+    // console.log('tableState = ', tableState)
+    // switch (action) {
+    //   case 'changePage':
+    //     changePage(tableState.page, tableState.sortOrder)
+    //     break
+    //   case 'sort':
+    //     sort(tableState.page, tableState.sortOrder)
+    //     break
+    //   default:
+    //     console.log('action not handled.')
+    // }
   }
 
   const options: MUIDataTableOptions = {
@@ -834,6 +861,26 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       }
     },
   }
+
+  useEffect(() => {
+    const { name, direction } = JSON.parse(
+      localStorage.getItem('sortColumn') as string
+    )
+    const limit =
+      JSON.parse(localStorage.getItem('limitColumns') as string) ?? 15
+
+    console.log('name = ', name ?? 'incident')
+    console.log('direction = ', direction)
+    getINCs({
+      limit,
+      nameSort: name ?? 'incident',
+      direction: direction ?? 'asc',
+    })
+  }, [])
+
+  useEffect(() => {
+    console.log('incidents = ', incidents)
+  }, [incidents])
 
   return (
     <DataTable

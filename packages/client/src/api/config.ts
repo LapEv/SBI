@@ -104,6 +104,7 @@ export const ApiEndPoints = {
   },
   INC: {
     getINC: 'incidents/getINC',
+    getINCs: 'incidents/getINCs',
     newINC: 'incidents/newINC',
     changeINC: 'incidents/changeINC',
     changeExecutor: 'incidents/changeExecutor',

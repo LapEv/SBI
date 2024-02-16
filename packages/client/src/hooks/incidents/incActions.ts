@@ -12,10 +12,12 @@ import {
   ChangeStatus,
   AddTypesCompletedWork,
   ChangeTypesCompletedWork,
+  GetINCsByParams,
 } from 'store/slices/incidents/interfaces'
 
 export interface INCActions {
   getINC: () => void
+  getINCs: (data: GetINCsByParams) => void
   getIncidentStatuses: () => void
   getTypesOfWork: () => void
   getTypesCompletedWork: () => void
@@ -36,4 +38,5 @@ export interface INCActions {
   changeTypesOfWork: (data: ChangeTypesOfWork) => void
   changeTypesCompletedWork: (data: ChangeTypesCompletedWork) => void
   setActiveINC: (id: string) => void
+  setLoadingINC: (data: boolean) => void
 }

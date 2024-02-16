@@ -82,6 +82,9 @@ export interface AddINC {
   applicant: string
   applicantContacts: string
   methodsReuqest: string
+  nameSort?: string
+  direction?: string
+  limit?: number
 }
 
 export interface INCStatuses {
@@ -156,6 +159,12 @@ export type INCState = {
   activeINC: string
   isLoadingINC: boolean
   error?: string
+}
+
+export interface GetINCsByParams {
+  limit: number
+  nameSort: string
+  direction: string
 }
 
 export interface ChangeINC {

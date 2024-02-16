@@ -447,6 +447,10 @@ export const emptyStatusTemp = {
   id_incStatus: '',
   status: '',
   userID: '',
+  typeCompletedWork: {
+    label: '',
+    id: '',
+  },
   commentCloseCheck: '',
   spaceParts: [],
 }

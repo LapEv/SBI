@@ -11,11 +11,15 @@
       ${mailConst.mailMessages.Incidents.addRequest} ${incident}
     </div>
     <div style="margin-top: 10px; font-size: 13px">
-      <b style="font-size: 12px;">${mailConst.mailMessages.Incidents.status}</b> ${status}<br>
+      <b style="font-size: 12px;">${
+        mailConst.mailMessages.Incidents.status
+        }</b> ${status}<br>
       <b>${mailConst.mailMessages.Incidents.client}</b> ${client}<br>
       ${
-      clientINC ? `<b>${mailConst.mailMessages.Incidents.clientINC}</b>` : ``
-      } ${clientINC}<br>
+      clientINC
+      ? `<b>${mailConst.mailMessages.Incidents.clientINC}</b> ${clientINC}<br>`
+      : ``
+      }
       <b>${
         mailConst.mailMessages.Incidents.timeRegistration
         }</b> ${timeRegistration}<br>
@@ -24,24 +28,38 @@
       <b>${mailConst.mailMessages.Incidents.address}</b> ${address}<br>
       ${
       objectClientID
-      ? `<b>${mailConst.mailMessages.Incidents.objectClientID}</b>`
+      ? `<b>${mailConst.mailMessages.Incidents.objectClientID}</b> ${objectClientID}<br>`
       : ``
-      } ${objectClientID}<br>
+      }
       ${
       objectClientName
-      ? `<b>${mailConst.mailMessages.Incidents.objectClientName}</b>`
+      ? `<b>${mailConst.mailMessages.Incidents.objectClientName}</b> ${objectClientName}<br>`
       : ``
-      } ${objectClientName}<br>
+      }
       <b>${mailConst.mailMessages.Incidents.equipment}</b> ${equipment}<br>
       <b>${mailConst.mailMessages.Incidents.model}</b> ${model}<br>
-      <b>${mailConst.mailMessages.Incidents.malfunction}</b> ${malfunction}<br>
-      <b>${mailConst.mailMessages.Incidents.description}</b> ${description}<br>
+      <b>${
+        mailConst.mailMessages.Incidents.malfunction
+        }</b> ${malfunction}<br>
+      <b>${
+        mailConst.mailMessages.Incidents.description
+        }</b> ${description}<br>
       <b>${mailConst.mailMessages.Incidents.applicant}</b> ${applicant}<br>
       <b>${
         mailConst.mailMessages.Incidents.applicantContacts
         }</b> ${applicantContacts}<br>
-      <b>${mailConst.mailMessages.Incidents.userAccepted}</b> ${userAccepted}<br>
+      <b>${
+        mailConst.mailMessages.Incidents.userAccepted
+        }</b> ${userAccepted}<br>
     </div>
+    <div style="margin-top: 10px; font-size: 9px">
+      ========================
+      <br>
+      <br>
+      `Это письмо сформировано автоматически, отвечать на него не нужно. Если Вы получили это сообщение по ошибке,
+      пожалуйста, сообщите об этом на адрес ${mailConst.ourMail} и удалите это сообщение.`
+    </div>
+
   </div>
 </body>
 

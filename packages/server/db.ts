@@ -24,6 +24,7 @@ import {
   throughContractsObjects,
   throughContractsSLA,
   throughContractsModels,
+  throughContractsIncStatusses,
 } from './models/contracts'
 import {
   incident,
@@ -106,6 +107,13 @@ export const ThroughContractsObjects = sequelize.define(
   throughContractsObjects,
   {}
 )
+
+export const ThroughContractsIncStatusses = sequelize.define(
+  'ThroughContractsIncStatusses',
+  throughContractsIncStatusses,
+  {}
+)
+
 export const Incidents = sequelize.define('Incidents', incident, {})
 export const IncindentStatuses = sequelize.define(
   'IncindentStatuses',
@@ -201,6 +209,15 @@ Contracts.belongsToMany(Objects, {
 Objects.belongsToMany(Contracts, {
   through: ThroughContractsObjects,
   foreignKey: 'id_object',
+})
+
+Contracts.belongsToMany(IncindentStatuses, {
+  through: ThroughContractsIncStatusses,
+  foreignKey: 'id_contract',
+})
+IncindentStatuses.belongsToMany(Contracts, {
+  through: ThroughContractsIncStatusses,
+  foreignKey: 'id_incStatusses',
 })
 
 Contracts.belongsToMany(ClassifierEquipment, {
@@ -397,6 +414,9 @@ export const ThroughContractsModelsRepos = new Repository(
 )
 export const ThroughContractsObjectsRepos = new Repository(
   ThroughContractsObjects as ModelCtor
+)
+export const ThroughContractsIncStatussesRepos = new Repository(
+  ThroughContractsIncStatusses as ModelCtor
 )
 
 export const IncidentStatusesRepos = new Repository(

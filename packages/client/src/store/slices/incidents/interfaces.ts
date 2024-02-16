@@ -9,6 +9,7 @@ import {
   TypicalMalfunctionForINC,
 } from '../classifier/interfaces'
 import { Files } from '../files/interfaces'
+import { Options } from 'components/DropDown/interface'
 
 export interface INC {
   id: string
@@ -43,8 +44,10 @@ export interface INC {
   spaceParts: string
   act: string
   active: boolean
+  typeCompletedWork: string
   IncindentStatus?: INCStatuses
   TypesOfWork?: TypesOfWork
+  TypesCompletedWork?: TypesCompletedWork
   SLA?: SLAforINC
   Client?: Clients
   Contract?: ContractsForINC
@@ -196,6 +199,7 @@ export interface ChangeStatus {
   status: string
   userID: string
   timeSLA: string
+  typeCompletedWork?: Options
   commentCloseCheck?: string
   act?: string[]
   spaceParts?: string[]

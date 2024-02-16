@@ -126,13 +126,13 @@ export const incident: ModelAttributes<Model, Incindent> = {
   },
 }
 
-export interface IncindentStatuses {
+export interface IIncindentStatuses {
   id: string
   statusINC: string
   active: boolean
 }
 
-export const incindentStatuses: ModelAttributes<Model, IncindentStatuses> = {
+export const incindentStatuses: ModelAttributes<Model, IIncindentStatuses> = {
   id: {
     type: DataType.STRING,
     defaultValue: DataType.UUIDV4,

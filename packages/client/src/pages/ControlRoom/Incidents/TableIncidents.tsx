@@ -545,6 +545,22 @@ export const TableIncidents = memo(({ incidents }: INCTable) => {
       },
     },
     {
+      name: 'typeCompletedWork',
+      label: 'Тип выполненных работ',
+      options: {
+        filter: false,
+        sort: true,
+        display: true,
+        viewColumns: true,
+        setCellHeaderProps: () => ({
+          style: { padding: !denseTable ? 15 : 8 },
+        }),
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
+      },
+    },
+    {
       name: 'commentCloseCheck',
       label: 'Комментарии к выполнению',
       options: {

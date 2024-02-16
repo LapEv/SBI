@@ -20,6 +20,7 @@ export const ContractsList = memo(
     ClassifierEquipments,
     ClassifierModels,
     Objects,
+    IncindentStatuses,
     id_client,
   }: Contracts) => {
     const [{ admin }] = useAuth()
@@ -88,15 +89,16 @@ export const ContractsList = memo(
           timeout="auto"
           unmountOnExit>
           <ContractPage
-            contract={contract}
-            id={id}
-            number={number}
-            notificationEmail={notificationEmail}
-            date={date}
+            contract={contract ?? ''}
+            id={id ?? ''}
+            number={number ?? ''}
+            notificationEmail={notificationEmail ?? ''}
+            date={date ?? ''}
             SLAs={SLAs}
             ClassifierEquipments={ClassifierEquipments}
             ClassifierModels={ClassifierModels}
             Objects={Objects}
+            IncindentStatuses={IncindentStatuses}
             id_client={id_client}
           />
         </Collapse>

@@ -52,6 +52,10 @@ export const typesCompletedWorkStartData = [
     active: true,
   },
   {
+    typeCompletedWork: 'Замена оборудования',
+    active: true,
+  },
+  {
     typeCompletedWork: 'Диагностика',
     active: true,
   },

@@ -17,7 +17,12 @@ import { Contracts, IContractData } from 'store/slices/contracts/interfaces'
 import { convertDateToStringYYYYMMDD } from 'utils/convertDate'
 import { isEqualArr } from 'utils/isEqualArr'
 import { useContracts } from 'hooks/contracts/useContracts'
-import { ContractEquipmentList, ContractSLAList, ContractObjectList } from './'
+import {
+  ContractEquipmentList,
+  ContractSLAList,
+  ContractObjectList,
+  ContractIncStatussesList,
+} from './'
 
 export function ContractPage({
   contract,
@@ -29,6 +34,7 @@ export function ContractPage({
   ClassifierEquipments,
   ClassifierModels,
   Objects,
+  IncindentStatuses,
   id_client,
 }: Contracts) {
   const [{ admin }] = useAuth()
@@ -39,10 +45,13 @@ export function ContractPage({
   const [modelDisabled, setModelDisabled] = useState<boolean>(true)
   const [dataDisabled, setDataDisabled] = useState<boolean>(true)
   const [objectDisabled, setObjectDisabled] = useState<boolean>(true)
+  const [incStatussesDisabled, setIncStatussesDisabled] =
+    useState<boolean>(true)
   const [slaID, setSLAID] = useState<string[]>([])
   const [selectedEquipments, setSelectedEquipments] = useState<string[]>([])
   const [selectedModels, setSelectedModels] = useState<string[]>([])
   const [objectID, setObjectID] = useState<string[]>([])
+  const [incStatussesID, setIncStatussesID] = useState<string[]>([])
   const [clearChanges, setClearChanges] = useState<boolean>(false)
   const [contractData, setContractData] = useState<IContractData>({
     contract,
@@ -77,6 +86,9 @@ export function ContractPage({
   })
 
   const changeData = ({ listAddContract }: AddValuesAddContract) => {
+    console.log('selectedModels = ', selectedModels)
+    console.log('objectID = ', objectID)
+    console.log('incStatussesID = ', incStatussesID)
     changeContract({
       id,
       number: listAddContract[0].value as string,
@@ -86,6 +98,7 @@ export function ContractPage({
       equipment: selectedEquipments,
       model: selectedModels,
       objects: objectID,
+      incStatusses: incStatussesID,
     })
     const newSLA = {
       contract,
@@ -102,6 +115,7 @@ export function ContractPage({
     setModelDisabled(true)
     setDataDisabled(true)
     setObjectDisabled(true)
+    setIncStatussesDisabled(true)
     setClearChanges(true)
   }
 
@@ -154,6 +168,29 @@ export function ContractPage({
     setObjectID(newObjects)
   }
 
+  const onChooseIncStatusses = (checked: boolean, id: string) => {
+    if (checked) {
+      const newIncStatusses = [...incStatussesID]
+      newIncStatusses.push(id)
+      setIncStatussesDisabled(
+        isEqualArr(
+          newIncStatusses,
+          IncindentStatuses?.map(({ id }) => id) as string[]
+        )
+      )
+      setIncStatussesID(newIncStatusses)
+      return
+    }
+    const newIncStatusses = incStatussesID.filter(item => item !== id)
+    setIncStatussesDisabled(
+      isEqualArr(
+        newIncStatusses,
+        IncindentStatuses?.map(({ id }) => id) as string[]
+      )
+    )
+    setIncStatussesID(newIncStatusses)
+  }
+
   const clearChange = () => {
     const newSLA = {
       contract,
@@ -174,23 +211,26 @@ export function ContractPage({
     setSelectedEquipments(ClassifierEquipments?.map(({ id }) => id) as string[])
     setSelectedModels(ClassifierModels?.map(({ id }) => id) as string[])
     setObjectID(Objects?.map(({ id }) => id) as string[])
+    setIncStatussesID(IncindentStatuses?.map(({ id }) => id) as string[])
     setbtnDisabled(true)
     setSLADisabled(true)
     setEquipmentDisabled(true)
     setModelDisabled(true)
     setDataDisabled(true)
     setObjectDisabled(true)
+    setIncStatussesDisabled(true)
     setClearChanges(true)
   }
 
   useEffect(() => {
     setSLAID(SLAs?.map(({ id }) => id) as string[])
     setSelectedEquipments(ClassifierEquipments?.map(({ id }) => id) as string[])
-    const temp = ClassifierEquipments?.map(item => [
+    const models = ClassifierEquipments?.map(item => [
       ...(item.ClassifierModels?.map(({ id }) => id) as string[]),
     ])[0]
-    setSelectedModels(temp as string[])
+    setSelectedModels(models as string[])
     setObjectID(Objects?.map(({ id }) => id) as string[])
+    setIncStatussesID(IncindentStatuses?.map(({ id }) => id) as string[])
   }, [])
 
   useEffect(() => {
@@ -199,7 +239,8 @@ export function ContractPage({
       !dataDisabled ||
       !equipmentDisabled ||
       !modelDisabled ||
-      !objectDisabled
+      !objectDisabled ||
+      !incStatussesDisabled
     ) {
       setbtnDisabled(false)
       return
@@ -211,6 +252,7 @@ export function ContractPage({
     equipmentDisabled,
     modelDisabled,
     objectDisabled,
+    incStatussesDisabled,
   ])
 
   return (
@@ -287,6 +329,10 @@ export function ContractPage({
         onClearChanges={setClearChanges}
       />
       <ContractObjectList objectID={objectID} onChooseItems={onChooseObjects} />
+      <ContractIncStatussesList
+        incStatussesID={incStatussesID}
+        onChooseItems={onChooseIncStatusses}
+      />
       <ButtonsSection
         onClick={handleSubmitAddContract(changeData)}
         btnSecondHandle={clearChange}

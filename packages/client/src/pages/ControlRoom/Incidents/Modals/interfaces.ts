@@ -8,6 +8,7 @@ export interface ChooseModalProps {
 
 export interface DataCloseINC {
   state: boolean
+  typeCompletedWork?: Options
   commentCloseCheck?: string
   files?: FileList
   spaceParts?: string[]

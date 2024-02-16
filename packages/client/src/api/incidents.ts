@@ -194,6 +194,7 @@ export const changeStatus = createAsyncThunk(
       timeSLA,
       commentCloseCheck,
       spaceParts,
+      typeCompletedWork,
     }: ChangeStatus,
     thunkAPI
   ) => {
@@ -207,8 +208,8 @@ export const changeStatus = createAsyncThunk(
         timeSLA,
         commentCloseCheck,
         spaceParts,
+        typeCompletedWork,
       })
-      console.log('data = ', data)
       return {
         data,
         message: {

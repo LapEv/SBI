@@ -5,7 +5,11 @@ export const mailConst = {
       'Данное сообщение отправлено автоматически, не надо на него отвечать.',
     Incidents: {
       titleRegistration: 'Уведолмение о регистрации обращения под номером ',
+      titleChangeStatus:
+        'Уведолмение об изменении статуса инцидента под номером ',
       addRequest: 'Зарегистровано обращение:',
+      changeStatus1: 'По инциденту',
+      changeStatus2: 'изменен статус:',
       client: 'Клиент:',
       clientINC: 'Номер клиента:',
       object: 'Объект:',
@@ -17,11 +21,14 @@ export const mailConst = {
       malfunction: 'Неисправность:',
       status: 'Статус:',
       timeRegistration: 'Время регистрации:',
+      timeChangeStatus: 'Время изменения статуса:',
       timeSLA: 'Крайний срок выполнения:',
       description: 'Описание проблемы:',
+      commentCloseCheck: 'Комментарий к закрытию:',
       applicant: 'Заявитель:',
       applicantContacts: 'Контакты заявителя:',
       userAccepted: 'Принял:',
+      typeCompletedWork: 'Тип выполненных работ:',
     },
   },
 }

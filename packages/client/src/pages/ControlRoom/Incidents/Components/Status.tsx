@@ -36,14 +36,17 @@ export const Status = memo(
       const oldStatus = incStatuses.findIndex(
         item => item.statusINC === currentStatus
       )
+
       if (newStatus < 0) {
         setMessage({
           text: `Необходимо выбрать статус!`,
           type: 'warning',
         })
+        setStatus({ id: '', label: currentStatus })
         return
       }
       if (newStatus <= oldStatus) {
+        setStatus({ id: '', label: currentStatus })
         if (newStatus === oldStatus) return
         setMessage({
           text: `Нельзя перевести в статус "${data.label}"!`,
@@ -51,6 +54,15 @@ export const Status = memo(
         })
         return
       }
+      if (newStatus - oldStatus > 1) {
+        setMessage({
+          text: `Нельзя перескакивать по статусам!`,
+          type: 'warning',
+        })
+        setStatus({ id: '', label: currentStatus })
+        return
+      }
+
       if (newStatus === 2) {
         setModal({ status: true, data })
         return
@@ -68,6 +80,7 @@ export const Status = memo(
 
     const handleModal = ({
       state,
+      typeCompletedWork,
       commentCloseCheck,
       files,
       spaceParts,
@@ -87,6 +100,7 @@ export const Status = memo(
           status: data.label,
           userID: user.id as string,
           timeSLA,
+          typeCompletedWork: typeCompletedWork as Options,
           commentCloseCheck: commentCloseCheck as string,
           spaceParts: spaceParts as string[],
         })
@@ -107,6 +121,7 @@ export const Status = memo(
         status: data.label,
         userID: user.id as string,
         timeSLA,
+        typeCompletedWork,
         commentCloseCheck,
         spaceParts,
       })
@@ -131,6 +146,7 @@ export const Status = memo(
           status,
           userID,
           timeSLA,
+          typeCompletedWork,
           commentCloseCheck,
           spaceParts,
         } = tempData
@@ -142,6 +158,7 @@ export const Status = memo(
           status,
           userID,
           timeSLA,
+          typeCompletedWork,
           commentCloseCheck,
           spaceParts,
         })

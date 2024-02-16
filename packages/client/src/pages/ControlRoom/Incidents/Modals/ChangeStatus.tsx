@@ -115,6 +115,7 @@ export const ChangeStatus = React.forwardRef<unknown, CloseINCProps>(
     const changeData = ({ list }: AddValuesProps) => {
       handleModal({
         state: true,
+        typeCompletedWork: selectedTypeCompletedWork,
         commentCloseCheck: list[1].value,
         files: selectedFiles as FileList,
         spaceParts: list[3].value

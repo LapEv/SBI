@@ -56,6 +56,7 @@ const createINCData = (data: INC[]) => {
       region: item.Object?.Region?.region as string,
       sla: item.SLA?.sla as string,
       typeOfWork: item.TypesOfWork?.typeOfWork as string,
+      typeCompletedWork: item.TypesCompletedWork?.typeCompletedWork as string,
       userAccepted: item.User?.shortName as string,
       executor: item.UserExecutor?.shortName as string,
       responsible: item.UserResponsible?.shortName as string,

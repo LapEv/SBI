@@ -3,9 +3,11 @@ import {
   ClassifierModels,
   Clients,
   ContractsRepos,
+  IncindentStatuses,
   Objects,
   SLA,
   ThroughContractsEquipmentsRepos,
+  ThroughContractsIncStatussesRepos,
   ThroughContractsModelsRepos,
   ThroughContractsObjectsRepos,
   ThroughContractsSLARepos,
@@ -30,6 +32,14 @@ const includes = [
   },
   {
     model: Objects,
+    where: { active: true },
+    required: false,
+    through: {
+      attributes: [],
+    },
+  },
+  {
+    model: IncindentStatuses,
     where: { active: true },
     required: false,
     through: {
@@ -267,10 +277,10 @@ export class contractService {
       equipment,
       model,
       objects,
+      incStatusses,
       notificationEmail,
     } = _req.body
     try {
-      console.log('notificationEmail = ', notificationEmail)
       await ContractsRepos.update(id, { number, date, notificationEmail })
       if (sla && sla.length) {
         await ThroughContractsSLARepos.deleteByCustomId({
@@ -299,6 +309,7 @@ export class contractService {
           newThroughContractEquipment
         )
       }
+
       if (model && model.length) {
         await ThroughContractsModelsRepos.deleteByCustomId({
           id_contract: id,
@@ -323,6 +334,23 @@ export class contractService {
           }
         })
         await ThroughContractsObjectsRepos.bulkCreate(newThroughContractObject)
+      }
+
+      if (incStatusses && incStatusses.length) {
+        await ThroughContractsIncStatussesRepos.deleteByCustomId({
+          id_contract: id,
+        })
+        const newThroughContractincStatusses = incStatusses.map(
+          (item: string) => {
+            return {
+              id_contract: id,
+              id_incStatusses: item,
+            }
+          }
+        )
+        await ThroughContractsIncStatussesRepos.bulkCreate(
+          newThroughContractincStatusses
+        )
       }
 
       const contracts = await ContractsRepos.findAll({

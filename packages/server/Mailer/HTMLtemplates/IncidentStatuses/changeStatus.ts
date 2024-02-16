@@ -1,11 +1,11 @@
 import { mailConst } from '../../../const'
-import { MailDataRegInc } from '/Mailer/interface'
+import { MailDataChangeStatus } from '/Mailer/interface'
 
-export const htmlRegistration = ({
+export const htmlChangeStatus = ({
   incident,
   status,
   clientINC,
-  timeRegistration,
+  timeChangeStatus,
   timeSLA,
   client,
   object,
@@ -16,11 +16,9 @@ export const htmlRegistration = ({
   model,
   malfunction,
   description,
-  applicant,
-  applicantContacts,
-  userAccepted,
-}: MailDataRegInc) => {
-  console.log('clientINC = ', clientINC)
+  typeCompletedWork,
+  commentCloseCheck,
+}: MailDataChangeStatus) => {
   const message = `
   <html>
 
@@ -32,12 +30,11 @@ export const htmlRegistration = ({
     <div
       style="width: auto; height: auto; padding: 10px; font-size: 11px; font-weight: 100;font-family: 'Calibri', sans-serif;color: #000000;">
       <div style="display: flex; font-size: 14px; font-weight: 700;">
-        ${mailConst.mailMessages.Incidents.addRequest} ${incident}
+        ${mailConst.mailMessages.Incidents.changeStatus1} ${incident} ${
+    mailConst.mailMessages.Incidents.changeStatus2
+  } ${status}
       </div>
       <div style="margin-top: 10px; font-size: 13px">
-        <b style="font-size: 12px;">${
-          mailConst.mailMessages.Incidents.status
-        }</b> ${status}<br>
         <b>${mailConst.mailMessages.Incidents.client}</b> ${client}<br>
         ${
           clientINC
@@ -45,8 +42,8 @@ export const htmlRegistration = ({
             : ``
         }
         <b>${
-          mailConst.mailMessages.Incidents.timeRegistration
-        }</b> ${timeRegistration}<br>
+          mailConst.mailMessages.Incidents.timeChangeStatus
+        }</b> ${timeChangeStatus}<br>
         <b>${mailConst.mailMessages.Incidents.timeSLA}</b> ${timeSLA}<br>
         <b>${mailConst.mailMessages.Incidents.address}</b> ${object}<br>
         <b>${mailConst.mailMessages.Incidents.address}</b> ${address}<br>
@@ -68,13 +65,16 @@ export const htmlRegistration = ({
         <b>${
           mailConst.mailMessages.Incidents.description
         }</b> ${description}<br>
-        <b>${mailConst.mailMessages.Incidents.applicant}</b> ${applicant}<br>
-        <b>${
-          mailConst.mailMessages.Incidents.applicantContacts
-        }</b> ${applicantContacts}<br>
-        <b>${
-          mailConst.mailMessages.Incidents.userAccepted
-        }</b> ${userAccepted}<br>
+        ${
+          typeCompletedWork
+            ? `<b>${mailConst.mailMessages.Incidents.typeCompletedWork}</b> ${typeCompletedWork}<br>`
+            : ``
+        }
+        ${
+          commentCloseCheck
+            ? `<b>${mailConst.mailMessages.Incidents.commentCloseCheck}</b> ${commentCloseCheck}<br>`
+            : ``
+        }
       </div>
       <div style="margin-top: 10px; font-size: 9px">
       ========================

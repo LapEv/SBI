@@ -134,6 +134,7 @@ export const changeContract = createAsyncThunk(
       equipment,
       model,
       objects,
+      incStatusses,
       id,
       notificationEmail,
     }: ChangeContract,
@@ -150,6 +151,7 @@ export const changeContract = createAsyncThunk(
           equipment,
           model,
           objects,
+          incStatusses,
           id,
         }
       )

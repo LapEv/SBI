@@ -13,6 +13,7 @@ import {
   Objects,
   Regions,
   SLA,
+  TypesCompletedWork,
   TypesCompletedWorkRepos,
   TypesOfWork,
   TypesOfWorkRepos,
@@ -25,7 +26,8 @@ import {
   convertDateToString,
   convertINCStringToDateTime,
 } from '../utils/convertDate'
-import { mailer } from '../Mailer'
+import { mailerChangeStatus, mailerRegInc } from '../Mailer'
+import { IIncindentStatuses } from '/models/incidents'
 
 const incLogs = [
   {
@@ -55,6 +57,10 @@ const includes = [
     attributes: ['id', 'typeOfWork', 'active'],
   },
   {
+    model: TypesCompletedWork,
+    attributes: ['id', 'typeCompletedWork', 'active'],
+  },
+  {
     model: SLA,
     required: true,
     attributes: ['id', 'sla', 'days', 'time', 'timeStart', 'timeEnd', 'active'],
@@ -68,6 +74,12 @@ const includes = [
     model: Contracts,
     required: true,
     attributes: ['id', 'contract', 'active', 'notificationEmail'],
+    include: [
+      {
+        model: IncindentStatuses,
+        required: true,
+      },
+    ],
   },
   {
     model: Objects,
@@ -535,28 +547,34 @@ export class incidentService {
         include: includes,
       })
 
-      const info = await mailer({
-        mailTo: inc[0]?.Contract.notificationEmail ?? '',
-        incident,
-        status: inc[0]?.IncindentStatus.statusINC ?? '',
-        clientINC,
-        timeRegistration: convertDateToString(timeRegistration) ?? '',
-        timeSLA,
-        client: inc[0]?.Client?.client ?? '',
-        object: inc[0]?.Object?.object ?? '',
-        objectClientID: inc[0]?.Object?.internalClientID ?? '',
-        objectClientName: inc[0]?.Object?.internalClientName ?? '',
-        address: inc[0]?.Object?.Address?.address as string,
-        equipment: inc[0]?.ClassifierEquipment?.equipment as string,
-        model: inc[0]?.ClassifierModel?.model as string,
-        malfunction: inc[0]?.TypicalMalfunction?.typicalMalfunction as string,
-        description: description ?? '',
-        applicant: applicant ?? '',
-        applicantContacts: applicantContacts ?? '',
-        userAccepted: inc[0]?.User?.shortName ?? '',
-      })
+      const isStatusses = inc[0]?.Contract.IncindentStatuses.map(
+        (item: IIncindentStatuses) =>
+          item.statusINC === inc[0]?.IncindentStatus.statusINC
+      ).filter((item: boolean) => item)
 
-      console.log('infoMailer Reg = ', info)
+      if (isStatusses && isStatusses.length) {
+        const info = await mailerRegInc({
+          mailTo: inc[0]?.Contract.notificationEmail ?? '',
+          incident,
+          status: inc[0]?.IncindentStatus.statusINC ?? '',
+          clientINC,
+          timeRegistration: convertDateToString(timeRegistration) ?? '',
+          timeSLA,
+          client: inc[0]?.Client?.client ?? '',
+          object: inc[0]?.Object?.object ?? '',
+          objectClientID: inc[0]?.Object?.internalClientID ?? '',
+          objectClientName: inc[0]?.Object?.internalClientName ?? '',
+          address: inc[0]?.Object?.Address?.address as string,
+          equipment: inc[0]?.ClassifierEquipment?.equipment as string,
+          model: inc[0]?.ClassifierModel?.model as string,
+          malfunction: inc[0]?.TypicalMalfunction?.typicalMalfunction as string,
+          description: description ?? '',
+          applicant: applicant ?? '',
+          applicantContacts: applicantContacts ?? '',
+          userAccepted: inc[0]?.User?.shortName ?? '',
+        })
+        console.log('infoMailer Reg = ', info)
+      }
 
       const newINC = await IncidentRepos.findAll({
         where: { active: true },
@@ -719,6 +737,7 @@ export class incidentService {
       timeSLA,
       commentCloseCheck,
       spaceParts,
+      typeCompletedWork,
     } = _req.body
     try {
       const incStatuses = await IncidentStatusesRepos.findAll({
@@ -726,6 +745,7 @@ export class incidentService {
       })
       const inc = await IncidentRepos.findAll({
         where: { id },
+        include: includes,
       })
       const newStatus = incStatuses.findIndex(item => item.id === id_incStatus)
       const currentDate = new Date(
@@ -739,12 +759,14 @@ export class incidentService {
         newStatus === 2 ? currentDate : inc[0].timeCloseCheck
       const id_incClosingCheck =
         newStatus === 2 ? userID : inc[0].id_incClosingCheck
+      const id_typeCompletedWork =
+        newStatus === 2 ? typeCompletedWork.id : inc[0].id_typeCompletedWork
+
       const sla = new Date(convertINCStringToDateTime(timeSLA)).getTime()
       const now = currentDate.getTime()
       const overdue = newStatus === 2 && now > sla ? true : inc[0].overdue
       const timeClose = newStatus === 3 ? currentDate : inc[0].timeClose
       const id_incClosing = newStatus === 3 ? userID : inc[0].id_incClosing
-
       await IncidentRepos.update(id, {
         id_incStatus,
         timeInWork,
@@ -753,6 +775,7 @@ export class incidentService {
         id_incResponsible,
         id_incClosingCheck,
         id_incClosing,
+        id_typeCompletedWork,
         overdue,
         commentCloseCheck,
         spaceParts,
@@ -763,6 +786,34 @@ export class incidentService {
         log: `${AppConst.ActionComment.changeStatus.first}${incident}${AppConst.ActionComment.changeStatus.second}${status}`,
         id_incLogUser: userID,
       })
+
+      const isStatusses = inc[0]?.Contract.IncindentStatuses.filter(
+        (item: IIncindentStatuses) => item.id === id_incStatus
+      ).filter((item: boolean) => item)
+
+      if (isStatusses && isStatusses.length) {
+        const info = await mailerChangeStatus({
+          mailTo: inc[0]?.Contract.notificationEmail ?? '',
+          incident,
+          status,
+          clientINC: inc[0]?.clientINC,
+          timeChangeStatus: convertDateToString(currentDate) ?? '',
+          timeSLA,
+          client: inc[0]?.Client?.client ?? '',
+          object: inc[0]?.Object?.object ?? '',
+          objectClientID: inc[0]?.Object?.internalClientID ?? '',
+          objectClientName: inc[0]?.Object?.internalClientName ?? '',
+          address: inc[0]?.Object?.Address?.address as string,
+          equipment: inc[0]?.ClassifierEquipment?.equipment as string,
+          model: inc[0]?.ClassifierModel?.model as string,
+          malfunction: inc[0]?.TypicalMalfunction?.typicalMalfunction as string,
+          description: inc[0]?.description ?? '',
+          commentCloseCheck,
+          typeCompletedWork: typeCompletedWork.label,
+        })
+        console.log('infoMailer Reg = ', info)
+      }
+
       const incs = await IncidentRepos.findAll({
         where: { active: true },
         // include: { all: true },

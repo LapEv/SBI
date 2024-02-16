@@ -1,5 +1,6 @@
 import { ClassifierEquipment, ClassifierModels } from '../classifier/interfaces'
 import { Clients } from '../clients/interfaces'
+import { INCStatuses } from '../incidents/interfaces'
 import { Objects } from '../objects/interfaces'
 import { SLA } from '../sla/interfaces'
 
@@ -20,6 +21,7 @@ export interface Contracts {
   ClassifierModels?: ClassifierModels[] | []
   Objects?: Objects[] | []
   Client?: Clients[] | []
+  IncindentStatuses?: INCStatuses[] | []
 }
 
 export interface IContractData {
@@ -59,6 +61,7 @@ export interface ChangeContract {
   equipment?: string[]
   model?: string[]
   objects?: string[]
+  incStatusses?: string[]
 }
 export interface NewContractName {
   contract: string

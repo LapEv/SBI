@@ -112,6 +112,7 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
             ClassifierEquipments,
             ClassifierModels,
             Objects,
+            IncindentStatuses,
           }) => (
             <ContractsList
               contract={contract}
@@ -123,6 +124,7 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
               ClassifierEquipments={ClassifierEquipments}
               ClassifierModels={ClassifierModels}
               Objects={Objects}
+              IncindentStatuses={IncindentStatuses}
               id_client={id as string}
               key={id}
             />

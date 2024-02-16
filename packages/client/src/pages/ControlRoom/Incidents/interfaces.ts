@@ -60,6 +60,7 @@ export interface IStatusTemp {
   id_incStatus: string
   status: string
   userID: string
+  typeCompletedWork: Options
   commentCloseCheck: string
   spaceParts: string[]
 }

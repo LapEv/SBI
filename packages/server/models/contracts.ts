@@ -141,3 +141,29 @@ export const throughContractsObjects: ModelAttributes<
     allowNull: false,
   },
 }
+
+export interface IThroughContractsIncStatusses {
+  id: string
+  id_contract: string
+  id_incStatusses: string
+}
+
+export const throughContractsIncStatusses: ModelAttributes<
+  Model,
+  IThroughContractsIncStatusses
+> = {
+  id: {
+    type: DataType.STRING,
+    defaultValue: DataType.UUIDV4,
+    allowNull: false,
+    primaryKey: true,
+  },
+  id_contract: {
+    type: DataType.STRING,
+    allowNull: false,
+  },
+  id_incStatusses: {
+    type: DataType.STRING,
+    allowNull: false,
+  },
+}

@@ -10,6 +10,7 @@ import { Modal } from '@mui/material'
 import { ChangeStatus } from '../Modals'
 import { DataCloseINC } from '../Modals/interfaces'
 import { useFiles } from 'hooks/files/useFiles'
+import { FillterOptions } from './FillterOptions'
 
 export const Status = memo(
   ({ value, id, incident, currentStatus, timeSLA }: IStatus) => {
@@ -21,10 +22,9 @@ export const Status = memo(
 
     const [{ user }] = useAuth()
     const [{ uploadedFiles }, { uploadFiles, resetUploadFiles }] = useFiles()
-
+    const [{ incStatuses }, { changeStatus }] = useIncidents()
     const [_, { setMessage }] = useMessage()
-    const [{ incStatuses }, { changeStatus, getIncidentStatuses }] =
-      useIncidents()
+
     const [status, setStatus] = useState<Options>({
       label: value,
       id: '',
@@ -68,6 +68,7 @@ export const Status = memo(
         return
       }
       setStatus(data)
+      const { nameSort, direction, limit, page } = FillterOptions()
       changeStatus({
         id,
         id_incStatus: data.id as string,
@@ -75,6 +76,10 @@ export const Status = memo(
         status: data.label,
         userID: user.id as string,
         timeSLA,
+        nameSort,
+        direction,
+        limit,
+        page,
       })
     }
 
@@ -114,6 +119,7 @@ export const Status = memo(
         return
       }
       setStatus(data)
+      const { nameSort, direction, limit, page } = FillterOptions()
       changeStatus({
         id,
         id_incStatus: data.id as string,
@@ -124,17 +130,13 @@ export const Status = memo(
         typeCompletedWork,
         commentCloseCheck,
         spaceParts,
+        nameSort,
+        direction,
+        limit,
+        page,
       })
       setModal({ status: false, data: emptyValue })
     }
-
-    useEffect(() => {
-      setStatus({
-        label: value,
-        id: '',
-      })
-      getIncidentStatuses()
-    }, [value])
 
     useEffect(() => {
       if (uploadedFiles && uploadedFiles.length > 0 && id === tempData.id) {
@@ -150,6 +152,7 @@ export const Status = memo(
           commentCloseCheck,
           spaceParts,
         } = tempData
+        const { nameSort, direction, limit, page } = FillterOptions()
         setStatus(data)
         changeStatus({
           id,
@@ -161,11 +164,17 @@ export const Status = memo(
           typeCompletedWork,
           commentCloseCheck,
           spaceParts,
+          nameSort,
+          direction,
+          limit,
+          page,
         })
         setModal({ status: false, data: emptyValue })
         resetUploadFiles()
       }
     }, [uploadedFiles])
+
+    // console.log('incStatuses = ', incStatuses)
 
     return (
       <>

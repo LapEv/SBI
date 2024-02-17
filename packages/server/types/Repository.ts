@@ -4,6 +4,7 @@ import type {
   FindOptions,
   WhereOptions,
   DestroyOptions,
+  CountOptions,
   // BulkCreateOptions,
 } from 'sequelize'
 import type { Model, ModelCtor } from 'sequelize-typescript'
@@ -68,8 +69,13 @@ export class Repository<T extends Model<T>> {
     if (options) return this.model.findAll(options)
     else return this.model.findAll()
   }
+
   public async findAll(options: FindOptions<Attributes<T>>): Promise<T[]> {
     return this.model.findAll(options)
+  }
+
+  public async count(options: CountOptions<Attributes<T>>): Promise<number> {
+    return this.model.count(options)
   }
 
   public async get(

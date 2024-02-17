@@ -1,14 +1,12 @@
 import { memo, useEffect, useState } from 'react'
-import { INC } from 'store/slices/incidents/interfaces'
 import {
   MUIDataTableMeta,
   MUIDataTableOptions,
   MUIDataTableState,
-  MUISortOptions,
 } from 'mui-datatables'
 import { textLabels } from './data'
 import { DataTable } from 'components/DataTable'
-import { TableCell, TableRow, tableBodyClasses, useTheme } from '@mui/material'
+import { TableCell, TableRow, useTheme } from '@mui/material'
 import { INC_Column, ITableMeta } from './interfaces'
 import {
   DenseTable,
@@ -20,15 +18,12 @@ import {
   IndicatorCell,
   StatusSLACell,
   SpacePartCell,
+  FillterOptions,
 } from './'
 import { useIncidents } from 'hooks/incidents/useINC'
 
-interface INCTable {
-  incidents: INC[]
-}
-
 export const TableIncidents = memo(() => {
-  const [{ incidents }, { getINCs, setLoadingINC }] = useIncidents()
+  const [{ incidents, countIncidents }, { getINCs }] = useIncidents()
 
   const [heightINCData, setHeightINCData] = useState<number>(0)
   const [denseTable, setDenseTable] = useState<boolean>(
@@ -52,8 +47,8 @@ export const TableIncidents = memo(() => {
       name: 'statusIndicator',
       label: 'Индикатор',
       options: {
-        filter: true,
-        sort: true,
+        filter: false,
+        sort: false,
         display: true,
         viewColumns: true,
         draggable: false,
@@ -94,7 +89,7 @@ export const TableIncidents = memo(() => {
       label: 'Родительский',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         display: true,
         viewColumns: true,
         setCellHeaderProps: () => ({
@@ -110,7 +105,7 @@ export const TableIncidents = memo(() => {
       label: 'Связанный',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         display: true,
         viewColumns: true,
         setCellHeaderProps: () => ({
@@ -265,7 +260,7 @@ export const TableIncidents = memo(() => {
       label: 'Координаты',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         display: true,
         viewColumns: true,
         setCellHeaderProps: () => ({
@@ -377,8 +372,8 @@ export const TableIncidents = memo(() => {
       name: 'typicalMalfunction',
       label: 'Неисправность',
       options: {
-        filter: true,
-        sort: true,
+        filter: false,
+        sort: false,
         display: true,
         viewColumns: true,
         setCellHeaderProps: () => ({
@@ -401,6 +396,8 @@ export const TableIncidents = memo(() => {
           style: { padding: !denseTable ? 15 : 8 },
         }),
         customBodyRender: (value: string, { rowData }: ITableMeta) => {
+          // console.log('value = ', value)
+          // console.log('incident = ', rowData[2])
           return (
             <Executor
               value={value ?? ''}
@@ -440,7 +437,7 @@ export const TableIncidents = memo(() => {
       label: 'Время в работу',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         display: true,
         viewColumns: true,
         setCellHeaderProps: () => ({
@@ -456,7 +453,7 @@ export const TableIncidents = memo(() => {
       label: 'Описание',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         display: true,
         viewColumns: true,
         setCellHeaderProps: () => ({
@@ -472,7 +469,7 @@ export const TableIncidents = memo(() => {
       label: 'Комментарий',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         display: true,
         viewColumns: true,
         setCellHeaderProps: () => ({
@@ -488,7 +485,7 @@ export const TableIncidents = memo(() => {
       label: 'Заявитель',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         display: true,
         viewColumns: true,
         setCellHeaderProps: () => ({
@@ -504,7 +501,7 @@ export const TableIncidents = memo(() => {
       label: 'Контакты заявителя',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         display: true,
         viewColumns: true,
         setCellHeaderProps: () => ({
@@ -520,8 +517,8 @@ export const TableIncidents = memo(() => {
       name: 'userClosingCheck',
       label: 'Перевел в выполнение',
       options: {
-        filter: true,
-        sort: true,
+        filter: false,
+        sort: false,
         display: true,
         viewColumns: true,
         setCellHeaderProps: () => ({
@@ -537,7 +534,7 @@ export const TableIncidents = memo(() => {
       label: 'Время выполнения',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         display: true,
         viewColumns: true,
         setCellHeaderProps: () => ({
@@ -553,7 +550,7 @@ export const TableIncidents = memo(() => {
       label: 'Тип выполненных работ',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         display: true,
         viewColumns: true,
         setCellHeaderProps: () => ({
@@ -569,7 +566,7 @@ export const TableIncidents = memo(() => {
       label: 'Комментарии к выполнению',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         display: true,
         viewColumns: true,
         setCellHeaderProps: () => ({
@@ -584,7 +581,7 @@ export const TableIncidents = memo(() => {
       name: 'overdue',
       label: 'Статус SLA',
       options: {
-        filter: false,
+        filter: true,
         sort: true,
         display: true,
         viewColumns: true,
@@ -601,8 +598,8 @@ export const TableIncidents = memo(() => {
       name: 'act',
       label: 'Акты',
       options: {
-        filter: true,
-        sort: true,
+        filter: false,
+        sort: false,
         display: true,
         viewColumns: true,
         setCellHeaderProps: () => ({
@@ -617,8 +614,8 @@ export const TableIncidents = memo(() => {
       name: 'spaceParts',
       label: 'ЗИП',
       options: {
-        filter: true,
-        sort: true,
+        filter: false,
+        sort: false,
         display: true,
         viewColumns: true,
         setCellHeaderProps: () => ({
@@ -633,8 +630,8 @@ export const TableIncidents = memo(() => {
       name: 'userClosing',
       label: 'Закрыл',
       options: {
-        filter: true,
-        sort: true,
+        filter: false,
+        sort: false,
         display: true,
         viewColumns: true,
         setCellHeaderProps: () => ({
@@ -650,7 +647,7 @@ export const TableIncidents = memo(() => {
       label: 'Время закрытия',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         display: true,
         viewColumns: true,
         setCellHeaderProps: () => ({
@@ -666,7 +663,7 @@ export const TableIncidents = memo(() => {
       label: 'Комментарии к закрытию',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         display: true,
         viewColumns: true,
         setCellHeaderProps: () => ({
@@ -682,7 +679,7 @@ export const TableIncidents = memo(() => {
       label: 'Оценка',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         display: true,
         viewColumns: true,
         setCellHeaderProps: () => ({
@@ -722,7 +719,6 @@ export const TableIncidents = memo(() => {
   }
 
   const handleTableInit = (data: any, value: any) => {
-    console.log('handleTableInit')
     const columnViewStorage = localStorage
       .getItem('IncidentsViewColumns')
       ?.split(',')
@@ -744,16 +740,6 @@ export const TableIncidents = memo(() => {
     }
   }
 
-  const changePage = (page: number, sortOrder: MUISortOptions) => {
-    console.log('changePage')
-    setLoadingINC(true)
-    // getINCs({ size: page })
-  }
-
-  const sort = (page: number, sortOrder: MUISortOptions) => {
-    console.log('Sort')
-  }
-
   const handleTableChange = (action: string, tableState: MUIDataTableState) => {
     if (action === 'viewColumnsChange') {
       const display = tableState.columns
@@ -764,23 +750,33 @@ export const TableIncidents = memo(() => {
       localStorage.setItem('IncidentsViewColumns', display.toString())
       return
     }
-    // console.log('action = ', action)
-    // console.log('tableState = ', tableState)
-    // switch (action) {
-    //   case 'changePage':
-    //     changePage(tableState.page, tableState.sortOrder)
-    //     break
-    //   case 'sort':
-    //     sort(tableState.page, tableState.sortOrder)
-    //     break
-    //   default:
-    //     console.log('action not handled.')
-    // }
+    console.log('action = ', action)
+    const { page, sortOrder, rowsPerPage, filterList } = tableState
+
+    const getINCbyData = {
+      nameSort: sortOrder.name,
+      direction: sortOrder.direction,
+      limit: rowsPerPage,
+      page,
+      filterList,
+    }
+    switch (action) {
+      case 'changePage':
+        getINCs(getINCbyData)
+        break
+      case 'sort':
+        getINCs(getINCbyData)
+        break
+      case 'changeRowsPerPage':
+        getINCs(getINCbyData)
+        break
+      default:
+        break
+    }
   }
 
   const options: MUIDataTableOptions = {
     filter: true,
-    rowsPerPage: 15,
     filterType: 'multiselect',
     resizableColumns: true,
     responsive: 'standard',
@@ -792,15 +788,23 @@ export const TableIncidents = memo(() => {
       enabled: true,
       transitionTime: 300,
     },
+    serverSide: true,
     // selectableRows: dragTable ? 'none' : 'multiple',
     // selectableRowsOnClick: !dragTable ?? false,
     selectableRows: 'none',
     selectableRowsOnClick: false,
     textLabels: textLabels,
     tableBodyHeight: '100%',
-    rowsPerPageOptions: [15, 30, 50],
     columnOrder: getcolumnOrderStorage(),
-    sortOrder: JSON.parse(localStorage.getItem('sortColumn') as string),
+    count: countIncidents,
+    rowsPerPageOptions: [15, 30, 50],
+    page: JSON.parse(localStorage.getItem('currentPage') as string) ?? 0,
+    rowsPerPage:
+      JSON.parse(localStorage.getItem('numberOfRows') as string) ?? 15,
+    onChangePage: currentPage =>
+      localStorage.setItem('currentPage', JSON.stringify(currentPage)),
+    onChangeRowsPerPage: numberOfRows =>
+      localStorage.setItem('numberOfRows', JSON.stringify(numberOfRows)),
     renderExpandableRow: (rowData, { dataIndex }) => {
       return (
         <TableRow sx={{ height: heightINCData }}>
@@ -816,6 +820,7 @@ export const TableIncidents = memo(() => {
     onFilterChange: (_, filterList) => {
       localStorage.setItem('filterList', JSON.stringify(filterList))
     },
+    sortOrder: JSON.parse(localStorage.getItem('sortColumn') as string),
     onColumnSortChange: (column, direction) =>
       localStorage.setItem(
         'sortColumn',
@@ -863,19 +868,8 @@ export const TableIncidents = memo(() => {
   }
 
   useEffect(() => {
-    const { name, direction } = JSON.parse(
-      localStorage.getItem('sortColumn') as string
-    )
-    const limit =
-      JSON.parse(localStorage.getItem('limitColumns') as string) ?? 15
-
-    console.log('name = ', name ?? 'incident')
-    console.log('direction = ', direction)
-    getINCs({
-      limit,
-      nameSort: name ?? 'incident',
-      direction: direction ?? 'asc',
-    })
+    const { nameSort, direction, limit, page } = FillterOptions()
+    getINCs({ limit, nameSort, direction, page })
   }, [])
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, memo } from 'react'
 import { Box, Container, Modal, Typography } from '@mui/material'
 import { Message } from 'components/Message/Message'
 import { useAuth } from 'hooks/auth/useAuth'
@@ -12,13 +12,12 @@ import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate
 import { IconPopoverButton } from 'components/Buttons'
 import { useIncidents } from 'hooks/incidents/useINC'
 
-export function IncidentsPage() {
+export const IncidentsPage = memo(() => {
   const modalClientRef = React.createRef()
   const [{ admin }, { getFieldEngineers, getDispatchers }] = useAuth()
+  const [_, { getIncidentStatuses, getTypesCompletedWork }] = useIncidents()
   const [modal, setModal] = useState<boolean>(false)
   const [modalImage, setModalImage] = useState<string>('')
-
-  const [{ incidents }, { getINC }] = useIncidents()
 
   const checkClickMenu = (name: string | null) => {
     if (name) {
@@ -32,12 +31,11 @@ export function IncidentsPage() {
   }
 
   useEffect(() => {
-    // getINC()
     getFieldEngineers()
     getDispatchers()
+    getIncidentStatuses()
+    getTypesCompletedWork()
   }, [])
-
-  // console.log('incidentss = ', incidents)
 
   return (
     <Container component="main" maxWidth="md" sx={mainHeaderForINCPage}>
@@ -88,4 +86,4 @@ export function IncidentsPage() {
       </Box>
     </Container>
   )
-}
+})

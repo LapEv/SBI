@@ -5,6 +5,7 @@ import { Options } from 'components/DropDown/interface'
 import { useIncidents } from 'hooks/incidents/useINC'
 import { IExecutor } from '../interfaces'
 import { customDropDownCell } from '../data'
+import { FillterOptions } from './FillterOptions'
 
 export const Executor = memo(
   ({ value, id, incident, responsible }: IExecutor) => {
@@ -14,12 +15,18 @@ export const Executor = memo(
 
     const setData = (data: Options) => {
       setExecutor(data)
+      const { nameSort, direction, limit, page } = FillterOptions()
+
       changeExecutor({
         id,
         id_incExecutor: data.id,
         incident,
         executor: data.label,
         userID: user.id as string,
+        nameSort,
+        direction,
+        limit,
+        page,
       })
       if (!responsible) {
         changeResponsible({
@@ -28,6 +35,10 @@ export const Executor = memo(
           incident,
           responsible: user.shortName as string,
           userID: user.id as string,
+          nameSort,
+          direction,
+          limit,
+          page,
         })
       }
     }

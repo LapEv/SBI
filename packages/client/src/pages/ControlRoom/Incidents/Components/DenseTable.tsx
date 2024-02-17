@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { FormControlLabel, Switch } from '@mui/material'
 
 interface IDenseTable {
@@ -5,7 +6,7 @@ interface IDenseTable {
   setDenseTable: (data: boolean) => void
 }
 
-export const DenseTable = ({ denseTable, setDenseTable }: IDenseTable) => {
+export const DenseTable = memo(({ denseTable, setDenseTable }: IDenseTable) => {
   return (
     <FormControlLabel
       control={
@@ -19,14 +20,14 @@ export const DenseTable = ({ denseTable, setDenseTable }: IDenseTable) => {
       label="Сжать"
     />
   )
-}
+})
 
 interface IIsDragTable {
   dragTable: boolean
   setDragTable: (data: boolean) => void
 }
 
-export const IsDragTable = ({ dragTable, setDragTable }: IIsDragTable) => {
+export const IsDragTable = memo(({ dragTable, setDragTable }: IIsDragTable) => {
   return (
     <FormControlLabel
       control={
@@ -40,4 +41,4 @@ export const IsDragTable = ({ dragTable, setDragTable }: IIsDragTable) => {
       label="Перетащить"
     />
   )
-}
+})

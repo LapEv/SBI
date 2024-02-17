@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { memo, useEffect } from 'react'
 import { Box, styled } from '@mui/material'
 import { ThemeMode } from '../../../../themes/themeConfig'
 
@@ -76,7 +76,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
 export const IncidentData =
   /* eslint-disable @typescript-eslint/no-unused-vars */
-  ({ values, setHeight }: IncidentDataProps) => {
+  memo(({ values, setHeight }: IncidentDataProps) => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const boxRef = React.createRef<HTMLDivElement>()
     // const [top, setTop] = useState<number>()
@@ -266,4 +266,4 @@ export const IncidentData =
         </Box>
       </Box>
     )
-  }
+  })

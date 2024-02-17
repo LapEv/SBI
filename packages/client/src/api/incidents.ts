@@ -40,10 +40,10 @@ export const getINC = createAsyncThunk(
 
 export const getINCs = createAsyncThunk(
   'incidents/getINCs',
-  async ({ limit, nameSort, direction }: GetINCsByParams, thunkAPI) => {
+  async ({ limit, nameSort, direction, page }: GetINCsByParams, thunkAPI) => {
     try {
       const { data } = await authhost.get<INC>(ApiEndPoints.INC.getINCs, {
-        params: { limit, nameSort, direction },
+        params: { limit, nameSort, direction, page },
       })
       return data
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -138,7 +138,17 @@ export const changeINC = createAsyncThunk(
 export const changeExecutor = createAsyncThunk(
   'incidents/changeExecutor',
   async (
-    { id, id_incExecutor, incident, executor, userID }: ChangeExecutor,
+    {
+      id,
+      id_incExecutor,
+      incident,
+      executor,
+      userID,
+      nameSort,
+      direction,
+      limit,
+      page,
+    }: ChangeExecutor,
     thunkAPI
   ) => {
     try {
@@ -148,6 +158,10 @@ export const changeExecutor = createAsyncThunk(
         incident,
         executor,
         userID,
+        nameSort,
+        direction,
+        limit,
+        page,
       })
       return {
         data,
@@ -171,7 +185,17 @@ export const changeExecutor = createAsyncThunk(
 export const changeResponsible = createAsyncThunk(
   'incidents/changeResponsible',
   async (
-    { id, id_incResponsible, incident, responsible, userID }: ChangeResponsible,
+    {
+      id,
+      id_incResponsible,
+      incident,
+      responsible,
+      userID,
+      nameSort,
+      direction,
+      limit,
+      page,
+    }: ChangeResponsible,
     thunkAPI
   ) => {
     try {
@@ -181,6 +205,10 @@ export const changeResponsible = createAsyncThunk(
         incident,
         responsible,
         userID,
+        nameSort,
+        direction,
+        limit,
+        page,
       })
       return {
         data,
@@ -214,6 +242,10 @@ export const changeStatus = createAsyncThunk(
       commentCloseCheck,
       spaceParts,
       typeCompletedWork,
+      nameSort,
+      direction,
+      limit,
+      page,
     }: ChangeStatus,
     thunkAPI
   ) => {
@@ -228,6 +260,10 @@ export const changeStatus = createAsyncThunk(
         commentCloseCheck,
         spaceParts,
         typeCompletedWork,
+        nameSort,
+        direction,
+        limit,
+        page,
       })
       return {
         data,

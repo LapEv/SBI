@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { FormControlLabel, Switch } from '@mui/material'
 
 interface IDragTable {
@@ -5,7 +6,7 @@ interface IDragTable {
   setDragTable: (data: boolean) => void
 }
 
-export const DragTable = ({ dragTable, setDragTable }: IDragTable) => {
+export const DragTable = memo(({ dragTable, setDragTable }: IDragTable) => {
   return (
     <FormControlLabel
       control={
@@ -19,4 +20,4 @@ export const DragTable = ({ dragTable, setDragTable }: IDragTable) => {
       label="Перетащить"
     />
   )
-}
+})

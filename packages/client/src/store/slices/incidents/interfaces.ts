@@ -85,6 +85,7 @@ export interface AddINC {
   nameSort?: string
   direction?: string
   limit?: number
+  page?: number
 }
 
 export interface INCStatuses {
@@ -131,6 +132,11 @@ export interface AddTypesCompletedWork {
   typeCompletedWork: string
 }
 
+export interface AnswerGetINC {
+  incs: INC[]
+  count: number
+}
+
 export interface AnswerINC {
   data: INC[]
   type: string
@@ -152,6 +158,7 @@ export interface AnswerTypesCompletedWork {
 }
 
 export type INCState = {
+  countIncidents: number
   incidents: INC[]
   incStatuses: INCStatuses[]
   typesOfWork: TypesOfWork[]
@@ -165,6 +172,8 @@ export interface GetINCsByParams {
   limit: number
   nameSort: string
   direction: string
+  page: number
+  filterList?: any
 }
 
 export interface ChangeINC {
@@ -191,6 +200,10 @@ export interface ChangeExecutor {
   incident: string
   executor: string
   userID: string
+  nameSort?: string
+  direction?: string
+  limit?: number
+  page?: number
 }
 
 export interface ChangeResponsible {
@@ -199,6 +212,10 @@ export interface ChangeResponsible {
   incident: string
   responsible: string
   userID: string
+  nameSort?: string
+  direction?: string
+  limit?: number
+  page?: number
 }
 
 export interface ChangeStatus {
@@ -212,6 +229,10 @@ export interface ChangeStatus {
   commentCloseCheck?: string
   act?: string[]
   spaceParts?: string[]
+  nameSort?: string
+  direction?: string
+  limit?: number
+  page?: number
 }
 
 export interface ChangeClosingCheck {

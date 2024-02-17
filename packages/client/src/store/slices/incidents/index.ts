@@ -9,6 +9,7 @@ import {
   INCState,
   TypesCompletedWork,
   AnswerTypesCompletedWork,
+  AnswerGetINC,
 } from './interfaces'
 import {
   getINC,
@@ -36,6 +37,7 @@ import {
 import { convertDateToStringFromDB } from 'utils/convertDate'
 
 const initialState: INCState = {
+  countIncidents: 0,
   incidents: [],
   incStatuses: [],
   typesOfWork: [],
@@ -93,10 +95,12 @@ export const incidentsSlise = createSlice({
     },
   },
   extraReducers: {
-    [getINC.fulfilled.type]: (state, action: PayloadAction<INC[]>) => {
+    [getINC.fulfilled.type]: (state, action: PayloadAction<AnswerGetINC>) => {
       state.isLoadingINC = false
       state.error = ''
-      state.incidents = createINCData(action.payload)
+      const { incs, count } = action.payload
+      state.incidents = createINCData(incs)
+      state.countIncidents = count
     },
     [getINC.pending.type]: state => {
       state.isLoadingINC = true
@@ -105,10 +109,12 @@ export const incidentsSlise = createSlice({
       state.isLoadingINC = false
       state.error = action.payload
     },
-    [getINCs.fulfilled.type]: (state, action: PayloadAction<INC[]>) => {
+    [getINCs.fulfilled.type]: (state, action: PayloadAction<AnswerGetINC>) => {
       state.isLoadingINC = false
       state.error = ''
-      state.incidents = createINCData(action.payload)
+      const { incs, count } = action.payload
+      state.incidents = createINCData(incs)
+      state.countIncidents = count
     },
     [getINCs.pending.type]: state => {
       state.isLoadingINC = true
@@ -117,10 +123,12 @@ export const incidentsSlise = createSlice({
       state.isLoadingINC = false
       state.error = action.payload
     },
-    [newINC.fulfilled.type]: (state, action: PayloadAction<AnswerINC>) => {
+    [newINC.fulfilled.type]: (state, action: PayloadAction<AnswerGetINC>) => {
       state.isLoadingINC = false
       state.error = ''
-      state.incidents = createINCData(action.payload.data)
+      const { incs, count } = action.payload
+      state.incidents = createINCData(incs)
+      state.countIncidents = count
     },
     [newINC.pending.type]: state => {
       state.isLoadingINC = true

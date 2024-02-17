@@ -28,6 +28,7 @@ import {
 } from '../utils/convertDate'
 import { mailerChangeStatus, mailerRegInc } from '../Mailer'
 import { IIncindentStatuses } from '/models/incidents'
+import { Order } from 'sequelize'
 
 const incLogs = [
   {
@@ -49,7 +50,9 @@ const includes = [
   {
     model: IncindentStatuses,
     required: true,
-    attributes: ['id', 'statusINC', 'active'],
+    // attributes: ['id', 'statusINC', 'active'],
+    attributes: [],
+    duplicating: false,
   },
   {
     model: TypesOfWork,
@@ -58,6 +61,7 @@ const includes = [
   },
   {
     model: TypesCompletedWork,
+    required: false,
     attributes: ['id', 'typeCompletedWork', 'active'],
   },
   {
@@ -196,6 +200,7 @@ const includes = [
   },
   {
     model: Files,
+    required: false,
     attributes: ['id', 'name', 'size', 'mimetype', 'path'],
   },
 ]
@@ -495,6 +500,7 @@ export class incidentService {
       nameSort,
       direction,
       limit,
+      page,
     } = _req.body
     try {
       const lastINC = await IncidentRepos.findAll({
@@ -579,16 +585,16 @@ export class incidentService {
         console.log('infoMailer Reg = ', info)
       }
 
-      console.log('nameSort = ', nameSort)
-      console.log('direction = ', direction)
-      console.log('limit = ', limit)
-      const newINC = await IncidentRepos.findAll({
+      const offset = Number(page) * Number(limit) ?? 1
+      const incs = await IncidentRepos.findAll({
         where: { active: true },
         order: [[nameSort as string, direction as string]],
         limit: Number(limit),
+        offset,
         include: includes,
       })
-      res.status(200).json(newINC)
+      const count = await IncidentRepos.count({})
+      res.status(200).json({ incs, count })
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -603,35 +609,14 @@ export class incidentService {
       .then(item => res.status(200).json(item))
       .catch(err => res.status(500).json({ error: ['db error: ', err.status] }))
   }
-  getINC = (_req: Request, res: Response) => {
-    IncidentRepos.findAll({
-      where: { active: true },
-      // include: { all: true, nested: true },
-      // include: { all: true },
-      include: includes,
-    })
-      .then(incs => {
-        res.status(200).json(incs)
-      })
-      .catch(err => res.status(500).json({ error: ['db error:  ', err] }))
-  }
-  getINCs = async (_req: Request, res: Response) => {
+  getINC = async (_req: Request, res: Response) => {
     try {
-      console.log('_req = ', _req.query)
-      const { limit, nameSort, direction } = _req.query
-      console.log('limit = ', limit)
-      console.log('nameSort = ', nameSort)
-      console.log('direction = ', direction)
       const incs = await IncidentRepos.findAll({
         where: { active: true },
-        // include: { all: true, nested: true },
-        // include: { all: true },
-        order: [[nameSort as string, direction as string]],
-        limit: Number(limit),
         include: includes,
       })
-      // console.log('incs = ', incs)
-      res.status(200).json(incs)
+      const count = await IncidentRepos.count({})
+      res.status(200).json({ incs, count })
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -639,7 +624,44 @@ export class incidentService {
       res.status(500).json({ error: ['db error', err] })
     }
   }
-
+  getINCs = async (_req: Request, res: Response) => {
+    try {
+      const { limit, nameSort, direction, page } = _req.query
+      const offset = Number(page) * Number(limit) ?? 1
+      console.log('getINCs!')
+      console.log('page = ', page)
+      console.log('limit = ', limit)
+      console.log('offset = ', offset)
+      const order =
+        nameSort === 'executor'
+          ? ([
+              [
+                { model: Users, as: 'UserExecutor' },
+                'shortName',
+                direction as string,
+              ],
+            ] as Order)
+          : ([[nameSort as string, direction as string]] as Order)
+      console.log('order = ', order)
+      const incs = await IncidentRepos.findAll({
+        where: { active: true },
+        // include: { all: true, nested: true },
+        include: { all: true },
+        // include: includes,
+        order,
+        limit: Number(limit),
+        offset,
+        logging: console.log,
+      })
+      const count = await IncidentRepos.count({})
+      res.status(200).json({ incs, count })
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      console.log('err = ', err)
+      res.status(500).json({ error: ['db error', err] })
+    }
+  }
   deleteINC = async (_req: Request, res: Response) => {
     const { selectedINCs } = _req.body
     try {
@@ -704,7 +726,17 @@ export class incidentService {
     }
   }
   changeExecutor = async (_req: Request, res: Response) => {
-    const { id, id_incExecutor, incident, executor, userID } = _req.body
+    const {
+      id,
+      id_incExecutor,
+      incident,
+      executor,
+      userID,
+      nameSort,
+      direction,
+      limit,
+      page,
+    } = _req.body
     try {
       await IncidentRepos.update(id, {
         id_incExecutor: id_incExecutor.length ? id_incExecutor : null,
@@ -713,6 +745,7 @@ export class incidentService {
         new Date().getTime() +
           Math.abs(new Date().getTimezoneOffset() * 60 * 1000)
       )
+
       await IncidentLogsRepos.create({
         id_incLog: id,
         time: currentDate,
@@ -720,8 +753,17 @@ export class incidentService {
         id_incLogUser: userID,
       })
 
+      const offset = Number(page) * Number(limit) ?? 1
+      const order =
+        nameSort === 'status'
+          ? ([[IncindentStatuses, 'statusINC', direction as string]] as Order)
+          : ([[nameSort as string, direction as string]] as Order)
+
       const incs = await IncidentRepos.findAll({
         where: { active: true },
+        order,
+        limit: Number(limit),
+        offset,
         include: includes,
       })
       res.status(200).json(incs)
@@ -732,7 +774,17 @@ export class incidentService {
     }
   }
   changeResponsible = async (_req: Request, res: Response) => {
-    const { id, id_incResponsible, incident, responsible, userID } = _req.body
+    const {
+      id,
+      id_incResponsible,
+      incident,
+      responsible,
+      userID,
+      nameSort,
+      direction,
+      limit,
+      page,
+    } = _req.body
     try {
       await IncidentRepos.update(id, {
         id_incResponsible: id_incResponsible.length ? id_incResponsible : null,
@@ -748,9 +800,17 @@ export class incidentService {
         id_incLogUser: userID,
       })
 
+      const offset = Number(page) * Number(limit) ?? 1
+      const order =
+        nameSort === 'status'
+          ? ([[IncindentStatuses, 'statusINC', direction as string]] as Order)
+          : ([[nameSort as string, direction as string]] as Order)
       const incs = await IncidentRepos.findAll({
         where: { active: true },
         // include: { all: true },
+        order,
+        limit: Number(limit),
+        offset,
         include: includes,
       })
       res.status(200).json(incs)
@@ -770,7 +830,12 @@ export class incidentService {
       timeSLA,
       commentCloseCheck,
       spaceParts,
+      commentClose,
       typeCompletedWork,
+      nameSort,
+      direction,
+      limit,
+      page,
     } = _req.body
     try {
       const incStatuses = await IncidentStatusesRepos.findAll({
@@ -810,8 +875,9 @@ export class incidentService {
         id_incClosing,
         id_typeCompletedWork,
         overdue,
-        commentCloseCheck,
-        spaceParts,
+        commentClose: commentClose ?? '',
+        commentCloseCheck: commentCloseCheck ?? '',
+        spaceParts: spaceParts ?? [],
       })
       await IncidentLogsRepos.create({
         id_incLog: id,
@@ -819,7 +885,6 @@ export class incidentService {
         log: `${AppConst.ActionComment.changeStatus.first}${incident}${AppConst.ActionComment.changeStatus.second}${status}`,
         id_incLogUser: userID,
       })
-
       const isStatusses = inc[0]?.Contract.IncindentStatuses.filter(
         (item: IIncindentStatuses) => item.id === id_incStatus
       ).filter((item: boolean) => item)
@@ -841,20 +906,33 @@ export class incidentService {
           model: inc[0]?.ClassifierModel?.model as string,
           malfunction: inc[0]?.TypicalMalfunction?.typicalMalfunction as string,
           description: inc[0]?.description ?? '',
-          commentCloseCheck,
-          typeCompletedWork: typeCompletedWork.label,
+          commentCloseCheck: commentCloseCheck ?? inc[0]?.commentCloseCheck,
+          typeCompletedWork:
+            typeCompletedWork && typeCompletedWork.label
+              ? typeCompletedWork.label
+              : inc[0]?.typeCompletedWork,
         })
         console.log('infoMailer Reg = ', info)
       }
 
+      const offset = Number(page) * Number(limit) ?? 1
+      const order =
+        nameSort === 'status'
+          ? ([[IncindentStatuses, 'statusINC', direction as string]] as Order)
+          : ([[nameSort as string, direction as string]] as Order)
+
       const incs = await IncidentRepos.findAll({
         where: { active: true },
         // include: { all: true },
+        order,
+        limit: Number(limit),
+        offset,
         include: includes,
       })
       res.status(200).json(incs)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
+      console.log('err = ', err)
       /* eslint-enable @typescript-eslint/no-explicit-any */
       res.status(500).json({ error: ['db error: ', err] })
     }

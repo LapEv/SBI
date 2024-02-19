@@ -137,6 +137,13 @@ export interface AnswerGetINC {
   count: number
 }
 
+export interface AnswerGetINCs {
+  data: {
+    incs: INC[]
+    count: number
+  }
+}
+
 export interface AnswerINC {
   data: INC[]
   type: string

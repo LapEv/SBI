@@ -128,7 +128,6 @@ export class contractService {
         }
       })
       await ThroughContractsSLARepos.bulkCreate(newThroughContractSla)
-
       const newThroughContractEquipment = equipment.map((item: string) => {
         return {
           id_contract: new_contract.id,

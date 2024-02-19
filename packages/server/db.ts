@@ -333,8 +333,14 @@ Incidents.belongsTo(Users, {
 Users.hasOne(Incidents, { foreignKey: 'id_incUser', sourceKey: 'id' })
 Incidents.belongsTo(Users, { foreignKey: 'id_incUser', targetKey: 'id' })
 
-Department.hasOne(Incidents, { foreignKey: 'id_incClient', sourceKey: 'id' })
-Incidents.belongsTo(Department, { foreignKey: 'id_incClient', targetKey: 'id' })
+Department.hasOne(Incidents, {
+  foreignKey: 'id_incDepartment',
+  sourceKey: 'id',
+})
+Incidents.belongsTo(Department, {
+  foreignKey: 'id_incDepartment',
+  targetKey: 'id',
+})
 
 ClassifierEquipment.hasOne(Incidents, {
   foreignKey: 'id_incEquipment',

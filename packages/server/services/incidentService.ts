@@ -30,6 +30,29 @@ import { mailerChangeStatus, mailerRegInc } from '../Mailer'
 import { IIncindentStatuses } from '/models/incidents'
 import { Order } from 'sequelize'
 
+const getOrder = (nameSort: string, direction: string) => {
+  if (nameSort === 'contract') {
+    return [['id_incContract', direction as string]] as Order
+  }
+  if (nameSort === 'client') {
+    return [['id_incClient', direction as string]] as Order
+  }
+  if (
+    nameSort === 'object' ||
+    nameSort === 'address' ||
+    nameSort === 'region'
+  ) {
+    return [['id_incObject', direction as string]] as Order
+  }
+  if (nameSort === 'equipment') {
+    return [['id_incEquipment', direction as string]] as Order
+  }
+  if (nameSort === 'model') {
+    return [['id_incModel', direction as string]] as Order
+  }
+  return [[nameSort as string, direction as string]] as Order
+}
+
 const incLogs = [
   {
     model: Users,
@@ -49,7 +72,7 @@ const incLogs = [
 const includes = [
   {
     model: IncindentStatuses,
-    required: false,
+    required: true,
     attributes: ['id', 'statusINC', 'active'],
   },
   {
@@ -79,7 +102,8 @@ const includes = [
     include: [
       {
         model: IncindentStatuses,
-        required: true,
+        required: false,
+        attributes: ['id', 'statusINC', 'active'],
       },
     ],
   },
@@ -108,7 +132,7 @@ const includes = [
   },
   {
     model: Users,
-    required: true,
+    required: false,
     attributes: [
       'id',
       'username',
@@ -515,7 +539,9 @@ export class incidentService {
           Math.abs(new Date().getTimezoneOffset() * 60 * 1000)
       )
 
-      console.log('id_incStatus = ', id_incStatus)
+      const status = await IncidentStatusesRepos.findOne({
+        where: { id: id_incStatus },
+      })
 
       const newINCdb = await IncidentRepos.create({
         numberINC,
@@ -545,6 +571,7 @@ export class incidentService {
         id_responsible: '',
         id_closingCheck: '',
         id_closing: '',
+        status: status?.statusINC,
       })
       await IncidentLogsRepos.create({
         id_incLog: newINCdb.id,
@@ -553,47 +580,47 @@ export class incidentService {
         id_incLogUser: responsibleID,
       })
 
-      const inc = await IncidentRepos.findAll({
+      const inc = await IncidentRepos.findOne({
         where: { id: newINCdb.id },
         include: includes,
       })
 
-      console.log('inc  = ', inc)
-      console.log('statusINC  = ', inc[0]?.IncindentStatus.statusINC)
-
-      const isStatusses = inc[0]?.Contract.IncindentStatuses.map(
+      const isStatusses = inc?.Contract.IncindentStatuses.map(
         (item: IIncindentStatuses) =>
-          item.statusINC === inc[0]?.IncindentStatus.statusINC
+          item.statusINC === inc?.IncindentStatus.statusINC
       ).filter((item: boolean) => item)
 
       if (isStatusses && isStatusses.length) {
         const info = await mailerRegInc({
-          mailTo: inc[0]?.Contract.notificationEmail ?? '',
+          mailTo: inc?.Contract.notificationEmail ?? '',
           incident,
-          status: inc[0]?.IncindentStatus.statusINC ?? '',
+          status: inc?.IncindentStatus.statusINC ?? '',
           clientINC,
           timeRegistration: convertDateToString(timeRegistration) ?? '',
           timeSLA,
-          client: inc[0]?.Client?.client ?? '',
-          object: inc[0]?.Object?.object ?? '',
-          objectClientID: inc[0]?.Object?.internalClientID ?? '',
-          objectClientName: inc[0]?.Object?.internalClientName ?? '',
-          address: inc[0]?.Object?.Address?.address as string,
-          equipment: inc[0]?.ClassifierEquipment?.equipment as string,
-          model: inc[0]?.ClassifierModel?.model as string,
-          malfunction: inc[0]?.TypicalMalfunction?.typicalMalfunction as string,
+          client: inc?.Client?.client ?? '',
+          object: inc?.Object?.object ?? '',
+          objectClientID: inc?.Object?.internalClientID ?? '',
+          objectClientName: inc?.Object?.internalClientName ?? '',
+          address: inc?.Object?.Address?.address as string,
+          equipment: inc?.ClassifierEquipment?.equipment as string,
+          model: inc?.ClassifierModel?.model as string,
+          malfunction: inc?.TypicalMalfunction?.typicalMalfunction as string,
           description: description ?? '',
           applicant: applicant ?? '',
           applicantContacts: applicantContacts ?? '',
-          userAccepted: inc[0]?.User?.shortName ?? '',
+          userAccepted: inc?.User?.shortName ?? '',
         })
         console.log('infoMailer Reg = ', info)
       }
 
+      console.log('1')
+
       const offset = Number(page) * Number(limit) ?? 1
+      const order = getOrder(nameSort, direction)
       const incs = await IncidentRepos.findAll({
         where: { active: true },
-        order: [[nameSort as string, direction as string]],
+        order,
         limit: Number(limit),
         offset,
         include: includes,
@@ -631,28 +658,15 @@ export class incidentService {
   }
   getINCs = async (_req: Request, res: Response) => {
     try {
+      const count = await IncidentRepos.count({})
+
+      if (count === 0) {
+        res.status(200).json({ incs: [], count })
+        return
+      }
       const { limit, nameSort, direction, page } = _req.query
       const offset = Number(page) * Number(limit) ?? 1
-      console.log('getINCs!')
-      console.log('page = ', page)
-      console.log('limit = ', limit)
-      console.log('offset = ', offset)
-      // const order =
-      //   nameSort === 'executor'
-      //     ? ([
-      //         [
-      //           { model: Users, as: 'UserExecutor' },
-      //           'shortName',
-      //           direction as string,
-      //         ],
-      //       ] as Order)
-      //     : ([[nameSort as string, direction as string]] as Order)
-      const order = [[nameSort as string, direction as string]] as Order
-
-      console.log('order = ', order)
-      console.log('limit = ', limit)
-      console.log('offset = ', offset)
-      console.log('page = ', page)
+      const order = getOrder(nameSort as string, direction as string)
       const incs = await IncidentRepos.findAll({
         where: { active: true },
         // include: { all: true, nested: true },
@@ -662,9 +676,7 @@ export class incidentService {
         limit: Number(limit),
         offset,
       })
-      const count = await IncidentRepos.count({})
-      console.log('count = ', count)
-      console.log('incs = ', incs)
+      // console.log('incs = ', incs)
       res.status(200).json({ incs, count })
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
@@ -751,6 +763,7 @@ export class incidentService {
     try {
       await IncidentRepos.update(id, {
         id_incExecutor: id_incExecutor.length ? id_incExecutor : null,
+        executor,
       })
       const currentDate = new Date(
         new Date().getTime() +
@@ -765,15 +778,7 @@ export class incidentService {
       })
 
       const offset = Number(page) * Number(limit) ?? 1
-      // const order =
-      //   nameSort === 'status'
-      //     ? ([[IncindentStatuses, 'statusINC', direction as string]] as Order)
-      //     : ([[nameSort as string, direction as string]] as Order)
-      const order = [[nameSort as string, direction as string]] as Order
-      console.log('order = ', order)
-      console.log('limit = ', limit)
-      console.log('offset = ', offset)
-      console.log('page = ', page)
+      const order = getOrder(nameSort as string, direction as string)
 
       const incs = await IncidentRepos.findAll({
         where: { active: true },
@@ -782,7 +787,6 @@ export class incidentService {
         offset,
         include: includes,
       })
-      console.log('incs = ', incs)
       res.status(200).json(incs)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
@@ -805,6 +809,7 @@ export class incidentService {
     try {
       await IncidentRepos.update(id, {
         id_incResponsible: id_incResponsible.length ? id_incResponsible : null,
+        responsible,
       })
       const currentDate = new Date(
         new Date().getTime() +
@@ -818,10 +823,7 @@ export class incidentService {
       })
 
       const offset = Number(page) * Number(limit) ?? 1
-      const order =
-        nameSort === 'status'
-          ? ([[IncindentStatuses, 'statusINC', direction as string]] as Order)
-          : ([[nameSort as string, direction as string]] as Order)
+      const order = getOrder(nameSort as string, direction as string)
       const incs = await IncidentRepos.findAll({
         where: { active: true },
         // include: { all: true },
@@ -858,7 +860,7 @@ export class incidentService {
       const incStatuses = await IncidentStatusesRepos.findAll({
         where: { active: true },
       })
-      const inc = await IncidentRepos.findAll({
+      const inc = await IncidentRepos.findOne({
         where: { id },
         include: includes,
       })
@@ -868,24 +870,24 @@ export class incidentService {
         new Date().getTime() +
           Math.abs(new Date().getTimezoneOffset() * 60 * 1000)
       )
-      const timeInWork = newStatus === 1 ? currentDate : inc[0].timeInWork
+      const timeInWork = newStatus === 1 ? currentDate : inc?.timeInWork
       const id_incResponsible =
-        newStatus === 1 ? userID : inc[0]?.id_incResponsible
-      const timeCloseCheck =
-        newStatus === 2 ? currentDate : inc[0]?.timeCloseCheck
+        newStatus === 1 ? userID : inc?.id_incResponsible
+      const timeCloseCheck = newStatus === 2 ? currentDate : inc?.timeCloseCheck
       const id_incClosingCheck =
-        newStatus === 2 ? userID : inc[0]?.id_incClosingCheck
+        newStatus === 2 ? userID : inc?.id_incClosingCheck
       const id_typeCompletedWork =
-        newStatus === 2 ? typeCompletedWork.id : inc[0]?.id_typeCompletedWork
+        newStatus === 2 ? typeCompletedWork.id : inc?.id_typeCompletedWork
 
       const sla = new Date(convertINCStringToDateTime(timeSLA)).getTime()
       const now = currentDate.getTime()
-      const overdue = newStatus === 2 && now > sla ? true : inc[0]?.overdue
-      const timeClose = newStatus === 3 ? currentDate : inc[0]?.timeClose
-      const id_incClosing = newStatus === 3 ? userID : inc[0]?.id_incClosing
+      const overdue = newStatus === 2 && now > sla ? true : inc?.overdue
+      const timeClose = newStatus === 3 ? currentDate : inc?.timeClose
+      const id_incClosing = newStatus === 3 ? userID : inc?.id_incClosing
 
       await IncidentRepos.update(id, {
         id_incStatus,
+        status,
         timeInWork,
         timeCloseCheck: timeCloseCheck ?? null,
         timeClose,
@@ -904,41 +906,38 @@ export class incidentService {
         log: `${AppConst.ActionComment.changeStatus.first}${incident}${AppConst.ActionComment.changeStatus.second}${status}`,
         id_incLogUser: userID,
       })
-      const isStatusses = inc[0]?.Contract.IncindentStatuses.filter(
+      const isStatusses = inc?.Contract.IncindentStatuses.filter(
         (item: IIncindentStatuses) => item.id === id_incStatus
       ).filter((item: boolean) => item)
 
       if (isStatusses && isStatusses.length) {
         const info = await mailerChangeStatus({
-          mailTo: inc[0]?.Contract.notificationEmail ?? '',
+          mailTo: inc?.Contract.notificationEmail ?? '',
           incident,
           status,
-          clientINC: inc[0]?.clientINC,
+          clientINC: inc?.clientINC,
           timeChangeStatus: convertDateToString(currentDate) ?? '',
           timeSLA,
-          client: inc[0]?.Client?.client ?? '',
-          object: inc[0]?.Object?.object ?? '',
-          objectClientID: inc[0]?.Object?.internalClientID ?? '',
-          objectClientName: inc[0]?.Object?.internalClientName ?? '',
-          address: inc[0]?.Object?.Address?.address as string,
-          equipment: inc[0]?.ClassifierEquipment?.equipment as string,
-          model: inc[0]?.ClassifierModel?.model as string,
-          malfunction: inc[0]?.TypicalMalfunction?.typicalMalfunction as string,
-          description: inc[0]?.description ?? '',
-          commentCloseCheck: commentCloseCheck ?? inc[0]?.commentCloseCheck,
+          client: inc?.Client?.client ?? '',
+          object: inc?.Object?.object ?? '',
+          objectClientID: inc?.Object?.internalClientID ?? '',
+          objectClientName: inc?.Object?.internalClientName ?? '',
+          address: inc?.Object?.Address?.address as string,
+          equipment: inc?.ClassifierEquipment?.equipment as string,
+          model: inc?.ClassifierModel?.model as string,
+          malfunction: inc?.TypicalMalfunction?.typicalMalfunction as string,
+          description: inc?.description ?? '',
+          commentCloseCheck: commentCloseCheck ?? inc?.commentCloseCheck,
           typeCompletedWork:
             typeCompletedWork && typeCompletedWork.label
               ? typeCompletedWork.label
-              : inc[0]?.typeCompletedWork,
+              : inc?.typeCompletedWork,
         })
         console.log('infoMailer Reg = ', info)
       }
 
       const offset = Number(page) * Number(limit) ?? 1
-      const order =
-        nameSort === 'status'
-          ? ([[IncindentStatuses, 'statusINC', direction as string]] as Order)
-          : ([[nameSort as string, direction as string]] as Order)
+      const order = getOrder(nameSort as string, direction as string)
 
       const incs = await IncidentRepos.findAll({
         where: { active: true },
@@ -953,7 +952,7 @@ export class incidentService {
     } catch (err: any) {
       console.log('err = ', err)
       /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error: ', err] })
+      res.status(500).json({ error: ['db error:  ', err] })
     }
   }
   changeUserClosingCheck = async (_req: Request, res: Response) => {

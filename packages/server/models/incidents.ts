@@ -16,6 +16,9 @@ export interface Incindent {
   commentCloseCheck: string
   commentClose: string
   report: string
+  status: string
+  responsible: string
+  executor: string
   spaceParts: string[]
   active: boolean
   methodsReuqest: string
@@ -100,6 +103,19 @@ export const incident: ModelAttributes<Model, Incindent> = {
     type: DataType.STRING,
     allowNull: false,
   },
+  status: {
+    type: DataType.STRING,
+    allowNull: false,
+  },
+  executor: {
+    type: DataType.STRING,
+    allowNull: true,
+  },
+  responsible: {
+    type: DataType.STRING,
+    allowNull: true,
+  },
+
   rating: {
     type: DataType.INTEGER,
     allowNull: true,

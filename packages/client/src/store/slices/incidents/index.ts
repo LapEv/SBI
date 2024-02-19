@@ -10,6 +10,7 @@ import {
   TypesCompletedWork,
   AnswerTypesCompletedWork,
   AnswerGetINC,
+  AnswerGetINCs,
 } from './interfaces'
 import {
   getINC,
@@ -47,10 +48,11 @@ const initialState: INCState = {
 }
 
 const createINCData = (data: INC[]) => {
+  console.log('data = ', data)
   return data.map(item => {
     return {
       ...item,
-      status: item.IncindentStatus?.statusINC as string,
+      // status: item.IncindentStatus?.statusINC as string,
       client: item.Client?.client as string,
       contract: item.Contract?.contract as string,
       object: item.Object?.object as string,
@@ -61,8 +63,8 @@ const createINCData = (data: INC[]) => {
       typeOfWork: item.TypesOfWork?.typeOfWork as string,
       typeCompletedWork: item.TypesCompletedWork?.typeCompletedWork as string,
       userAccepted: item.User?.shortName as string,
-      executor: item.UserExecutor?.shortName as string,
-      responsible: item.UserResponsible?.shortName as string,
+      // executor: item.UserExecutor?.shortName as string,
+      // responsible: item.UserResponsible?.shortName as string,
       userClosingCheck: item.UserClosingCheck?.shortName as string,
       userClosing: item.UserClosing?.shortName as string,
       equipment: item.ClassifierEquipment?.equipment as string,
@@ -123,10 +125,11 @@ export const incidentsSlise = createSlice({
       state.isLoadingINC = false
       state.error = action.payload
     },
-    [newINC.fulfilled.type]: (state, action: PayloadAction<AnswerGetINC>) => {
+    [newINC.fulfilled.type]: (state, action: PayloadAction<AnswerGetINCs>) => {
       state.isLoadingINC = false
       state.error = ''
-      const { incs, count } = action.payload
+      const { incs, count } = action.payload.data
+      console.log('action.payload = ', action.payload.data)
       state.incidents = createINCData(incs)
       state.countIncidents = count
     },

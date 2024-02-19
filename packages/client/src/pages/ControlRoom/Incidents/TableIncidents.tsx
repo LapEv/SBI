@@ -70,7 +70,7 @@ export const TableIncidents = memo(() => {
 
     {
       name: 'incident',
-      label: 'Инцидент',
+      label: 'Инцидент *',
       options: {
         filter: true,
         sort: true,
@@ -119,7 +119,7 @@ export const TableIncidents = memo(() => {
 
     {
       name: 'numberINC',
-      label: 'Номер',
+      label: 'Номер *',
       options: {
         filter: false,
         sort: true,
@@ -135,7 +135,7 @@ export const TableIncidents = memo(() => {
     },
     {
       name: 'clientINC',
-      label: 'Номер Клиента',
+      label: 'Номер Клиента *',
       options: {
         filter: true,
         sort: true,
@@ -151,7 +151,7 @@ export const TableIncidents = memo(() => {
     },
     {
       name: 'timeSLA',
-      label: 'SLA',
+      label: 'SLA *',
       options: {
         filter: true,
         sort: true,
@@ -168,7 +168,7 @@ export const TableIncidents = memo(() => {
 
     {
       name: 'status',
-      label: 'Статус',
+      label: 'Статус *',
       options: {
         filter: true,
         sort: true,
@@ -193,7 +193,7 @@ export const TableIncidents = memo(() => {
     },
     {
       name: 'client',
-      label: 'Клиент',
+      label: 'Клиент *',
       options: {
         filter: true,
         sort: true,
@@ -209,7 +209,7 @@ export const TableIncidents = memo(() => {
     },
     {
       name: 'contract',
-      label: 'Контракт',
+      label: 'Контракт *',
       options: {
         filter: true,
         sort: true,
@@ -225,7 +225,7 @@ export const TableIncidents = memo(() => {
     },
     {
       name: 'object',
-      label: 'Объект',
+      label: 'Объект *',
       options: {
         filter: true,
         sort: true,
@@ -241,10 +241,10 @@ export const TableIncidents = memo(() => {
     },
     {
       name: 'address',
-      label: 'Адрес',
+      label: 'Адрес *',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         display: true,
         viewColumns: true,
         setCellHeaderProps: () => ({
@@ -274,10 +274,10 @@ export const TableIncidents = memo(() => {
 
     {
       name: 'region',
-      label: 'Регион',
+      label: 'Регион *',
       options: {
         filter: true,
-        sort: true,
+        sort: false,
         display: true,
         viewColumns: true,
         setCellHeaderProps: () => ({
@@ -290,7 +290,7 @@ export const TableIncidents = memo(() => {
     },
     {
       name: 'userAccepted',
-      label: 'Кто принял',
+      label: 'Кто принял *',
       options: {
         filter: true,
         sort: true,
@@ -306,7 +306,7 @@ export const TableIncidents = memo(() => {
     },
     {
       name: 'timeRegistration',
-      label: 'Время регистрации',
+      label: 'Время регистрации *',
       options: {
         filter: false,
         sort: true,
@@ -322,7 +322,7 @@ export const TableIncidents = memo(() => {
     },
     {
       name: 'methodsReuqest',
-      label: 'Тип регистрации',
+      label: 'Тип регистрации *',
       options: {
         filter: true,
         sort: true,
@@ -338,7 +338,7 @@ export const TableIncidents = memo(() => {
     },
     {
       name: 'equipment',
-      label: 'Оборудование',
+      label: 'Оборудование *',
       options: {
         filter: true,
         sort: true,
@@ -354,7 +354,7 @@ export const TableIncidents = memo(() => {
     },
     {
       name: 'model',
-      label: 'Модель',
+      label: 'Модель *',
       options: {
         filter: true,
         sort: true,
@@ -386,7 +386,7 @@ export const TableIncidents = memo(() => {
     },
     {
       name: 'executor',
-      label: 'Исполнитель',
+      label: 'Исполнитель *',
       options: {
         filter: true,
         sort: true,
@@ -409,7 +409,7 @@ export const TableIncidents = memo(() => {
     },
     {
       name: 'responsible',
-      label: 'Ответственный',
+      label: 'Ответственный *',
       options: {
         filter: true,
         sort: true,
@@ -577,7 +577,7 @@ export const TableIncidents = memo(() => {
     },
     {
       name: 'overdue',
-      label: 'Статус SLA',
+      label: 'Статус SLA *',
       options: {
         filter: true,
         sort: true,

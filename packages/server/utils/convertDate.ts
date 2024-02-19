@@ -13,6 +13,7 @@ export const convertINCStringToDateTime = (date: string) => {
 }
 
 export const convertDateToStringFromDB = (dateTime: string) => {
+  console.log('dateTime = ', dateTime)
   if (!dateTime) return
   const dateTimeArr = dateTime.split(/T/)
   const dateArr = dateTimeArr[0].split('-')

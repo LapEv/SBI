@@ -1,4 +1,4 @@
-import { memo, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { useAuth } from 'hooks/auth/useAuth'
 import { DropDownIncidents } from 'components/DropDown'
 import { Options } from 'components/DropDown/interface'
@@ -43,14 +43,15 @@ export const Executor = memo(
       }
     }
 
+    useEffect(() => {
+      setExecutor({ label: value, id: '' })
+    }, [value])
+
     return (
       <DropDownIncidents
-        data={fieldEngineers.map(({ lastName, firstName, middleName, id }) => {
+        data={fieldEngineers.map(({ shortName, id }) => {
           return {
-            ['label']: `${lastName} ${firstName?.slice(
-              0,
-              1
-            )}.${middleName?.slice(0, 1)}.` as string,
+            ['label']: shortName as string,
             ['id']: id as string,
           }
         })}

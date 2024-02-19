@@ -174,7 +174,9 @@ export const Status = memo(
       }
     }, [uploadedFiles])
 
-    // console.log('incStatuses = ', incStatuses)
+    useEffect(() => {
+      setStatus({ label: value, id: '' })
+    }, [value])
 
     return (
       <>

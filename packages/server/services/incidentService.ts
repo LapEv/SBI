@@ -49,10 +49,8 @@ const incLogs = [
 const includes = [
   {
     model: IncindentStatuses,
-    required: true,
-    // attributes: ['id', 'statusINC', 'active'],
-    attributes: [],
-    duplicating: false,
+    required: false,
+    attributes: ['id', 'statusINC', 'active'],
   },
   {
     model: TypesOfWork,
@@ -516,6 +514,9 @@ export class incidentService {
         new Date().getTime() +
           Math.abs(new Date().getTimezoneOffset() * 60 * 1000)
       )
+
+      console.log('id_incStatus = ', id_incStatus)
+
       const newINCdb = await IncidentRepos.create({
         numberINC,
         incident,
@@ -551,10 +552,14 @@ export class incidentService {
         log: `${AppConst.ActionComment.incidentRegistration}${incident}`,
         id_incLogUser: responsibleID,
       })
+
       const inc = await IncidentRepos.findAll({
         where: { id: newINCdb.id },
         include: includes,
       })
+
+      console.log('inc  = ', inc)
+      console.log('statusINC  = ', inc[0]?.IncindentStatus.statusINC)
 
       const isStatusses = inc[0]?.Contract.IncindentStatuses.map(
         (item: IIncindentStatuses) =>
@@ -632,28 +637,34 @@ export class incidentService {
       console.log('page = ', page)
       console.log('limit = ', limit)
       console.log('offset = ', offset)
-      const order =
-        nameSort === 'executor'
-          ? ([
-              [
-                { model: Users, as: 'UserExecutor' },
-                'shortName',
-                direction as string,
-              ],
-            ] as Order)
-          : ([[nameSort as string, direction as string]] as Order)
+      // const order =
+      //   nameSort === 'executor'
+      //     ? ([
+      //         [
+      //           { model: Users, as: 'UserExecutor' },
+      //           'shortName',
+      //           direction as string,
+      //         ],
+      //       ] as Order)
+      //     : ([[nameSort as string, direction as string]] as Order)
+      const order = [[nameSort as string, direction as string]] as Order
+
       console.log('order = ', order)
+      console.log('limit = ', limit)
+      console.log('offset = ', offset)
+      console.log('page = ', page)
       const incs = await IncidentRepos.findAll({
         where: { active: true },
         // include: { all: true, nested: true },
-        include: { all: true },
-        // include: includes,
+        // include: { all: true },
+        include: includes,
         order,
         limit: Number(limit),
         offset,
-        logging: console.log,
       })
       const count = await IncidentRepos.count({})
+      console.log('count = ', count)
+      console.log('incs = ', incs)
       res.status(200).json({ incs, count })
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
@@ -754,10 +765,15 @@ export class incidentService {
       })
 
       const offset = Number(page) * Number(limit) ?? 1
-      const order =
-        nameSort === 'status'
-          ? ([[IncindentStatuses, 'statusINC', direction as string]] as Order)
-          : ([[nameSort as string, direction as string]] as Order)
+      // const order =
+      //   nameSort === 'status'
+      //     ? ([[IncindentStatuses, 'statusINC', direction as string]] as Order)
+      //     : ([[nameSort as string, direction as string]] as Order)
+      const order = [[nameSort as string, direction as string]] as Order
+      console.log('order = ', order)
+      console.log('limit = ', limit)
+      console.log('offset = ', offset)
+      console.log('page = ', page)
 
       const incs = await IncidentRepos.findAll({
         where: { active: true },
@@ -766,6 +782,7 @@ export class incidentService {
         offset,
         include: includes,
       })
+      console.log('incs = ', incs)
       res.status(200).json(incs)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
@@ -846,29 +863,31 @@ export class incidentService {
         include: includes,
       })
       const newStatus = incStatuses.findIndex(item => item.id === id_incStatus)
+
       const currentDate = new Date(
         new Date().getTime() +
           Math.abs(new Date().getTimezoneOffset() * 60 * 1000)
       )
       const timeInWork = newStatus === 1 ? currentDate : inc[0].timeInWork
       const id_incResponsible =
-        newStatus === 1 ? userID : inc[0].id_incResponsible
+        newStatus === 1 ? userID : inc[0]?.id_incResponsible
       const timeCloseCheck =
-        newStatus === 2 ? currentDate : inc[0].timeCloseCheck
+        newStatus === 2 ? currentDate : inc[0]?.timeCloseCheck
       const id_incClosingCheck =
-        newStatus === 2 ? userID : inc[0].id_incClosingCheck
+        newStatus === 2 ? userID : inc[0]?.id_incClosingCheck
       const id_typeCompletedWork =
-        newStatus === 2 ? typeCompletedWork.id : inc[0].id_typeCompletedWork
+        newStatus === 2 ? typeCompletedWork.id : inc[0]?.id_typeCompletedWork
 
       const sla = new Date(convertINCStringToDateTime(timeSLA)).getTime()
       const now = currentDate.getTime()
-      const overdue = newStatus === 2 && now > sla ? true : inc[0].overdue
-      const timeClose = newStatus === 3 ? currentDate : inc[0].timeClose
-      const id_incClosing = newStatus === 3 ? userID : inc[0].id_incClosing
+      const overdue = newStatus === 2 && now > sla ? true : inc[0]?.overdue
+      const timeClose = newStatus === 3 ? currentDate : inc[0]?.timeClose
+      const id_incClosing = newStatus === 3 ? userID : inc[0]?.id_incClosing
+
       await IncidentRepos.update(id, {
         id_incStatus,
         timeInWork,
-        timeCloseCheck,
+        timeCloseCheck: timeCloseCheck ?? null,
         timeClose,
         id_incResponsible,
         id_incClosingCheck,

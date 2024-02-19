@@ -61,6 +61,7 @@ export const newINC = createAsyncThunk(
   async (inc: AddINC, thunkAPI) => {
     try {
       const { data } = await authhost.post(ApiEndPoints.INC.newINC, inc)
+      console.log('data = ', data)
       return {
         data,
         message: {

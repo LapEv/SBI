@@ -396,8 +396,6 @@ export const TableIncidents = memo(() => {
           style: { padding: !denseTable ? 15 : 8 },
         }),
         customBodyRender: (value: string, { rowData }: ITableMeta) => {
-          // console.log('value = ', value)
-          // console.log('incident = ', rowData[2])
           return (
             <Executor
               value={value ?? ''}

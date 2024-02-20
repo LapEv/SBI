@@ -23,7 +23,7 @@ import dayjs, { Dayjs } from 'dayjs'
 import { getSLATime } from 'utils/getSLATime'
 import { useAuth } from 'hooks/auth/useAuth'
 import { convertDateToStringDDMMYYYYHHMMSS } from 'utils/convertDate'
-import { FillterOptions } from '../Components/FillterOptions'
+import { FilterOptions } from '../Components/FilterOptions'
 
 export const NewIncident = memo(
   React.forwardRef<unknown, ChooseModalProps>(
@@ -79,7 +79,8 @@ export const NewIncident = memo(
         const id_incStatus = incStatuses.find(item =>
           item.statusINC.includes('Зарегистрирован')
         )?.id as string
-        const { nameSort, direction, limit, page } = FillterOptions()
+        const { nameSort, direction, limit, page, filterOptions } =
+          FilterOptions()
 
         const newINCobject = {
           clientID: selectedClient.id,
@@ -105,6 +106,7 @@ export const NewIncident = memo(
           direction,
           limit,
           page,
+          filterOptions,
         }
         newINC(newINCobject)
         handleModal(false)

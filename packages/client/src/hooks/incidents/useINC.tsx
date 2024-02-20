@@ -25,6 +25,7 @@ import {
   newTypeOfWork,
   newTypeCompletedWork,
   getINCs,
+  getFilter,
 } from 'api/incidents'
 import { setActiveINC, setLoadingINC } from 'store/slices/incidents'
 
@@ -37,6 +38,9 @@ export function useIncidents(): [INCState, INCActions] {
     {
       getINC() {
         dispatch(getINC())
+      },
+      getFilter() {
+        dispatch(getFilter())
       },
       getINCs(data) {
         dispatch(getINCs(data))

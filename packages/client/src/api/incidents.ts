@@ -20,6 +20,7 @@ import {
   AddTypesCompletedWork,
   ChangeTypesCompletedWork,
   GetINCsByParams,
+  AnswerGetFilter,
 } from 'store/slices/incidents/interfaces'
 
 export const getINC = createAsyncThunk(
@@ -38,13 +39,35 @@ export const getINC = createAsyncThunk(
   }
 )
 
+export const getFilter = createAsyncThunk(
+  'incidents/getFilter',
+  async (_, thunkAPI) => {
+    try {
+      const { data } = await authhost.get<AnswerGetFilter>(
+        ApiEndPoints.INC.getFilter
+      )
+      return data
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      return thunkAPI.rejectWithValue(
+        `Не удалось получить данные по филтрам\n${getError(e)}`
+      )
+    }
+  }
+)
+
 export const getINCs = createAsyncThunk(
   'incidents/getINCs',
-  async ({ limit, nameSort, direction, page }: GetINCsByParams, thunkAPI) => {
+  async (
+    { limit, nameSort, direction, page, filterOptions }: GetINCsByParams,
+    thunkAPI
+  ) => {
     try {
       const { data } = await authhost.get<INC>(ApiEndPoints.INC.getINCs, {
-        params: { limit, nameSort, direction, page },
+        params: { limit, nameSort, direction, page, filterOptions },
       })
+      console.log('data = ', data)
       return data
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (e: any) {
@@ -148,6 +171,7 @@ export const changeExecutor = createAsyncThunk(
       direction,
       limit,
       page,
+      filterOptions,
     }: ChangeExecutor,
     thunkAPI
   ) => {
@@ -162,6 +186,7 @@ export const changeExecutor = createAsyncThunk(
         direction,
         limit,
         page,
+        filterOptions,
       })
       return {
         data,
@@ -195,6 +220,7 @@ export const changeResponsible = createAsyncThunk(
       direction,
       limit,
       page,
+      filterOptions,
     }: ChangeResponsible,
     thunkAPI
   ) => {
@@ -209,6 +235,7 @@ export const changeResponsible = createAsyncThunk(
         direction,
         limit,
         page,
+        filterOptions,
       })
       return {
         data,
@@ -246,6 +273,7 @@ export const changeStatus = createAsyncThunk(
       direction,
       limit,
       page,
+      filterOptions,
     }: ChangeStatus,
     thunkAPI
   ) => {
@@ -264,6 +292,7 @@ export const changeStatus = createAsyncThunk(
         direction,
         limit,
         page,
+        filterOptions,
       })
       return {
         data,

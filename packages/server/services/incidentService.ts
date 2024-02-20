@@ -28,7 +28,7 @@ import {
 } from '../utils/convertDate'
 import { mailerChangeStatus, mailerRegInc } from '../Mailer'
 import { IIncindentStatuses } from '/models/incidents'
-import { Order } from 'sequelize'
+import { Op, Order, WhereOptions } from 'sequelize'
 
 const getOrder = (nameSort: string, direction: string) => {
   if (nameSort === 'contract') {
@@ -226,6 +226,12 @@ const includes = [
     attributes: ['id', 'name', 'size', 'mimetype', 'path'],
   },
 ]
+
+const filter = (data: []) => {
+  return data.map(item => {
+    return { [Op.or]: item as WhereOptions }
+  })
+}
 
 export class incidentService {
   newIncidentStatuses = async (_req: Request, res: Response) => {
@@ -523,6 +529,7 @@ export class incidentService {
       direction,
       limit,
       page,
+      filterOptions,
     } = _req.body
     try {
       const lastINC = await IncidentRepos.findAll({
@@ -614,19 +621,20 @@ export class incidentService {
         console.log('infoMailer Reg = ', info)
       }
 
-      console.log('1')
-
       const offset = Number(page) * Number(limit) ?? 1
       const order = getOrder(nameSort, direction)
+      const filterData = filter(filterOptions as [])
+
       const incs = await IncidentRepos.findAll({
-        where: { active: true },
+        where: { [Op.and]: filterData },
         order,
         limit: Number(limit),
         offset,
         include: includes,
       })
       const count = await IncidentRepos.count({})
-      res.status(200).json({ incs, count })
+      const filterListData = await this.getFilterListFunc()
+      res.status(200).json({ incs, count, filterListData })
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -656,6 +664,71 @@ export class incidentService {
       res.status(500).json({ error: ['db error', err] })
     }
   }
+
+  getFilter = async (_req: Request, res: Response) => {
+    try {
+      const filterListData = await this.getFilterListFunc()
+      res.status(200).json(filterListData)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      console.log('err = ', err)
+      res.status(500).json({ error: ['db error', err] })
+    }
+  }
+
+  getFilterListFunc = async () => {
+    const incs = await IncidentRepos.findAll({
+      where: { active: true },
+      include: includes,
+    })
+    const statusList = [
+      ...new Set(incs.map(item => item.IncindentStatus.statusINC)),
+    ]
+    const contractList = [...new Set(incs.map(item => item.Contract.contract))]
+    const clientsList = [...new Set(incs.map(item => item.Client.client))]
+    const objectsList = [...new Set(incs.map(item => item.Object.object))]
+    const addressList = [
+      ...new Set(incs.map(item => item.Object.Address.address)),
+    ]
+    const regionList = [...new Set(incs.map(item => item.Object.Region.region))]
+    const userAcceptedList = [...new Set(incs.map(item => item.User.shortName))]
+    const equipmentList = [
+      ...new Set(incs.map(item => item.ClassifierEquipment.equipment)),
+    ]
+    const modelList = [...new Set(incs.map(item => item.ClassifierModel.model))]
+    const executorList = [
+      ...new Set(
+        incs.map(item => (item.UserExecutor ? item.UserExecutor.shortName : ''))
+      ),
+    ]
+    const responsibleList = [
+      ...new Set(
+        incs.map(item =>
+          item.UserResponsible ? item.UserResponsible.shortName : ''
+        )
+      ),
+    ]
+    const overdueList = [...new Set(incs.map(item => item.overdue))]
+    const slaList = [...new Set(incs.map(item => item.SLA.sla))]
+
+    return {
+      status: statusList,
+      client: clientsList,
+      contract: contractList,
+      object: objectsList,
+      address: addressList,
+      region: regionList,
+      userAccepted: userAcceptedList,
+      equipment: equipmentList,
+      model: modelList,
+      executor: executorList,
+      responsible: responsibleList,
+      overdue: overdueList,
+      sla: slaList,
+    }
+  }
+
   getINCs = async (_req: Request, res: Response) => {
     try {
       const count = await IncidentRepos.count({})
@@ -664,11 +737,12 @@ export class incidentService {
         res.status(200).json({ incs: [], count })
         return
       }
-      const { limit, nameSort, direction, page } = _req.query
+      const { limit, nameSort, direction, page, filterOptions } = _req.query
+      const filterData = filter(filterOptions as [])
       const offset = Number(page) * Number(limit) ?? 1
       const order = getOrder(nameSort as string, direction as string)
       const incs = await IncidentRepos.findAll({
-        where: { active: true },
+        where: { [Op.and]: filterData },
         // include: { all: true, nested: true },
         // include: { all: true },
         include: includes,
@@ -676,8 +750,8 @@ export class incidentService {
         limit: Number(limit),
         offset,
       })
-      // console.log('incs = ', incs)
-      res.status(200).json({ incs, count })
+      const filterListData = await this.getFilterListFunc()
+      res.status(200).json({ incs, count, filterListData })
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -759,6 +833,7 @@ export class incidentService {
       direction,
       limit,
       page,
+      filterOptions,
     } = _req.body
     try {
       await IncidentRepos.update(id, {
@@ -779,15 +854,17 @@ export class incidentService {
 
       const offset = Number(page) * Number(limit) ?? 1
       const order = getOrder(nameSort as string, direction as string)
+      const filterData = filter(filterOptions as [])
 
       const incs = await IncidentRepos.findAll({
-        where: { active: true },
+        where: { [Op.and]: filterData },
         order,
         limit: Number(limit),
         offset,
         include: includes,
       })
-      res.status(200).json(incs)
+      const filterListData = await this.getFilterListFunc()
+      res.status(200).json({ incs, filterListData })
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -805,6 +882,7 @@ export class incidentService {
       direction,
       limit,
       page,
+      filterOptions,
     } = _req.body
     try {
       await IncidentRepos.update(id, {
@@ -824,15 +902,17 @@ export class incidentService {
 
       const offset = Number(page) * Number(limit) ?? 1
       const order = getOrder(nameSort as string, direction as string)
+      const filterData = filter(filterOptions as [])
       const incs = await IncidentRepos.findAll({
-        where: { active: true },
+        where: { [Op.and]: filterData },
         // include: { all: true },
         order,
         limit: Number(limit),
         offset,
         include: includes,
       })
-      res.status(200).json(incs)
+      const filterListData = await this.getFilterListFunc()
+      res.status(200).json({ incs, filterListData })
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -855,6 +935,7 @@ export class incidentService {
       direction,
       limit,
       page,
+      filterOptions,
     } = _req.body
     try {
       const incStatuses = await IncidentStatusesRepos.findAll({
@@ -938,16 +1019,18 @@ export class incidentService {
 
       const offset = Number(page) * Number(limit) ?? 1
       const order = getOrder(nameSort as string, direction as string)
+      const filterData = filter(filterOptions as [])
 
       const incs = await IncidentRepos.findAll({
-        where: { active: true },
+        where: { [Op.and]: filterData },
         // include: { all: true },
         order,
         limit: Number(limit),
         offset,
         include: includes,
       })
-      res.status(200).json(incs)
+      const filterListData = await this.getFilterListFunc()
+      res.status(200).json({ incs, filterListData })
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       console.log('err = ', err)

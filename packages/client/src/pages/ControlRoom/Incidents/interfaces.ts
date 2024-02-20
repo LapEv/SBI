@@ -23,6 +23,8 @@ export interface INC_Column {
   options: {
     filter: boolean
     filterList?: string[]
+    filterOptions?: any
+    onFilterChange?: any
     sort: boolean
     hint?: any
     setCellProps?: any

@@ -120,6 +120,11 @@ export const incidentRouter = (apiRouter: Router) => {
   )
 
   router.get(
+    '/getFilter',
+    roleMiddleware(['getFilter', 'ADMIN', 'SUPERADMIN']),
+    service.getFilter
+  )
+  router.get(
     '/getINC',
     roleMiddleware(['getINC', 'ADMIN', 'SUPERADMIN']),
     service.getINC

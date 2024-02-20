@@ -18,14 +18,17 @@ import {
   IndicatorCell,
   StatusSLACell,
   SpacePartCell,
-  FillterOptions,
+  FilterOptions,
 } from './'
 import { useIncidents } from 'hooks/incidents/useINC'
+import { setFilter } from './Components/FilterOptions'
 
 export const TableIncidents = memo(() => {
-  const [{ incidents, countIncidents }, { getINCs }] = useIncidents()
+  const [{ incidents, countIncidents, filterListData }, { getINCs }] =
+    useIncidents()
 
   const [heightINCData, setHeightINCData] = useState<number>(0)
+  const [filterDialogOpen, setFilterDialogOpen] = useState<boolean>(false)
   const [denseTable, setDenseTable] = useState<boolean>(
     localStorage.getItem('IncidentsDenseTable') === '1' ? true : false
   )
@@ -60,7 +63,7 @@ export const TableIncidents = memo(() => {
             <IndicatorCell
               timeSLA={rowData[7] ?? ''}
               timeReg={rowData[16]}
-              timeCloseCheck={rowData[29]}
+              timeCloseCheck={rowData[30]}
               inc={rowData[2]}
             />
           )
@@ -72,7 +75,7 @@ export const TableIncidents = memo(() => {
       name: 'incident',
       label: 'Инцидент *',
       options: {
-        filter: true,
+        filter: false,
         sort: true,
         display: true,
         viewColumns: true,
@@ -137,7 +140,7 @@ export const TableIncidents = memo(() => {
       name: 'clientINC',
       label: 'Номер Клиента *',
       options: {
-        filter: true,
+        filter: false,
         sort: true,
         display: true,
         viewColumns: true,
@@ -153,7 +156,7 @@ export const TableIncidents = memo(() => {
       name: 'timeSLA',
       label: 'SLA *',
       options: {
-        filter: true,
+        filter: false,
         sort: true,
         display: true,
         viewColumns: true,
@@ -174,6 +177,20 @@ export const TableIncidents = memo(() => {
         sort: true,
         display: true,
         viewColumns: true,
+        filterOptions: {
+          names: filterListData.status,
+          display: (
+            filterList: any,
+            onChange: any,
+            index: any,
+            column: any
+          ) => (
+            console.log('filterList = ', filterList),
+            console.log('onChange = ', onChange),
+            console.log('index = ', index),
+            console.log('column = ', column)
+          ),
+        },
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -183,7 +200,7 @@ export const TableIncidents = memo(() => {
               value={value ?? ''}
               id={rowData[0]}
               incident={rowData[2]}
-              responsible={rowData[22]}
+              responsible={rowData[23]}
               currentStatus={rowData[8]}
               timeSLA={rowData[7] ?? ''}
             />
@@ -199,6 +216,9 @@ export const TableIncidents = memo(() => {
         sort: true,
         display: true,
         viewColumns: true,
+        filterOptions: {
+          names: filterListData.client,
+        },
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -215,6 +235,9 @@ export const TableIncidents = memo(() => {
         sort: true,
         display: true,
         viewColumns: true,
+        filterOptions: {
+          names: filterListData.contract,
+        },
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -231,6 +254,9 @@ export const TableIncidents = memo(() => {
         sort: true,
         display: true,
         viewColumns: true,
+        filterOptions: {
+          names: filterListData.object,
+        },
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -243,10 +269,13 @@ export const TableIncidents = memo(() => {
       name: 'address',
       label: 'Адрес *',
       options: {
-        filter: false,
+        filter: true,
         sort: false,
         display: true,
         viewColumns: true,
+        filterOptions: {
+          names: filterListData.address,
+        },
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -280,6 +309,9 @@ export const TableIncidents = memo(() => {
         sort: false,
         display: true,
         viewColumns: true,
+        filterOptions: {
+          names: filterListData.region,
+        },
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -296,6 +328,9 @@ export const TableIncidents = memo(() => {
         sort: true,
         display: true,
         viewColumns: true,
+        filterOptions: {
+          names: filterListData.userAccepted,
+        },
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -321,10 +356,30 @@ export const TableIncidents = memo(() => {
       },
     },
     {
+      name: 'sla',
+      label: 'Тип инцидента *',
+      options: {
+        filter: true,
+        sort: true,
+        display: true,
+        viewColumns: true,
+        filterOptions: {
+          names: filterListData.sla,
+        },
+        setCellHeaderProps: () => ({
+          style: { padding: !denseTable ? 15 : 8 },
+        }),
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
+      },
+    },
+
+    {
       name: 'methodsReuqest',
       label: 'Тип регистрации *',
       options: {
-        filter: true,
+        filter: false,
         sort: true,
         display: true,
         viewColumns: true,
@@ -344,6 +399,9 @@ export const TableIncidents = memo(() => {
         sort: true,
         display: true,
         viewColumns: true,
+        filterOptions: {
+          names: filterListData.equipment,
+        },
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -360,6 +418,9 @@ export const TableIncidents = memo(() => {
         sort: true,
         display: true,
         viewColumns: true,
+        filterOptions: {
+          names: filterListData.model,
+        },
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -392,6 +453,9 @@ export const TableIncidents = memo(() => {
         sort: true,
         display: true,
         viewColumns: true,
+        filterOptions: {
+          names: filterListData.executor,
+        },
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -401,7 +465,7 @@ export const TableIncidents = memo(() => {
               value={value ?? ''}
               id={rowData[0]}
               incident={rowData[2]}
-              responsible={rowData[22]}
+              responsible={rowData[23]}
             />
           )
         },
@@ -415,6 +479,9 @@ export const TableIncidents = memo(() => {
         sort: true,
         display: true,
         viewColumns: true,
+        filterOptions: {
+          names: filterListData.responsible,
+        },
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -424,7 +491,7 @@ export const TableIncidents = memo(() => {
               value={value ?? ''}
               id={rowData[0]}
               incident={rowData[2]}
-              responsible={rowData[22]}
+              responsible={rowData[23]}
             />
           )
         },
@@ -583,6 +650,9 @@ export const TableIncidents = memo(() => {
         sort: true,
         display: true,
         viewColumns: true,
+        filterOptions: {
+          names: filterListData.overdue,
+        },
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
@@ -716,7 +786,7 @@ export const TableIncidents = memo(() => {
     return INCColumn.map((item, index) => index)
   }
 
-  const handleTableInit = (data: any, value: any) => {
+  const handleTableInit = (action: string, tableState: MUIDataTableState) => {
     const columnViewStorage = localStorage
       .getItem('IncidentsViewColumns')
       ?.split(',')
@@ -732,9 +802,7 @@ export const TableIncidents = memo(() => {
       localStorage.getItem('filterList') as string
     )
     if (filterListStorage && filterListStorage?.length > 1) {
-      tableColumn.map(
-        (item, index) => (item.options.filterList = filterListStorage[index])
-      )
+      tableState.filterList = filterListStorage
     }
   }
 
@@ -748,17 +816,66 @@ export const TableIncidents = memo(() => {
       localStorage.setItem('IncidentsViewColumns', display.toString())
       return
     }
-    console.log('action = ', action)
     const { page, sortOrder, rowsPerPage, filterList } = tableState
 
+    const filterOptions = setFilter(INCColumn, filterList)
+    // console.log('filterOptions = ', filterOptions)
     const getINCbyData = {
       nameSort: sortOrder.name,
       direction: sortOrder.direction,
       limit: rowsPerPage,
       page,
-      filterList,
+      filterOptions,
     }
+    // console.log('tableState = ', tableState)
+    // console.log('filterListData = ', filterListData)
+    // tableState.filterData = tableState.filterData.map((item, index) => {
+    //   if (index === 8) {
+    //     return filterListData[0]
+    //   }
+    //   if (index === 9) {
+    //     return filterListData[2]
+    //   }
+    //   if (index === 10) {
+    //     return filterListData[1]
+    //   }
+    //   if (index === 11) {
+    //     return filterListData[3]
+    //   }
+    //   return item
+    // }) as string[][]
+    // console.log('tableState.filterData = ', tableState.filterData)
+
+    // const filterData = [
+    //   [],
+    //   [],
+    //   [],
+    //   [],
+    //   [],
+    //   [],
+    //   [],
+    //   [],
+    //   filterListData[0],
+    //   filterListData[2],
+    //   filterListData[1],
+    //   filterListData[3],
+    //   [],
+    // ]
     switch (action) {
+      case 'onFilterDialogOpen':
+        setFilterDialogOpen(true)
+        break
+      case 'onFilterDialogClose':
+        getINCs(getINCbyData)
+        setFilterDialogOpen(false)
+        localStorage.setItem('filterList', JSON.stringify(filterList))
+        break
+      case 'filterChange':
+        if (!filterDialogOpen) {
+          getINCs(getINCbyData)
+          localStorage.setItem('filterList', JSON.stringify(filterList))
+        }
+        break
       case 'changePage':
         getINCs(getINCbyData)
         break
@@ -815,9 +932,10 @@ export const TableIncidents = memo(() => {
         </TableRow>
       )
     },
-    onFilterChange: (_, filterList) => {
-      localStorage.setItem('filterList', JSON.stringify(filterList))
-    },
+    // onFilterChange: (_, filterList) => {
+    //   setFilter(INCColumn, filterList)
+    //   localStorage.setItem('filterList', JSON.stringify(filterList))
+    // },
     sortOrder: JSON.parse(localStorage.getItem('sortColumn') as string),
     onColumnSortChange: (column, direction) =>
       localStorage.setItem(
@@ -866,8 +984,8 @@ export const TableIncidents = memo(() => {
   }
 
   useEffect(() => {
-    const { nameSort, direction, limit, page } = FillterOptions()
-    getINCs({ limit, nameSort, direction, page })
+    const { nameSort, direction, limit, page, filterOptions } = FilterOptions()
+    getINCs({ limit, nameSort, direction, page, filterOptions })
   }, [])
 
   useEffect(() => {

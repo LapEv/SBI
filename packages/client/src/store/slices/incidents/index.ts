@@ -11,6 +11,8 @@ import {
   AnswerTypesCompletedWork,
   AnswerGetINC,
   AnswerGetINCs,
+  AnswerINCsData,
+  AnswerGetFilter,
 } from './interfaces'
 import {
   getINC,
@@ -34,6 +36,7 @@ import {
   deleteTypesCompletedWork,
   changeTypesCompletedWork,
   getINCs,
+  getFilter,
 } from 'api/incidents'
 import { convertDateToStringFromDB } from 'utils/convertDate'
 
@@ -43,12 +46,26 @@ const initialState: INCState = {
   incStatuses: [],
   typesOfWork: [],
   typesCompletedWork: [],
+  filterListData: {
+    status: [],
+    client: [],
+    contract: [],
+    object: [],
+    address: [],
+    region: [],
+    userAccepted: [],
+    equipment: [],
+    model: [],
+    executor: [],
+    responsible: [],
+    overdue: [],
+    sla: [],
+  },
   activeINC: '',
   isLoadingINC: false,
 }
 
 const createINCData = (data: INC[]) => {
-  console.log('data = ', data)
   return data.map(item => {
     return {
       ...item,
@@ -92,11 +109,25 @@ export const incidentsSlise = createSlice({
       state.activeINC = action.payload
     },
     setLoadingINC(state, action) {
-      console.log('action = ', action)
       state.isLoadingINC = action.payload
     },
   },
   extraReducers: {
+    [getFilter.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerGetFilter>
+    ) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.filterListData = action.payload
+    },
+    [getFilter.pending.type]: state => {
+      state.isLoadingINC = true
+    },
+    [getFilter.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingINC = false
+      state.error = action.payload
+    },
     [getINC.fulfilled.type]: (state, action: PayloadAction<AnswerGetINC>) => {
       state.isLoadingINC = false
       state.error = ''
@@ -114,9 +145,10 @@ export const incidentsSlise = createSlice({
     [getINCs.fulfilled.type]: (state, action: PayloadAction<AnswerGetINC>) => {
       state.isLoadingINC = false
       state.error = ''
-      const { incs, count } = action.payload
+      const { incs, count, filterListData } = action.payload
       state.incidents = createINCData(incs)
       state.countIncidents = count
+      state.filterListData = filterListData
     },
     [getINCs.pending.type]: state => {
       state.isLoadingINC = true
@@ -128,10 +160,10 @@ export const incidentsSlise = createSlice({
     [newINC.fulfilled.type]: (state, action: PayloadAction<AnswerGetINCs>) => {
       state.isLoadingINC = false
       state.error = ''
-      const { incs, count } = action.payload.data
-      console.log('action.payload = ', action.payload.data)
+      const { incs, count, filterListData } = action.payload.data
       state.incidents = createINCData(incs)
       state.countIncidents = count
+      state.filterListData = filterListData
     },
     [newINC.pending.type]: state => {
       state.isLoadingINC = true
@@ -154,11 +186,13 @@ export const incidentsSlise = createSlice({
     },
     [changeExecutor.fulfilled.type]: (
       state,
-      action: PayloadAction<AnswerINC>
+      action: PayloadAction<AnswerINCsData>
     ) => {
       state.isLoadingINC = false
       state.error = ''
-      state.incidents = createINCData(action.payload.data)
+      const { incs, filterListData } = action.payload.data
+      state.filterListData = filterListData
+      state.incidents = createINCData(incs)
     },
     [changeResponsible.pending.type]: state => {
       state.isLoadingINC = true
@@ -172,11 +206,13 @@ export const incidentsSlise = createSlice({
     },
     [changeResponsible.fulfilled.type]: (
       state,
-      action: PayloadAction<AnswerINC>
+      action: PayloadAction<AnswerINCsData>
     ) => {
       state.isLoadingINC = false
       state.error = ''
-      state.incidents = createINCData(action.payload.data)
+      const { incs, filterListData } = action.payload.data
+      state.filterListData = filterListData
+      state.incidents = createINCData(incs)
     },
     [changeStatus.pending.type]: state => {
       state.isLoadingINC = true
@@ -187,11 +223,13 @@ export const incidentsSlise = createSlice({
     },
     [changeStatus.fulfilled.type]: (
       state,
-      action: PayloadAction<AnswerINC>
+      action: PayloadAction<AnswerINCsData>
     ) => {
       state.isLoadingINC = false
       state.error = ''
-      state.incidents = createINCData(action.payload.data)
+      const { incs, filterListData } = action.payload.data
+      state.filterListData = filterListData
+      state.incidents = createINCData(incs)
     },
     [changeUserClosingCheck.pending.type]: state => {
       state.isLoadingINC = true

@@ -86,6 +86,7 @@ export interface AddINC {
   direction?: string
   limit?: number
   page?: number
+  filterOptions?: []
 }
 
 export interface INCStatuses {
@@ -135,13 +136,81 @@ export interface AddTypesCompletedWork {
 export interface AnswerGetINC {
   incs: INC[]
   count: number
+  filterListData: {
+    status: string[]
+    client: string[]
+    contract: string[]
+    object: string[]
+    address: string[]
+    region: string[]
+    userAccepted: string[]
+    equipment: string[]
+    model: string[]
+    executor: string[]
+    responsible: string[]
+    overdue: string[]
+    sla: string[]
+  }
+}
+
+export interface AnswerGetFilter {
+  status: string[]
+  client: string[]
+  contract: string[]
+  object: string[]
+  address: string[]
+  region: string[]
+  userAccepted: string[]
+  equipment: string[]
+  model: string[]
+  executor: string[]
+  responsible: string[]
+  overdue: string[]
+  sla: string[]
 }
 
 export interface AnswerGetINCs {
   data: {
     incs: INC[]
     count: number
+    filterListData: {
+      status: string[]
+      client: string[]
+      contract: string[]
+      object: string[]
+      address: string[]
+      region: string[]
+      userAccepted: string[]
+      equipment: string[]
+      model: string[]
+      executor: string[]
+      responsible: string[]
+      overdue: string[]
+      sla: string[]
+    }
   }
+}
+
+export interface AnswerINCsData {
+  data: {
+    incs: INC[]
+    filterListData: {
+      status: string[]
+      client: string[]
+      contract: string[]
+      object: string[]
+      address: string[]
+      region: string[]
+      userAccepted: string[]
+      equipment: string[]
+      model: string[]
+      executor: string[]
+      responsible: string[]
+      overdue: string[]
+      sla: string[]
+    }
+  }
+  type: string
 }
 
 export interface AnswerINC {
@@ -170,6 +239,21 @@ export type INCState = {
   incStatuses: INCStatuses[]
   typesOfWork: TypesOfWork[]
   typesCompletedWork: TypesCompletedWork[]
+  filterListData: {
+    status: string[]
+    client: string[]
+    contract: string[]
+    object: string[]
+    address: string[]
+    region: string[]
+    userAccepted: string[]
+    equipment: string[]
+    model: string[]
+    executor: string[]
+    responsible: string[]
+    overdue: string[]
+    sla: string[]
+  }
   activeINC: string
   isLoadingINC: boolean
   error?: string
@@ -180,7 +264,7 @@ export interface GetINCsByParams {
   nameSort: string
   direction: string
   page: number
-  filterList?: any
+  filterOptions?: any
 }
 
 export interface ChangeINC {
@@ -211,6 +295,7 @@ export interface ChangeExecutor {
   direction?: string
   limit?: number
   page?: number
+  filterOptions?: any
 }
 
 export interface ChangeResponsible {
@@ -223,6 +308,7 @@ export interface ChangeResponsible {
   direction?: string
   limit?: number
   page?: number
+  filterOptions?: any
 }
 
 export interface ChangeStatus {
@@ -240,6 +326,7 @@ export interface ChangeStatus {
   direction?: string
   limit?: number
   page?: number
+  filterOptions?: any
 }
 
 export interface ChangeClosingCheck {

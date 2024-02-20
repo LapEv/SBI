@@ -17,6 +17,7 @@ import {
 
 export interface INCActions {
   getINC: () => void
+  getFilter: () => void
   getINCs: (data: GetINCsByParams) => void
   getIncidentStatuses: () => void
   getTypesOfWork: () => void

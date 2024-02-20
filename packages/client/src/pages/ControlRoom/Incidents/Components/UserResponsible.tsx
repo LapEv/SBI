@@ -5,7 +5,7 @@ import { Options } from 'components/DropDown/interface'
 import { useIncidents } from 'hooks/incidents/useINC'
 import { IExecutor } from '../interfaces'
 import { customDropDownCell } from '../data'
-import { FillterOptions } from './FillterOptions'
+import { FilterOptions } from './FilterOptions'
 
 export const UserResponsible = memo(({ value, id, incident }: IExecutor) => {
   const [{ dispatchers, user }] = useAuth()
@@ -17,7 +17,7 @@ export const UserResponsible = memo(({ value, id, incident }: IExecutor) => {
 
   const setData = (data: Options) => {
     setResposible(data)
-    const { nameSort, direction, limit, page } = FillterOptions()
+    const { nameSort, direction, limit, page, filterOptions } = FilterOptions()
     changeResponsible({
       id,
       id_incResponsible: data.id as string,
@@ -28,6 +28,7 @@ export const UserResponsible = memo(({ value, id, incident }: IExecutor) => {
       direction,
       limit,
       page,
+      filterOptions,
     })
   }
 

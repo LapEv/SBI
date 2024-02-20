@@ -10,7 +10,7 @@ import { Modal } from '@mui/material'
 import { ChangeStatus } from '../Modals'
 import { DataCloseINC } from '../Modals/interfaces'
 import { useFiles } from 'hooks/files/useFiles'
-import { FillterOptions } from './FillterOptions'
+import { FilterOptions } from './FilterOptions'
 
 export const Status = memo(
   ({ value, id, incident, currentStatus, timeSLA }: IStatus) => {
@@ -68,7 +68,8 @@ export const Status = memo(
         return
       }
       setStatus(data)
-      const { nameSort, direction, limit, page } = FillterOptions()
+      const { nameSort, direction, limit, page, filterOptions } =
+        FilterOptions()
       changeStatus({
         id,
         id_incStatus: data.id as string,
@@ -80,6 +81,7 @@ export const Status = memo(
         direction,
         limit,
         page,
+        filterOptions,
       })
     }
 
@@ -119,7 +121,8 @@ export const Status = memo(
         return
       }
       setStatus(data)
-      const { nameSort, direction, limit, page } = FillterOptions()
+      const { nameSort, direction, limit, page, filterOptions } =
+        FilterOptions()
       changeStatus({
         id,
         id_incStatus: data.id as string,
@@ -134,6 +137,7 @@ export const Status = memo(
         direction,
         limit,
         page,
+        filterOptions,
       })
       setModal({ status: false, data: emptyValue })
     }
@@ -152,7 +156,8 @@ export const Status = memo(
           commentCloseCheck,
           spaceParts,
         } = tempData
-        const { nameSort, direction, limit, page } = FillterOptions()
+        const { nameSort, direction, limit, page, filterOptions } =
+          FilterOptions()
         setStatus(data)
         changeStatus({
           id,
@@ -168,6 +173,7 @@ export const Status = memo(
           direction,
           limit,
           page,
+          filterOptions,
         })
         setModal({ status: false, data: emptyValue })
         resetUploadFiles()

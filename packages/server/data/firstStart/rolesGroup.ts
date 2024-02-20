@@ -38,6 +38,7 @@ export const rolesGroupStartData = [
       'getTypesOfWork',
       'getINCs',
       'getINC',
+      'getFilter',
     ],
     groupName: 'Диспетчер',
   },

@@ -66,7 +66,7 @@ export class incidentService {
     return this.includes
   }
 
-  set IncludesAddress(data: {}) {
+  set IncludesAddress(data: string) {
     const incl = this.includes.map(item => {
       if (item.model === Objects) {
         return {
@@ -97,7 +97,7 @@ export class incidentService {
     this.includes = incl
   }
 
-  set IncludesRegion(data: {}) {
+  set IncludesRegion(data: string) {
     const incl = this.includes.map(item => {
       if (item.model === Objects) {
         return {

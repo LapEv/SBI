@@ -19,6 +19,7 @@ import {
   StatusSLACell,
   SpacePartCell,
   FilterOptions,
+  DragTable,
 } from './'
 import { useIncidents } from 'hooks/incidents/useINC'
 import { setFilter } from './Components/FilterOptions'
@@ -32,7 +33,7 @@ export const TableIncidents = memo(() => {
   const [denseTable, setDenseTable] = useState<boolean>(
     localStorage.getItem('IncidentsDenseTable') === '1' ? true : false
   )
-  // const [dragTable, setDragTable] = useState<boolean>(false)
+  const [dragTable, setDragTable] = useState<boolean>(false)
   const theme = useTheme()
 
   const INCColumn: INC_Column[] = [
@@ -179,17 +180,6 @@ export const TableIncidents = memo(() => {
         viewColumns: true,
         filterOptions: {
           names: filterListData.status,
-          display: (
-            filterList: any,
-            onChange: any,
-            index: any,
-            column: any
-          ) => (
-            console.log('filterList = ', filterList),
-            console.log('onChange = ', onChange),
-            console.log('index = ', index),
-            console.log('column = ', column)
-          ),
         },
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
@@ -819,7 +809,7 @@ export const TableIncidents = memo(() => {
     const { page, sortOrder, rowsPerPage, filterList } = tableState
 
     const filterOptions = setFilter(INCColumn, filterList)
-    // console.log('filterOptions = ', filterOptions)
+
     const getINCbyData = {
       nameSort: sortOrder.name,
       direction: sortOrder.direction,
@@ -827,40 +817,7 @@ export const TableIncidents = memo(() => {
       page,
       filterOptions,
     }
-    // console.log('tableState = ', tableState)
-    // console.log('filterListData = ', filterListData)
-    // tableState.filterData = tableState.filterData.map((item, index) => {
-    //   if (index === 8) {
-    //     return filterListData[0]
-    //   }
-    //   if (index === 9) {
-    //     return filterListData[2]
-    //   }
-    //   if (index === 10) {
-    //     return filterListData[1]
-    //   }
-    //   if (index === 11) {
-    //     return filterListData[3]
-    //   }
-    //   return item
-    // }) as string[][]
-    // console.log('tableState.filterData = ', tableState.filterData)
 
-    // const filterData = [
-    //   [],
-    //   [],
-    //   [],
-    //   [],
-    //   [],
-    //   [],
-    //   [],
-    //   [],
-    //   filterListData[0],
-    //   filterListData[2],
-    //   filterListData[1],
-    //   filterListData[3],
-    //   [],
-    // ]
     switch (action) {
       case 'onFilterDialogOpen':
         setFilterDialogOpen(true)
@@ -897,17 +854,18 @@ export const TableIncidents = memo(() => {
     responsive: 'standard',
     fixedHeader: false,
     fixedSelectColumn: false,
-    // expandableRows: !dragTable ?? false,
-    expandableRows: true,
+    expandableRows: !dragTable ?? false,
+    // expandableRows: true,
     draggableColumns: {
       enabled: true,
       transitionTime: 300,
     },
+    print: false,
     serverSide: true,
-    // selectableRows: dragTable ? 'none' : 'multiple',
-    // selectableRowsOnClick: !dragTable ?? false,
-    selectableRows: 'none',
-    selectableRowsOnClick: false,
+    selectableRows: dragTable ? 'none' : 'multiple',
+    selectableRowsOnClick: !dragTable ?? false,
+    // selectableRows: 'none',
+    // selectableRowsOnClick: false,
     textLabels: textLabels,
     tableBodyHeight: '100%',
     columnOrder: getcolumnOrderStorage(),
@@ -932,10 +890,6 @@ export const TableIncidents = memo(() => {
         </TableRow>
       )
     },
-    // onFilterChange: (_, filterList) => {
-    //   setFilter(INCColumn, filterList)
-    //   localStorage.setItem('filterList', JSON.stringify(filterList))
-    // },
     sortOrder: JSON.parse(localStorage.getItem('sortColumn') as string),
     onColumnSortChange: (column, direction) =>
       localStorage.setItem(
@@ -959,7 +913,13 @@ export const TableIncidents = memo(() => {
     },
     customToolbar: () => {
       return (
-        <DenseTable denseTable={denseTable} setDenseTable={setDenseTableFunc} />
+        <>
+          <DenseTable
+            denseTable={denseTable}
+            setDenseTable={setDenseTableFunc}
+          />
+          <DragTable dragTable={dragTable} setDragTable={setDragTable} />
+        </>
       )
     },
     setRowProps: (row, dataIndex, rowIndex) => {

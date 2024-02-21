@@ -1,9 +1,14 @@
 import {
   Addresses,
+  AddressesRepos,
   ClassifierEquipment,
+  ClassifierEquipmentRepos,
   ClassifierModels,
+  ClassifierModelsRepos,
   Clients,
+  ClientsRepos,
   Contracts,
+  ContractsRepos,
   Files,
   IncidentLogs,
   IncidentLogsRepos,
@@ -11,14 +16,18 @@ import {
   IncidentStatusesRepos,
   IncindentStatuses,
   Objects,
+  ObjectsRepos,
   Regions,
+  RegionsRepos,
   SLA,
+  SLARepos,
   TypesCompletedWork,
   TypesCompletedWorkRepos,
   TypesOfWork,
   TypesOfWorkRepos,
   TypicalMalfunctions,
   Users,
+  userRepos,
 } from './../db'
 import type { Request, Response } from 'express'
 import { AppConst } from '../const'
@@ -52,188 +61,384 @@ const getOrder = (nameSort: string, direction: string) => {
   }
   return [[nameSort as string, direction as string]] as Order
 }
-
-const incLogs = [
-  {
-    model: Users,
-    required: true,
-    attributes: [
-      'id',
-      'username',
-      'firstName',
-      'lastName',
-      'middleName',
-      'shortName',
-      'active',
-    ],
-  },
-]
-
-const includes = [
-  {
-    model: IncindentStatuses,
-    required: true,
-    attributes: ['id', 'statusINC', 'active'],
-  },
-  {
-    model: TypesOfWork,
-    required: true,
-    attributes: ['id', 'typeOfWork', 'active'],
-  },
-  {
-    model: TypesCompletedWork,
-    required: false,
-    attributes: ['id', 'typeCompletedWork', 'active'],
-  },
-  {
-    model: SLA,
-    required: true,
-    attributes: ['id', 'sla', 'days', 'time', 'timeStart', 'timeEnd', 'active'],
-  },
-  {
-    model: Clients,
-    required: true,
-    attributes: ['id', 'legalName', 'client', 'active'],
-  },
-  {
-    model: Contracts,
-    required: true,
-    attributes: ['id', 'contract', 'active', 'notificationEmail'],
-    include: [
-      {
-        model: IncindentStatuses,
-        required: false,
-        attributes: ['id', 'statusINC', 'active'],
-      },
-    ],
-  },
-  {
-    model: Objects,
-    required: true,
-    attributes: [
-      'id',
-      'object',
-      'internalClientID',
-      'internalClientName',
-      'active',
-    ],
-    include: [
-      {
-        model: Addresses,
-        required: true,
-        attributes: ['id', 'address', 'coordinates', 'active'],
-      },
-      {
-        model: Regions,
-        required: true,
-        attributes: ['id', 'region', 'active'],
-      },
-    ],
-  },
-  {
-    model: Users,
-    required: false,
-    attributes: [
-      'id',
-      'username',
-      'firstName',
-      'lastName',
-      'middleName',
-      'shortName',
-      'active',
-    ],
-  },
-  {
-    model: Users,
-    as: 'UserExecutor',
-    required: false,
-    attributes: [
-      'id',
-      'username',
-      'firstName',
-      'lastName',
-      'middleName',
-      'shortName',
-      'active',
-    ],
-  },
-  {
-    model: Users,
-    as: 'UserResponsible',
-    required: false,
-    attributes: [
-      'id',
-      'username',
-      'firstName',
-      'lastName',
-      'middleName',
-      'shortName',
-      'active',
-    ],
-  },
-  {
-    model: Users,
-    as: 'UserClosingCheck',
-    required: false,
-    attributes: [
-      'id',
-      'username',
-      'firstName',
-      'lastName',
-      'middleName',
-      'shortName',
-      'active',
-    ],
-  },
-  {
-    model: Users,
-    as: 'UserClosing',
-    required: false,
-    attributes: [
-      'id',
-      'username',
-      'firstName',
-      'lastName',
-      'middleName',
-      'shortName',
-      'active',
-    ],
-  },
-  {
-    model: ClassifierEquipment,
-    required: true,
-    attributes: ['id', 'equipment', 'active'],
-  },
-  {
-    model: ClassifierModels,
-    required: true,
-    attributes: ['id', 'model', 'active'],
-  },
-  {
-    model: TypicalMalfunctions,
-    required: true,
-    attributes: ['id', 'typicalMalfunction', 'active'],
-  },
-  {
-    model: IncidentLogs,
-    required: false,
-    attributes: ['id', 'time', 'log'],
-    include: incLogs,
-  },
-  {
-    model: Files,
-    required: false,
-    attributes: ['id', 'name', 'size', 'mimetype', 'path'],
-  },
-]
-
-const filter = (data: []) => {
-  return data.map(item => {
-    return { [Op.or]: item as WhereOptions }
-  })
-}
-
 export class incidentService {
+  get Includes() {
+    return this.includes
+  }
+
+  set IncludesAddress(data: {}) {
+    const incl = this.includes.map(item => {
+      if (item.model === Objects) {
+        return {
+          model: Objects,
+          required: true,
+          attributes: [
+            'id',
+            'object',
+            'internalClientID',
+            'internalClientName',
+            'active',
+          ],
+          include: item.include?.map(value => {
+            if (value.model === Addresses) {
+              return {
+                model: Addresses,
+                required: true,
+                attributes: ['id', 'address', 'coordinates', 'active'],
+                where: { id: data },
+              }
+            }
+            return value
+          }) as [],
+        }
+      }
+      return item
+    })
+    this.includes = incl
+  }
+
+  set IncludesRegion(data: {}) {
+    const incl = this.includes.map(item => {
+      if (item.model === Objects) {
+        return {
+          model: Objects,
+          required: true,
+          attributes: [
+            'id',
+            'object',
+            'internalClientID',
+            'internalClientName',
+            'active',
+          ],
+          include: item.include?.map(value => {
+            if (value.model === Regions) {
+              return {
+                model: Regions,
+                required: true,
+                attributes: ['id', 'region', 'active'],
+                where: { id: data },
+              }
+            }
+            return value
+          }) as [],
+        }
+      }
+      return item
+    })
+    this.includes = incl
+  }
+
+  get ResetIncludesAddress() {
+    const incl = this.includes.map(item => {
+      if (item.model === Objects) {
+        return {
+          model: Objects,
+          required: true,
+          attributes: [
+            'id',
+            'object',
+            'internalClientID',
+            'internalClientName',
+            'active',
+          ],
+          include: [
+            {
+              model: Addresses,
+              required: true,
+              attributes: ['id', 'address', 'coordinates', 'active'],
+            },
+            {
+              model: Regions,
+              required: true,
+              attributes: ['id', 'region', 'active'],
+            },
+          ],
+        }
+      }
+      return item
+    })
+    this.includes = incl
+    return this.includes
+  }
+
+  incLogs = [
+    {
+      model: Users,
+      required: true,
+      attributes: [
+        'id',
+        'username',
+        'firstName',
+        'lastName',
+        'middleName',
+        'shortName',
+        'active',
+      ],
+    },
+  ]
+
+  includes = [
+    {
+      model: IncindentStatuses,
+      required: true,
+      attributes: ['id', 'statusINC', 'active'],
+    },
+    {
+      model: TypesOfWork,
+      required: true,
+      attributes: ['id', 'typeOfWork', 'active'],
+    },
+    {
+      model: TypesCompletedWork,
+      required: false,
+      attributes: ['id', 'typeCompletedWork', 'active'],
+    },
+    {
+      model: SLA,
+      required: true,
+      attributes: [
+        'id',
+        'sla',
+        'days',
+        'time',
+        'timeStart',
+        'timeEnd',
+        'active',
+      ],
+    },
+    {
+      model: Clients,
+      required: true,
+      attributes: ['id', 'legalName', 'client', 'active'],
+    },
+    {
+      model: Contracts,
+      required: true,
+      attributes: ['id', 'contract', 'active', 'notificationEmail'],
+      include: [
+        {
+          model: IncindentStatuses,
+          required: false,
+          attributes: ['id', 'statusINC', 'active'],
+        },
+      ],
+    },
+    {
+      model: Objects,
+      required: true,
+      attributes: [
+        'id',
+        'object',
+        'internalClientID',
+        'internalClientName',
+        'active',
+      ],
+      include: [
+        {
+          model: Addresses,
+          required: true,
+          attributes: ['id', 'address', 'coordinates', 'active'],
+        },
+        {
+          model: Regions,
+          required: true,
+          attributes: ['id', 'region', 'active'],
+        },
+      ],
+    },
+    {
+      model: Users,
+      required: false,
+      attributes: [
+        'id',
+        'username',
+        'firstName',
+        'lastName',
+        'middleName',
+        'shortName',
+        'active',
+      ],
+    },
+    {
+      model: Users,
+      as: 'UserExecutor',
+      required: false,
+      attributes: [
+        'id',
+        'username',
+        'firstName',
+        'lastName',
+        'middleName',
+        'shortName',
+        'active',
+      ],
+    },
+    {
+      model: Users,
+      as: 'UserResponsible',
+      required: false,
+      attributes: [
+        'id',
+        'username',
+        'firstName',
+        'lastName',
+        'middleName',
+        'shortName',
+        'active',
+      ],
+    },
+    {
+      model: Users,
+      as: 'UserClosingCheck',
+      required: false,
+      attributes: [
+        'id',
+        'username',
+        'firstName',
+        'lastName',
+        'middleName',
+        'shortName',
+        'active',
+      ],
+    },
+    {
+      model: Users,
+      as: 'UserClosing',
+      required: false,
+      attributes: [
+        'id',
+        'username',
+        'firstName',
+        'lastName',
+        'middleName',
+        'shortName',
+        'active',
+      ],
+    },
+    {
+      model: ClassifierEquipment,
+      required: true,
+      attributes: ['id', 'equipment', 'active'],
+    },
+    {
+      model: ClassifierModels,
+      required: true,
+      attributes: ['id', 'model', 'active'],
+    },
+    {
+      model: TypicalMalfunctions,
+      required: true,
+      attributes: ['id', 'typicalMalfunction', 'active'],
+    },
+    {
+      model: IncidentLogs,
+      required: false,
+      attributes: ['id', 'time', 'log'],
+      include: this.incLogs,
+    },
+    {
+      model: Files,
+      required: false,
+      attributes: ['id', 'name', 'size', 'mimetype', 'path'],
+    },
+  ]
+
+  checkDataFilter = async (data: []) => {
+    return await Promise.all(
+      data.map(
+        async (item: []) =>
+          await Promise.all(
+            item.map(async value => {
+              if (value['contract']) {
+                const contract = await ContractsRepos.findOne({
+                  where: { contract: value['contract'] },
+                })
+                return { id_incContract: contract?.id }
+              }
+              if (value['client']) {
+                const client = await ClientsRepos.findOne({
+                  where: { client: value['client'] },
+                })
+                return { id_incClient: client?.id }
+              }
+              if (value['object']) {
+                const object = await ObjectsRepos.findOne({
+                  where: { object: value['object'] },
+                })
+                return { id_incObject: object?.id }
+              }
+              if (value['address']) {
+                const address = await AddressesRepos.findOne({
+                  where: { address: value['address'] },
+                })
+                this.IncludesAddress = address?.id
+                return []
+              }
+              if (value['region']) {
+                const region = await RegionsRepos.findOne({
+                  where: { region: value['region'] },
+                })
+                this.IncludesRegion = region?.id
+                return []
+              }
+              if (value['userAccepted']) {
+                const userAccepted = await userRepos.findOne({
+                  where: { shortName: value['userAccepted'] },
+                })
+                return { id_incUser: userAccepted?.id }
+              }
+              if (value['sla']) {
+                const sla = await SLARepos.findOne({
+                  where: { sla: value['sla'] },
+                })
+                return { id_incSLA: sla?.id }
+              }
+              if (value['equipment']) {
+                const equipment = await ClassifierEquipmentRepos.findOne({
+                  where: { equipment: value['equipment'] },
+                })
+                return { id_incEquipment: equipment?.id }
+              }
+              if (value['model']) {
+                const model = await ClassifierModelsRepos.findOne({
+                  where: { model: value['model'] },
+                })
+                return { id_incModel: model?.id }
+              }
+              if (value['executor']) {
+                const executor = await userRepos.findOne({
+                  where: { shortName: value['executor'] },
+                })
+                return { id_incExecutor: executor?.id }
+              }
+              if (value['responsible']) {
+                const responsible = await userRepos.findOne({
+                  where: { shortName: value['responsible'] },
+                })
+                return { id_incResponsible: responsible?.id }
+              }
+
+              return value
+            })
+          )
+      )
+    )
+  }
+
+  getFilterOptions = async (data: []): Promise<WhereOptions> => {
+    if (!data) {
+      return [{ active: 'true' }]
+    }
+    const dataFilter = await this.checkDataFilter(data)
+    const _dataFilter = dataFilter.filter(
+      elem => elem.filter(item => !Array.isArray(item) || item.length).length
+    )
+
+    return _dataFilter.map(item => {
+      return { [Op.or]: item as WhereOptions }
+    })
+  }
+
   newIncidentStatuses = async (_req: Request, res: Response) => {
     try {
       await IncidentStatusesRepos.create({ ..._req.body, active: true })
@@ -589,7 +794,7 @@ export class incidentService {
 
       const inc = await IncidentRepos.findOne({
         where: { id: newINCdb.id },
-        include: includes,
+        include: this.includes,
       })
 
       const isStatusses = inc?.Contract.IncindentStatuses.map(
@@ -623,16 +828,18 @@ export class incidentService {
 
       const offset = Number(page) * Number(limit) ?? 1
       const order = getOrder(nameSort, direction)
-      const filterData = filter(filterOptions as [])
+      const filterData = await this.getFilterOptions(filterOptions as [])
 
       const incs = await IncidentRepos.findAll({
         where: { [Op.and]: filterData },
         order,
         limit: Number(limit),
         offset,
-        include: includes,
+        include: this.includes,
       })
-      const count = await IncidentRepos.count({})
+      const count = await IncidentRepos.count({
+        where: { [Op.and]: filterData },
+      })
       const filterListData = await this.getFilterListFunc()
       res.status(200).json({ incs, count, filterListData })
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -645,7 +852,7 @@ export class incidentService {
     }
   }
   getAllINC = (_req: Request, res: Response) => {
-    IncidentRepos.findAll({ include: includes })
+    IncidentRepos.findAll({ include: this.includes })
       .then(item => res.status(200).json(item))
       .catch(err => res.status(500).json({ error: ['db error: ', err.status] }))
   }
@@ -653,9 +860,9 @@ export class incidentService {
     try {
       const incs = await IncidentRepos.findAll({
         where: { active: true },
-        include: includes,
+        include: this.includes,
       })
-      const count = await IncidentRepos.count({})
+      const count = incs.length
       res.status(200).json({ incs, count })
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
@@ -680,7 +887,7 @@ export class incidentService {
   getFilterListFunc = async () => {
     const incs = await IncidentRepos.findAll({
       where: { active: true },
-      include: includes,
+      include: this.includes,
     })
     const statusList = [
       ...new Set(incs.map(item => item.IncindentStatus.statusINC)),
@@ -731,26 +938,33 @@ export class incidentService {
 
   getINCs = async (_req: Request, res: Response) => {
     try {
-      const count = await IncidentRepos.count({})
+      const counts = await IncidentRepos.count({})
 
-      if (count === 0) {
-        res.status(200).json({ incs: [], count })
+      if (counts === 0) {
+        res.status(200).json({ incs: [], count: counts })
         return
       }
       const { limit, nameSort, direction, page, filterOptions } = _req.query
-      const filterData = filter(filterOptions as [])
+      const filterData = await this.getFilterOptions(filterOptions as [])
       const offset = Number(page) * Number(limit) ?? 1
       const order = getOrder(nameSort as string, direction as string)
+
+      console.log('filterData = ', filterData)
       const incs = await IncidentRepos.findAll({
         where: { [Op.and]: filterData },
         // include: { all: true, nested: true },
         // include: { all: true },
-        include: includes,
+        include: this.Includes,
         order,
         limit: Number(limit),
         offset,
       })
+      this.ResetIncludesAddress
       const filterListData = await this.getFilterListFunc()
+      const count = await IncidentRepos.count({
+        where: { [Op.and]: filterData },
+      })
+
       res.status(200).json({ incs, count, filterListData })
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
@@ -767,7 +981,7 @@ export class incidentService {
       })
       const incs = await IncidentRepos.findAll({
         where: { active: true },
-        include: includes,
+        include: this.includes,
       })
       res.status(200).json(incs)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -782,7 +996,7 @@ export class incidentService {
       await IncidentRepos.destroy({
         where: { id: selectedINCs },
       })
-      const incs = await IncidentRepos.findAll({ include: includes })
+      const incs = await IncidentRepos.findAll({ include: this.includes })
       res.status(200).json(incs)
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
@@ -798,7 +1012,7 @@ export class incidentService {
       })
       const incs = await IncidentRepos.findAll({
         where: { active: true },
-        include: includes,
+        include: this.includes,
       })
       res.status(200).json(incs)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -813,7 +1027,7 @@ export class incidentService {
       await IncidentRepos.update(id, { data })
       const incs = await IncidentRepos.findAll({
         where: { active: true },
-        include: includes,
+        include: this.includes,
       })
       res.status(200).json(incs)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -854,14 +1068,14 @@ export class incidentService {
 
       const offset = Number(page) * Number(limit) ?? 1
       const order = getOrder(nameSort as string, direction as string)
-      const filterData = filter(filterOptions as [])
+      const filterData = await this.getFilterOptions(filterOptions as [])
 
       const incs = await IncidentRepos.findAll({
         where: { [Op.and]: filterData },
         order,
         limit: Number(limit),
         offset,
-        include: includes,
+        include: this.includes,
       })
       const filterListData = await this.getFilterListFunc()
       res.status(200).json({ incs, filterListData })
@@ -902,14 +1116,14 @@ export class incidentService {
 
       const offset = Number(page) * Number(limit) ?? 1
       const order = getOrder(nameSort as string, direction as string)
-      const filterData = filter(filterOptions as [])
+      const filterData = await this.getFilterOptions(filterOptions as [])
       const incs = await IncidentRepos.findAll({
         where: { [Op.and]: filterData },
         // include: { all: true },
         order,
         limit: Number(limit),
         offset,
-        include: includes,
+        include: this.includes,
       })
       const filterListData = await this.getFilterListFunc()
       res.status(200).json({ incs, filterListData })
@@ -943,7 +1157,7 @@ export class incidentService {
       })
       const inc = await IncidentRepos.findOne({
         where: { id },
-        include: includes,
+        include: this.includes,
       })
       const newStatus = incStatuses.findIndex(item => item.id === id_incStatus)
 
@@ -1019,7 +1233,7 @@ export class incidentService {
 
       const offset = Number(page) * Number(limit) ?? 1
       const order = getOrder(nameSort as string, direction as string)
-      const filterData = filter(filterOptions as [])
+      const filterData = await this.getFilterOptions(filterOptions as [])
 
       const incs = await IncidentRepos.findAll({
         where: { [Op.and]: filterData },
@@ -1027,7 +1241,7 @@ export class incidentService {
         order,
         limit: Number(limit),
         offset,
-        include: includes,
+        include: this.includes,
       })
       const filterListData = await this.getFilterListFunc()
       res.status(200).json({ incs, filterListData })
@@ -1045,7 +1259,7 @@ export class incidentService {
       const incs = await IncidentRepos.findAll({
         where: { active: true },
         // include: { all: true },
-        include: includes,
+        include: this.includes,
       })
       res.status(200).json(incs)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -1061,7 +1275,7 @@ export class incidentService {
       const incs = await IncidentRepos.findAll({
         where: { active: true },
         // include: { all: true },
-        include: includes,
+        include: this.includes,
       })
       res.status(200).json(incs)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -1072,14 +1286,14 @@ export class incidentService {
   }
 
   getAllINCLogs = (_req: Request, res: Response) => {
-    IncidentLogsRepos.findAll({ include: incLogs })
+    IncidentLogsRepos.findAll({ include: this.incLogs })
       .then(item => res.status(200).json(item))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
   getINCLogs = (_req: Request, res: Response) => {
     IncidentLogsRepos.findAll({
       where: { active: true },
-      include: incLogs,
+      include: this.incLogs,
     })
       .then(logs => {
         res.status(200).json(logs)

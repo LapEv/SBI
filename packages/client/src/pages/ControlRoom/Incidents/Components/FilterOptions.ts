@@ -34,9 +34,8 @@ export const setFilter = (INCColumn: INC_Column[], filterList: string[][]) => {
             }
           })
           .filter(item => item)
-      : [{ active: true }]
-  const filterOptions =
-    filterData && filterData.length ? filterData : [{ active: true }]
+      : []
+  const filterOptions = filterData && filterData.length ? filterData : []
   localStorage.setItem('filterOptions', JSON.stringify(filterOptions))
   return filterOptions
 }

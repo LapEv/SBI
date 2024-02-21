@@ -67,7 +67,6 @@ export const getINCs = createAsyncThunk(
       const { data } = await authhost.get<INC>(ApiEndPoints.INC.getINCs, {
         params: { limit, nameSort, direction, page, filterOptions },
       })
-      console.log('data = ', data)
       return data
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (e: any) {

@@ -115,6 +115,12 @@ export const DataTable = ({ title, data, options, columns }: IDataTable) => {
                   borderLeftColor:
                     theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
                   borderLeftStyle: 'solid',
+                  fontSize: '0.935rem',
+                  fontWeight: 'bold',
+                  color:
+                    theme.palette.mode === ThemeMode.light
+                      ? '#000000'
+                      : '#FFFFFF',
                 },
                 data: {
                   fontSize: '0.935rem',
@@ -149,6 +155,9 @@ export const DataTable = ({ title, data, options, columns }: IDataTable) => {
               styleOverrides: {
                 paddingNone: {
                   padding: 3,
+                },
+                paddingCheckbox: {
+                  padding: 0,
                 },
                 root: {
                   padding: 10,

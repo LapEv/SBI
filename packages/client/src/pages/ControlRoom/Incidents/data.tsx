@@ -86,7 +86,14 @@ export const ModalTitles = {
   changeTypesOfWork: 'Изменить тип работ',
   changeTypesCompletedWork: 'Изменить тип выполненных работ',
   closeINC: 'Закрытие инцидента',
+  printINC: 'Выберите тип печати списка инцидентов',
 }
+
+export const printType = [
+  { label: 'Нормальный', value: 'normal' },
+  { label: 'Сжатый', value: 'compressed' },
+  { label: 'Очень сжатый', value: 'xcompressed' },
+]
 
 export const statusSLATitles = {
   yes: 'Просрочен',

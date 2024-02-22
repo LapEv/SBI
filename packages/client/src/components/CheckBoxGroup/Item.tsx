@@ -12,11 +12,17 @@ export const Item = memo(
     initChecked,
     oneChecked,
     props,
+    noEmpty,
   }: IItem) => {
     const [checked, setChecked] = useState<boolean>(initChecked! ?? false) // eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
     const theme = useTheme()
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+      if (oneChecked && noEmpty && checked) {
+        if (!event.target.checked) {
+          return
+        }
+      }
       setChecked(event.target.checked)
       onChooseItems(event.target.checked, id)
     }

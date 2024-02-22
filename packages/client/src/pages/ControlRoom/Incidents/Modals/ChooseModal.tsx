@@ -14,6 +14,7 @@ import {
 } from '.'
 import { ModalTitles } from '../data'
 import { ChooseModalProps } from './interfaces'
+import { PrintINC } from './PrintINC'
 
 export const ChooseModal = memo(
   React.forwardRef<unknown, ChooseModalProps>(
@@ -97,6 +98,13 @@ export const ChooseModal = memo(
               ref={ref}
               handleModal={handleModal}
               title={ModalTitles.changeTypesCompletedWork}
+            />
+          )}
+          {modalImage === 'printINC' && (
+            <PrintINC
+              ref={ref}
+              handleModal={handleModal}
+              title={ModalTitles.printINC}
             />
           )}
         </>

@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react'
+import React, { memo, useEffect, useState, useRef } from 'react'
 import {
   MUIDataTableMeta,
   MUIDataTableOptions,
@@ -6,7 +6,7 @@ import {
 } from 'mui-datatables'
 import { textLabels } from './data'
 import { DataTable } from 'components/DataTable'
-import { TableCell, TableRow, useTheme } from '@mui/material'
+import { TableCell, TableRow, useTheme, Modal } from '@mui/material'
 import { INC_Column, ITableMeta } from './interfaces'
 import {
   DenseTable,
@@ -19,12 +19,17 @@ import {
   StatusSLACell,
   SpacePartCell,
   FilterOptions,
-  DragTable,
+  PrintBar,
 } from './'
 import { useIncidents } from 'hooks/incidents/useINC'
 import { setFilter } from './Components/FilterOptions'
+import { ChooseModal } from './Modals'
 
 export const TableIncidents = memo(() => {
+  const modalClientRef = React.createRef()
+  const [modal, setModal] = useState<boolean>(false)
+  const [modalImage, setModalImage] = useState<string>('')
+
   const [{ incidents, countIncidents, filterListData }, { getINCs }] =
     useIncidents()
 
@@ -847,6 +852,21 @@ export const TableIncidents = memo(() => {
     }
   }
 
+  const onPrint = () => {
+    setModalImage('printINC')
+    setModal(true)
+    // return (
+    //   <Box sx={{ textAlign: 'center' }} style={{ display: 'none' }}>
+    //     <ReactToPrint
+    //       trigger={() => <Link>Print</Link>}
+    //       content={() => contentToPrint.current!}
+    //       children={<Box>temp</Box>}
+    //     />
+    //     <Box ref={contentToPrint} sx={{ textAlign: 'center' }}></Box>
+    //   </Box>
+    // )
+  }
+
   const options: MUIDataTableOptions = {
     filter: true,
     filterType: 'multiselect',
@@ -854,18 +874,18 @@ export const TableIncidents = memo(() => {
     responsive: 'standard',
     fixedHeader: false,
     fixedSelectColumn: false,
-    expandableRows: !dragTable ?? false,
-    // expandableRows: true,
+    // expandableRows: !dragTable ?? false,
+    expandableRows: true,
     draggableColumns: {
       enabled: true,
       transitionTime: 300,
     },
     print: false,
     serverSide: true,
-    selectableRows: dragTable ? 'none' : 'multiple',
-    selectableRowsOnClick: !dragTable ?? false,
-    // selectableRows: 'none',
-    // selectableRowsOnClick: false,
+    // selectableRows: dragTable ? 'none' : 'multiple',
+    // selectableRowsOnClick: !dragTable ?? false,
+    selectableRows: 'none',
+    selectableRowsOnClick: false,
     textLabels: textLabels,
     tableBodyHeight: '100%',
     columnOrder: getcolumnOrderStorage(),
@@ -914,11 +934,12 @@ export const TableIncidents = memo(() => {
     customToolbar: () => {
       return (
         <>
+          <PrintBar onPrint={onPrint} />
           <DenseTable
             denseTable={denseTable}
             setDenseTable={setDenseTableFunc}
           />
-          <DragTable dragTable={dragTable} setDragTable={setDragTable} />
+          {/* <DragTable dragTable={dragTable} setDragTable={setDragTable} /> */}
         </>
       )
     },
@@ -952,12 +973,30 @@ export const TableIncidents = memo(() => {
     console.log('incidents = ', incidents)
   }, [incidents])
 
+  const handleModal = (bool: boolean) => {
+    setModal(bool)
+  }
+
   return (
-    <DataTable
-      title={'Инциденты'}
-      data={incidents}
-      columns={tableColumn}
-      options={options}
-    />
+    <>
+      <Modal
+        open={modal}
+        onClose={setModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description">
+        <ChooseModal
+          ref={modalClientRef}
+          modalImage={modalImage}
+          handleModal={handleModal}
+        />
+      </Modal>
+
+      <DataTable
+        title={'Инциденты'}
+        data={incidents}
+        columns={tableColumn}
+        options={options}
+      />
+    </>
   )
 })

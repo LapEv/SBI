@@ -15,6 +15,7 @@ export interface DataList {
   comment?: string
   initChecked?: boolean
   oneChecked?: boolean
+  noEmpty?: boolean
 }
 
 export interface IItem extends DataList {

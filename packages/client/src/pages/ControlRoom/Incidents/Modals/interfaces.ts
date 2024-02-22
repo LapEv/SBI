@@ -1,4 +1,5 @@
 import { Options } from 'components/DropDown/interface'
+import { INC } from 'store/slices/incidents/interfaces'
 
 export interface ChooseModalProps {
   modalImage?: string

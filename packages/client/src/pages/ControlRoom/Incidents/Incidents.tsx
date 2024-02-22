@@ -15,10 +15,8 @@ import { useIncidents } from 'hooks/incidents/useINC'
 export const IncidentsPage = memo(() => {
   const modalClientRef = React.createRef()
   const [{ admin }, { getFieldEngineers, getDispatchers }] = useAuth()
-  const [
-    { filterListData },
-    { getIncidentStatuses, getTypesCompletedWork, getFilter },
-  ] = useIncidents()
+  const [_, { getIncidentStatuses, getTypesCompletedWork, getFilter }] =
+    useIncidents()
   const [modal, setModal] = useState<boolean>(false)
   const [modalImage, setModalImage] = useState<string>('')
 

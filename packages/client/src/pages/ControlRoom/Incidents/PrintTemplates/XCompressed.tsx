@@ -37,6 +37,7 @@ export const XCompressed = memo(() => {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-end',
+    height: 15,
     alignItems: 'flex-end',
   }
 

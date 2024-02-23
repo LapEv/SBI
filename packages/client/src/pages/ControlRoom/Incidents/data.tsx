@@ -90,9 +90,9 @@ export const ModalTitles = {
 }
 
 export const printType = [
-  { label: 'Нормальный', value: 'normal' },
-  { label: 'Сжатый', value: 'compressed' },
-  { label: 'Очень сжатый', value: 'xcompressed' },
+  { label: 'Нормальный (вертикальная печать)', value: 'normal' },
+  { label: 'Сжатый (горизонтальная печать)', value: 'compressed' },
+  { label: 'Очень сжатый (вертикальная печать)', value: 'xcompressed' },
 ]
 
 export const statusSLATitles = {

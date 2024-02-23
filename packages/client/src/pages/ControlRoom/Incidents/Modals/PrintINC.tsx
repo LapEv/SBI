@@ -39,8 +39,6 @@ export const PrintINC = memo(
         return
       }
 
-      console.log('selectedType = ', selectedType)
-
       return (
         <Box
           sx={{ ...modalStyle, paddingLeft: 5 }}

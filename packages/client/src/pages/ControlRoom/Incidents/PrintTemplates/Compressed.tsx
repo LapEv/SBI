@@ -7,13 +7,13 @@ export const Compressed = memo(() => {
 
   const container = {
     width: '100%',
-    height: 177,
+    height: 185,
     border: '1px solid #000000',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    p: 0.5,
+    p: 1,
   }
 
   const containerData = {
@@ -29,7 +29,7 @@ export const Compressed = memo(() => {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'flex-end',
-    height: 15,
+    height: 17,
   }
 
   const cellRight = {
@@ -38,16 +38,17 @@ export const Compressed = memo(() => {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
+    height: 17,
   }
 
   const label = {
-    fontSize: 10,
+    fontSize: 11,
     verticalAlign: 'center',
   }
 
   const data = {
     ml: 1,
-    fontSize: 10,
+    fontSize: 12,
     fontWeight: 'bold',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
@@ -132,7 +133,7 @@ export const Compressed = memo(() => {
             <Box
               sx={{
                 p: 1,
-                pb: 0.5,
+                // pb: 0.5,
                 pt: index <= 1 ? 1 : 0.5,
                 pl: index % 2 === 0 ? 1 : 0.5,
                 pr: index % 2 === 0 ? 0.5 : 1,

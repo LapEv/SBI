@@ -1,21 +1,20 @@
 import React, { memo, useRef } from 'react'
 import { ChooseModalProps } from './interfaces'
 import { useState, SyntheticEvent } from 'react'
-import { Box, Typography, useTheme } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { modalStyle, boxDataModal } from 'static/styles'
 import { Item } from 'components/CheckBoxGroup'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useIncidents } from 'hooks/incidents/useINC'
-import { TypesOfWork } from 'store/slices/incidents/interfaces'
 import ReactToPrint, { useReactToPrint } from 'react-to-print'
 import { printType } from '../data'
+import { Normal } from '../PrintTemplates/Normal'
 
 export const PrintINC = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
       /* eslint-enable @typescript-eslint/no-unused-vars */
-      const [{ incidents }] = useIncidents()
       const [selectedType, setSelectedType] = useState<string>('normal')
 
       const contentToPrint = useRef(null)
@@ -73,7 +72,7 @@ export const PrintINC = memo(
           <Box sx={{ textAlign: 'center' }} style={{ display: 'none' }}>
             <ReactToPrint content={() => contentToPrint.current!} />
             <Box ref={contentToPrint} sx={{ textAlign: 'center' }}>
-              <Typography variant="h4">Booking details</Typography>
+              <Normal />
             </Box>
           </Box>
         </Box>

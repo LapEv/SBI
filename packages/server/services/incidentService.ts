@@ -889,35 +889,40 @@ export class incidentService {
       where: { active: true },
       include: this.includes,
     })
-    const statusList = [
-      ...new Set(incs.map(item => item.IncindentStatus.statusINC)),
-    ]
-    const contractList = [...new Set(incs.map(item => item.Contract.contract))]
-    const clientsList = [...new Set(incs.map(item => item.Client.client))]
-    const objectsList = [...new Set(incs.map(item => item.Object.object))]
-    const addressList = [
-      ...new Set(incs.map(item => item.Object.Address.address)),
-    ]
-    const regionList = [...new Set(incs.map(item => item.Object.Region.region))]
-    const userAcceptedList = [...new Set(incs.map(item => item.User.shortName))]
-    const equipmentList = [
-      ...new Set(incs.map(item => item.ClassifierEquipment.equipment)),
-    ]
-    const modelList = [...new Set(incs.map(item => item.ClassifierModel.model))]
-    const executorList = [
-      ...new Set(
-        incs.map(item => (item.UserExecutor ? item.UserExecutor.shortName : ''))
-      ),
-    ]
-    const responsibleList = [
-      ...new Set(
-        incs.map(item =>
-          item.UserResponsible ? item.UserResponsible.shortName : ''
-        )
-      ),
-    ]
-    const overdueList = [...new Set(incs.map(item => item.overdue))]
-    const slaList = [...new Set(incs.map(item => item.SLA.sla))]
+    const statusList =
+      [...new Set(incs.map(item => item.IncindentStatus.statusINC))] ?? []
+    const contractList =
+      [...new Set(incs.map(item => item.Contract.contract))] ?? []
+    const clientsList = [...new Set(incs.map(item => item.Client.client))] ?? []
+    const objectsList = [...new Set(incs.map(item => item.Object.object))] ?? []
+    const addressList =
+      [...new Set(incs.map(item => item.Object.Address.address))] ?? []
+    const regionList =
+      [...new Set(incs.map(item => item.Object.Region.region))] ?? []
+    const userAcceptedList =
+      [...new Set(incs.map(item => item.User.shortName))] ?? []
+    const equipmentList =
+      [...new Set(incs.map(item => item.ClassifierEquipment.equipment))] ?? []
+    const modelList =
+      [...new Set(incs.map(item => item.ClassifierModel.model))] ?? []
+    const executorList =
+      [
+        ...new Set(
+          incs.map(item =>
+            item.UserExecutor ? item.UserExecutor.shortName : ''
+          )
+        ),
+      ] ?? []
+    const responsibleList =
+      [
+        ...new Set(
+          incs.map(item =>
+            item.UserResponsible ? item.UserResponsible.shortName : ''
+          )
+        ),
+      ] ?? []
+    const overdueList = [...new Set(incs.map(item => item.overdue))] ?? []
+    const slaList = [...new Set(incs.map(item => item.SLA.sla))] ?? []
 
     return {
       status: statusList,

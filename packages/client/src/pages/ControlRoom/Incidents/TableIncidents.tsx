@@ -33,6 +33,8 @@ export const TableIncidents = memo(() => {
   const [{ incidents, countIncidents, filterListData }, { getINCs }] =
     useIncidents()
 
+  console.log('filterListData = ', filterListData)
+
   const [heightINCData, setHeightINCData] = useState<number>(0)
   const [filterDialogOpen, setFilterDialogOpen] = useState<boolean>(false)
   const [denseTable, setDenseTable] = useState<boolean>(

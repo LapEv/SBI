@@ -944,9 +944,10 @@ export class incidentService {
   getINCs = async (_req: Request, res: Response) => {
     try {
       const counts = await IncidentRepos.count({})
+      const filterListData = await this.getFilterListFunc()
 
       if (counts === 0) {
-        res.status(200).json({ incs: [], count: counts })
+        res.status(200).json({ incs: [], count: counts, filterListData })
         return
       }
       const { limit, nameSort, direction, page, filterOptions } = _req.query
@@ -954,7 +955,6 @@ export class incidentService {
       const offset = Number(page) * Number(limit) ?? 1
       const order = getOrder(nameSort as string, direction as string)
 
-      console.log('filterData = ', filterData)
       const incs = await IncidentRepos.findAll({
         where: { [Op.and]: filterData },
         // include: { all: true, nested: true },
@@ -965,7 +965,6 @@ export class incidentService {
         offset,
       })
       this.ResetIncludesAddress
-      const filterListData = await this.getFilterListFunc()
       const count = await IncidentRepos.count({
         where: { [Op.and]: filterData },
       })

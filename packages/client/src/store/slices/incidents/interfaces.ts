@@ -36,6 +36,8 @@ export interface INC {
   timeClose: string
   executor: string
   responsible: string
+  applicant: string
+  applicantContacts: string
   userClosingCheck: string
   userClosing: string
   description: string
@@ -233,27 +235,29 @@ export interface AnswerTypesCompletedWork {
   type: string
 }
 
+export interface FilterListData {
+  status: string[]
+  client: string[]
+  contract: string[]
+  object: string[]
+  address: string[]
+  region: string[]
+  userAccepted: string[]
+  equipment: string[]
+  model: string[]
+  executor: string[]
+  responsible: string[]
+  overdue: string[]
+  sla: string[]
+}
+
 export type INCState = {
   countIncidents: number
   incidents: INC[]
   incStatuses: INCStatuses[]
   typesOfWork: TypesOfWork[]
   typesCompletedWork: TypesCompletedWork[]
-  filterListData: {
-    status: string[]
-    client: string[]
-    contract: string[]
-    object: string[]
-    address: string[]
-    region: string[]
-    userAccepted: string[]
-    equipment: string[]
-    model: string[]
-    executor: string[]
-    responsible: string[]
-    overdue: string[]
-    sla: string[]
-  }
+  filterListData: FilterListData
   activeINC: string
   isLoadingINC: boolean
   error?: string

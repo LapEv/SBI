@@ -119,7 +119,6 @@ export const incidentsSlise = createSlice({
     ) => {
       state.isLoadingINC = false
       state.error = ''
-      console.log('action.payload = ', action.payload)
       state.filterListData = action.payload
     },
     [getFilter.pending.type]: state => {
@@ -147,8 +146,6 @@ export const incidentsSlise = createSlice({
       state.isLoadingINC = false
       state.error = ''
       const { incs, count, filterListData } = action.payload
-      console.log('filterListData = ', filterListData)
-
       state.incidents = createINCData(incs)
       state.countIncidents = count
       state.filterListData = filterListData

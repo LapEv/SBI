@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState, useRef } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import {
   MUIDataTableMeta,
   MUIDataTableOptions,
@@ -78,7 +78,6 @@ export const TableIncidents = memo(() => {
         },
       },
     },
-
     {
       name: 'incident',
       label: 'Инцидент *',
@@ -127,7 +126,6 @@ export const TableIncidents = memo(() => {
         },
       },
     },
-
     {
       name: 'numberINC',
       label: 'Номер *',
@@ -176,7 +174,6 @@ export const TableIncidents = memo(() => {
         },
       },
     },
-
     {
       name: 'status',
       label: 'Статус *',
@@ -784,6 +781,7 @@ export const TableIncidents = memo(() => {
   }
 
   const handleTableInit = (action: string, tableState: MUIDataTableState) => {
+    console.log('handleTableInit')
     const columnViewStorage = localStorage
       .getItem('IncidentsViewColumns')
       ?.split(',')
@@ -857,16 +855,6 @@ export const TableIncidents = memo(() => {
   const onPrint = () => {
     setModalImage('printINC')
     setModal(true)
-    // return (
-    //   <Box sx={{ textAlign: 'center' }} style={{ display: 'none' }}>
-    //     <ReactToPrint
-    //       trigger={() => <Link>Print</Link>}
-    //       content={() => contentToPrint.current!}
-    //       children={<Box>temp</Box>}
-    //     />
-    //     <Box ref={contentToPrint} sx={{ textAlign: 'center' }}></Box>
-    //   </Box>
-    // )
   }
 
   const options: MUIDataTableOptions = {
@@ -973,6 +961,7 @@ export const TableIncidents = memo(() => {
 
   useEffect(() => {
     console.log('incidents = ', incidents)
+    // setTableColumn()
   }, [incidents])
 
   const handleModal = (bool: boolean) => {

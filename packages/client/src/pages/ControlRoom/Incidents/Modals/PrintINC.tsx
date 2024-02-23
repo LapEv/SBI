@@ -7,7 +7,7 @@ import { Item } from 'components/CheckBoxGroup'
 import { ButtonsModalSection } from 'components/Buttons'
 import ReactToPrint, { useReactToPrint } from 'react-to-print'
 import { printType } from '../data'
-import { Normal, Comressed, XComressed } from '../'
+import { Normal, Compressed, XCompressed } from '../'
 
 export const PrintINC = memo(
   React.forwardRef<unknown, ChooseModalProps>(
@@ -69,8 +69,8 @@ export const PrintINC = memo(
             <ReactToPrint content={() => contentToPrint.current!} />
             <Box ref={contentToPrint} sx={{ textAlign: 'center' }}>
               {selectedType === 'normal' && <Normal />}
-              {selectedType === 'compressed' && <Comressed />}
-              {selectedType === 'xcompressed' && <XComressed />}
+              {selectedType === 'compressed' && <Compressed />}
+              {selectedType === 'xcompressed' && <XCompressed />}
             </Box>
           </Box>
         </Box>

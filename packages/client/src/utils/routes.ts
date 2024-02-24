@@ -11,5 +11,8 @@ export enum Routes {
   ServiceLevel = 'servicelevel',
   Users = 'users',
   Clients = 'clients',
+  ClientAddINC = 'ClientAddINC',
+  CheckINC = 'CheckINC',
+  toTechSupport = 'toTechSupport',
   NotFounde = '*',
 }

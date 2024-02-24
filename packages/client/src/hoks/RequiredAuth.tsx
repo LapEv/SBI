@@ -7,6 +7,8 @@ export function RequiredAuth({ children }: { children: JSX.Element }) {
   const [{ user }] = useAuth()
   const { pathname } = useLocation()
 
+  console.log('user = ', user)
+
   if (isEmptyObjField(user))
     return (
       <Navigate to={`/${Routes.Login}`} replace state={{ from: pathname }} />

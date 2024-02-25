@@ -4,6 +4,7 @@ export enum Routes {
   SignUp = 'signup',
   Profile = 'profile',
   ControlRoom = 'controlroom',
+  EngineerRoom = 'engineerRoom',
   Incidents = 'Incidents',
   IncidentsConfirm = 'IncidentsConfirm',
   Warehouse = 'warehouse',
@@ -11,8 +12,8 @@ export enum Routes {
   ServiceLevel = 'servicelevel',
   Users = 'users',
   Clients = 'clients',
-  ClientAddINC = 'ClientAddINC',
-  CheckINC = 'CheckINC',
+  AddClientIncident = 'AddClientIncident',
+  CheckIncident = 'CheckIncident',
   toTechSupport = 'toTechSupport',
   NotFounde = '*',
 }

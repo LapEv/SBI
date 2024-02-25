@@ -39,6 +39,8 @@ import {
   getFilter,
 } from 'api/incidents'
 import { convertDateToStringFromDB } from 'utils/convertDate'
+import { CheckUser, signin } from 'api/user'
+import { ICheckUser } from 'storeAuth/interfaces'
 
 const initialState: INCState = {
   countIncidents: 0,
@@ -113,6 +115,18 @@ export const incidentsSlise = createSlice({
     },
   },
   extraReducers: {
+    [signin.fulfilled.type]: (state, action: PayloadAction<ICheckUser>) => {
+      state.isLoadingINC = false
+      state.error = ''
+      const { filterData } = action.payload
+      state.filterListData = filterData
+    },
+    [CheckUser.fulfilled.type]: (state, action: PayloadAction<ICheckUser>) => {
+      state.isLoadingINC = false
+      state.error = ''
+      const { filterData } = action.payload
+      state.filterListData = filterData
+    },
     [getFilter.fulfilled.type]: (
       state,
       action: PayloadAction<AnswerGetFilter>

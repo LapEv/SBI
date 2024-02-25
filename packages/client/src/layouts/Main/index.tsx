@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { styled, Theme, CSSObject } from '@mui/material/styles'
 import { Box, Divider, Drawer as MuiDrawer, useTheme } from '@mui/material'
 import { NavBar } from './navBar'
@@ -6,6 +6,8 @@ import { SideBar } from './sideBar'
 import { drawerWidth } from './drawerBarData'
 import { DrawerHeader } from './drawerHeader'
 import { Outlet } from 'react-router-dom'
+import { useAuth } from 'hooks/auth/useAuth'
+import { useApp } from 'hooks/app/useApp'
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -48,13 +50,33 @@ const Drawer = styled(MuiDrawer, {
 }))
 
 export const MainLayout = () => {
+  const boxRef = useRef<HTMLDivElement>(null)
+  const [_, { setDataWidth }] = useApp()
   const theme = useTheme()
   const [open, setOpen] = useState<boolean>(true)
-  const toggleDrawer = () => {
+  const [width, setWidth] = useState<string>(`calc(100% - ${drawerWidth}px)`)
+  const toggleDrawer = (check: boolean) => {
     setOpen(prev => !prev)
+    const widthCheck = check
+      ? `calc(100% - ${drawerWidth}px)`
+      : `calc(100% - ${theme.spacing(8)} - 1px)`
+    setWidth(widthCheck)
+    setTimeout(() => {
+      setDataWidth(boxRef.current!.clientWidth)
+    }, 100)
   }
+  const [{ user }] = useAuth()
+
+  useEffect(() => {
+    console.log('boxRef.current = ', boxRef)
+    setTimeout(() => {
+      setDataWidth(boxRef.current!.offsetWidth)
+    }, 100)
+  }, [])
 
   return (
+    // <>
+    //   {user && user.status ? (
     <Box sx={{ display: 'flex', width: '100%' }}>
       <NavBar />
       <Drawer
@@ -66,10 +88,9 @@ export const MainLayout = () => {
         <SideBar open={open} />
       </Drawer>
       <Box
+        ref={boxRef}
         sx={{
-          width: open
-            ? `calc(100% - ${drawerWidth}px)`
-            : `calc(100% - ${theme.spacing(8)} - 1px)`,
+          width,
           minHeight: '100vh',
           display: 'flex',
           justifyContent: 'center',
@@ -79,5 +100,19 @@ export const MainLayout = () => {
         <Outlet />
       </Box>
     </Box>
+    //   ) : (
+    //     <Box
+    //       ref={boxRef}
+    //       sx={{
+    //         display: 'flex',
+    //         width: '100%',
+    //         height: '100vH',
+    //         justifyContent: 'center',
+    //         alignItems: 'center',
+    //       }}>
+    //       <Outlet />
+    //     </Box>
+    //   )}
+    // </>
   )
 }

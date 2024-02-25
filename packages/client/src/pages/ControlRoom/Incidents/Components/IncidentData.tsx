@@ -1,6 +1,7 @@
 import React, { memo, useEffect } from 'react'
 import { Box, styled } from '@mui/material'
 import { ThemeMode } from '../../../../themes/themeConfig'
+import { useApp } from 'hooks/app/useApp'
 
 export interface IncidentDataProps {
   values: any
@@ -80,6 +81,7 @@ export const IncidentData =
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const boxRef = React.createRef<HTMLDivElement>()
     // const [top, setTop] = useState<number>()
+    const [{ dataWidth }] = useApp()
 
     useEffect(() => {
       setHeight(boxRef?.current?.clientHeight ?? 0)
@@ -90,14 +92,13 @@ export const IncidentData =
       <Box
         ref={boxRef}
         sx={{
-          position: 'fixed',
+          position: 'absolute',
           display: 'flex',
           flexWrap: 'wrap',
           flexDirection: 'row',
-          width: 'auto',
           justifyContent: 'flex-start',
           alignItems: 'flex-start',
-          minWidth: 625,
+          width: dataWidth,
           // p: 1,
           pl: 1,
           pt: 1,
@@ -202,7 +203,7 @@ export const IncidentData =
             }}>{`  ${values.comment ?? ''}`}</StyledBox>
         </StyledBoxContainer> */}
         </Box>
-        <Box sx={{ width: 'auto' }}>
+        {/* <Box sx={{ width: 'auto' }}>
           <StyledBoxContainer>
             <StyledBoxLabel>Время регистрации: </StyledBoxLabel>
             <StyledBox>{`  ${values.timeRegistration ?? ''}`}</StyledBox>
@@ -263,7 +264,7 @@ export const IncidentData =
             <StyledBoxLabel>Оценка: </StyledBoxLabel>
             <StyledBox>{`  ${values.rating ?? ''}`}</StyledBox>
           </StyledBoxContainer>
-        </Box>
+        </Box> */}
       </Box>
     )
   })

@@ -1,3 +1,5 @@
+import { FilterListData } from '../incidents/interfaces'
+
 export interface User {
   id?: string
   username?: string
@@ -16,6 +18,13 @@ export interface User {
   id_division?: string
   id_department?: string
   rolesGroup?: string
+  status?: string
+}
+
+export interface ICheckUser {
+  user: User
+  filterData: FilterListData
+  token: string
 }
 
 export interface Users {

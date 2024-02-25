@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs'
 import { auth } from '../data/auth'
 import { generateAccessToken } from '../utils/generateAccessToken'
 import { Op } from 'sequelize'
+import { incidentService } from './incidentService'
 
 export class userService {
   setUser = async (_req: Request, res: Response) => {
@@ -50,35 +51,48 @@ export class userService {
         .json({ error: [auth.notification.errorRegistration, err] })
     }
   }
-  login = (_req: Request, res: Response) => {
-    const { username, password } = _req.body
-    userRepos
-      .findAll({
+  login = async (_req: Request, res: Response) => {
+    try {
+      const { username, password } = _req.body
+      const user = await userRepos.findOne({
         where: { username: username },
       })
-      .then(user => {
-        const validPassword = bcrypt.compareSync(password, user[0].password)
-        if (!validPassword) {
-          return res
-            .status(400)
-            .json({ message: auth.notification.invalidPassword })
-        }
-        const token = generateAccessToken(
-          user[0].id,
-          user[0].rolesGroup,
-          user[0].username
-        )
-        const userData = user[0]
+      const validPassword = bcrypt.compareSync(password, user?.password)
+      if (!validPassword) {
+        return res
+          .status(400)
+          .json({ message: auth.notification.invalidPassword })
+      }
+      const token = generateAccessToken(
+        user?.id,
+        user?.rolesGroup,
+        user?.username
+      )
+      if (
+        user &&
+        (user.rolesGroup === 'ADMIN' ||
+          user.rolesGroup === 'SUPERADMIN' ||
+          user.rolesGroup === 'Dispatcher')
+      ) {
+        const service = new incidentService()
+        const filterData = await service.getFilterListFunc()
         return res.json({
           token,
-          ...userData.dataValues,
+          user,
+          filterData,
         })
+      }
+
+      return res.json({
+        token,
+        user,
       })
-      .catch(err =>
-        res
-          .status(400)
-          .json({ message: `${auth.notification.userNotFound}, ${err}` })
-      )
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      console.log('err = ', err)
+      res.status(500).json({ error: ['db error', err] })
+    }
   }
   changePassword = async (_req: Request, res: Response) => {
     const { oldPassword, newPassword, id } = _req.body
@@ -142,26 +156,33 @@ export class userService {
         .json({ error: [auth.notification.errorChangePassword, err] })
     }
   }
-  check = (_req: Request, res: Response) => {
+  check = async (_req: Request, res: Response) => {
     const { username, id, roles } = _req.body
     try {
       const token = generateAccessToken(id, roles, username)
-      userRepos
-        .findAll({
-          where: { id: id },
+      const user = await userRepos.findOne({
+        where: { id: id },
+      })
+
+      if (
+        user &&
+        (user.rolesGroup === 'ADMIN' ||
+          user.rolesGroup === 'SUPERADMIN' ||
+          user.rolesGroup === 'Dispatcher')
+      ) {
+        const service = new incidentService()
+        const filterData = await service.getFilterListFunc()
+        return res.json({
+          token,
+          user,
+          filterData,
         })
-        .then(user => {
-          const userData = user[0]
-          return res.json({
-            token,
-            ...userData.dataValues,
-          })
-        })
-        .catch(err =>
-          res
-            .status(400)
-            .json({ message: `${auth.notification.userNotFound}, ${err}` })
-        )
+      }
+
+      return res.json({
+        token,
+        user,
+      })
     } catch (err) {
       if (err instanceof Error) {
         return res

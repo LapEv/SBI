@@ -12,9 +12,10 @@ import { Box } from '@mui/material'
 import { isEmptyObjField } from 'utils/isEmptyObject'
 import { checkLoading } from 'utils/checkLoading'
 import { useAuth } from 'hooks/auth/useAuth'
+import { useIncidents } from 'hooks/incidents/useINC'
 
 function App() {
-  const [{ user }] = useAuth()
+  const [{ user }, { checkUser }] = useAuth()
   useEffect(() => {
     const fetchServerData = async () => {
       const url = `http://localhost:${__SERVER_PORT__}`
@@ -23,6 +24,10 @@ function App() {
       console.log(data)
     }
     fetchServerData()
+  }, [])
+
+  useEffect(() => {
+    checkUser()
   }, [])
 
   return (
@@ -80,6 +85,14 @@ function App() {
                   }
                 />
                 <Route
+                  path={Paths.EngineerRoom}
+                  element={
+                    <RequiredAuth>
+                      <Pages.EngineerPage />
+                    </RequiredAuth>
+                  }
+                />
+                <Route
                   path={Paths.Warehouse}
                   element={
                     <RequiredAuth>
@@ -116,6 +129,30 @@ function App() {
                   element={
                     <RequiredAuth>
                       <Pages.ServiceLevel />
+                    </RequiredAuth>
+                  }
+                />
+                <Route
+                  path={Paths.AddClientIncident}
+                  element={
+                    <RequiredAuth>
+                      <Pages.AddClientIncident />
+                    </RequiredAuth>
+                  }
+                />
+                <Route
+                  path={Paths.CheckIncident}
+                  element={
+                    <RequiredAuth>
+                      <Pages.ClientIncidentStatus />
+                    </RequiredAuth>
+                  }
+                />
+                <Route
+                  path={Paths.toTechSupport}
+                  element={
+                    <RequiredAuth>
+                      <Pages.ClientTechSupport />
                     </RequiredAuth>
                   }
                 />

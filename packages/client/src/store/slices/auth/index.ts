@@ -11,7 +11,13 @@ import {
   GetDispatchers,
 } from 'api/user'
 import { signin, signout, signup } from 'api/user'
-import { AnswerUser, AuthState, User, UserStatus } from './interfaces'
+import {
+  AnswerUser,
+  AuthState,
+  ICheckUser,
+  User,
+  UserStatus,
+} from './interfaces'
 
 const initialState: AuthState = {
   user: {},
@@ -35,16 +41,18 @@ export const authSlise = createSlice({
     },
   },
   extraReducers: {
-    [signin.fulfilled.type]: (state, action: PayloadAction<User>) => {
+    [signin.fulfilled.type]: (state, action: PayloadAction<ICheckUser>) => {
       state.isLoadingAuth = false
       state.error = ''
-      state.user = action.payload
-      state.userData = action.payload
+      const { user } = action.payload
+      state.user = user
+      state.userData = user
+      localStorage.setItem('theme', user.theme ?? 'light')
       state.admin =
-        (state.user.rolesGroup?.includes('ADMIN') ||
-          state.user.rolesGroup?.includes('SUPERADMIN')) ??
+        (user.rolesGroup?.includes('ADMIN') ||
+          user.rolesGroup?.includes('SUPERADMIN')) ??
         false
-      state.superAdmin = state.user.rolesGroup?.includes('SUPERADMIN') ?? false
+      state.superAdmin = user.rolesGroup?.includes('SUPERADMIN') ?? false
     },
     [signin.pending.type]: state => {
       state.isLoadingAuth = true
@@ -136,17 +144,18 @@ export const authSlise = createSlice({
       state.isLoadingAuth = false
       state.error = action.payload
     },
-    [CheckUser.fulfilled.type]: (state, action: PayloadAction<User>) => {
+    [CheckUser.fulfilled.type]: (state, action: PayloadAction<ICheckUser>) => {
       state.isLoadingAuth = false
       state.error = ''
-      state.user = action.payload
-      state.userData = action.payload
-      localStorage.setItem('theme', action.payload.theme ?? 'light')
+      const { user } = action.payload
+      state.user = user
+      state.userData = user
+      localStorage.setItem('theme', user.theme ?? 'light')
       state.admin =
-        (state.user.rolesGroup?.includes('ADMIN') ||
-          state.user.rolesGroup?.includes('SUPERADMIN')) ??
+        (user.rolesGroup?.includes('ADMIN') ||
+          user.rolesGroup?.includes('SUPERADMIN')) ??
         false
-      state.superAdmin = state.user.rolesGroup?.includes('SUPERADMIN') ?? false
+      state.superAdmin = user.rolesGroup?.includes('SUPERADMIN') ?? false
     },
     [CheckUser.pending.type]: state => {
       state.isLoadingAuth = true

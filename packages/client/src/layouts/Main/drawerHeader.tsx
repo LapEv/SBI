@@ -5,7 +5,7 @@ import { LeftArrow, RightArrow } from 'layouts/Main/icons'
 
 interface SideBarProps {
   open?: boolean
-  toggleDrawer: () => void
+  toggleDrawer: (check: boolean) => void
 }
 
 export const DrawerHeader: FC<SideBarProps> = ({ open, toggleDrawer }) => {
@@ -53,7 +53,7 @@ export const DrawerHeader: FC<SideBarProps> = ({ open, toggleDrawer }) => {
         {open ? <MUITypography>SBI</MUITypography> : <></>}
       </Box>
 
-      <IconButton onClick={toggleDrawer}>
+      <IconButton onClick={() => toggleDrawer(!open)}>
         {open ? <LeftArrow /> : <RightArrow />}
       </IconButton>
     </DrawerHeader>

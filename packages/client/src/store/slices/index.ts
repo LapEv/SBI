@@ -10,6 +10,7 @@ import { contractsReducer } from './contracts'
 import { objectsReducer } from './objects'
 import { incidentsReducer } from './incidents'
 import { filesReducer } from './files'
+import { appReducer } from './app'
 
 export const rootReducer = {
   auth: authReducer,
@@ -24,4 +25,5 @@ export const rootReducer = {
   objects: objectsReducer,
   incidents: incidentsReducer,
   files: filesReducer,
+  app: appReducer,
 }

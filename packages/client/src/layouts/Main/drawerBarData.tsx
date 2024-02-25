@@ -11,15 +11,25 @@ import { Routes } from 'utils/routes'
 import Diversity3Icon from '@mui/icons-material/Diversity3'
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber'
+import AddCardIcon from '@mui/icons-material/AddCard'
+import AssignmentIcon from '@mui/icons-material/Assignment'
+import HelpCenterIcon from '@mui/icons-material/HelpCenter'
+import EngineeringIcon from '@mui/icons-material/Engineering'
 
 export const menuData = [
-  { text: 'Главная', icon: <Main />, to: Routes.Index, type: 'component' },
+  // { text: 'Главная', icon: <Main />, to: Routes.Index, type: 'component' },
   {
     text: 'Диспетчерская',
     icon: <ControlRoom />,
     // to: Routes.ControlRoom,
     to: '',
     type: 'menu',
+  },
+  {
+    text: 'Инженерская',
+    icon: <EngineeringIcon />,
+    to: Routes.EngineerRoom,
+    type: 'component',
   },
   {
     text: 'Склад',
@@ -59,12 +69,94 @@ export const menuData = [
   },
 ]
 
+export const DispatcherData = [
+  { text: 'Главная', icon: <Main />, to: Routes.Index, type: 'component' },
+  {
+    text: 'Диспетчерская',
+    icon: <ControlRoom />,
+    // to: Routes.ControlRoom,
+    to: '',
+    type: 'menu',
+  },
+  {
+    text: 'Пользователи',
+    icon: <Users />,
+    to: Routes.Users,
+    type: 'component',
+  },
+  {
+    text: 'Профиль',
+    icon: <Profile />,
+    to: `/${Routes.Profile}`,
+    type: 'component',
+  },
+]
+
+export const FieldEngineersData = [
+  { text: 'Главная', icon: <Main />, to: Routes.Index, type: 'component' },
+  {
+    text: 'Инженерская',
+    icon: <EngineeringIcon />,
+    to: Routes.EngineerRoom,
+    type: 'component',
+  },
+  {
+    text: 'Пользователи',
+    icon: <Users />,
+    to: Routes.Users,
+    type: 'component',
+  },
+  {
+    text: 'Профиль',
+    icon: <Profile />,
+    to: `/${Routes.Profile}`,
+    type: 'component',
+  },
+]
+
+export const OtherData = [
+  { text: 'Главная', icon: <Main />, to: Routes.Index, type: 'component' },
+  {
+    text: 'Пользователи',
+    icon: <Users />,
+    to: Routes.Users,
+    type: 'component',
+  },
+  {
+    text: 'Профиль',
+    icon: <Profile />,
+    to: `/${Routes.Profile}`,
+    type: 'component',
+  },
+]
+
 export const controlRoomMenuData = [
   { text: 'Инциденты', icon: <ListAltIcon />, to: Routes.Incidents },
   {
     text: 'Подтверждения',
     icon: <ConfirmationNumberIcon />,
     to: Routes.IncidentsConfirm,
+  },
+]
+
+export const clientData = [
+  {
+    text: 'Оставить заявку',
+    icon: <AddCardIcon />,
+    to: Routes.AddClientIncident,
+    type: 'component',
+  },
+  {
+    text: 'Статуст инцидента',
+    icon: <AssignmentIcon />,
+    to: Routes.CheckIncident,
+    type: 'component',
+  },
+  {
+    text: 'Написать',
+    icon: <HelpCenterIcon />,
+    to: Routes.toTechSupport,
+    type: 'component',
   },
 ]
 

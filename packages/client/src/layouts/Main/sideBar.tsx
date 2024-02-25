@@ -11,12 +11,20 @@ import {
   styled,
   Collapse,
 } from '@mui/material'
-import { controlRoomMenuData, menuData } from './drawerBarData'
+import {
+  DispatcherData,
+  FieldEngineersData,
+  OtherData,
+  clientData,
+  controlRoomMenuData,
+  menuData,
+} from './drawerBarData'
 import { Avatar } from 'layouts/Main/icons/Avatar'
 import { Routes } from 'utils/routes'
 import { useAuth } from 'hooks/auth/useAuth'
 import { LinkButton } from 'components/LinkButton'
 import { RotateButton } from 'components/Buttons'
+import { User } from 'storeAuth/interfaces'
 
 interface SideBarProps {
   open?: boolean
@@ -61,8 +69,14 @@ const ControlRoomListItem = ({
   )
 }
 
+interface DataItems {
+  user: User
+  open: boolean
+}
+
 const NanListItem = ({ icon, text, to, isExpanded }: NanListItemProps) => {
   const [openControl, setOpenControl] = useState<boolean>(false)
+
   return (
     <>
       {text === 'Диспетчерская' ? (
@@ -139,12 +153,62 @@ const NanListItem = ({ icon, text, to, isExpanded }: NanListItemProps) => {
   )
 }
 
-export function SideBar({ open = false }: SideBarProps) {
-  const [{ user }, { checkUser, signout }] = useAuth()
+const DataItems = ({ user, open }: DataItems) => {
+  if (user && user.status === 'employee' && user.rolesGroup === 'Dispatcher') {
+    return (
+      <>
+        {DispatcherData.map(value => (
+          <NanListItem key={value.text} {...value} isExpanded={open} />
+        ))}
+      </>
+    )
+  }
+  if (
+    user &&
+    user.status === 'employee' &&
+    user.rolesGroup === 'FieldEngineers'
+  ) {
+    return (
+      <>
+        {FieldEngineersData.map(value => (
+          <NanListItem key={value.text} {...value} isExpanded={open} />
+        ))}
+      </>
+    )
+  }
+  if (
+    user &&
+    user.status === 'employee' &&
+    (user.rolesGroup === 'ADMIN' || user.rolesGroup === 'SUPERADMIN')
+  ) {
+    return (
+      <>
+        {menuData.map(value => (
+          <NanListItem key={value.text} {...value} isExpanded={open} />
+        ))}
+      </>
+    )
+  }
+  if (user && user.status === 'client') {
+    return (
+      <>
+        {clientData.map(value => (
+          <NanListItem key={value.text} {...value} isExpanded={open} />
+        ))}
+      </>
+    )
+  }
+  return (
+    <>
+      {OtherData.map(value => (
+        <NanListItem key={value.text} {...value} isExpanded={open} />
+      ))}
+    </>
+  )
+}
 
-  useEffect(() => {
-    checkUser()
-  }, [])
+export function SideBar({ open = false }: SideBarProps) {
+  const [{ user }, { signout }] = useAuth()
 
   const MUITypography = styled(Typography)(({ theme }) => ({
     fontWeight: 'bold',
@@ -197,9 +261,7 @@ export function SideBar({ open = false }: SideBarProps) {
         sx={{
           mt: 3,
         }}>
-        {menuData.map(value => (
-          <NanListItem key={value.text} {...value} isExpanded={open} />
-        ))}
+        <DataItems user={user} open={open} />
       </Box>
       <Box
         sx={{

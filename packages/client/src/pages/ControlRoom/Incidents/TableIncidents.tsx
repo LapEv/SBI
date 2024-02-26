@@ -68,8 +68,8 @@ export const TableIncidents = memo(() => {
           return (
             <IndicatorCell
               timeSLA={rowData[7] ?? ''}
-              timeReg={rowData[16]}
-              timeCloseCheck={rowData[30]}
+              timeReg={rowData[17]}
+              timeCloseCheck={rowData[31]}
               inc={rowData[2]}
             />
           )
@@ -192,7 +192,7 @@ export const TableIncidents = memo(() => {
               value={value ?? ''}
               id={rowData[0]}
               incident={rowData[2]}
-              responsible={rowData[23]}
+              responsible={rowData[24]}
               currentStatus={rowData[8]}
               timeSLA={rowData[7] ?? ''}
             />
@@ -219,6 +219,26 @@ export const TableIncidents = memo(() => {
         },
       },
     },
+    {
+      name: 'legalName',
+      label: 'Клиент Юр *',
+      options: {
+        filter: true,
+        sort: true,
+        display: true,
+        viewColumns: true,
+        filterOptions: {
+          names: filterListData.legalName,
+        },
+        setCellHeaderProps: () => ({
+          style: { padding: !denseTable ? 15 : 8 },
+        }),
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
+      },
+    },
+
     {
       name: 'contract',
       label: 'Контракт *',
@@ -457,7 +477,7 @@ export const TableIncidents = memo(() => {
               value={value ?? ''}
               id={rowData[0]}
               incident={rowData[2]}
-              responsible={rowData[23]}
+              responsible={rowData[24]}
             />
           )
         },
@@ -483,7 +503,7 @@ export const TableIncidents = memo(() => {
               value={value ?? ''}
               id={rowData[0]}
               incident={rowData[2]}
-              responsible={rowData[23]}
+              responsible={rowData[24]}
             />
           )
         },

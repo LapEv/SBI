@@ -68,7 +68,6 @@ export const MainLayout = () => {
   const [{ user }] = useAuth()
 
   useEffect(() => {
-    console.log('boxRef.current = ', boxRef)
     setTimeout(() => {
       setDataWidth(boxRef.current!.offsetWidth)
     }, 100)

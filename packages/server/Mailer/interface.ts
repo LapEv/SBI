@@ -6,6 +6,7 @@ export interface MailDataRegInc {
   timeRegistration: string
   timeSLA: string
   client: string
+  legalName: string
   objectClientID: string
   objectClientName: string
   object: string
@@ -27,6 +28,7 @@ export interface MailDataChangeStatus {
   timeChangeStatus: string
   timeSLA: string
   client: string
+  legalName: string
   objectClientID: string
   objectClientName: string
   object: string

@@ -141,6 +141,7 @@ export interface AnswerGetINC {
   filterListData: {
     status: string[]
     client: string[]
+    legalName: string[]
     contract: string[]
     object: string[]
     address: string[]
@@ -158,6 +159,7 @@ export interface AnswerGetINC {
 export interface AnswerGetFilter {
   status: string[]
   client: string[]
+  legalName: string[]
   contract: string[]
   object: string[]
   address: string[]
@@ -178,6 +180,7 @@ export interface AnswerGetINCs {
     filterListData: {
       status: string[]
       client: string[]
+      legalName: string[]
       contract: string[]
       object: string[]
       address: string[]
@@ -199,6 +202,7 @@ export interface AnswerINCsData {
     filterListData: {
       status: string[]
       client: string[]
+      legalName: string[]
       contract: string[]
       object: string[]
       address: string[]
@@ -237,6 +241,7 @@ export interface AnswerTypesCompletedWork {
 
 export interface FilterListData {
   status: string[]
+  legalName: string[]
   client: string[]
   contract: string[]
   object: string[]

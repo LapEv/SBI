@@ -51,6 +51,7 @@ const initialState: INCState = {
   filterListData: {
     status: [],
     client: [],
+    legalName: [],
     contract: [],
     object: [],
     address: [],
@@ -73,6 +74,7 @@ const createINCData = (data: INC[]) => {
       ...item,
       // status: item.IncindentStatus?.statusINC as string,
       client: item.Client?.client as string,
+      legalName: item.Client?.legalName as string,
       contract: item.Contract?.contract as string,
       object: item.Object?.object as string,
       address: item.Object?.Address?.address as string,

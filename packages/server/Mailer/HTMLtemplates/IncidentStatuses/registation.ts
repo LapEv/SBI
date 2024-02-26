@@ -8,6 +8,7 @@ export const htmlRegistration = ({
   timeRegistration,
   timeSLA,
   client,
+  legalName,
   object,
   objectClientID,
   objectClientName,
@@ -20,7 +21,6 @@ export const htmlRegistration = ({
   applicantContacts,
   userAccepted,
 }: MailDataRegInc) => {
-  console.log('clientINC = ', clientINC)
   const message = `
   <html>
 
@@ -39,6 +39,7 @@ export const htmlRegistration = ({
           mailConst.mailMessages.Incidents.status
         }</b> ${status}<br>
         <b>${mailConst.mailMessages.Incidents.client}</b> ${client}<br>
+        <b>${mailConst.mailMessages.Incidents.legalName}</b> ${legalName}<br>
         ${
           clientINC
             ? `<b>${mailConst.mailMessages.Incidents.clientINC}</b> ${clientINC}<br>`

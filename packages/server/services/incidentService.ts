@@ -344,6 +344,7 @@ export class incidentService {
   ]
 
   checkDataFilter = async (data: []) => {
+    console.log('data = ', data)
     return await Promise.all(
       data.map(
         async (item: []) =>
@@ -360,6 +361,12 @@ export class incidentService {
                   where: { client: value['client'] },
                 })
                 return { id_incClient: client?.id }
+              }
+              if (value['legalName']) {
+                const legalName = await ClientsRepos.findOne({
+                  where: { legalName: value['legalName'] },
+                })
+                return { id_incClient: legalName?.id }
               }
               if (value['object']) {
                 const object = await ObjectsRepos.findOne({
@@ -811,6 +818,7 @@ export class incidentService {
           timeRegistration: convertDateToString(timeRegistration) ?? '',
           timeSLA,
           client: inc?.Client?.client ?? '',
+          legalName: inc?.Client?.legalName ?? '',
           object: inc?.Object?.object ?? '',
           objectClientID: inc?.Object?.internalClientID ?? '',
           objectClientName: inc?.Object?.internalClientName ?? '',
@@ -894,6 +902,8 @@ export class incidentService {
     const contractList =
       [...new Set(incs.map(item => item.Contract.contract))] ?? []
     const clientsList = [...new Set(incs.map(item => item.Client.client))] ?? []
+    const legalNameList =
+      [...new Set(incs.map(item => item.Client.legalName))] ?? []
     const objectsList = [...new Set(incs.map(item => item.Object.object))] ?? []
     const addressList =
       [...new Set(incs.map(item => item.Object.Address.address))] ?? []
@@ -926,6 +936,7 @@ export class incidentService {
 
     return {
       status: statusList,
+      legalName: legalNameList,
       client: clientsList,
       contract: contractList,
       object: objectsList,
@@ -1218,6 +1229,7 @@ export class incidentService {
           timeChangeStatus: convertDateToString(currentDate) ?? '',
           timeSLA,
           client: inc?.Client?.client ?? '',
+          legalName: inc?.Client?.legalName ?? '',
           object: inc?.Object?.object ?? '',
           objectClientID: inc?.Object?.internalClientID ?? '',
           objectClientName: inc?.Object?.internalClientName ?? '',

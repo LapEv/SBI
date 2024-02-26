@@ -8,6 +8,7 @@ export const htmlChangeStatus = ({
   timeChangeStatus,
   timeSLA,
   client,
+  legalName,
   object,
   objectClientID,
   objectClientName,
@@ -35,12 +36,13 @@ export const htmlChangeStatus = ({
   } ${status}
       </div>
       <div style="margin-top: 10px; font-size: 13px">
-        <b>${mailConst.mailMessages.Incidents.client}</b> ${client}<br>
-        ${
-          clientINC
-            ? `<b>${mailConst.mailMessages.Incidents.clientINC}</b> ${clientINC}<br>`
-            : ``
-        }
+      <b>${mailConst.mailMessages.Incidents.client}</b> ${client}<br>
+      <b>${mailConst.mailMessages.Incidents.legalName}</b> ${legalName}<br>
+      ${
+        clientINC
+          ? `<b>${mailConst.mailMessages.Incidents.clientINC}</b> ${clientINC}<br>`
+          : ``
+      }
         <b>${
           mailConst.mailMessages.Incidents.timeChangeStatus
         }</b> ${timeChangeStatus}<br>

@@ -118,12 +118,10 @@ export const IncidentData =
         sx={{
           position: 'absolute',
           display: 'flex',
-          // flexWrap: 'no-wrap',
           flexDirection: 'column',
           justifyContent: 'flex-start',
           alignItems: 'flex-start',
           width: dataWidth,
-          // p: 1,
           pl: 1,
           pt: 1,
           pb: 2,

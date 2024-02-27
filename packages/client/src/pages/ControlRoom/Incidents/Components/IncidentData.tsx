@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react'
-import { Box, styled, useTheme } from '@mui/material'
+import { Box, Divider, styled, useTheme } from '@mui/material'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip'
 import { ThemeMode } from '../../../../themes/themeConfig'
 import { useApp } from 'hooks/app/useApp'
@@ -44,6 +44,39 @@ const Cell = ({ label, value }: CellProps) => {
         placement="top-start">
         <StyledBox>{value ?? ''}</StyledBox>
       </Tooltip>
+    </Box>
+  )
+}
+
+const DescriptionCell = ({ label, value }: CellProps) => {
+  const theme = useTheme()
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        color: theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
+        width: '100%',
+        margin: '3px',
+      }}>
+      <Box sx={{ fontSize: '0.875rem', width: 120, minWidth: 120 }}>
+        {label}
+      </Box>
+      <StyledBox
+        sx={{
+          overflowY: 'auto',
+          height: 75,
+          scrollbarColor: '#6b6b6b #2b2b2b',
+          scrollbarWidth: 'thin',
+          lineHeight: '18px',
+          webkitLineClamp: 2,
+          webkitBoxOrient: 'vertical',
+          textAlign: 'left',
+          verticalAlign: 'bottom',
+          whiteSpace: 'pre-line',
+        }}>
+        {value ?? ''}
+      </StyledBox>
     </Box>
   )
 }
@@ -118,22 +151,6 @@ export const IncidentData =
             <Cell label={'Регион: '} value={values.region} />
             <Cell label={'Регион: '} value={values.address} />
             <Cell label={'Координаты: '} value={values.coordinates} />
-            {/* <StyledBoxContainer>
-              <StyledBoxLabel>Описание: </StyledBoxLabel>
-              <StyledBox
-                sx={{
-                  overflowY: 'auto',
-                  height: 75,
-                  scrollbarColor: '#6b6b6b #2b2b2b',
-                  scrollbarWidth: 'thin',
-                  lineHeight: '18px',
-                  webkitLineClamp: 2,
-                  webkitBoxOrient: 'vertical',
-                  textAlign: 'left',
-                  verticalAlign: 'bottom',
-                  whiteSpace: 'pre-line',
-                }}>{values.description ?? ''}</StyledBox>
-            </StyledBoxContainer> */}
           </Box>
           <Box sx={{ width: 320, minWidth: 320 }}>
             <Cell label={'Категория: '} value={values.equipment} />
@@ -160,6 +177,16 @@ export const IncidentData =
             <Cell label={'Оценка: '} value={values.rating} />
             <Cell label={'Родительский: '} value={values.parentalIncident} />
             <Cell label={'Связанный: '} value={values.relatedIncident} />
+          </Box>
+        </Box>
+        <Divider sx={{ width: (dataWidth - 100) / 1.5, mt: 1 }} />
+        <Box sx={{ display: 'flex', flexDirection: 'row', mt: 1 }}>
+          <Box sx={{ width: (dataWidth - 100) / 3.2, minWidth: 420 }}>
+            <DescriptionCell label={'Описание: '} value={values.description} />
+          </Box>
+
+          <Box sx={{ width: (dataWidth - 100) / 3.2, minWidth: 420, ml: 1 }}>
+            <DescriptionCell label={'Комментарии: '} value={values.comment} />
           </Box>
         </Box>
       </Box>

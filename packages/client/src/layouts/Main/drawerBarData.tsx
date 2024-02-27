@@ -160,4 +160,4 @@ export const clientData = [
   },
 ]
 
-export const drawerWidth = 355
+export const drawerWidth = 300

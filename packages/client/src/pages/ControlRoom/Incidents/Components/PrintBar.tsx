@@ -13,7 +13,7 @@ export const PrintBar = memo(({ onPrint }: PrintData) => {
     <Tooltip title={'Печать'}>
       <IconButton
         onClick={onPrint}
-        sx={{ color: theme.palette.text.secondary }}>
+        sx={{ color: theme.palette.background.paper }}>
         <PrintIcon />
       </IconButton>
     </Tooltip>

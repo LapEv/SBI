@@ -35,24 +35,24 @@ export const DataTable = ({ title, data, options, columns }: IDataTable) => {
           ...theme,
           components: {
             ...theme.components,
-            MuiPopover: {
-              styleOverrides: {
-                paper: {
-                  backgroundColor:
-                    theme.palette.mode === ThemeMode.dark
-                      ? '#1E515D!important'
-                      : '#C1EEE1!important',
-                  boxShadow:
-                    theme.palette.mode === 'light'
-                      ? '1px 2px 16px 3px #1E515D'
-                      : '0px 0px 6px 0px #C1EEE1',
-                  color:
-                    theme.palette.mode === ThemeMode.light
-                      ? '#000000!important'
-                      : '#FFFFFF!important',
-                },
-              },
-            },
+            // MuiPopover: {
+            //   styleOverrides: {
+            //     paper: {
+            //       backgroundColor:
+            //         theme.palette.mode === ThemeMode.dark
+            //           ? '#1E515D'
+            //           : '#C1EEE1',
+            //       boxShadow:
+            //         theme.palette.mode === 'light'
+            //           ? '1px 2px 16px 3px #1E515D'
+            //           : '0px 0px 6px 0px #C1EEE1',
+            //       color:
+            //         theme.palette.mode === ThemeMode.light
+            //           ? '#FFFFFF'
+            //           : '#000000',
+            //     },
+            //   },
+            // },
             MUIDataTable: {
               styleOverrides: {
                 paper: {
@@ -235,9 +235,9 @@ export const DataTable = ({ title, data, options, columns }: IDataTable) => {
                     theme.palette.mode === ThemeMode.dark
                       ? '#1E515D'
                       : '#C1EEE1',
-                  height: 50,
-                  minHeight: 50,
-                  maxHeight: 50,
+                  height: 39,
+                  minHeight: 39,
+                  maxHeight: 39,
                 },
                 titleText: {
                   color:
@@ -248,14 +248,19 @@ export const DataTable = ({ title, data, options, columns }: IDataTable) => {
                 icon: {
                   color:
                     theme.palette.mode === ThemeMode.light
-                      ? '#000000'
-                      : '#FFFFFF',
+                      ? '#1E515D'
+                      : '#C1EEE1',
                 },
                 iconActive: {
                   color:
                     theme.palette.mode === ThemeMode.light
-                      ? '#1E515D'
-                      : '#C1EEE1',
+                      ? '#C1EEE1'
+                      : '#1E515D',
+                },
+                actions: {
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
                 },
               },
             },
@@ -270,9 +275,9 @@ export const DataTable = ({ title, data, options, columns }: IDataTable) => {
                     theme.palette.mode === ThemeMode.light
                       ? '#000000'
                       : '#FFFFFF',
-                  height: 50,
-                  minHeight: 50,
-                  maxHeight: 50,
+                  height: 39,
+                  minHeight: 39,
+                  maxHeight: 39,
                 },
                 iconButton: {
                   color:
@@ -295,6 +300,9 @@ export const DataTable = ({ title, data, options, columns }: IDataTable) => {
                       : '#C1EEE1',
                 },
                 toolbar: {
+                  minHeight: 38,
+                  height: 38,
+                  overflow: 'hidden',
                   color:
                     theme.palette.mode === ThemeMode.light
                       ? '#1E515D'

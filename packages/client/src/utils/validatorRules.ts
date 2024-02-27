@@ -75,7 +75,7 @@ export const NoRequiredValidation = {
 
 export const commentINCValidation = {
   validate: (value: string) => {
-    if (value && value.length > 20) {
+    if (value && value.length > 1024) {
       return 'Превышен лимит в 1024 символа'
     }
     return true

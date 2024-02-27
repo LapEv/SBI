@@ -20,6 +20,7 @@ import {
   SpacePartCell,
   FilterOptions,
   PrintBar,
+  AdditionalMenu,
 } from './'
 import { useIncidents } from 'hooks/incidents/useINC'
 import { setFilter } from './Components/FilterOptions'
@@ -29,7 +30,6 @@ export const TableIncidents = memo(() => {
   const modalClientRef = React.createRef()
   const [modal, setModal] = useState<boolean>(false)
   const [modalImage, setModalImage] = useState<string>('')
-
   const [{ incidents, countIncidents, filterListData }, { getINCs }] =
     useIncidents()
 
@@ -897,7 +897,7 @@ export const TableIncidents = memo(() => {
     tableBodyHeight: '100%',
     columnOrder: getcolumnOrderStorage(),
     count: countIncidents,
-    rowsPerPageOptions: [15, 30, 50],
+    rowsPerPageOptions: [10, 15, 18, 19, 20, 21, 22, 30, 50],
     page: JSON.parse(localStorage.getItem('currentPage') as string) ?? 0,
     rowsPerPage:
       JSON.parse(localStorage.getItem('numberOfRows') as string) ?? 15,
@@ -940,14 +940,14 @@ export const TableIncidents = memo(() => {
     },
     customToolbar: () => {
       return (
-        <>
-          <PrintBar onPrint={onPrint} />
-          <DenseTable
-            denseTable={denseTable}
-            setDenseTable={setDenseTableFunc}
-          />
-          {/* <DragTable dragTable={dragTable} setDragTable={setDragTable} /> */}
-        </>
+        <AdditionalMenu
+          denseTable={denseTable}
+          setDenseTableFunc={setDenseTableFunc}
+          onPrint={onPrint}
+          checkClickMenu={checkClickMenu}
+          dragTable={dragTable}
+          setDragTable={setDragTable}
+        />
       )
     },
     setRowProps: (row, dataIndex, rowIndex) => {
@@ -971,15 +971,17 @@ export const TableIncidents = memo(() => {
     },
   }
 
+  const checkClickMenu = (name: string | null) => {
+    if (name) {
+      setModal(true)
+      setModalImage(name)
+    }
+  }
+
   useEffect(() => {
     const { nameSort, direction, limit, page, filterOptions } = FilterOptions()
     getINCs({ limit, nameSort, direction, page, filterOptions })
   }, [])
-
-  useEffect(() => {
-    console.log('incidents = ', incidents)
-    // setTableColumn()
-  }, [incidents])
 
   const handleModal = (bool: boolean) => {
     setModal(bool)
@@ -998,7 +1000,6 @@ export const TableIncidents = memo(() => {
           handleModal={handleModal}
         />
       </Modal>
-
       <DataTable
         title={'Инциденты'}
         data={incidents}

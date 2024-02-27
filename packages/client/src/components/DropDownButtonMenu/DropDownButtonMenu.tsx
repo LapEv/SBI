@@ -20,7 +20,9 @@ interface DropDownMenuProps {
   onClick: (name: string | null) => void
   vertical?: 'top' | 'center' | 'bottom' | number
   icon?: JSX.Element
+  sx?: any
 }
+
 export const DropDownMenu = ({
   popover,
   data,
@@ -28,6 +30,7 @@ export const DropDownMenu = ({
   onClick,
   vertical,
   icon,
+  sx,
 }: DropDownMenuProps) => {
   const theme = useTheme()
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
@@ -73,6 +76,7 @@ export const DropDownMenu = ({
             color: theme.palette.primary.contrastText,
             backgroundColor: theme.palette.primary.main,
             boxShadow: 5,
+            ...sx,
           }}
           aria-controls={open ? 'account-menu' : undefined}
           aria-haspopup="true"

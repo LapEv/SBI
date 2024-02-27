@@ -43,7 +43,7 @@ export function IconPopoverButton({
         onMouseLeave={() => setAnchorEl(null)}
         onClick={onClick}
         size={size ?? 'medium'}
-        sx={sx ?? sxDefault}
+        sx={{ ...sxDefault, ...sx }}
         aria-controls={open ? 'account-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}>

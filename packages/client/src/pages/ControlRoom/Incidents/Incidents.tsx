@@ -1,34 +1,14 @@
-import React, { useEffect, useState, memo } from 'react'
-import { Box, Container, Modal, Typography } from '@mui/material'
+import { useEffect, memo } from 'react'
+import { Box, Container } from '@mui/material'
 import { Message } from 'components/Message/Message'
 import { useAuth } from 'hooks/auth/useAuth'
-import { DropDownMenu } from 'components/DropDownButtonMenu'
-import { TableIncidents, menuData } from '.'
-import { ChooseModal } from './Modals/ChooseModal'
-import { headerForPages, mainHeaderForINCPage } from 'static/styles'
-import { doubleMenuForHeader } from 'static/styles/headerForPages'
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
-import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate'
-import { IconPopoverButton } from 'components/Buttons'
+import { TableIncidents } from '.'
+import { mainHeaderForINCPage } from 'static/styles'
 import { useIncidents } from 'hooks/incidents/useINC'
 
 export const IncidentsPage = memo(() => {
-  const modalClientRef = React.createRef()
-  const [{ admin }, { getFieldEngineers, getDispatchers }] = useAuth()
-  const [_, { getIncidentStatuses, getTypesCompletedWork }] = useIncidents()
-  const [modal, setModal] = useState<boolean>(false)
-  const [modalImage, setModalImage] = useState<string>('')
-
-  const checkClickMenu = (name: string | null) => {
-    if (name) {
-      setModal(true)
-      setModalImage(name)
-    }
-  }
-
-  const handleModal = (bool: boolean) => {
-    setModal(bool)
-  }
+  const [, { getFieldEngineers, getDispatchers }] = useAuth()
+  const [, { getIncidentStatuses, getTypesCompletedWork }] = useIncidents()
 
   useEffect(() => {
     getFieldEngineers()
@@ -40,48 +20,7 @@ export const IncidentsPage = memo(() => {
   return (
     <Container component="main" maxWidth="md" sx={mainHeaderForINCPage}>
       <Message />
-      <Modal
-        open={modal}
-        onClose={setModal}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description">
-        <ChooseModal
-          ref={modalClientRef}
-          modalImage={modalImage}
-          handleModal={handleModal}
-        />
-      </Modal>
-      <Box component="div" sx={headerForPages}>
-        <Typography sx={{ fontWeight: 'bold', fontSize: '2.375rem' }}>
-          Инциденты
-        </Typography>
-        <Box sx={doubleMenuForHeader}>
-          {admin && (
-            <DropDownMenu
-              popover={'Добавить/Удалить'}
-              data={menuData}
-              divider={[3, 6, 9]}
-              onClick={checkClickMenu}
-              vertical={'bottom'}
-            />
-          )}
-          <IconPopoverButton
-            popover={'Создать инцидент'}
-            onClick={() => checkClickMenu('newIncident')}
-            vertical={'bottom'}
-            propsPopover={{ ml: -1, mt: 1 }}
-            icon={<AddCircleOutlineIcon />}
-          />
-          <IconPopoverButton
-            popover={'Создать запрос'}
-            onClick={() => checkClickMenu('newRequest')}
-            vertical={'bottom'}
-            propsPopover={{ ml: -1, mt: 1 }}
-            icon={<ControlPointDuplicateIcon />}
-          />
-        </Box>
-      </Box>
-      <Box sx={{ width: '100%', padding: 2 }}>
+      <Box sx={{ width: '100%', padding: 1 }}>
         <TableIncidents />
       </Box>
     </Container>

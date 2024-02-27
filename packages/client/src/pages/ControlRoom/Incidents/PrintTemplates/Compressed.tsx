@@ -29,6 +29,7 @@ export const Compressed = memo(() => {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'flex-end',
+    verticalAlign: 'bottom',
     height: 17,
   }
 
@@ -38,12 +39,16 @@ export const Compressed = memo(() => {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
+    verticalAlign: 'bottom',
     height: 17,
   }
 
   const label = {
     fontSize: 11,
     verticalAlign: 'center',
+    display: 'flex',
+    alignItems: 'flex-end',
+    height: 17,
   }
 
   const data = {
@@ -53,7 +58,11 @@ export const Compressed = memo(() => {
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    verticalAlign: 'center',
+    height: 17,
+    verticalAlign: 'bottom',
+    display: 'flex',
+    alignItems: 'flex-end',
+    color: '#000000',
   }
 
   const footer1 = {
@@ -79,8 +88,11 @@ export const Compressed = memo(() => {
 
   const labelComments = {
     fontSize: 9,
-    height: 20,
+    height: 25,
     verticalAlign: 'top',
+    display: 'flex',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   }
 
   const dataComments = {
@@ -89,13 +101,17 @@ export const Compressed = memo(() => {
     fontSize: 9,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    display: '-webkit-box',
+    // display: '-webkit-box',
     lineHeight: '11px',
     maxHeight: '22px',
     webkitLineClamp: 2,
     webkitBoxOrient: 'vertical',
     textAlign: 'left',
-    verticalAlign: 'bottom',
+    verticalAlign: 'top',
+    display: 'flex',
+    alignItems: 'flex-start',
+    color: '#000000',
+    height: 25,
   }
 
   return (
@@ -106,6 +122,7 @@ export const Compressed = memo(() => {
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
+        p: 2,
       }}>
       {incidents.map(
         (
@@ -137,7 +154,7 @@ export const Compressed = memo(() => {
                 pt: index <= 1 ? 1 : 0.5,
                 pl: index % 2 === 0 ? 1 : 0.5,
                 pr: index % 2 === 0 ? 0.5 : 1,
-                color: '#000000',
+                color: '#1E515D',
                 width: '50%',
                 display: 'flex',
               }}

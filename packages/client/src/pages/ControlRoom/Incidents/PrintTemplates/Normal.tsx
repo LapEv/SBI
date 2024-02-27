@@ -8,7 +8,7 @@ export const Normal = memo(() => {
   const container = {
     width: '100%',
     height: 264,
-    border: '3px solid #000000',
+    border: '2px solid #000000',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
@@ -29,6 +29,8 @@ export const Normal = memo(() => {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'flex-end',
+    verticalAlign: 'bottom',
+    height: 20,
   }
 
   const cellRight = {
@@ -37,10 +39,16 @@ export const Normal = memo(() => {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
+    verticalAlign: 'bottom',
+    height: 20,
   }
 
   const label = {
     fontSize: 14,
+    verticalAlign: 'bottom',
+    display: 'flex',
+    alignItems: 'flex-end',
+    height: 20,
   }
 
   const data = {
@@ -51,6 +59,10 @@ export const Normal = memo(() => {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     height: 20,
+    verticalAlign: 'bottom',
+    display: 'flex',
+    alignItems: 'flex-end',
+    color: '#000000',
   }
 
   const footer1 = {
@@ -78,6 +90,8 @@ export const Normal = memo(() => {
     fontSize: 14,
     height: 20,
     verticalAlign: 'top',
+    display: 'flex',
+    alignItems: 'flex-end',
   }
 
   const dataComments = {
@@ -86,17 +100,20 @@ export const Normal = memo(() => {
     fontSize: 14,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    display: '-webkit-box',
+    // display: '-webkit-box',
     lineHeight: '18px',
     maxHeight: '36px',
     webkitLineClamp: 2,
     webkitBoxOrient: 'vertical',
     textAlign: 'left',
-    verticalAlign: 'bottom',
+    verticalAlign: 'top',
+    display: 'flex',
+    alignItems: 'flex-end',
+    color: '#000000',
   }
 
   return (
-    <Box sx={{ width: '100%', height: 'auto' }}>
+    <Box sx={{ width: '100%', height: 'auto', p: 2 }}>
       {incidents.map(
         ({
           incident,
@@ -117,7 +134,7 @@ export const Normal = memo(() => {
           comment,
         }) => {
           return (
-            <Box sx={{ p: 1, color: '#000000' }} key={`normal${incident}`}>
+            <Box sx={{ p: 0.5, color: '#1E515D' }} key={`normal${incident}`}>
               <Box sx={container}>
                 <Box sx={containerData}>
                   <Box sx={{ width: '49%', textAlign: 'left' }}>

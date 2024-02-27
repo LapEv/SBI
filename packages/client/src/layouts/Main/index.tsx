@@ -74,44 +74,44 @@ export const MainLayout = () => {
   }, [])
 
   return (
-    // <>
-    //   {user && user.status ? (
-    <Box sx={{ display: 'flex', width: '100%' }}>
-      <NavBar />
-      <Drawer
-        sx={{ display: { xs: 'flex', md: 'flex' } }}
-        variant="permanent"
-        open={open}>
-        <DrawerHeader open={open} toggleDrawer={toggleDrawer} />
-        <Divider />
-        <SideBar open={open} />
-      </Drawer>
-      <Box
-        ref={boxRef}
-        sx={{
-          width,
-          minHeight: '100vh',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          p: 0,
-        }}>
-        <Outlet />
-      </Box>
-    </Box>
-    //   ) : (
-    //     <Box
-    //       ref={boxRef}
-    //       sx={{
-    //         display: 'flex',
-    //         width: '100%',
-    //         height: '100vH',
-    //         justifyContent: 'center',
-    //         alignItems: 'center',
-    //       }}>
-    //       <Outlet />
-    //     </Box>
-    //   )}
-    // </>
+    <>
+      {user && user.status ? (
+        <Box sx={{ display: 'flex', width: '100%' }}>
+          <NavBar />
+          <Drawer
+            sx={{ display: { xs: 'flex', md: 'flex' } }}
+            variant="permanent"
+            open={open}>
+            <DrawerHeader open={open} toggleDrawer={toggleDrawer} />
+            <Divider />
+            <SideBar open={open} />
+          </Drawer>
+          <Box
+            ref={boxRef}
+            sx={{
+              width,
+              minHeight: '100vh',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              p: 0,
+            }}>
+            <Outlet />
+          </Box>
+        </Box>
+      ) : (
+        <Box
+          ref={boxRef}
+          sx={{
+            display: 'flex',
+            width: '100%',
+            height: '100vH',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Outlet />
+        </Box>
+      )}
+    </>
   )
 }

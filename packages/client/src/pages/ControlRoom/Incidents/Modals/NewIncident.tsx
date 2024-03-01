@@ -23,7 +23,7 @@ import dayjs, { Dayjs } from 'dayjs'
 import { getSLATime } from 'utils/getSLATime'
 import { useAuth } from 'hooks/auth/useAuth'
 import { convertDateToStringDDMMYYYYHHMMSS } from 'utils/convertDate'
-import { FilterOptions } from '../Components/FilterOptions'
+import { FilterOptions } from '../Utils/FilterOptions'
 
 export const NewIncident = memo(
   React.forwardRef<unknown, ChooseModalProps>(

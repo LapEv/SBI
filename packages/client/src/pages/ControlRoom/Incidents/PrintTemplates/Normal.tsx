@@ -7,7 +7,7 @@ export const Normal = memo(() => {
 
   const container = {
     width: '100%',
-    height: 264,
+    height: 268,
     border: '2px solid #000000',
     display: 'flex',
     flexDirection: 'column',
@@ -44,10 +44,7 @@ export const Normal = memo(() => {
   }
 
   const label = {
-    fontSize: 14,
-    verticalAlign: 'bottom',
-    display: 'flex',
-    alignItems: 'flex-end',
+    fontSize: 15,
     height: 20,
   }
 
@@ -59,9 +56,6 @@ export const Normal = memo(() => {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     height: 20,
-    verticalAlign: 'bottom',
-    display: 'flex',
-    alignItems: 'flex-end',
     color: '#000000',
   }
 
@@ -74,6 +68,7 @@ export const Normal = memo(() => {
     height: 40,
     mt: 0.5,
     borderBottom: '1px solid #000000',
+    whiteSpace: 'pre-wrap',
   }
 
   const footer2 = {
@@ -89,9 +84,6 @@ export const Normal = memo(() => {
   const labelComments = {
     fontSize: 14,
     height: 20,
-    verticalAlign: 'top',
-    display: 'flex',
-    alignItems: 'flex-end',
   }
 
   const dataComments = {
@@ -100,41 +92,46 @@ export const Normal = memo(() => {
     fontSize: 14,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    // display: '-webkit-box',
-    lineHeight: '18px',
-    maxHeight: '36px',
+    height: 40,
+    display: '-webkit-box',
+    lineHeight: '20px',
+    maxHeight: '40px',
     webkitLineClamp: 2,
     webkitBoxOrient: 'vertical',
     textAlign: 'left',
-    verticalAlign: 'top',
-    display: 'flex',
-    alignItems: 'flex-end',
+    whiteSpace: 'pre-wrap',
     color: '#000000',
   }
 
   return (
-    <Box sx={{ width: '100%', height: 'auto', p: 2 }}>
+    <Box sx={{ width: '100%', height: 'auto', p: 2, pt: 0 }}>
+      <style>{`@media print {@page {size: portrait}`}</style>
       {incidents.map(
-        ({
-          incident,
-          clientINC,
-          timeSLA,
-          client,
-          object,
-          address,
-          coordinates,
-          equipment,
-          model,
-          typicalMalfunction,
-          responsible,
-          executor,
-          applicant,
-          applicantContacts,
-          description,
-          comment,
-        }) => {
+        (
+          {
+            incident,
+            clientINC,
+            timeSLA,
+            client,
+            object,
+            address,
+            coordinates,
+            equipment,
+            model,
+            typicalMalfunction,
+            responsible,
+            executor,
+            applicant,
+            applicantContacts,
+            description,
+            comment,
+          },
+          index
+        ) => {
           return (
-            <Box sx={{ p: 0.5, color: '#1E515D' }} key={`normal${incident}`}>
+            <Box
+              sx={{ p: 0.5, color: '#1E515D', pt: index % 4 === 0 ? 2 : 0 }}
+              key={`normal${incident}`}>
               <Box sx={container}>
                 <Box sx={containerData}>
                   <Box sx={{ width: '49%', textAlign: 'left' }}>
@@ -197,7 +194,7 @@ export const Normal = memo(() => {
                   </Box>
                 </Box>
                 <Box sx={footer1}>
-                  <Box sx={label}>Описание:</Box>
+                  <Box sx={labelComments}>Описание:</Box>
                   <Box sx={dataComments}>{description}</Box>
                 </Box>
                 <Box sx={footer2}>

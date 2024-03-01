@@ -86,7 +86,14 @@ export interface IIndicatorCell {
   timeSLA: string
   timeReg: string
   timeCloseCheck: string
+  status?: string
   inc?: string
+}
+
+export interface AnswerIndicatorData {
+  percent: number
+  value: number
+  indicator: string
 }
 
 export interface ICustomHeaderCell {

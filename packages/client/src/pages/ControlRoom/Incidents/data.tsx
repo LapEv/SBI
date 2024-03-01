@@ -3,6 +3,7 @@ import {
   commentINCValidation,
   forSpacePartsValidation,
   lightTextValidation,
+  phoneValidation,
 } from 'utils/validatorRules'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline'
@@ -90,9 +91,9 @@ export const ModalTitles = {
 }
 
 export const printType = [
-  { label: 'Нормальный (вертикальная печать)', value: 'normal' },
-  { label: 'Сжатый (горизонтальная печать)', value: 'compressed' },
-  { label: 'Очень сжатый (вертикальная печать)', value: 'xcompressed' },
+  { label: 'Нормальный', value: 'normal' },
+  { label: 'Сжатый', value: 'compressed' },
+  { label: 'Очень сжатый', value: 'xcompressed' },
 ]
 
 export const statusSLATitles = {
@@ -263,7 +264,7 @@ export const MapINCInputFields = [
   {
     name: 'applicantContacts',
     label: 'Введите контакты заявителя',
-    validation: NoRequiredValidation,
+    validation: phoneValidation,
     type: 'text',
     required: false,
     // tabIndex: 13,
@@ -460,4 +461,14 @@ export const emptyStatusTemp = {
   },
   commentCloseCheck: '',
   spaceParts: [],
+}
+
+export const colorIndicator = {
+  expired: '#ff2c2c',
+  notExpired: '#16f105',
+  inProgress: {
+    more95: '#ff2c2c',
+    more75: '#f1a605',
+    more50: '#daf105',
+  },
 }

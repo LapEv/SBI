@@ -5,7 +5,7 @@ import { Options } from 'components/DropDown/interface'
 import { useIncidents } from 'hooks/incidents/useINC'
 import { IExecutor } from '../interfaces'
 import { customDropDownCell } from '../data'
-import { FilterOptions } from './FilterOptions'
+import { FilterOptions } from '../Utils/FilterOptions'
 
 export const UserResponsible = memo(({ value, id, incident }: IExecutor) => {
   const [{ dispatchers, user }] = useAuth()

@@ -12,7 +12,6 @@ import { Box } from '@mui/material'
 import { isEmptyObjField } from 'utils/isEmptyObject'
 import { checkLoading } from 'utils/checkLoading'
 import { useAuth } from 'hooks/auth/useAuth'
-import { useIncidents } from 'hooks/incidents/useINC'
 
 function App() {
   const [{ user }, { checkUser }] = useAuth()

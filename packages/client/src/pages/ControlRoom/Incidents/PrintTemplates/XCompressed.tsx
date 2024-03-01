@@ -7,7 +7,7 @@ export const XCompressed = memo(() => {
 
   const container = {
     width: '100%',
-    height: 177,
+    height: 178,
     border: '1px solid #000000',
     display: 'flex',
     flexDirection: 'column',
@@ -29,6 +29,7 @@ export const XCompressed = memo(() => {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'flex-end',
+    verticalAlign: 'bottom',
     height: 15,
   }
 
@@ -37,13 +38,14 @@ export const XCompressed = memo(() => {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    height: 15,
     alignItems: 'flex-end',
+    verticalAlign: 'bottom',
+    height: 15,
   }
 
   const label = {
     fontSize: 10,
-    verticalAlign: 'center',
+    height: 15,
   }
 
   const data = {
@@ -53,7 +55,8 @@ export const XCompressed = memo(() => {
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    verticalAlign: 'center',
+    height: 15,
+    color: '#000000',
   }
 
   const footer1 = {
@@ -65,6 +68,7 @@ export const XCompressed = memo(() => {
     height: 25,
     mt: 0.5,
     borderBottom: '1px solid #000000',
+    whiteSpace: 'pre-wrap',
   }
 
   const footer2 = {
@@ -79,8 +83,7 @@ export const XCompressed = memo(() => {
 
   const labelComments = {
     fontSize: 9,
-    height: 20,
-    verticalAlign: 'top',
+    height: 12,
   }
 
   const dataComments = {
@@ -89,13 +92,15 @@ export const XCompressed = memo(() => {
     fontSize: 9,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+    height: 25,
     display: '-webkit-box',
-    lineHeight: '11px',
-    maxHeight: '22px',
+    lineHeight: '12px',
+    maxHeight: '25px',
     webkitLineClamp: 2,
     webkitBoxOrient: 'vertical',
     textAlign: 'left',
-    verticalAlign: 'bottom',
+    whiteSpace: 'pre-wrap',
+    color: '#000000',
   }
 
   return (
@@ -106,7 +111,10 @@ export const XCompressed = memo(() => {
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
+        p: 2,
+        pt: 0,
       }}>
+      <style>{`@media print {@page {size: portrait}`}</style>
       {incidents.map(
         (
           {
@@ -134,7 +142,10 @@ export const XCompressed = memo(() => {
               sx={{
                 p: 1,
                 pb: 0.5,
-                pt: index <= 1 ? 1 : 0.5,
+                pt:
+                  index % 12 === 0 || (index - 1) % 12 === 0 || index === 1
+                    ? 2
+                    : 0,
                 pl: index % 2 === 0 ? 1 : 0.5,
                 pr: index % 2 === 0 ? 0.5 : 1,
                 color: '#000000',
@@ -204,7 +215,7 @@ export const XCompressed = memo(() => {
                   </Box>
                 </Box>
                 <Box sx={footer1}>
-                  <Box sx={label}>Описание:</Box>
+                  <Box sx={labelComments}>Описание:</Box>
                   <Box sx={dataComments}>{description}</Box>
                 </Box>
                 <Box sx={footer2}>

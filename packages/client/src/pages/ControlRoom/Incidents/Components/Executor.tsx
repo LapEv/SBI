@@ -5,7 +5,7 @@ import { Options } from 'components/DropDown/interface'
 import { useIncidents } from 'hooks/incidents/useINC'
 import { IExecutor } from '../interfaces'
 import { customDropDownCell } from '../data'
-import { FilterOptions } from './FilterOptions'
+import { FilterOptions } from '../Utils/FilterOptions'
 
 export const Executor = memo(
   ({ value, id, incident, responsible }: IExecutor) => {

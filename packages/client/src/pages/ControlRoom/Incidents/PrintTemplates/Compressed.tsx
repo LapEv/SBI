@@ -44,10 +44,7 @@ export const Compressed = memo(() => {
   }
 
   const label = {
-    fontSize: 11,
-    verticalAlign: 'center',
-    display: 'flex',
-    alignItems: 'flex-end',
+    fontSize: 12,
     height: 17,
   }
 
@@ -59,9 +56,6 @@ export const Compressed = memo(() => {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     height: 17,
-    verticalAlign: 'bottom',
-    display: 'flex',
-    alignItems: 'flex-end',
     color: '#000000',
   }
 
@@ -71,7 +65,7 @@ export const Compressed = memo(() => {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    height: 25,
+    height: 24,
     mt: 0.5,
     borderBottom: '1px solid #000000',
   }
@@ -82,17 +76,13 @@ export const Compressed = memo(() => {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    height: 25,
+    height: 24,
     mt: 0.5,
   }
 
   const labelComments = {
     fontSize: 9,
-    height: 25,
-    verticalAlign: 'top',
-    display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
+    height: 11,
   }
 
   const dataComments = {
@@ -101,17 +91,15 @@ export const Compressed = memo(() => {
     fontSize: 9,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    // display: '-webkit-box',
-    lineHeight: '11px',
-    maxHeight: '22px',
+    height: 24,
+    display: '-webkit-box',
+    lineHeight: '12px',
+    maxHeight: '24px',
     webkitLineClamp: 2,
     webkitBoxOrient: 'vertical',
     textAlign: 'left',
-    verticalAlign: 'top',
-    display: 'flex',
-    alignItems: 'flex-start',
     color: '#000000',
-    height: 25,
+    whiteSpace: 'pre-wrap',
   }
 
   return (
@@ -123,7 +111,9 @@ export const Compressed = memo(() => {
         flexDirection: 'row',
         flexWrap: 'wrap',
         p: 2,
+        pt: 0,
       }}>
+      <style>{`@media print {@page {size: landscape}`}</style>
       {incidents.map(
         (
           {
@@ -150,8 +140,10 @@ export const Compressed = memo(() => {
             <Box
               sx={{
                 p: 1,
-                // pb: 0.5,
-                pt: index <= 1 ? 1 : 0.5,
+                pt:
+                  index % 8 === 0 || (index - 1) % 8 === 0 || index === 1
+                    ? 2
+                    : 0,
                 pl: index % 2 === 0 ? 1 : 0.5,
                 pr: index % 2 === 0 ? 0.5 : 1,
                 color: '#1E515D',
@@ -221,7 +213,7 @@ export const Compressed = memo(() => {
                   </Box>
                 </Box>
                 <Box sx={footer1}>
-                  <Box sx={label}>Описание:</Box>
+                  <Box sx={labelComments}>Описание:</Box>
                   <Box sx={dataComments}>{description}</Box>
                 </Box>
                 <Box sx={footer2}>

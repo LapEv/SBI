@@ -10,7 +10,7 @@ import { Modal } from '@mui/material'
 import { ChangeStatus } from '../Modals'
 import { DataCloseINC } from '../Modals/interfaces'
 import { useFiles } from 'hooks/files/useFiles'
-import { FilterOptions } from './FilterOptions'
+import { FilterOptions } from '../Utils/FilterOptions'
 
 export const Status = memo(
   ({ value, id, incident, currentStatus, timeSLA }: IStatus) => {

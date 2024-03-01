@@ -1,8 +1,10 @@
-import React, { memo, useEffect } from 'react'
-import { Box, Divider, styled, useTheme } from '@mui/material'
+import React, { memo, useEffect, useState } from 'react'
+import { Box, Divider, TextField, styled, useTheme } from '@mui/material'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip'
 import { ThemeMode } from '../../../../themes/themeConfig'
 import { useApp } from 'hooks/app/useApp'
+import { MultiTextFieldIncident } from 'components/TextFields'
+import { Button } from 'components/Buttons'
 
 export interface IncidentDataProps {
   values: any
@@ -62,7 +64,7 @@ const DescriptionCell = ({ label, value }: CellProps) => {
       <Box sx={{ fontSize: '0.875rem', width: 120, minWidth: 120 }}>
         {label}
       </Box>
-      <StyledBox
+      <StyledDescription
         sx={{
           overflowY: 'auto',
           height: 75,
@@ -76,7 +78,59 @@ const DescriptionCell = ({ label, value }: CellProps) => {
           whiteSpace: 'pre-line',
         }}>
         {value ?? ''}
-      </StyledBox>
+      </StyledDescription>
+    </Box>
+  )
+}
+
+const DescriptionCellComment = ({ label, value }: CellProps) => {
+  const theme = useTheme()
+  const [comment, setComment] = useState<string>(value)
+  const [saveComment, setSaveComment] = useState<boolean>(true)
+
+  const setComments = (text: string) => {
+    setComment(text)
+    if (text !== value) {
+      setSaveComment(false)
+      return
+    }
+    setSaveComment(true)
+  }
+
+  console.log('validation comments = ', value)
+
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        color: theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
+        width: 'auto',
+        margin: '3px',
+      }}>
+      <Box
+        sx={{
+          fontSize: '0.875rem',
+          width: 120,
+          minWidth: 120,
+          display: 'flex',
+          flexDirection: 'column',
+        }}>
+        <Box>{label}</Box>
+        <Button
+          sx={{ width: '70%', mt: 1, fontSize: '0.825rem' }}
+          disabled={saveComment}>
+          Сохранить
+        </Button>
+      </Box>
+      <MultiTextFieldIncident
+        variant="outlined"
+        sx={{ width: 500 }}
+        multiline
+        maxRows={4}
+        value={comment || ''}
+        onChange={e => setComments(e.target.value ?? '')}
+      />
     </Box>
   )
 }
@@ -84,6 +138,28 @@ const DescriptionCell = ({ label, value }: CellProps) => {
 const StyledBox = styled(Box)(({ theme }) => ({
   '&.MuiBox-root': {
     fontSize: '0.925rem',
+    fontWeight: 'bold',
+    width: '100%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    '&::-webkit-scrollbar': {
+      backgroundColor: '#2b2b2b',
+      borderRadius: 8,
+      width: 10,
+    },
+    '&::-webkit-scrollbar-thumb': {
+      borderRadius: 8,
+      backgroundColor: '#6b6b6b',
+      minHeight: 24,
+      border: '3px solid #2b2b2b',
+    },
+  },
+}))
+
+const StyledDescription = styled(Box)(({ theme }) => ({
+  '&.MuiBox-root': {
+    fontSize: '0.775rem',
     fontWeight: 'bold',
     width: '100%',
     '&::-webkit-scrollbar': {
@@ -150,7 +226,7 @@ export const IncidentData =
             <Cell label={'Регион: '} value={values.address} />
             <Cell label={'Координаты: '} value={values.coordinates} />
           </Box>
-          <Box sx={{ width: 320, minWidth: 320 }}>
+          <Box sx={{ width: 370, minWidth: 370 }}>
             <Cell label={'Категория: '} value={values.equipment} />
             <Cell label={'Модель: '} value={values.model} />
             <Cell label={'Проблема: '} value={values.typicalMalfunction} />
@@ -177,14 +253,17 @@ export const IncidentData =
             <Cell label={'Связанный: '} value={values.relatedIncident} />
           </Box>
         </Box>
-        <Divider sx={{ width: (dataWidth - 100) / 1.5, mt: 1 }} />
+        <Divider sx={{ width: dataWidth, mt: 1 }} />
         <Box sx={{ display: 'flex', flexDirection: 'row', mt: 1 }}>
           <Box sx={{ width: (dataWidth - 100) / 3.2, minWidth: 420 }}>
             <DescriptionCell label={'Описание: '} value={values.description} />
           </Box>
 
-          <Box sx={{ width: (dataWidth - 100) / 3.2, minWidth: 420, ml: 1 }}>
-            <DescriptionCell label={'Комментарии: '} value={values.comment} />
+          <Box sx={{ width: 'auto', minWidth: 520, ml: 1 }}>
+            <DescriptionCellComment
+              label={'Комментарии: '}
+              value={values.comment ?? ''}
+            />
           </Box>
         </Box>
       </Box>

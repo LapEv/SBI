@@ -712,7 +712,7 @@ export class incidentService {
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+      res.status(500).json({ error: ['db error:', err] })
     }
   }
 
@@ -979,7 +979,6 @@ export class incidentService {
       const count = await IncidentRepos.count({
         where: { [Op.and]: filterData },
       })
-
       res.status(200).json({ incs, count, filterListData })
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
@@ -1288,6 +1287,23 @@ export class incidentService {
     const { id, id_incClosing } = _req.body
     try {
       await IncidentRepos.update(id, { id_incClosing })
+      const incs = await IncidentRepos.findAll({
+        where: { active: true },
+        // include: { all: true },
+        include: this.includes,
+      })
+      res.status(200).json(incs)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (err: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      res.status(500).json({ error: ['db error', err] })
+    }
+  }
+
+  changeComment = async (_req: Request, res: Response) => {
+    const { id, comment } = _req.body
+    try {
+      await IncidentRepos.update(id, { comment })
       const incs = await IncidentRepos.findAll({
         where: { active: true },
         // include: { all: true },

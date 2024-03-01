@@ -5,16 +5,8 @@ import { ThemeMode } from '../../../../themes/themeConfig'
 import { useApp } from 'hooks/app/useApp'
 import { MultiTextFieldIncident } from 'components/TextFields'
 import { Button } from 'components/Buttons'
-
-export interface IncidentDataProps {
-  values: any
-  setHeight: (height: number) => void
-}
-
-interface CellProps {
-  label: string
-  value: string
-}
+import { CellProps, CellPropsComments, IncidentDataProps } from '../interfaces'
+import { checkCommentINCValidation } from 'utils/validatorRules'
 
 const Cell = ({ label, value }: CellProps) => {
   const theme = useTheme()
@@ -83,21 +75,33 @@ const DescriptionCell = ({ label, value }: CellProps) => {
   )
 }
 
-const DescriptionCellComment = ({ label, value }: CellProps) => {
+const DescriptionCellComment = ({
+  label,
+  value,
+  onSaveComments,
+}: CellPropsComments) => {
   const theme = useTheme()
   const [comment, setComment] = useState<string>(value)
-  const [saveComment, setSaveComment] = useState<boolean>(true)
+  const [disabledSaveComment, setDisabledSaveComment] = useState<boolean>(true)
+  const [errors, setErrors] = useState<boolean>(false)
+  const [errorLabel, setErrorLabel] = useState<string>('')
 
   const setComments = (text: string) => {
-    setComment(text)
-    if (text !== value) {
-      setSaveComment(false)
+    const checkValidation = checkCommentINCValidation(text)
+    if (checkValidation) {
+      setErrors(true)
+      setErrorLabel(checkValidation)
       return
     }
-    setSaveComment(true)
+    setErrors(false)
+    setErrorLabel('')
+    setComment(text)
+    if (text !== value) {
+      setDisabledSaveComment(false)
+      return
+    }
+    setDisabledSaveComment(true)
   }
-
-  console.log('validation comments = ', value)
 
   return (
     <Box
@@ -119,7 +123,8 @@ const DescriptionCellComment = ({ label, value }: CellProps) => {
         <Box>{label}</Box>
         <Button
           sx={{ width: '70%', mt: 1, fontSize: '0.825rem' }}
-          disabled={saveComment}>
+          disabled={disabledSaveComment}
+          onClick={() => onSaveComments(comment)}>
           Сохранить
         </Button>
       </Box>
@@ -130,6 +135,8 @@ const DescriptionCellComment = ({ label, value }: CellProps) => {
         maxRows={4}
         value={comment || ''}
         onChange={e => setComments(e.target.value ?? '')}
+        error={errors}
+        helperText={errors ? errorLabel : ''}
       />
     </Box>
   )
@@ -178,14 +185,15 @@ const StyledDescription = styled(Box)(({ theme }) => ({
 
 export const IncidentData =
   /* eslint-disable @typescript-eslint/no-unused-vars */
-  memo(({ values, setHeight }: IncidentDataProps) => {
+  memo(({ values, setHeight, onSaveComments }: IncidentDataProps) => {
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const boxRef = React.createRef<HTMLDivElement>()
     // const [top, setTop] = useState<number>()
     const [{ dataWidth }] = useApp()
 
     useEffect(() => {
-      setHeight(boxRef?.current?.clientHeight ?? 0)
+      const height = boxRef?.current?.clientHeight as number
+      setHeight(height + 10 ?? 0)
     }, [])
 
     return (
@@ -263,6 +271,9 @@ export const IncidentData =
             <DescriptionCellComment
               label={'Комментарии: '}
               value={values.comment ?? ''}
+              onSaveComments={comment =>
+                onSaveComments({ id: values.id, comment: comment })
+              }
             />
           </Box>
         </Box>

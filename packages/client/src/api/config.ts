@@ -113,6 +113,7 @@ export const ApiEndPoints = {
     changeStatus: 'incidents/changeStatus',
     changeUserClosingCheck: 'incidents/changeUserClosingCheck',
     changeUserClosing: 'incidents/changeUserClosing',
+    changeComment: 'incidents/changeComment',
     getIncidentStatuses: 'incidents/getIncidentStatuses',
     newIncidentStatuses: 'incidents/newIncidentStatuses',
     deleteIncidentStatuses: 'incidents/deleteIncidentStatuses',

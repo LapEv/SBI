@@ -189,6 +189,11 @@ export const incidentRouter = (apiRouter: Router) => {
     roleMiddleware(['changeUserClosing', 'ADMIN', 'SUPERADMIN']),
     service.changeUserClosing
   )
+  router.post(
+    '/changeComment',
+    roleMiddleware(['changeComment', 'ADMIN', 'SUPERADMIN']),
+    service.changeComment
+  )
 
   router.get(
     '/getINCLogs',

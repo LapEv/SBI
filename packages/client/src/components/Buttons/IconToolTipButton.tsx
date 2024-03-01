@@ -29,7 +29,18 @@ export function IconToolTipButton({
   }
 
   return (
-    <Tooltip title={title}>
+    <Tooltip
+      title={title}
+      PopperProps={{
+        modifiers: [
+          {
+            name: 'offset',
+            options: {
+              offset: [50, 0],
+            },
+          },
+        ],
+      }}>
       <IconButton
         onClick={onClick}
         size={size ?? 'medium'}

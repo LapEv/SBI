@@ -42,6 +42,10 @@ export const DataTable = ({ title, data, options, columns }: IDataTable) => {
                     theme.palette.mode === ThemeMode.dark
                       ? '#1E515D'
                       : '#C1EEE1',
+                  color:
+                    theme.palette.mode === ThemeMode.light
+                      ? '#000000'
+                      : '#FFFFFF',
                 },
               },
             },

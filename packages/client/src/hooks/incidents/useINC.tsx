@@ -26,6 +26,7 @@ import {
   newTypeCompletedWork,
   getINCs,
   getFilter,
+  changeComment,
 } from 'api/incidents'
 import { setActiveINC, setLoadingINC } from 'store/slices/incidents'
 
@@ -81,12 +82,14 @@ export function useIncidents(): [INCState, INCActions] {
       changeStatus(data) {
         dispatch(changeStatus(data))
       },
-
       changeUserClosingCheck(data) {
         dispatch(changeUserClosingCheck(data))
       },
       changeUserClosing(data) {
         dispatch(changeUserClosing(data))
+      },
+      changeComment(data) {
+        dispatch(changeComment(data))
       },
       deleteTypesOfWork(data) {
         dispatch(deleteTypesOfWork(data))

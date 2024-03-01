@@ -13,6 +13,7 @@ import {
   AddTypesCompletedWork,
   ChangeTypesCompletedWork,
   GetINCsByParams,
+  ChangeComment,
 } from 'store/slices/incidents/interfaces'
 
 export interface INCActions {
@@ -35,6 +36,7 @@ export interface INCActions {
   changeStatus: (data: ChangeStatus) => void
   changeUserClosingCheck: (data: ChangeClosingCheck) => void
   changeUserClosing: (data: ChangeClosing) => void
+  changeComment: (data: ChangeComment) => void
   changeIncidentStatuses: (data: ChangeINCStatuses) => void
   changeTypesOfWork: (data: ChangeTypesOfWork) => void
   changeTypesCompletedWork: (data: ChangeTypesCompletedWork) => void

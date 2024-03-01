@@ -1,5 +1,5 @@
 import { Options } from 'components/DropDown/interface'
-import { INC } from 'store/slices/incidents/interfaces'
+import { ChangeComment, INC } from 'store/slices/incidents/interfaces'
 
 export type Order = 'asc' | 'desc'
 
@@ -102,4 +102,21 @@ export interface ICustomHeaderCell {
 
 export interface ITableMeta {
   rowData: string[]
+}
+
+export interface IncidentDataProps {
+  values: any
+  setHeight: (height: number) => void
+  onSaveComments: (data: ChangeComment) => void
+}
+
+export interface CellProps {
+  label: string
+  value: string
+}
+
+export interface CellPropsComments {
+  label: string
+  value: string
+  onSaveComments: (comment: string) => void
 }

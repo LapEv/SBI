@@ -21,6 +21,7 @@ import {
   ChangeTypesCompletedWork,
   GetINCsByParams,
   AnswerGetFilter,
+  ChangeComment,
 } from 'store/slices/incidents/interfaces'
 
 export const getINC = createAsyncThunk(
@@ -361,6 +362,31 @@ export const changeUserClosing = createAsyncThunk(
       /* eslint-enable @typescript-eslint/no-explicit-any */
       return thunkAPI.rejectWithValue(
         `Не удалось назначить ответственного за закрытие!\n${getError(e)}`
+      )
+    }
+  }
+)
+
+export const changeComment = createAsyncThunk(
+  'incidents/changeComment',
+  async ({ id, comment }: ChangeComment, thunkAPI) => {
+    try {
+      const { data } = await authhost.post(ApiEndPoints.INC.changeComment, {
+        id,
+        comment,
+      })
+      return {
+        data,
+        message: {
+          text: 'Комментарий для инцидента изменен!',
+          type: 'success',
+        },
+      }
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+      return thunkAPI.rejectWithValue(
+        `Не удалось изменить комментарий к инциденту!\n${getError(e)}`
       )
     }
   }

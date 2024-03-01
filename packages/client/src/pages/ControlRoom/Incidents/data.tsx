@@ -214,7 +214,7 @@ export const MapINCInputFields = [
   {
     name: 'description',
     label: 'Введите описание к инциденту',
-    validation: NoRequiredValidation,
+    validation: commentINCValidation,
     type: 'text',
     required: false,
     // tabIndex: 7,
@@ -272,7 +272,7 @@ export const MapINCInputFields = [
   {
     name: 'comments',
     label: 'Введите комментарии',
-    validation: NoRequiredValidation,
+    validation: commentINCValidation,
     type: 'text',
     required: false,
     // tabIndex: 14,

@@ -363,6 +363,11 @@ export interface ChangeTypesCompletedWork {
   id?: string
 }
 
+export interface ChangeComment {
+  id: string
+  comment: string
+}
+
 export interface IServiceList {
   name: string
   label: string

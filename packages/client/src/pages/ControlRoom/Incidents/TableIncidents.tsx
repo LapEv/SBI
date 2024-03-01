@@ -18,8 +18,6 @@ import {
   FilterOptions,
   AdditionalMenu,
   GetIndicatorData,
-  Normal,
-  Compressed,
 } from './'
 import { useIncidents } from 'hooks/incidents/useINC'
 import { setFilter } from './Utils/FilterOptions'
@@ -30,8 +28,10 @@ export const TableIncidents = memo(() => {
   const modalClientRef = React.createRef()
   const [modal, setModal] = useState<boolean>(false)
   const [modalImage, setModalImage] = useState<string>('')
-  const [{ incidents, countIncidents, filterListData }, { getINCs }] =
-    useIncidents()
+  const [
+    { incidents, countIncidents, filterListData },
+    { getINCs, changeComment },
+  ] = useIncidents()
 
   const [heightINCData, setHeightINCData] = useState<number>(0)
   const [filterDialogOpen, setFilterDialogOpen] = useState<boolean>(false)
@@ -919,6 +919,7 @@ export const TableIncidents = memo(() => {
             <IncidentData
               values={incidents[dataIndex]}
               setHeight={setHeightINCData}
+              onSaveComments={changeComment}
             />
           </TableCell>
         </TableRow>
@@ -981,6 +982,7 @@ export const TableIncidents = memo(() => {
   useEffect(() => {
     const { nameSort, direction, limit, page, filterOptions } = FilterOptions()
     getINCs({ limit, nameSort, direction, page, filterOptions })
+    console.log('incs = ', incidents)
   }, [])
 
   const checkClickMenu = (name: string | null) => {
@@ -1000,7 +1002,8 @@ export const TableIncidents = memo(() => {
         open={modal}
         onClose={setModal}
         aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description">
+        aria-describedby="modal-modal-description"
+        disableScrollLock={true}>
         <ChooseModal
           ref={modalClientRef}
           modalImage={modalImage}

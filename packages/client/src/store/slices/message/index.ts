@@ -78,6 +78,7 @@ import {
   newTypeCompletedWork,
   deleteTypesCompletedWork,
   changeTypesCompletedWork,
+  changeComment,
 } from 'api/incidents'
 import { getFiles, uploadFiles } from 'api/files'
 
@@ -1204,6 +1205,23 @@ export const messageSlise = createSlice({
       state,
       action: PayloadAction<string>
     ) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = action.payload
+    },
+    [changeComment.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerMessage>
+    ) => {
+      state.isLoadingMessage = false
+      state.error = ''
+      state.text = action.payload.message.text
+      state.type = action.payload.message.type
+    },
+    [changeComment.pending.type]: state => {
+      state.isLoadingMessage = true
+    },
+    [changeComment.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingMessage = false
       state.type = 'error'
       state.text = action.payload

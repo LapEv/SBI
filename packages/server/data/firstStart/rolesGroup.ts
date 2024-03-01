@@ -34,6 +34,7 @@ export const rolesGroupStartData = [
       'changeStatus',
       'changeUserClosingCheck',
       'changeUserClosing',
+      'changeComment',
       'getTypesCompletedWork',
       'getTypesOfWork',
       'getINCs',

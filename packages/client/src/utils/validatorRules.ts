@@ -299,3 +299,10 @@ export const fileValidation = (files: FileList) => {
   }
   return { status: true, error: '' }
 }
+
+export const checkCommentINCValidation = (text: string) => {
+  if (text && text.length >= 1024) {
+    return 'Превышен лимит в 1024 символа'
+  }
+  return ''
+}

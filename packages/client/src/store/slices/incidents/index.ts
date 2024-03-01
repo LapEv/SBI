@@ -37,6 +37,7 @@ import {
   changeTypesCompletedWork,
   getINCs,
   getFilter,
+  changeComment,
 } from 'api/incidents'
 import { convertDateToStringFromDB } from 'utils/convertDate'
 import { CheckUser, signin } from 'api/user'
@@ -283,6 +284,22 @@ export const incidentsSlise = createSlice({
       state.error = ''
       state.incidents = createINCData(action.payload.data)
     },
+    [changeComment.pending.type]: state => {
+      state.isLoadingINC = true
+    },
+    [changeComment.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoadingINC = false
+      state.error = action.payload
+    },
+    [changeComment.fulfilled.type]: (
+      state,
+      action: PayloadAction<AnswerINC>
+    ) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.incidents = createINCData(action.payload.data)
+    },
+
     [changeINC.pending.type]: state => {
       state.isLoadingINC = true
     },

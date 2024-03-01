@@ -20,11 +20,12 @@ export const PrintINC = memo(
       const handlePrint = useReactToPrint({
         documentTitle: 'Print This Document',
         removeAfterPrint: true,
+        content: () => contentToPrint.current,
       })
 
       const changeData = (event: SyntheticEvent<EventTarget>) => {
         event.preventDefault()
-        handlePrint(null, () => contentToPrint.current)
+        handlePrint()
       }
 
       const onChooseItems = (checked: boolean, id: string) => {

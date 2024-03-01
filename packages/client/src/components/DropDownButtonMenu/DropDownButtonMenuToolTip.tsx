@@ -5,8 +5,6 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import Divider from '@mui/material/Divider'
 import { Box, Tooltip, useTheme } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
-import Popover from '@mui/material/Popover'
-import Typography from '@mui/material/Typography'
 import MenuIcon from '@mui/icons-material/Menu'
 
 interface DropDownMenuProps {
@@ -69,6 +67,7 @@ export const DropDownMenuToolTip = ({
         </IconButton>
       </Tooltip>
       <Menu
+        anchorEl={anchorMenuEl}
         id="DropDownMenu"
         open={openMenu}
         onClose={() => handleClose(null)}

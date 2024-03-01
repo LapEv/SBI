@@ -8,7 +8,6 @@ import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate
 import { PrintBar } from './PrintBar'
 import { DenseTable } from './DenseTable'
 import { DragTable } from './DragTable'
-import { useTheme } from '@mui/material'
 
 interface AdditionalMenu {
   denseTable: boolean
@@ -29,7 +28,6 @@ export const AdditionalMenu = memo(
     setDragTable,
   }: AdditionalMenu) => {
     const [{ admin }] = useAuth()
-    const theme = useTheme()
     return (
       <>
         <PrintBar onPrint={onPrint} />

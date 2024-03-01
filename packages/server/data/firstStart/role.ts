@@ -387,6 +387,10 @@ export const rolesStartData = [
     nameRole: 'Изменение ответсвенного за закрытие инцидента',
   },
   {
+    role: 'changeComment',
+    nameRole: 'Изменение комментария инцидента',
+  },
+  {
     role: 'newTypeOfWork',
     nameRole: 'Создание нового типа работ',
   },

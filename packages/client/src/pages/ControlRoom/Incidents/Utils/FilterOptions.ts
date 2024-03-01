@@ -5,7 +5,7 @@ export const FilterOptions = () => {
     localStorage.getItem('sortColumn') as string
   )
   const limit = JSON.parse(localStorage.getItem('numberOfRows') as string) ?? 15
-  const page = JSON.parse(localStorage.getItem('currentPage') as string) ?? 1
+  const page = JSON.parse(localStorage.getItem('currentPage') as string) ?? 0
   const filterOptions =
     JSON.parse(localStorage.getItem('filterOptions') as string) ?? []
 

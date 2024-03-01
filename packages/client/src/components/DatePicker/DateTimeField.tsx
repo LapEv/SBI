@@ -8,6 +8,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 import { CalendarIcon, ClearIconElement } from 'components/Icons'
 import { IDateTimeField } from './interface'
 import { Dayjs } from 'dayjs'
+import { memo } from 'react'
 
 const StyledDatePickers = styled(PickersLayout)(({ theme }) => ({
   '.MuiDateCalendar-root': {
@@ -24,33 +25,31 @@ const StyledDatePickers = styled(PickersLayout)(({ theme }) => ({
   },
 }))
 
-export const DateTimeField = ({
-  dateValue,
-  setDateValue,
-  sx,
-}: IDateTimeField) => {
-  return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DateTimePicker
-        slots={{
-          layout: StyledDatePickers as any,
-          textField: TextField,
-          openPickerIcon: CalendarIcon as any,
-          clearIcon: ClearIconElement as any,
-        }}
-        slotProps={{
-          field: { clearable: true },
-        }}
-        value={dateValue ?? ''}
-        onChange={newValue => {
-          setDateValue(newValue as Dayjs)
-        }}
-        views={['day', 'month', 'year', 'hours', 'minutes', 'seconds']}
-        label="Выберите дату"
-        format="DD.MM.YYYY HH:mm:ss"
-        sx={sx ?? { width: '90%', mt: 3 }}
-        timeSteps={{ minutes: 1, seconds: 1 }}
-      />
-    </LocalizationProvider>
-  )
-}
+export const DateTimeField = memo(
+  ({ dateValue, setDateValue, sx }: IDateTimeField) => {
+    return (
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DateTimePicker
+          slots={{
+            layout: StyledDatePickers as any,
+            textField: TextField,
+            openPickerIcon: CalendarIcon as any,
+            clearIcon: ClearIconElement as any,
+          }}
+          slotProps={{
+            field: { clearable: true },
+          }}
+          value={dateValue ?? ''}
+          onChange={newValue => {
+            setDateValue(newValue as Dayjs)
+          }}
+          views={['day', 'month', 'year', 'hours', 'minutes', 'seconds']}
+          label="Выберите дату"
+          format="DD.MM.YYYY HH:mm:ss"
+          sx={sx ?? { width: '90%', mt: 3 }}
+          timeSteps={{ minutes: 1, seconds: 1 }}
+        />
+      </LocalizationProvider>
+    )
+  }
+)

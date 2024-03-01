@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { Box, Container, Typography, List, Modal } from '@mui/material'
 import { useStructure } from 'hooks/structure/useStructure'
 import { DropDownMenu } from 'components/DropDownButtonMenu'
@@ -9,7 +9,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { Message } from 'components/Message'
 import { headerForPages, mainHeaderForPages } from 'static/styles'
 
-export function UsersPage() {
+export const UsersPage = memo(() => {
   const modalRef = React.createRef()
   const [{ admin }] = useAuth()
   const [{ divisions }, { getDivisions }] = useStructure()
@@ -70,4 +70,4 @@ export function UsersPage() {
       </List>
     </Container>
   )
-}
+})

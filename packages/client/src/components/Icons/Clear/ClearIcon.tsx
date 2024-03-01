@@ -1,10 +1,9 @@
 import ClearIcon from '@mui/icons-material/Clear'
 import { useTheme } from '@mui/material'
+import { memo } from 'react'
+import { IClearIcon } from '../interfaces'
 
-interface IClearIcon {
-  size: string
-}
-export const ClearIconElement = ({ size }: IClearIcon) => {
+export const ClearIconElement = memo(({ size }: IClearIcon) => {
   const theme = useTheme()
 
   return (
@@ -15,4 +14,4 @@ export const ClearIconElement = ({ size }: IClearIcon) => {
       }}
     />
   )
-}
+})

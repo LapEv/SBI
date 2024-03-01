@@ -1,5 +1,6 @@
 import { ChangeEvent, FocusEvent } from 'react'
 import { User } from 'storeAuth/interfaces'
+
 type stringOrNull = string | null
 export interface ProfileValidateFieldsProps {
   label: string
@@ -37,4 +38,16 @@ export interface ProfileChangePasswordValues {
     type: string
     required: boolean
   }[]
+}
+
+export interface ProfileHeaderProps {
+  component: string
+  onChooseFile: (event: ChangeEvent<HTMLInputElement>) => void
+  fileData: string | ArrayBuffer | undefined | null
+  avatar: string | null | undefined
+}
+
+export interface ProfileMainProps {
+  setModal: () => void
+  data: User
 }

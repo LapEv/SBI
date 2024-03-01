@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { ICustomCell } from '../interfaces'
+import { ICustomCell } from './interfaces'
 import { Box } from '@mui/material'
 import { customCell, statusSLATitles } from '../data'
 

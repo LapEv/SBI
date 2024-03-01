@@ -1,11 +1,11 @@
 import React, { memo, useEffect, useState } from 'react'
-import { Box, Divider, TextField, styled, useTheme } from '@mui/material'
+import { Box, Divider, styled, useTheme } from '@mui/material'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip'
 import { ThemeMode } from '../../../../themes/themeConfig'
 import { useApp } from 'hooks/app/useApp'
 import { MultiTextFieldIncident } from 'components/TextFields'
 import { Button } from 'components/Buttons'
-import { CellProps, CellPropsComments, IncidentDataProps } from '../interfaces'
+import { CellProps, CellPropsComments, IncidentDataProps } from './interfaces'
 import { checkCommentINCValidation } from 'utils/validatorRules'
 
 const Cell = ({ label, value }: CellProps) => {

@@ -1,17 +1,7 @@
 import { MouseEvent, memo, useState } from 'react'
-import {
-  FormControlLabel,
-  Popover,
-  Switch,
-  Typography,
-  Box,
-} from '@mui/material'
+import { FormControlLabel, Switch, Box } from '@mui/material'
 import { PopoverINC } from 'components/Popover/Popover'
-
-interface IDragTable {
-  dragTable: boolean
-  setDragTable: (data: boolean) => void
-}
+import { IDragTable } from './interfaces'
 
 export const DragTable = memo(({ dragTable, setDragTable }: IDragTable) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)

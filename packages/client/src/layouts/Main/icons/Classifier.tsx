@@ -1,6 +1,7 @@
 import { SvgIcon, SvgIconProps } from '@mui/material'
+import { memo } from 'react'
 
-export function Classifier(props: SvgIconProps) {
+export const Classifier = memo((props: SvgIconProps) => {
   return (
     <SvgIcon {...props} viewBox="0 0 512 512">
       <g>
@@ -12,4 +13,4 @@ export function Classifier(props: SvgIconProps) {
       </g>
     </SvgIcon>
   )
-}
+})

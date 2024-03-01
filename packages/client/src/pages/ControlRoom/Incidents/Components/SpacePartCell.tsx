@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { ISpacePart } from '../interfaces'
+import { ISpacePart } from './interfaces'
 import { Box } from '@mui/material'
 import { customCell } from '../data'
 

@@ -8,22 +8,15 @@ import {
 } from 'react-hook-form'
 import { useAuth } from 'hooks/auth/useAuth'
 import { Routes } from 'utils/routes'
-import { Login } from 'storeAuth/interfaces'
 import { MapLoginFields } from './LoginData'
 import { Button } from 'components/Buttons'
 import { TextField } from 'components/TextFields/'
 import { isEmptyObjField } from 'utils/isEmptyObject'
 import { Message } from 'components/Message'
-interface LoginValues extends Login {
-  list: {
-    label: string
-    value: string
-    validation: object
-    type: string
-  }[]
-}
+import { LoginValues } from './interfaces'
+import { memo } from 'react'
 
-export function LoginPage() {
+export const LoginPage = memo(() => {
   const location = useLocation()
   const navigate = useNavigate()
   const [{ user }, { signin }] = useAuth()
@@ -116,4 +109,4 @@ export function LoginPage() {
       </Box>
     </Container>
   )
-}
+})

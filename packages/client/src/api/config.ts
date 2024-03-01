@@ -1,4 +1,6 @@
 import axios, { InternalAxiosRequestConfig } from 'axios'
+import { store } from 'store'
+import { clearUser } from 'storeAuth/index'
 
 export const ApiEndPoints = {
   User: {
@@ -168,5 +170,16 @@ const authInterceptor = (
 
 authhost.interceptors.request.use(authInterceptor)
 authFileHost.interceptors.request.use(authInterceptor)
+
+authhost.interceptors.response.use(
+  res => res,
+  error => {
+    if (error.response.status === 403) {
+      localStorage.removeItem('token')
+      store.dispatch(clearUser())
+    }
+    return Promise.reject(error)
+  }
+)
 
 export { host, authhost, authFileHost }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, memo } from 'react'
 import {
   Snackbar,
   Alert,
@@ -10,12 +10,12 @@ import Slide from '@mui/material/Slide'
 import { useMessage } from 'hooks/message/useMessage'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-function TransitionLeft(props: any) {
+const TransitionLeft = memo((props: any) => {
   /* eslint-enable @typescript-eslint/no-explicit-any */
   return <Slide {...props} direction="up" />
-}
+})
 
-export const Message = () => {
+export const Message = memo(() => {
   const [show, setShow] = useState(false)
   const theme = useTheme()
 
@@ -64,4 +64,4 @@ export const Message = () => {
       </Alert>
     </Snackbar>
   )
-}
+})

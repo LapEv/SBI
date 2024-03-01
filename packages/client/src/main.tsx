@@ -5,7 +5,7 @@ import { store } from './store'
 import './index.css'
 import ThemeWrapper from './themes/ThemeWrapper'
 
-function startServiceWorker() {
+const startServiceWorker = () => {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker

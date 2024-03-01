@@ -5,8 +5,9 @@ import MuiAppBar from '@mui/material/AppBar'
 import { menuData } from './drawerBarData'
 import { Button } from '@mui/material'
 import { Link } from 'react-router-dom'
+import { memo } from 'react'
 
-function NavItem({ text, ...rest }: { text: string; to: string }) {
+const NavItem = memo(({ text, ...rest }: { text: string; to: string }) => {
   return (
     <Button
       color="inherit"
@@ -19,9 +20,9 @@ function NavItem({ text, ...rest }: { text: string; to: string }) {
       {text}
     </Button>
   )
-}
+})
 
-export const NavBar = () => {
+export const NavBar = memo(() => {
   const AppBar = styled(MuiAppBar)(({ theme }) => ({
     zIndex: theme.zIndex.drawer + 1,
     backgroundColor: theme.palette.background.default,
@@ -51,4 +52,4 @@ export const NavBar = () => {
       </Toolbar>
     </AppBar>
   )
-}
+})

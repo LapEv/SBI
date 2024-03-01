@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 import { styled, Theme, CSSObject } from '@mui/material/styles'
 import { Box, Divider, Drawer as MuiDrawer, useTheme } from '@mui/material'
 import { NavBar } from './navBar'
@@ -49,7 +49,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }))
 
-export const MainLayout = () => {
+export const MainLayout = memo(() => {
   const boxRef = useRef<HTMLDivElement>(null)
   const [_, { setDataWidth }] = useApp()
   const theme = useTheme()
@@ -114,4 +114,4 @@ export const MainLayout = () => {
       )}
     </>
   )
-}
+})

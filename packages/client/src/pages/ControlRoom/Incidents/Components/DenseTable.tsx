@@ -1,11 +1,6 @@
 import { MouseEvent, memo, useState } from 'react'
-import { FormControlLabel, Switch, Box, Tooltip } from '@mui/material'
-import { PopoverINC } from 'components/Popover/Popover'
-
-interface IDenseTable {
-  denseTable: boolean
-  setDenseTable: (data: boolean) => void
-}
+import { FormControlLabel, Switch, Tooltip } from '@mui/material'
+import { IDenseTable } from './interfaces'
 
 export const DenseTable = memo(({ denseTable, setDenseTable }: IDenseTable) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)

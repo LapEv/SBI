@@ -4,6 +4,7 @@ import LinearProgress, {
   linearProgressClasses,
 } from '@mui/material/LinearProgress'
 import { Typography, Box } from '@mui/material'
+import { memo } from 'react'
 
 export const StyledLinearProgress = styled(LinearProgress)(({ theme, sx }) => ({
   height: 15,
@@ -18,23 +19,29 @@ export const StyledLinearProgress = styled(LinearProgress)(({ theme, sx }) => ({
   },
 }))
 
-export const LinearProgressWithLabel = (
-  props: LinearProgressProps & {
-    value: number
-    percent: number
-    sx?: any
+export const LinearProgressWithLabel = memo(
+  (
+    props: LinearProgressProps & {
+      value: number
+      percent: number
+      sx?: any
+    }
+  ) => {
+    return (
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ width: '100%', mr: 1 }}>
+          <StyledLinearProgress
+            variant="determinate"
+            {...props}
+            sx={props.sx}
+          />
+        </Box>
+        <Box sx={{ minWidth: 35 }}>
+          <Typography variant="body2" color="text.secondary">{`${Math.floor(
+            props.percent
+          )}%`}</Typography>
+        </Box>
+      </Box>
+    )
   }
-) => {
-  return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Box sx={{ width: '100%', mr: 1 }}>
-        <StyledLinearProgress variant="determinate" {...props} sx={props.sx} />
-      </Box>
-      <Box sx={{ minWidth: 35 }}>
-        <Typography variant="body2" color="text.secondary">{`${Math.floor(
-          props.percent
-        )}%`}</Typography>
-      </Box>
-    </Box>
-  )
-}
+)

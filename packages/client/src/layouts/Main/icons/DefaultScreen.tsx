@@ -1,6 +1,7 @@
 import { SvgIcon, SvgIconProps } from '@mui/material'
+import { memo } from 'react'
 
-export function DefaultScreen(props: SvgIconProps) {
+export const DefaultScreen = memo((props: SvgIconProps) => {
   return (
     <SvgIcon {...props} viewBox="0 0 24 24">
       <path
@@ -8,4 +9,4 @@ export function DefaultScreen(props: SvgIconProps) {
         fill="#1E515D"></path>
     </SvgIcon>
   )
-}
+})

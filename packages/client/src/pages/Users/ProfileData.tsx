@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react'
+import React, { ChangeEvent, memo } from 'react'
 import { Box, Collapse, ListItemButton, Modal } from '@mui/material'
 import { TextField } from 'components/TextFields/'
 import { User } from 'storeAuth/interfaces'
@@ -23,7 +23,7 @@ import { DataList } from 'components/CheckBoxGroup/interface'
 import { deepEqual } from 'utils/deepEqual'
 import { DeleteUserModal } from './Modals/DeleteUserModal'
 
-export const ProfileData = (user: User) => {
+export const ProfileData = memo((user: User) => {
   const modalRef = React.createRef()
   const theme = useTheme()
   const [{ admin, userData }, { updateUserData, deleteUser, updateUser }] =
@@ -196,4 +196,4 @@ export const ProfileData = (user: User) => {
       )}
     </Box>
   )
-}
+})

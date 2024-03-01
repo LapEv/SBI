@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { Box, Container, Modal, Typography, List } from '@mui/material'
 import { Message } from 'components/Message/Message'
 import { useAuth } from 'hooks/auth/useAuth'
@@ -8,7 +8,7 @@ import { ChooseModal } from './Modals/ChooseModal'
 import { useClassifier } from 'hooks/classifier/useClassifier'
 import { headerForPages, mainHeaderForPages } from 'static/styles'
 
-export function ClassifierPage() {
+export const ClassifierPage = memo(() => {
   const modalClientRef = React.createRef()
   const [{ admin }] = useAuth()
   const [{ equipments }, { getClassifierEquipments, setActiveEquipment }] =
@@ -76,4 +76,4 @@ export function ClassifierPage() {
       </List>
     </Container>
   )
-}
+})

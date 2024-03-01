@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 import { Box, Typography } from '@mui/material'
 import {
   useForm,
@@ -15,156 +15,162 @@ import { useClassifier } from 'hooks/classifier/useClassifier'
 import { DropDown, emptyValue } from 'components/DropDown'
 import { Options } from 'components/DropDown/interface'
 import { Item } from 'components/CheckBoxGroup'
-import { resetTypicalMalfunction } from 'store/slices/classifier'
 import { TypicalMalfunctions } from 'store/slices/classifier/interfaces'
 
-export const NewClassifierModel = React.forwardRef<unknown, ChooseModalProps>(
-  /* eslint-disable @typescript-eslint/no-unused-vars */
-  ({ handleModal, title }: ChooseModalProps, ref) => {
-    const [{ equipments }, { newClassifierModel, resetTypicalMalfunction }] =
-      useClassifier()
-    /* eslint-enable @typescript-eslint/no-unused-vars */
-    const boxRef = React.createRef<HTMLDivElement>()
-    const [equipment, setEquipment] = useState<Options>(emptyValue)
-    const [typicalMalfunctions, setTypicalMalfunctions] = useState<
-      TypicalMalfunctions[]
-    >([])
-    const [selectedTypicalMalfunctions, setGroup] = useState<string[]>([])
-    const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
-    const [noTypical, setNoTypical] = useState<boolean>(false)
+export const NewClassifierModel = memo(
+  React.forwardRef<unknown, ChooseModalProps>(
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    ({ handleModal, title }: ChooseModalProps, ref) => {
+      const [{ equipments }, { newClassifierModel, resetTypicalMalfunction }] =
+        useClassifier()
+      /* eslint-enable @typescript-eslint/no-unused-vars */
+      const boxRef = React.createRef<HTMLDivElement>()
+      const [equipment, setEquipment] = useState<Options>(emptyValue)
+      const [typicalMalfunctions, setTypicalMalfunctions] = useState<
+        TypicalMalfunctions[]
+      >([])
+      const [selectedTypicalMalfunctions, setGroup] = useState<string[]>([])
+      const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
+      const [noTypical, setNoTypical] = useState<boolean>(false)
 
-    const { handleSubmit, control } = useForm<AddValuesProps>({
-      mode: 'onBlur',
-      defaultValues: {
-        list: MapModelsInputFields,
-      },
-    })
-    const { errors } = useFormState({ control })
-    const { fields } = useFieldArray({
-      control,
-      name: 'list',
-    })
-
-    function changeData({ list }: AddValuesProps) {
-      newClassifierModel({
-        id_equipment: equipment.id,
-        model: list[0].value,
-        selectedTypicalMalfunctions,
+      const { handleSubmit, control } = useForm<AddValuesProps>({
+        mode: 'onBlur',
+        defaultValues: {
+          list: MapModelsInputFields,
+        },
       })
-      handleModal(false)
-    }
+      const { errors } = useFormState({ control })
+      const { fields } = useFieldArray({
+        control,
+        name: 'list',
+      })
 
-    const chooseClassifierEquipment = (data: Options) => {
-      const typical = equipments.filter(({ id }) => id === data.id)[0]
-        .TypicalMalfunctions as TypicalMalfunctions[]
-      setTypicalMalfunctions(typical)
-      setEquipment(data)
-    }
-
-    const onChooseItems = (checked: boolean, id: string) => {
-      if (!checked) {
-        setGroup(selectedTypicalMalfunctions.filter(value => value !== id))
-        return
+      function changeData({ list }: AddValuesProps) {
+        newClassifierModel({
+          id_equipment: equipment.id,
+          model: list[0].value,
+          selectedTypicalMalfunctions,
+        })
+        handleModal(false)
       }
-      setGroup([...selectedTypicalMalfunctions, id])
-      if ([...selectedTypicalMalfunctions, id] && errSelectedItems)
-        setErrSelectedItems(false)
-    }
 
-    useEffect(() => {
-      resetTypicalMalfunction()
-    }, [])
-
-    useEffect(() => {
-      if (
-        (!typicalMalfunctions || !typicalMalfunctions.length) &&
-        equipment.id
-      ) {
-        setNoTypical(true)
-        return
+      const chooseClassifierEquipment = (data: Options) => {
+        const typical = equipments.filter(({ id }) => id === data.id)[0]
+          .TypicalMalfunctions as TypicalMalfunctions[]
+        setTypicalMalfunctions(typical)
+        setEquipment(data)
       }
-      setNoTypical(false)
-    }, [typicalMalfunctions])
 
-    return (
-      <Box
-        sx={{ ...modalStyle, minHeight: 300 }}
-        component="form"
-        onSubmit={handleSubmit(changeData)}>
-        <Typography variant={'h6'}>{title}</Typography>
-        <DropDown
-          data={equipments.map(item => {
-            return {
-              ['label']: item.equipment as string,
-              ['id']: item.id as string,
-            }
-          })}
-          props={{ mt: 3 }}
-          onChange={chooseClassifierEquipment}
-          value={equipment.label}
-          label="Выберите классификатор оборудования"
-          errorLabel="Не выбран классификатор оборудования!"
-        />
-        {fields.map(({ id, label, validation, type, required }, index) => {
-          return (
-            <Controller
-              key={id}
-              control={control}
-              name={`list.${index}.value`}
-              rules={validation}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  inputRef={field.ref}
-                  label={label}
-                  type={type}
-                  variant="outlined"
-                  sx={{ width: '90%', m: 2, mt: 4, height: 40 }}
-                  margin="normal"
-                  required={required ?? true}
-                  value={field.value || ''}
-                  error={!!(errors?.list ?? [])[index]?.value?.message}
-                  helperText={(errors?.list ?? [])[index]?.value?.message}
-                />
-              )}
-            />
-          )
-        })}
-        <Typography sx={{ fontSize: 14, mt: 2 }}>
-          Выберите типовые неисправности для этой модели:
-        </Typography>
-        {noTypical ? (
-          <Typography sx={{ fontSize: 14, mt: 2, width: '85%', height: 40 }}>
-            Для этого классификатора нет типовых неисправностей. Необходимо
-            сначала их внести!
-          </Typography>
-        ) : (
-          <Typography
-            sx={{ fontSize: 14, mt: 2, width: '85%', height: 10 }}></Typography>
-        )}
+      const onChooseItems = (checked: boolean, id: string) => {
+        if (!checked) {
+          setGroup(selectedTypicalMalfunctions.filter(value => value !== id))
+          return
+        }
+        setGroup([...selectedTypicalMalfunctions, id])
+        if ([...selectedTypicalMalfunctions, id] && errSelectedItems)
+          setErrSelectedItems(false)
+      }
+
+      useEffect(() => {
+        resetTypicalMalfunction()
+      }, [])
+
+      useEffect(() => {
+        if (
+          (!typicalMalfunctions || !typicalMalfunctions.length) &&
+          equipment.id
+        ) {
+          setNoTypical(true)
+          return
+        }
+        setNoTypical(false)
+      }, [typicalMalfunctions])
+
+      return (
         <Box
-          ref={boxRef}
-          sx={{
-            ...boxDataModal,
-            height: 200,
-            mt: 0,
-          }}>
-          {typicalMalfunctions.map(({ typicalMalfunction, id }) => (
-            <Item
-              name={typicalMalfunction}
-              id={`${id}`}
-              groupChecked={false}
-              onChooseItems={onChooseItems}
-              initChecked={true}
-              key={id}
-            />
-          ))}
+          sx={{ ...modalStyle, minHeight: 300 }}
+          component="form"
+          onSubmit={handleSubmit(changeData)}>
+          <Typography variant={'h6'}>{title}</Typography>
+          <DropDown
+            data={equipments.map(item => {
+              return {
+                ['label']: item.equipment as string,
+                ['id']: item.id as string,
+              }
+            })}
+            props={{ mt: 3 }}
+            onChange={chooseClassifierEquipment}
+            value={equipment.label}
+            label="Выберите классификатор оборудования"
+            errorLabel="Не выбран классификатор оборудования!"
+          />
+          {fields.map(({ id, label, validation, type, required }, index) => {
+            return (
+              <Controller
+                key={id}
+                control={control}
+                name={`list.${index}.value`}
+                rules={validation}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    inputRef={field.ref}
+                    label={label}
+                    type={type}
+                    variant="outlined"
+                    sx={{ width: '90%', m: 2, mt: 4, height: 40 }}
+                    margin="normal"
+                    required={required ?? true}
+                    value={field.value || ''}
+                    error={!!(errors?.list ?? [])[index]?.value?.message}
+                    helperText={(errors?.list ?? [])[index]?.value?.message}
+                  />
+                )}
+              />
+            )
+          })}
+          <Typography sx={{ fontSize: 14, mt: 2 }}>
+            Выберите типовые неисправности для этой модели:
+          </Typography>
+          {noTypical ? (
+            <Typography sx={{ fontSize: 14, mt: 2, width: '85%', height: 40 }}>
+              Для этого классификатора нет типовых неисправностей. Необходимо
+              сначала их внести!
+            </Typography>
+          ) : (
+            <Typography
+              sx={{
+                fontSize: 14,
+                mt: 2,
+                width: '85%',
+                height: 10,
+              }}></Typography>
+          )}
+          <Box
+            ref={boxRef}
+            sx={{
+              ...boxDataModal,
+              height: 200,
+              mt: 0,
+            }}>
+            {typicalMalfunctions.map(({ typicalMalfunction, id }) => (
+              <Item
+                name={typicalMalfunction}
+                id={`${id}`}
+                groupChecked={false}
+                onChooseItems={onChooseItems}
+                initChecked={true}
+                key={id}
+              />
+            ))}
+          </Box>
+          <ButtonsModalSection
+            closeModal={() => handleModal(false)}
+            btnName="Сохранить"
+          />
         </Box>
-        <ButtonsModalSection
-          closeModal={() => handleModal(false)}
-          btnName="Сохранить"
-        />
-      </Box>
-    )
-  }
+      )
+    }
+  )
 )

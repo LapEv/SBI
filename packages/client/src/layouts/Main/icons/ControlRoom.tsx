@@ -1,6 +1,7 @@
 import { SvgIcon, SvgIconProps } from '@mui/material'
+import { memo } from 'react'
 
-export function ControlRoom(props: SvgIconProps) {
+export const ControlRoom = memo((props: SvgIconProps) => {
   return (
     <SvgIcon {...props} viewBox="0 0 64 64">
       <path d="m46 29.99c0 3.3-1.05 6.53-2.95 9.2-.32-.12-.68-.2-1.05-.2-1.65 0-3 1.35-3 3 0 .37.08.73.2 1.05-2.67 1.9-5.9 2.95-9.2 2.95-7.82 0-14.44-5.66-15.75-13.28 1.03-.48 1.75-1.51 1.75-2.72s-.72-2.24-1.75-2.72c1.25-7.3 7.37-12.77 14.75-13.23v4c-6.15.51-11 5.67-11 11.95 0 6.62 5.38 12 12 12s12-5.38 12-12c0-1.78-.42-3.52-1.17-5.1l3.49-2.02c1.1 2.2 1.68 4.65 1.68 7.12z"></path>
@@ -9,4 +10,4 @@ export function ControlRoom(props: SvgIconProps) {
       <path d="m40 29.99c0 5.51-4.49 10-10 10s-10-4.49-10-10c0-5.18 3.95-9.45 9-9.95v4.04c-2.83.48-5 2.94-5 5.91 0 3.31 2.69 6 6 6s6-2.69 6-6c0-.73-.14-1.43-.38-2.08l3.48-2.02c.58 1.28.9 2.67.9 4.1z"></path>
     </SvgIcon>
   )
-}
+})

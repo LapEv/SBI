@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import {
   Box,
   Typography,
@@ -34,233 +34,241 @@ import {
 } from 'components/CheckBoxGroup/interface'
 import { CheckBoxGroups, Item } from 'components/CheckBoxGroup'
 
-export const AddContract = React.forwardRef<unknown, ChooseModalProps>(
-  /* eslint-disable @typescript-eslint/no-unused-vars */
-  ({ handleModal, title }: ChooseModalProps, ref) => {
-    /* eslint-enable @typescript-eslint/no-unused-vars */
-    const [openList, setOpenList] = useState(false)
-    const [openListObjects, setOpenListObjects] = useState(false)
-    const [{ clients }, { getClients }] = useClients()
-    const [{ contracts }, { getContracts, newContract }] = useContracts()
-    const [{ equipments }, { getClassifierEquipments }] = useClassifier()
-    const [{ sla }, { getSLA }] = useSLA()
-    const [{ objects }, { getObjects }] = useObjects()
-    const [client, setClient] = useState<Options>(emptyValue)
-    const [slaList, setSLAList] = useState<Options[]>([])
-    const [objectList, setObjectList] = useState<DataList[]>([])
-    const [selectedObjects, setSelectedObjects] = useState<string[]>([])
-    const [equipmentList, setEquipmentList] = useState<ICheckBoxGroupData[]>([])
-    const [selectedEquipments, setSelectedEquipments] = useState<string[]>([])
-    const [selectedModels, setSelectedModels] = useState<string[]>([])
-    const [errSLA, setErrSLA] = useState<boolean>(false)
-    const [_, { setMessage }] = useMessage()
-    const [dateValue, setDateValue] = useState<string>('')
-    const { handleSubmit, control } = useForm<AddValuesProps>({
-      mode: 'onBlur',
-      defaultValues: {
-        list: MapNewContractInputFields,
-      },
-    })
-    const { errors } = useFormState({ control })
-    const { fields } = useFieldArray({
-      control,
-      name: 'list',
-    })
-
-    const changeData = ({ list }: AddValuesProps) => {
-      const isExist = contracts.find(item => item.contract === list[0].value)
-      if (isExist) {
-        setMessage({
-          text: 'Такой контракт уже существует',
-          type: 'error',
-        })
-        return
-      }
-      if (!slaList.length) {
-        setErrSLA(true)
-        return
-      }
-      const date = convetStringToDate(
-        dayjs(dateValue).format('DD/MM/YYYY'),
-        '/'
+export const AddContract = memo(
+  React.forwardRef<unknown, ChooseModalProps>(
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    ({ handleModal, title }: ChooseModalProps, ref) => {
+      /* eslint-enable @typescript-eslint/no-unused-vars */
+      const [openList, setOpenList] = useState(false)
+      const [openListObjects, setOpenListObjects] = useState(false)
+      const [{ clients }, { getClients }] = useClients()
+      const [{ contracts }, { getContracts, newContract }] = useContracts()
+      const [{ equipments }, { getClassifierEquipments }] = useClassifier()
+      const [{ sla }, { getSLA }] = useSLA()
+      const [{ objects }, { getObjects }] = useObjects()
+      const [client, setClient] = useState<Options>(emptyValue)
+      const [slaList, setSLAList] = useState<Options[]>([])
+      const [objectList, setObjectList] = useState<DataList[]>([])
+      const [selectedObjects, setSelectedObjects] = useState<string[]>([])
+      const [equipmentList, setEquipmentList] = useState<ICheckBoxGroupData[]>(
+        []
       )
-      newContract({
-        contract: list[0].value,
-        number: list[1].value,
-        date: date,
-        sla: slaList.map(item => item.id),
-        equipment: selectedEquipments,
-        model: selectedModels,
-        objects: selectedObjects,
-        id_client: client.id,
+      const [selectedEquipments, setSelectedEquipments] = useState<string[]>([])
+      const [selectedModels, setSelectedModels] = useState<string[]>([])
+      const [errSLA, setErrSLA] = useState<boolean>(false)
+      const [_, { setMessage }] = useMessage()
+      const [dateValue, setDateValue] = useState<string>('')
+      const { handleSubmit, control } = useForm<AddValuesProps>({
+        mode: 'onBlur',
+        defaultValues: {
+          list: MapNewContractInputFields,
+        },
       })
-      handleModal(false)
-    }
+      const { errors } = useFormState({ control })
+      const { fields } = useFieldArray({
+        control,
+        name: 'list',
+      })
 
-    useEffect(() => {
-      getContracts()
-      getClients()
-      getClassifierEquipments()
-      getSLA()
-      getObjects()
-    }, [])
-
-    useEffect(() => {
-      const data = equipments.map(({ equipment, id, ClassifierModels }) => {
-        return {
-          id: id as string,
-          group: equipment,
-          checkedGroup: selectedEquipments.includes(id as string),
-          items: ClassifierModels?.map(({ model, id }) => {
-            return {
-              item: model,
-              id: id as string,
-              checkedItems: selectedModels.includes(id as string),
-            }
-          }) as [],
+      const changeData = ({ list }: AddValuesProps) => {
+        const isExist = contracts.find(item => item.contract === list[0].value)
+        if (isExist) {
+          setMessage({
+            text: 'Такой контракт уже существует',
+            type: 'error',
+          })
+          return
         }
-      })
-      setEquipmentList(data)
-    }, [equipments, openList])
-
-    useEffect(() => {
-      const listData = objects.map(({ object, id }) => {
-        return {
-          name: object,
-          id: id as string,
-          initChecked: selectedObjects.includes(id as string),
+        if (!slaList.length) {
+          setErrSLA(true)
+          return
         }
-      })
-      setObjectList(listData)
-    }, [objects, openListObjects])
-
-    const onChooseObjects = (checked: boolean, id: string) => {
-      if (checked) {
-        setSelectedObjects([...selectedObjects, id])
-        return
+        const date = convetStringToDate(
+          dayjs(dateValue).format('DD/MM/YYYY'),
+          '/'
+        )
+        newContract({
+          contract: list[0].value,
+          number: list[1].value,
+          date: date,
+          sla: slaList.map(item => item.id),
+          equipment: selectedEquipments,
+          model: selectedModels,
+          objects: selectedObjects,
+          id_client: client.id,
+          notificationEmail: '',
+        })
+        handleModal(false)
       }
-      setSelectedObjects(selectedObjects.filter(item => item !== id))
+
+      useEffect(() => {
+        getContracts()
+        getClients()
+        getClassifierEquipments()
+        getSLA()
+        getObjects()
+      }, [])
+
+      useEffect(() => {
+        const data = equipments.map(({ equipment, id, ClassifierModels }) => {
+          return {
+            id: id as string,
+            group: equipment,
+            checkedGroup: selectedEquipments.includes(id as string),
+            items: ClassifierModels?.map(({ model, id }) => {
+              return {
+                item: model,
+                id: id as string,
+                checkedItems: selectedModels.includes(id as string),
+              }
+            }) as [],
+          }
+        })
+        setEquipmentList(data)
+      }, [equipments, openList])
+
+      useEffect(() => {
+        const listData = objects.map(({ object, id }) => {
+          return {
+            name: object,
+            id: id as string,
+            initChecked: selectedObjects.includes(id as string),
+          }
+        })
+        setObjectList(listData)
+      }, [objects, openListObjects])
+
+      const onChooseObjects = (checked: boolean, id: string) => {
+        if (checked) {
+          setSelectedObjects([...selectedObjects, id])
+          return
+        }
+        setSelectedObjects(selectedObjects.filter(item => item !== id))
+      }
+
+      return (
+        <Box
+          sx={modalStyle}
+          component="form"
+          onSubmit={handleSubmit(changeData)}>
+          <Typography variant={'h6'}>{title}</Typography>
+          <DropDown
+            data={clients.map(item => {
+              return {
+                ['label']: item.client as string,
+                ['id']: item.id as string,
+              }
+            })}
+            props={{ mt: 3 }}
+            onChange={setClient}
+            value={client.label}
+            label="Выберите клиента"
+            errorLabel="Не выбран клиент!"
+          />
+          {fields.map(({ id, label, validation, type, required }, index) => {
+            return (
+              <Controller
+                key={id}
+                control={control}
+                name={`list.${index}.value`}
+                rules={validation}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    inputRef={field.ref}
+                    label={label}
+                    type={type}
+                    variant="outlined"
+                    required={required ?? true}
+                    sx={{ width: '90%', mt: 3, height: 40 }}
+                    margin="normal"
+                    value={field.value || ''}
+                    error={!!(errors?.list ?? [])[index]?.value?.message}
+                    helperText={(errors?.list ?? [])[index]?.value?.message}
+                  />
+                )}
+              />
+            )
+          })}
+          <DateField dateValue={dateValue} setDateValue={setDateValue} />
+          <DropDownMultiple
+            data={sla.map(item => {
+              return {
+                ['label']: item.sla as string,
+                ['id']: item.id as string,
+              }
+            })}
+            props={{ mt: 3 }}
+            onChange={setSLAList}
+            value={slaList}
+            label="Выберите уровни сервиса"
+            errorLabel="Не выбраны уровни сервиса!"
+            error={errSLA}
+          />
+          <ListItemButton
+            divider={openList}
+            sx={{ ...classifierChild2Component, mt: 2 }}
+            onClick={() => (setOpenList(!openList), setOpenListObjects(false))}>
+            <ListItemText
+              primary={'Выбор классификатора'}
+              sx={{ ml: 2 }}
+              primaryTypographyProps={{ fontSize: '1rem!important' }}
+            />
+            <RotateButton open={openList} size={'2rem'} />
+          </ListItemButton>
+          <Collapse
+            sx={{ ...classifierChild2Component, width: '85%' }}
+            in={openList}
+            timeout="auto"
+            unmountOnExit>
+            <CheckBoxGroups
+              data={equipmentList}
+              startDataGroups={selectedEquipments}
+              startDataItems={selectedModels}
+              onChooseGroup={setSelectedEquipments}
+              onChooseItems={setSelectedModels}
+            />
+          </Collapse>
+
+          <ListItemButton
+            divider={openListObjects}
+            sx={{ ...classifierChild2Component, mt: 2 }}
+            onClick={() => (
+              setOpenListObjects(!openListObjects), setOpenList(false)
+            )}>
+            <ListItemText
+              primary={'Выбор объектов'}
+              sx={{ ml: 2 }}
+              primaryTypographyProps={{
+                fontSize: '1rem!important',
+                fontWeight: 'bold',
+              }}
+            />
+            <RotateButton open={openListObjects} size={'2rem'} />
+          </ListItemButton>
+          <Collapse
+            sx={{ ...classifierChild2Component, width: '85%' }}
+            in={openListObjects}
+            timeout="auto"
+            unmountOnExit>
+            {objectList?.map(({ name, id, initChecked, comment }) => (
+              <Item
+                name={name}
+                id={`${id}`}
+                comment={comment}
+                groupChecked={null}
+                onChooseItems={onChooseObjects}
+                initChecked={initChecked}
+                key={id as string}
+              />
+            ))}
+          </Collapse>
+          <ButtonsModalSection
+            closeModal={() => handleModal(false)}
+            btnName="Сохранить"
+          />
+        </Box>
+      )
     }
-
-    return (
-      <Box sx={modalStyle} component="form" onSubmit={handleSubmit(changeData)}>
-        <Typography variant={'h6'}>{title}</Typography>
-        <DropDown
-          data={clients.map(item => {
-            return {
-              ['label']: item.client as string,
-              ['id']: item.id as string,
-            }
-          })}
-          props={{ mt: 3 }}
-          onChange={setClient}
-          value={client.label}
-          label="Выберите клиента"
-          errorLabel="Не выбран клиент!"
-        />
-        {fields.map(({ id, label, validation, type, required }, index) => {
-          return (
-            <Controller
-              key={id}
-              control={control}
-              name={`list.${index}.value`}
-              rules={validation}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  inputRef={field.ref}
-                  label={label}
-                  type={type}
-                  variant="outlined"
-                  required={required ?? true}
-                  sx={{ width: '90%', mt: 3, height: 40 }}
-                  margin="normal"
-                  value={field.value || ''}
-                  error={!!(errors?.list ?? [])[index]?.value?.message}
-                  helperText={(errors?.list ?? [])[index]?.value?.message}
-                />
-              )}
-            />
-          )
-        })}
-        <DateField dateValue={dateValue} setDateValue={setDateValue} />
-        <DropDownMultiple
-          data={sla.map(item => {
-            return {
-              ['label']: item.sla as string,
-              ['id']: item.id as string,
-            }
-          })}
-          props={{ mt: 3 }}
-          onChange={setSLAList}
-          value={slaList}
-          label="Выберите уровни сервиса"
-          errorLabel="Не выбраны уровни сервиса!"
-          error={errSLA}
-        />
-        <ListItemButton
-          divider={openList}
-          sx={{ ...classifierChild2Component, mt: 2 }}
-          onClick={() => (setOpenList(!openList), setOpenListObjects(false))}>
-          <ListItemText
-            primary={'Выбор классификатора'}
-            sx={{ ml: 2 }}
-            primaryTypographyProps={{ fontSize: '1rem!important' }}
-          />
-          <RotateButton open={openList} size={'2rem'} />
-        </ListItemButton>
-        <Collapse
-          sx={{ ...classifierChild2Component, width: '85%' }}
-          in={openList}
-          timeout="auto"
-          unmountOnExit>
-          <CheckBoxGroups
-            data={equipmentList}
-            startDataGroups={selectedEquipments}
-            startDataItems={selectedModels}
-            onChooseGroup={setSelectedEquipments}
-            onChooseItems={setSelectedModels}
-          />
-        </Collapse>
-
-        <ListItemButton
-          divider={openListObjects}
-          sx={{ ...classifierChild2Component, mt: 2 }}
-          onClick={() => (
-            setOpenListObjects(!openListObjects), setOpenList(false)
-          )}>
-          <ListItemText
-            primary={'Выбор объектов'}
-            sx={{ ml: 2 }}
-            primaryTypographyProps={{
-              fontSize: '1rem!important',
-              fontWeight: 'bold',
-            }}
-          />
-          <RotateButton open={openListObjects} size={'2rem'} />
-        </ListItemButton>
-        <Collapse
-          sx={{ ...classifierChild2Component, width: '85%' }}
-          in={openListObjects}
-          timeout="auto"
-          unmountOnExit>
-          {objectList?.map(({ name, id, initChecked, comment }) => (
-            <Item
-              name={name}
-              id={`${id}`}
-              comment={comment}
-              groupChecked={null}
-              onChooseItems={onChooseObjects}
-              initChecked={initChecked}
-              key={id as string}
-            />
-          ))}
-        </Collapse>
-        <ButtonsModalSection
-          closeModal={() => handleModal(false)}
-          btnName="Сохранить"
-        />
-      </Box>
-    )
-  }
+  )
 )

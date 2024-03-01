@@ -7,6 +7,7 @@ import { TextField } from 'components/TextFields'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { CalendarIcon, ClearIconElement } from 'components/Icons'
 import { IDateField } from './interface'
+import { memo } from 'react'
 
 const StyledDatePickers = styled(PickersLayout)(({ theme }) => ({
   '.MuiDateCalendar-root': {
@@ -23,7 +24,7 @@ const StyledDatePickers = styled(PickersLayout)(({ theme }) => ({
   },
 }))
 
-export const DateField = ({ dateValue, setDateValue, sx }: IDateField) => {
+export const DateField = memo(({ dateValue, setDateValue, sx }: IDateField) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
@@ -47,4 +48,4 @@ export const DateField = ({ dateValue, setDateValue, sx }: IDateField) => {
       />
     </LocalizationProvider>
   )
-}
+})

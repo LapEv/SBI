@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { Box, Container, Modal, Typography, List } from '@mui/material'
 import { Message } from 'components/Message'
 import { useAuth } from 'hooks/auth/useAuth'
@@ -11,7 +11,7 @@ import { ClientsList } from './ClientsList'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import { IconPopoverButton } from 'components/Buttons'
 
-export function ClientsPage() {
+export const ClientsPage = memo(() => {
   const modalClientRef = React.createRef()
   const [{ admin }] = useAuth()
   const [{ clients }, { getClients }] = useClients()
@@ -82,4 +82,4 @@ export function ClientsPage() {
       )}
     </Container>
   )
-}
+})

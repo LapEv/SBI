@@ -1,20 +1,14 @@
 import { Popover as MuiPopover, styled } from '@mui/material'
-import { ThemeMode } from '../../themes/themeConfig'
 import { createTheme, Theme, ThemeProvider } from '@mui/material/styles'
+import { memo } from 'react'
 
-const StyledPopover = styled(MuiPopover)(({ theme }) => ({
+const StyledPopover = styled(MuiPopover)(() => ({
   // '&.MuiPopover-root': {
-  //   backgroundColor: 'rgba(0,0,0,0)',
-  // },
-  // '&.MuiPopover-paper': {
-  //   backgroundColor: 'rgba(0,0,0,0)',
-  // },
-  // '.MuiPaper-root': {
   //   backgroundColor: 'rgba(0,0,0,0)',
   // },
 }))
 
-export const PopoverINC = (props: any) => {
+export const PopoverINC = memo((props: any) => {
   return (
     <ThemeProvider
       theme={(theme: Theme) =>
@@ -38,4 +32,4 @@ export const PopoverINC = (props: any) => {
       <StyledPopover {...props} />
     </ThemeProvider>
   )
-}
+})

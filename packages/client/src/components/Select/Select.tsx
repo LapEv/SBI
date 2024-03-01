@@ -5,6 +5,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { ISelect } from './interfaces'
 import { styled } from '@mui/material'
 import { ThemeMode } from '../../themes/themeConfig'
+import { memo } from 'react'
 
 const CustomSelect = styled(Select)(({ theme }) => ({
   padding: '0!important',
@@ -77,33 +78,35 @@ const CustomMenuItem = styled(MenuItem)(({ theme }) => ({
   },
 }))
 
-export const SelectMUI = ({ label, data, onChange, value, props }: ISelect) => {
-  return (
-    <CustomFormControl
-      sx={{
-        m: 1,
-        minWidth: 120,
-        width: '50%',
-      }}>
-      <InputLabel id="select-label-id">{label}</InputLabel>
-      <CustomSelect
-        sx={{ ...props }}
-        labelId="select-label"
-        id="select-label-id"
-        value={value || ''}
-        label={label}
-        onChange={(event: SelectChangeEvent<unknown>) =>
-          onChange(event.target.value as string)
-        }>
-        {data &&
-          data.map((item, index) => {
-            return (
-              <CustomMenuItem key={`${item}${index}`} value={item}>
-                {item}
-              </CustomMenuItem>
-            )
-          })}
-      </CustomSelect>
-    </CustomFormControl>
-  )
-}
+export const SelectMUI = memo(
+  ({ label, data, onChange, value, props }: ISelect) => {
+    return (
+      <CustomFormControl
+        sx={{
+          m: 1,
+          minWidth: 120,
+          width: '50%',
+        }}>
+        <InputLabel id="select-label-id">{label}</InputLabel>
+        <CustomSelect
+          sx={{ ...props }}
+          labelId="select-label"
+          id="select-label-id"
+          value={value || ''}
+          label={label}
+          onChange={(event: SelectChangeEvent<unknown>) =>
+            onChange(event.target.value as string)
+          }>
+          {data &&
+            data.map((item, index) => {
+              return (
+                <CustomMenuItem key={`${item}${index}`} value={item}>
+                  {item}
+                </CustomMenuItem>
+              )
+            })}
+        </CustomSelect>
+      </CustomFormControl>
+    )
+  }
+)

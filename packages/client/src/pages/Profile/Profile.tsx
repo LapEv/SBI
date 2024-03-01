@@ -1,11 +1,11 @@
 import { Box, Container, Modal } from '@mui/material'
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import { ProfileMain } from './ProfileMain'
 import { useAuth } from 'hooks/auth/useAuth'
 import { ProfileChangePassword } from './ProfileChangePassword'
 import { Message } from 'components/Message'
 
-export function ProfilePage() {
+export const ProfilePage = memo(() => {
   const [{ user }] = useAuth()
   const [modal, setModal] = useState<boolean>(false)
 
@@ -41,4 +41,4 @@ export function ProfilePage() {
       </Box>
     </Container>
   )
-}
+})

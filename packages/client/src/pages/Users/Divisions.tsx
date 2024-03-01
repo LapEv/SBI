@@ -1,5 +1,5 @@
 import { useStructure } from 'hooks/structure/useStructure'
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { Box, ListItemText, ListItemButton } from '@mui/material'
 import { Departments } from './'
 import { Division } from 'store/slices/structure/interfaces'
@@ -7,7 +7,7 @@ import Collapse from '@mui/material/Collapse'
 import { RotateButton } from 'components/Buttons'
 import { classifier, classifierComponent } from 'static/styles'
 
-export const Divisions = ({ divisionName, id }: Division) => {
+export const Divisions = memo(({ divisionName, id }: Division) => {
   const [
     { departaments, activeDivision },
     { getDepartments, setActiveDivision },
@@ -59,4 +59,4 @@ export const Divisions = ({ divisionName, id }: Division) => {
       </Collapse>
     </Box>
   )
-}
+})

@@ -1,6 +1,7 @@
 import { SvgIcon, SvgIconProps } from '@mui/material'
+import { memo } from 'react'
 
-export function Warehouse(props: SvgIconProps) {
+export const Warehouse = memo((props: SvgIconProps) => {
   return (
     <SvgIcon {...props} viewBox="0 0 512 512">
       <path d="m271.422 393.521h82.588v82.588h-82.588z"></path>
@@ -10,4 +11,4 @@ export function Warehouse(props: SvgIconProps) {
       <path d="m90.1 476.11h37.89v-112.589h56.716v-112.588h142.588v112.588h56.716v112.589h37.89v-264.596h-331.8z"></path>
     </SvgIcon>
   )
-}
+})

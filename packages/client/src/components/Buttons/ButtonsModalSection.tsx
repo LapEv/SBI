@@ -1,12 +1,9 @@
 import { Box } from '@mui/material'
 import { Button } from 'components/Buttons'
+import { memo } from 'react'
+import { Handle } from './interfaces'
 
-type Handle = {
-  closeModal: (state: boolean) => void
-  btnName: string
-}
-
-export const ButtonsModalSection = ({ closeModal, btnName }: Handle) => {
+export const ButtonsModalSection = memo(({ closeModal, btnName }: Handle) => {
   return (
     <Box
       sx={{
@@ -25,4 +22,4 @@ export const ButtonsModalSection = ({ closeModal, btnName }: Handle) => {
       </Button>
     </Box>
   )
-}
+})

@@ -1,10 +1,7 @@
 import { memo } from 'react'
 import { IconButton, Tooltip, useTheme } from '@mui/material'
 import PrintIcon from '@mui/icons-material/Print'
-
-interface PrintData {
-  onPrint: () => void
-}
+import { PrintData } from './interfaces'
 
 export const PrintBar = memo(({ onPrint }: PrintData) => {
   const theme = useTheme()

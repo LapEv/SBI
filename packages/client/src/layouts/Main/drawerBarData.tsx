@@ -17,11 +17,9 @@ import HelpCenterIcon from '@mui/icons-material/HelpCenter'
 import EngineeringIcon from '@mui/icons-material/Engineering'
 
 export const menuData = [
-  // { text: 'Главная', icon: <Main />, to: Routes.Index, type: 'component' },
   {
     text: 'Диспетчерская',
     icon: <ControlRoom />,
-    // to: Routes.ControlRoom,
     to: '',
     type: 'menu',
   },
@@ -74,7 +72,6 @@ export const DispatcherData = [
   {
     text: 'Диспетчерская',
     icon: <ControlRoom />,
-    // to: Routes.ControlRoom,
     to: '',
     type: 'menu',
   },

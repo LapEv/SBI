@@ -8,15 +8,7 @@ import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate
 import { PrintBar } from './PrintBar'
 import { DenseTable } from './DenseTable'
 import { DragTable } from './DragTable'
-
-interface AdditionalMenu {
-  denseTable: boolean
-  setDenseTableFunc: (state: boolean) => void
-  onPrint: () => void
-  checkClickMenu: (name: string | null) => void
-  dragTable: boolean
-  setDragTable: (state: boolean) => void
-}
+import { AdditionalMenuProps } from './interfaces'
 
 export const AdditionalMenu = memo(
   ({
@@ -26,7 +18,7 @@ export const AdditionalMenu = memo(
     checkClickMenu,
     dragTable,
     setDragTable,
-  }: AdditionalMenu) => {
+  }: AdditionalMenuProps) => {
     const [{ admin }] = useAuth()
     return (
       <>

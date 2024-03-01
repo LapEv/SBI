@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { memo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   Box,
@@ -24,57 +24,38 @@ import { Routes } from 'utils/routes'
 import { useAuth } from 'hooks/auth/useAuth'
 import { LinkButton } from 'components/LinkButton'
 import { RotateButton } from 'components/Buttons'
-import { User } from 'storeAuth/interfaces'
+import { DataItemsProps, NanListItemProps, SideBarProps } from './interfaces'
 
-interface SideBarProps {
-  open?: boolean
-}
-
-interface NanListItemProps {
-  icon: JSX.Element
-  text: string
-  to: string
-  isExpanded: boolean
-}
-
-const ControlRoomListItem = ({
-  icon,
-  text,
-  to,
-  isExpanded,
-}: NanListItemProps) => {
-  return (
-    <ListItem disablePadding sx={{ display: 'block', ml: 2 }}>
-      <ListItemButton
-        sx={{
-          minHeight: 24,
-          justifyContent: isExpanded ? 'initial' : 'center',
-        }}
-        component={Link}
-        to={to}>
-        <ListItemIcon
+const ControlRoomListItem = memo(
+  ({ icon, text, to, isExpanded }: NanListItemProps) => {
+    return (
+      <ListItem disablePadding sx={{ display: 'block', ml: 2 }}>
+        <ListItemButton
           sx={{
-            minWidth: 0,
-            mr: isExpanded ? 3 : 'auto',
-            justifyContent: 'center',
-          }}>
-          {icon}
-        </ListItemIcon>
-        <ListItemText
-          primary={text}
-          sx={{ display: isExpanded ? 'block' : 'none' }}
-        />
-      </ListItemButton>
-    </ListItem>
-  )
-}
+            minHeight: 24,
+            justifyContent: isExpanded ? 'initial' : 'center',
+          }}
+          component={Link}
+          to={to}>
+          <ListItemIcon
+            sx={{
+              minWidth: 0,
+              mr: isExpanded ? 3 : 'auto',
+              justifyContent: 'center',
+            }}>
+            {icon}
+          </ListItemIcon>
+          <ListItemText
+            primary={text}
+            sx={{ display: isExpanded ? 'block' : 'none' }}
+          />
+        </ListItemButton>
+      </ListItem>
+    )
+  }
+)
 
-interface DataItems {
-  user: User
-  open: boolean
-}
-
-const NanListItem = ({ icon, text, to, isExpanded }: NanListItemProps) => {
+const NanListItem = memo(({ icon, text, to, isExpanded }: NanListItemProps) => {
   const [openControl, setOpenControl] = useState<boolean>(false)
 
   return (
@@ -151,9 +132,9 @@ const NanListItem = ({ icon, text, to, isExpanded }: NanListItemProps) => {
       )}
     </>
   )
-}
+})
 
-const DataItems = ({ user, open }: DataItems) => {
+const DataItems = memo(({ user, open }: DataItemsProps) => {
   if (user && user.status === 'employee' && user.rolesGroup === 'Dispatcher') {
     return (
       <>
@@ -205,9 +186,9 @@ const DataItems = ({ user, open }: DataItems) => {
       ))}
     </>
   )
-}
+})
 
-export function SideBar({ open = false }: SideBarProps) {
+export const SideBar = memo(({ open = false }: SideBarProps) => {
   const [{ user }, { signout }] = useAuth()
 
   const MUITypography = styled(Typography)(({ theme }) => ({
@@ -282,4 +263,4 @@ export function SideBar({ open = false }: SideBarProps) {
       </Box>
     </List>
   )
-}
+})

@@ -1,6 +1,7 @@
 import { Box, Container } from '@mui/material'
+import { memo } from 'react'
 
-export function EngineerPage() {
+export const EngineerPage = memo(() => {
   return (
     <Container component="main" maxWidth="md">
       <Box
@@ -21,4 +22,4 @@ export function EngineerPage() {
       </Box>
     </Container>
   )
-}
+})

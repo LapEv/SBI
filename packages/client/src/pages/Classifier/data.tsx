@@ -1,12 +1,6 @@
 import {
-  coordinatesValidation,
-  emailValidation,
-  loginValidation,
-  nameValidation,
-  passwordValidation,
   lightTextValidation,
   textValidation,
-  textValidationENGlowercase,
   textValidationlowercase,
 } from 'utils/validatorRules'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'

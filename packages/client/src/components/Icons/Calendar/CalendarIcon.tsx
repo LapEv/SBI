@@ -1,10 +1,9 @@
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import { useTheme } from '@mui/material'
+import { memo } from 'react'
+import { ICalendarIcon } from '../interfaces'
 
-interface ICalendarIcon {
-  size: string
-}
-export const CalendarIcon = ({ size }: ICalendarIcon) => {
+export const CalendarIcon = memo(({ size }: ICalendarIcon) => {
   const theme = useTheme()
 
   return (
@@ -15,4 +14,4 @@ export const CalendarIcon = ({ size }: ICalendarIcon) => {
       }}
     />
   )
-}
+})

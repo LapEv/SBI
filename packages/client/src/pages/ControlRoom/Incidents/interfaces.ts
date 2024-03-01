@@ -38,50 +38,6 @@ export interface INC_Column {
   }
 }
 
-export interface IExecutor {
-  value: string
-  id: string
-  incident: string
-  responsible: string
-}
-
-export interface IStatus {
-  value: string
-  id: string
-  incident: string
-  responsible: string
-  currentStatus: string
-  timeSLA: string
-}
-
-export interface IStatusTemp {
-  id: string
-  incident: string
-  timeSLA: string
-  data: Options
-  id_incStatus: string
-  status: string
-  userID: string
-  typeCompletedWork: Options
-  commentCloseCheck: string
-  spaceParts: string[]
-}
-
-export interface IModal {
-  status: boolean
-  data: Options
-}
-
-export interface ICustomCell {
-  value: string
-  denseTable: boolean
-}
-
-export interface ISpacePart {
-  value: string[]
-  denseTable: boolean
-}
-
 export interface IIndicatorCell {
   timeSLA: string
   timeReg: string
@@ -102,21 +58,4 @@ export interface ICustomHeaderCell {
 
 export interface ITableMeta {
   rowData: string[]
-}
-
-export interface IncidentDataProps {
-  values: any
-  setHeight: (height: number) => void
-  onSaveComments: (data: ChangeComment) => void
-}
-
-export interface CellProps {
-  label: string
-  value: string
-}
-
-export interface CellPropsComments {
-  label: string
-  value: string
-  onSaveComments: (comment: string) => void
 }

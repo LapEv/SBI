@@ -7,22 +7,16 @@ import {
   useFormState,
 } from 'react-hook-form'
 import { useAuth } from 'hooks/auth/useAuth'
-import { User } from 'storeAuth/interfaces'
-import { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent, memo, useEffect, useState } from 'react'
 import { TextField } from 'components/TextFields'
 import { Button, ButtonsSection } from 'components/Buttons'
-import { ProfileValues } from './interfaces'
+import { ProfileMainProps, ProfileValues } from './interfaces'
 import { deepEqual } from 'utils/deepEqual'
 import { ProfileHeader } from './ProfileHeader'
 import { FileProps } from 'storeAuth/interfaces'
 import { useMessage } from 'hooks/message/useMessage'
 
-interface ProfileMainProps {
-  setModal: () => void
-  data: User
-}
-
-export function ProfileMain({ setModal, data }: ProfileMainProps) {
+export const ProfileMain = memo(({ setModal, data }: ProfileMainProps) => {
   const [{ userData }, { updateUserData, updateUser, changeAvatar }] = useAuth()
   const [_, { setMessage }] = useMessage()
   const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
@@ -160,4 +154,4 @@ export function ProfileMain({ setModal, data }: ProfileMainProps) {
       />
     </Box>
   )
-}
+})

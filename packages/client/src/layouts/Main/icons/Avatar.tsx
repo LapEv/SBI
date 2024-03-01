@@ -1,10 +1,8 @@
-import { SvgIcon, SvgIconProps } from '@mui/material'
+import { SvgIcon } from '@mui/material'
+import { AvatarIconProps } from './interfaces'
+import { memo } from 'react'
 
-interface AvatarIconProps extends SvgIconProps {
-  open?: boolean
-}
-
-export function Avatar(props: AvatarIconProps) {
+export const Avatar = memo((props: AvatarIconProps) => {
   return (
     <SvgIcon {...props} viewBox="0 0 70 70">
       <path
@@ -19,4 +17,4 @@ export function Avatar(props: AvatarIconProps) {
       />
     </SvgIcon>
   )
-}
+})

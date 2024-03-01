@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import {
   Box,
   Collapse,
@@ -19,13 +19,9 @@ import { NewSLA } from 'pages/ServiceLevel/Modals'
 import { ModalTitles } from 'pages/ServiceLevel/data'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import { useIncidents } from 'hooks/incidents/useINC'
+import { ISLAList } from './interfaces'
 
-interface ISLAList {
-  slaID: string[]
-  onChooseItems: (checked: boolean, id: string) => void
-}
-
-export function ContractSLAList({ slaID, onChooseItems }: ISLAList) {
+export const ContractSLAList = memo(({ slaID, onChooseItems }: ISLAList) => {
   const modalRef = React.createRef()
   const [modal, setModal] = useState<boolean>(false)
   const [{ admin }] = useAuth()
@@ -151,4 +147,4 @@ export function ContractSLAList({ slaID, onChooseItems }: ISLAList) {
       </Collapse>
     </Box>
   )
-}
+})

@@ -1,7 +1,8 @@
 import SearchIcon from '@mui/icons-material/Search'
 import { InputAdornment, useTheme } from '@mui/material'
+import { memo } from 'react'
 
-export const SearchIconElement = () => {
+export const SearchIconElement = memo(() => {
   const theme = useTheme()
 
   return (
@@ -11,4 +12,4 @@ export const SearchIconElement = () => {
       />
     </InputAdornment>
   )
-}
+})

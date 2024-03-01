@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import { Box, Container, Modal, Typography, List } from '@mui/material'
 import { Message } from 'components/Message/Message'
 import { useAuth } from 'hooks/auth/useAuth'
@@ -8,7 +8,7 @@ import { ChooseModal } from './Modals/ChooseModal'
 import { headerForPages, mainHeaderForPages } from 'static/styles'
 import { ServiceDataList } from './data'
 
-export function ServiceLevelPage() {
+export const ServiceLevelPage = memo(() => {
   const modalClientRef = React.createRef()
   const [{ admin }] = useAuth()
   const [modal, setModal] = useState<boolean>(false)
@@ -59,4 +59,4 @@ export function ServiceLevelPage() {
       </List>
     </Container>
   )
-}
+})

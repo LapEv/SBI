@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { memo, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import ErrorBoundary from 'components/ErrorBoundary'
 import './App.css'
@@ -13,7 +13,7 @@ import { isEmptyObjField } from 'utils/isEmptyObject'
 import { checkLoading } from 'utils/checkLoading'
 import { useAuth } from 'hooks/auth/useAuth'
 
-function App() {
+const App = memo(() => {
   const [{ user }, { checkUser }] = useAuth()
   useEffect(() => {
     const fetchServerData = async () => {
@@ -163,6 +163,6 @@ function App() {
       </BrowserRouter>
     </FullScreen>
   )
-}
+})
 
 export default App

@@ -4,7 +4,7 @@ import { useFullScreen } from 'hooks/useFullScreen'
 import { Fab } from './Buttons/FloatingActionButton'
 import ZoomInMap from '@mui/icons-material/ZoomInMap'
 import ZoomOutMap from '@mui/icons-material/ZoomInMap'
-import { type PropsWithChildren } from 'react'
+import { memo, type PropsWithChildren } from 'react'
 import { ThemeButton } from './Buttons/ThemeButton'
 
 const Screen = styled(Box)(() => ({
@@ -13,7 +13,7 @@ const Screen = styled(Box)(() => ({
   },
 }))
 
-export function FullScreen({ children }: PropsWithChildren) {
+export const FullScreen = memo(({ children }: PropsWithChildren) => {
   const [screenRef, fullScreen, toggleFullScreen] = useFullScreen()
 
   return (
@@ -28,4 +28,4 @@ export function FullScreen({ children }: PropsWithChildren) {
       <ThemeButton />
     </Screen>
   )
-}
+})

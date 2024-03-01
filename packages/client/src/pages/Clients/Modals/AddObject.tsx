@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 import { Box, Modal, Typography } from '@mui/material'
 import {
   useForm,
@@ -23,220 +23,230 @@ import { useObjects } from 'hooks/objects/useObjects'
 import { useClients } from 'hooks/clients/useClients'
 import { ModalAddAddressInObject } from './'
 
-export const AddObject = React.forwardRef<unknown, ChooseModalProps>(
-  /* eslint-disable @typescript-eslint/no-unused-vars */
-  ({ handleModal, title }: ChooseModalProps, ref) => {
-    /* eslint-enable @typescript-eslint/no-unused-vars */
-    const [{ clients }, { getClients }] = useClients()
-    const [{ regions, addresses }, { getRegions, getAddresses, addAddress }] =
-      useAddresses()
-    const [{ objects }, { getObjects, newObject }] = useObjects()
-    const [_, { setMessage }] = useMessage()
-    const [client, setClient] = useState<Options>(emptyValue)
-    const [region, setRegion] = useState<Options>(emptyValue)
-    const [errRegion, setErrRegion] = useState<boolean>(false)
-    const [address, setAddress] = useState<Options>(emptyValue)
-    const [errAddress, setErrAddress] = useState<boolean>(false)
-    const [newAddressName, setNewAddress] = useState<string>('')
-    const [modal, setModal] = useState<boolean>(false)
-    const modalAddRef = React.createRef()
+export const AddObject = memo(
+  React.forwardRef<unknown, ChooseModalProps>(
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    ({ handleModal, title }: ChooseModalProps, ref) => {
+      /* eslint-enable @typescript-eslint/no-unused-vars */
+      const [{ clients }, { getClients }] = useClients()
+      const [{ regions, addresses }, { getRegions, getAddresses, addAddress }] =
+        useAddresses()
+      const [{ objects }, { getObjects, newObject }] = useObjects()
+      const [_, { setMessage }] = useMessage()
+      const [client, setClient] = useState<Options>(emptyValue)
+      const [region, setRegion] = useState<Options>(emptyValue)
+      const [errRegion, setErrRegion] = useState<boolean>(false)
+      const [address, setAddress] = useState<Options>(emptyValue)
+      const [errAddress, setErrAddress] = useState<boolean>(false)
+      const [newAddressName, setNewAddress] = useState<string>('')
+      const [modal, setModal] = useState<boolean>(false)
+      const modalAddRef = React.createRef()
 
-    const { handleSubmit, control } = useForm<AddValuesProps>({
-      mode: 'onBlur',
-      defaultValues: {
-        list: MapObjectInputFields,
-      },
-    })
-    const { errors } = useFormState({ control })
-    const { fields } = useFieldArray({
-      control,
-      name: 'list',
-    })
-
-    const changeData = ({ list }: AddValuesProps) => {
-      const isExistObject = objects.find(item => item.object === list[0].value)
-      if (isExistObject) {
-        setMessage({
-          text: 'Такой объект уже существуeт',
-          type: 'error',
-        })
-        return
-      }
-      const isExistIntNumber = objects.find(
-        item => item.internalClientID === list[1].value
-      )
-      if (isExistIntNumber) {
-        setMessage({
-          text: 'Такой клиентский номер уже существуeт',
-          type: 'error',
-        })
-        return
-      }
-      const isExistInt = objects.find(
-        item => item.internalClientName === list[2].value
-      )
-      if (isExistInt) {
-        setMessage({
-          text: 'Такое клиентское название уже существуeт',
-          type: 'error',
-        })
-        return
-      }
-      newObject({
-        object: list[0].value,
-        internalClientID: list[1].value,
-        internalClientName: list[2].value,
-        id_client: client.id,
-        id_address: address.id,
-        id_region: region.id,
+      const { handleSubmit, control } = useForm<AddValuesProps>({
+        mode: 'onBlur',
+        defaultValues: {
+          list: MapObjectInputFields,
+        },
       })
-      handleModal(false)
-    }
+      const { errors } = useFormState({ control })
+      const { fields } = useFieldArray({
+        control,
+        name: 'list',
+      })
 
-    useEffect(() => {
-      getClients()
-      getObjects()
-      getAddresses()
-      getRegions()
-    }, [])
-
-    const checkAddress = (text: string) => {
-      const isAddress = addresses.find(item => item.address === text)
-      if (isAddress || !text) return
-      setNewAddress(text)
-      setErrRegion(true)
-      setErrAddress(true)
-      setModal(true)
-    }
-
-    const setModalNewAddress = ({
-      state,
-      region,
-      address,
-      coordinates,
-    }: answerModalAddAddressInObject) => {
-      if (state) {
-        setRegion(region)
-        setErrRegion(false)
-        setAddress(address)
-        setErrAddress(false)
-        addAddress({
-          address: address.label,
+      const changeData = ({ list }: AddValuesProps) => {
+        const isExistObject = objects.find(
+          item => item.object === list[0].value
+        )
+        if (isExistObject) {
+          setMessage({
+            text: 'Такой объект уже существуeт',
+            type: 'error',
+          })
+          return
+        }
+        const isExistIntNumber = objects.find(
+          item => item.internalClientID === list[1].value
+        )
+        if (isExistIntNumber) {
+          setMessage({
+            text: 'Такой клиентский номер уже существуeт',
+            type: 'error',
+          })
+          return
+        }
+        const isExistInt = objects.find(
+          item => item.internalClientName === list[2].value
+        )
+        if (isExistInt) {
+          setMessage({
+            text: 'Такое клиентское название уже существуeт',
+            type: 'error',
+          })
+          return
+        }
+        newObject({
+          object: list[0].value,
+          internalClientID: list[1].value,
+          internalClientName: list[2].value,
+          id_client: client.id,
+          id_address: address.id,
           id_region: region.id,
-          coordinates,
         })
+        handleModal(false)
       }
-      getAddresses()
-      setModal(false)
-    }
 
-    useEffect(() => {
-      if (!address.id && address.label) {
-        const isAddress = addresses.find(item => item.address === address.label)
-        if (isAddress) {
-          setAddress({
-            label: address.label,
-            id: isAddress.id as string,
+      useEffect(() => {
+        getClients()
+        getObjects()
+        getAddresses()
+        getRegions()
+      }, [])
+
+      const checkAddress = (text: string) => {
+        const isAddress = addresses.find(item => item.address === text)
+        if (isAddress || !text) return
+        setNewAddress(text)
+        setErrRegion(true)
+        setErrAddress(true)
+        setModal(true)
+      }
+
+      const setModalNewAddress = ({
+        state,
+        region,
+        address,
+        coordinates,
+      }: answerModalAddAddressInObject) => {
+        if (state) {
+          setRegion(region)
+          setErrRegion(false)
+          setAddress(address)
+          setErrAddress(false)
+          addAddress({
+            address: address.label,
+            id_region: region.id,
+            coordinates,
           })
         }
+        getAddresses()
+        setModal(false)
       }
-    }, [addresses])
 
-    return (
-      <Box>
-        <Modal
-          open={modal}
-          onClose={() => setModal(false)}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description">
-          <ModalAddAddressInObject
-            handleModal={setModalNewAddress}
-            ref={modalAddRef}
-            question={`Вы дествительно создать новый адрес: "${newAddressName}"`}
-            address={newAddressName}
-          />
-        </Modal>
-        <Box
-          sx={modalStyle}
-          component="form"
-          onSubmit={handleSubmit(changeData)}>
-          <Typography variant={'h6'}>{title}</Typography>
-          <DropDown
-            data={clients.map(item => {
-              return {
-                ['label']: item.client as string,
-                ['id']: item.id as string,
-              }
-            })}
-            props={{ mt: 3 }}
-            onChange={setClient}
-            value={client.label}
-            label="Выберите клиента"
-            errorLabel="Не выбран клиент!"
-          />
-          <Box sx={{ mt: 1, width: '90%' }}>
-            {fields.map(({ id, label, validation, type, required }, index) => {
-              return (
-                <Controller
-                  key={id}
-                  control={control}
-                  name={`list.${index}.value`}
-                  // {...register(`list.${index}.value`)}
-                  rules={validation}
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      inputRef={field.ref}
-                      label={label}
-                      type={type}
-                      variant="outlined"
-                      required={required ?? true}
-                      sx={{ width: '100%', mt: 3, height: 40 }}
-                      margin="normal"
-                      value={field.value || ''}
-                      error={!!(errors?.list ?? [])[index]?.value?.message}
-                      helperText={(errors?.list ?? [])[index]?.value?.message}
+      useEffect(() => {
+        if (!address.id && address.label) {
+          const isAddress = addresses.find(
+            item => item.address === address.label
+          )
+          if (isAddress) {
+            setAddress({
+              label: address.label,
+              id: isAddress.id as string,
+            })
+          }
+        }
+      }, [addresses])
+
+      return (
+        <Box>
+          <Modal
+            open={modal}
+            onClose={() => setModal(false)}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description">
+            <ModalAddAddressInObject
+              handleModal={setModalNewAddress}
+              ref={modalAddRef}
+              question={`Вы дествительно создать новый адрес: "${newAddressName}"`}
+              address={newAddressName}
+            />
+          </Modal>
+          <Box
+            sx={modalStyle}
+            component="form"
+            onSubmit={handleSubmit(changeData)}>
+            <Typography variant={'h6'}>{title}</Typography>
+            <DropDown
+              data={clients.map(item => {
+                return {
+                  ['label']: item.client as string,
+                  ['id']: item.id as string,
+                }
+              })}
+              props={{ mt: 3 }}
+              onChange={setClient}
+              value={client.label}
+              label="Выберите клиента"
+              errorLabel="Не выбран клиент!"
+            />
+            <Box sx={{ mt: 1, width: '90%' }}>
+              {fields.map(
+                ({ id, label, validation, type, required }, index) => {
+                  return (
+                    <Controller
+                      key={id}
+                      control={control}
+                      name={`list.${index}.value`}
+                      // {...register(`list.${index}.value`)}
+                      rules={validation}
+                      render={({ field }) => (
+                        <TextField
+                          {...field}
+                          inputRef={field.ref}
+                          label={label}
+                          type={type}
+                          variant="outlined"
+                          required={required ?? true}
+                          sx={{ width: '100%', mt: 3, height: 40 }}
+                          margin="normal"
+                          value={field.value || ''}
+                          error={!!(errors?.list ?? [])[index]?.value?.message}
+                          helperText={
+                            (errors?.list ?? [])[index]?.value?.message
+                          }
+                        />
+                      )}
                     />
-                  )}
-                />
-              )
-            })}
+                  )
+                }
+              )}
+            </Box>
+            <DropDown
+              data={addresses.map(item => {
+                return {
+                  ['label']: item.address as string,
+                  ['id']: item.id as string,
+                }
+              })}
+              props={{ mt: 3 }}
+              onBlur={checkAddress}
+              onChange={setAddress}
+              value={address.label}
+              label="Выберите адрес"
+              errorLabel="Не выбран адрес!"
+              error={errAddress}
+            />
+            <DropDown
+              data={regions.map(item => {
+                return {
+                  ['label']: item.region as string,
+                  ['id']: item.id as string,
+                }
+              })}
+              props={{ mt: 4 }}
+              onChange={setRegion}
+              value={region.label}
+              label="Выберите регион"
+              errorLabel="Не выбран регион!"
+              error={errRegion}
+            />
+            <ButtonsModalSection
+              closeModal={() => handleModal(false)}
+              btnName="Сохранить"
+            />
           </Box>
-          <DropDown
-            data={addresses.map(item => {
-              return {
-                ['label']: item.address as string,
-                ['id']: item.id as string,
-              }
-            })}
-            props={{ mt: 3 }}
-            onBlur={checkAddress}
-            onChange={setAddress}
-            value={address.label}
-            label="Выберите адрес"
-            errorLabel="Не выбран адрес!"
-            error={errAddress}
-          />
-          <DropDown
-            data={regions.map(item => {
-              return {
-                ['label']: item.region as string,
-                ['id']: item.id as string,
-              }
-            })}
-            props={{ mt: 4 }}
-            onChange={setRegion}
-            value={region.label}
-            label="Выберите регион"
-            errorLabel="Не выбран регион!"
-            error={errRegion}
-          />
-          <ButtonsModalSection
-            closeModal={() => handleModal(false)}
-            btnName="Сохранить"
-          />
         </Box>
-      </Box>
-    )
-  }
+      )
+    }
+  )
 )

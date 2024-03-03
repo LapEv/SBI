@@ -231,7 +231,6 @@ export const ChangeAvatar = createAsyncThunk(
 export const changePassword = createAsyncThunk(
   'user/changePassword',
   async (value: ChangePasswordProps, thunkAPI) => {
-    console.log('value = ', value)
     try {
       const { data } = await authhost.post<User[]>(
         ApiEndPoints.User.ChangePassword,

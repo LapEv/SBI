@@ -42,7 +42,6 @@ export const AddClient = memo(
           })
           return
         }
-        console.log('list = ', list)
         newClient({ client: list[0].value, legalName: list[1].value })
         handleModal(false)
       }

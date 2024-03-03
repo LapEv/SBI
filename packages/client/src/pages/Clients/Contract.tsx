@@ -63,8 +63,6 @@ export const ContractPage = memo(
       id_client,
     })
 
-    console.log('contract = ', contract)
-
     const {
       handleSubmit: handleSubmitAddContract,
       control: controlAddContract,
@@ -87,9 +85,6 @@ export const ContractPage = memo(
     })
 
     const changeData = ({ listAddContract }: AddValuesAddContract) => {
-      console.log('selectedModels = ', selectedModels)
-      console.log('objectID = ', objectID)
-      console.log('incStatussesID = ', incStatussesID)
       changeContract({
         id,
         number: listAddContract[0].value as string,

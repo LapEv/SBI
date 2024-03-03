@@ -1,5 +1,4 @@
 import { JwtPayload } from 'jsonwebtoken'
-import { Sequelize } from 'sequelize'
 
 declare global {
   namespace Express {

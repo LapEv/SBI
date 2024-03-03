@@ -1,4 +1,4 @@
-const getINCstring = (number, maxLength) => {
+const getINCstring = (number: number, maxLength: number) => {
   let id = ''
   while (number < maxLength) {
     maxLength = maxLength / 10

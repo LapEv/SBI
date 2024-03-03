@@ -1,13 +1,19 @@
 import { INC_Column } from '../interfaces'
 
 export const FilterOptions = () => {
-  const { name, direction } = JSON.parse(
-    localStorage.getItem('sortColumn') as string
-  )
-  const limit = JSON.parse(localStorage.getItem('numberOfRows') as string) ?? 15
-  const page = JSON.parse(localStorage.getItem('currentPage') as string) ?? 0
-  const filterOptions =
-    JSON.parse(localStorage.getItem('filterOptions') as string) ?? []
+  const sortStorage = localStorage.getItem('sortColumn') as string
+  const { name, direction } = sortStorage
+    ? JSON.parse(sortStorage)
+    : { name: 'incident', direction: 'asc' }
+
+  const limitStorage = localStorage.getItem('numberOfRows') as string
+  const limit = limitStorage ? JSON.parse(limitStorage) : 15
+
+  const pageStorage = localStorage.getItem('currentPage') as string
+  const page = pageStorage ? JSON.parse(pageStorage) : 0
+
+  const filterStorage = localStorage.getItem('filterOptions') as string
+  const filterOptions = filterStorage ? JSON.parse(filterStorage) : []
 
   return {
     limit,

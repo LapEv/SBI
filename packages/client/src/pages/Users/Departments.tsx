@@ -28,8 +28,6 @@ export const Departments = memo(
       }
     }, [activeDepartment])
 
-    console.log('users = ', users)
-
     return (
       <Box sx={flexColumn_FS_SA}>
         <ListItemButton

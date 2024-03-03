@@ -13,7 +13,6 @@ export const filesSlice = createSlice({
   initialState,
   reducers: {
     resetUploadFiles(state) {
-      console.log('reset')
       state.uploadedFiles = []
     },
   },

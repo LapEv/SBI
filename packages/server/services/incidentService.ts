@@ -344,7 +344,6 @@ export class incidentService {
   ]
 
   checkDataFilter = async (data: []) => {
-    console.log('data = ', data)
     return await Promise.all(
       data.map(
         async (item: []) =>
@@ -810,7 +809,7 @@ export class incidentService {
       ).filter((item: boolean) => item)
 
       if (isStatusses && isStatusses.length) {
-        const info = await mailerRegInc({
+        await mailerRegInc({
           mailTo: inc?.Contract.notificationEmail ?? '',
           incident,
           status: inc?.IncindentStatus.statusINC ?? '',
@@ -831,7 +830,6 @@ export class incidentService {
           applicantContacts: applicantContacts ?? '',
           userAccepted: inc?.User?.shortName ?? '',
         })
-        console.log('infoMailer Reg = ', info)
       }
 
       const offset = Number(page) * Number(limit) ?? 1
@@ -897,6 +895,7 @@ export class incidentService {
       where: { active: true },
       include: this.includes,
     })
+
     const statusList =
       [...new Set(incs.map(item => item.IncindentStatus.statusINC))] ?? []
     const contractList =
@@ -965,7 +964,6 @@ export class incidentService {
       const filterData = await this.getFilterOptions(filterOptions as [])
       const offset = Number(page) * Number(limit) ?? 1
       const order = getOrder(nameSort as string, direction as string)
-
       const incs = await IncidentRepos.findAll({
         where: { [Op.and]: filterData },
         // include: { all: true, nested: true },
@@ -984,7 +982,7 @@ export class incidentService {
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
       console.log('err = ', err)
-      res.status(500).json({ error: ['db error', err] })
+      res.status(500).json({ error: ['db error: ', err] })
     }
   }
   deleteINC = async (_req: Request, res: Response) => {
@@ -1220,7 +1218,7 @@ export class incidentService {
       ).filter((item: boolean) => item)
 
       if (isStatusses && isStatusses.length) {
-        const info = await mailerChangeStatus({
+        await mailerChangeStatus({
           mailTo: inc?.Contract.notificationEmail ?? '',
           incident,
           status,
@@ -1243,7 +1241,6 @@ export class incidentService {
               ? typeCompletedWork.label
               : inc?.typeCompletedWork,
         })
-        console.log('infoMailer Reg = ', info)
       }
 
       const offset = Number(page) * Number(limit) ?? 1

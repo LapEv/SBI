@@ -67,7 +67,6 @@ export const deleteRoles = createAsyncThunk(
       const { data } = await authhost.delete(ApiEndPoints.Roles.deleteRoles, {
         data: selectedRoles,
       })
-      console.log('deleteRoles data = ', data)
       return {
         data,
         message: { text: 'Роли удалены', type: 'success' },

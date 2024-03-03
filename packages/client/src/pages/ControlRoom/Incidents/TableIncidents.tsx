@@ -18,6 +18,7 @@ import {
   FilterOptions,
   AdditionalMenu,
   GetIndicatorData,
+  CustomCell,
 } from './'
 import { useIncidents } from 'hooks/incidents/useINC'
 import { setFilter } from './Utils/FilterOptions'
@@ -94,9 +95,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -110,9 +111,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -126,9 +127,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -142,9 +143,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -158,9 +159,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -174,9 +175,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -221,9 +222,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -240,9 +241,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
 
@@ -260,9 +261,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -279,9 +280,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -298,9 +299,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -314,9 +315,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
 
@@ -334,9 +335,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -353,9 +354,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -369,9 +370,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -388,9 +389,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
 
@@ -405,9 +406,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -424,9 +425,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -443,9 +444,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -459,9 +460,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -527,9 +528,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -543,9 +544,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -559,9 +560,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -575,9 +576,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -591,9 +592,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
 
@@ -608,9 +609,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -624,9 +625,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -640,9 +641,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -656,9 +657,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -692,9 +693,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -724,9 +725,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -740,9 +741,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -756,9 +757,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
     {
@@ -772,9 +773,9 @@ export const TableIncidents = memo(() => {
         setCellHeaderProps: () => ({
           style: { padding: !denseTable ? 15 : 8 },
         }),
-        // customBodyRender: (value: string) => {
-        //   return <CustomCell value={value ?? ''} denseTable={denseTable} />
-        // },
+        customBodyRender: (value: string) => {
+          return <CustomCell value={value ?? ''} denseTable={denseTable} />
+        },
       },
     },
   ]
@@ -925,7 +926,9 @@ export const TableIncidents = memo(() => {
         </TableRow>
       )
     },
-    sortOrder: JSON.parse(localStorage.getItem('sortColumn') as string),
+    sortOrder:
+      JSON.parse(localStorage.getItem('sortColumn') as string) ?? 'incident',
+
     onColumnSortChange: (column, direction) =>
       localStorage.setItem(
         'sortColumn',
@@ -982,7 +985,7 @@ export const TableIncidents = memo(() => {
   useEffect(() => {
     const { nameSort, direction, limit, page, filterOptions } = FilterOptions()
     getINCs({ limit, nameSort, direction, page, filterOptions })
-    console.log('incs = ', incidents)
+    // console.log('incs = ', incidents)
   }, [])
 
   const checkClickMenu = (name: string | null) => {

@@ -272,8 +272,6 @@ export const ChangeObject = memo(
         )
       }, [regions])
 
-      console.log('objects = ', objects)
-
       return (
         <Box
           sx={{ ...modalStyle, paddingLeft: 5 }}

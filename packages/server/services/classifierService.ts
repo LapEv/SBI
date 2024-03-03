@@ -433,7 +433,7 @@ export class classifierService {
       /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
-      console.log('err = ', err)
+      // console.log('err = ', err)
       res.status(500).json({ error: ['db error', err] })
     }
   }

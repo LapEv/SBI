@@ -9,9 +9,11 @@ declare global {
   namespace Express {
     interface Request {
       files: {
+        /* eslint-disable @typescript-eslint/no-explicit-any */
         files: any
       }
       filesName: any
+      /* eslint-enable @typescript-eslint/no-explicit-any */
     }
   }
 }
@@ -39,13 +41,13 @@ export class filesService {
             id_incFiles,
           },
         ]
-        console.log('uploadedFiles  = ', uploadedFiles)
         await FilesRepos.bulkCreate(uploadedFiles)
         res.status(200).json(uploadedFiles)
         return
       }
-
+      /* eslint-disable @typescript-eslint/no-explicit-any */
       const uploadedFiles = files.map((item: any, index: number) => {
+        /* eslint-enable @typescript-eslint/no-explicit-any */
         const filePath = path.join(
           __dirname,
           `../Files/${typeDir}/${incident}/${filesName[index]}`
@@ -61,7 +63,6 @@ export class filesService {
           id_incFiles,
         }
       })
-      console.log('uploadedFiles  = ', uploadedFiles)
       await FilesRepos.bulkCreate(uploadedFiles)
       res.status(200).json(uploadedFiles)
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -76,6 +77,7 @@ export class filesService {
     try {
       const files = await FilesRepos.findAll({})
       res.status(200).json(files)
+      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
       /* eslint-enable @typescript-eslint/no-explicit-any */
       res.status(500).json({

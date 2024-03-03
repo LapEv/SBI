@@ -23,9 +23,6 @@ export const IconToolTipButton = memo(
           modifiers: [
             {
               name: 'offset',
-              options: {
-                offset: [50, 0],
-              },
             },
           ],
         }}>

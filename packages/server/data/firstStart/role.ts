@@ -103,7 +103,6 @@ export const rolesStartData = [
     role: 'pullUserInArchive',
     nameRole: 'Вытащить пользователя из архива',
   },
-
   {
     role: 'getClientGroups',
     nameRole: 'Получения списка групп клиентов',
@@ -352,7 +351,7 @@ export const rolesStartData = [
   },
   {
     role: 'getFilter',
-    nameRole: 'Получение списка активных фильтров',
+    nameRole: 'Получение списка активных фильтров для инцидентов',
   },
   {
     role: 'getINCs',
@@ -421,5 +420,13 @@ export const rolesStartData = [
   {
     role: 'changeTypesCompletedWork',
     nameRole: 'Изменение данных типа выполненных работ',
+  },
+  {
+    role: 'getIncidentStatuses',
+    nameRole: 'Получение списка активных статусов инцидента',
+  },
+  {
+    role: 'uploadFiles',
+    nameRole: 'Загрузка актов',
   },
 ]

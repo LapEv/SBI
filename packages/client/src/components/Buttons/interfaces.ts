@@ -40,7 +40,7 @@ export interface IconButtonProps {
   vertical?: 'top' | 'center' | 'bottom' | number
   onClick: () => void
   icon?: JSX.Element
-  sx?: any
+  sx?: {}
   propsPopover?: any
   size?: 'small' | 'medium' | 'large'
 }

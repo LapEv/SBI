@@ -1290,9 +1290,7 @@ export class incidentService {
         include: this.includes,
       })
       res.status(200).json(incs)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: unknown) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
       res.status(500).json({ error: ['db error', err] })
     }
   }
@@ -1307,9 +1305,7 @@ export class incidentService {
         include: this.includes,
       })
       res.status(200).json(incs)
-      // /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err) {
-      // /* eslint-enable @typescript-eslint/no-explicit-any */
       res.status(500).json({ error: ['db error', err as Error] })
     }
   }

@@ -77,7 +77,7 @@ export const ProfileData = memo((user: User) => {
 
     const groupData = rolesGroup.find(item => item.id === id)?.group
     updateUserData({
-      ...userData!,
+      ...userData,
       ...{ rolesGroup: groupData },
     })
   }

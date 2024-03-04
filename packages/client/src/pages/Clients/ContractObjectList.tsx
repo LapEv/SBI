@@ -22,10 +22,8 @@ import { IObjectList } from './interfaces'
 
 export const ContractObjectList = memo(
   ({ objectID, onChooseItems }: IObjectList) => {
-    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
     const modalRef = React.createRef()
     const [modal, setModal] = useState<boolean>(false)
-    const openPopover = Boolean(anchorEl)
     const [{ admin }] = useAuth()
     const [{ objects }, { getObjects }] = useObjects()
     const [objectsData, setObjectsData] = useState<DataList[]>([])

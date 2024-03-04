@@ -357,7 +357,12 @@ export interface ChangeStatus {
   direction?: string
   limit?: number
   page?: number
-  filterOptions?: any
+  filterOptions?: (
+    | {
+        [x: string]: string
+      }[]
+    | undefined
+  )[]
 }
 
 export interface ChangeClosingCheck {

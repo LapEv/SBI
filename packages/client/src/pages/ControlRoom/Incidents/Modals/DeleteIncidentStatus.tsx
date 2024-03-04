@@ -17,7 +17,7 @@ export const DeleteIncidentStatus = memo(
     ({ handleModal, title }: ChooseModalProps, ref) => {
       /* eslint-enable @typescript-eslint/no-unused-vars */
       const boxRef = React.createRef<HTMLDivElement>()
-      const [height, setHeight] = useState<number | any>()
+      const [height, setHeight] = useState<string>('')
       const [{ incStatuses }, { deleteIncidentStatuses, getIncidentStatuses }] =
         useIncidents()
       const [selectedincStatuses, setSelectedincStatuses] = useState<string[]>(
@@ -57,13 +57,13 @@ export const DeleteIncidentStatus = memo(
       useEffect(() => {
         getIncidentStatuses()
         if (boxRef.current) {
-          setHeight(boxRef.current!.offsetHeight)
+          setHeight(boxRef.current.offsetHeight.toString())
         }
       }, [])
 
       const setText = (text: string) => {
         if (!height && boxRef.current) {
-          setHeight(boxRef.current!.offsetHeight)
+          setHeight(boxRef.current.offsetHeight.toString())
         }
         setFilterText(text)
       }

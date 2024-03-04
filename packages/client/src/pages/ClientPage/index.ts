@@ -1,3 +1,3 @@
-import { AddClientIncident } from './AddClientIncident/AddClientIncident'
-import { ClientIncidentStatus } from './ClientIncidentStatus/ClientIncidentStatus'
-import { ClientTechSupport } from './ClientTechSupport/ClientTechSupport'
+export { AddClientIncident } from './AddClientIncident/AddClientIncident'
+export { ClientIncidentStatus } from './ClientIncidentStatus/ClientIncidentStatus'
+export { ClientTechSupport } from './ClientTechSupport/ClientTechSupport'

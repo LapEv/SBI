@@ -43,7 +43,7 @@ export interface INC {
   description: string
   comment: string
   report: string
-  spaceParts: string
+  spaceParts: string | string[]
   act: string
   active: boolean
   typeCompletedWork: string
@@ -64,6 +64,13 @@ export interface INC {
   TypicalMalfunction?: TypicalMalfunctionForINC
   IncidentLogs?: IncidentLogsForINC[]
   Files?: Files[]
+  legalName: string
+  overdue: string
+  commentCloseCheck: string
+  commentClose: string
+  rating: string
+  parentalIncident: string
+  relatedIncident: string
 }
 
 export interface AddINC {
@@ -273,7 +280,12 @@ export interface GetINCsByParams {
   nameSort: string
   direction: string
   page: number
-  filterOptions?: any
+  filterOptions?: (
+    | {
+        [x: string]: string
+      }[]
+    | undefined
+  )[]
 }
 
 export interface ChangeINC {
@@ -304,7 +316,12 @@ export interface ChangeExecutor {
   direction?: string
   limit?: number
   page?: number
-  filterOptions?: any
+  filterOptions?: (
+    | {
+        [x: string]: string
+      }[]
+    | undefined
+  )[]
 }
 
 export interface ChangeResponsible {
@@ -317,7 +334,12 @@ export interface ChangeResponsible {
   direction?: string
   limit?: number
   page?: number
-  filterOptions?: any
+  filterOptions?: (
+    | {
+        [x: string]: string
+      }[]
+    | undefined
+  )[]
 }
 
 export interface ChangeStatus {
@@ -371,4 +393,61 @@ export interface ChangeComment {
 export interface IServiceList {
   name: string
   label: string
+}
+
+export interface IncidentDataINC {
+  id: string
+  numberINC: number
+  incident: string
+  clientINC: string
+  status: string
+  client: string
+  contract: string
+  sla: string
+  typeOfWork: string
+  object: string
+  address: string
+  coordinates: string
+  region: string
+  userAccepted: string
+  equipment: string
+  model: string
+  typicalMalfunction: string
+  timeRegistration: string
+  timeInWork: string
+  timeSLA: string
+  timeCloseCheck: string
+  timeClose: string
+  executor: string
+  responsible: string
+  applicant: string
+  applicantContacts: string
+  userClosingCheck: string
+  userClosing: string
+  description: string
+  comment: string
+  report: string
+  spaceParts: string
+  act: string
+  active: boolean
+  typeCompletedWork: string
+  IncindentStatus?: INCStatuses
+  TypesOfWork?: TypesOfWork
+  TypesCompletedWork?: TypesCompletedWork
+  SLA?: SLAforINC
+  Client?: Clients
+  Contract?: ContractsForINC
+  Object?: ObjectsForINC
+  User?: UserForINC
+  UserExecutor?: UserForINC
+  UserResponsible?: UserForINC
+  UserClosing?: UserForINC
+  UserClosingCheck?: UserForINC
+  ClassifierEquipment?: ClassifierEquipmentForINC
+  ClassifierModel?: ClassifierModelForINC
+  TypicalMalfunction?: TypicalMalfunctionForINC
+  IncidentLogs?: IncidentLogsForINC[]
+  Files?: Files[]
+  legalName: string
+  overdue: string
 }

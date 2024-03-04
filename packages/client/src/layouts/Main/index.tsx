@@ -64,14 +64,14 @@ export const MainLayout = memo(() => {
       : `calc(100% - ${theme.spacing(8)} - 1px)`
     setWidth(widthCheck)
     setTimeout(() => {
-      setDataWidth(boxRef.current!.clientWidth)
+      setDataWidth(boxRef?.current?.clientWidth as number)
     }, 100)
   }
   const [{ user }] = useAuth()
 
   useEffect(() => {
     setTimeout(() => {
-      setDataWidth(boxRef.current!.offsetWidth)
+      setDataWidth(boxRef?.current?.offsetWidth as number)
     }, 100)
   }, [])
 

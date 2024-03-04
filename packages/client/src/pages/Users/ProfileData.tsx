@@ -44,7 +44,7 @@ export const ProfileData = memo((user: User) => {
     defaultValues: {
       list: fieldsData.map(data => ({
         ...data,
-        value: user![data.name as keyof typeof user],
+        value: user[data.name as keyof typeof user],
       })),
     },
   })
@@ -75,10 +75,10 @@ export const ProfileData = memo((user: User) => {
     setErrSelectedItems(false)
     setChangeActive(false)
 
-    const groupData = rolesGroup.find(item => item.id === id)!
+    const groupData = rolesGroup.find(item => item.id === id)?.group
     updateUserData({
       ...userData!,
-      ...{ rolesGroup: groupData.group },
+      ...{ rolesGroup: groupData },
     })
   }
 
@@ -113,7 +113,7 @@ export const ProfileData = memo((user: User) => {
       component="form"
       onSubmit={handleSubmit(changeData)}
       sx={{ '& .MuiTextField-root': { m: 0.5, width: '55ch' } }}>
-      {fields.map(({ id, name, label, validation, type, value }, index) => {
+      {fields.map(({ id, name, label, validation, type }, index) => {
         return (
           <Controller
             key={id}
@@ -134,7 +134,7 @@ export const ProfileData = memo((user: User) => {
                 onChange={(event: ChangeEvent<HTMLInputElement>) => (
                   field.onChange(event),
                   updateUserData({
-                    ...userData!,
+                    ...userData,
                     ...{ [name]: event.target.value },
                   })
                 )}

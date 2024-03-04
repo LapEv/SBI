@@ -18,7 +18,7 @@ export const DeleteUser = memo(
       /* eslint-enable @typescript-eslint/no-unused-vars */
       const [{ users }, { deleteUser, getActiveUsers }] = useAuth()
       const boxRef = React.createRef<HTMLDivElement>()
-      const [height, setHeight] = useState<number | any>()
+      const [height, setHeight] = useState<string>('')
       const [selectedUser, setSelectedUser] = useState<string>('')
       const [reasonOfDelete, setReason] = useState<string>('')
       const [errSelectedItems, setErrSelectedItems] = useState<string>('')
@@ -55,7 +55,7 @@ export const DeleteUser = memo(
 
       const setText = (text: string) => {
         if (!height && boxRef.current) {
-          setHeight(boxRef.current!.offsetHeight)
+          setHeight(boxRef.current.offsetHeight.toString())
         }
         setFilterText(text)
       }

@@ -1,7 +1,9 @@
 import { descendingComparator } from './descendingComparator'
 
 type Order = 'asc' | 'desc'
+/* eslint-disable @typescript-eslint/no-unused-vars */
 export function getComparator<Key extends keyof any>(
+  /* eslint-enable @typescript-eslint/no-unused-vars */
   order: Order,
   orderBy: Key
 ): (

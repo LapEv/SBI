@@ -11,7 +11,7 @@ import { useIncidents } from 'hooks/incidents/useINC'
 import { useFiles } from 'hooks/files/useFiles'
 
 export const checkLoading = () => {
-  const [{ isLoadingAuth, user }] = useAuth()
+  const [{ isLoadingAuth }] = useAuth()
   const [{ isLoadingAddress }] = useAddresses()
   const [{ isLoadingRoles }] = useRoles()
   const [{ isLoadingStructure }] = useStructure()

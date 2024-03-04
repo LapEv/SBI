@@ -94,7 +94,6 @@ export const Status = memo(
       files,
       spaceParts,
       data,
-      config,
     }: DataCloseINC) => {
       if (!state) {
         setModal({ status: false, data: emptyValue })
@@ -118,7 +117,6 @@ export const Status = memo(
           type: 'IncidentActs',
           files: files as FileList,
           incident,
-          config,
         })
         return
       }

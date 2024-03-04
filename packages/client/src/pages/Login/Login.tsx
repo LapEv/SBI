@@ -80,7 +80,7 @@ export const LoginPage = memo(() => {
           <Typography sx={{ fontWeight: 700, fontSize: 32 }} color="green.64">
             Вход
           </Typography>
-          {fields.map(({ id, label, validation, type, value }, index) => {
+          {fields.map(({ id, label, validation, type }, index) => {
             return (
               <Controller
                 key={id}

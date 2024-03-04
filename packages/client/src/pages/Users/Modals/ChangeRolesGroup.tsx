@@ -50,7 +50,8 @@ export const ChangeRolesGroup = memo(
 
       const changeGroup = (data: Options) => {
         if (!data) return
-        const useRoles = rolesGroup.find(item => item.id === data.id)?.roles
+        const useRoles = rolesGroup.find(item => item.id === data.id)
+          ?.roles as string[]
         setData(
           roles.map(item => {
             return {
@@ -58,14 +59,14 @@ export const ChangeRolesGroup = memo(
               id: item.id,
               nameId: item.role,
               initChecked:
-                useRoles!.findIndex(value => value === item.role) >= 0
+                useRoles.findIndex(value => value === item.role) >= 0
                   ? true
                   : false,
             }
           })
         )
         setSelectedGroup(data)
-        setSelectedRoles(useRoles!)
+        setSelectedRoles(useRoles)
       }
 
       useEffect(() => {

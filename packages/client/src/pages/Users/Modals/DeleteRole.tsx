@@ -18,7 +18,7 @@ export const DeleteRole = memo(
       /* eslint-enable @typescript-eslint/no-unused-vars */
       const [{ roles }, { getRoles, deleteRoles }] = useRoles()
       const boxRef = React.createRef<HTMLDivElement>()
-      const [height, setHeight] = useState<number | any>()
+      const [height, setHeight] = useState<string>('')
       const [selectedRoles, setSelectedRoles] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
       const [filterText, setFilterText] = useState<string>('')
@@ -56,7 +56,7 @@ export const DeleteRole = memo(
 
       const setText = (text: string) => {
         if (!height && boxRef.current) {
-          setHeight(boxRef.current!.offsetHeight)
+          setHeight(boxRef.current.offsetHeight.toString())
         }
         setFilterText(text)
       }

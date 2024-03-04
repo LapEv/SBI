@@ -1,5 +1,3 @@
-import { TypesOfWork } from '../incidents/interfaces'
-
 export interface Files {
   id: string
   name: string
@@ -12,7 +10,6 @@ export interface UploadFiles {
   type: string
   files: FileList
   incident?: string
-  config?: any
   id_incFiles: string
 }
 

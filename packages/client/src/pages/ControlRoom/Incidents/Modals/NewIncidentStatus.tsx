@@ -44,33 +44,31 @@ export const NewIncidentStatus = memo(
           component="form"
           onSubmit={handleSubmit(changeData)}>
           <Typography variant={'h6'}>{title}</Typography>
-          {fields.map(
-            ({ name, id, label, validation, type, required }, index) => {
-              return (
-                <Controller
-                  key={id}
-                  control={control}
-                  name={`list.${index}.value`}
-                  rules={validation}
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      inputRef={field.ref}
-                      label={label}
-                      type={type}
-                      variant="outlined"
-                      sx={{ width: '90%', m: 2, mt: 4, height: 40 }}
-                      margin="normal"
-                      required={required ?? true}
-                      value={field.value || ''}
-                      error={!!(errors?.list ?? [])[index]?.value?.message}
-                      helperText={(errors?.list ?? [])[index]?.value?.message}
-                    />
-                  )}
-                />
-              )
-            }
-          )}
+          {fields.map(({ id, label, validation, type, required }, index) => {
+            return (
+              <Controller
+                key={id}
+                control={control}
+                name={`list.${index}.value`}
+                rules={validation}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    inputRef={field.ref}
+                    label={label}
+                    type={type}
+                    variant="outlined"
+                    sx={{ width: '90%', m: 2, mt: 4, height: 40 }}
+                    margin="normal"
+                    required={required ?? true}
+                    value={field.value || ''}
+                    error={!!(errors?.list ?? [])[index]?.value?.message}
+                    helperText={(errors?.list ?? [])[index]?.value?.message}
+                  />
+                )}
+              />
+            )
+          })}
           <ButtonsModalSection
             closeModal={() => handleModal(false)}
             btnName="Сохранить"

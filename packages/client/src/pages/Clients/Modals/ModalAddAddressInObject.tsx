@@ -55,14 +55,12 @@ export const ModalAddAddressInObject = memo(
         getRegions()
       }, [])
 
-      const onErrors = (errors: any) => console.error(errors)
-
       return (
         <Box
           sx={modalStyle}
           component="form"
           key={2}
-          onSubmit={handleSubmitAddAddress(AddAddress, onErrors)}>
+          onSubmit={handleSubmitAddAddress(AddAddress)}>
           <Typography variant={'h6'}>{question}</Typography>
           <DropDown
             data={regions.map(item => {
@@ -79,7 +77,7 @@ export const ModalAddAddressInObject = memo(
           />
           <Box sx={{ mt: 2, width: '90%' }}>
             {filedsModal.map(
-              ({ id, label, validation, type, required, name }, index) => {
+              ({ id, label, validation, type, required }, index) => {
                 return (
                   <Controller
                     key={id}

@@ -1,5 +1,5 @@
 import { Options } from 'components/DropDown/interface'
-import { ChangeComment } from 'store/slices/incidents/interfaces'
+import { ChangeComment, INC } from 'store/slices/incidents/interfaces'
 
 export interface AdditionalMenuProps {
   denseTable: boolean
@@ -48,7 +48,7 @@ export interface CellPropsComments {
 }
 
 export interface IncidentDataProps {
-  values: any
+  values: INC
   setHeight: (height: number) => void
   onSaveComments: (data: ChangeComment) => void
 }
@@ -59,12 +59,10 @@ export interface PrintData {
 
 export interface ICustomCell {
   value: string
-  denseTable: boolean
 }
 
 export interface ISpacePart {
   value: string[]
-  denseTable: boolean
 }
 
 export interface IModal {

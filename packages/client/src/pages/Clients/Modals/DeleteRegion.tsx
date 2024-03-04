@@ -16,7 +16,7 @@ export const DeleteRegion = memo(
     ({ handleModal, title }: ChooseModalProps, ref) => {
       /* eslint-enable @typescript-eslint/no-unused-vars */
       const boxRef = React.createRef<HTMLDivElement>()
-      const [height, setHeight] = useState<number | any>()
+      const [height, setHeight] = useState<string>('')
       const [{ regions }, { deleteRegion, getRegions }] = useAddresses()
       const [selectedRegions, setSelectedRegions] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
@@ -55,13 +55,13 @@ export const DeleteRegion = memo(
       useEffect(() => {
         getRegions()
         if (boxRef.current) {
-          setHeight(boxRef.current!.offsetHeight)
+          setHeight(boxRef.current.offsetHeight.toString())
         }
       }, [])
 
       const setText = (text: string) => {
         if (!height && boxRef.current) {
-          setHeight(boxRef.current!.offsetHeight)
+          setHeight(boxRef.current.offsetHeight.toString())
         }
         setFilterText(text)
       }

@@ -109,7 +109,7 @@ export const Group = memo(
           }) as string[]
         )
         setCheckedGroup(data.checkedGroup)
-        onClearChanges!(false)
+        onClearChanges?.(false)
       }
     }, [clearChanges])
 

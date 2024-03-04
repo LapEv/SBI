@@ -20,7 +20,7 @@ export const ProfileMain = memo(({ setModal, data }: ProfileMainProps) => {
   /* eslint-disable @typescript-eslint/no-unused-vars */
   const [_, { setMessage }] = useMessage()
   /* eslint-enable @typescript-eslint/no-unused-vars */
-  const [{ userData }, { updateUserData, updateUser, changeAvatar }] = useAuth()
+  const [{ userData }, { updateUserData, updateUser }] = useAuth()
   const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
   const [file, setFile] = useState<FileProps>({ data: '', info: undefined })
 
@@ -29,11 +29,11 @@ export const ProfileMain = memo(({ setModal, data }: ProfileMainProps) => {
     defaultValues: {
       list: MapProfileInputFields.map(item => ({
         ...item,
-        value: data![item.name as keyof typeof data],
+        value: data[item.name as keyof typeof data],
       })),
     },
   })
-  const { errors, isValid } = useFormState({ control })
+  const { errors } = useFormState({ control })
   const { fields } = useFieldArray({
     control,
     name: 'list',
@@ -57,7 +57,7 @@ export const ProfileMain = memo(({ setModal, data }: ProfileMainProps) => {
     reset({
       list: MapProfileInputFields.map(item => ({
         ...item,
-        value: data![item.name as keyof typeof data],
+        value: data[item.name as keyof typeof data],
       })),
     })
     setFile({ data: '', info: undefined } as FileProps)
@@ -130,7 +130,7 @@ export const ProfileMain = memo(({ setModal, data }: ProfileMainProps) => {
                       onChange={(event: ChangeEvent<HTMLInputElement>) => (
                         field.onChange(event),
                         updateUserData({
-                          ...userData!,
+                          ...userData,
                           ...{ [name]: event.target.value },
                         })
                       )}

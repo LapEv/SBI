@@ -96,7 +96,7 @@ export const DropDownIncidents = memo(
             : (onChange?.(emptyValue as Options), setErrors(true))
         }
         value={value ?? ''}
-        renderOption={(props, option, { selected }) => (
+        renderOption={(props, option) => (
           <li {...props}>
             <Box
               component="span"

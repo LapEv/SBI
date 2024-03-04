@@ -47,9 +47,11 @@ export const ChangeStatus = memo(
 
       const [selectedFiles, setSelectedFiles] = useState<FileList | null>()
       const [selectedNameFiles, setSelectedNameFiles] = useState<string>('')
-      const [dragOver, setDragOver] = useState<boolean>(false)
 
+      /* eslint-disable @typescript-eslint/no-unused-vars */
+      const [dragOver, setDragOver] = useState<boolean>(false)
       const [uploadProgress, setUploadProgress] = useState(0)
+      /* eslint-enable @typescript-eslint/no-unused-vars */
 
       const handleDragOver = useCallback((event: DragEvent<HTMLDivElement>) => {
         event.preventDefault()

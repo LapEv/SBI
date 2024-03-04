@@ -1,5 +1,4 @@
 import { Options } from 'components/DropDown/interface'
-import { INC } from 'store/slices/incidents/interfaces'
 
 export interface ChooseModalProps {
   modalImage?: string
@@ -14,7 +13,6 @@ export interface DataCloseINC {
   files?: FileList
   spaceParts?: string[]
   data: Options
-  config?: any
 }
 
 export interface CloseINCProps {

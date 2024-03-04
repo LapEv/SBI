@@ -17,7 +17,7 @@ export const DeleteClassifierModel = memo(
     ({ handleModal, title }: ChooseModalProps, ref) => {
       /* eslint-enable @typescript-eslint/no-unused-vars */
       const boxRef = React.createRef<HTMLDivElement>()
-      const [height, setHeight] = useState<number | any>()
+      const [height, setHeight] = useState<string>('')
       const [
         { models, equipments },
         { deleteClassifierModel, getClassifierModels },
@@ -55,7 +55,7 @@ export const DeleteClassifierModel = memo(
       useEffect(() => {
         getClassifierModels()
         if (boxRef.current) {
-          setHeight(boxRef.current!.offsetHeight)
+          setHeight(boxRef.current.offsetHeight.toString())
         }
       }, [])
 
@@ -65,7 +65,7 @@ export const DeleteClassifierModel = memo(
 
       const setText = (text: string) => {
         if (!height && boxRef.current) {
-          setHeight(boxRef.current!.offsetHeight)
+          setHeight(boxRef.current.offsetHeight.toString())
         }
         setFilterText(text)
       }

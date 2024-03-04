@@ -4,10 +4,8 @@ import { useState, useEffect } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
 import { Item } from 'components/CheckBoxGroup'
 import { ButtonsModalSection } from 'components/Buttons'
-import { useAddresses } from 'hooks/addresses/useAddresses'
 import { useFilteredData } from 'hooks/useFilteredData'
 import { TextField } from 'components/TextFields'
-import { Addresses } from 'store/slices/addresses/interfaces'
 import { modalStyle } from 'static/styles/modals'
 import { SearchIconElement } from 'components/Icons'
 import { useObjects } from 'hooks/objects/useObjects'
@@ -19,7 +17,7 @@ export const DeleteObjects = memo(
     ({ handleModal, title }: ChooseModalProps, ref) => {
       /* eslint-enable @typescript-eslint/no-unused-vars */
       const boxRef = React.createRef<HTMLDivElement>()
-      const [height, setHeight] = useState<number | any>()
+      const [height, setHeight] = useState<string>('')
       const [{ objects }, { deleteObjects, getObjects }] = useObjects()
       const [selectedObjects, setSelectedObjects] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
@@ -54,13 +52,13 @@ export const DeleteObjects = memo(
       useEffect(() => {
         getObjects()
         if (boxRef.current) {
-          setHeight(boxRef.current!.offsetHeight)
+          setHeight(boxRef.current.offsetHeight.toString())
         }
       }, [])
 
       const setText = (text: string) => {
         if (!height && boxRef.current) {
-          setHeight(boxRef.current!.offsetHeight)
+          setHeight(boxRef.current.offsetHeight.toString())
         }
         setFilterText(text)
       }

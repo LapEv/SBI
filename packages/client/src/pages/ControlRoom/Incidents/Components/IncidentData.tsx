@@ -142,7 +142,7 @@ const DescriptionCellComment = ({
   )
 }
 
-const StyledBox = styled(Box)(({ theme }) => ({
+const StyledBox = styled(Box)(() => ({
   '&.MuiBox-root': {
     fontSize: '0.925rem',
     fontWeight: 'bold',
@@ -164,7 +164,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 }))
 
-const StyledDescription = styled(Box)(({ theme }) => ({
+const StyledDescription = styled(Box)(() => ({
   '&.MuiBox-root': {
     fontSize: '0.775rem',
     fontWeight: 'bold',
@@ -224,7 +224,7 @@ export const IncidentData =
               value={values.overdue ? 'Просрочен' : 'Не просрочен'}
             />
             <Cell label={'Инцидент: '} value={values.incident} />
-            <Cell label={'Номер: '} value={values.numberINC} />
+            <Cell label={'Номер: '} value={values.numberINC.toString()} />
             <Cell label={'Номер клиента: '} value={values.clientINC} />
             <Cell label={'Клиент: '} value={values.legalName} />
             <Cell label={'Клиент (кратко): '} value={values.client} />

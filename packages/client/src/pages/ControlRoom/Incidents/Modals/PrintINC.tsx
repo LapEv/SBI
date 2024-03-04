@@ -65,7 +65,7 @@ export const PrintINC = memo(
             btnName="Печать"
           />
           <Box sx={{ textAlign: 'center' }} style={{ display: 'none' }}>
-            <ReactToPrint content={() => contentToPrint.current!} />
+            <ReactToPrint content={() => contentToPrint.current} />
             <Box ref={contentToPrint} sx={{ textAlign: 'center' }}>
               {selectedType === 'normal' && <Normal />}
               {selectedType === 'compressed' && <Compressed />}

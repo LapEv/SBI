@@ -14,7 +14,9 @@ export const Item = memo(
     props,
     noEmpty,
   }: IItem) => {
-    const [checked, setChecked] = useState<boolean>(initChecked! ?? false) // eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
+    const [checked, setChecked] = useState<boolean>(
+      (initChecked as boolean) ?? false
+    )
     const theme = useTheme()
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {

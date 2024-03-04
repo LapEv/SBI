@@ -74,7 +74,7 @@ export const ContractPage = memo(
       defaultValues: {
         listAddContract: MapContractInputFields.map(data => ({
           ...data,
-          value: contractData![data.name as keyof typeof contractData],
+          value: contractData[data.name as keyof typeof contractData],
         })),
       },
     })
@@ -204,7 +204,7 @@ export const ContractPage = memo(
       reset({
         listAddContract: MapContractInputFields.map(data => ({
           ...data,
-          value: newSLA![data.name as keyof typeof newSLA],
+          value: newSLA[data.name as keyof typeof newSLA],
         })),
       })
       setSLAID(SLAs?.map(({ id }) => id) as string[])
@@ -302,7 +302,7 @@ export const ContractPage = memo(
                         onChange={(event: ChangeEvent<HTMLInputElement>) => (
                           field.onChange(event),
                           checkForChange({
-                            ...contractData!,
+                            ...contractData,
                             ...{ [name]: event.target.value },
                           })
                         )}

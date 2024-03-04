@@ -4,7 +4,6 @@ import {
   ClassifierModels,
   TypicalMalfunctions,
   AnswerClassifierEquipment,
-  AnswerClassifierModels,
   AnswerTypicalMalfunctions,
   ClassifierState,
 } from './interfaces'

@@ -9,10 +9,7 @@ import { useFilteredData } from 'hooks/useFilteredData'
 import { SearchIconElement } from 'components/Icons'
 import { TextField } from 'components/TextFields'
 import { useIncidents } from 'hooks/incidents/useINC'
-import {
-  TypesCompletedWork,
-  TypesOfWork,
-} from 'store/slices/incidents/interfaces'
+import { TypesCompletedWork } from 'store/slices/incidents/interfaces'
 
 export const DeleteTypesCompletedWork = memo(
   React.forwardRef<unknown, ChooseModalProps>(
@@ -20,7 +17,7 @@ export const DeleteTypesCompletedWork = memo(
     ({ handleModal, title }: ChooseModalProps, ref) => {
       /* eslint-enable @typescript-eslint/no-unused-vars */
       const boxRef = React.createRef<HTMLDivElement>()
-      const [height, setHeight] = useState<number | any>()
+      const [height, setHeight] = useState<string>('')
       const [
         { typesCompletedWork },
         { deleteTypesCompletedWork, getTypesCompletedWork },
@@ -61,13 +58,13 @@ export const DeleteTypesCompletedWork = memo(
       useEffect(() => {
         getTypesCompletedWork()
         if (boxRef.current) {
-          setHeight(boxRef.current!.offsetHeight)
+          setHeight(boxRef.current.offsetHeight.toString())
         }
       }, [])
 
       const setText = (text: string) => {
         if (!height && boxRef.current) {
-          setHeight(boxRef.current!.offsetHeight)
+          setHeight(boxRef.current.offsetHeight.toString())
         }
         setFilterText(text)
       }

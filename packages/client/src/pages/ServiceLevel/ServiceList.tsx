@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from 'react'
-import { Box, ListItemText, ListItemButton, Modal } from '@mui/material'
+import { Box, ListItemText, ListItemButton } from '@mui/material'
 import Collapse from '@mui/material/Collapse'
 import { RotateButton } from 'components/Buttons'
 import { IServiceList, IServiceListData } from 'store/slices/sla/interfaces'

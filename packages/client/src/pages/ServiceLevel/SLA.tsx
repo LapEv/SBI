@@ -72,7 +72,7 @@ export const SLAPage = memo(
       defaultValues: {
         list: fieldsData.map(data => ({
           ...data,
-          value: slaData![data.name as keyof typeof slaData],
+          value: slaData[data.name as keyof typeof slaData],
         })),
       },
     })
@@ -139,7 +139,7 @@ export const SLAPage = memo(
       reset({
         list: fieldsData.map(data => ({
           ...data,
-          value: newSLA![data.name as keyof typeof newSLA],
+          value: newSLA[data.name as keyof typeof newSLA],
         })),
       })
       setSelectedType({
@@ -152,7 +152,7 @@ export const SLAPage = memo(
       if (!data) return
       setSelectedType(data)
       checkForChange({
-        ...slaData!,
+        ...slaData,
         ...{
           TypesOfWork: {
             ...TypesOfWork,
@@ -230,7 +230,7 @@ export const SLAPage = memo(
                                 : event.target.valueAsNumber
                             ),
                             checkForChange({
-                              ...slaData!,
+                              ...slaData,
                               ...{
                                 [name]:
                                   name !== 'days'

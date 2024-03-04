@@ -102,6 +102,9 @@ const createINCData = (data: INC[]) => {
       timeInWork: convertDateToStringFromDB(item.timeInWork) as string,
       timeCloseCheck: convertDateToStringFromDB(item.timeCloseCheck) as string,
       timeClose: convertDateToStringFromDB(item.timeClose) as string,
+      spaceParts: Array.isArray(item.spaceParts)
+        ? item.spaceParts.join(', ')
+        : item.spaceParts,
     }
   })
 }

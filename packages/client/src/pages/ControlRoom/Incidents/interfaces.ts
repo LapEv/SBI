@@ -1,5 +1,8 @@
-import { Options } from 'components/DropDown/interface'
-import { ChangeComment, INC } from 'store/slices/incidents/interfaces'
+import {
+  MUIDataTableCustomHeadRenderer,
+  MUIDataTableMeta,
+} from 'mui-datatables'
+import { INC } from 'store/slices/incidents/interfaces'
 
 export type Order = 'asc' | 'desc'
 
@@ -23,15 +26,14 @@ export interface INC_Column {
   options: {
     filter: boolean
     filterList?: string[]
-    filterOptions?: any
-    onFilterChange?: any
+    filterOptions?: {
+      names: string[]
+    }
     sort: boolean
-    hint?: any
-    setCellProps?: any
-    customBodyRender?: any
-    customHeadRender?: any
-    customHeadLabelRender?: any
-    setCellHeaderProps?: any
+    customBodyRender?: (value: string, { rowData }: MUIDataTableMeta) => void
+    setCellHeaderProps?:
+      | ((columnMeta: MUIDataTableCustomHeadRenderer) => object)
+      | undefined
     display?: boolean
     viewColumns?: boolean
     draggable?: boolean

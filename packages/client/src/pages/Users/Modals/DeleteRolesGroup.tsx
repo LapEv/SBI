@@ -19,7 +19,7 @@ export const DeleteRolesGroup = memo(
       const [{ rolesGroup }, { getRoles, getRolesGroup, deleteRolesGroup }] =
         useRoles()
       const boxRef = React.createRef<HTMLDivElement>()
-      const [height, setHeight] = useState<number | any>()
+      const [height, setHeight] = useState<string>('')
       const [selectedGroup, setGroup] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
       const [filterText, setFilterText] = useState<string>('')
@@ -57,7 +57,7 @@ export const DeleteRolesGroup = memo(
 
       const setText = (text: string) => {
         if (!height && boxRef.current) {
-          setHeight(boxRef.current!.offsetHeight)
+          setHeight(boxRef.current.offsetHeight.toString())
         }
         setFilterText(text)
       }

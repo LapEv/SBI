@@ -7,7 +7,7 @@ import { ButtonsModalSection } from 'components/Buttons'
 import { DropDown, emptyValue } from 'components/DropDown'
 import { useAddresses } from 'hooks/addresses/useAddresses'
 import { Options } from 'components/DropDown/interface'
-import { Addresses, Regions } from 'store/slices/addresses/interfaces'
+import { Addresses } from 'store/slices/addresses/interfaces'
 import {
   useForm,
   useFieldArray,

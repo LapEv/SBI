@@ -83,15 +83,15 @@ export const ChangeObject = memo(
           active: true,
         }
         const isExistObject = objects.filter(item => {
-          const {
-            id,
-            Address,
-            Region,
-            Client,
-            createdAt,
-            updatedAt,
-            ...newitem
-          } = item
+          const newitem = {
+            object: item.object,
+            id_client: item.id_client,
+            id_address: item.id_address,
+            id_region: item.id_region,
+            internalClientID: item.internalClientID,
+            internalClientName: item.internalClientName,
+            active: item.active,
+          }
           return deepEqual(newitem, newObject)
         })
         if (isExistObject.length) {

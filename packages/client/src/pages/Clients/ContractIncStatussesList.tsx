@@ -22,10 +22,8 @@ import { IIncStatussesList } from './interfaces'
 
 export const ContractIncStatussesList = memo(
   ({ incStatussesID, onChooseItems }: IIncStatussesList) => {
-    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
     const modalRef = React.createRef()
     const [modal, setModal] = useState<boolean>(false)
-    const openPopover = Boolean(anchorEl)
     const [{ admin }] = useAuth()
     const [{ incStatuses }, { getIncidentStatuses }] = useIncidents()
     const [incStatusesData, setIncStatusesData] = useState<DataList[]>([])

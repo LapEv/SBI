@@ -1,4 +1,3 @@
-import { DataList } from 'components/CheckBoxGroup/interface'
 import {
   ChangeClassifierEquipment,
   ChangeClassifierModel,

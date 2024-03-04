@@ -12,10 +12,8 @@ export class divisionService {
       })
       const divisions = await DivisionRepos.findAll({ where: { active: true } })
       res.status(200).json(divisions)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error: unable to set division', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -41,10 +39,8 @@ export class divisionService {
         where: { active: true },
       })
       res.status(200).json(divisions)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   fullDeleteDivision = async (_req: Request, res: Response) => {
@@ -55,10 +51,8 @@ export class divisionService {
       })
       const divisions = await DivisionRepos.findAll({})
       res.status(200).json(divisions)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -70,10 +64,8 @@ export class divisionService {
       })
       const divisions = await DivisionRepos.findAll({ where: { active: true } })
       res.status(200).json(divisions)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 }

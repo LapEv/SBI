@@ -452,12 +452,8 @@ export class incidentService {
         where: { active: true },
       })
       res.status(200).json(incStatuses)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({
-        error: ['db error: unable to set new incident statuses', err],
-      })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   getAllIncidentStatuses = (_req: Request, res: Response) => {
@@ -484,10 +480,8 @@ export class incidentService {
         where: { active: true },
       })
       res.status(200).json(incStatuses)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error: ', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   fullDeleteIncidentStatuses = async (_req: Request, res: Response) => {
@@ -498,10 +492,8 @@ export class incidentService {
       })
       const incStatuses = await IncidentStatusesRepos.findAll({})
       res.status(200).json(incStatuses)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   pullIncidentStatusesFromArchive = async (_req: Request, res: Response) => {
@@ -514,10 +506,8 @@ export class incidentService {
         where: { active: true },
       })
       res.status(200).json(incStatuses)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   changeIncidentStatuses = async (_req: Request, res: Response) => {
@@ -528,10 +518,8 @@ export class incidentService {
         where: { active: true },
       })
       res.status(200).json(incStatuses)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -542,12 +530,8 @@ export class incidentService {
         where: { active: true },
       })
       res.status(200).json(typesOfWork)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({
-        error: ['db error: unable to set new incident statuses', err],
-      })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   getAllTypesOfWork = (_req: Request, res: Response) => {
@@ -574,10 +558,8 @@ export class incidentService {
         where: { active: true },
       })
       res.status(200).json(typesOfWork)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   fullDeleteTypesOfWork = async (_req: Request, res: Response) => {
@@ -588,10 +570,8 @@ export class incidentService {
       })
       const typesOfWork = await TypesOfWorkRepos.findAll({})
       res.status(200).json(typesOfWork)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   pullTypesOfWorkFromArchive = async (_req: Request, res: Response) => {
@@ -604,10 +584,8 @@ export class incidentService {
         where: { active: true },
       })
       res.status(200).json(typesOfWork)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   changeTypesOfWork = async (_req: Request, res: Response) => {
@@ -618,10 +596,8 @@ export class incidentService {
         where: { active: true },
       })
       res.status(200).json(typesOfWork)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -632,12 +608,8 @@ export class incidentService {
         where: { active: true },
       })
       res.status(200).json(typesCompletedWork)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({
-        error: ['db error: unable to set new incident statuses', err],
-      })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   getAllTypesCompletedWork = (_req: Request, res: Response) => {
@@ -664,10 +636,8 @@ export class incidentService {
         where: { active: true },
       })
       res.status(200).json(typesCompletedWork)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   fullDeleteTypesCompletedWork = async (_req: Request, res: Response) => {
@@ -678,10 +648,8 @@ export class incidentService {
       })
       const typesCompletedWork = await TypesCompletedWorkRepos.findAll({})
       res.status(200).json(typesCompletedWork)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   pullTypesCompletedWorkFromArchive = async (_req: Request, res: Response) => {
@@ -694,10 +662,8 @@ export class incidentService {
         where: { active: true },
       })
       res.status(200).json(typesCompletedWork)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   changeTypesCompletedWork = async (_req: Request, res: Response) => {
@@ -708,10 +674,8 @@ export class incidentService {
         where: { active: true },
       })
       res.status(200).json(typesCompletedWork)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error:', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -848,13 +812,8 @@ export class incidentService {
       })
       const filterListData = await this.getFilterListFunc()
       res.status(200).json({ incs, count, filterListData })
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      console.log('err = ', err)
-      res.status(500).json({
-        error: ['db error: unable to set new incident: ', err],
-      })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   getAllINC = (_req: Request, res: Response) => {
@@ -870,11 +829,8 @@ export class incidentService {
       })
       const count = incs.length
       res.status(200).json({ incs, count })
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      console.log('err = ', err)
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -882,11 +838,8 @@ export class incidentService {
     try {
       const filterListData = await this.getFilterListFunc()
       res.status(200).json(filterListData)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      console.log('err = ', err)
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -978,11 +931,8 @@ export class incidentService {
         where: { [Op.and]: filterData },
       })
       res.status(200).json({ incs, count, filterListData })
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      console.log('err = ', err)
-      res.status(500).json({ error: ['db error: ', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   deleteINC = async (_req: Request, res: Response) => {
@@ -996,10 +946,8 @@ export class incidentService {
         include: this.includes,
       })
       res.status(200).json(incs)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   fullDeleteINC = async (_req: Request, res: Response) => {
@@ -1010,10 +958,8 @@ export class incidentService {
       })
       const incs = await IncidentRepos.findAll({ include: this.includes })
       res.status(200).json(incs)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   pullINCFromArchive = async (_req: Request, res: Response) => {
@@ -1042,10 +988,8 @@ export class incidentService {
         include: this.includes,
       })
       res.status(200).json(incs)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   changeExecutor = async (_req: Request, res: Response) => {
@@ -1091,10 +1035,8 @@ export class incidentService {
       })
       const filterListData = await this.getFilterListFunc()
       res.status(200).json({ incs, filterListData })
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error: ', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   changeResponsible = async (_req: Request, res: Response) => {
@@ -1139,10 +1081,8 @@ export class incidentService {
       })
       const filterListData = await this.getFilterListFunc()
       res.status(200).json({ incs, filterListData })
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   changeStatus = async (_req: Request, res: Response) => {
@@ -1257,11 +1197,8 @@ export class incidentService {
       })
       const filterListData = await this.getFilterListFunc()
       res.status(200).json({ incs, filterListData })
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      console.log('err = ', err)
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error:  ', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   changeUserClosingCheck = async (_req: Request, res: Response) => {
@@ -1274,8 +1211,8 @@ export class incidentService {
         include: this.includes,
       })
       res.status(200).json(incs)
-    } catch (err: any) {
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   changeUserClosing = async (_req: Request, res: Response) => {
@@ -1288,8 +1225,8 @@ export class incidentService {
         include: this.includes,
       })
       res.status(200).json(incs)
-    } catch (err: unknown) {
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 

@@ -1,6 +1,5 @@
 import type { Request, Response } from 'express'
 import { FilesRepos } from '../db'
-// import { AppConst } from '../const'
 const fs = require('fs')
 const path = require('path')
 
@@ -65,24 +64,16 @@ export class filesService {
       })
       await FilesRepos.bulkCreate(uploadedFiles)
       res.status(200).json(uploadedFiles)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({
-        error: ['db error: unable to upload files: ', err],
-      })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   getFiles = async (_req: Request, res: Response) => {
     try {
       const files = await FilesRepos.findAll({})
       res.status(200).json(files)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({
-        error: ['db error: unable to get files: ', err],
-      })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 }

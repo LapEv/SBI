@@ -43,12 +43,8 @@ export class userService {
         await userRepos.update(id, { ...newUser })
         res.status(200).json(newUser)
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res
-        .status(500)
-        .json({ error: [auth.notification.errorRegistration, err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   login = async (_req: Request, res: Response) => {
@@ -87,11 +83,8 @@ export class userService {
         token,
         user,
       })
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      console.log('err = ', err)
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   changePassword = async (_req: Request, res: Response) => {
@@ -117,12 +110,8 @@ export class userService {
     try {
       await userRepos.update(id, { password: hashPassword })
       res.status(200).json('Ok')
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res
-        .status(500)
-        .json({ error: [auth.notification.errorChangePassword, err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   changeAvatar = async (_req: Request, res: Response) => {
@@ -148,12 +137,8 @@ export class userService {
     try {
       await userRepos.update(id, { password: hashPassword })
       res.status(200).json('Ok')
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res
-        .status(500)
-        .json({ error: [auth.notification.errorChangePassword, err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   check = async (_req: Request, res: Response) => {
@@ -275,10 +260,8 @@ export class userService {
         where: { active: true },
       })
       res.status(200).json(users)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   pullUserInArchive = async (_req: Request, res: Response) => {
@@ -291,10 +274,8 @@ export class userService {
         where: { active: true, reasonOfDelete: '' },
       })
       res.status(200).json(users)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   fullDeleteUser = async (_req: Request, res: Response) => {
@@ -305,10 +286,8 @@ export class userService {
       })
       const users = await userRepos.findAll({})
       res.status(200).json(users)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   changeTheme = (_req: Request, res: Response) => {
@@ -334,10 +313,8 @@ export class userService {
       const dataFind = { id_division, id_department, active: true }
       const rolesGroup = await userRepos.findAll({ where: dataFind })
       res.status(200).json(rolesGroup)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   updateProfile = async (_req: Request, res: Response) => {
@@ -352,10 +329,8 @@ export class userService {
       const dataFind = { id_division, id_department, active: true }
       const rolesGroup = await userRepos.findAll({ where: dataFind })
       res.status(200).json(rolesGroup)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 }

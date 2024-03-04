@@ -3,11 +3,11 @@ import { Dayjs } from 'dayjs'
 export interface IDateField {
   dateValue: string
   setDateValue: (text: string) => void
-  sx?: any
+  sx?: Record<string, unknown>
 }
 
 export interface IDateTimeField {
   dateValue: Dayjs
   setDateValue: (text: Dayjs) => void
-  sx?: any
+  sx?: Record<string, unknown>
 }

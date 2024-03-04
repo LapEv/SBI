@@ -18,9 +18,9 @@ export const AddRegion = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
+      const [_, { setMessage }] = useMessage()
       /* eslint-enable @typescript-eslint/no-unused-vars */
       const [{ regions }, { getRegions, newRegion }] = useAddresses()
-      const [_, { setMessage }] = useMessage()
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
         defaultValues: {

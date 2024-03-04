@@ -1,8 +1,9 @@
 import { MUIDataTableOptions } from 'mui-datatables'
+import { INC } from 'store/slices/incidents/interfaces'
 
 export interface IDataTable {
   title: string
-  data: any[]
+  data: INC[]
   columns: Column[]
   options: MUIDataTableOptions
 }

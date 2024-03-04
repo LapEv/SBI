@@ -93,12 +93,8 @@ export class classifierService {
         order,
       })
       res.status(200).json(classifierEquipments)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({
-        error: ['db error: unable to set new classifier equipment', err],
-      })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   getAllClassifierEquipments = (_req: Request, res: Response) => {
@@ -132,10 +128,8 @@ export class classifierService {
         order,
       })
       res.status(200).json(classifierEquipments)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   fullDeleteClassifierEquipment = async (_req: Request, res: Response) => {
@@ -151,10 +145,8 @@ export class classifierService {
         },
       })
       res.status(200).json(classifierEquipments[1])
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   pullClassifierEquipmentFromArchive = async (_req: Request, res: Response) => {
@@ -169,10 +161,8 @@ export class classifierService {
         order,
       })
       res.status(200).json(classifierEquipments)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   changeClassifierEquipment = async (_req: Request, res: Response) => {
@@ -185,10 +175,8 @@ export class classifierService {
         order,
       })
       res.status(200).json(classifierEquipments)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -218,12 +206,8 @@ export class classifierService {
         order,
       })
       res.status(200).json(classifierEquipment)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res
-        .status(500)
-        .json({ error: ['db error: unable to set new classifier model', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   getAllClassifierModels = (_req: Request, res: Response) => {
@@ -269,10 +253,8 @@ export class classifierService {
         order,
       })
       res.status(200).json(classifierEquipment)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   fullDeleteClassifierModel = async (_req: Request, res: Response) => {
@@ -287,10 +269,8 @@ export class classifierService {
         order: orderModel,
       })
       res.status(200).json(classifierModels)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   pullClassifierModelFromArchive = async (_req: Request, res: Response) => {
@@ -305,10 +285,8 @@ export class classifierService {
         order: orderModel,
       })
       res.status(200).json(classifierModels)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   changeClassifierModel = async (_req: Request, res: Response) => {
@@ -337,10 +315,8 @@ export class classifierService {
         order,
       })
       res.status(200).json(classifierEquipment)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -370,12 +346,8 @@ export class classifierService {
         order,
       })
       res.status(200).json(equipments)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({
-        error: ['db error: unable to set new typical malfunction', err],
-      })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   getAllTypicalMalfunctions = (_req: Request, res: Response) => {
@@ -416,10 +388,8 @@ export class classifierService {
         order,
       })
       res.status(200).json(equipments)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   fullDeleteTypicalMalfunction = async (_req: Request, res: Response) => {
@@ -430,11 +400,8 @@ export class classifierService {
       })
       const typicalMalfunctions = await TypicalMalfunctionsRepos.findAll({})
       res.status(200).json(typicalMalfunctions)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      // console.log('err = ', err)
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   pullTypicalMalfunctionFromArchive = async (_req: Request, res: Response) => {
@@ -448,10 +415,8 @@ export class classifierService {
         order: orderTypicalMalfunction,
       })
       res.status(200).json(typicalMalfunctions)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   changeTypicalMalfunction = async (_req: Request, res: Response) => {
@@ -466,10 +431,8 @@ export class classifierService {
         order,
       })
       res.status(200).json(equipments)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 }

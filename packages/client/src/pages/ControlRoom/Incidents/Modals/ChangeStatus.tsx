@@ -35,10 +35,10 @@ export const ChangeStatus = memo(
   React.forwardRef<unknown, CloseINCProps>(
     /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title, data }: CloseINCProps, ref) => {
+      const [_, { setMessage }] = useMessage()
       /* eslint-enable @typescript-eslint/no-unused-vars */
       const theme = useTheme()
       const [{ typesCompletedWork }] = useIncidents()
-      const [_, { setMessage }] = useMessage()
       const [typeCompletedWorkList, setTypeCompletedWorkList] = useState<
         Options[]
       >([])

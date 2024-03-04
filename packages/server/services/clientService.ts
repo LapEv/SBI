@@ -9,12 +9,8 @@ export class clientService {
         where: { active: true },
       })
       res.status(200).json(clients)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({
-        error: ['db error: unable to set new client', err],
-      })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -44,10 +40,8 @@ export class clientService {
         where: { active: true },
       })
       res.status(200).json(clients)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -59,10 +53,8 @@ export class clientService {
       })
       const clients = await ClientsRepos.findAll({})
       res.status(200).json(clients)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -76,10 +68,8 @@ export class clientService {
         where: { active: true },
       })
       res.status(200).json(clients)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -97,10 +87,8 @@ export class clientService {
         where: { active: true },
       })
       res.status(200).json(clients)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -111,12 +99,8 @@ export class clientService {
         where: { active: true },
       })
       res.status(200).json(clientsGroup)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({
-        error: ['db error: unable to set new client', err],
-      })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -146,10 +130,8 @@ export class clientService {
         where: { active: true },
       })
       res.status(200).json(clientsGroup)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -161,10 +143,8 @@ export class clientService {
       })
       const clientsGroup = await ClientsGroupRepos.findAll({})
       res.status(200).json(clientsGroup)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -178,10 +158,8 @@ export class clientService {
         where: { active: true },
       })
       res.status(200).json(clientsGroup)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -196,10 +174,8 @@ export class clientService {
         where: { active: true },
       })
       res.status(200).json(clientsGroup)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 }

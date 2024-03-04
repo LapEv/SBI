@@ -9,8 +9,10 @@ import { IExecutor } from './interfaces'
 
 export const Executor = memo(
   ({ value, id, incident, responsible }: IExecutor) => {
-    const [{ fieldEngineers, user }] = useAuth()
+    /* eslint-disable @typescript-eslint/no-unused-vars */
     const [_, { changeExecutor, changeResponsible }] = useIncidents()
+    /* eslint-enable @typescript-eslint/no-unused-vars */
+    const [{ fieldEngineers, user }] = useAuth()
     const [executor, setExecutor] = useState<Options>({ label: value, id: '' })
 
     const setData = (data: Options) => {

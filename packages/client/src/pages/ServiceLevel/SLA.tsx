@@ -33,8 +33,10 @@ export const SLAPage = memo(
     id_typeOfWork,
     TypesOfWork,
   }: IServiceListData) => {
-    const [{ typesOfWork }, { getTypesOfWork }] = useIncidents()
+    /* eslint-disable @typescript-eslint/no-unused-vars */
     const [_, { changeSLA, changeOLA }] = useSLA()
+    /* eslint-enable @typescript-eslint/no-unused-vars */
+    const [{ typesOfWork }, { getTypesOfWork }] = useIncidents()
     const [{ admin }] = useAuth()
     const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
     const [listTypes, setListTypes] = useState<Options[]>([])

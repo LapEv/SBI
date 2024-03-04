@@ -11,10 +11,8 @@ export class userStatusService {
       })
       const userStatus = await UserStatusRepos.findAll({})
       res.status(200).json(userStatus)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error: unable to set division', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   getUserStatus = (_req: Request, res: Response) => {
@@ -32,10 +30,8 @@ export class userStatusService {
         where: { active: true },
       })
       res.status(200).json(userStatus)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -47,10 +43,8 @@ export class userStatusService {
       })
       const userStatus = await UserStatusRepos.findAll({})
       res.status(200).json(userStatus)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 }

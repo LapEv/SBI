@@ -20,10 +20,10 @@ export const AddAddress = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
+      const [_, { setMessage }] = useMessage()
       /* eslint-enable @typescript-eslint/no-unused-vars */
       const [{ regions, addresses }, { getRegions, getAddresses, newAddress }] =
         useAddresses()
-      const [_, { setMessage }] = useMessage()
       const [region, setRegion] = useState<Options>(emptyValue)
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',

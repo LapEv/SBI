@@ -33,36 +33,42 @@ export const DropDown = memo(
         sx={{ width: '90%', height: 40, ...props }}
         options={data}
         noOptionsText={'Нет данных'}
-        filterOptions={(option, { inputValue }): any => {
+        filterOptions={(option, { inputValue }): unknown[] => {
           if (inputValue === '') return option
           const value = inputValue.toLowerCase().trim()
-          const displayOptions = option.filter((item): any => {
-            if ((item as any).label.toLowerCase().trim().includes(value)) {
+          const displayOptions = option.filter((item): unknown => {
+            if ((item as Options).label.toLowerCase().trim().includes(value)) {
               return item
             }
             if (
-              (item as any).description &&
-              (item as any).description.length &&
-              (item as any).description.toLowerCase().trim().includes(value)
+              (item as Options)?.description &&
+              (item as Options)?.description?.length &&
+              (item as Options)?.description
+                ?.toLowerCase()
+                .trim()
+                .includes(value)
             ) {
               return item
             }
             if (
-              (item as any).descriptionID &&
-              (item as any).descriptionID.length &&
-              (item as any).descriptionID.toLowerCase().trim().includes(value)
+              (item as Options)?.descriptionID &&
+              (item as Options)?.descriptionID?.length &&
+              (item as Options)?.descriptionID
+                ?.toLowerCase()
+                .trim()
+                .includes(value)
             ) {
               return item
             }
           })
           return displayOptions ?? []
         }}
-        isOptionEqualToValue={(option, value): any => {
+        isOptionEqualToValue={(option, value): boolean => {
           return (
-            (option as any).label === value ||
-            (option as any).id === value ||
-            (option as any).description === value ||
-            (option as any).descriptionID === value ||
+            (option as Options).label === value ||
+            (option as Options).id === value ||
+            (option as Options).description === value ||
+            (option as Options).descriptionID === value ||
             value === ''
           )
         }}
@@ -72,7 +78,7 @@ export const DropDown = memo(
             : (onChange?.(emptyValue as Options), setErrors(true))
         }
         value={value ?? ''}
-        renderOption={(props, option, { selected }) => (
+        renderOption={(props, option) => (
           <li {...props}>
             <Box
               component="span"
@@ -86,15 +92,15 @@ export const DropDown = memo(
               }}
             />
             <Box sx={{ flexGrow: 1 }}>
-              {(option as any).label}
-              {(option as any).description && (
+              {(option as Options).label}
+              {(option as Options).description && (
                 <div>
-                  <span>{(option as any).description}</span>
+                  <span>{(option as Options).description}</span>
                 </div>
               )}
-              {(option as any).descriptionID && (
+              {(option as Options).descriptionID && (
                 <div>
-                  <span>{(option as any).descriptionID}</span>
+                  <span>{(option as Options).descriptionID}</span>
                 </div>
               )}
             </Box>
@@ -150,7 +156,6 @@ export const DropDownIncidents = ({
   label,
   errorLabel,
   error,
-  textProps,
   disableClearable,
   tabIndex,
 }: DataDropDown) => {
@@ -161,7 +166,9 @@ export const DropDownIncidents = ({
     setErrors(error as boolean)
   }, [error])
 
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   const CustomPopper = (props: any) => {
+    /* eslint-enable @typescript-eslint/no-explicit-any */
     return (
       <Popper
         {...props}
@@ -185,36 +192,39 @@ export const DropDownIncidents = ({
       sx={{ width: '90%', height: 40, ...props }}
       options={data}
       noOptionsText={'Нет данных!'}
-      filterOptions={(option, { inputValue }): any => {
+      filterOptions={(option, { inputValue }): unknown[] => {
         if (inputValue === '') return option
         const value = inputValue.toLowerCase().trim()
-        const displayOptions = option.filter((item): any => {
-          if ((item as any).label.toLowerCase().trim().includes(value)) {
+        const displayOptions = option.filter((item): unknown => {
+          if ((item as Options).label.toLowerCase().trim().includes(value)) {
             return item
           }
           if (
-            (item as any).description &&
-            (item as any).description.length &&
-            (item as any).description.toLowerCase().trim().includes(value)
+            (item as Options).description &&
+            (item as Options)?.description?.length &&
+            (item as Options)?.description?.toLowerCase().trim().includes(value)
           ) {
             return item
           }
           if (
-            (item as any).descriptionID &&
-            (item as any).descriptionID.length &&
-            (item as any).descriptionID.toLowerCase().trim().includes(value)
+            (item as Options).descriptionID &&
+            (item as Options)?.descriptionID?.length &&
+            (item as Options)?.descriptionID
+              ?.toLowerCase()
+              .trim()
+              .includes(value)
           ) {
             return item
           }
         })
         return displayOptions ?? []
       }}
-      isOptionEqualToValue={(option, value): any => {
+      isOptionEqualToValue={(option, value): boolean => {
         return (
-          (option as any).label === value ||
-          (option as any).id === value ||
-          (option as any).description === value ||
-          (option as any).descriptionID === value ||
+          (option as Options).label === value ||
+          (option as Options).id === value ||
+          (option as Options).description === value ||
+          (option as Options).descriptionID === value ||
           value === ''
         )
       }}
@@ -224,7 +234,7 @@ export const DropDownIncidents = ({
           : (onChange?.(emptyValue as Options), setErrors(true))
       }
       value={value ?? ''}
-      renderOption={(props, option, { selected }) => (
+      renderOption={(props, option) => (
         <li {...props}>
           <Box
             component="span"
@@ -238,15 +248,15 @@ export const DropDownIncidents = ({
             }}
           />
           <Box sx={{ flexGrow: 1 }}>
-            {(option as any).label}
-            {(option as any).description && (
+            {(option as Options).label}
+            {(option as Options).description && (
               <div>
-                <span>{(option as any).description}</span>
+                <span>{(option as Options).description}</span>
               </div>
             )}
-            {(option as any).descriptionID && (
+            {(option as Options).descriptionID && (
               <div>
-                <span>{(option as any).descriptionID}</span>
+                <span>{(option as Options).descriptionID}</span>
               </div>
             )}
           </Box>

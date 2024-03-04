@@ -18,12 +18,8 @@ export class slaService {
         include: includes,
       })
       res.status(200).json(sla)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({
-        error: ['db error: unable to set new sla', err],
-      })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   getAllSLA = (_req: Request, res: Response) => {
@@ -53,10 +49,8 @@ export class slaService {
         where: { active: true },
       })
       res.status(200).json(sla)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   fullDeleteSLA = async (_req: Request, res: Response) => {
@@ -67,10 +61,8 @@ export class slaService {
       })
       const sla = await SLARepos.findAll({})
       res.status(200).json(sla)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   pullSLAFromArchive = async (_req: Request, res: Response) => {
@@ -84,10 +76,8 @@ export class slaService {
         include: includes,
       })
       res.status(200).json(sla)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   changeSLA = async (_req: Request, res: Response) => {
@@ -106,10 +96,8 @@ export class slaService {
         include: includes,
       })
       res.status(200).json(slas)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -121,12 +109,8 @@ export class slaService {
         include: includes,
       })
       res.status(200).json(ola)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({
-        error: ['db error: unable to set new ola', err],
-      })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   getAllOLA = (_req: Request, res: Response) => {
@@ -154,10 +138,8 @@ export class slaService {
         where: { active: true },
       })
       res.status(200).json(ola)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   fullDeleteOLA = async (_req: Request, res: Response) => {
@@ -168,10 +150,8 @@ export class slaService {
       })
       const ola = await OLARepos.findAll({})
       res.status(200).json(ola)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   pullOLAFromArchive = async (_req: Request, res: Response) => {
@@ -185,10 +165,8 @@ export class slaService {
         include: includes,
       })
       res.status(200).json(ola)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   changeOLA = async (_req: Request, res: Response) => {
@@ -207,10 +185,8 @@ export class slaService {
         include: includes,
       })
       res.status(200).json(olas)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 }

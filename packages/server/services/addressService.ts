@@ -7,12 +7,10 @@ export class addressService {
       await AddressesRepos.create({ ..._req.body, active: true })
       const addresses = await AddressesRepos.findAll({})
       res.status(200).json(addresses)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
+    } catch (err) {
       res
         .status(500)
-        .json({ error: ['db error: unable to set new address', err] })
+        .json({ error: ['db error: unable to set new address', err as Error] })
     }
   }
 
@@ -53,10 +51,8 @@ export class addressService {
         where: { active: true },
       })
       res.status(200).json(addresses)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -68,10 +64,8 @@ export class addressService {
       })
       const addresses = await AddressesRepos.findAll({})
       res.status(200).json(addresses)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   pullAddressFromArchive = async (_req: Request, res: Response) => {
@@ -84,10 +78,8 @@ export class addressService {
         where: { active: true },
       })
       res.status(200).json(users)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -100,10 +92,8 @@ export class addressService {
       })
       const addresses = await AddressesRepos.findAll({})
       res.status(200).json(addresses)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   newRegion = async (_req: Request, res: Response) => {
@@ -111,10 +101,8 @@ export class addressService {
       await RegionsRepos.create({ ..._req.body, active: true })
       const regions = await RegionsRepos.findAll({})
       res.status(200).json(regions)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error: unable to set role', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   getAllRegions = (_req: Request, res: Response) => {
@@ -141,10 +129,8 @@ export class addressService {
         where: { active: true },
       })
       res.status(200).json(regions)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -156,10 +142,8 @@ export class addressService {
       })
       const regions = await RegionsRepos.findAll({})
       res.status(200).json(regions)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   pullRegionFromArchive = async (_req: Request, res: Response) => {
@@ -172,10 +156,8 @@ export class addressService {
         where: { active: true },
       })
       res.status(200).json(users)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -187,10 +169,8 @@ export class addressService {
       })
       const regions = await RegionsRepos.findAll({})
       res.status(200).json(regions)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 }

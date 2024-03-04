@@ -20,12 +20,12 @@ export const NewSLA = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [{ typesOfWork }, { getTypesOfWork }] = useIncidents()
       const [_, { newSLA }] = useSLA()
+      /* eslint-enable @typescript-eslint/no-unused-vars */
+      const [{ typesOfWork }, { getTypesOfWork }] = useIncidents()
       const [listTypes, setListTypes] = useState<Options[]>([])
       const [selectedType, setSelectedType] = useState<Options>(emptyValue)
 
-      /* eslint-enable @typescript-eslint/no-unused-vars */
       const { handleSubmit: handleSubmitAddSLA, control: controlAddSLA } =
         useForm<AddValuesPropsSLA>({
           mode: 'onBlur',

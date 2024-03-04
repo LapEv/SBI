@@ -10,7 +10,6 @@ export const DropDownMultiple = memo(
     data,
     props,
     onChange,
-    onBlur,
     value,
     label,
     errorLabel,
@@ -29,12 +28,13 @@ export const DropDownMultiple = memo(
         disableCloseOnSelect
         sx={{ width: '90%', ...props }}
         options={data}
-        getOptionLabel={(option: any) => (option as any).label}
-        isOptionEqualToValue={(option, value): any =>
-          (option as any).label === (value as any).label || value === emptyValue
+        getOptionLabel={(option: unknown) => (option as Options).label}
+        isOptionEqualToValue={(option, value): boolean =>
+          (option as Options).label === (value as Options).label ||
+          value === emptyValue
         }
         onChange={(_, textValue) =>
-          (textValue as any).length
+          (textValue as string).length
             ? (onChange?.(textValue as Options[]), setErrors(false))
             : (onChange?.(textValue as Options[]), setErrors(true))
         }

@@ -9,7 +9,7 @@ export interface DropDownMenuProps {
   onClick: (name: string | null) => void
   vertical?: 'top' | 'center' | 'bottom' | number
   icon?: JSX.Element
-  sx?: any
+  sx?: Record<string, unknown>
 }
 
 export interface DropDownMenuTooltipProps {
@@ -22,5 +22,5 @@ export interface DropDownMenuTooltipProps {
   divider?: number[]
   onClick: (name: string | null) => void
   icon?: JSX.Element
-  sx?: any
+  sx?: Record<string, unknown>
 }

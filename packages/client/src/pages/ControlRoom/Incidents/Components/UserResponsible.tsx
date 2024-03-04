@@ -8,8 +8,10 @@ import { customDropDownCell } from '../data'
 import { FilterOptions } from '../Utils/FilterOptions'
 
 export const UserResponsible = memo(({ value, id, incident }: IExecutor) => {
-  const [{ dispatchers, user }] = useAuth()
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   const [_, { changeResponsible }] = useIncidents()
+  /* eslint-enable @typescript-eslint/no-unused-vars */
+  const [{ dispatchers, user }] = useAuth()
   const [responsible, setResposible] = useState<Options>({
     label: value,
     id: '',

@@ -17,8 +17,10 @@ import { FileProps } from 'storeAuth/interfaces'
 import { useMessage } from 'hooks/message/useMessage'
 
 export const ProfileMain = memo(({ setModal, data }: ProfileMainProps) => {
-  const [{ userData }, { updateUserData, updateUser, changeAvatar }] = useAuth()
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   const [_, { setMessage }] = useMessage()
+  /* eslint-enable @typescript-eslint/no-unused-vars */
+  const [{ userData }, { updateUserData, updateUser, changeAvatar }] = useAuth()
   const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
   const [file, setFile] = useState<FileProps>({ data: '', info: undefined })
 

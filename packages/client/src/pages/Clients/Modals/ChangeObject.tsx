@@ -26,12 +26,12 @@ export const ChangeObject = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
+      const [_, { setMessage }] = useMessage()
       /* eslint-enable @typescript-eslint/no-unused-vars */
       const [{ addresses, regions }, { getAddresses, getRegions }] =
         useAddresses()
       const [{ clients }, { getClients }] = useClients()
       const [{ objects }, { getObjects, changeObject }] = useObjects()
-      const [_, { setMessage }] = useMessage()
       const [listObjects, setListObjects] = useState<Options[]>([])
       const [listAddresses, setListAddresses] = useState<Options[]>([])
       const [listRegions, setListRegions] = useState<Options[]>([])

@@ -14,6 +14,9 @@ import { FilterOptions } from '../Utils/FilterOptions'
 
 export const Status = memo(
   ({ value, id, incident, currentStatus, timeSLA }: IStatus) => {
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    const [_, { setMessage }] = useMessage()
+    /* eslint-enable @typescript-eslint/no-unused-vars */
     const modalClientRef = React.createRef()
     const [modal, setModal] = useState<IModal>({
       status: false,
@@ -23,7 +26,6 @@ export const Status = memo(
     const [{ user }] = useAuth()
     const [{ uploadedFiles }, { uploadFiles, resetUploadFiles }] = useFiles()
     const [{ incStatuses }, { changeStatus }] = useIncidents()
-    const [_, { setMessage }] = useMessage()
 
     const [status, setStatus] = useState<Options>({
       label: value,

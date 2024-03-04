@@ -29,10 +29,12 @@ export const DateField = memo(({ dateValue, setDateValue, sx }: IDateField) => {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
         slots={{
+          /* eslint-disable @typescript-eslint/no-explicit-any */
           layout: StyledDatePickers as any,
           textField: TextField,
           openPickerIcon: CalendarIcon as any,
           clearIcon: ClearIconElement as any,
+          /* eslint-enable @typescript-eslint/no-explicit-any */
         }}
         slotProps={{
           field: { clearable: true },

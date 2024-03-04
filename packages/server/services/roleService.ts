@@ -7,12 +7,8 @@ export class roleService {
       await roleGroupRepos.create(_req.body)
       const rolesGroup = await roleGroupRepos.findAll({})
       res.status(200).json(rolesGroup)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res
-        .status(500)
-        .json({ error: ['db error: unable to set role group', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -34,10 +30,8 @@ export class roleService {
         where: { active: true },
       })
       res.status(200).json(rolesGroup)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -49,10 +43,8 @@ export class roleService {
       })
       const rolesGroup = await roleGroupRepos.findAll({})
       res.status(200).json(rolesGroup)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -64,33 +56,18 @@ export class roleService {
       })
       const rolesGroup = await roleGroupRepos.findAll({})
       res.status(200).json(rolesGroup)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
-
-  // getAllRolesGroup = () => {
-  //   roleGroupRepos
-  //     .findAll({})
-  //     .then(roleGroup => console.log('roleGroup = ', roleGroup))
-  //     /* eslint-disable */
-  //     .catch(err => {
-  //       error: `db error, ${err.status}`
-  //     })
-  //   /* eslint-enable */
-  // }
 
   newRole = async (_req: Request, res: Response) => {
     try {
       await roleRepos.create(_req.body)
       const roles = await roleRepos.findAll({})
       res.status(200).json(roles)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error: unable to set role', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
@@ -111,10 +88,8 @@ export class roleService {
         where: { active: true },
       })
       res.status(200).json(roles)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   fullDeleteRole = async (_req: Request, res: Response) => {
@@ -125,21 +100,17 @@ export class roleService {
       })
       const roles = await roleRepos.findAll({})
       res.status(200).json(roles)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
 
-  getAllRoles = () => {
-    roleRepos
-      .findAll({})
-      .then(roles => roles.map(value => value.roles))
-      /* eslint-disable */
-      .catch(err => {
-        error: `db error, ${err.status}`
-      })
-    /* eslint-enable */
+  getAllRoles = async (_req: Request, res: Response) => {
+    try {
+      const roles = await roleRepos.findAll({})
+      res.status(200).json(roles)
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
+    }
   }
 }

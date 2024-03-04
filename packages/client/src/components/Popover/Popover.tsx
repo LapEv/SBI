@@ -8,7 +8,9 @@ const StyledPopover = styled(MuiPopover)(() => ({
   // },
 }))
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const PopoverINC = memo((props: any) => {
+  /* eslint-enable @typescript-eslint/no-explicit-any */
   return (
     <ThemeProvider
       theme={(theme: Theme) =>

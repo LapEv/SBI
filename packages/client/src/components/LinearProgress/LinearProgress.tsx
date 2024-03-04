@@ -24,7 +24,7 @@ export const LinearProgressWithLabel = memo(
     props: LinearProgressProps & {
       value: number
       percent: number
-      sx?: any
+      sx?: Record<string, unknown>
     }
   ) => {
     return (

@@ -10,7 +10,6 @@ export const NewRequest = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      // const [_, { newIncidentStatuses }] = useIncidents()
       /* eslint-enable @typescript-eslint/no-unused-vars */
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',

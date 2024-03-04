@@ -39,7 +39,9 @@ export const ContractPage = memo(
     id_client,
   }: Contracts) => {
     const [{ admin }] = useAuth()
+    /* eslint-disable @typescript-eslint/no-unused-vars */
     const [_, { changeContract }] = useContracts()
+    /* eslint-enable @typescript-eslint/no-unused-vars */
     const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
     const [slaDisabled, setSLADisabled] = useState<boolean>(true)
     const [equipmentDisabled, setEquipmentDisabled] = useState<boolean>(true)

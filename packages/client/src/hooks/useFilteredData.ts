@@ -7,7 +7,9 @@ export const useFilteredData = <T>(
 ): T[] => {
   const filtered = useMemo(() => {
     return filterText
-      ? data.filter((item: any) =>
+      ? /* eslint-disable @typescript-eslint/no-explicit-any */
+        data.filter((item: any) =>
+          /* eslint-enable @typescript-eslint/no-explicit-any */
           item[key].toLowerCase().includes(filterText.toLowerCase())
         )
       : data

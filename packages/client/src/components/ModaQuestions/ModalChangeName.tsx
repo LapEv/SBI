@@ -11,7 +11,6 @@ export const ModalChangeName = memo(
     ({ handleModal, question, answer }: IModalChangeName, ref) => {
       /* eslint-enable @typescript-eslint/no-unused-vars */
       const [text, setText] = useState<string>('')
-      const [errSelectedItems, setErrSelectedItems] = useState<string>('')
       const theme = useTheme()
 
       const changeData = (event: SyntheticEvent<EventTarget>) => {
@@ -44,9 +43,7 @@ export const ModalChangeName = memo(
               onChange={e => setText(e.target.value ?? '')}
             />
           </Box>
-          <Box sx={{ color: theme.palette.error.main, height: 20 }}>
-            {errSelectedItems}
-          </Box>
+          <Box sx={{ color: theme.palette.error.main, height: 20 }}></Box>
           <ButtonsSection
             btnSecondHandle={() => answer(false, '')}
             btnName="Сохранить"

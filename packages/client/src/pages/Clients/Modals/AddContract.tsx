@@ -38,6 +38,7 @@ export const AddContract = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
+      const [_, { setMessage }] = useMessage()
       /* eslint-enable @typescript-eslint/no-unused-vars */
       const [openList, setOpenList] = useState(false)
       const [openListObjects, setOpenListObjects] = useState(false)
@@ -56,7 +57,6 @@ export const AddContract = memo(
       const [selectedEquipments, setSelectedEquipments] = useState<string[]>([])
       const [selectedModels, setSelectedModels] = useState<string[]>([])
       const [errSLA, setErrSLA] = useState<boolean>(false)
-      const [_, { setMessage }] = useMessage()
       const [dateValue, setDateValue] = useState<string>('')
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',

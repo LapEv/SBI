@@ -25,7 +25,9 @@ export const ContractsList = memo(
   }: Contracts) => {
     const [{ admin }] = useAuth()
     const [{ activeContract }, { setActiveContract }] = useContracts()
+    /* eslint-disable @typescript-eslint/no-unused-vars */
     const [_, { newContractName }] = useContracts()
+    /* eslint-enable @typescript-eslint/no-unused-vars */
     const modalRef = React.createRef()
     const [open, setOpen] = useState(false)
     const [modal, setModal] = useState<boolean>(false)

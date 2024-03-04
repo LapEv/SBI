@@ -25,7 +25,7 @@ const StyledDataTable = styled(MUIDataTable)(({ theme }) => ({
 
 declare module '@mui/material/styles' {
   interface Components {
-    [key: string]: any
+    [key: string]: Record<string, unknown>
   }
 }
 export const DataTable = memo(

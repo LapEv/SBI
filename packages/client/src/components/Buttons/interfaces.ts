@@ -41,14 +41,14 @@ export interface IconButtonProps {
   onClick: () => void
   icon?: JSX.Element
   sx?: Record<string, unknown>
-  propsPopover?: any
+  propsPopover?: Record<string, unknown>
   size?: 'small' | 'medium' | 'large'
 }
 
 export interface IconButtonTooltipProps {
   onClick: () => void
   icon?: JSX.Element
-  sx?: any
+  sx?: Record<string, unknown>
   size?: 'small' | 'medium' | 'large'
   title: string
 }

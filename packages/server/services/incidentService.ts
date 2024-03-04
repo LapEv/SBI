@@ -1274,9 +1274,7 @@ export class incidentService {
         include: this.includes,
       })
       res.status(200).json(incs)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
     } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
       res.status(500).json({ error: ['db error', err] })
     }
   }

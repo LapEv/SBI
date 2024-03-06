@@ -38,7 +38,7 @@ export interface IStatus {
 
 export interface CellProps {
   label: string
-  value: string
+  value: string | string[]
 }
 
 export interface CellPropsComments {

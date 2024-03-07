@@ -71,13 +71,13 @@ export class Repository<T extends Model<T>> {
   }
 
   public async findOne<M>(
-    options: FindOptions<Attributes<T> | M>
+    options: FindOptions<Attributes<T>>
   ): Promise<T | null | M> {
     return this.model.findOne(options)
   }
 
   public async findAll<M>(
-    options: FindOptions<Attributes<T> | M>
+    options: FindOptions<Attributes<T>>
   ): Promise<T[] | M[]> {
     return this.model.findAll(options)
   }

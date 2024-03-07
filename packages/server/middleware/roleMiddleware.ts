@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import jwt, { Secret, JwtPayload } from 'jsonwebtoken'
 import { roleGroupRepos } from '../db'
+import { IRolesGroup } from '/models/roles'
 const { SECRET_KEY } = process.env
 
 module.exports = function (roles: []) {
@@ -17,9 +18,9 @@ module.exports = function (roles: []) {
       const { rolesGroup } = verifycode as JwtPayload
       let hasRole = false
 
-      const groupRoles = await roleGroupRepos.findAll({
+      const groupRoles = (await roleGroupRepos.findAll({
         where: { group: rolesGroup },
-      })
+      })) as IRolesGroup[]
       groupRoles[0].roles.forEach((item: string) => {
         if (roles.includes(item as never)) {
           hasRole = true

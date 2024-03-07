@@ -1,6 +1,13 @@
 import type { ModelAttributes } from 'sequelize'
 import { DataType, Model } from 'sequelize-typescript'
 
+export interface IRolesGroup {
+  id: string
+  group: string
+  roles: string[]
+  groupName: string
+}
+
 export interface RolesGroup {
   id: string
   group: string

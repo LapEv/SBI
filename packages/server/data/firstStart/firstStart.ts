@@ -43,6 +43,15 @@ import {
   typesOfWorkStartData,
   typesCompletedWorkStartData,
 } from './incident'
+import { IDivision } from '/models/divisions'
+import {
+  IClassifierEquipment,
+  IClassifierModels,
+  ITypicalMalfunctions,
+} from '/models/classifier'
+import { ITypesOfWork } from '/models/incidents'
+import { IAddresses, IRegions } from '/models/adresses'
+import { IDepartment } from '/models/departments'
 
 export const firstStart = async () => {
   try {
@@ -105,14 +114,16 @@ export const firstStart = async () => {
       } else {
         console.log('Create Addresses')
         if (!regions.length) {
-          const newRegions = await RegionsRepos.bulkCreate(regionsStartData)
+          const newRegions = (await RegionsRepos.bulkCreate(
+            regionsStartData
+          )) as IRegions[]
           const newAddressesData = addressesStartData.map(value => {
             return { ...value, id_region: newRegions[0].id }
           })
           if (!addresses.length) {
-            const newAddresses = await AddressesRepos.bulkCreate(
+            const newAddresses = (await AddressesRepos.bulkCreate(
               newAddressesData
-            )
+            )) as IAddresses[]
             const newClients = await ClientsRepos.getAll()
             const objectdata = objectsStartData.map((value, index) => {
               return {
@@ -192,9 +203,9 @@ export const firstStart = async () => {
         )
       } else {
         console.log('Create SLA')
-        const typesWork = await TypesOfWorkRepos.bulkCreate(
+        const typesWork = (await TypesOfWorkRepos.bulkCreate(
           typesOfWorkStartData
-        )
+        )) as ITypesOfWork[]
         console.log('typesWork = ', typesWork)
         const newSLA = slaStartData.map((item, index) => {
           return {
@@ -228,9 +239,9 @@ export const firstStart = async () => {
           'Первый запуск таблиц ClassifierEquipment, ClassifierModels и TypicalMalfunctions невозможен! Какая-то из таблиц уже существует!'
         )
       } else {
-        const newEquipments = await ClassifierEquipmentRepos.bulkCreate(
+        const newEquipments = (await ClassifierEquipmentRepos.bulkCreate(
           equipmentsStartData
-        )
+        )) as IClassifierEquipment[]
         const newModelsStartData = modelsStartData.map((item, index) => {
           return {
             ...item,
@@ -238,9 +249,9 @@ export const firstStart = async () => {
           }
         })
 
-        const newModels = await ClassifierModelsRepos.bulkCreate(
+        const newModels = (await ClassifierModelsRepos.bulkCreate(
           newModelsStartData
-        )
+        )) as IClassifierModels[]
 
         const newTypicalMalfunctionStartData = typ_malfunctionsStartData.map(
           (item, index) => {
@@ -252,9 +263,10 @@ export const firstStart = async () => {
           }
         )
 
-        const newTypicalMalfunction = await TypicalMalfunctionsRepos.bulkCreate(
-          newTypicalMalfunctionStartData
-        )
+        const newTypicalMalfunction =
+          (await TypicalMalfunctionsRepos.bulkCreate(
+            newTypicalMalfunctionStartData
+          )) as ITypicalMalfunctions[]
 
         const newThroughModelTypMalfunction = newModels.map((item, index) => {
           const temp = newTypicalMalfunction.map((value, i) => {
@@ -319,23 +331,27 @@ export const firstStart = async () => {
         'Первый запуск таблиц невозможен! Какая-то из таблиц уже существует!'
       )
     } else {
-      const newDivision = await DivisionRepos.bulkCreate(divisionStartData)
+      const newDivision = (await DivisionRepos.bulkCreate(
+        divisionStartData
+      )) as IDivision[]
       departmentStartData.map(async value => {
         value.id_division = newDivision.find(
           item => item.division === value.division
-        )?.id
+        )?.id as string
       })
-      const newDepartment = await DepartmentRepos.bulkCreate(
+      const newDepartment = (await DepartmentRepos.bulkCreate(
         departmentStartData
-      )
+      )) as IDepartment[]
       await UserStatusRepos.bulkCreate(userStatusStartData)
       const newuserStartData = userStartData.map(value => {
-        value.id_division = newDivision.find(
+        const divivsionFind = newDivision.find(
           item => item.division === value.division
-        )?.id
-        value.id_department = newDepartment.find(
+        ) as IDivision
+        value.id_division = divivsionFind.id
+        const departmentFind = newDepartment.find(
           item => item.department === value.department
-        )?.id
+        ) as IDepartment
+        value.id_department = departmentFind.id
         const hashPassword = bcrypt.hashSync(value.password, 7)
         return {
           ...value,

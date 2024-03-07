@@ -1,6 +1,13 @@
 import type { ModelAttributes } from 'sequelize'
 import { DataType, Model } from 'sequelize-typescript'
 
+export interface IDivision {
+  id: string
+  division: string
+  divisionName: string
+  active: boolean
+}
+
 export interface Division {
   id: string
   division: string

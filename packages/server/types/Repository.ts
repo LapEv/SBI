@@ -23,9 +23,9 @@ export class Repository<T extends Model<T>> {
     return this.model.create(value)
   }
 
-  public async bulkCreate(
+  public async bulkCreate<M>(
     value: MakeNullishOptional<T['_creationAttributes']>[]
-  ): Promise<T[]> {
+  ): Promise<T[] | M[]> {
     return this.model.bulkCreate(value)
   }
 

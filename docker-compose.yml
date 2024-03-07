@@ -40,21 +40,6 @@ services:
     volumes:
       - ./tmp/pgdata:/var/lib/postgresql/data
 
-  nginx:
-    container_name: proxy_nginx
-    depends_on:
-      - client
-      - server
-      - postgres
-      - pgadmin
-    image: nginx:latest
-    ports:
-      - '80:80'
-    volumes:
-      - ./nginx:/etc/nginx/conf.d
-      - ./static:/var/www/static
-    restart: always
-
   pgadmin:
     container_name: pgadmin
     depends_on:

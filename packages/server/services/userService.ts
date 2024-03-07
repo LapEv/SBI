@@ -61,11 +61,8 @@ export class userService {
           .status(400)
           .json({ message: auth.notification.invalidPassword })
       }
-      const token = generateAccessToken(
-        user?.id,
-        user?.rolesGroup,
-        user?.username
-      )
+      const token = generateAccessToken(user.id, user.rolesGroup, user.username)
+
       if (
         user &&
         (user.rolesGroup === 'ADMIN' ||

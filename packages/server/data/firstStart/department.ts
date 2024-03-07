@@ -27,4 +27,11 @@ export const departmentStartData = [
     id_division: '',
     active: true,
   },
+  {
+    department: 'Client',
+    departmentName: 'Клиент',
+    division: 'Client',
+    id_division: '',
+    active: true,
+  },
 ]

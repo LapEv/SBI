@@ -19,4 +19,9 @@ export const divisionStartData = [
     divisionName: 'Отдел производственно финансового учета',
     active: true,
   },
+  {
+    division: 'Client',
+    divisionName: 'Клиенты',
+    active: true,
+  },
 ]

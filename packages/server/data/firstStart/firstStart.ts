@@ -206,14 +206,12 @@ export const firstStart = async () => {
         const typesWork = (await TypesOfWorkRepos.bulkCreate(
           typesOfWorkStartData
         )) as ITypesOfWork[]
-        console.log('typesWork = ', typesWork)
         const newSLA = slaStartData.map((item, index) => {
           return {
             ...item,
             id_typeOfWork: typesWork[index].id,
           }
         })
-        console.log('newSLA = ', newSLA)
         // const newOLA = olaStartData.map((item, index) => {
         //   return {
         //     ...item,
@@ -347,11 +345,11 @@ export const firstStart = async () => {
         const divivsionFind = newDivision.find(
           item => item.division === value.division
         ) as IDivision
-        value.id_division = divivsionFind.id
+        value.id_division = divivsionFind ? divivsionFind.id : ''
         const departmentFind = newDepartment.find(
           item => item.department === value.department
         ) as IDepartment
-        value.id_department = departmentFind.id
+        value.id_department = departmentFind ? departmentFind.id : ''
         const hashPassword = bcrypt.hashSync(value.password, 7)
         return {
           ...value,

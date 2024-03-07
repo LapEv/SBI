@@ -1,5 +1,60 @@
 import type { ModelAttributes } from 'sequelize'
 import { DataType, Model } from 'sequelize-typescript'
+import { IContracts } from './contracts'
+import { IClients } from './clients'
+import { IObjects } from './objects'
+import {
+  IClassifierEquipment,
+  IClassifierModels,
+  ITypicalMalfunctions,
+} from './classifier'
+import { IUser } from './users'
+import { ISLA } from './sla'
+
+export interface IIncindent {
+  id: string
+  numberINC: number
+  incident: string
+  clientINC: string
+  timeRegistration: string
+  timeInWork: string
+  timeSLA: string
+  timeCloseCheck: string
+  timeClose: string
+  typeCompletedWork: string
+  description: string
+  comment: string
+  commentCloseCheck: string
+  commentClose: string
+  report: string
+  status: string
+  responsible: string
+  executor: string
+  spaceParts: string[]
+  active: boolean
+  methodsReuqest: string
+  rating: number
+  parentalIncident: string
+  relatedIncident: string
+  applicant: string
+  applicantContacts: string
+  overdue: boolean
+  Contract: IContracts
+  IncindentStatus: IIncindentStatuses
+  Client: IClients
+  Object: IObjects
+  ClassifierEquipment: IClassifierEquipment
+  ClassifierModel: IClassifierModels
+  TypicalMalfunction: ITypicalMalfunctions
+  User: IUser
+  UserExecutor: IUser
+  UserResponsible: IUser
+  SLA: ISLA
+  id_incResponsible: string
+  id_incClosingCheck: string
+  id_typeCompletedWork: string
+  id_incClosing: string
+}
 
 export interface Incindent {
   id: string
@@ -166,6 +221,12 @@ export const incindentStatuses: ModelAttributes<Model, IIncindentStatuses> = {
   },
 }
 
+export interface ITypesOfWork {
+  id: string
+  typeOfWork: string
+  active: boolean
+}
+
 export interface TypesOfWork {
   id: string
   typeOfWork: string
@@ -190,6 +251,12 @@ export const typesOfWork: ModelAttributes<Model, TypesOfWork> = {
   },
 }
 
+export interface ITypesCompletedWork {
+  id: string
+  typeCompletedWork: string
+  active: boolean
+}
+
 export interface TypesCompletedWork {
   id: string
   typeCompletedWork: string
@@ -212,6 +279,12 @@ export const typesCompletedWork: ModelAttributes<Model, TypesCompletedWork> = {
     type: DataType.BOOLEAN,
     allowNull: false,
   },
+}
+
+export interface IIncidentLogs {
+  id: string
+  time: string
+  log: string
 }
 
 export interface IncidentLogs {

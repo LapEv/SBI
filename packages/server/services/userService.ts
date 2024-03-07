@@ -6,6 +6,8 @@ import { auth } from '../data/auth'
 import { generateAccessToken } from '../utils/generateAccessToken'
 import { Op } from 'sequelize'
 import { incidentService } from './incidentService'
+import { IUser } from '/models/users'
+import { IDepartment } from '/models/departments'
 
 export class userService {
   setUser = async (_req: Request, res: Response) => {
@@ -50,9 +52,9 @@ export class userService {
   login = async (_req: Request, res: Response) => {
     try {
       const { username, password } = _req.body
-      const user = await userRepos.findOne({
+      const user = (await userRepos.findOne({
         where: { username: username },
-      })
+      })) as IUser
       const validPassword = bcrypt.compareSync(password, user?.password)
       if (!validPassword) {
         return res
@@ -89,9 +91,9 @@ export class userService {
   }
   changePassword = async (_req: Request, res: Response) => {
     const { oldPassword, newPassword, id } = _req.body
-    const user = await userRepos.findAll({
+    const user = (await userRepos.findAll({
       where: { id },
-    })
+    })) as IUser[]
     const validPassword = bcrypt.compareSync(oldPassword, user[0].password)
     if (!validPassword) {
       return res
@@ -116,9 +118,9 @@ export class userService {
   }
   changeAvatar = async (_req: Request, res: Response) => {
     const { oldPassword, newPassword, id } = _req.body
-    const user = await userRepos.findAll({
+    const user = (await userRepos.findAll({
       where: { id },
-    })
+    })) as IUser[]
     const validPassword = bcrypt.compareSync(oldPassword, user[0].password)
     if (!validPassword) {
       return res
@@ -145,9 +147,9 @@ export class userService {
     const { username, id, roles } = _req.body
     try {
       const token = generateAccessToken(id, roles, username)
-      const user = await userRepos.findOne({
+      const user = (await userRepos.findOne({
         where: { id: id },
-      })
+      })) as IUser
 
       if (
         user &&
@@ -201,9 +203,9 @@ export class userService {
       .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
   getFieldEngineers = async (_req: Request, res: Response) => {
-    const departments = await DepartmentRepos.findAll({
+    const departments = (await DepartmentRepos.findAll({
       where: { active: true },
-    })
+    })) as IDepartment[]
     const id_department = departments.find(
       item => item.department === 'FieldEngineers'
     )?.id
@@ -217,9 +219,9 @@ export class userService {
       .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
   getDispatchers = async (_req: Request, res: Response) => {
-    const departments = await DepartmentRepos.findAll({
+    const departments = (await DepartmentRepos.findAll({
       where: { active: true },
-    })
+    })) as IDepartment[]
     const id_department = departments.find(
       item => item.department === 'Dispatcher'
     )?.id

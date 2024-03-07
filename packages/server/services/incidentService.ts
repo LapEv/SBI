@@ -36,8 +36,15 @@ import {
   convertINCStringToDateTime,
 } from '../utils/convertDate'
 import { mailerChangeStatus, mailerRegInc } from '../Mailer'
-import { IIncindentStatuses } from '/models/incidents'
+import { IIncindent, IIncindentStatuses } from '/models/incidents'
 import { Op, Order, WhereOptions } from 'sequelize'
+import { IContracts } from '/models/contracts'
+import { IClients } from '/models/clients'
+import { IObjects } from '/models/objects'
+import { ISLA } from '/models/sla'
+import { IAddresses, IRegions } from '/models/adresses'
+import { IUser } from '/models/users'
+import { IClassifierEquipment, IClassifierModels } from '/models/classifier'
 
 const getOrder = (nameSort: string, direction: string) => {
   if (nameSort === 'contract') {
@@ -350,77 +357,77 @@ export class incidentService {
           await Promise.all(
             item.map(async value => {
               if (value['contract']) {
-                const contract = await ContractsRepos.findOne({
+                const contract = (await ContractsRepos.findOne({
                   where: { contract: value['contract'] },
-                })
+                })) as IContracts
                 return { id_incContract: contract?.id }
               }
               if (value['client']) {
-                const client = await ClientsRepos.findOne({
+                const client = (await ClientsRepos.findOne({
                   where: { client: value['client'] },
-                })
+                })) as IClients
                 return { id_incClient: client?.id }
               }
               if (value['legalName']) {
-                const legalName = await ClientsRepos.findOne({
+                const legalName = (await ClientsRepos.findOne({
                   where: { legalName: value['legalName'] },
-                })
+                })) as IClients
                 return { id_incClient: legalName?.id }
               }
               if (value['object']) {
-                const object = await ObjectsRepos.findOne({
+                const object = (await ObjectsRepos.findOne({
                   where: { object: value['object'] },
-                })
+                })) as IObjects
                 return { id_incObject: object?.id }
               }
               if (value['address']) {
-                const address = await AddressesRepos.findOne({
+                const address = (await AddressesRepos.findOne({
                   where: { address: value['address'] },
-                })
+                })) as IAddresses
                 this.IncludesAddress = address?.id
                 return []
               }
               if (value['region']) {
-                const region = await RegionsRepos.findOne({
+                const region = (await RegionsRepos.findOne({
                   where: { region: value['region'] },
-                })
+                })) as IRegions
                 this.IncludesRegion = region?.id
                 return []
               }
               if (value['userAccepted']) {
-                const userAccepted = await userRepos.findOne({
+                const userAccepted = (await userRepos.findOne({
                   where: { shortName: value['userAccepted'] },
-                })
+                })) as IUser
                 return { id_incUser: userAccepted?.id }
               }
               if (value['sla']) {
-                const sla = await SLARepos.findOne({
+                const sla = (await SLARepos.findOne({
                   where: { sla: value['sla'] },
-                })
+                })) as ISLA
                 return { id_incSLA: sla?.id }
               }
               if (value['equipment']) {
-                const equipment = await ClassifierEquipmentRepos.findOne({
+                const equipment = (await ClassifierEquipmentRepos.findOne({
                   where: { equipment: value['equipment'] },
-                })
+                })) as IClassifierEquipment
                 return { id_incEquipment: equipment?.id }
               }
               if (value['model']) {
-                const model = await ClassifierModelsRepos.findOne({
+                const model = (await ClassifierModelsRepos.findOne({
                   where: { model: value['model'] },
-                })
+                })) as IClassifierModels
                 return { id_incModel: model?.id }
               }
               if (value['executor']) {
-                const executor = await userRepos.findOne({
+                const executor = (await userRepos.findOne({
                   where: { shortName: value['executor'] },
-                })
+                })) as IUser
                 return { id_incExecutor: executor?.id }
               }
               if (value['responsible']) {
-                const responsible = await userRepos.findOne({
+                const responsible = (await userRepos.findOne({
                   where: { shortName: value['responsible'] },
-                })
+                })) as IUser
                 return { id_incResponsible: responsible?.id }
               }
 
@@ -707,10 +714,10 @@ export class incidentService {
       filterOptions,
     } = _req.body
     try {
-      const lastINC = await IncidentRepos.findAll({
+      const lastINC = (await IncidentRepos.findAll({
         limit: 1,
         order: [['createdAt', 'DESC']],
-      })
+      })) as IIncindent[]
       const numberINC =
         !lastINC || !lastINC.length
           ? AppConst.startINC
@@ -721,9 +728,9 @@ export class incidentService {
           Math.abs(new Date().getTimezoneOffset() * 60 * 1000)
       )
 
-      const status = await IncidentStatusesRepos.findOne({
+      const status = (await IncidentStatusesRepos.findOne({
         where: { id: id_incStatus },
-      })
+      })) as IIncindentStatuses
 
       const newINCdb = await IncidentRepos.create({
         numberINC,
@@ -755,6 +762,7 @@ export class incidentService {
         id_closing: '',
         status: status?.statusINC,
       })
+
       await IncidentLogsRepos.create({
         id_incLog: newINCdb.id,
         time: timeRegistration,
@@ -762,10 +770,10 @@ export class incidentService {
         id_incLogUser: responsibleID,
       })
 
-      const inc = await IncidentRepos.findOne({
+      const inc = (await IncidentRepos.findOne({
         where: { id: newINCdb.id },
         include: this.includes,
-      })
+      })) as IIncindent
 
       const isStatusses = inc?.Contract.IncindentStatuses.map(
         (item: IIncindentStatuses) =>
@@ -844,10 +852,10 @@ export class incidentService {
   }
 
   getFilterListFunc = async () => {
-    const incs = await IncidentRepos.findAll({
+    const incs = (await IncidentRepos.findAll({
       where: { active: true },
       include: this.includes,
-    })
+    })) as IIncindent[]
 
     const statusList =
       [...new Set(incs.map(item => item.IncindentStatus.statusINC))] ?? []
@@ -1104,33 +1112,32 @@ export class incidentService {
       filterOptions,
     } = _req.body
     try {
-      const incStatuses = await IncidentStatusesRepos.findAll({
+      const incStatuses = (await IncidentStatusesRepos.findAll({
         where: { active: true },
-      })
-      const inc = await IncidentRepos.findOne({
+      })) as IIncindentStatuses[]
+      const inc = (await IncidentRepos.findOne({
         where: { id },
         include: this.includes,
-      })
+      })) as IIncindent
       const newStatus = incStatuses.findIndex(item => item.id === id_incStatus)
 
       const currentDate = new Date(
         new Date().getTime() +
           Math.abs(new Date().getTimezoneOffset() * 60 * 1000)
       )
-      const timeInWork = newStatus === 1 ? currentDate : inc?.timeInWork
-      const id_incResponsible =
-        newStatus === 1 ? userID : inc?.id_incResponsible
-      const timeCloseCheck = newStatus === 2 ? currentDate : inc?.timeCloseCheck
+      const timeInWork = newStatus === 1 ? currentDate : inc.timeInWork
+      const id_incResponsible = newStatus === 1 ? userID : inc.id_incResponsible
+      const timeCloseCheck = newStatus === 2 ? currentDate : inc.timeCloseCheck
       const id_incClosingCheck =
-        newStatus === 2 ? userID : inc?.id_incClosingCheck
+        newStatus === 2 ? userID : inc.id_incClosingCheck
       const id_typeCompletedWork =
-        newStatus === 2 ? typeCompletedWork.id : inc?.id_typeCompletedWork
+        newStatus === 2 ? typeCompletedWork.id : inc.id_typeCompletedWork
 
       const sla = new Date(convertINCStringToDateTime(timeSLA)).getTime()
       const now = currentDate.getTime()
-      const overdue = newStatus === 2 && now > sla ? true : inc?.overdue
-      const timeClose = newStatus === 3 ? currentDate : inc?.timeClose
-      const id_incClosing = newStatus === 3 ? userID : inc?.id_incClosing
+      const overdue = newStatus === 2 && now > sla ? true : inc.overdue
+      const timeClose = newStatus === 3 ? currentDate : inc.timeClose
+      const id_incClosing = newStatus === 3 ? userID : inc.id_incClosing
 
       await IncidentRepos.update(id, {
         id_incStatus,
@@ -1153,33 +1160,33 @@ export class incidentService {
         log: `${AppConst.ActionComment.changeStatus.first}${incident}${AppConst.ActionComment.changeStatus.second}${status}`,
         id_incLogUser: userID,
       })
-      const isStatusses = inc?.Contract.IncindentStatuses.filter(
+      const isStatusses = inc.Contract.IncindentStatuses.filter(
         (item: IIncindentStatuses) => item.id === id_incStatus
-      ).filter((item: boolean) => item)
+      ).filter((item: IIncindentStatuses) => item)
 
       if (isStatusses && isStatusses.length) {
         await mailerChangeStatus({
-          mailTo: inc?.Contract.notificationEmail ?? '',
+          mailTo: inc.Contract.notificationEmail ?? '',
           incident,
           status,
-          clientINC: inc?.clientINC,
+          clientINC: inc.clientINC,
           timeChangeStatus: convertDateToString(currentDate) ?? '',
           timeSLA,
-          client: inc?.Client?.client ?? '',
-          legalName: inc?.Client?.legalName ?? '',
-          object: inc?.Object?.object ?? '',
-          objectClientID: inc?.Object?.internalClientID ?? '',
-          objectClientName: inc?.Object?.internalClientName ?? '',
-          address: inc?.Object?.Address?.address as string,
-          equipment: inc?.ClassifierEquipment?.equipment as string,
-          model: inc?.ClassifierModel?.model as string,
-          malfunction: inc?.TypicalMalfunction?.typicalMalfunction as string,
-          description: inc?.description ?? '',
-          commentCloseCheck: commentCloseCheck ?? inc?.commentCloseCheck,
+          client: inc.Client.client ?? '',
+          legalName: inc.Client.legalName ?? '',
+          object: inc.Object.object ?? '',
+          objectClientID: inc.Object.internalClientID ?? '',
+          objectClientName: inc.Object.internalClientName ?? '',
+          address: inc.Object.Address.address as string,
+          equipment: inc.ClassifierEquipment.equipment as string,
+          model: inc.ClassifierModel.model as string,
+          malfunction: inc.TypicalMalfunction.typicalMalfunction as string,
+          description: inc.description ?? '',
+          commentCloseCheck: commentCloseCheck ?? inc.commentCloseCheck,
           typeCompletedWork:
             typeCompletedWork && typeCompletedWork.label
               ? typeCompletedWork.label
-              : inc?.typeCompletedWork,
+              : inc.typeCompletedWork,
         })
       }
 

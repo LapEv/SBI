@@ -1,6 +1,13 @@
 import type { ModelAttributes } from 'sequelize'
 import { DataType, Model } from 'sequelize-typescript'
 
+export interface IAddresses {
+  id: string
+  address: string
+  coordinates: string
+  active: boolean
+}
+
 export interface Addresses {
   id: string
   address: string
@@ -29,6 +36,12 @@ export const addresses: ModelAttributes<Model, Addresses> = {
     type: DataType.BOOLEAN,
     allowNull: false,
   },
+}
+
+export interface IRegions {
+  id: string
+  region: string
+  active: boolean
 }
 
 export interface Regions {

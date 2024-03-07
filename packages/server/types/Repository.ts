@@ -70,11 +70,15 @@ export class Repository<T extends Model<T>> {
     else return this.model.findAll()
   }
 
-  public async findOne(options: FindOptions<Attributes<T>>): Promise<T | null> {
+  public async findOne<M>(
+    options: FindOptions<Attributes<T> | M>
+  ): Promise<T | null | M> {
     return this.model.findOne(options)
   }
 
-  public async findAll(options: FindOptions<Attributes<T>>): Promise<T[]> {
+  public async findAll<M>(
+    options: FindOptions<Attributes<T> | M>
+  ): Promise<T[] | M[]> {
     return this.model.findAll(options)
   }
 

@@ -1,6 +1,15 @@
 import type { ModelAttributes } from 'sequelize'
 import { DataType, Model } from 'sequelize-typescript'
 
+export interface IDepartment {
+  id: string
+  department: string
+  departmentName: string
+  division: string
+  id_division: string
+  active: boolean
+}
+
 export interface Department {
   id: string
   department: string

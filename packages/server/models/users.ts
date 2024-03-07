@@ -1,6 +1,31 @@
 import type { ModelAttributes } from 'sequelize'
 import { DataType, Model } from 'sequelize-typescript'
 
+export interface IUser {
+  id: string
+  username: string
+  password: string
+  firstName: string
+  lastName: string
+  middleName: string
+  shortName: string
+  email: string
+  phone?: string
+  rolesGroup: string
+  post?: string
+  avatar?: string
+  active: boolean
+  theme: string
+  division: string
+  chiefDivision: boolean
+  department: string
+  chiefDepartment: boolean
+  id_division: string
+  id_department: string
+  status: string
+  reasonOfDelete: string
+}
+
 export interface User {
   id: number
   username: string

@@ -1,5 +1,16 @@
 import type { ModelAttributes } from 'sequelize'
 import { DataType, Model } from 'sequelize-typescript'
+import { IAddresses, IRegions } from './adresses'
+
+export interface IObjects {
+  id: string
+  object: string
+  internalClientID: string
+  internalClientName: string
+  active: boolean
+  Address: IAddresses
+  Region: IRegions
+}
 
 export interface Objects {
   id: string

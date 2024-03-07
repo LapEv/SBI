@@ -1,6 +1,16 @@
 import type { ModelAttributes } from 'sequelize'
 import { DataType, Model } from 'sequelize-typescript'
 
+export interface IClients {
+  id: number
+  legalName: string
+  client: string
+  office: string
+  contacts: string[]
+  comments: string
+  active: boolean
+}
+
 export interface Clients {
   id: number
   legalName: string

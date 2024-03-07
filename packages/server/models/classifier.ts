@@ -1,6 +1,12 @@
 import type { ModelAttributes } from 'sequelize'
 import { DataType, Model } from 'sequelize-typescript'
 
+export interface IClassifierEquipment {
+  id: string
+  equipment: string
+  active: boolean
+}
+
 export interface ClassifierEquipment {
   id: string
   equipment: string
@@ -26,6 +32,12 @@ export const classifierEquipment: ModelAttributes<Model, ClassifierEquipment> =
     },
   }
 
+export interface IClassifierModels {
+  id: string
+  model: string
+  active: boolean
+}
+
 export interface ClassifierModels {
   id: string
   model: string
@@ -48,6 +60,12 @@ export const classifierModels: ModelAttributes<Model, ClassifierModels> = {
     type: DataType.BOOLEAN,
     allowNull: false,
   },
+}
+
+export interface ITypicalMalfunctions {
+  id: string
+  typicalMalfunction: string
+  active: boolean
 }
 
 export interface TypicalMalfunctions {

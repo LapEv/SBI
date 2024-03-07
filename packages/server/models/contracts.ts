@@ -1,5 +1,16 @@
 import type { ModelAttributes } from 'sequelize'
 import { DataType, Model } from 'sequelize-typescript'
+import { IIncindentStatuses } from './incidents'
+
+export interface IContracts {
+  id: string
+  contract: string
+  number: string
+  date: string
+  notificationEmail: string
+  active: boolean
+  IncindentStatuses: IIncindentStatuses[]
+}
 
 export interface Contracts {
   id: string

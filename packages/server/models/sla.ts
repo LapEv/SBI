@@ -1,6 +1,16 @@
 import type { ModelAttributes } from 'sequelize'
 import { DataType, Model } from 'sequelize-typescript'
 
+export interface ISLA {
+  id: string
+  sla: string
+  days: number
+  time: string
+  timeStart: string
+  timeEnd: string
+  active: boolean
+}
+
 export interface SLA {
   id: string
   sla: string
@@ -45,6 +55,15 @@ export const sla: ModelAttributes<Model, SLA> = {
   },
 }
 
+export interface IOLA {
+  id: string
+  ola: string
+  days: number
+  time: string
+  timeStart: string
+  timeEnd: string
+  active: boolean
+}
 export interface OLA {
   id: string
   ola: string

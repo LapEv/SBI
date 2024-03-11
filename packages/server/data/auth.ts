@@ -8,11 +8,6 @@ export const auth = {
     return `The password must be at least ${this.passwordMinLength} and no more than ${this.passwordMaxLength} characters`
   },
   notification: {
-    addNotification: 'Уведомление записано!',
-    addNotificationError: 'Ошибка при добавлении уведомления',
-    updateNotification: 'Уведомление обновлено!',
-    updateNotificationError: 'Ошибка при изменении уведомления!',
-    getAllNotifications: 'Ошибка при создании списка уведомлений',
     userNotFound: 'Пользователь не найден!',
     errorRegistration: 'Ошибка при регистрации!',
     errorValidation: 'Ошибка валидации пароля!',

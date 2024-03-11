@@ -55,6 +55,9 @@ export class userService {
       const user = (await userRepos.findOne({
         where: { username: username },
       })) as IUser
+      if (!user) {
+        return res.status(400).json({ message: auth.notification.userNotFound })
+      }
       const validPassword = bcrypt.compareSync(password, user?.password)
       if (!validPassword) {
         return res

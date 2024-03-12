@@ -1,4 +1,9 @@
 const REQUIRED_FIELD = 'Обязательно для заполнения'
+interface IWatch {
+  list: {
+    value: string
+  }[]
+}
 
 export const loginValidation = {
   required: REQUIRED_FIELD,
@@ -198,9 +203,7 @@ export const emailValidationNoRequired = {
 
 export const passwordValidationNew = {
   required: REQUIRED_FIELD,
-  /* eslint-disable @typescript-eslint/no-explicit-any */
-  validate: (value: string, watch: any) => {
-    /* eslint-enable @typescript-eslint/no-explicit-any */
+  validate: (value: string, watch: IWatch) => {
     if (watch.list[0].value === value) {
       return 'Новый пароль не должен быть таким же, как старый'
     }
@@ -223,9 +226,7 @@ export const passwordValidationNew = {
 
 export const passwordValidationConfrim = {
   required: REQUIRED_FIELD,
-  /* eslint-disable @typescript-eslint/no-explicit-any */
-  validate: (value: string, watch: any) => {
-    /* eslint-enable @typescript-eslint/no-explicit-any */
+  validate: (value: string, watch: IWatch) => {
     if (watch.list[1].value !== value) {
       return 'Пароли не совпадают'
     }

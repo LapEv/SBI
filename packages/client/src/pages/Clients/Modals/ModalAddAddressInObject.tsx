@@ -17,9 +17,7 @@ import { Options } from 'components/DropDown/interface'
 
 export const ModalAddAddressInObject = memo(
   React.forwardRef<unknown, IModalAddAddressInObject>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, question, address }: IModalAddAddressInObject, ref) => {
-      /* eslint-enable @typescript-eslint/no-unused-vars */
       const [{ regions }, { getRegions, newAddress }] = useAddresses()
 
       MapNewAddressModalInputFields[0].value = address
@@ -57,6 +55,8 @@ export const ModalAddAddressInObject = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={modalStyle}
           component="form"
           key={2}

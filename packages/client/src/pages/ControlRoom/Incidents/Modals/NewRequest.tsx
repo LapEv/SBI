@@ -9,9 +9,7 @@ import { ButtonsModalSection } from 'components/Buttons'
 
 export const NewRequest = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      /* eslint-enable @typescript-eslint/no-unused-vars */
       // const { handleSubmit, control } = useForm<AddValuesProps>({
       //   mode: 'onBlur',
       //   defaultValues: {
@@ -32,7 +30,7 @@ export const NewRequest = memo(
       // }
 
       return (
-        <Box sx={modalStyle}>
+        <Box ref={ref} tabIndex={-1} sx={modalStyle}>
           {/* component="form"
           onSubmit={handleSubmit(changeData)}> */}
           <Typography variant={'h6'}>{title}</Typography>

@@ -73,7 +73,11 @@ export const Models = memo(
           item => item.id === id
         ) as TypicalMalfunctions
         modelList.push(newModel)
-        const isEq = isEqualArrObjects(typicalModels, modelList, 'id')
+        const isEq = isEqualArrObjects(
+          typicalModels as [],
+          modelList as [],
+          'id'
+        )
         const listData = data.map(item => {
           if (item.id === id) {
             return { ...item, initChecked: true }
@@ -89,7 +93,11 @@ export const Models = memo(
       const newModelList = selectedTypicalMalfunction?.filter(
         item => item.id !== id
       )
-      const isEq = isEqualArrObjects(typicalModels, newModelList, 'id')
+      const isEq = isEqualArrObjects(
+        typicalModels as [],
+        newModelList as [],
+        'id'
+      )
       const listData = data.map(item => {
         if (item.id === id) {
           return { ...item, initChecked: false }

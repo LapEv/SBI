@@ -77,9 +77,7 @@ export const authSlise = createSlice({
       state.isLoadingAuth = false
       state.error = action.payload
     },
-    /* eslint-disable @typescript-eslint/no-unused-vars */
-    [signout.fulfilled.type]: (state, action: PayloadAction<User>) => {
-      /* eslint-enable @typescript-eslint/no-unused-vars */
+    [signout.fulfilled.type]: (state, {}: PayloadAction<User>) => {
       state.isLoadingAuth = false
       state.error = ''
       state.user = {}

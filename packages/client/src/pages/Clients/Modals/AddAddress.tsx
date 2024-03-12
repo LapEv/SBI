@@ -18,10 +18,8 @@ import { Options } from 'components/DropDown/interface'
 
 export const AddAddress = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [_, { setMessage }] = useMessage()
-      /* eslint-enable @typescript-eslint/no-unused-vars */
+      const [{}, { setMessage }] = useMessage()
       const [{ regions, addresses }, { getRegions, getAddresses, newAddress }] =
         useAddresses()
       const [region, setRegion] = useState<Options>(emptyValue)
@@ -64,6 +62,8 @@ export const AddAddress = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={modalStyle}
           component="form"
           onSubmit={handleSubmit(changeData)}>

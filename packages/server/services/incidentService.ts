@@ -982,10 +982,8 @@ export class incidentService {
         include: this.includes,
       })
       res.status(200).json(incs)
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (err: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      res.status(500).json({ error: ['db error', err] })
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
     }
   }
   changeINC = async (_req: Request, res: Response) => {

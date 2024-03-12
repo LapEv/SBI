@@ -51,9 +51,7 @@ const Drawer = styled(MuiDrawer, {
 
 export const MainLayout = memo(() => {
   const boxRef = useRef<HTMLDivElement>(null)
-  /* eslint-disable @typescript-eslint/no-unused-vars */
-  const [_, { setDataWidth }] = useApp()
-  /* eslint-enable @typescript-eslint/no-unused-vars */
+  const [{}, { setDataWidth }] = useApp()
   const theme = useTheme()
   const [open, setOpen] = useState<boolean>(true)
   const [width, setWidth] = useState<string>(`calc(100% - ${drawerWidth}px)`)

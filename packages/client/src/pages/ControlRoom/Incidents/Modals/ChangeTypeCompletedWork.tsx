@@ -18,9 +18,7 @@ import { useIncidents } from 'hooks/incidents/useINC'
 
 export const ChangeTypeCompletedWork = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      /* eslint-enable @typescript-eslint/no-unused-vars */
       const [
         { typesCompletedWork },
         { getTypesCompletedWork, changeTypesCompletedWork },
@@ -92,6 +90,8 @@ export const ChangeTypeCompletedWork = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={{ ...modalStyle, paddingLeft: 5 }}
           component="form"
           onSubmit={handleSubmit(changeData)}>

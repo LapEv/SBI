@@ -8,9 +8,7 @@ import { TextField } from 'components/TextFields'
 
 export const DeleteUserModal = memo(
   React.forwardRef<unknown, ModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title, answerFromModal }: ModalProps, ref) => {
-      /* eslint-enable @typescript-eslint/no-unused-vars */
       const [reasonOfDelete, setReason] = useState<string>('')
       const [errSelectedItems, setErrSelectedItems] = useState<string>('')
       const theme = useTheme()
@@ -27,6 +25,8 @@ export const DeleteUserModal = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={{ ...modalStyle, paddingLeft: 5 }}
           component="form"
           onSubmit={changeData}>

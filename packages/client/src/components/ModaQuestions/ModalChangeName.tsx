@@ -7,9 +7,7 @@ import { IModalChangeName } from './interface'
 
 export const ModalChangeName = memo(
   React.forwardRef<unknown, IModalChangeName>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, question, answer }: IModalChangeName, ref) => {
-      /* eslint-enable @typescript-eslint/no-unused-vars */
       const [text, setText] = useState<string>('')
       const theme = useTheme()
 
@@ -21,6 +19,8 @@ export const ModalChangeName = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={{ ...modalStyle, paddingLeft: 5 }}
           component="form"
           onSubmit={changeData}>

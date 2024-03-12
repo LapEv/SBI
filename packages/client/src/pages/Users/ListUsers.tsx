@@ -7,9 +7,7 @@ import { ProfileData } from './'
 import { useAuth } from 'hooks/auth/useAuth'
 
 export const ListUsers = memo((user: User) => {
-  /* eslint-disable @typescript-eslint/no-unused-vars */
-  const [_, { getUser }] = useAuth()
-  /* eslint-enable @typescript-eslint/no-unused-vars */
+  const [{}, { getUser }] = useAuth()
   const [open, setOpen] = useState(false)
 
   const handleClick = () => {

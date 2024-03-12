@@ -12,7 +12,6 @@ import {
   delData,
 } from 'storeAuth/interfaces'
 import { authhost, host, ApiEndPoints } from './config'
-import { getError } from 'utils/getError'
 import axios from 'axios'
 
 interface ValidationError {

@@ -1,7 +1,8 @@
 import MuiButton, { type ButtonProps } from '@mui/material/Button'
 
-//https://github.com/mui/material-ui/issues/16846
-type TButtonProps = Omit<ButtonProps, 'component'> & { component?: any } // eslint-disable-line @typescript-eslint/no-explicit-any
+type TButtonProps = Omit<ButtonProps, 'component'> & {
+  component?: Record<string, unknown>
+}
 
 export function Button(props: TButtonProps) {
   return (

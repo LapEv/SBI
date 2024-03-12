@@ -19,9 +19,7 @@ import { MapNewAddressInputFields } from './data'
 
 export const ChangeAddress = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      /* eslint-enable @typescript-eslint/no-unused-vars */
       const [
         { addresses, regions },
         { getAddresses, getRegions, changeAddress },
@@ -135,6 +133,8 @@ export const ChangeAddress = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={{ ...modalStyle, paddingLeft: 5 }}
           component="form"
           onSubmit={handleSubmit(changeData)}>

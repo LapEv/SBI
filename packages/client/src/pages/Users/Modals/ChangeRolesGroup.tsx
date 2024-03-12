@@ -12,9 +12,7 @@ import { Options } from 'components/DropDown/interface'
 
 export const ChangeRolesGroup = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      /* eslint-enable @typescript-eslint/no-unused-vars */
       const [
         { roles, rolesGroup },
         { getRoles, getRolesGroup, changeRolesGroup },
@@ -90,6 +88,8 @@ export const ChangeRolesGroup = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={{ ...modalStyle, paddingLeft: 5 }}
           component="form"
           onSubmit={changeData}>

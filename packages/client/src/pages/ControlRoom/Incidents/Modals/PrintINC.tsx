@@ -11,9 +11,7 @@ import { Normal, Compressed, XCompressed } from '../'
 
 export const PrintINC = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      /* eslint-enable @typescript-eslint/no-unused-vars */
       const [selectedType, setSelectedType] = useState<string>('normal')
 
       const contentToPrint = useRef(null)
@@ -42,6 +40,8 @@ export const PrintINC = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={{ ...modalStyle, paddingLeft: 5 }}
           component="form"
           onSubmit={changeData}>

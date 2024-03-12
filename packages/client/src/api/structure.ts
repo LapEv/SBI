@@ -6,7 +6,6 @@ import {
   NewDepartment,
   NewDivision,
 } from 'store/slices/structure/interfaces'
-import { getError } from 'utils/getError'
 import axios from 'axios'
 
 interface ValidationError {

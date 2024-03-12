@@ -39,9 +39,7 @@ export const ContractPage = memo(
     id_client,
   }: Contracts) => {
     const [{ admin }] = useAuth()
-    /* eslint-disable @typescript-eslint/no-unused-vars */
-    const [_, { changeContract }] = useContracts()
-    /* eslint-enable @typescript-eslint/no-unused-vars */
+    const [{}, { changeContract }] = useContracts()
     const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
     const [slaDisabled, setSLADisabled] = useState<boolean>(true)
     const [equipmentDisabled, setEquipmentDisabled] = useState<boolean>(true)
@@ -117,9 +115,9 @@ export const ContractPage = memo(
       setClearChanges(true)
     }
 
-    const checkForChange = (newData: IContractData) => {
+    const checkForChange = (newData: {}) => {
       if (!admin) return
-      setDataDisabled(deepEqual(newData, contractData))
+      setDataDisabled(deepEqual(newData, contractData as {}))
     }
 
     const onChooseSLAs = (checked: boolean, id: string) => {
@@ -127,26 +125,26 @@ export const ContractPage = memo(
         const newSLAs = [...slaID]
         newSLAs.push(id)
         setSLADisabled(
-          isEqualArr(newSLAs, SLAs?.map(({ id }) => id) as string[])
+          isEqualArr(newSLAs as [], SLAs?.map(({ id }) => id) as [])
         )
         setSLAID(newSLAs)
         return
       }
       const newSLAs = slaID.filter(item => item !== id)
-      setSLADisabled(isEqualArr(newSLAs, SLAs?.map(({ id }) => id) as string[]))
+      setSLADisabled(isEqualArr(newSLAs as [], SLAs?.map(({ id }) => id) as []))
       setSLAID(newSLAs)
     }
 
     const onChooseEquipments = (data: string[]) => {
       setEquipmentDisabled(
-        isEqualArr(data, ClassifierEquipments?.map(({ id }) => id) as string[])
+        isEqualArr(data as [], ClassifierEquipments?.map(({ id }) => id) as [])
       )
       setSelectedEquipments(data)
     }
 
     const onChooseModels = (data: string[]) => {
       setModelDisabled(
-        isEqualArr(data, ClassifierModels?.map(({ id }) => id) as string[])
+        isEqualArr(data as [], ClassifierModels?.map(({ id }) => id) as [])
       )
       setSelectedModels(data)
     }
@@ -156,14 +154,14 @@ export const ContractPage = memo(
         const newObjects = [...objectID]
         newObjects.push(id)
         setObjectDisabled(
-          isEqualArr(newObjects, Objects?.map(({ id }) => id) as string[])
+          isEqualArr(newObjects as [], Objects?.map(({ id }) => id) as [])
         )
         setObjectID(newObjects)
         return
       }
       const newObjects = objectID.filter(item => item !== id)
       setObjectDisabled(
-        isEqualArr(newObjects, Objects?.map(({ id }) => id) as string[])
+        isEqualArr(newObjects as [], Objects?.map(({ id }) => id) as [])
       )
       setObjectID(newObjects)
     }
@@ -174,8 +172,8 @@ export const ContractPage = memo(
         newIncStatusses.push(id)
         setIncStatussesDisabled(
           isEqualArr(
-            newIncStatusses,
-            IncindentStatuses?.map(({ id }) => id) as string[]
+            newIncStatusses as [],
+            IncindentStatuses?.map(({ id }) => id) as []
           )
         )
         setIncStatussesID(newIncStatusses)
@@ -184,8 +182,8 @@ export const ContractPage = memo(
       const newIncStatusses = incStatussesID.filter(item => item !== id)
       setIncStatussesDisabled(
         isEqualArr(
-          newIncStatusses,
-          IncindentStatuses?.map(({ id }) => id) as string[]
+          newIncStatusses as [],
+          IncindentStatuses?.map(({ id }) => id) as []
         )
       )
       setIncStatussesID(newIncStatusses)

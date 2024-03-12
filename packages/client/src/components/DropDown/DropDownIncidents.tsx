@@ -1,5 +1,5 @@
 import { useState, useEffect, memo } from 'react'
-import { Box, Popper, useTheme } from '@mui/material'
+import { Box, Popper, PopperProps, useTheme } from '@mui/material'
 import { TextFieldIncidents } from 'components/TextFields'
 import { AutocompleteIncidents } from 'components/Autocomplete'
 import { DataDropDown, Options } from './interface'
@@ -24,23 +24,6 @@ export const DropDownIncidents = memo(
     useEffect(() => {
       setErrors(error as boolean)
     }, [error])
-
-    /* eslint-disable @typescript-eslint/no-explicit-any */
-    const CustomPopper = (props: any) => {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return (
-        <Popper
-          {...props}
-          placement="bottom"
-          sx={{ height: '10px' }}
-          style={{
-            width: props.anchorEl.clientWidth,
-            height: '5px',
-            zIndex: 1,
-          }}
-        />
-      )
-    }
 
     return (
       <AutocompleteIncidents
@@ -124,7 +107,9 @@ export const DropDownIncidents = memo(
             </Box>
           </li>
         )}
-        PopperComponent={CustomPopper}
+        PopperComponent={({ style, ...props }) => (
+          <Popper {...props} style={{ ...style, zIndex: 1 }} />
+        )}
         componentsProps={{
           paper: {
             style: {

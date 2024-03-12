@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { authhost, ApiEndPoints, authFileHost } from './config'
-import { getError } from 'utils/getError'
 import { Files, UploadFiles } from 'store/slices/files/interfaces'
 import axios from 'axios'
 

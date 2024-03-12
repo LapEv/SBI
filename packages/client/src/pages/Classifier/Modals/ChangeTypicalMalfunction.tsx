@@ -18,9 +18,7 @@ import { useClassifier } from 'hooks/classifier/useClassifier'
 
 export const ChangeTypicalMalfunction = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      /* eslint-enable @typescript-eslint/no-unused-vars */
       const [
         { typicalMalfunctions },
         { getTypicalMalfunctions, changeTypicalMalfunction },
@@ -92,6 +90,8 @@ export const ChangeTypicalMalfunction = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={{ ...modalStyle, paddingLeft: 5 }}
           component="form"
           onSubmit={handleSubmit(changeData)}>

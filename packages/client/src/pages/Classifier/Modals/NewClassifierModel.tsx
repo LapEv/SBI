@@ -19,11 +19,9 @@ import { TypicalMalfunctions } from 'store/slices/classifier/interfaces'
 
 export const NewClassifierModel = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
       const [{ equipments }, { newClassifierModel, resetTypicalMalfunction }] =
         useClassifier()
-      /* eslint-enable @typescript-eslint/no-unused-vars */
       const boxRef = React.createRef<HTMLDivElement>()
       const [equipment, setEquipment] = useState<Options>(emptyValue)
       const [typicalMalfunctions, setTypicalMalfunctions] = useState<
@@ -88,6 +86,8 @@ export const NewClassifierModel = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={{ ...modalStyle, minHeight: 300 }}
           component="form"
           onSubmit={handleSubmit(changeData)}>

@@ -36,10 +36,8 @@ import { CheckBoxGroups, Item } from 'components/CheckBoxGroup'
 
 export const AddContract = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [_, { setMessage }] = useMessage()
-      /* eslint-enable @typescript-eslint/no-unused-vars */
+      const [{}, { setMessage }] = useMessage()
       const [openList, setOpenList] = useState(false)
       const [openListObjects, setOpenListObjects] = useState(false)
       const [{ clients }, { getClients }] = useClients()
@@ -148,6 +146,8 @@ export const AddContract = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={modalStyle}
           component="form"
           onSubmit={handleSubmit(changeData)}>

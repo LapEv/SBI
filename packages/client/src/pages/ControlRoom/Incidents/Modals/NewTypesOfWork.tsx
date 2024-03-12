@@ -15,10 +15,8 @@ import { useIncidents } from 'hooks/incidents/useINC'
 
 export const NewTypesOfWork = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [_, { newTypesOfWork }] = useIncidents()
-      /* eslint-enable @typescript-eslint/no-unused-vars */
+      const [{}, { newTypesOfWork }] = useIncidents()
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
         defaultValues: {
@@ -40,6 +38,8 @@ export const NewTypesOfWork = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={modalStyle}
           component="form"
           onSubmit={handleSubmit(changeData)}>

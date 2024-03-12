@@ -16,10 +16,8 @@ import { useClients } from 'hooks/clients/useClients'
 
 export const AddClient = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [_, { setMessage }] = useMessage()
-      /* eslint-enable @typescript-eslint/no-unused-vars */
+      const [{}, { setMessage }] = useMessage()
       const [{ clients }, { getClients, newClient }] = useClients()
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
@@ -52,6 +50,8 @@ export const AddClient = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={modalStyle}
           component="form"
           onSubmit={handleSubmit(changeData)}>

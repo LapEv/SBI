@@ -1,7 +1,16 @@
 import { deepEqual } from './deepEqual'
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export const сheckArrObjects = (array1: any, array2: any) => {
+type arr1 = {
+  id: string
+  models: string
+}[]
+
+type arr2 = {
+  id: string
+  models: string
+}[]
+
+export const сheckArrObjects = (array1: arr1, array2: arr2) => {
   if (!array2 || array2.length < 0) return false
   const arr1 = [...array1]
   const arr2 = [...array2]

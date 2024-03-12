@@ -1,8 +1,7 @@
 import { sortArrayOfObjects } from './sortArrayOfObjects'
 import { deepEqual } from './deepEqual'
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export const isEqualArrObjects = (array1: any, array2: any, key: string) => {
+export const isEqualArrObjects = (array1: [], array2: [], key: string) => {
   if (!array2 || array2.length < 0) return false
   if (array1.length !== array2.length) return false
   const arr1 = sortArrayOfObjects([...array1], key, 'ascending')

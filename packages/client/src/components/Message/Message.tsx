@@ -6,12 +6,10 @@ import {
   AlertColor,
   useTheme,
 } from '@mui/material'
-import Slide from '@mui/material/Slide'
+import Slide, { SlideProps } from '@mui/material/Slide'
 import { useMessage } from 'hooks/message/useMessage'
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const TransitionLeft = memo((props: any) => {
-  /* eslint-enable @typescript-eslint/no-explicit-any */
+const TransitionLeft = memo((props: SlideProps) => {
   return <Slide {...props} direction="up" />
 })
 

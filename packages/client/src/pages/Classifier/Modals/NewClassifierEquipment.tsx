@@ -15,10 +15,8 @@ import { useClassifier } from 'hooks/classifier/useClassifier'
 
 export const NewClassifierEquipment = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [_, { newClassifierEquipment }] = useClassifier()
-      /* eslint-enable @typescript-eslint/no-unused-vars */
+      const [{}, { newClassifierEquipment }] = useClassifier()
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
         defaultValues: {
@@ -38,6 +36,8 @@ export const NewClassifierEquipment = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={modalStyle}
           component="form"
           onSubmit={handleSubmit(changeData)}>

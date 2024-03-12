@@ -12,6 +12,20 @@ export interface DataDropDown {
   tabIndex?: number
 }
 
+export interface DataDropDownIncidents {
+  data: Options[]
+  value?: string
+  props?: Record<string, string[]>
+  label: string
+  errorLabel: string
+  onChange?: (value: Options) => void
+  onBlur?: (value: string) => void
+  error?: boolean
+  textProps?: object
+  disableClearable?: boolean
+  tabIndex?: number
+}
+
 export interface DataDropDownMultiple {
   data: Options[]
   value?: Options[]

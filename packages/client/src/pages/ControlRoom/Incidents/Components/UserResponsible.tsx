@@ -1,16 +1,14 @@
 import { memo, useEffect, useState } from 'react'
 import { useAuth } from 'hooks/auth/useAuth'
-import { DropDownIncidents } from 'components/DropDown'
 import { Options } from 'components/DropDown/interface'
 import { useIncidents } from 'hooks/incidents/useINC'
 import { IExecutor } from './interfaces'
 import { customDropDownCell } from '../data'
 import { FilterOptions } from '../Utils/FilterOptions'
+import { DropDownIncidents } from 'components/DropDown'
 
 export const UserResponsible = memo(({ value, id, incident }: IExecutor) => {
-  /* eslint-disable @typescript-eslint/no-unused-vars */
-  const [_, { changeResponsible }] = useIncidents()
-  /* eslint-enable @typescript-eslint/no-unused-vars */
+  const [{}, { changeResponsible }] = useIncidents()
   const [{ dispatchers, user }] = useAuth()
   const [responsible, setResposible] = useState<Options>({
     label: value,

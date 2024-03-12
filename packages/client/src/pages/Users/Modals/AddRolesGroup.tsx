@@ -17,9 +17,7 @@ import { Item } from 'components/CheckBoxGroup'
 
 export const AddRolesGroup = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      /* eslint-enable @typescript-eslint/no-unused-vars */
       const [{ roles }, { newRolesGroup, getRolesGroup, getRoles }] = useRoles()
       const theme = useTheme()
       const [selectedItems, setItems] = useState<Roles[]>([])
@@ -73,6 +71,8 @@ export const AddRolesGroup = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={modalStyle}
           component="form"
           onSubmit={handleSubmit(changeData)}>

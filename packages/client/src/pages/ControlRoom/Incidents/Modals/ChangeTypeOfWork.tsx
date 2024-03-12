@@ -18,9 +18,7 @@ import { useIncidents } from 'hooks/incidents/useINC'
 
 export const ChangeTypeOfWork = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      /* eslint-enable @typescript-eslint/no-unused-vars */
       const [{ typesOfWork }, { getTypesOfWork, changeTypesOfWork }] =
         useIncidents()
       const [listTypesOfWork, setListTypesOfWork] = useState<Options[]>([])
@@ -86,6 +84,8 @@ export const ChangeTypeOfWork = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={{ ...modalStyle, paddingLeft: 5 }}
           component="form"
           onSubmit={handleSubmit(changeData)}>

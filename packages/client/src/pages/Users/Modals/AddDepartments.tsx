@@ -17,9 +17,7 @@ import { Options } from 'components/DropDown/interface'
 
 export const AddDepartments = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      /* eslint-enable @typescript-eslint/no-unused-vars */
       const [{ divisions }, { addDepartments }] = useStructure()
       const [division, setDivision] = useState<Options>(emptyValue)
       const { handleSubmit, control } = useForm<AddValuesProps>({
@@ -47,6 +45,8 @@ export const AddDepartments = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={modalStyle}
           component="form"
           onSubmit={handleSubmit(changeData)}>

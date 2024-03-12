@@ -17,9 +17,7 @@ import { FileProps } from 'storeAuth/interfaces'
 import { useMessage } from 'hooks/message/useMessage'
 
 export const ProfileMain = memo(({ setModal, data }: ProfileMainProps) => {
-  /* eslint-disable @typescript-eslint/no-unused-vars */
-  const [_, { setMessage }] = useMessage()
-  /* eslint-enable @typescript-eslint/no-unused-vars */
+  const [{}, { setMessage }] = useMessage()
   const [{ userData }, { updateUserData, updateUser }] = useAuth()
   const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
   const [file, setFile] = useState<FileProps>({ data: '', info: undefined })
@@ -47,7 +45,7 @@ export const ProfileMain = memo(({ setModal, data }: ProfileMainProps) => {
       })
       // changeAvatar(file)
     }
-    if (!deepEqual(userData, data)) {
+    if (!deepEqual(userData as {}, data as {})) {
       updateUser(userData)
     }
   }
@@ -76,7 +74,7 @@ export const ProfileMain = memo(({ setModal, data }: ProfileMainProps) => {
 
   useEffect(() => {
     if (file.info) return
-    setbtnDisabled(deepEqual(userData, data))
+    setbtnDisabled(deepEqual(userData as {}, data as {}))
   }, [userData])
 
   useEffect(() => {

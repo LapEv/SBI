@@ -27,9 +27,7 @@ import { Options } from 'components/DropDown/interface'
 
 export const AddUser = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      /* eslint-enable @typescript-eslint/no-unused-vars */
       const [{ userStatus }, { getUserStatus, signup }] = useAuth()
       const [{ divisions, departaments }] = useStructure()
       const [{ rolesGroup }, { getRolesGroup }] = useRoles()
@@ -158,6 +156,8 @@ export const AddUser = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={modalStyle}
           component="form"
           onSubmit={handleSubmit(changeData)}>

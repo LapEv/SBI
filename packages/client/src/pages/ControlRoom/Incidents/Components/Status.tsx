@@ -14,9 +14,7 @@ import { FilterOptions } from '../Utils/FilterOptions'
 
 export const Status = memo(
   ({ value, id, incident, currentStatus, timeSLA }: IStatus) => {
-    /* eslint-disable @typescript-eslint/no-unused-vars */
-    const [_, { setMessage }] = useMessage()
-    /* eslint-enable @typescript-eslint/no-unused-vars */
+    const [{}, { setMessage }] = useMessage()
     const modalClientRef = React.createRef()
     const [modal, setModal] = useState<IModal>({
       status: false,

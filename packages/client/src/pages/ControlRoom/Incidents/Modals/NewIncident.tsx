@@ -27,9 +27,7 @@ import { FilterOptions } from '../Utils/FilterOptions'
 
 export const NewIncident = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      /* eslint-enable @typescript-eslint/no-unused-vars */
       const [{ user }] = useAuth()
       const [{ clients }, { getClients }] = useClients()
       const [{ contracts }, { getContractsByClientID, resetContracts }] =
@@ -285,6 +283,8 @@ export const NewIncident = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={{ ...modalStyle, width: '80%', minHeight: 500 }}
           component="form"
           onSubmit={handleSubmit(changeData)}>

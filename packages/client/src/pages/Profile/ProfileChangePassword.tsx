@@ -18,9 +18,7 @@ import { memo } from 'react'
 
 export const ProfileChangePassword = memo(
   ({ handleModal, userId }: ProfileChangePasswordProps) => {
-    /* eslint-disable @typescript-eslint/no-unused-vars */
-    const [_, { changePassword }] = useAuth()
-    /* eslint-enable @typescript-eslint/no-unused-vars */
+    const [{}, { changePassword }] = useAuth()
     const { handleSubmit, control } = useForm<ProfileChangePasswordValues>({
       mode: 'onBlur',
       defaultValues: {

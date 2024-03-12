@@ -16,10 +16,8 @@ import { Roles } from 'storeRoles/interfaces'
 
 export const AddRole = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [_, { newRole }] = useRoles()
-      /* eslint-enable @typescript-eslint/no-unused-vars */
+      const [{}, { newRole }] = useRoles()
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
         defaultValues: {
@@ -43,6 +41,8 @@ export const AddRole = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={modalStyle}
           component="form"
           onSubmit={handleSubmit(changeData)}>

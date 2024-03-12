@@ -33,10 +33,8 @@ import { useMessage } from 'hooks/message/useMessage'
 
 export const ChangeStatus = memo(
   React.forwardRef<unknown, CloseINCProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title, data }: CloseINCProps, ref) => {
-      const [_, { setMessage }] = useMessage()
-      /* eslint-enable @typescript-eslint/no-unused-vars */
+      const [{}, { setMessage }] = useMessage()
       const theme = useTheme()
       const [{ typesCompletedWork }] = useIncidents()
       const [typeCompletedWorkList, setTypeCompletedWorkList] = useState<
@@ -48,10 +46,8 @@ export const ChangeStatus = memo(
       const [selectedFiles, setSelectedFiles] = useState<FileList | null>()
       const [selectedNameFiles, setSelectedNameFiles] = useState<string>('')
 
-      /* eslint-disable @typescript-eslint/no-unused-vars */
       const [dragOver, setDragOver] = useState<boolean>(false)
-      const [uploadProgress, setUploadProgress] = useState(0)
-      /* eslint-enable @typescript-eslint/no-unused-vars */
+      const [uploadProgress] = useState(0)
 
       const handleDragOver = useCallback((event: DragEvent<HTMLDivElement>) => {
         event.preventDefault()

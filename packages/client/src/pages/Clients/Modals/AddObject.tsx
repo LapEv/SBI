@@ -25,10 +25,8 @@ import { ModalAddAddressInObject } from './'
 
 export const AddObject = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [_, { setMessage }] = useMessage()
-      /* eslint-enable @typescript-eslint/no-unused-vars */
+      const [{}, { setMessage }] = useMessage()
       const [{ clients }, { getClients }] = useClients()
       const [{ regions, addresses }, { getRegions, getAddresses, addAddress }] =
         useAddresses()
@@ -148,7 +146,7 @@ export const AddObject = memo(
       }, [addresses])
 
       return (
-        <Box>
+        <Box ref={ref} tabIndex={-1}>
           <Modal
             open={modal}
             onClose={() => setModal(false)}

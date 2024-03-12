@@ -779,9 +779,7 @@ export const TableIncidents = memo(() => {
     },
   ]
 
-  /* eslint-disable @typescript-eslint/no-unused-vars */
-  const [tableColumn, setTableColumn] = useState<INC_Column[]>(INCColumn)
-  /* eslint-enable @typescript-eslint/no-unused-vars */
+  const [tableColumn] = useState<INC_Column[]>(INCColumn)
 
   const setDenseTableFunc = (state: boolean) => {
     setDenseTable(state)

@@ -13,9 +13,7 @@ import { Roles } from 'storeRoles/interfaces'
 
 export const DeleteRole = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      /* eslint-enable @typescript-eslint/no-unused-vars */
       const [{ roles }, { getRoles, deleteRoles }] = useRoles()
       const boxRef = React.createRef<HTMLDivElement>()
       const [height, setHeight] = useState<string>('')
@@ -63,6 +61,8 @@ export const DeleteRole = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={{ ...modalStyle, paddingLeft: 5 }}
           component="form"
           onSubmit={changeData}>

@@ -33,9 +33,7 @@ export const SLAPage = memo(
     id_typeOfWork,
     TypesOfWork,
   }: IServiceListData) => {
-    /* eslint-disable @typescript-eslint/no-unused-vars */
-    const [_, { changeSLA, changeOLA }] = useSLA()
-    /* eslint-enable @typescript-eslint/no-unused-vars */
+    const [{}, { changeSLA, changeOLA }] = useSLA()
     const [{ typesOfWork }, { getTypesOfWork }] = useIncidents()
     const [{ admin }] = useAuth()
     const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
@@ -107,9 +105,9 @@ export const SLAPage = memo(
       }
     }
 
-    const checkForChange = (newData: IServiceListData) => {
+    const checkForChange = (newData: {}) => {
       if (!admin) return
-      setbtnDisabled(deepEqual(newData, slaData))
+      setbtnDisabled(deepEqual(newData, slaData as {}))
     }
 
     const clearChange = () => {

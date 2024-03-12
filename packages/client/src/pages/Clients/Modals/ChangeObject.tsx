@@ -24,10 +24,8 @@ import { useMessage } from 'hooks/message/useMessage'
 
 export const ChangeObject = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [_, { setMessage }] = useMessage()
-      /* eslint-enable @typescript-eslint/no-unused-vars */
+      const [{}, { setMessage }] = useMessage()
       const [{ addresses, regions }, { getAddresses, getRegions }] =
         useAddresses()
       const [{ clients }, { getClients }] = useClients()
@@ -274,6 +272,8 @@ export const ChangeObject = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={{ ...modalStyle, paddingLeft: 5 }}
           component="form"
           onSubmit={handleSubmit(changeData)}>

@@ -1,8 +1,8 @@
-export function isObject(object: unknown) {
+export function isObject(object: unknown): boolean {
   return object != null && object.constructor.name === 'Object'
 }
 
-export function isNullish(object: unknown) {
+export function isNullish(object: unknown): boolean {
   return object === null || object === undefined
 }
 

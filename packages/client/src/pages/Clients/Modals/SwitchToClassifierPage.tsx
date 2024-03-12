@@ -7,9 +7,7 @@ import { ButtonsSection } from 'components/Buttons'
 
 export const SwitchToClassifierPage = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      /* eslint-enable @typescript-eslint/no-unused-vars */
       const navigate = useNavigate()
 
       const changeData = () => {
@@ -18,7 +16,7 @@ export const SwitchToClassifierPage = memo(
       }
 
       return (
-        <Box sx={{ ...modalStyle, paddingLeft: 5 }}>
+        <Box sx={{ ...modalStyle, paddingLeft: 5 }} ref={ref} tabIndex={-1}>
           <Typography variant={'h6'} sx={{ textAlign: 'center' }}>
             {title}
           </Typography>

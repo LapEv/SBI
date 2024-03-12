@@ -97,7 +97,10 @@ export const Group = memo(
     }
 
     useEffect(() => {
-      if (!isEqualArr(data.items, items) || data.checkedGroup !== checked) {
+      if (
+        !isEqualArr(data.items as [], items as []) ||
+        data.checkedGroup !== checked
+      ) {
         setChecked(data.checkedGroup)
         setSelectedGroup(data.checkedGroup ? data.id : '')
         setItems(data.items)

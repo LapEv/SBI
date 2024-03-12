@@ -13,9 +13,7 @@ import { ClassifierEquipment } from 'store/slices/classifier/interfaces'
 
 export const DeleteClassifierEquipment = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      /* eslint-enable @typescript-eslint/no-unused-vars */
       const boxRef = React.createRef<HTMLDivElement>()
       const [height, setHeight] = useState<string>('')
       const [
@@ -68,6 +66,8 @@ export const DeleteClassifierEquipment = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={{ ...modalStyle, paddingLeft: 5 }}
           component="form"
           onSubmit={changeData}>

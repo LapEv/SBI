@@ -15,10 +15,8 @@ import { useStructure } from 'hooks/structure/useStructure'
 
 export const AddDivision = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [_, { addDivision }] = useStructure()
-      /* eslint-enable @typescript-eslint/no-unused-vars */
+      const [{}, { addDivision }] = useStructure()
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
         defaultValues: {
@@ -38,6 +36,8 @@ export const AddDivision = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={modalStyle}
           component="form"
           onSubmit={handleSubmit(changeData)}>

@@ -183,12 +183,9 @@ const StyledDescription = styled(Box)(() => ({
   },
 }))
 
-export const IncidentData =
-  /* eslint-disable @typescript-eslint/no-unused-vars */
-  memo(({ values, setHeight, onSaveComments }: IncidentDataProps) => {
-    /* eslint-enable @typescript-eslint/no-unused-vars */
+export const IncidentData = memo(
+  ({ values, setHeight, onSaveComments }: IncidentDataProps) => {
     const boxRef = React.createRef<HTMLDivElement>()
-    // const [top, setTop] = useState<number>()
     const [{ dataWidth }] = useApp()
 
     useEffect(() => {
@@ -279,4 +276,5 @@ export const IncidentData =
         </Box>
       </Box>
     )
-  })
+  }
+)

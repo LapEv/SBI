@@ -18,9 +18,7 @@ import { MapNewRegionInputFields } from './data'
 
 export const ChangeRegion = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      /* eslint-enable @typescript-eslint/no-unused-vars */
       const [{ regions }, { getRegions, changeRegion }] = useAddresses()
       const [listRegions, setListRegions] = useState<Options[]>([])
       const [selectedRegions, setSelectedRegions] =
@@ -88,6 +86,8 @@ export const ChangeRegion = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={{ ...modalStyle, paddingLeft: 5 }}
           component="form"
           onSubmit={handleSubmit(changeData)}>

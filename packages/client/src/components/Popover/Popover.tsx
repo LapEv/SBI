@@ -1,4 +1,4 @@
-import { Popover as MuiPopover, styled } from '@mui/material'
+import { Popover as MuiPopover, PopoverProps, styled } from '@mui/material'
 import { createTheme, Theme, ThemeProvider } from '@mui/material/styles'
 import { memo } from 'react'
 
@@ -8,9 +8,7 @@ const StyledPopover = styled(MuiPopover)(() => ({
   // },
 }))
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export const PopoverINC = memo((props: any) => {
-  /* eslint-enable @typescript-eslint/no-explicit-any */
+export const PopoverINC = memo((props: PopoverProps) => {
   return (
     <ThemeProvider
       theme={(theme: Theme) =>

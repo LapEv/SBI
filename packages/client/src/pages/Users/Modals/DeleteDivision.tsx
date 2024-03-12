@@ -13,9 +13,7 @@ import { TextField } from 'components/TextFields'
 
 export const DeleteDivision = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      /* eslint-enable @typescript-eslint/no-unused-vars */
       const boxRef = React.createRef<HTMLDivElement>()
       const [height, setHeight] = useState<string>('')
       const [{ divisions }, { deleteDivision, getDivisions }] = useStructure()
@@ -65,6 +63,8 @@ export const DeleteDivision = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={{ ...modalStyle, paddingLeft: 5 }}
           component="form"
           onSubmit={changeData}>

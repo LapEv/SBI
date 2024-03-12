@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { authhost, ApiEndPoints } from './config'
-import { getError } from 'utils/getError'
 import { ChangeObject, Objects } from 'store/slices/objects/interfaces'
 import axios from 'axios'
 

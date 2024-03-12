@@ -9,6 +9,7 @@ import {
   ChangeThemeProps,
   FileProps,
   UserStatus,
+  delData,
 } from 'storeAuth/interfaces'
 import { authhost, host, ApiEndPoints } from './config'
 import { getError } from 'utils/getError'
@@ -60,12 +61,16 @@ export const signup = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось зарегистрироваться!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось зарегистрироваться: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -79,10 +84,16 @@ export const signout = createAsyncThunk('user/signout', async (_, thunkAPI) => {
         type: 'success',
       },
     }
-    /* eslint-disable @typescript-eslint/no-explicit-any */
-  } catch (e: any) {
-    /* eslint-enable @typescript-eslint/no-explicit-any */
-    return thunkAPI.rejectWithValue(`Не удалось выйти!\n${getError(e)}`)
+  } catch (error) {
+    if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+      return thunkAPI.rejectWithValue(
+        `Не удалось выйти: \n${
+          error.response?.data.message ?? error.response?.data
+        }`
+      )
+    } else {
+      console.error(error)
+    }
   }
 })
 
@@ -94,12 +105,16 @@ export const GetUser = createAsyncThunk(
         id,
       })
       return data
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось получить данные пользователя!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось получить данные пользователя: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -113,12 +128,16 @@ export const GetActiveUsers = createAsyncThunk(
         dataFind
       )
       return data
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось получить данные пользователей!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось получить данные пользователей: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -131,14 +150,16 @@ export const GetDispatchers = createAsyncThunk(
         ApiEndPoints.User.GetDispatchers
       )
       return data
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось получить данные пользователей по департаменту!\n${getError(
-          e
-        )}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось получить данные пользователей по диспетчерам: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -151,14 +172,16 @@ export const GetFieldEngineers = createAsyncThunk(
         ApiEndPoints.User.GetFieldEngineers
       )
       return data
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось получить данные пользователей по департаменту!\n${getError(
-          e
-        )}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось получить данные пользователей по инженерам: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -174,7 +197,7 @@ export const CheckUser = createAsyncThunk(
       if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные пользователя: \n${
-            error.response?.data.message ?? error.response?.data
+            error.response?.data.message ?? error
           }`
         )
       } else {
@@ -199,12 +222,16 @@ export const updateProfile = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось обновить данные пользователя!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось обновить данные пользователя: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -232,12 +259,16 @@ export const ChangeAvatar = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось обновить аватар пользователя! \n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось обновить аватар пользователя: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -257,12 +288,16 @@ export const changePassword = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось изменить пароль! \n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось изменить пароль: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -276,12 +311,16 @@ export const ChangeTheme = createAsyncThunk(
         value
       )
       return data
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось обновить данные темы! \n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось обновить данные темы: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -294,20 +333,19 @@ export const getUserStatus = createAsyncThunk(
         ApiEndPoints.User.GetUserStatus
       )
       return data
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось получить статусы пользователей!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось получить статусы пользователей: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
-
-interface delData {
-  id: string
-  reasonOfDelete: string
-}
 
 export const deleteUser = createAsyncThunk(
   'user/deleteUser',
@@ -321,12 +359,16 @@ export const deleteUser = createAsyncThunk(
         data,
         message: { text: 'Пользователь перемещен в архив', type: 'success' },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось переместить пользователя в архив!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось переместить пользователя в архив: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -344,12 +386,16 @@ export const updateUser = createAsyncThunk(
         data,
         message: { text: 'Данные пользователя обновлены', type: 'success' },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось обновить данные пользователя!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось обновить данные пользователя: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )

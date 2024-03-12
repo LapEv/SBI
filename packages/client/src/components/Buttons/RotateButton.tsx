@@ -1,8 +1,8 @@
 import IconButton from '@mui/material/IconButton'
 import ExpandLess from '@mui/icons-material/ExpandLess'
-import { userRotateStyles } from '../../themes/rotateConfig'
 import { IRotateButton } from './interfaces'
 import { memo } from 'react'
+import { userRotateStyles } from 'themes/rotateConfig'
 
 export const RotateButton = memo(
   ({ open, handleClick, size }: IRotateButton) => {

@@ -1,5 +1,5 @@
 import { Autocomplete as MuiAutocomplete, styled } from '@mui/material'
-import { ThemeMode } from '../../themes/themeConfig'
+import { ThemeMode } from 'themes/themeConfig'
 
 export const Autocomplete = styled(MuiAutocomplete)(({ theme }) => ({
   '& input': {

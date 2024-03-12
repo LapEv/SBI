@@ -39,6 +39,7 @@ import { files } from './models/files'
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
   process.env
 
+console.log('POSTGRES_PASSWORD = ', POSTGRES_PASSWORD)
 const sequelizeOptions: SequelizeOptions = {
   // host: 'sbi-db', //sbi-db - для докера; localhost - для npm run dev:ssr
   host: 'localhost',

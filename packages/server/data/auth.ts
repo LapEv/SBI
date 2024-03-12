@@ -30,3 +30,7 @@ export const auth = {
     findUserError: 'Ошибка при поиске данных пользователя!',
   },
 }
+
+export const incidents = {
+  notification: {},
+}

@@ -20,7 +20,8 @@
     "baseUrl": "./src/",
     "paths": {
       "storeAuth/*": ["store/slices/auth/*"],
-      "storeRoles/*": ["store/slices/roles/*"]
+      "storeRoles/*": ["store/slices/roles/*"],
+      "themes/*": ["themes/*"]
     }
   },
   "include": ["src"],

@@ -111,3 +111,8 @@ export interface UserForINC {
   shortName: string
   active: boolean
 }
+
+export interface delData {
+  id: string
+  reasonOfDelete: string
+}

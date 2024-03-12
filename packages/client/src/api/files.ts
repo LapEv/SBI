@@ -2,6 +2,12 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { authhost, ApiEndPoints, authFileHost } from './config'
 import { getError } from 'utils/getError'
 import { Files, UploadFiles } from 'store/slices/files/interfaces'
+import axios from 'axios'
+
+interface ValidationError {
+  message: string
+  errors: Record<string, string[]>
+}
 
 export const getFiles = createAsyncThunk(
   'files/getFiles',
@@ -9,12 +15,16 @@ export const getFiles = createAsyncThunk(
     try {
       const { data } = await authhost.get<Files>(ApiEndPoints.Files.getFiles)
       return data
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось получить данные по файлам\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось получить данные по файлам: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -42,12 +52,16 @@ export const uploadFiles = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось загрузить файлы\n${getError(e)} `
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось загрузить файлы: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )

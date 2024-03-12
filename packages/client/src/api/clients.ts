@@ -7,6 +7,12 @@ import {
   ChangeClient,
   ChangeClientsGroup,
 } from 'store/slices/clients/interfaces'
+import axios from 'axios'
+
+interface ValidationError {
+  message: string
+  errors: Record<string, string[]>
+}
 
 export const getClientGroups = createAsyncThunk(
   'client/getClientGroups',
@@ -16,12 +22,16 @@ export const getClientGroups = createAsyncThunk(
         ApiEndPoints.Clients.getClientGroups
       )
       return data
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось получить данные по группе клиентов\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось получить данные по группе клиентов: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -41,12 +51,16 @@ export const newClientGroup = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось создать новую группу клиентов\n${getError(e)} `
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось создать новую группу клиентов: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -68,12 +82,16 @@ export const deleteClientGroup = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось удалить группу клиентов!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось удалить группу клиентов: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -97,12 +115,16 @@ export const changeClientGroup = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось изменить группу клиентов!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось изменить группу клиентов: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -115,12 +137,16 @@ export const getClients = createAsyncThunk(
         ApiEndPoints.Clients.getClients
       )
       return data
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось получить данные по клиентам\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось получить данные по клиентам: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -140,12 +166,16 @@ export const newClient = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось создать нового клиента\n${getError(e)} `
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось создать нового клиента: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -164,12 +194,16 @@ export const deleteClient = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось удалить клиентов!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось удалить клиентов: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -196,12 +230,16 @@ export const changeClient = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось изменить клиента!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось изменить клиента: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )

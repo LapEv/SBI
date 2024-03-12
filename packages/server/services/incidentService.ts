@@ -463,6 +463,7 @@ export class incidentService {
       res.status(500).json({ error: ['db error', err as Error] })
     }
   }
+
   getAllIncidentStatuses = (_req: Request, res: Response) => {
     IncidentStatusesRepos.findAll({})
       .then(item => res.status(200).json(item))

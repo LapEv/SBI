@@ -31,6 +31,7 @@ export default defineConfig({
       storeRoles: path.resolve(__dirname, './src/store/slices/roles/'),
       storeAuth: path.resolve(__dirname, './src/store/slices/auth/'),
       storeStructure: path.resolve(__dirname, './src/store/slices/structure/'),
+      themes: path.resolve(__dirname, './src/themes/'),
     },
   },
   build: {

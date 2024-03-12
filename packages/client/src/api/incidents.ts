@@ -23,6 +23,12 @@ import {
   AnswerGetFilter,
   ChangeComment,
 } from 'store/slices/incidents/interfaces'
+import axios from 'axios'
+
+interface ValidationError {
+  message: string
+  errors: Record<string, string[]>
+}
 
 export const getINC = createAsyncThunk(
   'incidents/getINC',
@@ -30,12 +36,16 @@ export const getINC = createAsyncThunk(
     try {
       const { data } = await authhost.get<INC>(ApiEndPoints.INC.getINC)
       return data
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось получить данные по инцидентам\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось получить данные по инцидентам: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -48,12 +58,16 @@ export const getFilter = createAsyncThunk(
         ApiEndPoints.INC.getFilter
       )
       return data
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось получить данные по филтрам\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось получить данные по фильтрам: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -69,12 +83,16 @@ export const getINCs = createAsyncThunk(
         params: { limit, nameSort, direction, page, filterOptions },
       })
       return data
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось получить данные по инцидентам\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось получить данные по инцидентам: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -91,12 +109,16 @@ export const newINC = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось создать новый инцидент\n${getError(e)} `
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось создать новый инцидент: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -148,12 +170,16 @@ export const changeINC = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось изменить инцидент!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось изменить инцидент: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -197,12 +223,16 @@ export const changeExecutor = createAsyncThunk(
           type: id_incExecutor.length ? 'success' : 'info',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось назначить исполнителя!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось назначить исполнителя: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -246,12 +276,16 @@ export const changeResponsible = createAsyncThunk(
           type: id_incResponsible.length ? 'success' : 'info',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось назначить ответственного!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось назначить ответственного: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -301,12 +335,16 @@ export const changeStatus = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось назначить ответственного!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось изменить статус: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -329,12 +367,16 @@ export const changeUserClosingCheck = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось назначить ответственного за выполнение!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось назначить ответственного за выполнение: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -357,12 +399,16 @@ export const changeUserClosing = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось назначить ответственного за закрытие!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось назначить ответственного за закрытие: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -382,12 +428,16 @@ export const changeComment = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось изменить комментарий к инциденту!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось изменить комментарий к инциденту: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -400,12 +450,16 @@ export const getIncidentStatuses = createAsyncThunk(
         ApiEndPoints.INC.getIncidentStatuses
       )
       return data
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось получить данные по статусам инцидентов\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось получить данные по статусам инцидентов: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -425,12 +479,16 @@ export const newIncidentStatuses = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось создать новый статус инцидента\n${getError(e)} `
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось создать новый статус инцидента: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -452,12 +510,16 @@ export const deleteIncidentStatuses = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось удалить статус инцидента!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось удалить статус инцидента: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -480,12 +542,16 @@ export const changeIncidentStatuses = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось изменить статус инцидента!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось изменить статус инцидента: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -498,12 +564,16 @@ export const getTypesOfWork = createAsyncThunk(
         ApiEndPoints.INC.getTypesOfWork
       )
       return data
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось получить данные по типам работ\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось получить данные по типам работ: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -523,12 +593,16 @@ export const newTypeOfWork = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось создать новый тип работ\n${getError(e)} `
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `е удалось создать новый тип работ: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -547,12 +621,16 @@ export const deleteTypesOfWork = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось удалить типы работ!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось удалить типы работ: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -572,12 +650,16 @@ export const changeTypesOfWork = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось изменить тип работ!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось изменить тип работ: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -590,12 +672,16 @@ export const getTypesCompletedWork = createAsyncThunk(
         ApiEndPoints.INC.getTypesCompletedWork
       )
       return data
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось получить данные по типам выполненных работ\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось получить данные по типам выполненных работ: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -615,12 +701,16 @@ export const newTypeCompletedWork = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось создать новый тип выполненных работ\n${getError(e)} `
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось создать новый тип выполненных работ: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -642,12 +732,16 @@ export const deleteTypesCompletedWork = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось удалить типы выполненных работ!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось удалить типы выполненных работ: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )
@@ -670,12 +764,16 @@ export const changeTypesCompletedWork = createAsyncThunk(
           type: 'success',
         },
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (e: any) {
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-      return thunkAPI.rejectWithValue(
-        `Не удалось изменить тип выполненных работ!\n${getError(e)}`
-      )
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось изменить тип выполненных работ: \n${
+            error.response?.data.message ?? error.response?.data
+          }`
+        )
+      } else {
+        console.error(error)
+      }
     }
   }
 )

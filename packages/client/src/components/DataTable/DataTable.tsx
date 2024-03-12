@@ -1,9 +1,9 @@
 import { styled } from '@mui/material'
 import MUIDataTable from 'mui-datatables'
 import { createTheme, Theme, ThemeProvider } from '@mui/material/styles'
-import { ThemeMode } from '../../themes/themeConfig'
 import { IDataTable } from './interface'
 import { memo } from 'react'
+import { ThemeMode } from 'themes/themeConfig'
 
 const StyledDataTable = styled(MUIDataTable)(({ theme }) => ({
   '.MuiSwitch-track': {

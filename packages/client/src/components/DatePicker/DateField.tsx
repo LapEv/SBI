@@ -1,6 +1,5 @@
 import { PickersLayout } from '@mui/x-date-pickers/PickersLayout'
 import { styled } from '@mui/material'
-import { ThemeMode } from '../../themes/themeConfig'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { TextField } from 'components/TextFields'
@@ -8,6 +7,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { CalendarIcon, ClearIconElement } from 'components/Icons'
 import { IDateField } from './interface'
 import { memo } from 'react'
+import { ThemeMode } from 'themes/themeConfig'
 
 const StyledDatePickers = styled(PickersLayout)(({ theme }) => ({
   '.MuiDateCalendar-root': {

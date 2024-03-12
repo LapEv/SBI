@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { store } from './store'
 import './index.css'
-import ThemeWrapper from './themes/ThemeWrapper'
+import ThemeWrapper from 'themes/ThemeWrapper'
 
 const startServiceWorker = () => {
   if ('serviceWorker' in navigator) {

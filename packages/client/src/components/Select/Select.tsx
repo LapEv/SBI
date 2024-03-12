@@ -4,8 +4,8 @@ import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { ISelect } from './interfaces'
 import { styled } from '@mui/material'
-import { ThemeMode } from '../../themes/themeConfig'
 import { memo } from 'react'
+import { ThemeMode } from 'themes/themeConfig'
 
 const CustomSelect = styled(Select)(({ theme }) => ({
   padding: '0!important',

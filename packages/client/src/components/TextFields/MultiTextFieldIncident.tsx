@@ -1,5 +1,5 @@
 import { TextField as MuiTextField, styled } from '@mui/material'
-import { ThemeMode } from '../../themes/themeConfig'
+import { ThemeMode } from 'themes/themeConfig'
 
 export const MultiTextFieldIncident = styled(MuiTextField)(({ theme }) => ({
   '.MuiInputLabel-root': {

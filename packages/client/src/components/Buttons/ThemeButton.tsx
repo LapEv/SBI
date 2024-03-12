@@ -1,10 +1,10 @@
 import { useTheme } from '@mui/material'
 import { memo, useContext } from 'react'
-import { ColorModeContext } from '../../themes/ThemeWrapper'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import { useAuth } from 'hooks/auth/useAuth'
 import { Fab } from './FloatingActionButton'
+import { ColorModeContext } from 'themes/ThemeWrapper'
 
 export const ThemeButton = memo(() => {
   const theme = useTheme()

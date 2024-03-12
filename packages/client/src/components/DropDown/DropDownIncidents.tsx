@@ -1,5 +1,5 @@
 import { useState, useEffect, memo } from 'react'
-import { Box, Popper, PopperProps, useTheme } from '@mui/material'
+import { Box, Popper, useTheme } from '@mui/material'
 import { TextFieldIncidents } from 'components/TextFields'
 import { AutocompleteIncidents } from 'components/Autocomplete'
 import { DataDropDown, Options } from './interface'

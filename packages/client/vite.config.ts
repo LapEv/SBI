@@ -2,11 +2,12 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 import dotenv from 'dotenv'
-const result = dotenv.config({ path: '../../.env' })
+// const result = dotenv.config({ path: '../../.env' })
 
-if (result.error) {
-  throw result.error
-}
+dotenv.config()
+// if (result.error) {
+//   throw result.error
+// }
 
 console.log('process.env.SERVER_PORT = ', process.env.SERVER_PORT)
 

@@ -37,11 +37,13 @@ import { throughModelTypMalfunctions } from './models/classifier'
 import { files } from './models/files'
 import dotenv from 'dotenv'
 
-const result = dotenv.config({ path: '../../.env' })
+// const result = dotenv.config({ path: '../../.env' })
 
-if (result.error) {
-  throw result.error
-}
+// if (result.error) {
+//   throw result.error
+// }
+
+dotenv.config()
 
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
   process.env

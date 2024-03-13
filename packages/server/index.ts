@@ -5,11 +5,13 @@ import express from 'express'
 import { dbConnect } from './db'
 import { apiRouter } from './routers/index.router'
 
-const result = dotenv.config({ path: '../../.env' })
+// const result = dotenv.config({ path: '../../.env' })
 
-if (result.error) {
-  throw result.error
-}
+// if (result.error) {
+//   throw result.error
+// }
+
+dotenv.config()
 
 const app = express()
 app.use(

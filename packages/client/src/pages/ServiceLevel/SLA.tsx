@@ -105,9 +105,9 @@ export const SLAPage = memo(
       }
     }
 
-    const checkForChange = (newData: {}) => {
+    const checkForChange = (newData: Record<never, never>) => {
       if (!admin) return
-      setbtnDisabled(deepEqual(newData, slaData as {}))
+      setbtnDisabled(deepEqual(newData, slaData as Record<never, never>))
     }
 
     const clearChange = () => {

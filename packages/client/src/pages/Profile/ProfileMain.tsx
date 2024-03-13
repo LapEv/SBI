@@ -45,7 +45,9 @@ export const ProfileMain = memo(({ setModal, data }: ProfileMainProps) => {
       })
       // changeAvatar(file)
     }
-    if (!deepEqual(userData as {}, data as {})) {
+    if (
+      !deepEqual(userData as Record<never, never>, data as Record<never, never>)
+    ) {
       updateUser(userData)
     }
   }
@@ -74,7 +76,9 @@ export const ProfileMain = memo(({ setModal, data }: ProfileMainProps) => {
 
   useEffect(() => {
     if (file.info) return
-    setbtnDisabled(deepEqual(userData as {}, data as {}))
+    setbtnDisabled(
+      deepEqual(userData as Record<never, never>, data as Record<never, never>)
+    )
   }, [userData])
 
   useEffect(() => {

@@ -115,9 +115,9 @@ export const ContractPage = memo(
       setClearChanges(true)
     }
 
-    const checkForChange = (newData: {}) => {
+    const checkForChange = (newData: Record<never, never>) => {
       if (!admin) return
-      setDataDisabled(deepEqual(newData, contractData as {}))
+      setDataDisabled(deepEqual(newData, contractData as Record<never, never>))
     }
 
     const onChooseSLAs = (checked: boolean, id: string) => {

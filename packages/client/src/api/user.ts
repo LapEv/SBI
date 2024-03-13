@@ -74,28 +74,6 @@ export const signup = createAsyncThunk(
   }
 )
 
-export const signout = createAsyncThunk('user/signout', async (_, thunkAPI) => {
-  try {
-    localStorage.removeItem('token')
-    return {
-      message: {
-        text: 'Пользователь вышел из системы!',
-        type: 'success',
-      },
-    }
-  } catch (error) {
-    if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
-      return thunkAPI.rejectWithValue(
-        `Не удалось выйти: \n${
-          error.response?.data.message ?? error.response?.data
-        }`
-      )
-    } else {
-      console.error(error)
-    }
-  }
-})
-
 export const GetUser = createAsyncThunk(
   'user/getUserInfo',
   async (id: string, thunkAPI) => {

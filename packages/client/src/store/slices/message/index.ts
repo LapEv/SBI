@@ -19,7 +19,6 @@ import {
   updateProfile,
   deleteUser,
   signin,
-  signout,
   signup,
   updateUser,
 } from 'api/user'
@@ -281,20 +280,6 @@ export const messageSlise = createSlice({
       state.isLoadingMessage = true
     },
     [signup.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingMessage = false
-      state.type = 'error'
-      state.text = action.payload
-    },
-    [signout.fulfilled.type]: (state, action: PayloadAction<AnswerMessage>) => {
-      state.isLoadingMessage = false
-      state.error = ''
-      state.text = action.payload.message.text
-      state.type = action.payload.message.type
-    },
-    [signout.pending.type]: state => {
-      state.isLoadingMessage = true
-    },
-    [signout.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoadingMessage = false
       state.type = 'error'
       state.text = action.payload

@@ -27,7 +27,6 @@ export const ServiceLevelPage = memo(() => {
 
   return (
     <Container component="main" maxWidth="md" sx={mainHeaderForPages}>
-      <Message />
       <Modal
         open={modal}
         onClose={setModal}

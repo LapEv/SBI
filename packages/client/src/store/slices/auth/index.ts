@@ -10,7 +10,7 @@ import {
   GetFieldEngineers,
   GetDispatchers,
 } from 'api/user'
-import { signin, signout, signup } from 'api/user'
+import { signin, signup } from 'api/user'
 import {
   AnswerUser,
   AuthState,
@@ -41,6 +41,12 @@ export const authSlise = createSlice({
     },
     clearUser(state) {
       state.user = {}
+    },
+    signout(state) {
+      localStorage.removeItem('token')
+      state.error = ''
+      state.user = {}
+      state.userData = {}
     },
   },
   extraReducers: {
@@ -77,20 +83,20 @@ export const authSlise = createSlice({
       state.isLoadingAuth = false
       state.error = action.payload
     },
-    [signout.fulfilled.type]: (state, action: PayloadAction<User>) => {
-      state.isLoadingAuth = false
-      state.error = ''
-      action.payload = {}
-      state.user = action.payload
-      state.userData = action.payload
-    },
-    [signout.pending.type]: state => {
-      state.isLoadingAuth = true
-    },
-    [signout.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingAuth = false
-      state.error = action.payload
-    },
+    // [signout.fulfilled.type]: (state, action: PayloadAction<User>) => {
+    //   state.isLoadingAuth = false
+    //   state.error = ''
+    //   action.payload = {}
+    //   state.user = action.payload
+    //   state.userData = action.payload
+    // },
+    // [signout.pending.type]: state => {
+    //   state.isLoadingAuth = true
+    // },
+    // [signout.rejected.type]: (state, action: PayloadAction<string>) => {
+    //   state.isLoadingAuth = false
+    //   state.error = action.payload
+    // },
     [GetUser.fulfilled.type]: (state, action: PayloadAction<User>) => {
       state.isLoadingAuth = false
       state.error = ''
@@ -222,4 +228,4 @@ export const authSlise = createSlice({
 
 export const authReducer = authSlise.reducer
 // export const { updateUserData, updateEditStatus } = authSlise.actions
-export const { updateUserData, clearUser } = authSlise.actions
+export const { updateUserData, clearUser, signout } = authSlise.actions

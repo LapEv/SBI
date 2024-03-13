@@ -43,8 +43,6 @@ if (result.error) {
   throw result.error
 }
 
-console.log(result.parsed)
-
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
   process.env
 

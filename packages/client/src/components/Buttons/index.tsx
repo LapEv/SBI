@@ -1,10 +1,14 @@
 import MuiButton, { type ButtonProps } from '@mui/material/Button'
+import { memo } from 'react'
+import { LinkProps } from 'react-router-dom'
 
 type TButtonProps = Omit<ButtonProps, 'component'> & {
-  component?: Record<string, unknown>
+  component?: React.ForwardRefExoticComponent<
+    LinkProps & React.RefAttributes<HTMLAnchorElement>
+  >
 }
 
-export function Button(props: TButtonProps) {
+export const Button = memo((props: TButtonProps) => {
   return (
     <MuiButton
       variant="contained"
@@ -12,7 +16,7 @@ export function Button(props: TButtonProps) {
       {...props}
     />
   )
-}
+})
 
 export { ButtonsSection } from './ButtonsSection'
 export { ButtonsModalSection } from './ButtonsModalSection'

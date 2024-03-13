@@ -12,6 +12,7 @@ import { Box } from '@mui/material'
 import { isEmptyObjField } from 'utils/isEmptyObject'
 import { checkLoading } from 'utils/checkLoading'
 import { useAuth } from 'hooks/auth/useAuth'
+import { Message } from 'components/Message'
 
 const App = memo(() => {
   const [{ user }, { checkUser }] = useAuth()
@@ -50,6 +51,7 @@ const App = memo(() => {
                 <CircularProgress />
               </Box>
             )}
+            <Message />
             <Routes>
               <Route path={Paths.Index} element={<Layouts.Main />}>
                 <Route

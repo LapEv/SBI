@@ -51,7 +51,6 @@ export const LoginPage = memo(() => {
     )
   ) : (
     <Container component="main" maxWidth="sm">
-      <Message />
       <Box
         sx={{
           my: 10,

@@ -24,7 +24,6 @@ export const ProfilePage = memo(() => {
           borderStyle: 'solid',
           p: 3,
         }}>
-        <Message />
         <Modal
           open={modal}
           onClose={setModal}

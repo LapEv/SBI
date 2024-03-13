@@ -13,10 +13,10 @@ import {
   updateUser,
   GetDispatchers,
 } from 'api/user'
-import { signin, signout, signup } from 'api/user'
+import { signin, signup } from 'api/user'
 import { RootState } from 'store'
 import { useAppDispatch } from 'store/hooks'
-import { updateUserData } from 'store/slices/auth'
+import { signout, updateUserData } from 'store/slices/auth'
 import { AuthActions } from './authActions'
 import { AuthState } from 'storeAuth/interfaces'
 

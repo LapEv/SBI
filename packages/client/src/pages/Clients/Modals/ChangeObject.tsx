@@ -25,7 +25,7 @@ import { useMessage } from 'hooks/message/useMessage'
 export const ChangeObject = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [{}, { setMessage }] = useMessage()
+      const [, { setMessage }] = useMessage()
       const [{ addresses, regions }, { getAddresses, getRegions }] =
         useAddresses()
       const [{ clients }, { getClients }] = useClients()

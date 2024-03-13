@@ -9,7 +9,7 @@ import { IExecutor } from './interfaces'
 
 export const Executor = memo(
   ({ value, id, incident, responsible }: IExecutor) => {
-    const [{}, { changeExecutor, changeResponsible }] = useIncidents()
+    const [, { changeExecutor, changeResponsible }] = useIncidents()
     const [{ fieldEngineers, user }] = useAuth()
     const [executor, setExecutor] = useState<Options>({ label: value, id: '' })
 

@@ -17,7 +17,7 @@ import { useClients } from 'hooks/clients/useClients'
 export const AddClient = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [{}, { setMessage }] = useMessage()
+      const [, { setMessage }] = useMessage()
       const [{ clients }, { getClients, newClient }] = useClients()
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',

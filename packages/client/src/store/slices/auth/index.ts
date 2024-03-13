@@ -77,11 +77,12 @@ export const authSlise = createSlice({
       state.isLoadingAuth = false
       state.error = action.payload
     },
-    [signout.fulfilled.type]: (state, {}: PayloadAction<User>) => {
+    [signout.fulfilled.type]: (state, action: PayloadAction<User>) => {
       state.isLoadingAuth = false
       state.error = ''
-      state.user = {}
-      state.userData = {}
+      action.payload = {}
+      state.user = action.payload
+      state.userData = action.payload
     },
     [signout.pending.type]: state => {
       state.isLoadingAuth = true

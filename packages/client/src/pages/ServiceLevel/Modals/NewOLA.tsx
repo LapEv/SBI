@@ -19,7 +19,7 @@ import { useIncidents } from 'hooks/incidents/useINC'
 export const NewOLA = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [_, { newOLA }] = useSLA()
+      const [, { newOLA }] = useSLA()
       const [{ typesOfWork }, { getTypesOfWork }] = useIncidents()
       const [listTypes, setListTypes] = useState<Options[]>([])
       const [selectedType, setSelectedType] = useState<Options>(emptyValue)

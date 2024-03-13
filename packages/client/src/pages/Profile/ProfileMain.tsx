@@ -17,7 +17,7 @@ import { FileProps } from 'storeAuth/interfaces'
 import { useMessage } from 'hooks/message/useMessage'
 
 export const ProfileMain = memo(({ setModal, data }: ProfileMainProps) => {
-  const [{}, { setMessage }] = useMessage()
+  const [, { setMessage }] = useMessage()
   const [{ userData }, { updateUserData, updateUser }] = useAuth()
   const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
   const [file, setFile] = useState<FileProps>({ data: '', info: undefined })

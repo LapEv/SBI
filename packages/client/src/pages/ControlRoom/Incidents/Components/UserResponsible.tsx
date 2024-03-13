@@ -8,7 +8,7 @@ import { FilterOptions } from '../Utils/FilterOptions'
 import { DropDownIncidents } from 'components/DropDown'
 
 export const UserResponsible = memo(({ value, id, incident }: IExecutor) => {
-  const [{}, { changeResponsible }] = useIncidents()
+  const [, { changeResponsible }] = useIncidents()
   const [{ dispatchers, user }] = useAuth()
   const [responsible, setResposible] = useState<Options>({
     label: value,

@@ -34,7 +34,7 @@ import { useMessage } from 'hooks/message/useMessage'
 export const ChangeStatus = memo(
   React.forwardRef<unknown, CloseINCProps>(
     ({ handleModal, title, data }: CloseINCProps, ref) => {
-      const [{}, { setMessage }] = useMessage()
+      const [, { setMessage }] = useMessage()
       const theme = useTheme()
       const [{ typesCompletedWork }] = useIncidents()
       const [typeCompletedWorkList, setTypeCompletedWorkList] = useState<
@@ -46,7 +46,7 @@ export const ChangeStatus = memo(
       const [selectedFiles, setSelectedFiles] = useState<FileList | null>()
       const [selectedNameFiles, setSelectedNameFiles] = useState<string>('')
 
-      const [dragOver, setDragOver] = useState<boolean>(false)
+      const [, setDragOver] = useState<boolean>(false)
       const [uploadProgress] = useState(0)
 
       const handleDragOver = useCallback((event: DragEvent<HTMLDivElement>) => {
@@ -140,6 +140,8 @@ export const ChangeStatus = memo(
 
       return (
         <Box
+          ref={ref}
+          tabIndex={-1}
           sx={{ ...modalStyle, paddingLeft: 5 }}
           component="form"
           onSubmit={handleSubmit(changeData)}>

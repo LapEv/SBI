@@ -17,7 +17,7 @@ import { useMessage } from 'hooks/message/useMessage'
 export const AddRegion = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [{}, { setMessage }] = useMessage()
+      const [, { setMessage }] = useMessage()
       const [{ regions }, { getRegions, newRegion }] = useAddresses()
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',

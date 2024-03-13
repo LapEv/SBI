@@ -16,7 +16,7 @@ import { useClassifier } from 'hooks/classifier/useClassifier'
 export const NewClassifierEquipment = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [{}, { newClassifierEquipment }] = useClassifier()
+      const [, { newClassifierEquipment }] = useClassifier()
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
         defaultValues: {

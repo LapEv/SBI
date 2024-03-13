@@ -33,7 +33,7 @@ export const SLAPage = memo(
     id_typeOfWork,
     TypesOfWork,
   }: IServiceListData) => {
-    const [{}, { changeSLA, changeOLA }] = useSLA()
+    const [, { changeSLA, changeOLA }] = useSLA()
     const [{ typesOfWork }, { getTypesOfWork }] = useIncidents()
     const [{ admin }] = useAuth()
     const [btnDisabled, setbtnDisabled] = useState<boolean>(true)

@@ -39,7 +39,7 @@ export const ContractPage = memo(
     id_client,
   }: Contracts) => {
     const [{ admin }] = useAuth()
-    const [{}, { changeContract }] = useContracts()
+    const [, { changeContract }] = useContracts()
     const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
     const [slaDisabled, setSLADisabled] = useState<boolean>(true)
     const [equipmentDisabled, setEquipmentDisabled] = useState<boolean>(true)

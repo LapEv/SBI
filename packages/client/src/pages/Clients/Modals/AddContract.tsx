@@ -37,7 +37,7 @@ import { CheckBoxGroups, Item } from 'components/CheckBoxGroup'
 export const AddContract = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [{}, { setMessage }] = useMessage()
+      const [, { setMessage }] = useMessage()
       const [openList, setOpenList] = useState(false)
       const [openListObjects, setOpenListObjects] = useState(false)
       const [{ clients }, { getClients }] = useClients()

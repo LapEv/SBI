@@ -18,7 +18,7 @@ import { memo } from 'react'
 
 export const ProfileChangePassword = memo(
   ({ handleModal, userId }: ProfileChangePasswordProps) => {
-    const [{}, { changePassword }] = useAuth()
+    const [, { changePassword }] = useAuth()
     const { handleSubmit, control } = useForm<ProfileChangePasswordValues>({
       mode: 'onBlur',
       defaultValues: {

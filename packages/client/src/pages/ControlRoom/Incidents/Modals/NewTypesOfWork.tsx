@@ -16,7 +16,7 @@ import { useIncidents } from 'hooks/incidents/useINC'
 export const NewTypesOfWork = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [{}, { newTypesOfWork }] = useIncidents()
+      const [, { newTypesOfWork }] = useIncidents()
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
         defaultValues: {

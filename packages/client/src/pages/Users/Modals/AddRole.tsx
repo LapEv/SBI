@@ -17,7 +17,7 @@ import { Roles } from 'storeRoles/interfaces'
 export const AddRole = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [{}, { newRole }] = useRoles()
+      const [, { newRole }] = useRoles()
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
         defaultValues: {

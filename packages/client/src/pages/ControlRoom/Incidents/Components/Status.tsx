@@ -14,7 +14,7 @@ import { FilterOptions } from '../Utils/FilterOptions'
 
 export const Status = memo(
   ({ value, id, incident, currentStatus, timeSLA }: IStatus) => {
-    const [{}, { setMessage }] = useMessage()
+    const [, { setMessage }] = useMessage()
     const modalClientRef = React.createRef()
     const [modal, setModal] = useState<IModal>({
       status: false,

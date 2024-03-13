@@ -94,7 +94,9 @@ export const ProfileData = memo((user: User) => {
   }
 
   useEffect(() => {
-    setChangeActive(deepEqual(userData as {}, user as {}))
+    setChangeActive(
+      deepEqual(userData as Record<never, never>, user as Record<never, never>)
+    )
   }, [userData])
 
   useEffect(() => {

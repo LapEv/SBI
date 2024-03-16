@@ -3,6 +3,7 @@
     "target": "ESNext",
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "types": ["node"],
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": false,
@@ -15,19 +16,16 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "rootDir": "./src/",
+    "rootDir": "./",
     "baseUrl": "./src/",
     "paths": {
       "storeAuth/*": ["store/slices/auth/*"],
       "storeRoles/*": ["store/slices/roles/*"],
-      "themes/*": ["themes/*"]
+      "themes/*": ["themes/*"],
+      "/*": ["./node_modules/*"]
     }
   },
-  "baseUrl": ".",
-  "paths": {
-    "*": ["src/*"]
-  },
-  "include": ["src", "src/**/*.ts"],
+  "include": ["src"],
   "files": ["src/custom.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -23,7 +23,11 @@
       "themes/*": ["themes/*"]
     }
   },
-  "include": ["src"],
+  "baseUrl": ".",
+  "paths": {
+    "*": ["src/*"]
+  },
+  "include": ["src", "src/**/*.ts"],
   "files": ["src/custom.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

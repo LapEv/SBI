@@ -6,7 +6,6 @@ import { ChooseModal } from './Modals'
 import { Divisions } from './'
 import { menuData } from './data'
 import { useAuth } from 'hooks/auth/useAuth'
-import { Message } from 'components/Message'
 import { headerForPages, mainHeaderForPages } from 'static/styles'
 
 export const UsersPage = memo(() => {

@@ -1,6 +1,5 @@
 import { useEffect, memo } from 'react'
 import { Box, Container } from '@mui/material'
-import { Message } from 'components/Message/Message'
 import { useAuth } from 'hooks/auth/useAuth'
 import { TableIncidents } from '.'
 import { mainHeaderForINCPage } from 'static/styles'

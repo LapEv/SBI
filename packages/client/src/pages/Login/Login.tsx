@@ -12,7 +12,6 @@ import { MapLoginFields } from './LoginData'
 import { Button } from 'components/Buttons'
 import { TextField } from 'components/TextFields/'
 import { isEmptyObjField } from 'utils/isEmptyObject'
-import { Message } from 'components/Message'
 import { LoginValues } from './interfaces'
 import { memo } from 'react'
 

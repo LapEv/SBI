@@ -13,9 +13,6 @@
     "preview": "lerna run preview"
   },
   "license": "MIT",
-  "workspaces": [
-    "packages/*"
-  ],
   "engines": {
     "node": ">=15"
   },

@@ -1,4 +1,4 @@
-import { JwtPayload } from 'jsonwebtoken'
+// import { JwtPayload } from 'jsonwebtoken'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import jwt_decode from 'jwt-decode'
 import {
@@ -25,7 +25,7 @@ export const signin = createAsyncThunk(
     try {
       const { data } = await host.post(ApiEndPoints.User.Login, loginData)
       localStorage.setItem('token', data.token)
-      const { id } = jwt_decode(data.token) as JwtPayload
+      const { id } = jwt_decode(data.token) as any
       return {
         ...data,
         id,
@@ -168,7 +168,7 @@ export const CheckUser = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const { data } = await authhost.get<User>(ApiEndPoints.User.CheckUser)
-      const { id } = jwt_decode(data.token as string) as JwtPayload
+      const { id } = jwt_decode(data.token as string) as any
       return { ...data, id }
     } catch (error) {
       if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {

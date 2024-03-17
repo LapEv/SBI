@@ -51,8 +51,6 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_PORT: ${POSTGRES_PORT}
       SECRET_KEY: ${SECRET_KEY}
-    depends_on:
-      - server
 
   client:
     container_name: sbi-client
@@ -68,6 +66,8 @@ services:
     environment:
       - CLIENT_PORT=${CLIENT_PORT}
       - SERVER_PORT=${SERVER_PORT}
+    depends_on:
+      - server
 
   pgadmin:
     container_name: sbi-pgadmin

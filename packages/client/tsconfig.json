@@ -21,8 +21,7 @@
       "storeAuth/*": ["store/slices/auth/*"],
       "storeRoles/*": ["store/slices/roles/*"],
       "themes/*": ["themes/*"],
-      "/*": ["./node_modules/*", "../../node_modules/*"],
-      "jsonwebtoken/*": ["../../node_modules/@types/jsonwebtoken/index.d.ts"]
+      "/*": ["./node_modules/*", "../../node_modules/*"]
     }
   },
   "include": ["src"],

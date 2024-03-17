@@ -1,4 +1,4 @@
-import { JwtPayload } from 'jsonwebtoken'
+import { JwtPayload } from '../../../../node_modules/@types/jsonwebtoken'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import jwt_decode from 'jwt-decode'
 import {

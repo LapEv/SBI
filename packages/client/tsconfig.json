@@ -5,7 +5,7 @@
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
     "skipLibCheck": true,
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -21,7 +21,8 @@
       "storeAuth/*": ["store/slices/auth/*"],
       "storeRoles/*": ["store/slices/roles/*"],
       "themes/*": ["themes/*"],
-      "/*": ["./node_modules/*"]
+      "/*": ["./node_modules/*", "../../node_modules/*"],
+      "jsonwebtoken/*": ["../../node_modules/@types/jsonwebtoken/index.d.ts"]
     }
   },
   "include": ["src"],

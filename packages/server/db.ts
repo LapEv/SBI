@@ -53,6 +53,8 @@ const sequelizeOptions: SequelizeOptions = {
   minifyAliases: true,
 }
 
+console.log('sequelizeOptions = ', sequelizeOptions)
+
 export const sequelize = new Sequelize(sequelizeOptions)
 
 export const Roles = sequelize.define('Roles', roles, {})

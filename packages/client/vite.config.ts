@@ -9,8 +9,6 @@ dotenv.config()
 //   throw result.error
 // }
 
-console.log('process.env.SERVER_PORT = ', process.env.SERVER_PORT)
-
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {

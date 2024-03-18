@@ -19,7 +19,7 @@ const App = memo(() => {
   useEffect(() => {
     const fetchServerData = async () => {
       // const url = `http://localhost:${__SERVER_PORT__}`
-      const url = `sbi-db:${__SERVER_PORT__}`
+      const url = `sbi-server:${__SERVER_PORT__}`
       const response = await fetch(url)
       const data = await response.json()
       console.log(data)

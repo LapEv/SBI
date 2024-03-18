@@ -19,12 +19,11 @@ const App = memo(() => {
   useEffect(() => {
     const fetchServerData = async () => {
       // const url = `http://localhost:${__SERVER_PORT__}`
-      const url = `http://${__SERVER_DOCKER_HOST__}:${__SERVER_PORT__}`
+      const url = `http://${__SERVER_HOST__}:${__SERVER_PORT__}`
       const response = await fetch(url)
       const data = await response.json()
       console.log(data)
     }
-    console.log('__SERVER_DOCKER_HOST__ = ', __SERVER_DOCKER_HOST__)
     fetchServerData()
   }, [])
 

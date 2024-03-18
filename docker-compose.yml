@@ -21,7 +21,7 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      back:
+      front:
         ipv4_address: 172.18.0.4
 
   # nginx:
@@ -104,8 +104,8 @@ networks:
     ipam:
       config:
         - subnet: 172.18.0.0/16
-  back:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.18.0.0/16
+  # back:
+  #   driver: bridge
+  #   ipam:
+  #     config:
+  #       - subnet: 172.18.0.0/16

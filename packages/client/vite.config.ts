@@ -18,6 +18,7 @@ export default defineConfig({
   },
   define: {
     __SERVER_PORT__: process.env.SERVER_PORT,
+    __SERVER_DOCKER_HOST__: process.env.SERVER_DOCKER_HOST,
   },
   plugins: [react()],
   esbuild: {

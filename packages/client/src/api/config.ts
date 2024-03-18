@@ -135,7 +135,8 @@ export const ApiEndPoints = {
   },
 }
 
-const url = `http://localhost:${__SERVER_PORT__}/api/`
+// const url = `http://localhost:${__SERVER_PORT__}/api/`
+const url = `http://localhost:${__SERVER_DOCKER_HOST__}/api/`
 
 const authhost = axios.create({
   baseURL: url,

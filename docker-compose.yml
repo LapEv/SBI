@@ -104,10 +104,8 @@ networks:
     ipam:
       config:
         - subnet: 172.18.0.0/16
-    interval: false
   back:
     driver: bridge
     ipam:
       config:
         - subnet: 172.18.0.0/16
-    interval: true

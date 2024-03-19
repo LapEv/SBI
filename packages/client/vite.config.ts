@@ -9,11 +9,6 @@ dotenv.config()
 //   throw result.error
 // }
 
-console.log('process.env.SERVER_HOST = ', process.env.SERVER_HOST)
-console.log(
-  'process.env.SERVER_HOST = ',
-  JSON.stringify(process.env.SERVER_HOST)
-)
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {

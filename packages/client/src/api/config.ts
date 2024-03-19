@@ -135,8 +135,6 @@ export const ApiEndPoints = {
   },
 }
 
-console.log('__SERVER_HOST__ = ', __SERVER_HOST__)
-
 // const url = `http://localhost:${__SERVER_PORT__}/api/`
 const url = `http://${__SERVER_HOST__}:${__SERVER_PORT__}/api/`
 
@@ -177,6 +175,7 @@ authFileHost.interceptors.request.use(authInterceptor)
 authhost.interceptors.response.use(
   res => res,
   error => {
+    console.log('err = ', error)
     if (
       error.response.status === 403 &&
       error.response.data.message === 'The user is not logged in'

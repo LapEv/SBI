@@ -2,6 +2,8 @@ import type { Request, Response } from 'express'
 import { FilesRepos } from '../db'
 const fs = require('fs')
 const path = require('path')
+import dotenv from 'dotenv'
+dotenv.config()
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -21,15 +23,15 @@ export class filesService {
   uploadFiles = async (_req: Request, res: Response) => {
     const { incident, type, filesName, id_incFiles } = _req.body
     const { files } = _req.files
+    const typeDir = type === 'IncidentActs' ? type : ''
+    const pathFiles =
+      process.env.NODE_ENV === 'development'
+        ? path.join(__dirname, `../Files/${typeDir}/${incident}/${filesName}`)
+        : `process.env.FILE_PATH/${typeDir}/${incident}/${filesName}`
     try {
-      const typeDir = type === 'IncidentActs' ? type : ''
       if (files.constructor !== Array) {
-        const filePath = path.join(
-          __dirname,
-          `../Files/${typeDir}/${incident}/${filesName}`
-        )
-        if (!fs.existsSync(filePath)) {
-          files.mv(filePath)
+        if (!fs.existsSync(pathFiles)) {
+          files.mv(pathFiles)
         }
         const uploadedFiles = [
           {
@@ -47,10 +49,13 @@ export class filesService {
       /* eslint-disable @typescript-eslint/no-explicit-any */
       const uploadedFiles = files.map((item: any, index: number) => {
         /* eslint-enable @typescript-eslint/no-explicit-any */
-        const filePath = path.join(
-          __dirname,
-          `../Files/${typeDir}/${incident}/${filesName[index]}`
-        )
+        const filePath =
+          process.env.NODE_ENV === 'development'
+            ? path.join(
+                __dirname,
+                `../Files/${typeDir}/${incident}/${filesName[index]}`
+              )
+            : `process.env.FILE_PATH/${typeDir}/${incident}/${filesName[index]}`
         if (!fs.existsSync(filePath)) {
           item.mv(filePath)
         }

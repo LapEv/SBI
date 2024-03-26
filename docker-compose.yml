@@ -55,6 +55,8 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_PORT: ${POSTGRES_PORT}
       SECRET_KEY: ${SECRET_KEY}
+    volumes:
+      - ./packages/server/Files:/${FILE_PATH}
     networks:
       front:
         ipv4_address: 172.25.0.3
@@ -74,6 +76,8 @@ services:
       - CLIENT_PORT=${CLIENT_PORT}
       - SERVER_PORT=${SERVER_PORT}
     depends_on:
+      - server
+    links:
       - server
     networks:
       front:

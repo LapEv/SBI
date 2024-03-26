@@ -39,11 +39,16 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
-  process.env
+const {
+  POSTGRES_USER,
+  POSTGRES_PASSWORD,
+  POSTGRES_DB,
+  POSTGRES_PORT,
+  POSTGRES_HOST,
+} = process.env
 
 const sequelizeOptions: SequelizeOptions = {
-  host: process.env.NODE_ENV === 'development' ? 'localhost' : 'sbi-db', //sbi-db - для докера; localhost - для npm run dev:ssr
+  host: process.env.NODE_ENV === 'development' ? 'localhost' : POSTGRES_HOST, //sbi-db - для докера; localhost - для npm run dev:ssr
   port: Number(POSTGRES_PORT),
   username: POSTGRES_USER,
   password: POSTGRES_PASSWORD,

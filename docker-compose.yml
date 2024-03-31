@@ -64,7 +64,7 @@ services:
       - postgres
     volumes:
       - ./packages/server/Files:/${FILE_PATH}
-    command: ['sh', '-c', 'node /app/server/src/index.js']
+    command: ['sh', '-c', 'node /app/server/index.js']
     networks:
       - back
 

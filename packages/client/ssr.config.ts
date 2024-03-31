@@ -5,9 +5,6 @@ import * as path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  esbuild: {
-    logOverride: { 'this-is-undefined-in-esm': 'silent' },
-  },
   build: {
     lib: {
       entry: path.resolve(__dirname, 'ssr.tsx'),

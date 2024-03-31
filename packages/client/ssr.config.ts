@@ -5,6 +5,9 @@ import * as path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  esbuild: {
+    logOverride: { 'this-is-undefined-in-esm': 'silent' },
+  },
   build: {
     lib: {
       entry: path.resolve(__dirname, 'ssr.tsx'),
@@ -14,6 +17,13 @@ export default defineConfig({
     rollupOptions: {
       output: {
         dir: 'dist-ssr',
+      },
+      onwarn(warning, warn) {
+        // Suppress "Module level directives cause errors when bundled" warnings
+        if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
+          return
+        }
+        warn(warning)
       },
     },
   },

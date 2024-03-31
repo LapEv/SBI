@@ -2,13 +2,8 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 import dotenv from 'dotenv'
-// const result = dotenv.config({ path: '../../.env' })
 
 dotenv.config()
-// if (result.error) {
-//   throw result.error
-// }
-
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {

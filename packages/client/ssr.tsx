@@ -5,6 +5,8 @@ import { store } from './src/store'
 import ThemeWrapper from './src/themes/ThemeWrapper'
 
 export function render(url: string) {
+  console.log('ssr')
+
   return renderToString(
     <Provider store={store}>
       <ThemeWrapper />

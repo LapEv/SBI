@@ -18,8 +18,8 @@ const App = memo(() => {
   const [{ user }, { checkUser }] = useAuth()
   useEffect(() => {
     const fetchServerData = async () => {
-      // const url = `http://localhost:${__SERVER_PORT__}`
-      const url = `http://${__SERVER_HOST__}:${__SERVER_PORT__}`
+      const url = `http://localhost:${__SERVER_PORT__}`
+      // const url = `http://${__SERVER_HOST__}:${__SERVER_PORT__}`
       const response = await fetch(url)
       const data = await response.json()
       console.log(data)

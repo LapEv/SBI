@@ -23,7 +23,11 @@ const startServiceWorker = () => {
   }
 }
 
-startServiceWorker()
+if (process.env.NODE_ENV === 'production') {
+  startServiceWorker()
+}
+
+console.log('main')
 
 const App = () => (
   <React.StrictMode>

@@ -15,11 +15,7 @@ export default defineConfig({
     port: Number(process.env.CLIENT_PORT) || 3000,
   },
   define: {
-    __SERVER_HOST__:
-      process.env.NODE_ENV === 'development'
-        ? JSON.stringify(process.env.SERVER_HOST)
-        : JSON.stringify(process.env.SERVER_DOCKER_HOST),
-    __SERVER_PORT__: process.env.SERVER_PORT,
+    __SERVER_PORT__: process.env.SERVER_PORT || 3001,
   },
   plugins: [react()],
   esbuild: {
@@ -41,17 +37,6 @@ export default defineConfig({
       storeAuth: path.resolve(__dirname, './src/store/slices/auth/'),
       storeStructure: path.resolve(__dirname, './src/store/slices/structure/'),
       themes: path.resolve(__dirname, './src/themes/'),
-    },
-  },
-  build: {
-    rollupOptions: {
-      onwarn(warning, warn) {
-        // Suppress "Module level directives cause errors when bundled" warnings
-        if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
-          return
-        }
-        warn(warning)
-      },
     },
   },
 })

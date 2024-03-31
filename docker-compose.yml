@@ -21,21 +21,25 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      front:
-        ipv4_address: 172.25.0.4
+      - back
 
-  # nginx:
-  #   container_name: sbi-nginx
-  #   depends_on:
-  #     - server
-  #     - client
-  #     - pgadmin
-  #   restart: always
-  #   build:
-  #     dockerfile: Dockerfile.nginx
-  #     context: .
-  #   ports:
-  #     - '3050:80'
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - server
+    volumes:
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - back
 
   server:
     container_name: sbi-server
@@ -56,35 +60,26 @@ services:
       POSTGRES_PORT: ${POSTGRES_PORT}
       POSTGRES_HOST: ${POSTGRES_HOST}
       SECRET_KEY: ${SECRET_KEY}
+    depends_on:
+      - postgres
     volumes:
       - ./packages/server/Files:/${FILE_PATH}
+    command: ['sh', '-c', 'node /app/server/src/index.js']
     networks:
-      front:
-        ipv4_address: 172.25.0.3
+      - back
 
-  client:
-    container_name: sbi-client
-    image: sbi-client
-    build:
-      context: .
-      dockerfile: Dockerfile.client
-      args:
-        CLIENT_PORT: ${CLIENT_PORT}
+  acme-companion:
+    image: nginxproxy/acme-companion
+    container_name: nginx-proxy-acme
     restart: always
-    ports:
-      - '${CLIENT_PORT}:80'
-    environment:
-      - CLIENT_PORT=${CLIENT_PORT}
-      - SERVER_PORT=${SERVER_PORT}
-      - SERVER_HOST=${SERVER_HOST}
-      - SERVER_DOCKER_HOST=${SERVER_DOCKER_HOST}
     depends_on:
-      - server
-    links:
-      - server
-    networks:
-      front:
-        ipv4_address: 172.25.0.2
+      - nginx-proxy
+    volumes_from:
+      - nginx-proxy
+    volumes:
+      - certs:/etc/nginx/certs:rw
+      - acme:/etc/acme.sh
+      - /var/run/docker.sock:/var/run/docker.sock:ro
 
   pgadmin:
     container_name: sbi-pgadmin
@@ -102,20 +97,15 @@ services:
       postgres:
         condition: service_healthy
     networks:
-      front:
-        ipv4_address: 172.25.0.5
+      - back
+
+volumes:
+  conf:
+  vhost:
+  html:
+  certs:
+  acme:
 
 networks:
-  front:
+  back:
     driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.25.0.0/16
-          ip_range: 172.25.0.0/24
-          gateway: 172.25.0.1
-  # back:
-  #   driver: bridge
-  #   ipam:
-  #     config:
-  #       - subnet: 172.18.0.0/16

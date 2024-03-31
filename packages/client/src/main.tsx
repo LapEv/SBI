@@ -25,10 +25,12 @@ const startServiceWorker = () => {
 
 startServiceWorker()
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+const App = () => (
   <React.StrictMode>
     <Provider store={store}>
       <ThemeWrapper />
     </Provider>
   </React.StrictMode>
 )
+
+ReactDOM.hydrateRoot(document.getElementById('root') as HTMLElement, <App />)

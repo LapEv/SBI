@@ -36,6 +36,7 @@ import {
 import { throughModelTypMalfunctions } from './models/classifier'
 import { files } from './models/files'
 import dotenv from 'dotenv'
+import { isDev } from './data/app'
 
 dotenv.config()
 
@@ -48,7 +49,7 @@ const {
 } = process.env
 
 const sequelizeOptions: SequelizeOptions = {
-  host: process.env.NODE_ENV === 'development' ? 'localhost' : POSTGRES_HOST, //sbi-db - для докера; localhost - для npm run dev:ssr
+  host: isDev ? 'localhost' : POSTGRES_HOST, //sbi-db - для докера; localhost - для npm run dev:ssr
   port: Number(POSTGRES_PORT),
   username: POSTGRES_USER,
   password: POSTGRES_PASSWORD,
@@ -56,8 +57,6 @@ const sequelizeOptions: SequelizeOptions = {
   dialect: 'postgres',
   minifyAliases: true,
 }
-
-console.log('sequelizeOptions = ', sequelizeOptions)
 
 export const sequelize = new Sequelize(sequelizeOptions)
 

@@ -17,4 +17,22 @@ export default defineConfig({
       },
     },
   },
+  resolve: {
+    alias: {
+      assets: path.resolve(__dirname, './src/assets'),
+      api: path.resolve(__dirname, './src/api'),
+      pages: path.resolve(__dirname, './src/pages'),
+      layouts: path.resolve(__dirname, './src/layouts'),
+      components: path.resolve(__dirname, './src/components'),
+      utils: path.resolve(__dirname, './src/utils'),
+      static: path.resolve(__dirname, './src/static'),
+      hoks: path.resolve(__dirname, './src/hoks'),
+      hooks: path.resolve(__dirname, './src/hooks'),
+      store: path.resolve(__dirname, './src/store'),
+      storeRoles: path.resolve(__dirname, './src/store/slices/roles/'),
+      storeAuth: path.resolve(__dirname, './src/store/slices/auth/'),
+      storeStructure: path.resolve(__dirname, './src/store/slices/structure/'),
+      themes: path.resolve(__dirname, './src/themes/'),
+    },
+  },
 })

@@ -4,7 +4,9 @@ import { ThemeConfig } from './themeConfig'
 import App from '../App'
 import { useAuth } from 'hooks/auth/useAuth'
 const defaultTheme =
-  (localStorage.getItem('theme') as 'light' | 'dark') ?? 'light'
+  typeof window !== 'undefined'
+    ? (localStorage.getItem('theme') as 'light' | 'dark')
+    : 'light'
 export const ColorModeContext = createContext({
   toggleColorMode: (id: string | undefined) => {
     id

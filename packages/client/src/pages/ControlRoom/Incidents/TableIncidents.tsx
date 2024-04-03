@@ -925,8 +925,10 @@ export const TableIncidents = memo(() => {
         </TableRow>
       )
     },
-    sortOrder:
-      JSON.parse(localStorage.getItem('sortColumn') as string) ?? 'incident',
+    sortOrder: JSON.parse(localStorage.getItem('sortColumn') as string) ?? {
+      name: 'incident',
+      direction: 'asc',
+    },
 
     onColumnSortChange: (column, direction) =>
       localStorage.setItem(
@@ -984,7 +986,7 @@ export const TableIncidents = memo(() => {
   useEffect(() => {
     const { nameSort, direction, limit, page, filterOptions } = FilterOptions()
     getINCs({ limit, nameSort, direction, page, filterOptions })
-    console.log('incs = ', incidents)
+    // console.log('incs = ', incidents)
   }, [])
 
   const checkClickMenu = (name: string | null) => {

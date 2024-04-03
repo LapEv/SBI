@@ -1,5 +1,5 @@
-import React, { Component, PropsWithChildren } from 'react'
-import { ErrorPage } from '../../pages/Error'
+import { Component, PropsWithChildren } from 'react'
+import { Error } from 'pages'
 
 interface ErrorBoundaryState {
   hasError: boolean
@@ -18,7 +18,7 @@ class ErrorBoundary extends Component<PropsWithChildren, ErrorBoundaryState> {
         message: 'Упс. Мы работаем над исправлением ошибки.',
       }
 
-      return <ErrorPage error={notFoundError} />
+      return <Error error={notFoundError} />
     }
 
     return this.props.children

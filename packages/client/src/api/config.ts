@@ -175,10 +175,12 @@ authFileHost.interceptors.request.use(authInterceptor)
 authhost.interceptors.response.use(
   res => res,
   error => {
-    console.log('err = ', error)
     if (
-      error.response.status === 403 &&
-      error.response.data.message === 'The user is not logged in'
+      (error.response.status === 401 &&
+        error.response.statusText === 'Unauthorized') ||
+      (error.response.status === 403 &&
+        error.response.statusText === 'Forbidden' &&
+        error.response.data.message === 'The user is not logged in')
     ) {
       localStorage.removeItem('token')
       store.dispatch(clearUser())

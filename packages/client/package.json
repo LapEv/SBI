@@ -4,12 +4,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:ssr && npm run build:client",
+    "build": "npm run clean && npm run build:ssr && npm run build:client",
     "build:client": "tsc && vite build --config vite.config.ts",
     "build:ssr": "tsc && vite build --config ssr.config.ts",
     "preview": "vite preview",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "clean": "rimraf dist && rimraf dist-ssr"
   },
   "dependencies": {
     "@emotion/react": "11.10.6",
@@ -36,7 +37,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.8",
     "react-redux": "8.0.5",
-    "react-router-dom": "6.8.1",
+    "react-router-dom": "6.9.0",
     "react-to-print": "^2.15.1"
   },
   "devDependencies": {

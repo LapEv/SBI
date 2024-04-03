@@ -4,6 +4,8 @@ import { Provider } from 'react-redux'
 import { store } from './store'
 import './index.css'
 import ThemeWrapper from 'themes/ThemeWrapper'
+import { BrowserRouter } from 'react-router-dom'
+import { FullScreen } from 'components/FullScreen'
 
 const startServiceWorker = () => {
   if ('serviceWorker' in navigator) {
@@ -29,12 +31,15 @@ if (process.env.NODE_ENV === 'production') {
 
 console.log('main')
 
-const App = () => (
+export const App = () => (
   <React.StrictMode>
     <Provider store={store}>
-      <ThemeWrapper />
+      <FullScreen>
+        <BrowserRouter>
+          <ThemeWrapper />
+        </BrowserRouter>
+      </FullScreen>
     </Provider>
   </React.StrictMode>
 )
-
 ReactDOM.hydrateRoot(document.getElementById('root') as HTMLElement, <App />)

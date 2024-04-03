@@ -3,10 +3,13 @@ import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
 import { ThemeConfig } from './themeConfig'
 import App from '../App'
 import { useAuth } from 'hooks/auth/useAuth'
-const defaultTheme =
+
+const localStorageTheme =
   typeof window !== 'undefined'
     ? (localStorage.getItem('theme') as 'light' | 'dark')
     : 'light'
+const defaultTheme = localStorageTheme ?? 'light'
+
 export const ColorModeContext = createContext({
   toggleColorMode: (id: string | undefined) => {
     id

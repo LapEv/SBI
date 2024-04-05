@@ -17,8 +17,8 @@ export const getAddresses = createAsyncThunk(
   'addresses/getAddresses',
   async (_, thunkAPI) => {
     try {
-      const { data } = await authhost.get<Addresses>(
-        ApiEndPoints.Addresses.getAddresses
+      const { data } = await authhost.get<Addresses[]>(
+        ApiEndPoints.Addresses.getAddresses,
       )
       return data
     } catch (error) {
@@ -26,13 +26,13 @@ export const getAddresses = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные по адресам: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const newAddress = createAsyncThunk(
@@ -41,7 +41,7 @@ export const newAddress = createAsyncThunk(
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Addresses.newAddress,
-        address
+        address,
       )
       return {
         data,
@@ -52,13 +52,13 @@ export const newAddress = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось создать новый адрес: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const deleteAddress = createAsyncThunk(
@@ -67,7 +67,7 @@ export const deleteAddress = createAsyncThunk(
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Addresses.deleteAddress,
-        { selectedAddresses }
+        { selectedAddresses },
       )
       return {
         data,
@@ -78,13 +78,13 @@ export const deleteAddress = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `е удалось удалить адреса: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changeAddress = createAsyncThunk(
@@ -96,7 +96,7 @@ export const changeAddress = createAsyncThunk(
         {
           newAddress,
           id,
-        }
+        },
       )
       return {
         data,
@@ -107,13 +107,13 @@ export const changeAddress = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось изменить адрес: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const getRegions = createAsyncThunk(
@@ -121,7 +121,7 @@ export const getRegions = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const { data } = await authhost.get<Regions>(
-        ApiEndPoints.Addresses.getRegions
+        ApiEndPoints.Addresses.getRegions,
       )
       return data
     } catch (error) {
@@ -129,13 +129,13 @@ export const getRegions = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные по регионам: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const newRegion = createAsyncThunk(
@@ -144,7 +144,7 @@ export const newRegion = createAsyncThunk(
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Addresses.newRegion,
-        region
+        region,
       )
       return {
         data,
@@ -155,13 +155,13 @@ export const newRegion = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось создать новый регион: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const deleteRegion = createAsyncThunk(
@@ -170,7 +170,7 @@ export const deleteRegion = createAsyncThunk(
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Addresses.deleteRegion,
-        { selectedRegions }
+        { selectedRegions },
       )
       return {
         data,
@@ -181,13 +181,13 @@ export const deleteRegion = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось удалить регионы: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changeRegion = createAsyncThunk(
@@ -199,7 +199,7 @@ export const changeRegion = createAsyncThunk(
         {
           newRegion,
           id,
-        }
+        },
       )
       return {
         data,
@@ -210,11 +210,11 @@ export const changeRegion = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось изменить регион: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )

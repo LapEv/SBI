@@ -1,4 +1,4 @@
-import dotenv from 'dotenv'
+import * as dotenv from 'dotenv'
 import cors from 'cors'
 const fileUpload = require('express-fileupload')
 import express from 'express'
@@ -8,10 +8,10 @@ import { apiRouter } from './routers/index.router'
 import { isDev, srcPath } from './data/app'
 import staticMiddleware from './middleware/static.middleware'
 import ssrMiddleware from './middleware/ssr.middleware'
-dotenv.config()
 
 async function init() {
   await dbConnect()
+  dotenv.config()
   const app = express()
   app.use(
     fileUpload({
@@ -20,7 +20,7 @@ async function init() {
         fileSize: 200 * 1024 * 1024 * 1024, //20MB max file(s) size
       },
       tempFileDir: '/Files/',
-    })
+    }),
   )
   app.use(express.json({ limit: '50mb' }))
   app.use(cors())

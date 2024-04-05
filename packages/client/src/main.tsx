@@ -15,7 +15,7 @@ const startServiceWorker = () => {
         .then(registration => {
           console.log(
             'ServiceWorker registration successful with scope: ',
-            registration.scope
+            registration.scope,
           )
         })
         .catch((error: string) => {

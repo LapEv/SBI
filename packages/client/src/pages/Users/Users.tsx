@@ -4,9 +4,9 @@ import { useStructure } from 'hooks/structure/useStructure'
 import { DropDownMenu } from 'components/DropDownButtonMenu'
 import { ChooseModal } from './Modals'
 import { Divisions } from './'
-import { menuData } from './data'
 import { useAuth } from 'hooks/auth/useAuth'
 import { headerForPages, mainHeaderForPages } from 'static/styles'
+import { menuData } from './menuData'
 
 export const UsersPage = memo(() => {
   const modalRef = React.createRef()

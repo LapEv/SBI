@@ -9,6 +9,7 @@ import {
   FileProps,
   UserStatus,
   delData,
+  ICheckUser,
 } from 'storeAuth/interfaces'
 import { authhost, host, ApiEndPoints } from './config'
 import axios from 'axios'
@@ -27,9 +28,12 @@ export const signin = createAsyncThunk(
   'user/signin',
   async (loginData: Login, thunkAPI) => {
     try {
-      const { data } = await host.post(ApiEndPoints.User.Login, loginData)
-      localStorage.setItem('token', data.token)
-      const { id } = jwt_decode(data.token) as Token
+      const { data } = await host.post<ICheckUser>(
+        ApiEndPoints.User.Login,
+        loginData,
+      )
+      localStorage.setItem('token', data.token as string)
+      const { id } = jwt_decode(data.token as string) as Token
       return {
         ...data,
         id,
@@ -43,13 +47,13 @@ export const signin = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось авторизоваться: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const signup = createAsyncThunk(
@@ -69,13 +73,13 @@ export const signup = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось зарегистрироваться: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const GetUser = createAsyncThunk(
@@ -91,13 +95,13 @@ export const GetUser = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные пользователя: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const GetActiveUsers = createAsyncThunk(
@@ -106,7 +110,7 @@ export const GetActiveUsers = createAsyncThunk(
     try {
       const { data } = await authhost.post<User[]>(
         ApiEndPoints.User.GetUsers,
-        dataFind
+        dataFind,
       )
       return data
     } catch (error) {
@@ -114,13 +118,13 @@ export const GetActiveUsers = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные пользователей: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const GetDispatchers = createAsyncThunk(
@@ -128,7 +132,7 @@ export const GetDispatchers = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const { data } = await authhost.post<User>(
-        ApiEndPoints.User.GetDispatchers
+        ApiEndPoints.User.GetDispatchers,
       )
       return data
     } catch (error) {
@@ -136,13 +140,13 @@ export const GetDispatchers = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные пользователей по диспетчерам: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const GetFieldEngineers = createAsyncThunk(
@@ -150,7 +154,7 @@ export const GetFieldEngineers = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const { data } = await authhost.post<User>(
-        ApiEndPoints.User.GetFieldEngineers
+        ApiEndPoints.User.GetFieldEngineers,
       )
       return data
     } catch (error) {
@@ -158,34 +162,38 @@ export const GetFieldEngineers = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные пользователей по инженерам: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const CheckUser = createAsyncThunk(
   'user/checkUser',
   async (_, thunkAPI) => {
     try {
-      const { data } = await authhost.get<User>(ApiEndPoints.User.CheckUser)
+      const { data } = await authhost.get<ICheckUser>(
+        ApiEndPoints.User.CheckUser,
+      )
       const { id } = jwt_decode(data.token as string) as Token
+      console.log('id = ', id)
+      console.log('data = ', data)
       return { ...data, id }
     } catch (error) {
       if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные пользователя: \n${
             error.response?.data.message ?? error
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const updateProfile = createAsyncThunk(
@@ -194,7 +202,7 @@ export const updateProfile = createAsyncThunk(
     try {
       const { data } = await authhost.put<User[]>(
         ApiEndPoints.User.UpdateProfile,
-        newProfile
+        newProfile,
       )
       return {
         data,
@@ -208,13 +216,13 @@ export const updateProfile = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось обновить данные пользователя: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const ChangeAvatar = createAsyncThunk(
@@ -231,7 +239,7 @@ export const ChangeAvatar = createAsyncThunk(
       const { data } = await authhost.put<User[]>(
         ApiEndPoints.User.UpdateProfileAvatar,
         formData,
-        config
+        config,
       )
       return {
         data,
@@ -245,13 +253,13 @@ export const ChangeAvatar = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось обновить аватар пользователя: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changePassword = createAsyncThunk(
@@ -260,7 +268,7 @@ export const changePassword = createAsyncThunk(
     try {
       const { data } = await authhost.post<User[]>(
         ApiEndPoints.User.ChangePassword,
-        value
+        value,
       )
       return {
         data,
@@ -274,13 +282,13 @@ export const changePassword = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось изменить пароль: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const ChangeTheme = createAsyncThunk(
@@ -289,7 +297,7 @@ export const ChangeTheme = createAsyncThunk(
     try {
       const { data } = await authhost.post<ChangeThemeProps>(
         ApiEndPoints.User.ChangeTheme,
-        value
+        value,
       )
       return data
     } catch (error) {
@@ -297,13 +305,13 @@ export const ChangeTheme = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось обновить данные темы: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const getUserStatus = createAsyncThunk(
@@ -311,7 +319,7 @@ export const getUserStatus = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const { data } = await authhost.get<UserStatus[]>(
-        ApiEndPoints.User.GetUserStatus
+        ApiEndPoints.User.GetUserStatus,
       )
       return data
     } catch (error) {
@@ -319,13 +327,13 @@ export const getUserStatus = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить статусы пользователей: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const deleteUser = createAsyncThunk(
@@ -345,13 +353,13 @@ export const deleteUser = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось переместить пользователя в архив: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const updateUser = createAsyncThunk(
@@ -372,11 +380,11 @@ export const updateUser = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось обновить данные пользователя: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )

@@ -49,11 +49,11 @@ export const authSlise = createSlice({
       state.userData = {}
     },
   },
-  extraReducers: {
-    [signin.fulfilled.type]: (state, action: PayloadAction<ICheckUser>) => {
+  extraReducers: builder => {
+    builder.addCase(signin.fulfilled, (state, { payload }) => {
       state.isLoadingAuth = false
       state.error = ''
-      const { user } = action.payload
+      const { user } = payload as ICheckUser
       state.user = user
       state.userData = user
       localStorage.setItem('theme', user.theme ?? 'light')
@@ -62,27 +62,27 @@ export const authSlise = createSlice({
           user.rolesGroup?.includes('SUPERADMIN')) ??
         false
       state.superAdmin = user.rolesGroup?.includes('SUPERADMIN') ?? false
-    },
-    [signin.pending.type]: state => {
+    })
+    builder.addCase(signin.pending, state => {
       state.isLoadingAuth = true
-    },
-    [signin.rejected.type]: (state, action: PayloadAction<string>) => {
+    })
+    builder.addCase(signin.rejected, (state, { payload }) => {
       state.isLoadingAuth = false
-      state.error = action.payload
-    },
-    [signup.fulfilled.type]: (state, action: PayloadAction<User>) => {
-      state.isLoadingAuth = false
-      state.error = ''
-      state.user = action.payload
-      state.userData = action.payload
-    },
-    [signup.pending.type]: state => {
-      state.isLoadingAuth = true
-    },
-    [signup.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingAuth = false
-      state.error = action.payload
-    },
+      state.error = payload as string
+    })
+    // [signup.fulfilled.type]: (state, action: PayloadAction<User>) => {
+    //   state.isLoadingAuth = false
+    //   state.error = ''
+    //   state.user = action.payload
+    //   state.userData = action.payload
+    // },
+    // [signup.pending.type]: state => {
+    //   state.isLoadingAuth = true
+    // },
+    // [signup.rejected.type]: (state, action: PayloadAction<string>) => {
+    //   state.isLoadingAuth = false
+    //   state.error = action.payload
+    // },
     // [signout.fulfilled.type]: (state, action: PayloadAction<User>) => {
     //   state.isLoadingAuth = false
     //   state.error = ''
@@ -97,65 +97,66 @@ export const authSlise = createSlice({
     //   state.isLoadingAuth = false
     //   state.error = action.payload
     // },
-    [GetUser.fulfilled.type]: (state, action: PayloadAction<User>) => {
+    // [GetUser.fulfilled.type]: (state, action: PayloadAction<User>) => {
+    //   state.isLoadingAuth = false
+    //   state.error = ''
+    //   state.userData = action.payload
+    //   localStorage.setItem('theme', action.payload.theme ?? 'light')
+    // },
+    // [GetUser.pending.type]: state => {
+    //   state.isLoadingAuth = true
+    // },
+    // [GetUser.rejected.type]: (state, action: PayloadAction<string>) => {
+    //   state.isLoadingAuth = false
+    //   state.error = action.payload
+    // },
+    // [GetFieldEngineers.fulfilled.type]: (
+    //   state,
+    //   action: PayloadAction<User[]>
+    // ) => {
+    //   state.isLoadingAuth = false
+    //   state.error = ''
+    //   state.fieldEngineers = action.payload
+    // },
+    // [GetFieldEngineers.pending.type]: state => {
+    //   state.isLoadingAuth = true
+    // },
+    // [GetFieldEngineers.rejected.type]: (
+    //   state,
+    //   action: PayloadAction<string>
+    // ) => {
+    //   state.isLoadingAuth = false
+    //   state.error = action.payload
+    // },
+    // [GetDispatchers.fulfilled.type]: (state, action: PayloadAction<User[]>) => {
+    //   state.isLoadingAuth = false
+    //   state.error = ''
+    //   state.dispatchers = action.payload
+    // },
+    // [GetDispatchers.pending.type]: state => {
+    //   state.isLoadingAuth = true
+    // },
+    // [GetDispatchers.rejected.type]: (state, action: PayloadAction<string>) => {
+    //   state.isLoadingAuth = false
+    //   state.error = action.payload
+    // },
+    // [GetActiveUsers.fulfilled.type]: (state, action: PayloadAction<User[]>) => {
+    //   state.isLoadingAuth = false
+    //   state.error = ''
+    //   state.users = action.payload
+    // },
+    // [GetActiveUsers.pending.type]: state => {
+    //   state.isLoadingAuth = true
+    // },
+    // [GetActiveUsers.rejected.type]: (state, action: PayloadAction<string>) => {
+    //   state.isLoadingAuth = false
+    //   state.error = action.payload
+    // },
+    builder.addCase(CheckUser.fulfilled, (state, { payload }) => {
       state.isLoadingAuth = false
       state.error = ''
-      state.userData = action.payload
-      localStorage.setItem('theme', action.payload.theme ?? 'light')
-    },
-    [GetUser.pending.type]: state => {
-      state.isLoadingAuth = true
-    },
-    [GetUser.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingAuth = false
-      state.error = action.payload
-    },
-    [GetFieldEngineers.fulfilled.type]: (
-      state,
-      action: PayloadAction<User[]>
-    ) => {
-      state.isLoadingAuth = false
-      state.error = ''
-      state.fieldEngineers = action.payload
-    },
-    [GetFieldEngineers.pending.type]: state => {
-      state.isLoadingAuth = true
-    },
-    [GetFieldEngineers.rejected.type]: (
-      state,
-      action: PayloadAction<string>
-    ) => {
-      state.isLoadingAuth = false
-      state.error = action.payload
-    },
-    [GetDispatchers.fulfilled.type]: (state, action: PayloadAction<User[]>) => {
-      state.isLoadingAuth = false
-      state.error = ''
-      state.dispatchers = action.payload
-    },
-    [GetDispatchers.pending.type]: state => {
-      state.isLoadingAuth = true
-    },
-    [GetDispatchers.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingAuth = false
-      state.error = action.payload
-    },
-    [GetActiveUsers.fulfilled.type]: (state, action: PayloadAction<User[]>) => {
-      state.isLoadingAuth = false
-      state.error = ''
-      state.users = action.payload
-    },
-    [GetActiveUsers.pending.type]: state => {
-      state.isLoadingAuth = true
-    },
-    [GetActiveUsers.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingAuth = false
-      state.error = action.payload
-    },
-    [CheckUser.fulfilled.type]: (state, action: PayloadAction<ICheckUser>) => {
-      state.isLoadingAuth = false
-      state.error = ''
-      const { user } = action.payload
+      console.log('payload = ', payload)
+      const { user } = payload as ICheckUser
       state.user = user
       state.userData = user
       localStorage.setItem('theme', user.theme ?? 'light')
@@ -164,65 +165,65 @@ export const authSlise = createSlice({
           user.rolesGroup?.includes('SUPERADMIN')) ??
         false
       state.superAdmin = user.rolesGroup?.includes('SUPERADMIN') ?? false
-    },
-    [CheckUser.pending.type]: state => {
+    })
+    builder.addCase(CheckUser.pending, state => {
       state.isLoadingAuth = true
-    },
-    [CheckUser.rejected.type]: (state, action: PayloadAction<string>) => {
+    })
+    builder.addCase(CheckUser.rejected, (state, { payload }) => {
       state.isLoadingAuth = false
-      state.error = action.payload
-    },
-    [updateProfile.fulfilled.type]: (state, action: PayloadAction<User>) => {
-      state.isLoadingAuth = false
-      state.error = ''
-      state.user = action.payload
-    },
-    [updateProfile.pending.type]: state => {
-      state.isLoadingAuth = true
-    },
-    [updateProfile.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingAuth = false
-      state.error = action.payload
-    },
-    [ChangeAvatar.fulfilled.type]: (state, action: PayloadAction<User>) => {
-      state.isLoadingAuth = false
-      state.error = ''
-      state.user = action.payload
-    },
-    [ChangeAvatar.pending.type]: state => {
-      state.isLoadingAuth = true
-    },
-    [ChangeAvatar.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingAuth = false
-      state.error = action.payload
-    },
-    [getUserStatus.fulfilled.type]: (
-      state,
-      action: PayloadAction<UserStatus[]>
-    ) => {
-      state.isLoadingAuth = false
-      state.error = ''
-      state.userStatus = action.payload
-    },
-    [getUserStatus.pending.type]: state => {
-      state.isLoadingAuth = true
-    },
-    [getUserStatus.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingAuth = false
-      state.error = action.payload
-    },
-    [updateUser.fulfilled.type]: (state, action: PayloadAction<AnswerUser>) => {
-      state.isLoadingAuth = false
-      state.error = ''
-      state.users = action.payload.data
-    },
-    [updateUser.pending.type]: state => {
-      state.isLoadingAuth = true
-    },
-    [updateUser.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoadingAuth = false
-      state.error = action.payload
-    },
+      state.error = payload as string
+    })
+    // [updateProfile.fulfilled.type]: (state, action: PayloadAction<User>) => {
+    //   state.isLoadingAuth = false
+    //   state.error = ''
+    //   state.user = action.payload
+    // },
+    // [updateProfile.pending.type]: state => {
+    //   state.isLoadingAuth = true
+    // },
+    // [updateProfile.rejected.type]: (state, action: PayloadAction<string>) => {
+    //   state.isLoadingAuth = false
+    //   state.error = action.payload
+    // },
+    // [ChangeAvatar.fulfilled.type]: (state, action: PayloadAction<User>) => {
+    //   state.isLoadingAuth = false
+    //   state.error = ''
+    //   state.user = action.payload
+    // },
+    // [ChangeAvatar.pending.type]: state => {
+    //   state.isLoadingAuth = true
+    // },
+    // [ChangeAvatar.rejected.type]: (state, action: PayloadAction<string>) => {
+    //   state.isLoadingAuth = false
+    //   state.error = action.payload
+    // },
+    // [getUserStatus.fulfilled.type]: (
+    //   state,
+    //   action: PayloadAction<UserStatus[]>
+    // ) => {
+    //   state.isLoadingAuth = false
+    //   state.error = ''
+    //   state.userStatus = action.payload
+    // },
+    // [getUserStatus.pending.type]: state => {
+    //   state.isLoadingAuth = true
+    // },
+    // [getUserStatus.rejected.type]: (state, action: PayloadAction<string>) => {
+    //   state.isLoadingAuth = false
+    //   state.error = action.payload
+    // },
+    // [updateUser.fulfilled.type]: (state, action: PayloadAction<AnswerUser>) => {
+    //   state.isLoadingAuth = false
+    //   state.error = ''
+    //   state.users = action.payload.data
+    // },
+    // [updateUser.pending.type]: state => {
+    //   state.isLoadingAuth = true
+    // },
+    // [updateUser.rejected.type]: (state, action: PayloadAction<string>) => {
+    //   state.isLoadingAuth = false
+    //   state.error = action.payload
+    // },
   },
 })
 

@@ -13,8 +13,6 @@ export const appSlise = createSlice({
       state.dataWidth = action.payload - 15
     },
   },
-
-  extraReducers: {},
 })
 
 export const appReducer = appSlise.reducer

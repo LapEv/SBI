@@ -36,7 +36,7 @@ export const TableIncidents = memo(() => {
   const [heightINCData, setHeightINCData] = useState<number>(0)
   const [filterDialogOpen, setFilterDialogOpen] = useState<boolean>(false)
   const [denseTable, setDenseTable] = useState<boolean>(
-    localStorage.getItem('IncidentsDenseTable') === '1' ? true : false
+    localStorage.getItem('IncidentsDenseTable') === '1' ? true : false,
   )
   const [dragTable, setDragTable] = useState<boolean>(false)
   const theme = useTheme()
@@ -796,7 +796,7 @@ export const TableIncidents = memo(() => {
         const newOrder = INCColumn.map((item, index) =>
           columnOrderStorage.findIndex(value => value === index) >= 0
             ? columnOrderStorage.findIndex(value => value === index)
-            : index
+            : index,
         )
         return newOrder
       }
@@ -814,11 +814,11 @@ export const TableIncidents = memo(() => {
         item =>
           (item.options.display = !columnViewStorage?.includes(item.name)
             ? true
-            : false)
+            : false),
       )
     }
     const filterListStorage = JSON.parse(
-      localStorage.getItem('filterList') as string
+      localStorage.getItem('filterList') as string,
     )
     if (filterListStorage && filterListStorage?.length > 1) {
       tableState.filterList = filterListStorage
@@ -829,7 +829,7 @@ export const TableIncidents = memo(() => {
     if (action === 'viewColumnsChange') {
       const display = tableState.columns
         .map(({ display, name }) =>
-          display === 'false' ? name : null || name === 'id' ? name : null
+          display === 'false' ? name : null || name === 'id' ? name : null,
         )
         .filter(item => item)
       localStorage.setItem('IncidentsViewColumns', display.toString())
@@ -933,7 +933,7 @@ export const TableIncidents = memo(() => {
     onColumnSortChange: (column, direction) =>
       localStorage.setItem(
         'sortColumn',
-        JSON.stringify({ name: column, direction })
+        JSON.stringify({ name: column, direction }),
       ),
     onColumnOrderChange: newColumnOrder =>
       localStorage.setItem('IncidentsColumnOrder', newColumnOrder.toString()),
@@ -971,8 +971,8 @@ export const TableIncidents = memo(() => {
                 ? '#1d4751'
                 : '#9ed3c4'
               : theme.palette.mode === 'dark'
-              ? '#1E515D'
-              : '#C1EEE1',
+                ? '#1E515D'
+                : '#C1EEE1',
         },
       }
     },

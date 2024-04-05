@@ -5,7 +5,8 @@ import { Box, Typography } from '@mui/material'
 import { modalStyle, boxDataModal } from 'static/styles'
 import { Item } from 'components/CheckBoxGroup'
 import { ButtonsModalSection } from 'components/Buttons'
-import ReactToPrint, { useReactToPrint } from 'react-to-print'
+import ReactToPrint from 'react-to-print'
+import * as RTP from 'react-to-print'
 import { printType } from '../data'
 import { Normal, Compressed, XCompressed } from '../'
 
@@ -13,9 +14,8 @@ export const PrintINC = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
       const [selectedType, setSelectedType] = useState<string>('normal')
-
       const contentToPrint = useRef(null)
-      const handlePrint = useReactToPrint({
+      const handlePrint = RTP.useReactToPrint({
         documentTitle: 'Print This Document',
         removeAfterPrint: true,
         content: () => contentToPrint.current,
@@ -74,6 +74,6 @@ export const PrintINC = memo(
           </Box>
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

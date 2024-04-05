@@ -1,11 +1,19 @@
 import MuiButton, { type ButtonProps } from '@mui/material/Button'
-import { memo } from 'react'
+import {
+  ElementType,
+  ForwardRefExoticComponent,
+  RefAttributes,
+  memo,
+} from 'react'
 import { LinkProps } from 'react-router-dom'
 
 type TButtonProps = Omit<ButtonProps, 'component'> & {
-  component?: React.ForwardRefExoticComponent<
-    LinkProps & React.RefAttributes<HTMLAnchorElement>
-  >
+  component?:
+    | React.ForwardRefExoticComponent<
+        LinkProps & React.RefAttributes<HTMLAnchorElement>
+      >
+    | ElementType<any>
+    | ForwardRefExoticComponent<LinkProps & RefAttributes<HTMLAnchorElement>>
 }
 
 export const Button = memo((props: TButtonProps) => {

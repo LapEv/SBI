@@ -27,7 +27,7 @@ import { DropDown, DropDownMultiple, emptyValue } from 'components/DropDown'
 import { useObjects } from 'hooks/objects/useObjects'
 import { useClients } from 'hooks/clients/useClients'
 import { convetStringToDate } from 'utils/convertDate'
-import dayjs from 'dayjs'
+import dayjs, { Dayjs } from 'dayjs'
 import {
   DataList,
   ICheckBoxGroupData,
@@ -50,12 +50,12 @@ export const AddContract = memo(
       const [objectList, setObjectList] = useState<DataList[]>([])
       const [selectedObjects, setSelectedObjects] = useState<string[]>([])
       const [equipmentList, setEquipmentList] = useState<ICheckBoxGroupData[]>(
-        []
+        [],
       )
       const [selectedEquipments, setSelectedEquipments] = useState<string[]>([])
       const [selectedModels, setSelectedModels] = useState<string[]>([])
       const [errSLA, setErrSLA] = useState<boolean>(false)
-      const [dateValue, setDateValue] = useState<string>('')
+      const [dateValue, setDateValue] = useState<Dayjs>()
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
         defaultValues: {
@@ -83,8 +83,8 @@ export const AddContract = memo(
         }
         const date = convetStringToDate(
           dayjs(dateValue).format('DD/MM/YYYY'),
-          '/'
-        )
+          '/',
+        ) as string
         newContract({
           contract: list[0].value,
           number: list[1].value,
@@ -190,7 +190,10 @@ export const AddContract = memo(
               />
             )
           })}
-          <DateField dateValue={dateValue} setDateValue={setDateValue} />
+          <DateField
+            dateValue={dateValue as Dayjs}
+            setDateValue={setDateValue}
+          />
           <DropDownMultiple
             data={sla.map(item => {
               return {
@@ -269,6 +272,6 @@ export const AddContract = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

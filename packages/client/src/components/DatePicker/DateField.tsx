@@ -8,6 +8,8 @@ import { CalendarIcon, ClearIconElement } from 'components/Icons'
 import { IDateField } from './interface'
 import { memo } from 'react'
 import { ThemeMode } from 'themes/themeConfig'
+import dayjs from 'dayjs'
+import { Dayjs } from 'dayjs'
 
 const StyledDatePickers = styled(PickersLayout)(({ theme }) => ({
   '.MuiDateCalendar-root': {
@@ -39,9 +41,9 @@ export const DateField = memo(({ dateValue, setDateValue, sx }: IDateField) => {
         slotProps={{
           field: { clearable: true },
         }}
-        value={dateValue}
+        value={dateValue ?? ''}
         onChange={newValue => {
-          setDateValue(newValue as string)
+          setDateValue(newValue as Dayjs)
         }}
         views={['day', 'month', 'year']}
         label="Выберите дату"

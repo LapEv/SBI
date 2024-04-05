@@ -134,7 +134,7 @@ export const ApiEndPoints = {
     uploadFiles: 'files/uploadFiles',
   },
 }
-
+console.log('ApiEndPoints __SERVER_PORT__ = ', __SERVER_PORT__)
 const url = `http://localhost:${__SERVER_PORT__}/api/`
 // const url = `http://${__SERVER_HOST__}:${__SERVER_PORT__}/api/`
 
@@ -163,7 +163,7 @@ const host = axios.create({
 })
 
 const authInterceptor = (
-  config: InternalAxiosRequestConfig
+  config: InternalAxiosRequestConfig,
 ): InternalAxiosRequestConfig => {
   config.headers.authorization = `Bearer ${localStorage.getItem('token')}`
   return config
@@ -186,7 +186,7 @@ authhost.interceptors.response.use(
       store.dispatch(clearUser())
     }
     return Promise.reject(error)
-  }
+  },
 )
 
 export { host, authhost, authFileHost }

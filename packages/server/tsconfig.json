@@ -10,6 +10,7 @@
     "declarationMap": true,
     "removeComments": true,
     "strict": true,
+    "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
     "noImplicitReturns": false,
     "noImplicitOverride": true,
@@ -22,7 +23,8 @@
     "baseUrl": ".",
     "paths": {
       "*": ["types/*"],
-      "/*": ["./*"]
+      "/*": ["./*"],
+      "react": ["./node_modules/@types/react"]
     },
     // "typeRoots": ["./types", "./node_modules/@types"],
     "skipLibCheck": true,

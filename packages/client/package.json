@@ -26,7 +26,6 @@
     "@types/hoist-non-react-statics": "^3.3.5",
     "@types/mui-datatables": "^4.3.12",
     "@types/node": "^20.12.3",
-    "@typescript-eslint/eslint-plugin": "^7.6.0",
     "axios": "^1.6.8",
     "dayjs": "^1.11.10",
     "dotenv": "^16.4.5",

@@ -17,8 +17,8 @@ export const getClientGroups = createAsyncThunk(
   'client/getClientGroups',
   async (_, thunkAPI) => {
     try {
-      const { data } = await authhost.get<ClientsGroup>(
-        ApiEndPoints.Clients.getClientGroups
+      const { data } = await authhost.get<ClientsGroup[]>(
+        ApiEndPoints.Clients.getClientGroups,
       )
       return data
     } catch (error) {
@@ -26,13 +26,13 @@ export const getClientGroups = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные по группе клиентов: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const newClientGroup = createAsyncThunk(
@@ -41,7 +41,7 @@ export const newClientGroup = createAsyncThunk(
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Clients.newClientGroup,
-        clientGroup
+        clientGroup,
       )
       return {
         data,
@@ -55,13 +55,13 @@ export const newClientGroup = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось создать новую группу клиентов: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const deleteClientGroup = createAsyncThunk(
@@ -72,7 +72,7 @@ export const deleteClientGroup = createAsyncThunk(
         ApiEndPoints.Clients.deleteClientGroup,
         {
           selectedClientsGroup,
-        }
+        },
       )
       return {
         data,
@@ -86,13 +86,13 @@ export const deleteClientGroup = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось удалить группу клиентов: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changeClientGroup = createAsyncThunk(
@@ -105,7 +105,7 @@ export const changeClientGroup = createAsyncThunk(
           groupName,
           clients,
           id,
-        }
+        },
       )
       return {
         data,
@@ -119,21 +119,21 @@ export const changeClientGroup = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось изменить группу клиентов: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const getClients = createAsyncThunk(
   'client/getClients',
   async (_, thunkAPI) => {
     try {
-      const { data } = await authhost.get<Clients>(
-        ApiEndPoints.Clients.getClients
+      const { data } = await authhost.get<Clients[]>(
+        ApiEndPoints.Clients.getClients,
       )
       return data
     } catch (error) {
@@ -141,13 +141,13 @@ export const getClients = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные по клиентам: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const newClient = createAsyncThunk(
@@ -156,7 +156,7 @@ export const newClient = createAsyncThunk(
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Clients.newClient,
-        client
+        client,
       )
       return {
         data,
@@ -170,13 +170,13 @@ export const newClient = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось создать нового клиента: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const deleteClient = createAsyncThunk(
@@ -198,20 +198,20 @@ export const deleteClient = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось удалить клиентов: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changeClient = createAsyncThunk(
   'client/changeClient',
   async (
     { client, legalName, contracts, contacts, comments, id }: ChangeClient,
-    thunkAPI
+    thunkAPI,
   ) => {
     try {
       const { data } = await authhost.post(ApiEndPoints.Clients.changeClient, {
@@ -234,11 +234,11 @@ export const changeClient = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось изменить клиента: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )

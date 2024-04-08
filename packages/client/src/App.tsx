@@ -31,8 +31,6 @@ const App = memo(() => {
     checkUser()
   }, [])
 
-  console.log('user = ', user)
-
   return (
     <ErrorBoundary>
       <div className="App" data-testid="App">

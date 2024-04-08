@@ -1,12 +1,5 @@
-import { AddAddress } from './../../../pages/Clients/Modals/AddAddress'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import {
-  Addresses,
-  Regions,
-  AnswerAddresses,
-  AnswerRegions,
-  AddressesState,
-} from './interfaces'
+import { createSlice } from '@reduxjs/toolkit'
+import { Addresses, Regions, AddressesState } from './interfaces'
 import {
   getAddresses,
   newAddress,
@@ -45,124 +38,90 @@ export const addressesSlise = createSlice({
       state.isLoadingAddress = false
       state.error = payload as string
     })
-
-    // [getAddresses.fulfilled.type]: (
-    //   state,
-    //   action: PayloadAction<Addresses[]>
-    // ) => {
-    //   state.isLoadingAddress = false
-    //   state.error = ''
-    //   state.addresses = action.payload
-    // },
-    // [getAddresses.pending.type]: state => {
-    //   state.isLoadingAddress = true
-    // },
-    // [getAddresses.rejected.type]: (state, action: PayloadAction<string>) => {
-    //   state.isLoadingAddress = false
-    //   state.error = action.payload
-    // },
-    // [newAddress.fulfilled.type]: (
-    //   state,
-    //   action: PayloadAction<AnswerAddresses>
-    // ) => {
-    //   state.isLoadingAddress = false
-    //   state.error = ''
-    //   state.addresses = action.payload.data
-    // },
-    // [newAddress.pending.type]: state => {
-    //   state.isLoadingAddress = true
-    // },
-    // [newAddress.rejected.type]: (state, action: PayloadAction<string>) => {
-    //   state.isLoadingAddress = false
-    //   state.error = action.payload
-    // },
-    // [deleteAddress.fulfilled.type]: (
-    //   state,
-    //   action: PayloadAction<AnswerAddresses>
-    // ) => {
-    //   state.isLoadingAddress = false
-    //   state.error = ''
-    //   state.addresses = action.payload.data
-    // },
-    // [deleteAddress.pending.type]: state => {
-    //   state.isLoadingAddress = true
-    // },
-    // [deleteAddress.rejected.type]: (state, action: PayloadAction<string>) => {
-    //   state.isLoadingAddress = false
-    //   state.error = action.payload
-    // },
-    // [changeAddress.fulfilled.type]: (
-    //   state,
-    //   action: PayloadAction<AnswerAddresses>
-    // ) => {
-    //   state.isLoadingAddress = false
-    //   state.error = ''
-    //   state.addresses = action.payload.data
-    // },
-    // [changeAddress.pending.type]: state => {
-    //   state.isLoadingAddress = true
-    // },
-    // [changeAddress.rejected.type]: (state, action: PayloadAction<string>) => {
-    //   state.isLoadingAddress = false
-    //   state.error = action.payload
-    // },
-    // [getRegions.fulfilled.type]: (state, action: PayloadAction<Regions[]>) => {
-    //   state.isLoadingAddress = false
-    //   state.error = ''
-    //   state.regions = action.payload
-    // },
-    // [getRegions.pending.type]: state => {
-    //   state.isLoadingAddress = true
-    // },
-    // [getRegions.rejected.type]: (state, action: PayloadAction<string>) => {
-    //   state.isLoadingAddress = false
-    //   state.error = action.payload
-    // },
-    // [newRegion.fulfilled.type]: (
-    //   state,
-    //   action: PayloadAction<AnswerRegions>
-    // ) => {
-    //   state.isLoadingAddress = false
-    //   state.error = ''
-    //   state.regions = action.payload.data
-    // },
-    // [newRegion.pending.type]: state => {
-    //   state.isLoadingAddress = true
-    // },
-    // [newRegion.rejected.type]: (state, action: PayloadAction<string>) => {
-    //   state.isLoadingAddress = false
-    //   state.error = action.payload
-    // },
-    // [deleteRegion.fulfilled.type]: (
-    //   state,
-    //   action: PayloadAction<AnswerRegions>
-    // ) => {
-    //   state.isLoadingAddress = false
-    //   state.error = ''
-    //   state.regions = action.payload.data
-    // },
-    // [deleteRegion.pending.type]: state => {
-    //   state.isLoadingAddress = true
-    // },
-    // [deleteRegion.rejected.type]: (state, action: PayloadAction<string>) => {
-    //   state.isLoadingAddress = false
-    //   state.error = action.payload
-    // },
-    // [changeRegion.fulfilled.type]: (
-    //   state,
-    //   action: PayloadAction<AnswerRegions>
-    // ) => {
-    //   state.isLoadingAddress = false
-    //   state.error = ''
-    //   state.regions = action.payload.data
-    // },
-    // [changeRegion.pending.type]: state => {
-    //   state.isLoadingAddress = true
-    // },
-    // [changeRegion.rejected.type]: (state, action: PayloadAction<string>) => {
-    //   state.isLoadingAddress = false
-    //   state.error = action.payload
-    // },
+    builder.addCase(newAddress.fulfilled, (state, { payload }) => {
+      state.isLoadingAddress = false
+      state.error = ''
+      state.addresses = payload?.data as Addresses[]
+    })
+    builder.addCase(newAddress.pending, state => {
+      state.isLoadingAddress = true
+    })
+    builder.addCase(newAddress.rejected, (state, { payload }) => {
+      state.isLoadingAddress = false
+      state.error = payload as string
+    })
+    builder.addCase(deleteAddress.fulfilled, (state, { payload }) => {
+      state.isLoadingAddress = false
+      state.error = ''
+      state.addresses = payload?.data as Addresses[]
+    })
+    builder.addCase(deleteAddress.pending, state => {
+      state.isLoadingAddress = true
+    })
+    builder.addCase(deleteAddress.rejected, (state, { payload }) => {
+      state.isLoadingAddress = false
+      state.error = payload as string
+    })
+    builder.addCase(changeAddress.fulfilled, (state, { payload }) => {
+      state.isLoadingAddress = false
+      state.error = ''
+      state.addresses = payload?.data as Addresses[]
+    })
+    builder.addCase(changeAddress.pending, state => {
+      state.isLoadingAddress = true
+    })
+    builder.addCase(changeAddress.rejected, (state, { payload }) => {
+      state.isLoadingAddress = false
+      state.error = payload as string
+    })
+    builder.addCase(getRegions.fulfilled, (state, { payload }) => {
+      state.isLoadingAddress = false
+      state.error = ''
+      state.regions = payload as Regions[]
+    })
+    builder.addCase(getRegions.pending, state => {
+      state.isLoadingAddress = true
+    })
+    builder.addCase(getRegions.rejected, (state, { payload }) => {
+      state.isLoadingAddress = false
+      state.error = payload as string
+    })
+    builder.addCase(newRegion.fulfilled, (state, { payload }) => {
+      state.isLoadingAddress = false
+      state.error = ''
+      state.regions = payload?.data as Regions[]
+    })
+    builder.addCase(newRegion.pending, state => {
+      state.isLoadingAddress = true
+    })
+    builder.addCase(newRegion.rejected, (state, { payload }) => {
+      state.isLoadingAddress = false
+      state.error = payload as string
+    })
+    builder.addCase(deleteRegion.fulfilled, (state, { payload }) => {
+      state.isLoadingAddress = false
+      state.error = ''
+      state.regions = payload?.data as Regions[]
+    })
+    builder.addCase(deleteRegion.pending, state => {
+      state.isLoadingAddress = true
+    })
+    builder.addCase(deleteRegion.rejected, (state, { payload }) => {
+      state.isLoadingAddress = false
+      state.error = payload as string
+    })
+    builder.addCase(changeRegion.fulfilled, (state, { payload }) => {
+      state.isLoadingAddress = false
+      state.error = ''
+      state.regions = payload?.data as Regions[]
+    })
+    builder.addCase(changeRegion.pending, state => {
+      state.isLoadingAddress = true
+    })
+    builder.addCase(changeRegion.rejected, (state, { payload }) => {
+      state.isLoadingAddress = false
+      state.error = payload as string
+    })
   },
 })
 

@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Objects, AnswerObjects, ObjectsState } from './interfaces'
+import { createSlice } from '@reduxjs/toolkit'
+import { Objects, ObjectsState } from './interfaces'
 import { changeObject, deleteObjects, getObjects, newObject } from 'api/objects'
 
 const initialState: ObjectsState = {
@@ -16,65 +16,56 @@ export const objectsSlise = createSlice({
       state.activeObject = action.payload
     },
   },
-  // extraReducers: {
-  //   [getObjects.fulfilled.type]: (state, action: PayloadAction<Objects[]>) => {
-  //     state.isLoadingObjects = false
-  //     state.error = ''
-  //     state.objects = action.payload
-  //   },
-  //   [getObjects.pending.type]: state => {
-  //     state.isLoadingObjects = true
-  //   },
-  //   [getObjects.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingObjects = false
-  //     state.error = action.payload
-  //   },
-  //   [newObject.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerObjects>
-  //   ) => {
-  //     state.isLoadingObjects = false
-  //     state.error = ''
-  //     state.objects = action.payload.data
-  //   },
-  //   [newObject.pending.type]: state => {
-  //     state.isLoadingObjects = true
-  //   },
-  //   [newObject.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingObjects = false
-  //     state.error = action.payload
-  //   },
-  //   [deleteObjects.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerObjects>
-  //   ) => {
-  //     state.isLoadingObjects = false
-  //     state.error = ''
-  //     state.objects = action.payload.data
-  //   },
-  //   [deleteObjects.pending.type]: state => {
-  //     state.isLoadingObjects = true
-  //   },
-  //   [deleteObjects.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingObjects = false
-  //     state.error = action.payload
-  //   },
-  //   [changeObject.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerObjects>
-  //   ) => {
-  //     state.isLoadingObjects = false
-  //     state.error = ''
-  //     state.objects = action.payload.data
-  //   },
-  //   [changeObject.pending.type]: state => {
-  //     state.isLoadingObjects = true
-  //   },
-  //   [changeObject.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingObjects = false
-  //     state.error = action.payload
-  //   },
-  // },
+  extraReducers: builder => {
+    builder.addCase(getObjects.fulfilled, (state, { payload }) => {
+      state.isLoadingObjects = false
+      state.error = ''
+      state.objects = payload as Objects[]
+    })
+    builder.addCase(getObjects.pending, state => {
+      state.isLoadingObjects = true
+    })
+    builder.addCase(getObjects.rejected, (state, { payload }) => {
+      state.isLoadingObjects = false
+      state.error = payload as string
+    })
+    builder.addCase(newObject.fulfilled, (state, { payload }) => {
+      state.isLoadingObjects = false
+      state.error = ''
+      state.objects = payload?.data as Objects[]
+    })
+    builder.addCase(newObject.pending, state => {
+      state.isLoadingObjects = true
+    })
+    builder.addCase(newObject.rejected, (state, { payload }) => {
+      state.isLoadingObjects = false
+      state.error = payload as string
+    })
+    builder.addCase(deleteObjects.fulfilled, (state, { payload }) => {
+      state.isLoadingObjects = false
+      state.error = ''
+      state.objects = payload?.data as Objects[]
+    })
+    builder.addCase(deleteObjects.pending, state => {
+      state.isLoadingObjects = true
+    })
+    builder.addCase(deleteObjects.rejected, (state, { payload }) => {
+      state.isLoadingObjects = false
+      state.error = payload as string
+    })
+    builder.addCase(changeObject.fulfilled, (state, { payload }) => {
+      state.isLoadingObjects = false
+      state.error = ''
+      state.objects = payload?.data as Objects[]
+    })
+    builder.addCase(changeObject.pending, state => {
+      state.isLoadingObjects = true
+    })
+    builder.addCase(changeObject.rejected, (state, { payload }) => {
+      state.isLoadingObjects = false
+      state.error = payload as string
+    })
+  },
 })
 
 export const objectsReducer = objectsSlise.reducer

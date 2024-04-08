@@ -12,8 +12,8 @@ export const getObjects = createAsyncThunk(
   'objects/getObjects',
   async (_, thunkAPI) => {
     try {
-      const { data } = await authhost.get<Objects>(
-        ApiEndPoints.Objects.getObjects
+      const { data } = await authhost.get<Objects[]>(
+        ApiEndPoints.Objects.getObjects,
       )
       return data
     } catch (error) {
@@ -21,13 +21,13 @@ export const getObjects = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные по объектам: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const newObject = createAsyncThunk(
@@ -36,7 +36,7 @@ export const newObject = createAsyncThunk(
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Objects.newObject,
-        object
+        object,
       )
       return {
         data,
@@ -50,13 +50,13 @@ export const newObject = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось создать новый объект: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const deleteObjects = createAsyncThunk(
@@ -78,13 +78,13 @@ export const deleteObjects = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось удалить объект: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changeObject = createAsyncThunk(
@@ -99,7 +99,7 @@ export const changeObject = createAsyncThunk(
       internalClientName,
       id,
     }: ChangeObject,
-    thunkAPI
+    thunkAPI,
   ) => {
     try {
       const { data } = await authhost.post(ApiEndPoints.Objects.changeObject, {
@@ -123,11 +123,11 @@ export const changeObject = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось изменить объект: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )

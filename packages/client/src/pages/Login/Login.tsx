@@ -37,7 +37,7 @@ export const LoginPage = memo(() => {
         username: data.list[0].value,
         password: data.list[1].value,
       },
-      () => navigate(location.state ?? '/')
+      () => navigate(location.state ?? '/'),
     )
   }
 

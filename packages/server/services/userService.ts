@@ -23,7 +23,7 @@ export class userService {
     const { password, firstName, lastName, middleName } = _req.body
     const shortName = `${lastName} ${firstName.slice(0, 1)}.${middleName.slice(
       0,
-      1
+      1,
     )}.`
     const hashPassword = bcrypt.hashSync(password, 7)
     const newUser = {
@@ -144,9 +144,9 @@ export class userService {
     }
   }
   check = async (_req: Request, res: Response) => {
-    const { username, id, roles } = _req.body
+    const { username, id, rolesGroup } = _req.body
     try {
-      const token = generateAccessToken(id, roles, username)
+      const token = generateAccessToken(id, rolesGroup, username)
       const user = (await userRepos.findOne({
         where: { id: id },
       })) as IUser
@@ -207,7 +207,7 @@ export class userService {
       where: { active: true },
     })) as IDepartment[]
     const id_department = departments.find(
-      item => item.department === 'FieldEngineers'
+      item => item.department === 'FieldEngineers',
     )?.id
     userRepos
       .findAll({
@@ -223,7 +223,7 @@ export class userService {
       where: { active: true },
     })) as IDepartment[]
     const id_department = departments.find(
-      item => item.department === 'Dispatcher'
+      item => item.department === 'Dispatcher',
     )?.id
     userRepos
       .findAll({
@@ -299,7 +299,7 @@ export class userService {
       .then(user =>
         res
           .status(200)
-          .json(`Theme changed for user with id=${user} on ${theme}!`)
+          .json(`Theme changed for user with id=${user} on ${theme}!`),
       )
       .catch(err => res.status(500).json({ error: ['db error', err] }))
   }
@@ -307,7 +307,7 @@ export class userService {
     const { id, userData } = _req.body
     const shortName = `${userData.lastName} ${userData.firstName.slice(
       0,
-      1
+      1,
     )}.${userData.middleName.slice(0, 1)}.`
     try {
       await userRepos.update(id, { ...userData, shortName })
@@ -323,7 +323,7 @@ export class userService {
     const { id, userData } = _req.body
     const shortName = `${userData.lastName} ${userData.firstName.slice(
       0,
-      1
+      1,
     )}.${userData.middleName.slice(0, 1)}.`
     try {
       await userRepos.update(id, { ...userData, shortName })

@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { authhost, ApiEndPoints } from './config'
 import {
   AddINC,
-  INC,
   ChangeINC,
   INCStatuses,
   AddINCStatuses,
@@ -19,10 +18,11 @@ import {
   AddTypesCompletedWork,
   ChangeTypesCompletedWork,
   GetINCsByParams,
-  AnswerGetFilter,
   ChangeComment,
+  AnswerGetINC,
 } from 'store/slices/incidents/interfaces'
 import axios from 'axios'
+import { ICheckUser } from 'storeAuth/interfaces'
 
 interface ValidationError {
   message: string
@@ -33,28 +33,28 @@ export const getINC = createAsyncThunk(
   'incidents/getINC',
   async (_, thunkAPI) => {
     try {
-      const { data } = await authhost.get<INC>(ApiEndPoints.INC.getINC)
+      const { data } = await authhost.get<AnswerGetINC>(ApiEndPoints.INC.getINC)
       return data
     } catch (error) {
       if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные по инцидентам: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const getFilter = createAsyncThunk(
   'incidents/getFilter',
   async (_, thunkAPI) => {
     try {
-      const { data } = await authhost.get<AnswerGetFilter>(
-        ApiEndPoints.INC.getFilter
+      const { data } = await authhost.get<ICheckUser>(
+        ApiEndPoints.INC.getFilter,
       )
       return data
     } catch (error) {
@@ -62,38 +62,41 @@ export const getFilter = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные по фильтрам: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const getINCs = createAsyncThunk(
   'incidents/getINCs',
   async (
     { limit, nameSort, direction, page, filterOptions }: GetINCsByParams,
-    thunkAPI
+    thunkAPI,
   ) => {
     try {
-      const { data } = await authhost.get<INC>(ApiEndPoints.INC.getINCs, {
-        params: { limit, nameSort, direction, page, filterOptions },
-      })
+      const { data } = await authhost.get<AnswerGetINC>(
+        ApiEndPoints.INC.getINCs,
+        {
+          params: { limit, nameSort, direction, page, filterOptions },
+        },
+      )
       return data
     } catch (error) {
       if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные по инцидентам: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const newINC = createAsyncThunk(
@@ -113,13 +116,13 @@ export const newINC = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось создать новый инцидент: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changeINC = createAsyncThunk(
@@ -142,7 +145,7 @@ export const changeINC = createAsyncThunk(
       report,
       spaceParts,
     }: ChangeINC,
-    thunkAPI
+    thunkAPI,
   ) => {
     try {
       const { data } = await authhost.post(ApiEndPoints.INC.changeINC, {
@@ -174,13 +177,13 @@ export const changeINC = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось изменить инцидент: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changeExecutor = createAsyncThunk(
@@ -198,7 +201,7 @@ export const changeExecutor = createAsyncThunk(
       page,
       filterOptions,
     }: ChangeExecutor,
-    thunkAPI
+    thunkAPI,
   ) => {
     try {
       const { data } = await authhost.post(ApiEndPoints.INC.changeExecutor, {
@@ -227,13 +230,13 @@ export const changeExecutor = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось назначить исполнителя: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changeResponsible = createAsyncThunk(
@@ -251,7 +254,7 @@ export const changeResponsible = createAsyncThunk(
       page,
       filterOptions,
     }: ChangeResponsible,
-    thunkAPI
+    thunkAPI,
   ) => {
     try {
       const { data } = await authhost.post(ApiEndPoints.INC.changeResponsible, {
@@ -280,13 +283,13 @@ export const changeResponsible = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось назначить ответственного: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changeStatus = createAsyncThunk(
@@ -308,7 +311,7 @@ export const changeStatus = createAsyncThunk(
       page,
       filterOptions,
     }: ChangeStatus,
-    thunkAPI
+    thunkAPI,
   ) => {
     try {
       const { data } = await authhost.post(ApiEndPoints.INC.changeStatus, {
@@ -339,13 +342,13 @@ export const changeStatus = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось изменить статус: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changeUserClosingCheck = createAsyncThunk(
@@ -357,7 +360,7 @@ export const changeUserClosingCheck = createAsyncThunk(
         {
           id,
           id_incClosingCheck,
-        }
+        },
       )
       return {
         data,
@@ -371,13 +374,13 @@ export const changeUserClosingCheck = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось назначить ответственного за выполнение: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changeUserClosing = createAsyncThunk(
@@ -389,7 +392,7 @@ export const changeUserClosing = createAsyncThunk(
         {
           id,
           id_incClosing,
-        }
+        },
       )
       return {
         data,
@@ -403,13 +406,13 @@ export const changeUserClosing = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось назначить ответственного за закрытие: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changeComment = createAsyncThunk(
@@ -432,21 +435,21 @@ export const changeComment = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось изменить комментарий к инциденту: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const getIncidentStatuses = createAsyncThunk(
   'incidents/getIncidentStatuses',
   async (_, thunkAPI) => {
     try {
-      const { data } = await authhost.get<INCStatuses>(
-        ApiEndPoints.INC.getIncidentStatuses
+      const { data } = await authhost.get<INCStatuses[]>(
+        ApiEndPoints.INC.getIncidentStatuses,
       )
       return data
     } catch (error) {
@@ -454,13 +457,13 @@ export const getIncidentStatuses = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные по статусам инцидентов: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const newIncidentStatuses = createAsyncThunk(
@@ -469,7 +472,7 @@ export const newIncidentStatuses = createAsyncThunk(
     try {
       const { data } = await authhost.post(
         ApiEndPoints.INC.newIncidentStatuses,
-        statusINC
+        statusINC,
       )
       return {
         data,
@@ -483,13 +486,13 @@ export const newIncidentStatuses = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось создать новый статус инцидента: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const deleteIncidentStatuses = createAsyncThunk(
@@ -500,7 +503,7 @@ export const deleteIncidentStatuses = createAsyncThunk(
         ApiEndPoints.INC.deleteIncidentStatuses,
         {
           selectedINCStatuses,
-        }
+        },
       )
       return {
         data,
@@ -514,13 +517,13 @@ export const deleteIncidentStatuses = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось удалить статус инцидента: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changeIncidentStatuses = createAsyncThunk(
@@ -532,7 +535,7 @@ export const changeIncidentStatuses = createAsyncThunk(
         {
           statusINC,
           id,
-        }
+        },
       )
       return {
         data,
@@ -546,21 +549,21 @@ export const changeIncidentStatuses = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось изменить статус инцидента: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const getTypesOfWork = createAsyncThunk(
   'incidents/getTypesOfWork',
   async (_, thunkAPI) => {
     try {
-      const { data } = await authhost.get<TypesOfWork>(
-        ApiEndPoints.INC.getTypesOfWork
+      const { data } = await authhost.get<TypesOfWork[]>(
+        ApiEndPoints.INC.getTypesOfWork,
       )
       return data
     } catch (error) {
@@ -568,13 +571,13 @@ export const getTypesOfWork = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные по типам работ: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const newTypeOfWork = createAsyncThunk(
@@ -583,7 +586,7 @@ export const newTypeOfWork = createAsyncThunk(
     try {
       const { data } = await authhost.post(
         ApiEndPoints.INC.newTypeOfWork,
-        typeOfWork
+        typeOfWork,
       )
       return {
         data,
@@ -597,13 +600,13 @@ export const newTypeOfWork = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `е удалось создать новый тип работ: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const deleteTypesOfWork = createAsyncThunk(
@@ -625,13 +628,13 @@ export const deleteTypesOfWork = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось удалить типы работ: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changeTypesOfWork = createAsyncThunk(
@@ -654,21 +657,21 @@ export const changeTypesOfWork = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось изменить тип работ: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const getTypesCompletedWork = createAsyncThunk(
   'incidents/getTypesCompletedWork',
   async (_, thunkAPI) => {
     try {
-      const { data } = await authhost.get<TypesCompletedWork>(
-        ApiEndPoints.INC.getTypesCompletedWork
+      const { data } = await authhost.get<TypesCompletedWork[]>(
+        ApiEndPoints.INC.getTypesCompletedWork,
       )
       return data
     } catch (error) {
@@ -676,13 +679,13 @@ export const getTypesCompletedWork = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные по типам выполненных работ: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const newTypeCompletedWork = createAsyncThunk(
@@ -691,7 +694,7 @@ export const newTypeCompletedWork = createAsyncThunk(
     try {
       const { data } = await authhost.post(
         ApiEndPoints.INC.newTypeCompletedWork,
-        typeCompletedWork
+        typeCompletedWork,
       )
       return {
         data,
@@ -705,13 +708,13 @@ export const newTypeCompletedWork = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось создать новый тип выполненных работ: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const deleteTypesCompletedWork = createAsyncThunk(
@@ -722,7 +725,7 @@ export const deleteTypesCompletedWork = createAsyncThunk(
         ApiEndPoints.INC.deleteTypesCompletedWork,
         {
           selectedTypeCompletedWork,
-        }
+        },
       )
       return {
         data,
@@ -736,13 +739,13 @@ export const deleteTypesCompletedWork = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось удалить типы выполненных работ: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changeTypesCompletedWork = createAsyncThunk(
@@ -754,7 +757,7 @@ export const changeTypesCompletedWork = createAsyncThunk(
         {
           typeCompletedWork,
           id,
-        }
+        },
       )
       return {
         data,
@@ -768,11 +771,11 @@ export const changeTypesCompletedWork = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось изменить тип выполненных работ: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )

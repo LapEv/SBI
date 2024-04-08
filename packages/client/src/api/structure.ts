@@ -17,8 +17,8 @@ export const getDivisions = createAsyncThunk(
   'structure/getDivisions',
   async (_, thunkAPI) => {
     try {
-      const { data } = await authhost.get<Division>(
-        ApiEndPoints.Structure.getDivisions
+      const { data } = await authhost.get<Division[]>(
+        ApiEndPoints.Structure.getDivisions,
       )
       return data
     } catch (error) {
@@ -26,21 +26,21 @@ export const getDivisions = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные по дивизионам: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const getDepartments = createAsyncThunk(
   'structure/getRolesGroup',
   async (_, thunkAPI) => {
     try {
-      const { data } = await authhost.get<Department>(
-        ApiEndPoints.Structure.getDepartments
+      const { data } = await authhost.get<Department[]>(
+        ApiEndPoints.Structure.getDepartments,
       )
       return data
     } catch (error) {
@@ -48,13 +48,13 @@ export const getDepartments = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные по департаментам: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const newDivision = createAsyncThunk(
@@ -74,25 +74,25 @@ export const newDivision = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось создать дивизион: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const newDepartment = createAsyncThunk(
   'structure/newDepartment',
   async (
     { department, departmentName, division, id_division }: NewDepartment,
-    thunkAPI
+    thunkAPI,
   ) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Structure.newDepartment,
-        { department, departmentName, division, id_division }
+        { department, departmentName, division, id_division },
       )
       return {
         data,
@@ -103,13 +103,13 @@ export const newDepartment = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось создать новый отдел: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const deleteDivision = createAsyncThunk(
@@ -118,7 +118,7 @@ export const deleteDivision = createAsyncThunk(
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Structure.updateDivision,
-        { selectedDivisions }
+        { selectedDivisions },
       )
       return {
         data,
@@ -129,13 +129,13 @@ export const deleteDivision = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось удалить дивизион: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const deleteDepartment = createAsyncThunk(
@@ -144,7 +144,7 @@ export const deleteDepartment = createAsyncThunk(
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Structure.updateDepartment,
-        { selectedDepartments }
+        { selectedDepartments },
       )
       return {
         data,
@@ -155,11 +155,11 @@ export const deleteDepartment = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось удалить отдел: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )

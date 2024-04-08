@@ -1,18 +1,11 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import {
   INC,
   INCStatuses,
-  AnswerINC,
-  AnswerINCStatuses,
   TypesOfWork,
-  AnswerTypesOfWork,
   INCState,
   TypesCompletedWork,
-  AnswerTypesCompletedWork,
   AnswerGetINC,
-  AnswerGetINCs,
-  AnswerINCsData,
-  AnswerGetFilter,
 } from './interfaces'
 import {
   getINC,
@@ -120,408 +113,317 @@ export const incidentsSlise = createSlice({
       state.isLoadingINC = action.payload
     },
   },
-  // extraReducers: {
-  //   [signin.fulfilled.type]: (state, action: PayloadAction<ICheckUser>) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     const { filterData } = action.payload
-  //     state.filterListData = filterData
-  //   },
-  //   [CheckUser.fulfilled.type]: (state, action: PayloadAction<ICheckUser>) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     const { filterData } = action.payload
-  //     state.filterListData = filterData
-  //   },
-  //   [getFilter.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerGetFilter>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     state.filterListData = action.payload
-  //   },
-  //   [getFilter.pending.type]: state => {
-  //     state.isLoadingINC = true
-  //   },
-  //   [getFilter.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingINC = false
-  //     state.error = action.payload
-  //   },
-  //   [getINC.fulfilled.type]: (state, action: PayloadAction<AnswerGetINC>) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     const { incs, count } = action.payload
-  //     state.incidents = createINCData(incs)
-  //     state.countIncidents = count
-  //   },
-  //   [getINC.pending.type]: state => {
-  //     state.isLoadingINC = true
-  //   },
-  //   [getINC.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingINC = false
-  //     state.error = action.payload
-  //   },
-  //   [getINCs.fulfilled.type]: (state, action: PayloadAction<AnswerGetINC>) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     const { incs, count, filterListData } = action.payload
-  //     state.incidents = createINCData(incs)
-  //     state.countIncidents = count
-  //     state.filterListData = filterListData
-  //   },
-  //   [getINCs.pending.type]: state => {
-  //     state.isLoadingINC = true
-  //   },
-  //   [getINCs.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingINC = false
-  //     state.error = action.payload
-  //   },
-  //   [newINC.fulfilled.type]: (state, action: PayloadAction<AnswerGetINCs>) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     const { incs, count, filterListData } = action.payload.data
-  //     state.incidents = createINCData(incs)
-  //     state.countIncidents = count
-  //     state.filterListData = filterListData
-  //   },
-  //   [newINC.pending.type]: state => {
-  //     state.isLoadingINC = true
-  //   },
-  //   [newINC.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingINC = false
-  //     state.error = action.payload
-  //   },
-  //   [changeINC.fulfilled.type]: (state, action: PayloadAction<AnswerINC>) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     state.incidents = createINCData(action.payload.data)
-  //   },
-  //   [changeExecutor.pending.type]: state => {
-  //     state.isLoadingINC = true
-  //   },
-  //   [changeExecutor.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingINC = false
-  //     state.error = action.payload
-  //   },
-  //   [changeExecutor.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerINCsData>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     const { incs, filterListData } = action.payload.data
-  //     state.filterListData = filterListData
-  //     state.incidents = createINCData(incs)
-  //   },
-  //   [changeResponsible.pending.type]: state => {
-  //     state.isLoadingINC = true
-  //   },
-  //   [changeResponsible.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = action.payload
-  //   },
-  //   [changeResponsible.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerINCsData>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     const { incs, filterListData } = action.payload.data
-  //     state.filterListData = filterListData
-  //     state.incidents = createINCData(incs)
-  //   },
-  //   [changeStatus.pending.type]: state => {
-  //     state.isLoadingINC = true
-  //   },
-  //   [changeStatus.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingINC = false
-  //     state.error = action.payload
-  //   },
-  //   [changeStatus.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerINCsData>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     const { incs, filterListData } = action.payload.data
-  //     state.filterListData = filterListData
-  //     state.incidents = createINCData(incs)
-  //   },
-  //   [changeUserClosingCheck.pending.type]: state => {
-  //     state.isLoadingINC = true
-  //   },
-  //   [changeUserClosingCheck.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = action.payload
-  //   },
-  //   [changeUserClosingCheck.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerINC>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     state.incidents = createINCData(action.payload.data)
-  //   },
-  //   [changeUserClosing.pending.type]: state => {
-  //     state.isLoadingINC = true
-  //   },
-  //   [changeUserClosing.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = action.payload
-  //   },
-  //   [changeUserClosing.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerINC>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     state.incidents = createINCData(action.payload.data)
-  //   },
-  //   [changeComment.pending.type]: state => {
-  //     state.isLoadingINC = true
-  //   },
-  //   [changeComment.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingINC = false
-  //     state.error = action.payload
-  //   },
-  //   [changeComment.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerINC>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     state.incidents = createINCData(action.payload.data)
-  //   },
-
-  //   [changeINC.pending.type]: state => {
-  //     state.isLoadingINC = true
-  //   },
-  //   [changeINC.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingINC = false
-  //     state.error = action.payload
-  //   },
-  //   [getIncidentStatuses.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<INCStatuses[]>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     state.incStatuses = action.payload
-  //   },
-  //   [getIncidentStatuses.pending.type]: state => {
-  //     state.isLoadingINC = true
-  //   },
-  //   [getIncidentStatuses.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = action.payload
-  //   },
-  //   [newIncidentStatuses.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerINCStatuses>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     state.incStatuses = action.payload.data
-  //   },
-  //   [newIncidentStatuses.pending.type]: state => {
-  //     state.isLoadingINC = true
-  //   },
-  //   [newIncidentStatuses.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = action.payload
-  //   },
-  //   [deleteIncidentStatuses.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerINCStatuses>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     state.incStatuses = action.payload.data
-  //   },
-  //   [deleteIncidentStatuses.pending.type]: state => {
-  //     state.isLoadingINC = true
-  //   },
-  //   [deleteIncidentStatuses.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = action.payload
-  //   },
-  //   [changeIncidentStatuses.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerINCStatuses>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     state.incStatuses = action.payload.data
-  //   },
-  //   [changeIncidentStatuses.pending.type]: state => {
-  //     state.isLoadingINC = true
-  //   },
-  //   [changeIncidentStatuses.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = action.payload
-  //   },
-  //   [getTypesOfWork.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<TypesOfWork[]>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     state.typesOfWork = action.payload
-  //   },
-  //   [getTypesOfWork.pending.type]: state => {
-  //     state.isLoadingINC = true
-  //   },
-  //   [getTypesOfWork.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingINC = false
-  //     state.error = action.payload
-  //   },
-  //   [newTypeOfWork.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerTypesOfWork>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     state.typesOfWork = action.payload.data
-  //   },
-  //   [newTypeOfWork.pending.type]: state => {
-  //     state.isLoadingINC = true
-  //   },
-  //   [newTypeOfWork.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingINC = false
-  //     state.error = action.payload
-  //   },
-  //   [deleteTypesOfWork.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerTypesOfWork>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     state.typesOfWork = action.payload.data
-  //   },
-  //   [deleteTypesOfWork.pending.type]: state => {
-  //     state.isLoadingINC = true
-  //   },
-  //   [deleteTypesOfWork.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = action.payload
-  //   },
-  //   [changeTypesOfWork.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerTypesOfWork>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     state.typesOfWork = action.payload.data
-  //   },
-  //   [changeTypesOfWork.pending.type]: state => {
-  //     state.isLoadingINC = true
-  //   },
-  //   [changeTypesOfWork.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = action.payload
-  //   },
-
-  //   [getTypesCompletedWork.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<TypesCompletedWork[]>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     state.typesCompletedWork = action.payload
-  //   },
-  //   [getTypesCompletedWork.pending.type]: state => {
-  //     state.isLoadingINC = true
-  //   },
-  //   [getTypesCompletedWork.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = action.payload
-  //   },
-  //   [newTypeCompletedWork.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerTypesCompletedWork>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     state.typesCompletedWork = action.payload.data
-  //   },
-  //   [newTypeCompletedWork.pending.type]: state => {
-  //     state.isLoadingINC = true
-  //   },
-  //   [newTypeCompletedWork.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = action.payload
-  //   },
-  //   [deleteTypesCompletedWork.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerTypesCompletedWork>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     state.typesCompletedWork = action.payload.data
-  //   },
-  //   [deleteTypesCompletedWork.pending.type]: state => {
-  //     state.isLoadingINC = true
-  //   },
-  //   [deleteTypesCompletedWork.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = action.payload
-  //   },
-  //   [changeTypesCompletedWork.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerTypesCompletedWork>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = ''
-  //     state.typesCompletedWork = action.payload.data
-  //   },
-  //   [changeTypesCompletedWork.pending.type]: state => {
-  //     state.isLoadingINC = true
-  //   },
-  //   [changeTypesCompletedWork.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingINC = false
-  //     state.error = action.payload
-  //   },
-  // },
+  extraReducers: builder => {
+    builder.addCase(signin.fulfilled, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = ''
+      const { filterData } = payload as ICheckUser
+      state.filterListData = filterData
+    })
+    builder.addCase(CheckUser.fulfilled, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = ''
+      const { filterData } = payload as ICheckUser
+      state.filterListData = filterData
+    })
+    builder.addCase(getFilter.fulfilled, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = ''
+      const { filterData } = payload as ICheckUser
+      state.filterListData = filterData
+    })
+    builder.addCase(getFilter.pending, state => {
+      state.isLoadingINC = true
+    })
+    builder.addCase(getFilter.rejected, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = payload as string
+    })
+    builder.addCase(getINC.fulfilled, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = ''
+      const { incs, count } = payload as AnswerGetINC
+      state.incidents = createINCData(incs)
+      state.countIncidents = count
+    })
+    builder.addCase(getINC.pending, state => {
+      state.isLoadingINC = true
+    })
+    builder.addCase(getINC.rejected, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = payload as string
+    })
+    builder.addCase(getINCs.fulfilled, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = ''
+      const { incs, count, filterListData } = payload as AnswerGetINC
+      state.incidents = createINCData(incs)
+      state.countIncidents = count
+      state.filterListData = filterListData
+    })
+    builder.addCase(getINCs.pending, state => {
+      state.isLoadingINC = true
+    })
+    builder.addCase(getINCs.rejected, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = payload as string
+    })
+    builder.addCase(newINC.fulfilled, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = ''
+      const { incs, count, filterListData } = payload?.data as AnswerGetINC
+      state.incidents = createINCData(incs)
+      state.countIncidents = count
+      state.filterListData = filterListData
+    })
+    builder.addCase(newINC.pending, state => {
+      state.isLoadingINC = true
+    })
+    builder.addCase(newINC.rejected, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = payload as string
+    })
+    builder.addCase(changeINC.fulfilled, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.incidents = createINCData(payload?.data)
+    })
+    builder.addCase(changeINC.pending, state => {
+      state.isLoadingINC = true
+    })
+    builder.addCase(changeINC.rejected, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = payload as string
+    })
+    builder.addCase(changeExecutor.fulfilled, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = ''
+      const { incs, filterListData } = payload?.data as AnswerGetINC
+      state.filterListData = filterListData
+      state.incidents = createINCData(incs)
+    })
+    builder.addCase(changeExecutor.pending, state => {
+      state.isLoadingINC = true
+    })
+    builder.addCase(changeExecutor.rejected, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = payload as string
+    })
+    builder.addCase(changeResponsible.fulfilled, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = ''
+      const { incs, filterListData } = payload?.data as AnswerGetINC
+      state.filterListData = filterListData
+      state.incidents = createINCData(incs)
+    })
+    builder.addCase(changeResponsible.pending, state => {
+      state.isLoadingINC = true
+    })
+    builder.addCase(changeResponsible.rejected, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = payload as string
+    })
+    builder.addCase(changeStatus.fulfilled, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = ''
+      const { incs, filterListData } = payload?.data as AnswerGetINC
+      state.filterListData = filterListData
+      state.incidents = createINCData(incs)
+    })
+    builder.addCase(changeStatus.pending, state => {
+      state.isLoadingINC = true
+    })
+    builder.addCase(changeStatus.rejected, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = payload as string
+    })
+    builder.addCase(changeUserClosingCheck.fulfilled, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.incidents = createINCData(payload?.data)
+    })
+    builder.addCase(changeUserClosingCheck.pending, state => {
+      state.isLoadingINC = true
+    })
+    builder.addCase(changeUserClosingCheck.rejected, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = payload as string
+    })
+    builder.addCase(changeUserClosing.fulfilled, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.incidents = createINCData(payload?.data)
+    })
+    builder.addCase(changeUserClosing.pending, state => {
+      state.isLoadingINC = true
+    })
+    builder.addCase(changeUserClosing.rejected, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = payload as string
+    })
+    builder.addCase(changeComment.fulfilled, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.incidents = createINCData(payload?.data)
+    })
+    builder.addCase(changeComment.pending, state => {
+      state.isLoadingINC = true
+    })
+    builder.addCase(changeComment.rejected, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = payload as string
+    })
+    builder.addCase(getIncidentStatuses.fulfilled, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.incStatuses = payload as INCStatuses[]
+    })
+    builder.addCase(getIncidentStatuses.pending, state => {
+      state.isLoadingINC = true
+    })
+    builder.addCase(getIncidentStatuses.rejected, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = payload as string
+    })
+    builder.addCase(newIncidentStatuses.fulfilled, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.incStatuses = payload?.data as INCStatuses[]
+    })
+    builder.addCase(newIncidentStatuses.pending, state => {
+      state.isLoadingINC = true
+    })
+    builder.addCase(newIncidentStatuses.rejected, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = payload as string
+    })
+    builder.addCase(deleteIncidentStatuses.fulfilled, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.incStatuses = payload?.data as INCStatuses[]
+    })
+    builder.addCase(deleteIncidentStatuses.pending, state => {
+      state.isLoadingINC = true
+    })
+    builder.addCase(deleteIncidentStatuses.rejected, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = payload as string
+    })
+    builder.addCase(changeIncidentStatuses.fulfilled, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.incStatuses = payload?.data as INCStatuses[]
+    })
+    builder.addCase(changeIncidentStatuses.pending, state => {
+      state.isLoadingINC = true
+    })
+    builder.addCase(changeIncidentStatuses.rejected, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = payload as string
+    })
+    builder.addCase(getTypesOfWork.fulfilled, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.typesOfWork = payload as TypesOfWork[]
+    })
+    builder.addCase(getTypesOfWork.pending, state => {
+      state.isLoadingINC = true
+    })
+    builder.addCase(getTypesOfWork.rejected, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = payload as string
+    })
+    builder.addCase(newTypeOfWork.fulfilled, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.typesOfWork = payload?.data as TypesOfWork[]
+    })
+    builder.addCase(newTypeOfWork.pending, state => {
+      state.isLoadingINC = true
+    })
+    builder.addCase(newTypeOfWork.rejected, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = payload as string
+    })
+    builder.addCase(deleteTypesOfWork.fulfilled, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.typesOfWork = payload?.data as TypesOfWork[]
+    })
+    builder.addCase(deleteTypesOfWork.pending, state => {
+      state.isLoadingINC = true
+    })
+    builder.addCase(deleteTypesOfWork.rejected, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = payload as string
+    })
+    builder.addCase(changeTypesOfWork.fulfilled, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.typesOfWork = payload?.data as TypesOfWork[]
+    })
+    builder.addCase(changeTypesOfWork.pending, state => {
+      state.isLoadingINC = true
+    })
+    builder.addCase(changeTypesOfWork.rejected, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = payload as string
+    })
+    builder.addCase(getTypesCompletedWork.fulfilled, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.typesCompletedWork = payload as TypesCompletedWork[]
+    })
+    builder.addCase(getTypesCompletedWork.pending, state => {
+      state.isLoadingINC = true
+    })
+    builder.addCase(getTypesCompletedWork.rejected, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = payload as string
+    })
+    builder.addCase(newTypeCompletedWork.fulfilled, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = ''
+      state.typesCompletedWork = payload?.data as TypesCompletedWork[]
+    })
+    builder.addCase(newTypeCompletedWork.pending, state => {
+      state.isLoadingINC = true
+    })
+    builder.addCase(newTypeCompletedWork.rejected, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = payload as string
+    })
+    builder.addCase(
+      deleteTypesCompletedWork.fulfilled,
+      (state, { payload }) => {
+        state.isLoadingINC = false
+        state.error = ''
+        state.typesCompletedWork = payload?.data as TypesCompletedWork[]
+      },
+    )
+    builder.addCase(deleteTypesCompletedWork.pending, state => {
+      state.isLoadingINC = true
+    })
+    builder.addCase(deleteTypesCompletedWork.rejected, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = payload as string
+    })
+    builder.addCase(
+      changeTypesCompletedWork.fulfilled,
+      (state, { payload }) => {
+        state.isLoadingINC = false
+        state.error = ''
+        state.typesCompletedWork = payload?.data as TypesCompletedWork[]
+      },
+    )
+    builder.addCase(changeTypesCompletedWork.pending, state => {
+      state.isLoadingINC = true
+    })
+    builder.addCase(changeTypesCompletedWork.rejected, (state, { payload }) => {
+      state.isLoadingINC = false
+      state.error = payload as string
+    })
+  },
 })
 
 export const incidentsReducer = incidentsSlise.reducer

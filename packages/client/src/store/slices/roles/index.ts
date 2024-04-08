@@ -1,11 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import {
-  AnswerRole,
-  AnswerRolesGroup,
-  Roles,
-  RolesGroup,
-  RolesState,
-} from './interfaces'
+import { createSlice } from '@reduxjs/toolkit'
+import { Roles, RolesGroup, RolesState } from './interfaces'
 import {
   deleteRoles,
   deleteRolesGroup,
@@ -32,112 +26,92 @@ export const rolesSlise = createSlice({
     },
   },
 
-  // extraReducers: {
-  //   [getRoles.fulfilled.type]: (state, action: PayloadAction<Roles[]>) => {
-  //     state.isLoadingRoles = false
-  //     state.error = ''
-  //     state.roles = action.payload
-  //   },
-  //   [getRoles.pending.type]: state => {
-  //     state.isLoadingRoles = true
-  //   },
-  //   [getRoles.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingRoles = false
-  //     state.error = action.payload
-  //   },
-  //   [getRolesGroup.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<RolesGroup[]>
-  //   ) => {
-  //     state.isLoadingRoles = false
-  //     state.error = ''
-  //     state.rolesGroup = action.payload
-  //   },
-  //   [getRolesGroup.pending.type]: state => {
-  //     state.isLoadingRoles = true
-  //   },
-  //   [getRolesGroup.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingRoles = false
-  //     state.error = action.payload
-  //   },
-  //   [newRole.fulfilled.type]: (state, action: PayloadAction<AnswerRole>) => {
-  //     state.isLoadingRoles = false
-  //     state.error = ''
-  //     state.roles = action.payload.data
-  //   },
-  //   [newRole.pending.type]: state => {
-  //     state.isLoadingRoles = true
-  //   },
-  //   [newRole.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingRoles = false
-  //     state.error = action.payload
-  //   },
-  //   [newRolesGroup.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerRolesGroup>
-  //   ) => {
-  //     state.isLoadingRoles = false
-  //     state.rolesGroup = action.payload.data
-  //   },
-  //   [newRolesGroup.pending.type]: state => {
-  //     state.isLoadingRoles = true
-  //   },
-  //   [newRolesGroup.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingRoles = false
-  //     state.error = action.payload
-  //   },
-  //   [deleteRoles.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerRole>
-  //   ) => {
-  //     state.isLoadingRoles = false
-  //     state.error = ''
-  //     state.roles = action.payload.data
-  //   },
-  //   [deleteRoles.pending.type]: state => {
-  //     state.isLoadingRoles = true
-  //   },
-  //   [deleteRoles.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingRoles = false
-  //     state.error = action.payload
-  //   },
-  //   [deleteRolesGroup.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerRolesGroup>
-  //   ) => {
-  //     state.isLoadingRoles = false
-  //     state.error = ''
-  //     state.rolesGroup = action.payload.data
-  //   },
-  //   [deleteRolesGroup.pending.type]: state => {
-  //     state.isLoadingRoles = true
-  //   },
-  //   [deleteRolesGroup.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingRoles = false
-  //     state.error = action.payload
-  //   },
-  //   [changeRolesGroup.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerRolesGroup>
-  //   ) => {
-  //     state.isLoadingRoles = false
-  //     state.error = ''
-  //     state.rolesGroup = action.payload.data
-  //   },
-  //   [changeRolesGroup.pending.type]: state => {
-  //     state.isLoadingRoles = true
-  //   },
-  //   [changeRolesGroup.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingRoles = false
-  //     state.error = action.payload
-  //   },
-  // },
+  extraReducers: builder => {
+    builder.addCase(getRoles.fulfilled, (state, { payload }) => {
+      state.isLoadingRoles = false
+      state.error = ''
+      state.roles = payload as Roles[]
+    })
+    builder.addCase(getRoles.pending, state => {
+      state.isLoadingRoles = true
+    })
+    builder.addCase(getRoles.rejected, (state, { payload }) => {
+      state.isLoadingRoles = false
+      state.error = payload as string
+    })
+    builder.addCase(getRolesGroup.fulfilled, (state, { payload }) => {
+      state.isLoadingRoles = false
+      state.error = ''
+      state.rolesGroup = payload as RolesGroup[]
+    })
+    builder.addCase(getRolesGroup.pending, state => {
+      state.isLoadingRoles = true
+    })
+    builder.addCase(getRolesGroup.rejected, (state, { payload }) => {
+      state.isLoadingRoles = false
+      state.error = payload as string
+    })
+    builder.addCase(newRole.fulfilled, (state, { payload }) => {
+      state.isLoadingRoles = false
+      state.error = ''
+      state.roles = payload?.data as Roles[]
+    })
+    builder.addCase(newRole.pending, state => {
+      state.isLoadingRoles = true
+    })
+    builder.addCase(newRole.rejected, (state, { payload }) => {
+      state.isLoadingRoles = false
+      state.error = payload as string
+    })
+    builder.addCase(newRolesGroup.fulfilled, (state, { payload }) => {
+      state.isLoadingRoles = false
+      state.error = ''
+      state.rolesGroup = payload?.data as RolesGroup[]
+    })
+    builder.addCase(newRolesGroup.pending, state => {
+      state.isLoadingRoles = true
+    })
+    builder.addCase(newRolesGroup.rejected, (state, { payload }) => {
+      state.isLoadingRoles = false
+      state.error = payload as string
+    })
+    builder.addCase(deleteRoles.fulfilled, (state, { payload }) => {
+      state.isLoadingRoles = false
+      state.error = ''
+      state.roles = payload?.data as Roles[]
+    })
+    builder.addCase(deleteRoles.pending, state => {
+      state.isLoadingRoles = true
+    })
+    builder.addCase(deleteRoles.rejected, (state, { payload }) => {
+      state.isLoadingRoles = false
+      state.error = payload as string
+    })
+    builder.addCase(deleteRolesGroup.fulfilled, (state, { payload }) => {
+      state.isLoadingRoles = false
+      state.error = ''
+      state.rolesGroup = payload?.data as RolesGroup[]
+    })
+    builder.addCase(deleteRolesGroup.pending, state => {
+      state.isLoadingRoles = true
+    })
+    builder.addCase(deleteRolesGroup.rejected, (state, { payload }) => {
+      state.isLoadingRoles = false
+      state.error = payload as string
+    })
+    builder.addCase(changeRolesGroup.fulfilled, (state, { payload }) => {
+      state.isLoadingRoles = false
+      state.error = ''
+      state.rolesGroup = payload?.data as RolesGroup[]
+    })
+    builder.addCase(changeRolesGroup.pending, state => {
+      state.isLoadingRoles = true
+    })
+    builder.addCase(changeRolesGroup.rejected, (state, { payload }) => {
+      state.isLoadingRoles = false
+      state.error = payload as string
+    })
+  },
 })
 
 export const rolesReducer = rolesSlise.reducer

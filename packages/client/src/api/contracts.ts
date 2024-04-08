@@ -16,8 +16,8 @@ export const getContracts = createAsyncThunk(
   'contracts/getContracts',
   async (_, thunkAPI) => {
     try {
-      const { data } = await authhost.get<Contracts>(
-        ApiEndPoints.Contracts.getContracts
+      const { data } = await authhost.get<Contracts[]>(
+        ApiEndPoints.Contracts.getContracts,
       )
       return data
     } catch (error) {
@@ -25,22 +25,22 @@ export const getContracts = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные по контрактам: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const getContractsByClientID = createAsyncThunk(
   'contracts/getContractsByClientID',
   async (id_client: string, thunkAPI) => {
     try {
-      const { data } = await authhost.post<Contracts>(
+      const { data } = await authhost.post<Contracts[]>(
         ApiEndPoints.Contracts.getContractsByClientID,
-        { id_client }
+        { id_client },
       )
       return data
     } catch (error) {
@@ -48,13 +48,13 @@ export const getContractsByClientID = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные по контрактам ID клиента: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const newContract = createAsyncThunk(
@@ -63,7 +63,7 @@ export const newContract = createAsyncThunk(
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Contracts.newContract,
-        contract
+        contract,
       )
       return {
         data,
@@ -77,13 +77,13 @@ export const newContract = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось создать новый контракт: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const newContractName = createAsyncThunk(
@@ -95,7 +95,7 @@ export const newContractName = createAsyncThunk(
         {
           contract,
           id,
-        }
+        },
       )
       return {
         data,
@@ -109,13 +109,13 @@ export const newContractName = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось создать новый контракт: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const deleteContract = createAsyncThunk(
@@ -126,7 +126,7 @@ export const deleteContract = createAsyncThunk(
         ApiEndPoints.Contracts.deleteContract,
         {
           selectedContracts,
-        }
+        },
       )
       return {
         data,
@@ -140,13 +140,13 @@ export const deleteContract = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось удалить контракты: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changeContract = createAsyncThunk(
@@ -163,7 +163,7 @@ export const changeContract = createAsyncThunk(
       id,
       notificationEmail,
     }: ChangeContract,
-    thunkAPI
+    thunkAPI,
   ) => {
     try {
       const { data } = await authhost.post(
@@ -178,7 +178,7 @@ export const changeContract = createAsyncThunk(
           objects,
           incStatusses,
           id,
-        }
+        },
       )
       return {
         data,
@@ -192,11 +192,11 @@ export const changeContract = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось изменить контракт: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )

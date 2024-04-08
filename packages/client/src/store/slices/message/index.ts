@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import {
   changeRolesGroup,
   deleteRoles,
@@ -12,7 +12,7 @@ import {
   newDepartment,
   newDivision,
 } from 'api/structure'
-import { AnswerMessage, MessageState } from './interfaces'
+import { MessageState } from './interfaces'
 import {
   ChangeAvatar,
   changePassword,
@@ -79,7 +79,7 @@ import {
   changeTypesCompletedWork,
   changeComment,
 } from 'api/incidents'
-import { getFiles, uploadFiles } from 'api/files'
+import { uploadFiles } from 'api/files'
 
 const initialState: MessageState = {
   text: '',
@@ -101,1209 +101,922 @@ export const messageSlise = createSlice({
       state.type = action.payload.type
     },
   },
-  // extraReducers: {
-  //   [newDivision.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [newDivision.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [newDivision.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [newDepartment.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [newDepartment.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [newDepartment.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [deleteDivision.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [deleteDivision.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [deleteDivision.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [deleteDepartment.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [deleteDepartment.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [deleteDepartment.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [newRole.fulfilled.type]: (state, action: PayloadAction<AnswerMessage>) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [newRole.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [newRole.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [newRolesGroup.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [newRolesGroup.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [newRolesGroup.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [deleteRoles.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [deleteRoles.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [deleteRoles.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [deleteRolesGroup.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [deleteRolesGroup.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [deleteRolesGroup.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [changeRolesGroup.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changeRolesGroup.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changeRolesGroup.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [signin.fulfilled.type]: (state, action: PayloadAction<AnswerMessage>) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [signin.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [signin.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [signup.fulfilled.type]: (state, action: PayloadAction<AnswerMessage>) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [signup.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [signup.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [updateProfile.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [updateProfile.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [updateProfile.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [ChangeAvatar.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [ChangeAvatar.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [ChangeAvatar.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [changePassword.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changePassword.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changePassword.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [deleteUser.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [deleteUser.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [deleteUser.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [updateUser.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [updateUser.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [updateUser.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [newAddress.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [newAddress.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [newAddress.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [deleteAddress.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [deleteAddress.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [deleteAddress.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [changeAddress.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changeAddress.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changeAddress.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [newRegion.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [newRegion.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [newRegion.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [deleteRegion.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [deleteRegion.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [deleteRegion.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [changeRegion.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changeRegion.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changeRegion.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [newClassifierEquipment.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [newClassifierEquipment.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [newClassifierEquipment.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [deleteClassifierEquipment.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [deleteClassifierEquipment.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [deleteClassifierEquipment.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [changeClassifierEquipment.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changeClassifierEquipment.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changeClassifierEquipment.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [newClassifierModel.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [newClassifierModel.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [newClassifierModel.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [deleteClassifierModel.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [deleteClassifierModel.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [deleteClassifierModel.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [changeClassifierModel.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changeClassifierModel.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changeClassifierModel.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [newTypicalMalfunction.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [newTypicalMalfunction.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [newTypicalMalfunction.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [deleteTypicalMalfunction.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [deleteTypicalMalfunction.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [deleteTypicalMalfunction.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [changeTypicalMalfunction.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changeTypicalMalfunction.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changeTypicalMalfunction.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [changeModelsInTypicalMalfunction.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changeModelsInTypicalMalfunction.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changeModelsInTypicalMalfunction.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [newSLA.fulfilled.type]: (state, action: PayloadAction<AnswerMessage>) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [newSLA.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [newSLA.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [deleteSLA.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [deleteSLA.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [deleteSLA.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [changeSLA.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changeSLA.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changeSLA.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [newOLA.fulfilled.type]: (state, action: PayloadAction<AnswerMessage>) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [newOLA.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [newOLA.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [deleteOLA.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [deleteOLA.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [deleteOLA.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [changeOLA.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changeOLA.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changeOLA.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [newTypeOfWork.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [newTypeOfWork.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [newTypeOfWork.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [deleteTypesOfWork.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [deleteTypesOfWork.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [deleteTypesOfWork.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [changeTypesOfWork.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changeTypesOfWork.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changeTypesOfWork.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-
-  //   [newTypeCompletedWork.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [newTypeCompletedWork.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [newTypeCompletedWork.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [deleteTypesCompletedWork.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [deleteTypesCompletedWork.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [deleteTypesCompletedWork.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [changeTypesCompletedWork.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changeTypesCompletedWork.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changeTypesCompletedWork.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-
-  //   [newClientGroup.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [newClientGroup.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [newClientGroup.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [deleteClientGroup.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [deleteClientGroup.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [deleteClientGroup.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [changeClientGroup.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changeClientGroup.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changeClientGroup.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [newClient.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [newClient.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [newClient.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [deleteClient.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [deleteClient.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [deleteClient.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [changeClient.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changeClient.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changeClient.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [newContract.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [newContract.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [newContract.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [deleteContract.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [deleteContract.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [deleteContract.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [changeContract.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changeContract.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changeContract.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [newObject.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [newObject.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [newObject.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [deleteObjects.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [deleteObjects.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [deleteObjects.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [changeObject.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changeObject.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changeObject.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [newINC.fulfilled.type]: (state, action: PayloadAction<AnswerMessage>) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [newINC.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [newINC.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [changeINC.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changeINC.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changeINC.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [changeExecutor.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changeExecutor.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changeExecutor.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [changeResponsible.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changeResponsible.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changeResponsible.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [changeStatus.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changeStatus.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changeStatus.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-
-  //   [changeUserClosingCheck.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changeUserClosingCheck.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changeUserClosingCheck.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [changeUserClosing.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changeUserClosing.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changeUserClosing.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [changeComment.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changeComment.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changeComment.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-
-  //   [newIncidentStatuses.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [newIncidentStatuses.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [newIncidentStatuses.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [deleteIncidentStatuses.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [deleteIncidentStatuses.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [deleteIncidentStatuses.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [changeIncidentStatuses.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.error = ''
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [changeIncidentStatuses.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [changeIncidentStatuses.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-
-  //   [getFiles.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [getFiles.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [getFiles.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  //   [uploadFiles.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerMessage>
-  //   ) => {
-  //     state.isLoadingMessage = false
-  //     state.text = action.payload.message.text
-  //     state.type = action.payload.message.type
-  //   },
-  //   [uploadFiles.pending.type]: state => {
-  //     state.isLoadingMessage = true
-  //   },
-  //   [uploadFiles.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingMessage = false
-  //     state.type = 'error'
-  //     state.text = action.payload
-  //   },
-  // },
+  extraReducers: builder => {
+    builder.addCase(newDivision.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(newDivision.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(newDivision.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(newDepartment.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(newDepartment.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(newDepartment.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(deleteDivision.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(deleteDivision.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(deleteDivision.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(deleteDepartment.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(deleteDepartment.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(deleteDepartment.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(newRole.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(newRole.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(newRole.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(newRolesGroup.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(newRolesGroup.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(newRolesGroup.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(deleteRoles.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(deleteRoles.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(deleteRoles.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(deleteRolesGroup.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(deleteRolesGroup.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(deleteRolesGroup.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(changeRolesGroup.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeRolesGroup.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeRolesGroup.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(signin.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(signin.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(signin.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(signup.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(signup.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(signup.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(updateProfile.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(updateProfile.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(updateProfile.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(ChangeAvatar.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(ChangeAvatar.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(ChangeAvatar.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(changePassword.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changePassword.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changePassword.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(deleteUser.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(deleteUser.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(deleteUser.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(updateUser.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(updateUser.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(updateUser.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(newAddress.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(newAddress.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(newAddress.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(deleteAddress.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(deleteAddress.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(deleteAddress.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(changeAddress.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeAddress.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeAddress.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(newRegion.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(newRegion.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(newRegion.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(deleteRegion.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(deleteRegion.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(deleteRegion.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(changeRegion.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeRegion.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeRegion.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(newClassifierEquipment.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(newClassifierEquipment.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(newClassifierEquipment.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(
+      deleteClassifierEquipment.fulfilled,
+      (state, { payload }) => {
+        state.isLoadingMessage = false
+        state.text = payload?.message.text as string
+        state.type = payload?.message.type as string
+      },
+    )
+    builder.addCase(deleteClassifierEquipment.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(
+      deleteClassifierEquipment.rejected,
+      (state, { payload }) => {
+        state.isLoadingMessage = false
+        state.type = 'error'
+        state.text = payload as string
+      },
+    )
+    builder.addCase(
+      changeClassifierEquipment.fulfilled,
+      (state, { payload }) => {
+        state.isLoadingMessage = false
+        state.text = payload?.message.text as string
+        state.type = payload?.message.type as string
+      },
+    )
+    builder.addCase(changeClassifierEquipment.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(
+      changeClassifierEquipment.rejected,
+      (state, { payload }) => {
+        state.isLoadingMessage = false
+        state.type = 'error'
+        state.text = payload as string
+      },
+    )
+    builder.addCase(newClassifierModel.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(newClassifierModel.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(newClassifierModel.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(deleteClassifierModel.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(deleteClassifierModel.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(deleteClassifierModel.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(changeClassifierModel.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeClassifierModel.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeClassifierModel.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(newTypicalMalfunction.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(newTypicalMalfunction.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(newTypicalMalfunction.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(
+      deleteTypicalMalfunction.fulfilled,
+      (state, { payload }) => {
+        state.isLoadingMessage = false
+        state.text = payload?.message.text as string
+        state.type = payload?.message.type as string
+      },
+    )
+    builder.addCase(deleteTypicalMalfunction.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(deleteTypicalMalfunction.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(
+      changeTypicalMalfunction.fulfilled,
+      (state, { payload }) => {
+        state.isLoadingMessage = false
+        state.text = payload?.message.text as string
+        state.type = payload?.message.type as string
+      },
+    )
+    builder.addCase(changeTypicalMalfunction.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeTypicalMalfunction.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(
+      changeModelsInTypicalMalfunction.fulfilled,
+      (state, { payload }) => {
+        state.isLoadingMessage = false
+        state.text = payload?.message.text as string
+        state.type = payload?.message.type as string
+      },
+    )
+    builder.addCase(changeModelsInTypicalMalfunction.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(
+      changeModelsInTypicalMalfunction.rejected,
+      (state, { payload }) => {
+        state.isLoadingMessage = false
+        state.type = 'error'
+        state.text = payload as string
+      },
+    )
+    builder.addCase(newSLA.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(newSLA.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(newSLA.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(deleteSLA.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(deleteSLA.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(deleteSLA.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(changeSLA.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeSLA.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeSLA.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(newOLA.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(newOLA.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(newOLA.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(deleteOLA.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(deleteOLA.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(deleteOLA.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(changeOLA.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeOLA.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeOLA.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(newTypeOfWork.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(newTypeOfWork.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(newTypeOfWork.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(deleteTypesOfWork.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(deleteTypesOfWork.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(deleteTypesOfWork.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(changeTypesOfWork.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeTypesOfWork.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeTypesOfWork.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(newTypeCompletedWork.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(newTypeCompletedWork.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(newTypeCompletedWork.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(
+      deleteTypesCompletedWork.fulfilled,
+      (state, { payload }) => {
+        state.isLoadingMessage = false
+        state.text = payload?.message.text as string
+        state.type = payload?.message.type as string
+      },
+    )
+    builder.addCase(deleteTypesCompletedWork.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(deleteTypesCompletedWork.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(
+      changeTypesCompletedWork.fulfilled,
+      (state, { payload }) => {
+        state.isLoadingMessage = false
+        state.text = payload?.message.text as string
+        state.type = payload?.message.type as string
+      },
+    )
+    builder.addCase(changeTypesCompletedWork.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeTypesCompletedWork.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(newClientGroup.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(newClientGroup.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(newClientGroup.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(deleteClientGroup.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(deleteClientGroup.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(deleteClientGroup.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(changeClientGroup.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeClientGroup.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeClientGroup.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(newClient.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(newClient.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(newClient.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(deleteClient.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(deleteClient.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(deleteClient.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(changeClient.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeClient.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeClient.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(newContract.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(newContract.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(newContract.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(deleteContract.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(deleteContract.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(deleteContract.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(changeContract.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeContract.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeContract.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(newObject.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(newObject.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(newObject.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(deleteObjects.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(deleteObjects.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(deleteObjects.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(changeObject.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeObject.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeObject.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(newINC.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(newINC.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(newINC.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(changeINC.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeINC.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeINC.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(changeExecutor.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeExecutor.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeExecutor.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(changeResponsible.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeResponsible.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeResponsible.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(changeStatus.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeStatus.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeStatus.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(changeUserClosingCheck.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeUserClosingCheck.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeUserClosingCheck.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(changeUserClosing.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeUserClosing.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeUserClosing.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(changeComment.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeComment.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeComment.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(newIncidentStatuses.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(newIncidentStatuses.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(newIncidentStatuses.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(deleteIncidentStatuses.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(deleteIncidentStatuses.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(deleteIncidentStatuses.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(changeIncidentStatuses.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeIncidentStatuses.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeIncidentStatuses.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(uploadFiles.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(uploadFiles.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(uploadFiles.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+  },
 })
 
 export const messageReducer = messageSlise.reducer

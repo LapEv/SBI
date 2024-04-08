@@ -9,7 +9,6 @@ const localStorageTheme =
     ? (localStorage.getItem('theme') as 'light' | 'dark')
     : 'light'
 const defaultTheme = localStorageTheme ?? 'light'
-console.log('Client start defaultTheme = ', defaultTheme)
 
 export const ColorModeContext = createContext({
   toggleColorMode: (id: string | undefined) => {
@@ -20,8 +19,6 @@ export const ColorModeContext = createContext({
 export default function ToggleColorMode() {
   const [mode, setMode] = useState<'light' | 'dark'>(defaultTheme)
   const [, { changeThemeOnServer }] = useAuth()
-  console.log('Client defaultTheme = ', defaultTheme)
-  console.log('Client mode = ', mode)
 
   const colorMode = useMemo(
     () => ({
@@ -41,11 +38,7 @@ export default function ToggleColorMode() {
     }),
     [],
   )
-  console.log('Client colorMode = ', colorMode)
-
   const theme = useMemo(() => createTheme(ThemeConfig(mode)), [mode])
-
-  console.log('Client theme = ', theme)
 
   return (
     <ColorModeContext.Provider value={colorMode}>

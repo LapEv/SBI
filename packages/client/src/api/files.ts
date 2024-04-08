@@ -12,20 +12,20 @@ export const getFiles = createAsyncThunk(
   'files/getFiles',
   async (_, thunkAPI) => {
     try {
-      const { data } = await authhost.get<Files>(ApiEndPoints.Files.getFiles)
+      const { data } = await authhost.get<Files[]>(ApiEndPoints.Files.getFiles)
       return data
     } catch (error) {
       if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные по файлам: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const uploadFiles = createAsyncThunk(
@@ -42,7 +42,7 @@ export const uploadFiles = createAsyncThunk(
       formData.append('id_incFiles', id_incFiles)
       const { data } = await authFileHost.post(
         ApiEndPoints.Files.uploadFiles,
-        formData
+        formData,
       )
       return {
         data,
@@ -56,11 +56,11 @@ export const uploadFiles = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось загрузить файлы: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )

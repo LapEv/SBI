@@ -1,10 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import {
   ClassifierEquipment,
   ClassifierModels,
   TypicalMalfunctions,
-  AnswerClassifierEquipment,
-  AnswerTypicalMalfunctions,
   ClassifierState,
 } from './interfaces'
 import {
@@ -51,279 +49,218 @@ export const classifierSlise = createSlice({
       state.models = []
     },
   },
-  // extraReducers: {
-  //   [getClassifierEquipments.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<ClassifierEquipment[]>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = ''
-  //     state.equipments = action.payload
-  //   },
-  //   [getClassifierEquipments.pending.type]: state => {
-  //     state.isLoadingClassifier = true
-  //   },
-  //   [getClassifierEquipments.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = action.payload
-  //   },
-  //   [newClassifierEquipment.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerClassifierEquipment>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = ''
-  //     state.equipments = action.payload.data
-  //   },
-  //   [newClassifierEquipment.pending.type]: state => {
-  //     state.isLoadingClassifier = true
-  //   },
-  //   [newClassifierEquipment.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = action.payload
-  //   },
-  //   [deleteClassifierEquipment.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerClassifierEquipment>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = ''
-  //     state.equipments = action.payload.data
-  //   },
-  //   [deleteClassifierEquipment.pending.type]: state => {
-  //     state.isLoadingClassifier = true
-  //   },
-  //   [deleteClassifierEquipment.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = action.payload
-  //   },
-  //   [changeClassifierEquipment.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerClassifierEquipment>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = ''
-  //     state.equipments = action.payload.data
-  //   },
-  //   [changeClassifierEquipment.pending.type]: state => {
-  //     state.isLoadingClassifier = true
-  //   },
-  //   [changeClassifierEquipment.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = action.payload
-  //   },
-  //   [getClassifierModels.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<ClassifierModels[]>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = ''
-  //     state.models = action.payload
-  //   },
-  //   [getClassifierModels.pending.type]: state => {
-  //     state.isLoadingClassifier = true
-  //   },
-  //   [getClassifierModels.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = action.payload
-  //   },
-  //   [getClassifierModelsById.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<ClassifierModels[]>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = ''
-  //     state.models = action.payload
-  //   },
-  //   [getClassifierModelsById.pending.type]: state => {
-  //     state.isLoadingClassifier = true
-  //   },
-  //   [getClassifierModelsById.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = action.payload
-  //   },
-  //   [newClassifierModel.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerClassifierEquipment>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = ''
-  //     state.equipments = action.payload.data
-  //   },
-  //   [newClassifierModel.pending.type]: state => {
-  //     state.isLoadingClassifier = true
-  //   },
-  //   [newClassifierModel.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = action.payload
-  //   },
-  //   [deleteClassifierModel.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerClassifierEquipment>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = ''
-  //     state.equipments = action.payload.data
-  //   },
-  //   [deleteClassifierModel.pending.type]: state => {
-  //     state.isLoadingClassifier = true
-  //   },
-  //   [deleteClassifierModel.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = action.payload
-  //   },
-  //   [changeClassifierModel.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerClassifierEquipment>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = ''
-  //     state.equipments = action.payload.data
-  //   },
-  //   [changeClassifierModel.pending.type]: state => {
-  //     state.isLoadingClassifier = true
-  //   },
-  //   [changeClassifierModel.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = action.payload
-  //   },
-  //   [getTypicalMalfunctions.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<TypicalMalfunctions[]>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = ''
-  //     state.typicalMalfunctions = action.payload
-  //   },
-  //   [getTypicalMalfunctions.pending.type]: state => {
-  //     state.isLoadingClassifier = true
-  //   },
-  //   [getTypicalMalfunctions.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = action.payload
-  //   },
-  //   [getTypicalMalfunctionsById.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<TypicalMalfunctions[]>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = ''
-  //     state.typicalMalfunctions = action.payload
-  //   },
-  //   [getTypicalMalfunctionsById.pending.type]: state => {
-  //     state.isLoadingClassifier = true
-  //   },
-  //   [getTypicalMalfunctionsById.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = action.payload
-  //   },
-
-  //   [newTypicalMalfunction.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerClassifierEquipment>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = ''
-  //     state.equipments = action.payload.data
-  //   },
-  //   [newTypicalMalfunction.pending.type]: state => {
-  //     state.isLoadingClassifier = true
-  //   },
-  //   [newTypicalMalfunction.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = action.payload
-  //   },
-  //   [deleteTypicalMalfunction.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerClassifierEquipment>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = ''
-  //     state.equipments = action.payload.data
-  //   },
-  //   [deleteTypicalMalfunction.pending.type]: state => {
-  //     state.isLoadingClassifier = true
-  //   },
-  //   [deleteTypicalMalfunction.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = action.payload
-  //   },
-  //   [changeTypicalMalfunction.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerClassifierEquipment>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = ''
-  //     state.equipments = action.payload.data
-  //   },
-  //   [changeTypicalMalfunction.pending.type]: state => {
-  //     state.isLoadingClassifier = true
-  //   },
-  //   [changeTypicalMalfunction.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = action.payload
-  //   },
-  //   [changeModelsInTypicalMalfunction.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerTypicalMalfunctions>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = ''
-  //     state.typicalMalfunctions = action.payload.data
-  //   },
-  //   [changeModelsInTypicalMalfunction.pending.type]: state => {
-  //     state.isLoadingClassifier = true
-  //   },
-  //   [changeModelsInTypicalMalfunction.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingClassifier = false
-  //     state.error = action.payload
-  //   },
-  // },
+  extraReducers: builder => {
+    builder.addCase(getClassifierEquipments.fulfilled, (state, { payload }) => {
+      state.isLoadingClassifier = false
+      state.error = ''
+      state.equipments = payload as ClassifierEquipment[]
+    })
+    builder.addCase(getClassifierEquipments.pending, state => {
+      state.isLoadingClassifier = true
+    })
+    builder.addCase(getClassifierEquipments.rejected, (state, { payload }) => {
+      state.isLoadingClassifier = false
+      state.error = payload as string
+    })
+    builder.addCase(newClassifierEquipment.fulfilled, (state, { payload }) => {
+      state.isLoadingClassifier = false
+      state.error = ''
+      state.equipments = payload?.data as ClassifierEquipment[]
+    })
+    builder.addCase(newClassifierEquipment.pending, state => {
+      state.isLoadingClassifier = true
+    })
+    builder.addCase(newClassifierEquipment.rejected, (state, { payload }) => {
+      state.isLoadingClassifier = false
+      state.error = payload as string
+    })
+    builder.addCase(
+      deleteClassifierEquipment.fulfilled,
+      (state, { payload }) => {
+        state.isLoadingClassifier = false
+        state.error = ''
+        state.equipments = payload?.data as ClassifierEquipment[]
+      },
+    )
+    builder.addCase(deleteClassifierEquipment.pending, state => {
+      state.isLoadingClassifier = true
+    })
+    builder.addCase(
+      deleteClassifierEquipment.rejected,
+      (state, { payload }) => {
+        state.isLoadingClassifier = false
+        state.error = payload as string
+      },
+    )
+    builder.addCase(
+      changeClassifierEquipment.fulfilled,
+      (state, { payload }) => {
+        state.isLoadingClassifier = false
+        state.error = ''
+        state.equipments = payload?.data as ClassifierEquipment[]
+      },
+    )
+    builder.addCase(changeClassifierEquipment.pending, state => {
+      state.isLoadingClassifier = true
+    })
+    builder.addCase(
+      changeClassifierEquipment.rejected,
+      (state, { payload }) => {
+        state.isLoadingClassifier = false
+        state.error = payload as string
+      },
+    )
+    builder.addCase(getClassifierModels.fulfilled, (state, { payload }) => {
+      state.isLoadingClassifier = false
+      state.error = ''
+      state.models = payload as ClassifierModels[]
+    })
+    builder.addCase(getClassifierModels.pending, state => {
+      state.isLoadingClassifier = true
+    })
+    builder.addCase(getClassifierModels.rejected, (state, { payload }) => {
+      state.isLoadingClassifier = false
+      state.error = payload as string
+    })
+    builder.addCase(getClassifierModelsById.fulfilled, (state, { payload }) => {
+      state.isLoadingClassifier = false
+      state.error = ''
+      state.models = payload as ClassifierModels[]
+    })
+    builder.addCase(getClassifierModelsById.pending, state => {
+      state.isLoadingClassifier = true
+    })
+    builder.addCase(getClassifierModelsById.rejected, (state, { payload }) => {
+      state.isLoadingClassifier = false
+      state.error = payload as string
+    })
+    builder.addCase(newClassifierModel.fulfilled, (state, { payload }) => {
+      state.isLoadingClassifier = false
+      state.error = ''
+      state.models = payload?.data as ClassifierModels[]
+    })
+    builder.addCase(newClassifierModel.pending, state => {
+      state.isLoadingClassifier = true
+    })
+    builder.addCase(newClassifierModel.rejected, (state, { payload }) => {
+      state.isLoadingClassifier = false
+      state.error = payload as string
+    })
+    builder.addCase(deleteClassifierModel.fulfilled, (state, { payload }) => {
+      state.isLoadingClassifier = false
+      state.error = ''
+      state.models = payload?.data as ClassifierModels[]
+    })
+    builder.addCase(deleteClassifierModel.pending, state => {
+      state.isLoadingClassifier = true
+    })
+    builder.addCase(deleteClassifierModel.rejected, (state, { payload }) => {
+      state.isLoadingClassifier = false
+      state.error = payload as string
+    })
+    builder.addCase(changeClassifierModel.fulfilled, (state, { payload }) => {
+      state.isLoadingClassifier = false
+      state.error = ''
+      state.models = payload?.data as ClassifierModels[]
+    })
+    builder.addCase(changeClassifierModel.pending, state => {
+      state.isLoadingClassifier = true
+    })
+    builder.addCase(changeClassifierModel.rejected, (state, { payload }) => {
+      state.isLoadingClassifier = false
+      state.error = payload as string
+    })
+    builder.addCase(getTypicalMalfunctions.fulfilled, (state, { payload }) => {
+      state.isLoadingClassifier = false
+      state.error = ''
+      state.typicalMalfunctions = payload as TypicalMalfunctions[]
+    })
+    builder.addCase(getTypicalMalfunctions.pending, state => {
+      state.isLoadingClassifier = true
+    })
+    builder.addCase(getTypicalMalfunctions.rejected, (state, { payload }) => {
+      state.isLoadingClassifier = false
+      state.error = payload as string
+    })
+    builder.addCase(
+      getTypicalMalfunctionsById.fulfilled,
+      (state, { payload }) => {
+        state.isLoadingClassifier = false
+        state.error = ''
+        state.typicalMalfunctions = payload as TypicalMalfunctions[]
+      },
+    )
+    builder.addCase(getTypicalMalfunctionsById.pending, state => {
+      state.isLoadingClassifier = true
+    })
+    builder.addCase(
+      getTypicalMalfunctionsById.rejected,
+      (state, { payload }) => {
+        state.isLoadingClassifier = false
+        state.error = payload as string
+      },
+    )
+    builder.addCase(newTypicalMalfunction.fulfilled, (state, { payload }) => {
+      state.isLoadingClassifier = false
+      state.error = ''
+      state.typicalMalfunctions = payload?.data as TypicalMalfunctions[]
+    })
+    builder.addCase(newTypicalMalfunction.pending, state => {
+      state.isLoadingClassifier = true
+    })
+    builder.addCase(newTypicalMalfunction.rejected, (state, { payload }) => {
+      state.isLoadingClassifier = false
+      state.error = payload as string
+    })
+    builder.addCase(
+      deleteTypicalMalfunction.fulfilled,
+      (state, { payload }) => {
+        state.isLoadingClassifier = false
+        state.error = ''
+        state.typicalMalfunctions = payload?.data as TypicalMalfunctions[]
+      },
+    )
+    builder.addCase(deleteTypicalMalfunction.pending, state => {
+      state.isLoadingClassifier = true
+    })
+    builder.addCase(deleteTypicalMalfunction.rejected, (state, { payload }) => {
+      state.isLoadingClassifier = false
+      state.error = payload as string
+    })
+    builder.addCase(
+      changeTypicalMalfunction.fulfilled,
+      (state, { payload }) => {
+        state.isLoadingClassifier = false
+        state.error = ''
+        state.typicalMalfunctions = payload?.data as TypicalMalfunctions[]
+      },
+    )
+    builder.addCase(changeTypicalMalfunction.pending, state => {
+      state.isLoadingClassifier = true
+    })
+    builder.addCase(changeTypicalMalfunction.rejected, (state, { payload }) => {
+      state.isLoadingClassifier = false
+      state.error = payload as string
+    })
+    builder.addCase(
+      changeModelsInTypicalMalfunction.fulfilled,
+      (state, { payload }) => {
+        state.isLoadingClassifier = false
+        state.error = ''
+        state.typicalMalfunctions = payload?.data as TypicalMalfunctions[]
+      },
+    )
+    builder.addCase(changeModelsInTypicalMalfunction.pending, state => {
+      state.isLoadingClassifier = true
+    })
+    builder.addCase(
+      changeModelsInTypicalMalfunction.rejected,
+      (state, { payload }) => {
+        state.isLoadingClassifier = false
+        state.error = payload as string
+      },
+    )
+  },
 })
 
 export const classifierReducer = classifierSlise.reducer

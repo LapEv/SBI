@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AnswerUploaded, Files, FilesState } from './interfaces'
+import { createSlice } from '@reduxjs/toolkit'
+import { Files, FilesState } from './interfaces'
 import { getFiles, uploadFiles } from 'api/files'
 
 const initialState: FilesState = {
@@ -16,35 +16,32 @@ export const filesSlice = createSlice({
       state.uploadedFiles = []
     },
   },
-  // extraReducers: {
-  //   [getFiles.fulfilled.type]: (state, action: PayloadAction<Files[]>) => {
-  //     state.isLoadingFiles = false
-  //     state.error = ''
-  //     state.files = action.payload
-  //   },
-  //   [getFiles.pending.type]: state => {
-  //     state.isLoadingFiles = true
-  //   },
-  //   [getFiles.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingFiles = false
-  //     state.error = action.payload
-  //   },
-  //   [uploadFiles.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerUploaded>
-  //   ) => {
-  //     state.isLoadingFiles = false
-  //     state.error = ''
-  //     state.uploadedFiles = action.payload.data
-  //   },
-  //   [uploadFiles.pending.type]: state => {
-  //     state.isLoadingFiles = true
-  //   },
-  //   [uploadFiles.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingFiles = false
-  //     state.error = action.payload
-  //   },
-  // },
+  extraReducers: builder => {
+    builder.addCase(getFiles.fulfilled, (state, { payload }) => {
+      state.isLoadingFiles = false
+      state.error = ''
+      state.files = payload as Files[]
+    })
+    builder.addCase(getFiles.pending, state => {
+      state.isLoadingFiles = true
+    })
+    builder.addCase(getFiles.rejected, (state, { payload }) => {
+      state.isLoadingFiles = false
+      state.error = payload as string
+    })
+    builder.addCase(uploadFiles.fulfilled, (state, { payload }) => {
+      state.isLoadingFiles = false
+      state.error = ''
+      state.files = payload?.data as Files[]
+    })
+    builder.addCase(uploadFiles.pending, state => {
+      state.isLoadingFiles = true
+    })
+    builder.addCase(uploadFiles.rejected, (state, { payload }) => {
+      state.isLoadingFiles = false
+      state.error = payload as string
+    })
+  },
 })
 
 export const filesReducer = filesSlice.reducer

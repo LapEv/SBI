@@ -16,28 +16,28 @@ export const getRoles = createAsyncThunk(
   'user/getRoles',
   async (_, thunkAPI) => {
     try {
-      const { data } = await authhost.get<Roles>(ApiEndPoints.Roles.getRoles)
+      const { data } = await authhost.get<Roles[]>(ApiEndPoints.Roles.getRoles)
       return data
     } catch (error) {
       if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные по ролям: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const getRolesGroup = createAsyncThunk(
   'user/getRolesGroup',
   async (_, thunkAPI) => {
     try {
-      const { data } = await authhost.get<RolesGroup>(
-        ApiEndPoints.Roles.getRolesGroup
+      const { data } = await authhost.get<RolesGroup[]>(
+        ApiEndPoints.Roles.getRolesGroup,
       )
       return data
     } catch (error) {
@@ -45,13 +45,13 @@ export const getRolesGroup = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные по группам ролей: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const newRole = createAsyncThunk(
@@ -68,13 +68,13 @@ export const newRole = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось создать новую роль: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const deleteRoles = createAsyncThunk(
@@ -93,13 +93,13 @@ export const deleteRoles = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось удалить роли: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const newRolesGroup = createAsyncThunk(
@@ -108,7 +108,7 @@ export const newRolesGroup = createAsyncThunk(
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Roles.newRolesGroup,
-        rolesGroup
+        rolesGroup,
       )
       return {
         data,
@@ -119,13 +119,13 @@ export const newRolesGroup = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось создать новую группу ролей: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const deleteRolesGroup = createAsyncThunk(
@@ -134,7 +134,7 @@ export const deleteRolesGroup = createAsyncThunk(
     try {
       const { data } = await authhost.delete(
         ApiEndPoints.Roles.deleteRolesGroup,
-        { data: selectedRoleGroup }
+        { data: selectedRoleGroup },
       )
       return {
         data,
@@ -145,13 +145,13 @@ export const deleteRolesGroup = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось удалить группу ролей: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changeRolesGroup = createAsyncThunk(
@@ -163,7 +163,7 @@ export const changeRolesGroup = createAsyncThunk(
         {
           roles,
           activeRolesGroup,
-        }
+        },
       )
       return {
         data,
@@ -174,11 +174,11 @@ export const changeRolesGroup = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось изменить группу ролей: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )

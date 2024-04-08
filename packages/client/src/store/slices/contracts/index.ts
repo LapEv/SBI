@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Contracts, AnswerContracts, ContractsState } from './interfaces'
+import { createSlice } from '@reduxjs/toolkit'
+import { Contracts, ContractsState } from './interfaces'
 import {
   changeContract,
   deleteContract,
@@ -25,86 +25,68 @@ export const contractsSlise = createSlice({
       state.contracts = []
     },
   },
-  // extraReducers: {
-  //   [getContracts.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<Contracts[]>
-  //   ) => {
-  //     state.isLoadingContracts = false
-  //     state.error = ''
-  //     state.contracts = action.payload
-  //   },
-  //   [getContracts.pending.type]: state => {
-  //     state.isLoadingContracts = true
-  //   },
-  //   [getContracts.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingContracts = false
-  //     state.error = action.payload
-  //   },
-  //   [getContractsByClientID.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<Contracts[]>
-  //   ) => {
-  //     state.isLoadingContracts = false
-  //     state.error = ''
-  //     state.contracts = action.payload
-  //   },
-  //   [getContractsByClientID.pending.type]: state => {
-  //     state.isLoadingContracts = true
-  //   },
-  //   [getContractsByClientID.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingContracts = false
-  //     state.error = action.payload
-  //   },
-  //   [newContract.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerContracts>
-  //   ) => {
-  //     state.isLoadingContracts = false
-  //     state.error = ''
-  //     state.contracts = action.payload.data
-  //   },
-  //   [newContract.pending.type]: state => {
-  //     state.isLoadingContracts = true
-  //   },
-  //   [newContract.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingContracts = false
-  //     state.error = action.payload
-  //   },
-  //   [deleteContract.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerContracts>
-  //   ) => {
-  //     state.isLoadingContracts = false
-  //     state.error = ''
-  //     state.contracts = action.payload.data
-  //   },
-  //   [deleteContract.pending.type]: state => {
-  //     state.isLoadingContracts = true
-  //   },
-  //   [deleteContract.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingContracts = false
-  //     state.error = action.payload
-  //   },
-  //   [changeContract.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerContracts>
-  //   ) => {
-  //     state.isLoadingContracts = false
-  //     state.error = ''
-  //     state.contracts = action.payload.data
-  //   },
-  //   [changeContract.pending.type]: state => {
-  //     state.isLoadingContracts = true
-  //   },
-  //   [changeContract.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingContracts = false
-  //     state.error = action.payload
-  //   },
-  // },
+  extraReducers: builder => {
+    builder.addCase(getContracts.fulfilled, (state, { payload }) => {
+      state.isLoadingContracts = false
+      state.error = ''
+      state.contracts = payload as Contracts[]
+    })
+    builder.addCase(getContracts.pending, state => {
+      state.isLoadingContracts = true
+    })
+    builder.addCase(getContracts.rejected, (state, { payload }) => {
+      state.isLoadingContracts = false
+      state.error = payload as string
+    })
+    builder.addCase(getContractsByClientID.fulfilled, (state, { payload }) => {
+      state.isLoadingContracts = false
+      state.error = ''
+      state.contracts = payload as Contracts[]
+    })
+    builder.addCase(getContractsByClientID.pending, state => {
+      state.isLoadingContracts = true
+    })
+    builder.addCase(getContractsByClientID.rejected, (state, { payload }) => {
+      state.isLoadingContracts = false
+      state.error = payload as string
+    })
+    builder.addCase(newContract.fulfilled, (state, { payload }) => {
+      state.isLoadingContracts = false
+      state.error = ''
+      state.contracts = payload?.data as Contracts[]
+    })
+    builder.addCase(newContract.pending, state => {
+      state.isLoadingContracts = true
+    })
+    builder.addCase(newContract.rejected, (state, { payload }) => {
+      state.isLoadingContracts = false
+      state.error = payload as string
+    })
+    builder.addCase(deleteContract.fulfilled, (state, { payload }) => {
+      state.isLoadingContracts = false
+      state.error = ''
+      state.contracts = payload?.data as Contracts[]
+    })
+    builder.addCase(deleteContract.pending, state => {
+      state.isLoadingContracts = true
+    })
+    builder.addCase(deleteContract.rejected, (state, { payload }) => {
+      state.isLoadingContracts = false
+      state.error = payload as string
+    })
+    builder.addCase(changeContract.fulfilled, (state, { payload }) => {
+      state.isLoadingContracts = false
+      state.error = ''
+      state.contracts = payload?.data as Contracts[]
+    })
+    builder.addCase(changeContract.pending, state => {
+      state.isLoadingContracts = true
+    })
+    builder.addCase(changeContract.rejected, (state, { payload }) => {
+      state.isLoadingContracts = false
+      state.error = payload as string
+    })
+  },
 })
 
 export const contractsReducer = contractsSlise.reducer

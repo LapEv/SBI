@@ -1,11 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import {
-  AnswerDepartment,
-  AnswerDivision,
-  Department,
-  Division,
-  StructureState,
-} from './interfaces'
+import { createSlice } from '@reduxjs/toolkit'
+import { Department, Division, StructureState } from './interfaces'
 import {
   getDepartments,
   getDivisions,
@@ -35,101 +29,80 @@ export const structureSlise = createSlice({
     },
   },
 
-  // extraReducers: {
-  //   [getDivisions.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<Division[]>
-  //   ) => {
-  //     state.isLoadingStructure = false
-  //     state.error = ''
-  //     state.divisions = action.payload
-  //   },
-  //   [getDivisions.pending.type]: state => {
-  //     state.isLoadingStructure = true
-  //   },
-  //   [getDivisions.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingStructure = false
-  //     state.error = action.payload
-  //   },
-  //   [getDepartments.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<Department[]>
-  //   ) => {
-  //     state.isLoadingStructure = false
-  //     state.error = ''
-  //     state.departaments = action.payload
-  //   },
-  //   [getDepartments.pending.type]: state => {
-  //     state.isLoadingStructure = true
-  //   },
-  //   [getDepartments.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingStructure = false
-  //     state.error = action.payload
-  //   },
-  //   [newDivision.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerDivision>
-  //   ) => {
-  //     state.isLoadingStructure = false
-  //     state.error = ''
-  //     state.divisions = action.payload.data
-  //   },
-  //   [newDivision.pending.type]: state => {
-  //     state.isLoadingStructure = true
-  //   },
-  //   [newDivision.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingStructure = false
-  //     state.error = action.payload
-  //   },
-  //   [newDepartment.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerDepartment>
-  //   ) => {
-  //     state.isLoadingStructure = false
-  //     state.error = ''
-  //     state.departaments = action.payload.data
-  //   },
-  //   [newDepartment.pending.type]: state => {
-  //     state.isLoadingStructure = true
-  //   },
-  //   [newDepartment.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingStructure = false
-  //     state.error = action.payload
-  //   },
-  //   [deleteDivision.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerDivision>
-  //   ) => {
-  //     state.isLoadingStructure = false
-  //     state.error = ''
-  //     state.divisions = action.payload.data
-  //   },
-  //   [deleteDivision.pending.type]: state => {
-  //     state.isLoadingStructure = true
-  //   },
-  //   [deleteDivision.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingStructure = false
-  //     state.error = action.payload
-  //   },
-  //   [deleteDepartment.fulfilled.type]: (
-  //     state,
-  //     action: PayloadAction<AnswerDepartment>
-  //   ) => {
-  //     state.isLoadingStructure = false
-  //     state.error = ''
-  //     state.departaments = action.payload.data
-  //   },
-  //   [deleteDepartment.pending.type]: state => {
-  //     state.isLoadingStructure = true
-  //   },
-  //   [deleteDepartment.rejected.type]: (
-  //     state,
-  //     action: PayloadAction<string>
-  //   ) => {
-  //     state.isLoadingStructure = false
-  //     state.error = action.payload
-  //   },
-  // },
+  extraReducers: builder => {
+    builder.addCase(getDivisions.fulfilled, (state, { payload }) => {
+      state.isLoadingStructure = false
+      state.error = ''
+      state.divisions = payload as Division[]
+    })
+    builder.addCase(getDivisions.pending, state => {
+      state.isLoadingStructure = true
+    })
+    builder.addCase(getDivisions.rejected, (state, { payload }) => {
+      state.isLoadingStructure = false
+      state.error = payload as string
+    })
+    builder.addCase(getDepartments.fulfilled, (state, { payload }) => {
+      state.isLoadingStructure = false
+      state.error = ''
+      state.departaments = payload as Department[]
+    })
+    builder.addCase(getDepartments.pending, state => {
+      state.isLoadingStructure = true
+    })
+    builder.addCase(getDepartments.rejected, (state, { payload }) => {
+      state.isLoadingStructure = false
+      state.error = payload as string
+    })
+    builder.addCase(newDivision.fulfilled, (state, { payload }) => {
+      state.isLoadingStructure = false
+      state.error = ''
+      state.divisions = payload?.data as Division[]
+    })
+    builder.addCase(newDivision.pending, state => {
+      state.isLoadingStructure = true
+    })
+    builder.addCase(newDivision.rejected, (state, { payload }) => {
+      state.isLoadingStructure = false
+      state.error = payload as string
+    })
+    builder.addCase(newDepartment.fulfilled, (state, { payload }) => {
+      state.isLoadingStructure = false
+      state.error = ''
+      state.departaments = payload?.data as Department[]
+    })
+    builder.addCase(newDepartment.pending, state => {
+      state.isLoadingStructure = true
+    })
+    builder.addCase(newDepartment.rejected, (state, { payload }) => {
+      state.isLoadingStructure = false
+      state.error = payload as string
+    })
+    builder.addCase(deleteDivision.fulfilled, (state, { payload }) => {
+      state.isLoadingStructure = false
+      state.error = ''
+      state.divisions = payload?.data as Division[]
+    })
+    builder.addCase(deleteDivision.pending, state => {
+      state.isLoadingStructure = true
+    })
+    builder.addCase(deleteDivision.rejected, (state, { payload }) => {
+      state.isLoadingStructure = false
+      state.error = payload as string
+    })
+    builder.addCase(deleteDepartment.fulfilled, (state, { payload }) => {
+      state.isLoadingStructure = false
+      state.error = ''
+      state.departaments = payload?.data as Department[]
+    })
+    builder.addCase(deleteDepartment.pending, state => {
+      state.isLoadingStructure = true
+    })
+    builder.addCase(deleteDepartment.rejected, (state, { payload }) => {
+      state.isLoadingStructure = false
+      state.error = payload as string
+    })
+  },
 })
 
 export const structureReducer = structureSlise.reducer

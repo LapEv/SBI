@@ -6,6 +6,8 @@ import './index.css'
 import ThemeWrapper from 'themes/ThemeWrapper'
 import { BrowserRouter } from 'react-router-dom'
 import { FullScreen } from 'components/FullScreen'
+import { CacheProvider } from '@emotion/react'
+import createCache from '@emotion/cache'
 
 const startServiceWorker = () => {
   if ('serviceWorker' in navigator) {
@@ -29,17 +31,19 @@ if (process.env.NODE_ENV === 'production') {
   startServiceWorker()
 }
 
-console.log('main')
+const cache = createCache({ key: 'custom' })
 
 export const App = () => (
   <React.StrictMode>
-    <Provider store={store}>
-      <FullScreen>
-        <BrowserRouter>
-          <ThemeWrapper />
-        </BrowserRouter>
-      </FullScreen>
-    </Provider>
+    <CacheProvider value={cache}>
+      <Provider store={store}>
+        <FullScreen>
+          <BrowserRouter>
+            <ThemeWrapper />
+          </BrowserRouter>
+        </FullScreen>
+      </Provider>
+    </CacheProvider>
   </React.StrictMode>
 )
 ReactDOM.hydrateRoot(document.getElementById('root') as HTMLElement, <App />)

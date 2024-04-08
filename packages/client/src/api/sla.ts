@@ -17,14 +17,14 @@ interface ValidationError {
 
 export const getSLA = createAsyncThunk('sla/getSLA', async (_, thunkAPI) => {
   try {
-    const { data } = await authhost.get<SLA>(ApiEndPoints.SLA.getSLA)
+    const { data } = await authhost.get<SLA[]>(ApiEndPoints.SLA.getSLA)
     return data
   } catch (error) {
     if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
       return thunkAPI.rejectWithValue(
         `Не удалось получить данные по SLA: \n${
           error.response?.data.message ?? error.response?.data
-        }`
+        }`,
       )
     } else {
       console.error(error)
@@ -49,13 +49,13 @@ export const newSLA = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось создать новый SLA: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const deleteSLA = createAsyncThunk(
@@ -77,20 +77,20 @@ export const deleteSLA = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось удалить SLA: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changeSLA = createAsyncThunk(
   'sla/changeSLA',
   async (
     { sla, id, days, time, timeStart, timeEnd, id_typeOfWork }: ChangeSLA,
-    thunkAPI
+    thunkAPI,
   ) => {
     try {
       const { data } = await authhost.post(ApiEndPoints.SLA.changeSLA, {
@@ -114,25 +114,25 @@ export const changeSLA = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось изменить SLA: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const getOLA = createAsyncThunk('sla/getOLA', async (_, thunkAPI) => {
   try {
-    const { data } = await authhost.get<OLA>(ApiEndPoints.SLA.getOLA)
+    const { data } = await authhost.get<OLA[]>(ApiEndPoints.SLA.getOLA)
     return data
   } catch (error) {
     if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
       return thunkAPI.rejectWithValue(
         `Не удалось получить данные по OLA: \n${
           error.response?.data.message ?? error.response?.data
-        }`
+        }`,
       )
     } else {
       console.error(error)
@@ -157,13 +157,13 @@ export const newOLA = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось создать новый OLA: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const deleteOLA = createAsyncThunk(
@@ -185,20 +185,20 @@ export const deleteOLA = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось удалить OLA: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changeOLA = createAsyncThunk(
   'sla/changeOLA',
   async (
     { ola, id, days, time, timeStart, timeEnd, id_typeOfWork }: ChangeOLA,
-    thunkAPI
+    thunkAPI,
   ) => {
     try {
       const { data } = await authhost.post(ApiEndPoints.SLA.changeOLA, {
@@ -222,11 +222,11 @@ export const changeOLA = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось изменить OLA: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )

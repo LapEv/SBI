@@ -120,7 +120,7 @@ export const getRegions = createAsyncThunk(
   'addresses/getRegions',
   async (_, thunkAPI) => {
     try {
-      const { data } = await authhost.get<Regions>(
+      const { data } = await authhost.get<Regions[]>(
         ApiEndPoints.Addresses.getRegions,
       )
       return data

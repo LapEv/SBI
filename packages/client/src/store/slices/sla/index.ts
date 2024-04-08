@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { SLA, OLA, AnswerSLA, AnswerOLA, SLAState } from './interfaces'
+import { createSlice } from '@reduxjs/toolkit'
+import { SLA, OLA, SLAState } from './interfaces'
 import {
   getSLA,
   getOLA,
@@ -30,104 +30,104 @@ export const slaSlise = createSlice({
       state.activeList = action.payload
     },
   },
-  // extraReducers: {
-  //   [getSLA.fulfilled.type]: (state, action: PayloadAction<SLA[]>) => {
-  //     state.isLoadingSLA = false
-  //     state.error = ''
-  //     state.sla = action.payload
-  //   },
-  //   [getSLA.pending.type]: state => {
-  //     state.isLoadingSLA = true
-  //   },
-  //   [getSLA.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingSLA = false
-  //     state.error = action.payload
-  //   },
-  //   [newSLA.fulfilled.type]: (state, action: PayloadAction<AnswerSLA>) => {
-  //     state.isLoadingSLA = false
-  //     state.error = ''
-  //     state.sla = action.payload.data
-  //   },
-  //   [newSLA.pending.type]: state => {
-  //     state.isLoadingSLA = true
-  //   },
-  //   [newSLA.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingSLA = false
-  //     state.error = action.payload
-  //   },
-  //   [deleteSLA.fulfilled.type]: (state, action: PayloadAction<AnswerSLA>) => {
-  //     state.isLoadingSLA = false
-  //     state.error = ''
-  //     state.sla = action.payload.data
-  //   },
-  //   [deleteSLA.pending.type]: state => {
-  //     state.isLoadingSLA = true
-  //   },
-  //   [deleteSLA.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingSLA = false
-  //     state.error = action.payload
-  //   },
-  //   [changeSLA.fulfilled.type]: (state, action: PayloadAction<AnswerSLA>) => {
-  //     state.isLoadingSLA = false
-  //     state.error = ''
-  //     state.sla = action.payload.data
-  //   },
-  //   [changeSLA.pending.type]: state => {
-  //     state.isLoadingSLA = true
-  //   },
-  //   [changeSLA.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingSLA = false
-  //     state.error = action.payload
-  //   },
-  //   [getOLA.fulfilled.type]: (state, action: PayloadAction<OLA[]>) => {
-  //     state.isLoadingSLA = false
-  //     state.error = ''
-  //     state.ola = action.payload
-  //   },
-  //   [getOLA.pending.type]: state => {
-  //     state.isLoadingSLA = true
-  //   },
-  //   [getOLA.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingSLA = false
-  //     state.error = action.payload
-  //   },
-  //   [newOLA.fulfilled.type]: (state, action: PayloadAction<AnswerOLA>) => {
-  //     state.isLoadingSLA = false
-  //     state.error = ''
-  //     state.ola = action.payload.data
-  //   },
-  //   [newOLA.pending.type]: state => {
-  //     state.isLoadingSLA = true
-  //   },
-  //   [newOLA.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingSLA = false
-  //     state.error = action.payload
-  //   },
-  //   [deleteOLA.fulfilled.type]: (state, action: PayloadAction<AnswerOLA>) => {
-  //     state.isLoadingSLA = false
-  //     state.error = ''
-  //     state.ola = action.payload.data
-  //   },
-  //   [deleteOLA.pending.type]: state => {
-  //     state.isLoadingSLA = true
-  //   },
-  //   [deleteOLA.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingSLA = false
-  //     state.error = action.payload
-  //   },
-  //   [changeOLA.fulfilled.type]: (state, action: PayloadAction<AnswerOLA>) => {
-  //     state.isLoadingSLA = false
-  //     state.error = ''
-  //     state.ola = action.payload.data
-  //   },
-  //   [changeOLA.pending.type]: state => {
-  //     state.isLoadingSLA = true
-  //   },
-  //   [changeOLA.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoadingSLA = false
-  //     state.error = action.payload
-  //   },
-  // },
+  extraReducers: builder => {
+    builder.addCase(getSLA.fulfilled, (state, { payload }) => {
+      state.isLoadingSLA = false
+      state.error = ''
+      state.sla = payload as SLA[]
+    })
+    builder.addCase(getSLA.pending, state => {
+      state.isLoadingSLA = true
+    })
+    builder.addCase(getSLA.rejected, (state, { payload }) => {
+      state.isLoadingSLA = false
+      state.error = payload as string
+    })
+    builder.addCase(newSLA.fulfilled, (state, { payload }) => {
+      state.isLoadingSLA = false
+      state.error = ''
+      state.sla = payload?.data as SLA[]
+    })
+    builder.addCase(newSLA.pending, state => {
+      state.isLoadingSLA = true
+    })
+    builder.addCase(newSLA.rejected, (state, { payload }) => {
+      state.isLoadingSLA = false
+      state.error = payload as string
+    })
+    builder.addCase(deleteSLA.fulfilled, (state, { payload }) => {
+      state.isLoadingSLA = false
+      state.error = ''
+      state.sla = payload?.data as SLA[]
+    })
+    builder.addCase(deleteSLA.pending, state => {
+      state.isLoadingSLA = true
+    })
+    builder.addCase(deleteSLA.rejected, (state, { payload }) => {
+      state.isLoadingSLA = false
+      state.error = payload as string
+    })
+    builder.addCase(changeSLA.fulfilled, (state, { payload }) => {
+      state.isLoadingSLA = false
+      state.error = ''
+      state.sla = payload?.data as SLA[]
+    })
+    builder.addCase(changeSLA.pending, state => {
+      state.isLoadingSLA = true
+    })
+    builder.addCase(changeSLA.rejected, (state, { payload }) => {
+      state.isLoadingSLA = false
+      state.error = payload as string
+    })
+    builder.addCase(getOLA.fulfilled, (state, { payload }) => {
+      state.isLoadingSLA = false
+      state.error = ''
+      state.ola = payload as OLA[]
+    })
+    builder.addCase(getOLA.pending, state => {
+      state.isLoadingSLA = true
+    })
+    builder.addCase(getOLA.rejected, (state, { payload }) => {
+      state.isLoadingSLA = false
+      state.error = payload as string
+    })
+    builder.addCase(newOLA.fulfilled, (state, { payload }) => {
+      state.isLoadingSLA = false
+      state.error = ''
+      state.ola = payload?.data as OLA[]
+    })
+    builder.addCase(newOLA.pending, state => {
+      state.isLoadingSLA = true
+    })
+    builder.addCase(newOLA.rejected, (state, { payload }) => {
+      state.isLoadingSLA = false
+      state.error = payload as string
+    })
+    builder.addCase(deleteOLA.fulfilled, (state, { payload }) => {
+      state.isLoadingSLA = false
+      state.error = ''
+      state.ola = payload?.data as OLA[]
+    })
+    builder.addCase(deleteOLA.pending, state => {
+      state.isLoadingSLA = true
+    })
+    builder.addCase(deleteOLA.rejected, (state, { payload }) => {
+      state.isLoadingSLA = false
+      state.error = payload as string
+    })
+    builder.addCase(changeOLA.fulfilled, (state, { payload }) => {
+      state.isLoadingSLA = false
+      state.error = ''
+      state.ola = payload?.data as OLA[]
+    })
+    builder.addCase(changeOLA.pending, state => {
+      state.isLoadingSLA = true
+    })
+    builder.addCase(changeOLA.rejected, (state, { payload }) => {
+      state.isLoadingSLA = false
+      state.error = payload as string
+    })
+  },
 })
 
 export const slaReducer = slaSlise.reducer

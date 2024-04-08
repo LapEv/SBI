@@ -179,8 +179,6 @@ export const CheckUser = createAsyncThunk(
         ApiEndPoints.User.CheckUser,
       )
       const { id } = jwt_decode(data.token as string) as Token
-      console.log('id = ', id)
-      console.log('data = ', data)
       return { ...data, id }
     } catch (error) {
       if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {

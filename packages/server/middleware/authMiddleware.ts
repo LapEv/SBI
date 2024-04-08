@@ -11,7 +11,7 @@ interface jwtAnswer {
 export const authMiddleware = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   if (req.method === 'OPTIONS') {
     next()

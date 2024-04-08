@@ -20,8 +20,8 @@ export const getClassifierEquipments = createAsyncThunk(
   'classifier/getClassifierEquipments',
   async (_, thunkAPI) => {
     try {
-      const { data } = await authhost.get<ClassifierEquipment>(
-        ApiEndPoints.Classifier.getClassifierEquipments
+      const { data } = await authhost.get<ClassifierEquipment[]>(
+        ApiEndPoints.Classifier.getClassifierEquipments,
       )
       return data
     } catch (error) {
@@ -29,13 +29,13 @@ export const getClassifierEquipments = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные по класиффикатору оборудования: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const newClassifierEquipment = createAsyncThunk(
@@ -44,7 +44,7 @@ export const newClassifierEquipment = createAsyncThunk(
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Classifier.newClassifierEquipment,
-        equipment
+        equipment,
       )
       return {
         data,
@@ -58,13 +58,13 @@ export const newClassifierEquipment = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось создать новый классификатор оборудования: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const deleteClassifierEquipment = createAsyncThunk(
@@ -73,7 +73,7 @@ export const deleteClassifierEquipment = createAsyncThunk(
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Classifier.deleteClassifierEquipment,
-        { selectedClassifierEquipments }
+        { selectedClassifierEquipments },
       )
       return {
         data,
@@ -87,13 +87,13 @@ export const deleteClassifierEquipment = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось удалить классификатор оборудования: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changeClassifierEquipment = createAsyncThunk(
@@ -102,7 +102,7 @@ export const changeClassifierEquipment = createAsyncThunk(
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Classifier.changeClassifierEquipment,
-        { equipment, id }
+        { equipment, id },
       )
       return {
         data,
@@ -116,21 +116,21 @@ export const changeClassifierEquipment = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось изменить классификатор оборудования: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const getClassifierModels = createAsyncThunk(
   'classifier/getClassifierModels',
   async (_, thunkAPI) => {
     try {
-      const { data } = await authhost.get<ClassifierEquipment>(
-        ApiEndPoints.Classifier.getClassifierModels
+      const { data } = await authhost.get<ClassifierModels[]>(
+        ApiEndPoints.Classifier.getClassifierModels,
       )
       return data
     } catch (error) {
@@ -138,22 +138,22 @@ export const getClassifierModels = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные по списку моделей: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const getClassifierModelsById = createAsyncThunk(
   'classifier/getClassifierModelsById',
   async (id_equipment: string, thunkAPI) => {
     try {
-      const { data } = await authhost.post<ClassifierModels>(
+      const { data } = await authhost.post<ClassifierModels[]>(
         ApiEndPoints.Classifier.getClassifierModelsById,
-        { id_equipment }
+        { id_equipment },
       )
       return data
     } catch (error) {
@@ -161,13 +161,13 @@ export const getClassifierModelsById = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные по списку моделей: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const newClassifierModel = createAsyncThunk(
@@ -176,7 +176,7 @@ export const newClassifierModel = createAsyncThunk(
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Classifier.newClassifierModel,
-        model
+        model,
       )
       return {
         data,
@@ -190,13 +190,13 @@ export const newClassifierModel = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось создать новую модель: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const deleteClassifierModel = createAsyncThunk(
@@ -205,7 +205,7 @@ export const deleteClassifierModel = createAsyncThunk(
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Classifier.deleteClassifierModel,
-        { selectedClassifierModels }
+        { selectedClassifierModels },
       )
       return {
         data,
@@ -219,25 +219,25 @@ export const deleteClassifierModel = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось удалить модель: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changeClassifierModel = createAsyncThunk(
   'classifier/changeClassifierModel',
   async (
     { model, id, selectedTypicalMalfunctions }: ChangeClassifierModel,
-    thunkAPI
+    thunkAPI,
   ) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Classifier.changeClassifierModel,
-        { model, id, selectedTypicalMalfunctions }
+        { model, id, selectedTypicalMalfunctions },
       )
       return {
         data,
@@ -251,21 +251,21 @@ export const changeClassifierModel = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось изменить модель: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const getTypicalMalfunctions = createAsyncThunk(
   'classifier/getTypicalMalfunctions',
   async (_, thunkAPI) => {
     try {
-      const { data } = await authhost.get<ClassifierEquipment>(
-        ApiEndPoints.Classifier.getTypicalMalfunctions
+      const { data } = await authhost.get<TypicalMalfunctions[]>(
+        ApiEndPoints.Classifier.getTypicalMalfunctions,
       )
       return data
     } catch (error) {
@@ -273,22 +273,22 @@ export const getTypicalMalfunctions = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные по списку типовых неисправностей: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const getTypicalMalfunctionsById = createAsyncThunk(
   'classifier/getTypicalMalfunctionsById',
   async (id_equipment: string, thunkAPI) => {
     try {
-      const { data } = await authhost.post<TypicalMalfunctions>(
+      const { data } = await authhost.post<TypicalMalfunctions[]>(
         ApiEndPoints.Classifier.getTypicalMalfunctionsById,
-        { id_equipment }
+        { id_equipment },
       )
       return data
     } catch (error) {
@@ -296,13 +296,13 @@ export const getTypicalMalfunctionsById = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось получить данные по списку типовых неисправностей: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const newTypicalMalfunction = createAsyncThunk(
@@ -311,7 +311,7 @@ export const newTypicalMalfunction = createAsyncThunk(
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Classifier.newTypicalMalfunction,
-        newTypicalMalfunction
+        newTypicalMalfunction,
       )
       return {
         data,
@@ -325,13 +325,13 @@ export const newTypicalMalfunction = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось создать новую типовую неисправность: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const deleteTypicalMalfunction = createAsyncThunk(
@@ -340,7 +340,7 @@ export const deleteTypicalMalfunction = createAsyncThunk(
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Classifier.deleteTypicalMalfunction,
-        { selectedtypicalMalfunctions }
+        { selectedtypicalMalfunctions },
       )
       return {
         data,
@@ -354,13 +354,13 @@ export const deleteTypicalMalfunction = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось удалить типоваю неисправность: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changeTypicalMalfunction = createAsyncThunk(
@@ -369,7 +369,7 @@ export const changeTypicalMalfunction = createAsyncThunk(
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Classifier.changeTypicalMalfunction,
-        { typicalMalfunction, id }
+        { typicalMalfunction, id },
       )
       return {
         data,
@@ -383,25 +383,25 @@ export const changeTypicalMalfunction = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось изменить типовую неисправность: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )
 
 export const changeModelsInTypicalMalfunction = createAsyncThunk(
   'classifier/changeModelsInTypicalMalfunction',
   async (
     { id_equipment, newTypicalMalfunction }: ChangeModelsInTypicalMalfunction,
-    thunkAPI
+    thunkAPI,
   ) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Classifier.changeModelsInTypicalMalfunction,
-        { id_equipment, newTypicalMalfunction }
+        { id_equipment, newTypicalMalfunction },
       )
       return {
         data,
@@ -415,11 +415,11 @@ export const changeModelsInTypicalMalfunction = createAsyncThunk(
         return thunkAPI.rejectWithValue(
           `Не удалось изменить модель: \n${
             error.response?.data.message ?? error.response?.data
-          }`
+          }`,
         )
       } else {
         console.error(error)
       }
     }
-  }
+  },
 )

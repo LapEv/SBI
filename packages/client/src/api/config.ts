@@ -134,8 +134,9 @@ export const ApiEndPoints = {
     uploadFiles: 'files/uploadFiles',
   },
 }
-console.log('__SERVER_PORT__ = ', __SERVER_PORT__)
-const url = `http://localhost:3000/api/`
+
+console.log('API __SERVER_PORT__  = ', __SERVER_PORT__)
+const url = `http://localhost:${__SERVER_PORT__}/api/`
 // const url = `http://${__SERVER_HOST__}:${__SERVER_PORT__}/api/`
 
 const authhost = axios.create({

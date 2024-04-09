@@ -28,10 +28,12 @@ export const signin = createAsyncThunk(
   'user/signin',
   async (loginData: Login, thunkAPI) => {
     try {
+      console.log('signin')
       const { data } = await host.post<ICheckUser>(
         ApiEndPoints.User.Login,
         loginData,
       )
+      console.log('data = ', data)
       localStorage.setItem('token', data.token as string)
       const { id } = jwt_decode(data.token as string) as Token
       return {
@@ -179,6 +181,8 @@ export const CheckUser = createAsyncThunk(
         ApiEndPoints.User.CheckUser,
       )
       const { id } = jwt_decode(data.token as string) as Token
+      console.log('data = ', data)
+      console.log('id = ', id)
       return { ...data, id }
     } catch (error) {
       if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {

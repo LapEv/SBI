@@ -15,6 +15,7 @@ async function ssrMiddleware(req: Request, res: Response, next: NextFunction) {
 
   const vite = req.app.locals.settings.vite as ViteDevServer
   const url = req.originalUrl
+  console.log('url = ', url)
 
   try {
     let template: string
@@ -45,9 +46,12 @@ async function ssrMiddleware(req: Request, res: Response, next: NextFunction) {
 
     const cacheKey = 'custom'
     const cache = createCache({ key: cacheKey })
+    console.log('cache = ', cache)
     const { extractCritical } = createEmotionServer(cache)
 
     const appHtml = await render(url, cache)
+
+    console.log('appHtml = ', appHtml)
     const { html, css, ids } = extractCritical(appHtml)
     const finalHtml = template
       .replace(`<!--ssr-outlet-->`, html)

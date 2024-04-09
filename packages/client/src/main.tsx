@@ -9,27 +9,27 @@ import { FullScreen } from 'components/FullScreen'
 import { CacheProvider } from '@emotion/react'
 import createCache from '@emotion/cache'
 
-const startServiceWorker = () => {
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker
-        .register('../sw.js')
-        .then(registration => {
-          console.log(
-            'ServiceWorker registration successful with scope: ',
-            registration.scope,
-          )
-        })
-        .catch((error: string) => {
-          console.error('ServiceWorker registration failed: ', error)
-        })
-    })
-  }
-}
+// const startServiceWorker = () => {
+//   if ('serviceWorker' in navigator) {
+//     window.addEventListener('load', () => {
+//       navigator.serviceWorker
+//         .register('../sw.js')
+//         .then(registration => {
+//           console.log(
+//             'ServiceWorker registration successful with scope: ',
+//             registration.scope,
+//           )
+//         })
+//         .catch((error: string) => {
+//           console.error('ServiceWorker registration failed: ', error)
+//         })
+//     })
+//   }
+// }
 
-if (process.env.NODE_ENV === 'production') {
-  startServiceWorker()
-}
+// if (process.env.NODE_ENV === 'production') {
+//   startServiceWorker()
+// }
 
 const cache = createCache({ key: 'custom' })
 

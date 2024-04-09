@@ -174,15 +174,20 @@ authFileHost.interceptors.request.use(authInterceptor)
 authhost.interceptors.response.use(
   res => res,
   error => {
-    if (
-      (error.response.status === 401 &&
-        error.response.statusText === 'Unauthorized') ||
-      (error.response.status === 403 &&
-        error.response.statusText === 'Forbidden' &&
-        error.response.data.message === 'The user is not logged in')
-    ) {
-      localStorage.removeItem('token')
-      store.dispatch(clearUser())
+    console.log('res error = ', error)
+    if (error.response) {
+      if (error.response.status) {
+        if (
+          (error.response.status === 401 &&
+            error.response.statusText === 'Unauthorized') ||
+          (error.response.status === 403 &&
+            error.response.statusText === 'Forbidden' &&
+            error.response.data.message === 'The user is not logged in')
+        ) {
+          localStorage.removeItem('token')
+          store.dispatch(clearUser())
+        }
+      }
     }
     return Promise.reject(error)
   },

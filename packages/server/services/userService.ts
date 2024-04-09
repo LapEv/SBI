@@ -52,6 +52,8 @@ export class userService {
   login = async (_req: Request, res: Response) => {
     try {
       const { username, password } = _req.body
+      console.log('username = ', username)
+      console.log('password = ', password)
       const user = (await userRepos.findOne({
         where: { username: username },
       })) as IUser
@@ -65,7 +67,7 @@ export class userService {
           .json({ message: auth.notification.invalidPassword })
       }
       const token = generateAccessToken(user.id, user.rolesGroup, user.username)
-
+      console.log('token = ', token)
       if (
         user &&
         (user.rolesGroup === 'ADMIN' ||
@@ -145,11 +147,14 @@ export class userService {
   }
   check = async (_req: Request, res: Response) => {
     const { username, id, rolesGroup } = _req.body
+    console.log('username = ', username)
+    console.log('id = ', id)
     try {
       const token = generateAccessToken(id, rolesGroup, username)
       const user = (await userRepos.findOne({
         where: { id: id },
       })) as IUser
+      console.log('token = ', token)
 
       if (
         user &&

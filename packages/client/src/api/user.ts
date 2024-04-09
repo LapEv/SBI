@@ -29,6 +29,7 @@ export const signin = createAsyncThunk(
   async (loginData: Login, thunkAPI) => {
     try {
       console.log('signin')
+      console.log('loginData = ', loginData)
       const { data } = await host.post<ICheckUser>(
         ApiEndPoints.User.Login,
         loginData,

@@ -181,8 +181,8 @@ export const CheckUser = createAsyncThunk(
       const { data } = await authhost.get<ICheckUser>(
         ApiEndPoints.User.CheckUser,
       )
-      const { id } = jwt_decode(data.token as string) as Token
       console.log('data = ', data)
+      const { id } = jwt_decode(data.token as string) as Token
       console.log('id = ', id)
       return { ...data, id }
     } catch (error) {

@@ -53,6 +53,10 @@ async function ssrMiddleware(req: Request, res: Response, next: NextFunction) {
 
     console.log('appHtml = ', appHtml)
     const { html, css, ids } = extractCritical(appHtml)
+    console.log('html = ', html)
+    console.log('css = ', css)
+    console.log('ids = ', ids)
+
     const finalHtml = template
       .replace(`<!--ssr-outlet-->`, html)
       .replace(`<!--ssr-store-->`, appStore)
@@ -60,6 +64,8 @@ async function ssrMiddleware(req: Request, res: Response, next: NextFunction) {
         '</head>',
         `<style data-emotion="${cacheKey} ${ids.join(' ')}">${css}</style></head>`,
       )
+
+    console.log('finalHtml = ', finalHtml)
 
     res.status(200).set({ 'Content-Type': 'text/html' }).end(finalHtml)
   } catch (e) {

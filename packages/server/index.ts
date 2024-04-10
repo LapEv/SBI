@@ -1,6 +1,5 @@
 import * as dotenv from 'dotenv'
 import cors from 'cors'
-const fileUpload = require('express-fileupload')
 import express from 'express'
 import { createServer } from 'vite'
 import { dbConnect } from './db'
@@ -8,6 +7,7 @@ import { apiRouter } from './routers/index.router'
 import { isDev, srcPath } from './data/app'
 import staticMiddleware from './middleware/static.middleware'
 import ssrMiddleware from './middleware/ssr.middleware'
+import fileUpload from 'express-fileupload'
 
 async function init() {
   await dbConnect()
@@ -23,7 +23,12 @@ async function init() {
     }),
   )
   app.use(express.json({ limit: '50mb' }))
-  app.use(cors())
+  const corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true,
+    optionSuccessStatus: 200,
+  }
+  app.use(cors(corsOptions))
   app.use(express.json())
   const port = Number(process.env.SERVER_PORT) || 3001
 

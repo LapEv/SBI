@@ -1,28 +1,15 @@
 import type { Request, Response } from 'express'
 import { FilesRepos } from '../db'
-const fs = require('fs')
-const path = require('path')
+import * as fs from 'fs'
+import * as path from 'path'
 import dotenv from 'dotenv'
+import { FileArray, UploadedFile } from 'express-fileupload'
 dotenv.config()
-
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace Express {
-    interface Request {
-      files: {
-        /* eslint-disable @typescript-eslint/no-explicit-any */
-        files: any
-      }
-      filesName: any
-      /* eslint-enable @typescript-eslint/no-explicit-any */
-    }
-  }
-}
 
 export class filesService {
   uploadFiles = async (_req: Request, res: Response) => {
     const { incident, type, filesName, id_incFiles } = _req.body
-    const { files } = _req.files
+    const { files } = _req.files as FileArray
     const typeDir = type === 'IncidentActs' ? type : ''
     const pathFiles =
       process.env.NODE_ENV === 'development'
@@ -30,14 +17,15 @@ export class filesService {
         : `process.env.FILE_PATH/${typeDir}/${incident}/${filesName}`
     try {
       if (files.constructor !== Array) {
+        const file = files as UploadedFile
         if (!fs.existsSync(pathFiles)) {
-          files.mv(pathFiles)
+          file.mv(pathFiles)
         }
         const uploadedFiles = [
           {
             name: filesName,
-            size: files.size,
-            mimetype: files.mimetype,
+            size: file.size,
+            mimetype: file.mimetype,
             path: `${typeDir}/${incident}/${filesName}`,
             id_incFiles,
           },
@@ -46,14 +34,12 @@ export class filesService {
         res.status(200).json(uploadedFiles)
         return
       }
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-      const uploadedFiles = files.map((item: any, index: number) => {
-        /* eslint-enable @typescript-eslint/no-explicit-any */
+      const uploadedFiles = files.map((item: UploadedFile, index: number) => {
         const filePath =
           process.env.NODE_ENV === 'development'
             ? path.join(
                 __dirname,
-                `../Files/${typeDir}/${incident}/${filesName[index]}`
+                `../Files/${typeDir}/${incident}/${filesName[index]}`,
               )
             : `process.env.FILE_PATH/${typeDir}/${incident}/${filesName[index]}`
         if (!fs.existsSync(filePath)) {

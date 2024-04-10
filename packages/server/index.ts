@@ -30,7 +30,9 @@ async function init() {
   }
   app.use(cors(corsOptions))
   app.use(express.json())
-  const port = Number(process.env.SERVER_PORT) || 3001
+  const port = Number(process.env.SERVER_PORT) || 3000
+
+  console.log('Server SERVER_PORT = ', port)
 
   if (isDev) {
     const vite = await createServer({

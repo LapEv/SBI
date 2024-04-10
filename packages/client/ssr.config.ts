@@ -9,7 +9,7 @@ export default defineConfig({
     logOverride: { 'this-is-undefined-in-esm': 'silent' },
   },
   define: {
-    __SERVER_PORT__: process.env.SERVER_PORT || 3001,
+    __SERVER_PORT__: process.env.SERVER_PORT || 3000,
   },
   build: {
     lib: {

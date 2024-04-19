@@ -46,16 +46,11 @@ async function ssrMiddleware(req: Request, res: Response, next: NextFunction) {
 
     const cacheKey = 'custom'
     const cache = createCache({ key: cacheKey })
-    console.log('cache = ', cache)
     const { extractCritical } = createEmotionServer(cache)
 
     const appHtml = await render(url, cache)
 
-    console.log('appHtml = ', appHtml)
     const { html, css, ids } = extractCritical(appHtml)
-    console.log('html = ', html)
-    console.log('css = ', css)
-    console.log('ids = ', ids)
 
     const finalHtml = template
       .replace(`<!--ssr-outlet-->`, html)
@@ -64,8 +59,6 @@ async function ssrMiddleware(req: Request, res: Response, next: NextFunction) {
         '</head>',
         `<style data-emotion="${cacheKey} ${ids.join(' ')}">${css}</style></head>`,
       )
-
-    console.log('finalHtml = ', finalHtml)
 
     res.status(200).set({ 'Content-Type': 'text/html' }).end(finalHtml)
   } catch (e) {

@@ -23,8 +23,18 @@ async function init() {
     }),
   )
   app.use(express.json({ limit: '50mb' }))
+  console.log('Server env = ', process.env)
   const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: [
+      `http://127.0.0.1:${process.env.CLIENT_PORT}`,
+      `http://localhost:${process.env.CLIENT_PORT}`,
+      `http://127.0.0.1:${process.env.SERVER_PORT}`,
+      `http://localhost:${process.env.SERVER_PORT}`,
+      `http://${process.env.SERVER_PROD_HOST}:${process.env.CLIENT_PORT}`,
+      `http://${process.env.SERVER_PROD_HOST}:${process.env.SERVER_PORT}`,
+      `http://${process.env.SERVER_PROD_DOMAIN}:${process.env.CLIENT_PORT}`,
+      `http://${process.env.SERVER_PROD_DOMAIN}:${process.env.SERVER_PORT}`,
+    ],
     credentials: true,
     optionSuccessStatus: 200,
   }
@@ -33,6 +43,7 @@ async function init() {
   const port = Number(process.env.SERVER_PORT) || 3000
 
   console.log('Server SERVER_PORT = ', port)
+  app.use('/api', apiRouter)
 
   if (isDev) {
     const vite = await createServer({
@@ -48,7 +59,6 @@ async function init() {
   app.use('/assets', staticMiddleware())
   app.use(ssrMiddleware)
 
-  app.use('/api', apiRouter)
   app.get('/', (_, res) => {
     res.json('👋 Server ready ')
   })

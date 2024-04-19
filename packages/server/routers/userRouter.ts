@@ -3,11 +3,11 @@ import { userService } from '../services/userService'
 import { check } from 'express-validator'
 import { auth } from '../data/auth'
 import { authMiddleware } from '../middleware/authMiddleware'
-const roleMiddleware = require('../middleware/roleMiddleware')
+
+const roleMiddleware = require('../middleware/roleMiddleware') /* tslint:disable no-var-requires */
 
 export const userRouter = (apiRouter: Router) => {
   const service = new userService()
-
   const router: Router = Router()
 
   router.post(
@@ -19,7 +19,7 @@ export const userRouter = (apiRouter: Router) => {
         max: auth.passwordMaxLength,
       }),
     ],
-    service.setUser
+    service.setUser,
   )
   router.post('/login', service.login)
   router.post('/updateProfile', authMiddleware, service.updateProfile)
@@ -30,49 +30,49 @@ export const userRouter = (apiRouter: Router) => {
   router.post(
     '/getUserInfo',
     roleMiddleware(['getUsers', 'ADMIN', 'SUPERADMIN']),
-    service.getUserInfo
+    service.getUserInfo,
   )
   router.post(
     '/getUsers',
     roleMiddleware(['getUsers', 'ADMIN', 'SUPERADMIN']),
-    service.getUsers
+    service.getUsers,
   )
   router.post(
     '/getActiveUsers',
     roleMiddleware(['getUsers', 'ADMIN', 'SUPERADMIN']),
-    service.getActiveUsers
+    service.getActiveUsers,
   )
   router.post(
     '/getFieldEngineers',
     roleMiddleware(['getFieldEngineers', 'ADMIN', 'SUPERADMIN']),
-    service.getFieldEngineers
+    service.getFieldEngineers,
   )
   router.post(
     '/getDispatchers',
     roleMiddleware(['getDispatchers', 'ADMIN', 'SUPERADMIN']),
-    service.getDispatchers
+    service.getDispatchers,
   )
   router.post(
     '/deleteUser',
     roleMiddleware(['ADMIN', 'SUPERADMIN', 'deleteUser']),
-    service.deleteUser
+    service.deleteUser,
   )
   router.post(
     '/pullUserInArchive',
     roleMiddleware(['ADMIN', 'SUPERADMIN', 'pullUserInArchive']),
-    service.pullUserInArchive
+    service.pullUserInArchive,
   )
 
   router.delete(
     '/fullDeleteUser',
     roleMiddleware(['ADMIN', 'SUPERADMIN', 'fullDeleteUser']),
-    service.fullDeleteUser
+    service.fullDeleteUser,
   )
 
   router.post(
     '/updateUser',
     roleMiddleware(['ADMIN', 'SUPERADMIN', 'updateUser']),
-    service.updateUser
+    service.updateUser,
   )
 
   router.post('/theme', service.changeTheme)

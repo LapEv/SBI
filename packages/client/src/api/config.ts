@@ -135,10 +135,13 @@ export const ApiEndPoints = {
   },
 }
 
-console.log('API __SERVER_PORT__  = ', __SERVER_PORT__)
-const url = `http://localhost:3000/api/`
-console.log('url = ', url)
-// const url = `http://${__SERVER_HOST__}:${__SERVER_PORT__}/api/`
+console.log('__SERVER_PORT__ = ', __SERVER_PORT__)
+console.log('__SERVER_HOST__ = ', __SERVER_HOST__)
+
+const url =
+  `http://${__SERVER_HOST__}:${__SERVER_PORT__}/api/` ||
+  `http://localhost:3000/api/`
+console.log('api url = ', url)
 
 const authhost = axios.create({
   baseURL: url,

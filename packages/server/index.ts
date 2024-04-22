@@ -23,7 +23,6 @@ async function init() {
     }),
   )
   app.use(express.json({ limit: '50mb' }))
-  console.log('Server env = ', process.env)
   const corsOptions = {
     origin: [
       `http://127.0.0.1:${process.env.CLIENT_PORT}`,

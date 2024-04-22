@@ -42,6 +42,7 @@ services:
       POSTGRES_PORT: ${POSTGRES_PORT}
       POSTGRES_HOST: ${POSTGRES_HOST}
       SECRET_KEY: ${SECRET_KEY}
+      SERVER_HOST: ${SERVER_HOST}
     depends_on:
       - postgres
     volumes:

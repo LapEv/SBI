@@ -22,6 +22,7 @@ async function init() {
       tempFileDir: '/Files/',
     }),
   )
+  console.log('process.env = ', process.env)
   app.use(express.json({ limit: '50mb' }))
   const corsOptions = {
     origin: [

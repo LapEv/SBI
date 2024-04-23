@@ -21,7 +21,7 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - sbi
+      - back
 
   server:
     container_name: sbi-server
@@ -58,7 +58,7 @@ services:
       - ./packages/server/Files:/${FILE_PATH}
     command: ['sh', '-c', 'node /app/server/index.js']
     networks:
-      - sbi
+      - back
 
   pgadmin:
     container_name: sbi-pgadmin
@@ -76,7 +76,7 @@ services:
       postgres:
         condition: service_healthy
     networks:
-      - sbi
+      - back
 
   nginx:
     container_name: sbi-nginx
@@ -91,7 +91,7 @@ services:
     depends_on:
       - server
     networks:
-      - sbi
+      - back
 
 volumes:
   pgadmin:
@@ -99,5 +99,5 @@ volumes:
   Files:
 
 networks:
-  sbi:
+  back:
     driver: bridge

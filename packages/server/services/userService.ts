@@ -52,17 +52,13 @@ export class userService {
   login = async (_req: Request, res: Response) => {
     try {
       const { username, password } = _req.body
-      console.log('Server login username = ', username)
-      console.log('Server login password = ', password)
       const user = (await userRepos.findOne({
         where: { username: username },
       })) as IUser
-      console.log('Server login user = ', password)
       if (!user) {
         return res.status(400).json({ message: auth.notification.userNotFound })
       }
       const validPassword = bcrypt.compareSync(password, user?.password)
-      console.log('Server login validPassword = ', validPassword)
 
       if (!validPassword) {
         return res
@@ -70,7 +66,6 @@ export class userService {
           .json({ message: auth.notification.invalidPassword })
       }
       const token = generateAccessToken(user.id, user.rolesGroup, user.username)
-      console.log('Server login token = ', token)
       if (
         user &&
         (user.rolesGroup === 'ADMIN' ||
@@ -79,8 +74,6 @@ export class userService {
       ) {
         const service = new incidentService()
         const filterData = await service.getFilterListFunc()
-        console.log('Server login service = ', service)
-        console.log('Server login filterData = ', filterData)
         return res.json({
           token,
           user,
@@ -152,14 +145,11 @@ export class userService {
   }
   check = async (_req: Request, res: Response) => {
     const { username, id, rolesGroup } = _req.body
-    console.log('Server check username = ', username)
-    console.log('Server check id = ', id)
     try {
       const token = generateAccessToken(id, rolesGroup, username)
       const user = (await userRepos.findOne({
         where: { id: id },
       })) as IUser
-      console.log('token = ', token)
 
       if (
         user &&

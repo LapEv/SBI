@@ -15,7 +15,6 @@ async function ssrMiddleware(req: Request, res: Response, next: NextFunction) {
 
   const vite = req.app.locals.settings.vite as ViteDevServer
   const url = req.originalUrl
-  console.log('url = ', url)
 
   try {
     let template: string

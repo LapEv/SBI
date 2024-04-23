@@ -21,7 +21,7 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - back
+      - sbi
 
   server:
     container_name: sbi-server
@@ -58,7 +58,7 @@ services:
       - ./packages/server/Files:/${FILE_PATH}
     command: ['sh', '-c', 'node /app/server/index.js']
     networks:
-      - back
+      - sbi
 
   pgadmin:
     container_name: sbi-pgadmin
@@ -76,12 +76,31 @@ services:
       postgres:
         condition: service_healthy
     networks:
-      - back
+      - sbi
+
+  nginx:
+    container_name: sbi-nginx
+    image: nginx:1.24.0
+    restart: always
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - type: bind
+        source: /nginx/nginx.conf
+        target: /etc/nginx/nginx.conf
+        read_only: true
+      - /etc/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - server
+    networks:
+      - tuna-net
 
 volumes:
   pgadmin:
   postgresql:
+  ${FILE_PATH}:
 
 networks:
-  back:
+  sbi:
     driver: bridge

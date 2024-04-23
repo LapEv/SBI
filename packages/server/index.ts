@@ -22,7 +22,7 @@ async function init() {
       tempFileDir: '/Files/',
     }),
   )
-  console.log('process.env = ', process.env)
+
   app.use(express.json({ limit: '50mb' }))
   const corsOptions = {
     origin: [
@@ -42,7 +42,6 @@ async function init() {
   app.use(express.json())
   const port = Number(process.env.SERVER_PORT) || 3000
 
-  console.log('Server SERVER_PORT = ', port)
   app.use('/api', apiRouter)
 
   if (isDev) {

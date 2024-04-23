@@ -99,7 +99,7 @@ services:
 volumes:
   pgadmin:
   postgresql:
-  ${FILE_PATH}:
+  Files:
 
 networks:
   sbi:

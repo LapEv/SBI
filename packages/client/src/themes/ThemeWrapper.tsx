@@ -1,14 +1,8 @@
-import { createContext, useMemo, useState } from 'react'
+import { createContext, useEffect, useMemo, useState } from 'react'
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
 import { ThemeConfig } from './themeConfig'
 import App from '../App'
 import { useAuth } from 'hooks/auth/useAuth'
-
-const localStorageTheme =
-  typeof window !== 'undefined'
-    ? (localStorage.getItem('theme') as 'light' | 'dark')
-    : 'light'
-const defaultTheme = localStorageTheme ?? 'light'
 
 export const ColorModeContext = createContext({
   toggleColorMode: (id: string | undefined) => {
@@ -17,8 +11,16 @@ export const ColorModeContext = createContext({
 })
 
 export default function ToggleColorMode() {
-  const [mode, setMode] = useState<'light' | 'dark'>(defaultTheme)
+  const [mode, setMode] = useState<'light' | 'dark'>('light')
   const [, { changeThemeOnServer }] = useAuth()
+
+  useEffect(() => {
+    const localStorageTheme =
+      typeof window !== 'undefined'
+        ? (localStorage.getItem('theme') as 'light' | 'dark')
+        : 'light'
+    setMode(localStorageTheme ?? 'light')
+  }, [])
 
   const colorMode = useMemo(
     () => ({

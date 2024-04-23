@@ -8,15 +8,13 @@ export default defineConfig(({ mode }) => {
     esbuild: {
       logOverride: { 'this-is-undefined-in-esm': 'silent' },
     },
-    baseURL: process.env.SERVER_HOST,
-    base: process.env.SERVER_HOST,
     envPrefix: 'SBI_',
     define: {
       __SERVER_PORT__: process.env.SERVER_PORT || 3000,
       __BASE_URL__: JSON.stringify(
         mode === 'development'
           ? 'localhost'
-          : process.env.SERVER_HOST ?? 'sb-i.ru',
+          : process.env.SERVER_HOST ?? 'https://sb-i.ru',
       ),
     },
     build: {

@@ -94,7 +94,7 @@ services:
     depends_on:
       - server
     networks:
-      - tuna-net
+      - sbi
 
 volumes:
   pgadmin:

@@ -12,7 +12,9 @@ type TButtonProps = Omit<ButtonProps, 'component'> & {
     | React.ForwardRefExoticComponent<
         LinkProps & React.RefAttributes<HTMLAnchorElement>
       >
-    | ElementType<HTMLElement>
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    | ElementType<any>
+    /* eslint-enable @typescript-eslint/no-explicit-any */
     | ForwardRefExoticComponent<LinkProps & RefAttributes<HTMLAnchorElement>>
 }
 

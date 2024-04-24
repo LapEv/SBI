@@ -1,14 +1,12 @@
 import { useAuth } from 'hooks/auth/useAuth'
-import { memo, useEffect } from 'react'
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { memo } from 'react'
+import { Navigate, useLocation } from 'react-router-dom'
 import { isEmptyObjField } from 'utils/isEmptyObject'
 import { Routes } from 'utils/routes'
-import { Routes as Paths } from 'utils/routes'
-import * as Pages from 'pages'
 
 export const RequiredAuth = memo(({ children }: { children: JSX.Element }) => {
   const [{ user }] = useAuth()
-  let { pathname } = useLocation()
+  const { pathname } = useLocation()
 
   if (isEmptyObjField(user))
     return (

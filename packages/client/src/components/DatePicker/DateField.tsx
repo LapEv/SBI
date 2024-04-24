@@ -8,7 +8,6 @@ import { CalendarIcon, ClearIconElement } from 'components/Icons'
 import { IDateField } from './interface'
 import { memo } from 'react'
 import { ThemeMode } from 'themes/themeConfig'
-import dayjs from 'dayjs'
 import { Dayjs } from 'dayjs'
 
 const StyledDatePickers = styled(PickersLayout)(({ theme }) => ({

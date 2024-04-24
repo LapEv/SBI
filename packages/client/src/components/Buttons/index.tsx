@@ -12,7 +12,7 @@ type TButtonProps = Omit<ButtonProps, 'component'> & {
     | React.ForwardRefExoticComponent<
         LinkProps & React.RefAttributes<HTMLAnchorElement>
       >
-    | ElementType<any>
+    | ElementType<HTMLElement>
     | ForwardRefExoticComponent<LinkProps & RefAttributes<HTMLAnchorElement>>
 }
 

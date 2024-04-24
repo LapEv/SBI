@@ -52,9 +52,11 @@ export class userService {
   login = async (_req: Request, res: Response) => {
     try {
       const { username, password } = _req.body
+      console.log('username = ', username)
       const user = (await userRepos.findOne({
         where: { username: username },
       })) as IUser
+      console.log('user = ', user)
       if (!user) {
         return res.status(400).json({ message: auth.notification.userNotFound })
       }

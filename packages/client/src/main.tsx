@@ -5,7 +5,6 @@ import { store } from './store'
 import './index.css'
 import ThemeWrapper from 'themes/ThemeWrapper'
 import { BrowserRouter } from 'react-router-dom'
-import { FullScreen } from 'components/FullScreen'
 import { CacheProvider } from '@emotion/react'
 import createCache from '@emotion/cache'
 
@@ -37,11 +36,9 @@ export const App = () => (
   <React.StrictMode>
     <CacheProvider value={cache}>
       <Provider store={store}>
-        <FullScreen>
-          <BrowserRouter>
-            <ThemeWrapper />
-          </BrowserRouter>
-        </FullScreen>
+        <BrowserRouter>
+          <ThemeWrapper />
+        </BrowserRouter>
       </Provider>
     </CacheProvider>
   </React.StrictMode>

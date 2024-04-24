@@ -12,6 +12,7 @@ import { isEmptyObjField } from 'utils/isEmptyObject'
 import { checkLoading } from 'utils/checkLoading'
 import { useAuth } from 'hooks/auth/useAuth'
 import { Message } from 'components/Message'
+// import { FullScreen } from 'components/FullScreen'
 
 const App = memo(() => {
   const [{ user }, { checkUser }] = useAuth()
@@ -22,6 +23,7 @@ const App = memo(() => {
 
   return (
     <ErrorBoundary>
+      {/* <FullScreen> */}
       <div className="App" data-testid="App">
         {checkLoading() && (
           <Box
@@ -149,6 +151,7 @@ const App = memo(() => {
           <Route path={Paths.NotFounde} element={<Pages.Error />} />
         </Routes>
       </div>
+      {/* </FullScreen> */}
     </ErrorBoundary>
   )
 })

@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => {
       __BASE_URL__: JSON.stringify(
         mode === 'development'
           ? 'localhost'
-          : process.env.SERVER_HOST ?? 'https://sb-i.ru',
+          : process.env.SERVER_HOST ?? 'https://sd.sb-i.ru',
       ),
     },
     plugins: [react()],

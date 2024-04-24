@@ -8,8 +8,7 @@
     "dev": "cross-env NODE_ENV=development nodemon index.ts",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "clean": "rimraf dist",
-    "test": "jest ."
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",

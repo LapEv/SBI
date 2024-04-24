@@ -62,7 +62,7 @@ services:
 
   pgadmin:
     container_name: sbi-pgadmin
-    image: dpage/pgadmin4:latest
+    image: pgaertig/pgadmin4
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: e.lapkin@sb-i.ru

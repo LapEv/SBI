@@ -138,7 +138,6 @@ export const ApiEndPoints = {
 const url = __BASE_URL__.includes('https')
   ? `${__BASE_URL__}/api/`
   : `http://${__BASE_URL__}:${__SERVER_PORT__}/api/`
-console.log('API url = ', url)
 
 const authhost = axios.create({
   baseURL: url,

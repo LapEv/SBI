@@ -23,7 +23,7 @@ const initialState: AuthState = {
   userByDepartment: [],
   admin: false,
   superAdmin: false,
-  isLoadingAuth: false,
+  isLoadingAuth: true,
 }
 
 export const authSlise = createSlice({
@@ -130,14 +130,19 @@ export const authSlise = createSlice({
       state.isLoadingAuth = false
       state.error = ''
       const { user } = payload as ICheckUser
-      state.user = user
-      state.userData = user
-      localStorage.setItem('theme', user.theme ?? 'light')
-      state.admin =
-        (user.rolesGroup?.includes('ADMIN') ||
-          user.rolesGroup?.includes('SUPERADMIN')) ??
-        false
-      state.superAdmin = user.rolesGroup?.includes('SUPERADMIN') ?? false
+      console.log('user = ', user)
+      if (user) {
+        state.user = user
+        state.userData = user
+        localStorage.setItem('theme', user.theme ?? 'light')
+        state.admin =
+          (user.rolesGroup?.includes('ADMIN') ||
+            user.rolesGroup?.includes('SUPERADMIN')) ??
+          false
+        state.superAdmin = user.rolesGroup?.includes('SUPERADMIN') ?? false
+      } else {
+        localStorage.setItem('theme', 'light')
+      }
     })
     builder.addCase(CheckUser.pending, state => {
       state.isLoadingAuth = true

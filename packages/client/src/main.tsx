@@ -33,14 +33,14 @@ import createCache from '@emotion/cache'
 const cache = createCache({ key: 'custom' })
 
 export const App = () => (
-  <React.StrictMode>
-    <CacheProvider value={cache}>
-      <Provider store={store}>
-        <BrowserRouter>
-          <ThemeWrapper />
-        </BrowserRouter>
-      </Provider>
-    </CacheProvider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <CacheProvider value={cache}>
+    <Provider store={store}>
+      <BrowserRouter>
+        <ThemeWrapper />
+      </BrowserRouter>
+    </Provider>
+  </CacheProvider>
+  // </React.StrictMode>
 )
 ReactDOM.hydrateRoot(document.getElementById('root') as HTMLElement, <App />)

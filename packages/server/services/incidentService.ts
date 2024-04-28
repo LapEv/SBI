@@ -37,7 +37,7 @@ import {
 } from '../utils/convertDate'
 import { mailerChangeStatus, mailerRegInc } from '../Mailer'
 import { IIncindent, IIncindentStatuses } from '/models/incidents'
-import { Op, Order, WhereOptions } from 'sequelize'
+import { Op, WhereOptions } from 'sequelize'
 import { IContracts } from '/models/contracts'
 import { IClients } from '/models/clients'
 import { IObjects } from '/models/objects'
@@ -45,29 +45,8 @@ import { ISLA } from '/models/sla'
 import { IAddresses, IRegions } from '/models/adresses'
 import { IUser } from '/models/users'
 import { IClassifierEquipment, IClassifierModels } from '/models/classifier'
+import { getOrderINC } from '../utils/getOrder'
 
-const getOrder = (nameSort: string, direction: string) => {
-  if (nameSort === 'contract') {
-    return [['id_incContract', direction as string]] as Order
-  }
-  if (nameSort === 'client') {
-    return [['id_incClient', direction as string]] as Order
-  }
-  if (
-    nameSort === 'object' ||
-    nameSort === 'address' ||
-    nameSort === 'region'
-  ) {
-    return [['id_incObject', direction as string]] as Order
-  }
-  if (nameSort === 'equipment') {
-    return [['id_incEquipment', direction as string]] as Order
-  }
-  if (nameSort === 'model') {
-    return [['id_incModel', direction as string]] as Order
-  }
-  return [[nameSort as string, direction as string]] as Order
-}
 export class incidentService {
   get Includes() {
     return this.includes
@@ -432,9 +411,9 @@ export class incidentService {
               }
 
               return value
-            })
-          )
-      )
+            }),
+          ),
+      ),
     )
   }
 
@@ -444,7 +423,7 @@ export class incidentService {
     }
     const dataFilter = await this.checkDataFilter(data)
     const _dataFilter = dataFilter.filter(
-      elem => elem.filter(item => !Array.isArray(item) || item.length).length
+      elem => elem.filter(item => !Array.isArray(item) || item.length).length,
     )
 
     return _dataFilter.map(item => {
@@ -726,7 +705,7 @@ export class incidentService {
       const incident = `${AppConst.attrINC}0000${numberINC}`
       const timeRegistration = new Date(
         new Date().getTime() +
-          Math.abs(new Date().getTimezoneOffset() * 60 * 1000)
+          Math.abs(new Date().getTimezoneOffset() * 60 * 1000),
       )
 
       const status = (await IncidentStatusesRepos.findOne({
@@ -778,7 +757,7 @@ export class incidentService {
 
       const isStatusses = inc?.Contract.IncindentStatuses.map(
         (item: IIncindentStatuses) =>
-          item.statusINC === inc?.IncindentStatus.statusINC
+          item.statusINC === inc?.IncindentStatus.statusINC,
       ).filter((item: boolean) => item)
 
       if (isStatusses && isStatusses.length) {
@@ -806,7 +785,7 @@ export class incidentService {
       }
 
       const offset = Number(page) * Number(limit) ?? 1
-      const order = getOrder(nameSort, direction)
+      const order = getOrderINC(nameSort, direction)
       const filterData = await this.getFilterOptions(filterOptions as [])
 
       const incs = await IncidentRepos.findAll({
@@ -857,7 +836,7 @@ export class incidentService {
       where: { active: true },
       include: this.includes,
     })) as IIncindent[]
-
+    console.log('incs = ', incs)
     const statusList =
       [...new Set(incs.map(item => item.IncindentStatus.statusINC))] ?? []
     const contractList =
@@ -870,8 +849,10 @@ export class incidentService {
       [...new Set(incs.map(item => item.Object.Address.address))] ?? []
     const regionList =
       [...new Set(incs.map(item => item.Object.Region.region))] ?? []
+    console.log('regionList = ', regionList)
     const userAcceptedList =
       [...new Set(incs.map(item => item.User.shortName))] ?? []
+    console.log('userAcceptedList = ', userAcceptedList)
     const equipmentList =
       [...new Set(incs.map(item => item.ClassifierEquipment.equipment))] ?? []
     const modelList =
@@ -880,16 +861,16 @@ export class incidentService {
       [
         ...new Set(
           incs.map(item =>
-            item.UserExecutor ? item.UserExecutor.shortName : ''
-          )
+            item.UserExecutor ? item.UserExecutor.shortName : '',
+          ),
         ),
       ] ?? []
     const responsibleList =
       [
         ...new Set(
           incs.map(item =>
-            item.UserResponsible ? item.UserResponsible.shortName : ''
-          )
+            item.UserResponsible ? item.UserResponsible.shortName : '',
+          ),
         ),
       ] ?? []
     const overdueList = [...new Set(incs.map(item => item.overdue))] ?? []
@@ -925,7 +906,7 @@ export class incidentService {
       const { limit, nameSort, direction, page, filterOptions } = _req.query
       const filterData = await this.getFilterOptions(filterOptions as [])
       const offset = Number(page) * Number(limit) ?? 1
-      const order = getOrder(nameSort as string, direction as string)
+      const order = getOrderINC(nameSort as string, direction as string)
       const incs = await IncidentRepos.findAll({
         where: { [Op.and]: filterData },
         // include: { all: true, nested: true },
@@ -1019,7 +1000,7 @@ export class incidentService {
       })
       const currentDate = new Date(
         new Date().getTime() +
-          Math.abs(new Date().getTimezoneOffset() * 60 * 1000)
+          Math.abs(new Date().getTimezoneOffset() * 60 * 1000),
       )
 
       await IncidentLogsRepos.create({
@@ -1030,7 +1011,7 @@ export class incidentService {
       })
 
       const offset = Number(page) * Number(limit) ?? 1
-      const order = getOrder(nameSort as string, direction as string)
+      const order = getOrderINC(nameSort as string, direction as string)
       const filterData = await this.getFilterOptions(filterOptions as [])
 
       const incs = await IncidentRepos.findAll({
@@ -1066,7 +1047,7 @@ export class incidentService {
       })
       const currentDate = new Date(
         new Date().getTime() +
-          Math.abs(new Date().getTimezoneOffset() * 60 * 1000)
+          Math.abs(new Date().getTimezoneOffset() * 60 * 1000),
       )
       await IncidentLogsRepos.create({
         id_incLog: id,
@@ -1076,7 +1057,7 @@ export class incidentService {
       })
 
       const offset = Number(page) * Number(limit) ?? 1
-      const order = getOrder(nameSort as string, direction as string)
+      const order = getOrderINC(nameSort as string, direction as string)
       const filterData = await this.getFilterOptions(filterOptions as [])
       const incs = await IncidentRepos.findAll({
         where: { [Op.and]: filterData },
@@ -1122,7 +1103,7 @@ export class incidentService {
 
       const currentDate = new Date(
         new Date().getTime() +
-          Math.abs(new Date().getTimezoneOffset() * 60 * 1000)
+          Math.abs(new Date().getTimezoneOffset() * 60 * 1000),
       )
       const timeInWork = newStatus === 1 ? currentDate : inc.timeInWork
       const id_incResponsible = newStatus === 1 ? userID : inc.id_incResponsible
@@ -1160,7 +1141,7 @@ export class incidentService {
         id_incLogUser: userID,
       })
       const isStatusses = inc.Contract.IncindentStatuses.filter(
-        (item: IIncindentStatuses) => item.id === id_incStatus
+        (item: IIncindentStatuses) => item.id === id_incStatus,
       ).filter((item: IIncindentStatuses) => item)
 
       if (isStatusses && isStatusses.length) {
@@ -1190,7 +1171,7 @@ export class incidentService {
       }
 
       const offset = Number(page) * Number(limit) ?? 1
-      const order = getOrder(nameSort as string, direction as string)
+      const order = getOrderINC(nameSort as string, direction as string)
       const filterData = await this.getFilterOptions(filterOptions as [])
 
       const incs = await IncidentRepos.findAll({

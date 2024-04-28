@@ -40,8 +40,8 @@ export const ServiceList = memo(({ name, label }: IServiceList) => {
             id_typeOfWork,
             TypesOfWork,
           }
-        }
-      )
+        },
+      ),
     )
   }, [sla])
 
@@ -68,8 +68,8 @@ export const ServiceList = memo(({ name, label }: IServiceList) => {
             id_typeOfWork,
             TypesOfWork,
           }
-        }
-      )
+        },
+      ),
     )
   }, [ola])
 
@@ -125,7 +125,7 @@ export const ServiceList = memo(({ name, label }: IServiceList) => {
               id={id as string}
               key={`${id}`}
             />
-          )
+          ),
         )}
       </Collapse>
     </Box>

@@ -1,5 +1,9 @@
 import { ClientsRepos, ClientsGroupRepos } from '../db'
 import type { Request, Response } from 'express'
+import { getOrder } from '../utils/getOrder'
+
+const order = getOrder('client', 'ASC')
+const orderGroup = getOrder('groupName', 'ASC')
 
 export class clientService {
   newClient = async (_req: Request, res: Response) => {
@@ -7,6 +11,7 @@ export class clientService {
       await ClientsRepos.create({ ..._req.body, active: true })
       const clients = await ClientsRepos.findAll({
         where: { active: true },
+        order,
       })
       res.status(200).json(clients)
     } catch (err) {
@@ -15,7 +20,7 @@ export class clientService {
   }
 
   getAllClients = (_req: Request, res: Response) => {
-    ClientsRepos.findAll({})
+    ClientsRepos.findAll({ order })
       .then(item => res.status(200).json(item))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
@@ -23,6 +28,7 @@ export class clientService {
   getClients = (_req: Request, res: Response) => {
     ClientsRepos.findAll({
       where: { active: true },
+      order,
     })
       .then(clients => {
         res.status(200).json(clients)
@@ -38,6 +44,7 @@ export class clientService {
       })
       const clients = await ClientsRepos.findAll({
         where: { active: true },
+        order,
       })
       res.status(200).json(clients)
     } catch (err) {
@@ -51,7 +58,7 @@ export class clientService {
       await ClientsRepos.destroy({
         where: { id: selectedClients },
       })
-      const clients = await ClientsRepos.findAll({})
+      const clients = await ClientsRepos.findAll({ order })
       res.status(200).json(clients)
     } catch (err) {
       res.status(500).json({ error: ['db error', err as Error] })
@@ -66,6 +73,7 @@ export class clientService {
       })
       const clients = await ClientsRepos.findAll({
         where: { active: true },
+        order,
       })
       res.status(200).json(clients)
     } catch (err) {
@@ -85,6 +93,7 @@ export class clientService {
       })
       const clients = await ClientsRepos.findAll({
         where: { active: true },
+        order,
       })
       res.status(200).json(clients)
     } catch (err) {
@@ -97,6 +106,7 @@ export class clientService {
       await ClientsGroupRepos.create({ ..._req.body, active: true })
       const clientsGroup = await ClientsGroupRepos.findAll({
         where: { active: true },
+        order: orderGroup,
       })
       res.status(200).json(clientsGroup)
     } catch (err) {
@@ -105,7 +115,7 @@ export class clientService {
   }
 
   getAllClientGroups = (_req: Request, res: Response) => {
-    ClientsGroupRepos.findAll({})
+    ClientsGroupRepos.findAll({ order: orderGroup })
       .then(item => res.status(200).json(item))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
@@ -113,6 +123,7 @@ export class clientService {
   getClientGroups = (_req: Request, res: Response) => {
     ClientsGroupRepos.findAll({
       where: { active: true },
+      order: orderGroup,
     })
       .then(clients => {
         res.status(200).json(clients)
@@ -128,6 +139,7 @@ export class clientService {
       })
       const clientsGroup = await ClientsGroupRepos.findAll({
         where: { active: true },
+        order: orderGroup,
       })
       res.status(200).json(clientsGroup)
     } catch (err) {
@@ -141,7 +153,9 @@ export class clientService {
       await ClientsGroupRepos.destroy({
         where: { id: selectedClientsGroup },
       })
-      const clientsGroup = await ClientsGroupRepos.findAll({})
+      const clientsGroup = await ClientsGroupRepos.findAll({
+        order: orderGroup,
+      })
       res.status(200).json(clientsGroup)
     } catch (err) {
       res.status(500).json({ error: ['db error', err as Error] })
@@ -156,6 +170,7 @@ export class clientService {
       })
       const clientsGroup = await ClientsGroupRepos.findAll({
         where: { active: true },
+        order: orderGroup,
       })
       res.status(200).json(clientsGroup)
     } catch (err) {
@@ -172,6 +187,7 @@ export class clientService {
       })
       const clientsGroup = await ClientsGroupRepos.findAll({
         where: { active: true },
+        order: orderGroup,
       })
       res.status(200).json(clientsGroup)
     } catch (err) {

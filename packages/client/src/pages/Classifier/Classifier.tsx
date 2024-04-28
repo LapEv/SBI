@@ -35,7 +35,7 @@ export const ClassifierPage = memo(() => {
     <Container component="main" maxWidth="md" sx={mainHeaderForPages}>
       <Modal
         open={modal}
-        onClose={setModal}
+        onClose={() => setModal(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <ChooseModal
@@ -67,7 +67,7 @@ export const ClassifierPage = memo(() => {
               ClassifierModels={ClassifierModels}
               TypicalMalfunctions={TypicalMalfunctions}
             />
-          )
+          ),
         )}
       </List>
     </Container>

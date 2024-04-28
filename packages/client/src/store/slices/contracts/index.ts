@@ -6,6 +6,7 @@ import {
   getContracts,
   getContractsByClientID,
   newContract,
+  newContractName,
 } from 'api/contracts'
 
 const initialState: ContractsState = {
@@ -59,6 +60,18 @@ export const contractsSlise = createSlice({
       state.isLoadingContracts = true
     })
     builder.addCase(newContract.rejected, (state, { payload }) => {
+      state.isLoadingContracts = false
+      state.error = payload as string
+    })
+    builder.addCase(newContractName.fulfilled, (state, { payload }) => {
+      state.isLoadingContracts = false
+      state.error = ''
+      state.contracts = payload?.data as Contracts[]
+    })
+    builder.addCase(newContractName.pending, state => {
+      state.isLoadingContracts = true
+    })
+    builder.addCase(newContractName.rejected, (state, { payload }) => {
       state.isLoadingContracts = false
       state.error = payload as string
     })

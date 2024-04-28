@@ -1004,7 +1004,7 @@ export const TableIncidents = memo(() => {
     <>
       <Modal
         open={modal}
-        onClose={setModal}
+        onClose={() => setModal(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         disableScrollLock={true}>

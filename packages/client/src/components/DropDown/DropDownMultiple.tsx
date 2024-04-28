@@ -70,12 +70,12 @@ export const DropDownMultiple = memo(
                 minHeight: 42,
                 height: 'auto',
                 maxHeight: 200,
-                overflowY: 'auto',
+                overflowY: 'hidden',
               },
             }}
           />
         )}
       />
     )
-  }
+  },
 )

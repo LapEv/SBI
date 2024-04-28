@@ -1,5 +1,17 @@
 import type { Request, Response } from 'express'
-import { DivisionRepos } from '../db'
+import { Department, DivisionRepos } from '../db'
+import { getOrder } from '../utils/getOrder'
+
+// const orderDepartment = getOrder('departmentName', 'ASC')
+const includes = [
+  {
+    model: Department,
+    // where: { active: true },
+    // order: orderDepartment,
+    // required: false,
+  },
+]
+const order = getOrder('departmentName', 'ASC')
 
 export class divisionService {
   newDivision = async (_req: Request, res: Response) => {
@@ -10,7 +22,11 @@ export class divisionService {
         divisionName,
         active: true,
       })
-      const divisions = await DivisionRepos.findAll({ where: { active: true } })
+      const divisions = await DivisionRepos.findAll({
+        where: { active: true },
+        order,
+        include: includes,
+      })
       res.status(200).json(divisions)
     } catch (err) {
       res.status(500).json({ error: ['db error', err as Error] })
@@ -18,13 +34,17 @@ export class divisionService {
   }
 
   getDivisions = (_req: Request, res: Response) => {
-    DivisionRepos.findAll({ where: { active: true } })
+    DivisionRepos.findAll({
+      where: { active: true },
+      // include: { all: true, nested: true },
+      include: { all: true },
+    })
       .then(divisions => res.status(200).json(divisions))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
 
   getAllDivisions = (_req: Request, res: Response) => {
-    DivisionRepos.findAll({})
+    DivisionRepos.findAll({ order, include: includes })
       .then(divisions => res.status(200).json(divisions))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
@@ -37,6 +57,8 @@ export class divisionService {
       })
       const divisions = await DivisionRepos.findAll({
         where: { active: true },
+        order,
+        include: includes,
       })
       res.status(200).json(divisions)
     } catch (err) {
@@ -49,7 +71,10 @@ export class divisionService {
       await DivisionRepos.destroy({
         where: { id: selectedDivisions },
       })
-      const divisions = await DivisionRepos.findAll({})
+      const divisions = await DivisionRepos.findAll({
+        order,
+        include: includes,
+      })
       res.status(200).json(divisions)
     } catch (err) {
       res.status(500).json({ error: ['db error', err as Error] })
@@ -62,7 +87,11 @@ export class divisionService {
       await DivisionRepos.update(selectedDivisions, {
         active: false,
       })
-      const divisions = await DivisionRepos.findAll({ where: { active: true } })
+      const divisions = await DivisionRepos.findAll({
+        where: { active: true },
+        order,
+        include: includes,
+      })
       res.status(200).json(divisions)
     } catch (err) {
       res.status(500).json({ error: ['db error', err as Error] })

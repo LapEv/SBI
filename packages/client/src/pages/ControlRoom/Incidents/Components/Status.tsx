@@ -34,7 +34,7 @@ export const Status = memo(
     const setData = (data: Options) => {
       const newStatus = incStatuses.findIndex(item => item.id === data.id)
       const oldStatus = incStatuses.findIndex(
-        item => item.statusINC === currentStatus
+        item => item.statusINC === currentStatus,
       )
 
       if (newStatus < 0) {
@@ -186,7 +186,7 @@ export const Status = memo(
       <>
         <Modal
           open={modal.status}
-          onClose={setModal}
+          onClose={() => setModal({ status: false, data: emptyValue })}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description">
           <ChangeStatus
@@ -213,5 +213,5 @@ export const Status = memo(
         />
       </>
     )
-  }
+  },
 )

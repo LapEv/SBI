@@ -13,24 +13,4 @@ export const RequiredAuth = memo(({ children }: { children: JSX.Element }) => {
       <Navigate to={`/${Routes.Login}`} replace state={{ from: pathname }} />
     )
   return children
-  // if (isEmptyObjField(user)) {
-  //   state = pathname
-  //   return <Pages.Login />
-  // }
-  // return children
 })
-
-// export const withAuth = (WrappedComponent: React.ComponentType<unknown>) => {
-//   return (props: Record<string, unknown>) => {
-//     const navigate = useNavigate()
-//     const [{ user }] = useAuth()
-
-//     useEffect(() => {
-//       if (isEmptyObjField(user)) {
-//         navigate(Paths.Login)
-//       }
-//     }, [user])
-
-//     return <WrappedComponent {...props} />
-//   }
-// }

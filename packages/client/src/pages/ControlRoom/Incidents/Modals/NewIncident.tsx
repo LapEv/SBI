@@ -44,7 +44,7 @@ export const NewIncident = memo(
         useState<Options>(emptyValue)
       const [objectList, setObjectList] = useState<Options[]>([])
       const [selectedObject, setSelectedObject] = useState<Options>(emptyValue)
-      const [dateValue, setDateValue] = useState<Dayjs>()
+      const [dateValue, setDateValue] = useState<Dayjs>(dayjs())
       const [slaList, setSLAList] = useState<Options[]>([])
       const [selectedSLA, setSelectedSLA] = useState<Options>(emptyValue)
       const [typeOfWorkList, setTypeOfWorkList] = useState<Options[]>([])
@@ -75,7 +75,7 @@ export const NewIncident = memo(
 
       function changeData({ list }: AddValuesProps) {
         const id_incStatus = incStatuses.find(item =>
-          item.statusINC.includes('Зарегистрирован')
+          item.statusINC.includes('Зарегистрирован'),
         )?.id as string
         const { nameSort, direction, limit, page, filterOptions } =
           FilterOptions()
@@ -87,7 +87,7 @@ export const NewIncident = memo(
           SLAID: selectedSLA.id,
           typeOfWorkID: selectedTypeOfWork.id,
           timeSLA: convertDateToStringDDMMYYYYHHMMSS(
-            dayjs(dateValue).format('DD/MM/YYYYTHH:mm:ss')
+            dayjs(dateValue).format('DD/MM/YYYYTHH:mm:ss'),
           ) as string,
           id_incStatus,
           clientINC: list[10].value,
@@ -152,7 +152,7 @@ export const NewIncident = memo(
                 description: internalClientName ?? '',
                 descriptionID: internalClientID ?? '',
               }
-            }
+            },
           ) as Options[]
           setObjectList(listObjects)
           const listSLAs = contract.SLAs?.map(({ sla, id }) => {
@@ -168,7 +168,7 @@ export const NewIncident = memo(
                 label: equipment,
                 id: id as string,
               }
-            }
+            },
           ) as Options[]
           setEquipmentList(listEquipment)
           setSelectedObject(emptyValue)
@@ -202,7 +202,7 @@ export const NewIncident = memo(
             label: '',
             id: '',
           })
-          setDateValue(undefined)
+          setDateValue(dayjs())
           return
         }
         const slaData = activeContract?.SLAs?.find(item => item.id === data.id)
@@ -239,7 +239,7 @@ export const NewIncident = memo(
         setSelectedEquipment(data)
         if (data.id) {
           const activeEquipment = activeContract?.ClassifierEquipments?.filter(
-            item => item.id === data.id
+            item => item.id === data.id,
           )[0]
           const listModels = activeEquipment?.ClassifierModels?.map(
             ({ model, id }) => {
@@ -247,7 +247,7 @@ export const NewIncident = memo(
                 label: model,
                 id: id as string,
               }
-            }
+            },
           ) as Options[]
           setModelList(listModels)
           setSelectedModel(emptyValue)
@@ -261,10 +261,10 @@ export const NewIncident = memo(
         setSelectedModel(data)
         if (data.id) {
           const activeEquipment = activeContract?.ClassifierEquipments?.filter(
-            item => item.id === selectedEquipment.id
+            item => item.id === selectedEquipment.id,
           )[0]
           const activeModel = activeEquipment?.ClassifierModels?.filter(
-            item => item.id === data.id
+            item => item.id === data.id,
           )[0]
           const listTypical = activeModel?.TypicalMalfunctions?.map(
             ({ typicalMalfunction, id }) => {
@@ -272,7 +272,7 @@ export const NewIncident = memo(
                 label: typicalMalfunction,
                 id: id as string,
               }
-            }
+            },
           ) as Options[]
           setTypicalMalfunctionList(listTypical)
           setSelectedTypicalMalfunction(emptyValue)
@@ -303,7 +303,7 @@ export const NewIncident = memo(
             {fields.map(
               (
                 { id, name, label, validation, type, required, tabIndex },
-                index
+                index,
               ) => {
                 return (
                   <Controller
@@ -470,7 +470,7 @@ export const NewIncident = memo(
                     }}
                   />
                 )
-              }
+              },
             )}
           </Stack>
           <ButtonsModalSection
@@ -479,6 +479,6 @@ export const NewIncident = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

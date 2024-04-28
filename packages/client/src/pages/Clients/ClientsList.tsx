@@ -127,7 +127,7 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
               id_client={id as string}
               key={id}
             />
-          )
+          ),
         )}
         {admin && (
           <IconPopoverButton

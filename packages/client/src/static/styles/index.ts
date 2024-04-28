@@ -3,7 +3,8 @@ export {
   headerForPages,
   mainHeaderForPages,
   mainHeaderForINCPage,
-} from './headerForPages'
+} from './pages/headerForPages'
+export { page } from './pages/main'
 export {
   classifier,
   classifierComponent,

@@ -7,6 +7,7 @@ import { Divisions } from './'
 import { useAuth } from 'hooks/auth/useAuth'
 import { headerForPages, mainHeaderForPages } from 'static/styles'
 import { menuData } from './menuData'
+import { page } from 'static/styles/pages/main'
 
 export const UsersPage = memo(() => {
   const modalRef = React.createRef()
@@ -30,11 +31,13 @@ export const UsersPage = memo(() => {
     getDivisions()
   }, [])
 
+  console.log('divisions = ', divisions)
+
   return (
     <Container component="main" maxWidth="md" sx={mainHeaderForPages}>
       <Modal
         open={modal}
-        onClose={setModal}
+        onClose={() => setModal(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <ChooseModal
@@ -56,7 +59,7 @@ export const UsersPage = memo(() => {
           />
         )}
       </Box>
-      <List sx={{ width: '100%', p: 3, borderColor: 'border.default' }}>
+      <List sx={{ ...page, maxWidth: 1200 }}>
         {divisions.map(value => (
           <Divisions
             divisionName={value.divisionName}

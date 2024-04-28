@@ -53,5 +53,5 @@ export const DateTimeField = memo(
         />
       </LocalizationProvider>
     )
-  }
+  },
 )

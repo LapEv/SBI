@@ -4,11 +4,10 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { DropDownMenu } from 'components/DropDownButtonMenu'
 import { menuData } from './data'
 import { ChooseModal } from './Modals/ChooseModal'
-import { headerForPages, mainHeaderForPages, popoverIcon } from 'static/styles'
+import { headerForPages, mainHeaderForPages } from 'static/styles'
 import { useClients } from 'hooks/clients/useClients'
 import { ClientsList } from './ClientsList'
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
-import { IconPopoverButton } from 'components/Buttons'
+import { page } from 'static/styles/pages/main'
 
 export const ClientsPage = memo(() => {
   const modalClientRef = React.createRef()
@@ -33,16 +32,13 @@ export const ClientsPage = memo(() => {
     getClients()
   }, [])
 
-  const AddNewClient = () => {
-    setModal(true)
-    setModalImage('newClient')
-  }
-
+  console.log('clients = ', clients)
   return (
     <Container component="main" maxWidth="md" sx={mainHeaderForPages}>
       <Modal
         open={modal}
-        onClose={setModal}
+        onClose={() => setModal(false)}
+        disableEnforceFocus
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <ChooseModal
@@ -64,20 +60,11 @@ export const ClientsPage = memo(() => {
           />
         )}
       </Box>
-      <List sx={{ width: '100%', p: 3, borderColor: 'border.default' }}>
+      <List sx={{ ...page, maxWidth: 1200 }}>
         {clients.map(({ client, legalName, id }) => (
           <ClientsList client={client} legalName={legalName} id={id} key={id} />
         ))}
       </List>
-      {admin && (
-        <IconPopoverButton
-          popover={'Добавить клиента'}
-          onClick={AddNewClient}
-          icon={<AddCircleOutlineIcon />}
-          propsPopover={{ ml: -1 }}
-          sx={popoverIcon}
-        />
-      )}
     </Container>
   )
 })

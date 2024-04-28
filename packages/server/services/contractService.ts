@@ -15,6 +15,7 @@ import {
   TypicalMalfunctions,
 } from '../db'
 import type { Request, Response } from 'express'
+import { getOrder } from '../utils/getOrder'
 
 const includes = [
   {
@@ -113,6 +114,8 @@ const includesAll = [
   },
 ]
 
+const order = getOrder('contract', 'ASC')
+
 export class contractService {
   newContract = async (_req: Request, res: Response) => {
     const { sla, equipment, model, objects, ...data } = _req.body
@@ -135,7 +138,7 @@ export class contractService {
         }
       })
       await ThroughContractsEquipmentsRepos.bulkCreate(
-        newThroughContractEquipment
+        newThroughContractEquipment,
       )
 
       const newThroughContractModels = model.map((item: string) => {
@@ -156,6 +159,7 @@ export class contractService {
 
       const contracts = await ContractsRepos.findAll({
         where: { active: true },
+        order,
         include: includes,
       })
       res.status(200).json(contracts)
@@ -172,6 +176,7 @@ export class contractService {
       })
       const contracts = await ContractsRepos.findAll({
         where: { active: true },
+        order,
         include: includes,
       })
       res.status(200).json(contracts)
@@ -181,7 +186,7 @@ export class contractService {
   }
 
   getAllContracts = (_req: Request, res: Response) => {
-    ContractsRepos.findAll({ include: includesAll })
+    ContractsRepos.findAll({ include: includesAll, order })
       .then(item => res.status(200).json(item))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
@@ -190,6 +195,7 @@ export class contractService {
     ContractsRepos.findAll({
       where: { active: true },
       include: includes,
+      order,
     })
       .then(contracts => {
         res.status(200).json(contracts)
@@ -202,6 +208,7 @@ export class contractService {
     ContractsRepos.findAll({
       where: { active: true, id_client },
       include: includes,
+      order,
     })
       .then(contracts => {
         res.status(200).json(contracts)
@@ -217,6 +224,7 @@ export class contractService {
       })
       const contracts = await ContractsRepos.findAll({
         where: { active: true },
+        order,
       })
       res.status(200).json(contracts)
     } catch (err) {
@@ -230,7 +238,7 @@ export class contractService {
       await ContractsRepos.destroy({
         where: { id: selectedContracts },
       })
-      const contracts = await ContractsRepos.findAll({})
+      const contracts = await ContractsRepos.findAll({ order })
       res.status(200).json(contracts)
     } catch (err) {
       res.status(500).json({ error: ['db error', err as Error] })
@@ -245,6 +253,7 @@ export class contractService {
       })
       const contracts = await ContractsRepos.findAll({
         where: { active: true },
+        order,
         include: includes,
       })
       res.status(200).json(contracts)
@@ -291,7 +300,7 @@ export class contractService {
           }
         })
         await ThroughContractsEquipmentsRepos.bulkCreate(
-          newThroughContractEquipment
+          newThroughContractEquipment,
         )
       }
 
@@ -331,15 +340,16 @@ export class contractService {
               id_contract: id,
               id_incStatusses: item,
             }
-          }
+          },
         )
         await ThroughContractsIncStatussesRepos.bulkCreate(
-          newThroughContractincStatusses
+          newThroughContractincStatusses,
         )
       }
 
       const contracts = await ContractsRepos.findAll({
         where: { active: true },
+        order,
         include: includes,
       })
       res.status(200).json(contracts)

@@ -9,6 +9,13 @@ import { incidentService } from './incidentService'
 import { IUser } from '/models/users'
 import { IDepartment } from '/models/departments'
 
+// const includes = [
+//   {
+//     model: Division,
+//     required: true,
+//     attributes: ['id', 'division', 'divisionName', 'active'],
+//   },
+// ]
 export class userService {
   setUser = async (_req: Request, res: Response) => {
     const errValidation: Result = validationResult(_req)
@@ -56,18 +63,18 @@ export class userService {
       const user = (await userRepos.findOne({
         where: { username: username },
       })) as IUser
-      console.log('user = ', user)
       if (!user) {
         return res.status(400).json({ message: auth.notification.userNotFound })
       }
       const validPassword = bcrypt.compareSync(password, user?.password)
-
+      console.log('validPassword = ', validPassword)
       if (!validPassword) {
         return res
           .status(400)
           .json({ message: auth.notification.invalidPassword })
       }
       const token = generateAccessToken(user.id, user.rolesGroup, user.username)
+      console.log('token = ', token)
       if (
         user &&
         (user.rolesGroup === 'ADMIN' ||
@@ -75,7 +82,9 @@ export class userService {
           user.rolesGroup === 'Dispatcher')
       ) {
         const service = new incidentService()
+        console.log('start')
         const filterData = await service.getFilterListFunc()
+        console.log('filterData = ', filterData)
         return res.json({
           token,
           user,
@@ -161,6 +170,7 @@ export class userService {
       ) {
         const service = new incidentService()
         const filterData = await service.getFilterListFunc()
+        console.log('filterData = ', filterData)
         return res.json({
           token,
           user,
@@ -198,6 +208,8 @@ export class userService {
     userRepos
       .findAll({
         where: _req.body,
+        // include: { all: true, nested: true },
+        include: { all: true },
       })
       .then(user => {
         res.status(200).json(user)

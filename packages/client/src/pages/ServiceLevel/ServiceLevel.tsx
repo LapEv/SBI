@@ -6,6 +6,7 @@ import { ServiceList, menuData } from '.'
 import { ChooseModal } from './Modals/ChooseModal'
 import { headerForPages, mainHeaderForPages } from 'static/styles'
 import { ServiceDataList } from './data'
+import { page } from 'static/styles/pages/main'
 
 export const ServiceLevelPage = memo(() => {
   const modalClientRef = React.createRef()
@@ -28,7 +29,7 @@ export const ServiceLevelPage = memo(() => {
     <Container component="main" maxWidth="md" sx={mainHeaderForPages}>
       <Modal
         open={modal}
-        onClose={setModal}
+        onClose={() => setModal(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <ChooseModal
@@ -50,7 +51,7 @@ export const ServiceLevelPage = memo(() => {
           />
         )}
       </Box>
-      <List sx={{ width: '100%', p: 3, borderColor: 'border.default' }}>
+      <List sx={{ ...page, maxWidth: 1200 }}>
         {ServiceDataList.map(({ name, label }, index) => (
           <ServiceList name={name} label={label} key={`${label}${index}`} />
         ))}

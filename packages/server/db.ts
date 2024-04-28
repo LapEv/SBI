@@ -77,62 +77,62 @@ export const Regions = sequelize.define('Regions', regions, {})
 export const ClassifierEquipment = sequelize.define(
   'ClassifierEquipment',
   classifierEquipment,
-  {}
+  {},
 )
 export const ClassifierModels = sequelize.define(
   'ClassifierModels',
   classifierModels,
-  {}
+  {},
 )
 export const TypicalMalfunctions = sequelize.define(
   'TypicalMalfunctions',
   typicalMalfunctions,
-  {}
+  {},
 )
 export const ThroughModelTypMalfunctions = sequelize.define(
   'ThroughModelTypMalfunctions',
   throughModelTypMalfunctions,
-  {}
+  {},
 )
 export const SLA = sequelize.define('SLA', sla, {})
 export const OLA = sequelize.define('OLA', ola, {})
 export const ThroughContractsSLA = sequelize.define(
   'ThroughContractsSLA',
   throughContractsSLA,
-  {}
+  {},
 )
 export const ThroughContractsEquipments = sequelize.define(
   'ThroughContractsEquipments',
   throughContractsEquipments,
-  {}
+  {},
 )
 export const ThroughContractsModels = sequelize.define(
   'ThroughContractsModels',
   throughContractsModels,
-  {}
+  {},
 )
 export const ThroughContractsObjects = sequelize.define(
   'ThroughContractsObjects',
   throughContractsObjects,
-  {}
+  {},
 )
 
 export const ThroughContractsIncStatusses = sequelize.define(
   'ThroughContractsIncStatusses',
   throughContractsIncStatusses,
-  {}
+  {},
 )
 
 export const Incidents = sequelize.define('Incidents', incident, {})
 export const IncindentStatuses = sequelize.define(
   'IncindentStatuses',
   incindentStatuses,
-  {}
+  {},
 )
 export const TypesCompletedWork = sequelize.define(
   'TypesCompletedWork',
   typesCompletedWork,
-  {}
+  {},
 )
 export const TypesOfWork = sequelize.define('TypesOfWork', typesOfWork, {})
 export const IncidentLogs = sequelize.define('IncidentLogs', incidentLogs, {})
@@ -148,11 +148,11 @@ RolesGroup.belongsToMany(Users, { through: 'ThroughUserRoleGroup' })
 Users.belongsToMany(Roles, { through: 'ThroughUserRole' })
 Roles.belongsToMany(Users, { through: 'ThroughUserRole' })
 
-Division.hasMany(Users, { foreignKey: 'id_division' })
-Users.belongsTo(Division, { foreignKey: 'id_division', targetKey: 'id' })
+// Users.hasOne(Division, { foreignKey: 'id_division', sourceKey: 'id' })
+// Division.belongsTo(Users, { foreignKey: 'id_division', targetKey: 'id' })
 
-Department.hasMany(Users, { foreignKey: 'id_department' })
-Users.belongsTo(Department, { foreignKey: 'id_department', targetKey: 'id' })
+// Department.hasOne(Users, { foreignKey: 'id_department', sourceKey: 'id' })
+// Users.belongsTo(Department, { foreignKey: 'id_department', targetKey: 'id' })
 
 Division.hasMany(Department, { foreignKey: 'id_division' })
 Department.belongsTo(Division, { foreignKey: 'id_division', targetKey: 'id' })
@@ -342,14 +342,14 @@ Incidents.belongsTo(Users, {
 Users.hasOne(Incidents, { foreignKey: 'id_incUser', sourceKey: 'id' })
 Incidents.belongsTo(Users, { foreignKey: 'id_incUser', targetKey: 'id' })
 
-Department.hasOne(Incidents, {
-  foreignKey: 'id_incDepartment',
-  sourceKey: 'id',
-})
-Incidents.belongsTo(Department, {
-  foreignKey: 'id_incDepartment',
-  targetKey: 'id',
-})
+// Department.hasOne(Incidents, {
+//   foreignKey: 'id_incDepartment',
+//   sourceKey: 'id',
+// })
+// Incidents.belongsTo(Department, {
+//   foreignKey: 'id_incDepartment',
+//   targetKey: 'id',
+// })
 
 ClassifierEquipment.hasOne(Incidents, {
   foreignKey: 'id_incEquipment',
@@ -403,44 +403,44 @@ export const ContractsRepos = new Repository(Contracts as ModelCtor)
 export const ObjectsRepos = new Repository(Objects as ModelCtor)
 
 export const ClassifierEquipmentRepos = new Repository(
-  ClassifierEquipment as ModelCtor
+  ClassifierEquipment as ModelCtor,
 )
 export const ClassifierModelsRepos = new Repository(
-  ClassifierModels as ModelCtor
+  ClassifierModels as ModelCtor,
 )
 export const TypicalMalfunctionsRepos = new Repository(
-  TypicalMalfunctions as ModelCtor
+  TypicalMalfunctions as ModelCtor,
 )
 export const ThroughModelTypMalfunctionsRepos = new Repository(
-  ThroughModelTypMalfunctions as ModelCtor
+  ThroughModelTypMalfunctions as ModelCtor,
 )
 
 export const SLARepos = new Repository(SLA as ModelCtor)
 export const OLARepos = new Repository(OLA as ModelCtor)
 
 export const ThroughContractsSLARepos = new Repository(
-  ThroughContractsSLA as ModelCtor
+  ThroughContractsSLA as ModelCtor,
 )
 export const ThroughContractsEquipmentsRepos = new Repository(
-  ThroughContractsEquipments as ModelCtor
+  ThroughContractsEquipments as ModelCtor,
 )
 export const ThroughContractsModelsRepos = new Repository(
-  ThroughContractsModels as ModelCtor
+  ThroughContractsModels as ModelCtor,
 )
 export const ThroughContractsObjectsRepos = new Repository(
-  ThroughContractsObjects as ModelCtor
+  ThroughContractsObjects as ModelCtor,
 )
 export const ThroughContractsIncStatussesRepos = new Repository(
-  ThroughContractsIncStatusses as ModelCtor
+  ThroughContractsIncStatusses as ModelCtor,
 )
 
 export const IncidentStatusesRepos = new Repository(
-  IncindentStatuses as ModelCtor
+  IncindentStatuses as ModelCtor,
 )
 export const IncidentRepos = new Repository(Incidents as ModelCtor)
 export const TypesOfWorkRepos = new Repository(TypesOfWork as ModelCtor)
 export const TypesCompletedWorkRepos = new Repository(
-  TypesCompletedWork as ModelCtor
+  TypesCompletedWork as ModelCtor,
 )
 export const IncidentLogsRepos = new Repository(IncidentLogs as ModelCtor)
 

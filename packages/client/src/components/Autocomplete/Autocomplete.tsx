@@ -6,11 +6,11 @@ export const Autocomplete = styled(MuiAutocomplete)(({ theme }) => ({
     padding: '0!important',
     paddingLeft: '7px!important',
     paddingRight: '7px!important',
-    fontSize: 16,
+    fontSize: 12,
   },
-  '.MuiAutocomplete-endAdornment': {
-    top: -2,
-  },
+  // '.MuiAutocomplete-endAdornment': {
+  //   top: -2,
+  // },
   '.MuiAutocomplete-clearIndicator': {
     color: theme.palette.mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
     '& .MuiSvgIcon-root': {

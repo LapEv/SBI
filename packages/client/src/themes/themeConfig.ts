@@ -95,7 +95,7 @@ export const ThemeConfig = (mode: PaletteMode) =>
       MuiTypography: {
         defaultProps: {
           fontWeight: 'bold',
-          // fontSize: '0.975rem',
+          fontSize: '0.975rem',
           color: mode === ThemeMode.light ? '#1E515D' : '#FFFFFF',
         },
       },
@@ -173,4 +173,4 @@ export const ThemeConfig = (mode: PaletteMode) =>
         },
       },
     },
-  } as ThemeOptions)
+  }) as ThemeOptions

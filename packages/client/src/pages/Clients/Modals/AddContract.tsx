@@ -55,7 +55,7 @@ export const AddContract = memo(
       const [selectedEquipments, setSelectedEquipments] = useState<string[]>([])
       const [selectedModels, setSelectedModels] = useState<string[]>([])
       const [errSLA, setErrSLA] = useState<boolean>(false)
-      const [dateValue, setDateValue] = useState<Dayjs>()
+      const [dateValue, setDateValue] = useState<Dayjs>(dayjs())
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
         defaultValues: {

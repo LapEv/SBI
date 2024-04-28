@@ -29,6 +29,8 @@ export const Divisions = memo(({ divisionName, id }: Division) => {
     }
   }, [activeDivision])
 
+  console.log('departaments = ', departaments)
+
   return (
     <Box sx={classifier}>
       <ListItemButton

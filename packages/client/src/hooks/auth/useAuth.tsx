@@ -27,9 +27,8 @@ export function useAuth(): [AuthState, AuthActions] {
   return [
     auth,
     {
-      signin(authData, callback) {
+      signin(authData) {
         dispatch(signin(authData))
-        callback()
       },
       signup(signUpData) {
         dispatch(signup(signUpData))

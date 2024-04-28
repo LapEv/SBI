@@ -28,15 +28,10 @@ export const signin = createAsyncThunk(
   'user/signin',
   async (loginData: Login, thunkAPI) => {
     try {
-      console.log('signin')
-      console.log('loginData = ', loginData)
-      console.log('host = ', host)
-      console.log('ApiEndPoints.User.Login = ', ApiEndPoints.User.Login)
       const { data } = await host.post<ICheckUser>(
         ApiEndPoints.User.Login,
         loginData,
       )
-      console.log('data = ', data)
       localStorage.setItem('token', data.token as string)
       const { id } = jwt_decode(data.token as string) as Token
       return {

@@ -7,7 +7,7 @@ import {
   ChangeThemeProps,
 } from 'storeAuth/interfaces'
 export interface AuthActions {
-  signin: (authData: Login, callback: () => void) => void
+  signin: (authData: Login) => void
   signup: (signUpData: SignUp) => void
   signout: () => void
   updateProfile: (data: User) => void

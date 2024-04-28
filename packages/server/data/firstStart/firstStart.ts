@@ -91,7 +91,7 @@ export const firstStart = async () => {
       console.log('Check Clients')
       if (clients.length) {
         console.log(
-          'Первый запуск таблиц Clients невозможен! Какая-то из таблиц уже существует!'
+          'Первый запуск таблиц Clients невозможен! Какая-то из таблиц уже существует!',
         )
       } else {
         console.log('Create Clients')
@@ -109,20 +109,20 @@ export const firstStart = async () => {
       console.log('Check Addresses')
       if (addresses.length || regions.length) {
         console.log(
-          'Первый запуск таблиц Address и Regions невозможен! Какая-то из таблиц уже существует!'
+          'Первый запуск таблиц Address и Regions невозможен! Какая-то из таблиц уже существует!',
         )
       } else {
         console.log('Create Addresses')
         if (!regions.length) {
           const newRegions = (await RegionsRepos.bulkCreate(
-            regionsStartData
+            regionsStartData,
           )) as IRegions[]
           const newAddressesData = addressesStartData.map(value => {
             return { ...value, id_region: newRegions[0].id }
           })
           if (!addresses.length) {
             const newAddresses = (await AddressesRepos.bulkCreate(
-              newAddressesData
+              newAddressesData,
             )) as IAddresses[]
             const newClients = await ClientsRepos.getAll()
             const objectdata = objectsStartData.map((value, index) => {
@@ -163,7 +163,7 @@ export const firstStart = async () => {
       console.log('Check TypesCompletedWork')
       if (typesCompletedWork.length) {
         console.log(
-          'Первый запуск таблиц TypesCompletedWork невозможен! Какая-то из таблиц уже существует!'
+          'Первый запуск таблиц TypesCompletedWork невозможен! Какая-то из таблиц уже существует!',
         )
       } else {
         console.log('Create TypesCompletedWork!')
@@ -180,7 +180,7 @@ export const firstStart = async () => {
       console.log('Check INC')
       if (incs.length || incStatuses.length) {
         console.log(
-          'Первый запуск таблиц INC, INCStatuses невозможен! Какая-то из таблиц уже существует!'
+          'Первый запуск таблиц INC, INCStatuses невозможен! Какая-то из таблиц уже существует!',
         )
       } else {
         console.log('Create INC')
@@ -199,12 +199,12 @@ export const firstStart = async () => {
       console.log('Check SLA')
       if (sla.length || ola.length || typesOfWork.length) {
         console.log(
-          'Первый запуск таблиц SLA, OLA, TypesOfWork невозможен! Какая-то из таблиц уже существует!'
+          'Первый запуск таблиц SLA, OLA, TypesOfWork невозможен! Какая-то из таблиц уже существует!',
         )
       } else {
         console.log('Create SLA')
         const typesWork = (await TypesOfWorkRepos.bulkCreate(
-          typesOfWorkStartData
+          typesOfWorkStartData,
         )) as ITypesOfWork[]
         const newSLA = slaStartData.map((item, index) => {
           return {
@@ -234,11 +234,11 @@ export const firstStart = async () => {
     } else {
       if (equipments.length || models.length || typ_malfunctions.length) {
         console.log(
-          'Первый запуск таблиц ClassifierEquipment, ClassifierModels и TypicalMalfunctions невозможен! Какая-то из таблиц уже существует!'
+          'Первый запуск таблиц ClassifierEquipment, ClassifierModels и TypicalMalfunctions невозможен! Какая-то из таблиц уже существует!',
         )
       } else {
         const newEquipments = (await ClassifierEquipmentRepos.bulkCreate(
-          equipmentsStartData
+          equipmentsStartData,
         )) as IClassifierEquipment[]
         const newModelsStartData = modelsStartData.map((item, index) => {
           return {
@@ -248,7 +248,7 @@ export const firstStart = async () => {
         })
 
         const newModels = (await ClassifierModelsRepos.bulkCreate(
-          newModelsStartData
+          newModelsStartData,
         )) as IClassifierModels[]
 
         const newTypicalMalfunctionStartData = typ_malfunctionsStartData.map(
@@ -258,12 +258,12 @@ export const firstStart = async () => {
               id_equipment:
                 index < 3 ? newEquipments[0].id : newEquipments[1].id,
             }
-          }
+          },
         )
 
         const newTypicalMalfunction =
           (await TypicalMalfunctionsRepos.bulkCreate(
-            newTypicalMalfunctionStartData
+            newTypicalMalfunctionStartData,
           )) as ITypicalMalfunctions[]
 
         const newThroughModelTypMalfunction = newModels.map((item, index) => {
@@ -286,7 +286,7 @@ export const firstStart = async () => {
             }
           })
           const temp2 = temp.filter(
-            item => item.id_model && item.id_typicalMalfunction
+            item => item.id_model && item.id_typicalMalfunction,
           )
           return temp2
         })
@@ -306,7 +306,7 @@ export const firstStart = async () => {
     } else {
       if (roles.length || rolesGroup.length) {
         console.log(
-          'Первый запуск таблиц Roles, RolesGroup невозможен! Какая-то из таблиц уже существует!'
+          'Первый запуск таблиц Roles, RolesGroup невозможен! Какая-то из таблиц уже существует!',
         )
       } else {
         await roleRepos.bulkCreate(rolesStartData)
@@ -326,38 +326,56 @@ export const firstStart = async () => {
 
     if (divisions.length || department.length || users.length) {
       console.log(
-        'Первый запуск таблиц невозможен! Какая-то из таблиц уже существует!'
+        'Первый запуск таблиц невозможен! Какая-то из таблиц уже существует!',
       )
     } else {
+      console.log('Create Div, Dep, Users, UserStatusses!')
       const newDivision = (await DivisionRepos.bulkCreate(
-        divisionStartData
+        divisionStartData,
       )) as IDivision[]
-      departmentStartData.map(async value => {
-        value.id_division = newDivision.find(
-          item => item.division === value.division
-        )?.id as string
+      console.log('newDivision = ', newDivision)
+      const newDepartmentData = departmentStartData.map(value => {
+        return {
+          ...value,
+          id_division: newDivision.find(
+            item => item.division === value.division,
+          )?.id,
+        }
       })
+      console.log('newDepartmentData = ', newDepartmentData)
       const newDepartment = (await DepartmentRepos.bulkCreate(
-        departmentStartData
+        newDepartmentData,
       )) as IDepartment[]
+      console.log('newDepartment = ', newDepartment)
+
       await UserStatusRepos.bulkCreate(userStatusStartData)
       const newuserStartData = userStartData.map(value => {
-        const divivsionFind = newDivision.find(
-          item => item.division === value.division
-        ) as IDivision
-        value.id_division = divivsionFind ? divivsionFind.id : ''
-        const departmentFind = newDepartment.find(
-          item => item.department === value.department
-        ) as IDepartment
-        value.id_department = departmentFind ? departmentFind.id : ''
         const hashPassword = bcrypt.hashSync(value.password, 7)
         return {
           ...value,
           password: hashPassword,
           active: true,
           theme: 'light',
+          id_division: newDivision.find(
+            item => item.division === value.division,
+          )?.id,
+          id_department: newDepartment.find(
+            item => item.department === value.department,
+          )?.id,
         }
+        // const divivsionFind = newDivision.find(
+        //   item => item.division === value.division,
+        // ) as IDivision
+        // value.id_division = divivsionFind ? divivsionFind.id : ''
+        // const departmentFind = newDepartment.find(
+        //   item => item.department === value.department,
+        // ) as IDepartment
+        // value.id_department = departmentFind ? departmentFind.id : ''
+        // return {
+
+        // }
       })
+      console.log('newuserStartData = ', newuserStartData)
       await userRepos.bulkCreate(newuserStartData)
     }
   } catch (error) {

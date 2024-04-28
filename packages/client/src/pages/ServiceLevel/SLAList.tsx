@@ -118,5 +118,5 @@ export const SLAList = memo(
         </Collapse>
       </Box>
     )
-  }
+  },
 )

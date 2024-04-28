@@ -58,7 +58,12 @@ import {
   newClient,
   newClientGroup,
 } from 'api/clients'
-import { changeContract, deleteContract, newContract } from 'api/contracts'
+import {
+  changeContract,
+  deleteContract,
+  newContract,
+  newContractName,
+} from 'api/contracts'
 import { changeObject, deleteObjects, newObject } from 'api/objects'
 import {
   changeINC,
@@ -791,6 +796,19 @@ export const messageSlise = createSlice({
       state.isLoadingMessage = true
     })
     builder.addCase(newContract.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(newContractName.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(newContractName.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(newContractName.rejected, (state, { payload }) => {
       state.isLoadingMessage = false
       state.type = 'error'
       state.text = payload as string

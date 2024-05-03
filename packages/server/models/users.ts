@@ -16,9 +16,7 @@ export interface IUser {
   avatar?: string
   active: boolean
   theme: string
-  division: string
   chiefDivision: boolean
-  department: string
   chiefDepartment: boolean
   id_division: string
   id_department: string
@@ -41,9 +39,7 @@ export interface User {
   avatar?: string
   active: boolean
   theme: string
-  division: string
   chiefDivision: boolean
-  department: string
   chiefDepartment: boolean
   id_division: string
   id_department: string
@@ -111,19 +107,11 @@ export const users: ModelAttributes<Model, User> = {
     type: DataType.STRING,
     allowNull: false,
   },
-  division: {
-    type: DataType.STRING,
-    allowNull: false,
-  },
   chiefDivision: {
     type: DataType.BOOLEAN,
     allowNull: true,
   },
   id_division: {
-    type: DataType.STRING,
-    allowNull: false,
-  },
-  department: {
     type: DataType.STRING,
     allowNull: false,
   },

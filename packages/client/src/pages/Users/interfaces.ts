@@ -9,7 +9,3 @@ export interface ProfileValues extends User {
     type: string
   }[]
 }
-
-export interface DPR extends User {
-  departmentName: string
-}

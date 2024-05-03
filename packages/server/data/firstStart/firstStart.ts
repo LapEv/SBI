@@ -333,7 +333,6 @@ export const firstStart = async () => {
       const newDivision = (await DivisionRepos.bulkCreate(
         divisionStartData,
       )) as IDivision[]
-      console.log('newDivision = ', newDivision)
       const newDepartmentData = departmentStartData.map(value => {
         return {
           ...value,
@@ -342,12 +341,9 @@ export const firstStart = async () => {
           )?.id,
         }
       })
-      console.log('newDepartmentData = ', newDepartmentData)
       const newDepartment = (await DepartmentRepos.bulkCreate(
         newDepartmentData,
       )) as IDepartment[]
-      console.log('newDepartment = ', newDepartment)
-
       await UserStatusRepos.bulkCreate(userStatusStartData)
       const newuserStartData = userStartData.map(value => {
         const hashPassword = bcrypt.hashSync(value.password, 7)
@@ -363,20 +359,14 @@ export const firstStart = async () => {
             item => item.department === value.department,
           )?.id,
         }
-        // const divivsionFind = newDivision.find(
-        //   item => item.division === value.division,
-        // ) as IDivision
-        // value.id_division = divivsionFind ? divivsionFind.id : ''
-        // const departmentFind = newDepartment.find(
-        //   item => item.department === value.department,
-        // ) as IDepartment
-        // value.id_department = departmentFind ? departmentFind.id : ''
-        // return {
-
-        // }
       })
-      console.log('newuserStartData = ', newuserStartData)
-      await userRepos.bulkCreate(newuserStartData)
+      const userData = newuserStartData.map(
+        /* eslint-disable @typescript-eslint/no-unused-vars */
+        ({ department, division, ...obj }) => obj,
+        /* eslint-enable @typescript-eslint/no-unused-vars */
+      )
+      await userRepos.bulkCreate(userData)
+      console.log('Create Div, Dep, Users, UserStatusses completed!')
     }
   } catch (error) {
     console.error('Unable to connect to the database: ', error)

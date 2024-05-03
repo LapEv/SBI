@@ -113,7 +113,7 @@ export const userStartData = [
     division: 'Client',
     chiefDivision: false,
     id_division: '',
-    department: 'Client',
+    department: 'Perekrestok',
     chiefDepartment: false,
     id_department: '',
     status: 'client',

@@ -1,17 +1,28 @@
 import type { Request, Response } from 'express'
-import { Department, DivisionRepos } from '../db'
+import { Department, DivisionRepos, Users } from '../db'
 import { getOrder } from '../utils/getOrder'
 
-// const orderDepartment = getOrder('departmentName', 'ASC')
-const includes = [
+const orderDepartment = getOrder('departmentName', 'ASC')
+const orderUsers = getOrder('lastName', 'ASC')
+const include = [
   {
     model: Department,
-    // where: { active: true },
-    // order: orderDepartment,
-    // required: false,
+    attributes: ['id', 'department', 'departmentName'],
+    where: { active: true },
+    order: orderDepartment,
+    required: false,
+    include: [
+      {
+        model: Users,
+        required: false,
+        where: { active: true },
+        order: orderUsers,
+      },
+    ],
   },
 ]
-const order = getOrder('departmentName', 'ASC')
+const order = getOrder('divisionName', 'ASC')
+const attributes = ['id', 'division', 'divisionName', 'active']
 
 export class divisionService {
   newDivision = async (_req: Request, res: Response) => {
@@ -25,7 +36,8 @@ export class divisionService {
       const divisions = await DivisionRepos.findAll({
         where: { active: true },
         order,
-        include: includes,
+        include,
+        attributes,
       })
       res.status(200).json(divisions)
     } catch (err) {
@@ -36,15 +48,20 @@ export class divisionService {
   getDivisions = (_req: Request, res: Response) => {
     DivisionRepos.findAll({
       where: { active: true },
-      // include: { all: true, nested: true },
-      include: { all: true },
+      order,
+      include,
+      attributes,
     })
       .then(divisions => res.status(200).json(divisions))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
 
   getAllDivisions = (_req: Request, res: Response) => {
-    DivisionRepos.findAll({ order, include: includes })
+    DivisionRepos.findAll({
+      order,
+      include,
+      attributes,
+    })
       .then(divisions => res.status(200).json(divisions))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
@@ -58,7 +75,8 @@ export class divisionService {
       const divisions = await DivisionRepos.findAll({
         where: { active: true },
         order,
-        include: includes,
+        include,
+        attributes,
       })
       res.status(200).json(divisions)
     } catch (err) {
@@ -73,7 +91,8 @@ export class divisionService {
       })
       const divisions = await DivisionRepos.findAll({
         order,
-        include: includes,
+        include,
+        attributes,
       })
       res.status(200).json(divisions)
     } catch (err) {
@@ -90,7 +109,8 @@ export class divisionService {
       const divisions = await DivisionRepos.findAll({
         where: { active: true },
         order,
-        include: includes,
+        include,
+        attributes,
       })
       res.status(200).json(divisions)
     } catch (err) {

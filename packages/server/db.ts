@@ -148,11 +148,11 @@ RolesGroup.belongsToMany(Users, { through: 'ThroughUserRoleGroup' })
 Users.belongsToMany(Roles, { through: 'ThroughUserRole' })
 Roles.belongsToMany(Users, { through: 'ThroughUserRole' })
 
-// Users.hasOne(Division, { foreignKey: 'id_division', sourceKey: 'id' })
-// Division.belongsTo(Users, { foreignKey: 'id_division', targetKey: 'id' })
+Division.hasMany(Users, { foreignKey: 'id_division' })
+Users.belongsTo(Division, { foreignKey: 'id_division', targetKey: 'id' })
 
-// Department.hasOne(Users, { foreignKey: 'id_department', sourceKey: 'id' })
-// Users.belongsTo(Department, { foreignKey: 'id_department', targetKey: 'id' })
+Department.hasMany(Users, { foreignKey: 'id_department' })
+Users.belongsTo(Department, { foreignKey: 'id_department', targetKey: 'id' })
 
 Division.hasMany(Department, { foreignKey: 'id_division' })
 Department.belongsTo(Division, { foreignKey: 'id_division', targetKey: 'id' })

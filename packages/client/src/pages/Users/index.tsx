@@ -1,5 +1,5 @@
 export { UsersPage } from './Users'
 export { Divisions } from './Divisions'
-export { Departments } from './Departments'
+export { DepartmentData } from './Department'
 export { ListUsers } from './ListUsers'
 export { ProfileData } from './ProfileData'

@@ -32,6 +32,7 @@ export const signin = createAsyncThunk(
         ApiEndPoints.User.Login,
         loginData,
       )
+      console.log('api user = ', data)
       localStorage.setItem('token', data.token as string)
       const { id } = jwt_decode(data.token as string) as Token
       return {
@@ -178,6 +179,7 @@ export const CheckUser = createAsyncThunk(
       const { data } = await authhost.get<ICheckUser>(
         ApiEndPoints.User.CheckUser,
       )
+      console.log('api user = ', data)
       const { id } = jwt_decode(data.token as string) as Token
       return { ...data, id }
     } catch (error) {

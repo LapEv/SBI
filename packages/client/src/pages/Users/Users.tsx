@@ -60,12 +60,12 @@ export const UsersPage = memo(() => {
         )}
       </Box>
       <List sx={{ ...page, maxWidth: 1200 }}>
-        {divisions.map(value => (
+        {divisions.map(({ divisionName, id, Departments }) => (
           <Divisions
-            divisionName={value.divisionName}
-            division={value.division}
-            id={value.id}
-            key={value.id}
+            divisionName={divisionName}
+            id_division={id}
+            key={id}
+            Departments={Departments}
           />
         ))}
       </List>

@@ -6,12 +6,7 @@ export const divisionStartData = [
   },
   {
     division: 'ServiceDepartment',
-    divisionName: 'Отдел Сервисного обслуживания',
-    active: true,
-  },
-  {
-    division: 'AccountingDepartment',
-    divisionName: 'Бухгалтерия',
+    divisionName: 'Отдел cервисного обслуживания',
     active: true,
   },
   {

@@ -1,22 +1,19 @@
 import { memo, useEffect, useState } from 'react'
 import { Box, ListItemText, ListItemButton } from '@mui/material'
 import Collapse from '@mui/material/Collapse'
-import { useAuth } from 'hooks/auth/useAuth'
 import { ListUsers } from './ListUsers'
 import { RotateButton } from 'components/Buttons'
-import { DPR } from './interfaces'
 import { useStructure } from 'hooks/structure/useStructure'
 import { classifierChildComponent, flexColumn_FS_SA } from 'static/styles'
+import { Department } from 'store/slices/structure/interfaces'
 
-export const Departments = memo(
-  ({ departmentName, id_division, id_department }: DPR) => {
-    const [{ users }, { getActiveUsers }] = useAuth()
+export const DepartmentData = memo(
+  ({ departmentName, id_department, Users }: Department) => {
     const [{ activeDepartment }, { setActiveDepartment }] = useStructure()
     const [open, setOpen] = useState(false)
 
     const handleClick = () => {
       if (!open) {
-        getActiveUsers({ id_division, id_department })
         setActiveDepartment(id_department as string)
       }
       setOpen(!open)
@@ -46,11 +43,9 @@ export const Departments = memo(
           in={open}
           timeout="auto"
           unmountOnExit>
-          {users.map(value => (
-            <ListUsers {...value} key={value.id} />
-          ))}
+          {Users?.map(value => <ListUsers {...value} key={value.id} />)}
         </Collapse>
       </Box>
     )
-  }
+  },
 )

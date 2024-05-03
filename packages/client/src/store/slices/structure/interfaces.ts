@@ -1,8 +1,12 @@
+import { User } from 'storeAuth/interfaces'
+
 export interface Division {
   id?: string
   division?: string
   divisionName: string
   data?: string[]
+  id_division?: string
+  Departments?: Department[]
 }
 
 export interface Department {
@@ -12,6 +16,8 @@ export interface Department {
   division?: string
   divisionName?: string
   id_division?: string
+  id_department?: string
+  Users?: User[]
 }
 
 export interface NewDivision {

@@ -130,7 +130,6 @@ export const authSlise = createSlice({
       state.isLoadingAuth = false
       state.error = ''
       const { user } = payload as ICheckUser
-      console.log('user = ', user)
       if (user) {
         state.user = user
         state.userData = user

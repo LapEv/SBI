@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express'
-import { DepartmentRepos, userRepos } from '../db'
+import { Department, DepartmentRepos, Division, userRepos } from '../db'
 import { Result, validationResult } from 'express-validator'
 import bcrypt from 'bcryptjs'
 import { auth } from '../data/auth'
@@ -9,13 +9,18 @@ import { incidentService } from './incidentService'
 import { IUser } from '/models/users'
 import { IDepartment } from '/models/departments'
 
-// const includes = [
-//   {
-//     model: Division,
-//     required: true,
-//     attributes: ['id', 'division', 'divisionName', 'active'],
-//   },
-// ]
+const include = [
+  {
+    model: Division,
+    required: true,
+    attributes: ['id', 'division', 'divisionName', 'active'],
+  },
+  {
+    model: Department,
+    required: true,
+    attributes: ['id', 'department', 'departmentName', 'active'],
+  },
+]
 export class userService {
   setUser = async (_req: Request, res: Response) => {
     const errValidation: Result = validationResult(_req)
@@ -59,22 +64,20 @@ export class userService {
   login = async (_req: Request, res: Response) => {
     try {
       const { username, password } = _req.body
-      console.log('username = ', username)
       const user = (await userRepos.findOne({
         where: { username: username },
+        include,
       })) as IUser
       if (!user) {
         return res.status(400).json({ message: auth.notification.userNotFound })
       }
       const validPassword = bcrypt.compareSync(password, user?.password)
-      console.log('validPassword = ', validPassword)
       if (!validPassword) {
         return res
           .status(400)
           .json({ message: auth.notification.invalidPassword })
       }
       const token = generateAccessToken(user.id, user.rolesGroup, user.username)
-      console.log('token = ', token)
       if (
         user &&
         (user.rolesGroup === 'ADMIN' ||
@@ -82,9 +85,7 @@ export class userService {
           user.rolesGroup === 'Dispatcher')
       ) {
         const service = new incidentService()
-        console.log('start')
         const filterData = await service.getFilterListFunc()
-        console.log('filterData = ', filterData)
         return res.json({
           token,
           user,
@@ -104,6 +105,7 @@ export class userService {
     const { oldPassword, newPassword, id } = _req.body
     const user = (await userRepos.findAll({
       where: { id },
+      include,
     })) as IUser[]
     const validPassword = bcrypt.compareSync(oldPassword, user[0].password)
     if (!validPassword) {
@@ -131,6 +133,7 @@ export class userService {
     const { oldPassword, newPassword, id } = _req.body
     const user = (await userRepos.findAll({
       where: { id },
+      include,
     })) as IUser[]
     const validPassword = bcrypt.compareSync(oldPassword, user[0].password)
     if (!validPassword) {
@@ -160,6 +163,7 @@ export class userService {
       const token = generateAccessToken(id, rolesGroup, username)
       const user = (await userRepos.findOne({
         where: { id: id },
+        include,
       })) as IUser
 
       if (
@@ -197,7 +201,7 @@ export class userService {
     userRepos
       .findAll({
         where: dataFind,
-        include: { all: true },
+        include,
       })
       .then(user => {
         res.status(200).json(user)
@@ -208,8 +212,7 @@ export class userService {
     userRepos
       .findAll({
         where: _req.body,
-        // include: { all: true, nested: true },
-        include: { all: true },
+        include,
       })
       .then(user => {
         res.status(200).json(user)
@@ -226,6 +229,7 @@ export class userService {
     userRepos
       .findAll({
         where: { id_department, active: true },
+        include,
       })
       .then(user => {
         res.status(200).json(user)
@@ -247,6 +251,7 @@ export class userService {
             { rolesGroup: 'SUPERADMIN' },
           ],
         },
+        include,
       })
       .then(user => {
         res.status(200).json(user)
@@ -258,6 +263,7 @@ export class userService {
     userRepos
       .findAll({
         where: { id },
+        include,
       })
       .then(user => {
         const userData = user[0]
@@ -274,6 +280,7 @@ export class userService {
       })
       const users = await userRepos.findAll({
         where: { active: true },
+        include,
       })
       res.status(200).json(users)
     } catch (err) {
@@ -288,6 +295,7 @@ export class userService {
       })
       const users = await userRepos.findAll({
         where: { active: true, reasonOfDelete: '' },
+        include,
       })
       res.status(200).json(users)
     } catch (err) {
@@ -300,7 +308,7 @@ export class userService {
       await userRepos.destroy({
         where: { id: selectedUsers },
       })
-      const users = await userRepos.findAll({})
+      const users = await userRepos.findAll({ include })
       res.status(200).json(users)
     } catch (err) {
       res.status(500).json({ error: ['db error', err as Error] })
@@ -327,7 +335,7 @@ export class userService {
       await userRepos.update(id, { ...userData, shortName })
       const { id_division, id_department } = userData
       const dataFind = { id_division, id_department, active: true }
-      const rolesGroup = await userRepos.findAll({ where: dataFind })
+      const rolesGroup = await userRepos.findAll({ where: dataFind, include })
       res.status(200).json(rolesGroup)
     } catch (err) {
       res.status(500).json({ error: ['db error', err as Error] })
@@ -343,7 +351,7 @@ export class userService {
       await userRepos.update(id, { ...userData, shortName })
       const { id_division, id_department } = userData
       const dataFind = { id_division, id_department, active: true }
-      const rolesGroup = await userRepos.findAll({ where: dataFind })
+      const rolesGroup = await userRepos.findAll({ where: dataFind, include })
       res.status(200).json(rolesGroup)
     } catch (err) {
       res.status(500).json({ error: ['db error', err as Error] })

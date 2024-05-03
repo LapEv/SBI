@@ -7,6 +7,12 @@ export const departmentStartData = [
     active: true,
   },
   {
+    department: 'AccountingDepartment',
+    departmentName: 'Бухгалтерия',
+    division: 'Administration',
+    active: true,
+  },
+  {
     department: 'Dispatcher',
     departmentName: 'Диспетчерская',
     division: 'ServiceDepartment',
@@ -28,8 +34,8 @@ export const departmentStartData = [
     active: true,
   },
   {
-    department: 'Client',
-    departmentName: 'Клиент',
+    department: 'Perekrestok',
+    departmentName: 'Перекресток',
     division: 'Client',
     id_division: '',
     active: true,

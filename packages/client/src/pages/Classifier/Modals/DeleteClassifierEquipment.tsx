@@ -26,7 +26,7 @@ export const DeleteClassifierEquipment = memo(
       const filteredEquipments = useFilteredData<ClassifierEquipment>(
         equipments,
         filterText,
-        'equipment'
+        ['equipment'],
       )
       const theme = useTheme()
 
@@ -105,6 +105,6 @@ export const DeleteClassifierEquipment = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

@@ -66,4 +66,14 @@ export const menuData = [
     title: 'Изменить группу ролей',
     icon: <DisplaySettings fontSize="medium" />,
   },
+  {
+    name: 'ChangeNameRolesGroup',
+    title: 'Изменить название группы ролей',
+    icon: <DisplaySettings fontSize="medium" />,
+  },
+  {
+    name: 'ChangeNameRole',
+    title: 'Изменить название роли',
+    icon: <DisplaySettings fontSize="medium" />,
+  },
 ]

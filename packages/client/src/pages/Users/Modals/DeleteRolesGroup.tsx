@@ -16,35 +16,35 @@ export const DeleteRolesGroup = memo(
     ({ handleModal, title }: ChooseModalProps, ref) => {
       const [{ rolesGroup }, { getRoles, getRolesGroup, deleteRolesGroup }] =
         useRoles()
-      const boxRef = React.createRef<HTMLDivElement>()
-      const [height, setHeight] = useState<string>('')
-      const [selectedGroup, setGroup] = useState<string[]>([])
+      const [selectedRolesGroup, setSelectedRolesGroup] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
       const [filterText, setFilterText] = useState<string>('')
       const filteredRolesGroups = useFilteredData<RolesGroup>(
         rolesGroup,
         filterText,
-        'groupName'
+        ['groupName', 'group'],
       )
       const theme = useTheme()
 
       const changeData = (event: SyntheticEvent<EventTarget>) => {
         event.preventDefault()
-        if (!selectedGroup.length) {
+        if (!selectedRolesGroup.length) {
           setErrSelectedItems(true)
           return
         }
-        deleteRolesGroup(selectedGroup)
+        deleteRolesGroup(selectedRolesGroup)
         handleModal(false)
       }
 
       const onChooseItems = (checked: boolean, id: string) => {
         if (!checked) {
-          setGroup(selectedGroup.filter(value => value !== id))
+          setSelectedRolesGroup(
+            selectedRolesGroup.filter(value => value !== id),
+          )
           return
         }
-        setGroup([...selectedGroup, id])
-        if ([...selectedGroup, id] && errSelectedItems)
+        setSelectedRolesGroup([...selectedRolesGroup, id])
+        if ([...selectedRolesGroup, id] && errSelectedItems)
           setErrSelectedItems(false)
       }
 
@@ -52,13 +52,6 @@ export const DeleteRolesGroup = memo(
         getRoles()
         getRolesGroup()
       }, [])
-
-      const setText = (text: string) => {
-        if (!height && boxRef.current) {
-          setHeight(boxRef.current.offsetHeight.toString())
-        }
-        setFilterText(text)
-      }
 
       return (
         <Box
@@ -71,20 +64,19 @@ export const DeleteRolesGroup = memo(
           <TextField
             variant="outlined"
             sx={{ width: '90%', mt: 2, height: 40 }}
-            label="Фильтр по фамилии"
+            label="Фильтр по группе ролей"
             margin="normal"
             value={filterText || ''}
-            onChange={e => setText(e.target.value ?? '')}
+            onChange={({ target }) => setFilterText(target.value ?? '')}
             InputProps={{
               endAdornment: <SearchIconElement />,
             }}
           />
-          <Box
-            ref={boxRef}
-            sx={{ ...boxDataModal, height: filterText ? height : 'auto' }}>
-            {filteredRolesGroups.map(({ groupName, id }) => (
+          <Box sx={{ ...boxDataModal }}>
+            {filteredRolesGroups.map(({ groupName, group, id }) => (
               <Item
                 name={groupName}
+                comment={group}
                 id={`${id}`}
                 groupChecked={false}
                 onChooseItems={onChooseItems}
@@ -101,6 +93,6 @@ export const DeleteRolesGroup = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

@@ -27,7 +27,7 @@ export const DeleteTypicalMalfunction = memo(
       const filteredTypicalMalfunctions = useFilteredData<TypicalMalfunctions>(
         typicalMalfunctions,
         filterText,
-        'typicalMalfunction'
+        ['typicalMalfunction'],
       )
       const theme = useTheme()
 
@@ -44,7 +44,7 @@ export const DeleteTypicalMalfunction = memo(
       const onChooseItems = (checked: boolean, id: string) => {
         if (!checked) {
           setSelectedTypicalMalfunctions(
-            selectedTypicalMalfunctions.filter(value => value !== id)
+            selectedTypicalMalfunctions.filter(value => value !== id),
           )
           return
         }
@@ -102,7 +102,7 @@ export const DeleteTypicalMalfunction = memo(
                   onChooseItems={onChooseItems}
                   key={id as string}
                 />
-              )
+              ),
             )}
           </Box>
           <Box sx={{ color: theme.palette.error.main, height: 20 }}>
@@ -114,6 +114,6 @@ export const DeleteTypicalMalfunction = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

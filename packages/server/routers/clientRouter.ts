@@ -9,73 +9,73 @@ export const clientRouter = (apiRouter: Router) => {
 
   router.get(
     '/getClientGroups',
-    roleMiddleware(['getClientGroups', 'ADMIN', 'SUPERADMIN']),
-    service.getClientGroups
+    roleMiddleware(['getClientGroups', 'SUPERADMIN']),
+    service.getClientGroups,
   )
   router.get(
     '/getAllClientGroups',
-    roleMiddleware(['getAllClientGroups', 'ADMIN', 'SUPERADMIN']),
-    service.getAllClientGroups
+    roleMiddleware(['getAllClientGroups', 'SUPERADMIN']),
+    service.getAllClientGroups,
   )
   router.post(
     '/newClientGroup',
-    roleMiddleware(['newClientGroup', 'ADMIN', 'SUPERADMIN']),
-    service.newClientGroup
+    roleMiddleware(['newClientGroup', 'SUPERADMIN']),
+    service.newClientGroup,
   )
   router.delete(
     '/deleteClientGroup',
-    roleMiddleware(['deleteClientGroup', 'ADMIN', 'SUPERADMIN']),
-    service.deleteClientGroup
+    roleMiddleware(['deleteClientGroup', 'SUPERADMIN']),
+    service.deleteClientGroup,
   )
   router.delete(
     '/fulldeleteClientsGroup',
-    roleMiddleware(['fulldeleteClientsGroup', 'ADMIN', 'SUPERADMIN']),
-    service.fulldeleteClientsGroup
+    roleMiddleware(['fulldeleteClientsGroup', 'SUPERADMIN']),
+    service.fulldeleteClientsGroup,
   )
   router.post(
     '/pullClientsGroupFromArchive',
-    roleMiddleware(['pullClientsGroupFromArchive', 'ADMIN', 'SUPERADMIN']),
-    service.pullClientsGroupFromArchive
+    roleMiddleware(['pullClientsGroupFromArchive', 'SUPERADMIN']),
+    service.pullClientsGroupFromArchive,
   )
   router.post(
     '/changeClientGroup',
-    roleMiddleware(['changeClientGroup', 'ADMIN', 'SUPERADMIN']),
-    service.changeClientGroup
+    roleMiddleware(['changeClientGroup', 'SUPERADMIN']),
+    service.changeClientGroup,
   )
   router.get(
     '/getAllClients',
-    roleMiddleware(['getAllClients', 'ADMIN', 'SUPERADMIN']),
-    service.getAllClients
+    roleMiddleware(['getAllClients', 'SUPERADMIN']),
+    service.getAllClients,
   )
   router.get(
     '/getClients',
-    roleMiddleware(['getClients', 'ADMIN', 'SUPERADMIN']),
-    service.getClients
+    roleMiddleware(['getClients', 'SUPERADMIN']),
+    service.getClients,
   )
   router.post(
     '/newClient',
-    roleMiddleware(['newClient', 'ADMIN', 'SUPERADMIN']),
-    service.newClient
+    roleMiddleware(['newClient', 'SUPERADMIN']),
+    service.newClient,
   )
   router.delete(
     '/deleteClient',
-    roleMiddleware(['deleteClient', 'ADMIN', 'SUPERADMIN']),
-    service.deleteClient
+    roleMiddleware(['deleteClient', 'SUPERADMIN']),
+    service.deleteClient,
   )
   router.delete(
     '/fulldeleteClient',
-    roleMiddleware(['fulldeleteClient', 'ADMIN', 'SUPERADMIN']),
-    service.fulldeleteClient
+    roleMiddleware(['fulldeleteClient', 'SUPERADMIN']),
+    service.fulldeleteClient,
   )
   router.post(
     '/changeClient',
-    roleMiddleware(['changeClient', 'ADMIN', 'SUPERADMIN']),
-    service.changeClient
+    roleMiddleware(['changeClient', 'SUPERADMIN']),
+    service.changeClient,
   )
   router.post(
     '/pullClientFromArchive',
-    roleMiddleware(['pullClientFromArchive', 'ADMIN', 'SUPERADMIN']),
-    service.pullClientFromArchive
+    roleMiddleware(['pullClientFromArchive', 'SUPERADMIN']),
+    service.pullClientFromArchive,
   )
 
   apiRouter.use('/client', router)

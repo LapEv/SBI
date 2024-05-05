@@ -1,7 +1,6 @@
 import React, { ChangeEvent, memo } from 'react'
 import { Box, Collapse, ListItemButton, Modal } from '@mui/material'
 import { TextField } from 'components/TextFields/'
-import { User } from 'storeAuth/interfaces'
 import {
   useForm,
   useFieldArray,
@@ -22,13 +21,16 @@ import { ButtonsSection, RotateButton } from 'components/Buttons'
 import { DataList } from 'components/CheckBoxGroup/interface'
 import { deepEqual } from 'utils/deepEqual'
 import { DeleteUserModal } from './Modals/DeleteUserModal'
+import { User } from 'storeAuth/interfaces'
 
 export const ProfileData = memo((user: User) => {
   const modalRef = React.createRef()
   const theme = useTheme()
-  const [{ admin, userData }, { updateUserData, deleteUser, updateUser }] =
-    useAuth()
-  const [{ rolesGroup }, { getRolesGroup }] = useRoles()
+  const [
+    { admin, userData, userInfo },
+    { updateUserData, deleteUser, updateUser },
+  ] = useAuth()
+  const [{ rolesGroup }, { getRolesGroupNotRoles }] = useRoles()
   const [open, setOpen] = useState(false)
   const [dataGroup, setDataGroup] = useState<DataList[]>([])
   const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
@@ -39,12 +41,12 @@ export const ProfileData = memo((user: User) => {
     ? MapProfileInputFieldsAdminWithoutPassword
     : MapProfileInputFields
 
-  const { handleSubmit, control } = useForm<ProfileValues>({
+  const { handleSubmit, control, reset } = useForm<ProfileValues>({
     mode: 'onBlur',
     defaultValues: {
       list: fieldsData.map(data => ({
         ...data,
-        value: user[data.name as keyof typeof user],
+        value: user[data.name as keyof typeof user] as string,
       })),
     },
   })
@@ -55,6 +57,7 @@ export const ProfileData = memo((user: User) => {
   })
 
   function changeData() {
+    console.log('changeData')
     updateUser(userData)
   }
 
@@ -75,40 +78,52 @@ export const ProfileData = memo((user: User) => {
     setErrSelectedItems(false)
     setChangeActive(false)
 
-    const groupData = rolesGroup.find(item => item.id === id)?.group
     updateUserData({
       ...userData,
-      ...{ rolesGroup: groupData },
+      id_rolesGroup: id,
     })
   }
 
   const handleClick = () => {
     setOpen(!open)
-    getRolesGroup()
+    getRolesGroupNotRoles()
   }
 
   const deleteUserFunc = (answer: boolean, reasonOfDelete: string) => {
-    setModal(false)
     if (!answer) return
     deleteUser(userData.id as string, reasonOfDelete)
   }
 
   useEffect(() => {
-    setChangeActive(
-      deepEqual(userData as Record<never, never>, user as Record<never, never>)
+    const isDeepEqual = deepEqual(
+      userData as Record<never, never>,
+      userInfo as Record<never, never>,
     )
+    setChangeActive(isDeepEqual)
   }, [userData])
 
   useEffect(() => {
-    const data = rolesGroup.map(item => {
+    const data = rolesGroup.map(({ group, groupName, id }) => {
       return {
-        name: item.groupName,
-        id: item.id,
-        initChecked: userData.rolesGroup === item.group ?? false,
+        name: groupName,
+        id: id,
+        initChecked: userInfo.RolesGroup?.group === group ?? false,
       }
     })
     setDataGroup(data)
   }, [rolesGroup])
+
+  useEffect(() => {
+    if (admin) {
+      reset({
+        list: fieldsData.map(data => ({
+          ...data,
+          value: userInfo[data.name as keyof typeof userInfo] as string,
+        })),
+      })
+      updateUserData(userInfo)
+    }
+  }, [userInfo])
 
   return (
     <Box
@@ -162,7 +177,11 @@ export const ProfileData = memo((user: User) => {
             />
           </Modal>
           <ListItemButton
-            sx={{ fontSize: 12, color: theme.palette.text.secondary }}
+            sx={{
+              fontSize: 12,
+              color: theme.palette.text.secondary,
+              width: '91%',
+            }}
             onClick={handleClick}>
             <RotateButton open={open} handleClick={handleClick} size={'2rem'} />
             Дополнительно

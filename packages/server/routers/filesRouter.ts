@@ -9,13 +9,13 @@ export const filesRouter = (apiRouter: Router) => {
 
   router.get(
     '/getFiles',
-    roleMiddleware(['getFiles', 'ADMIN', 'SUPERADMIN']),
-    service.getFiles
+    roleMiddleware(['getFiles', 'SUPERADMIN']),
+    service.getFiles,
   )
   router.post(
     '/uploadFiles',
-    roleMiddleware(['uploadFiles', 'ADMIN', 'SUPERADMIN']),
-    service.uploadFiles
+    roleMiddleware(['uploadFiles', 'SUPERADMIN']),
+    service.uploadFiles,
   )
 
   apiRouter.use('/files', router)

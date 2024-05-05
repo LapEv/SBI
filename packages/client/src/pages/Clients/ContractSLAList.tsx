@@ -33,7 +33,9 @@ export const ContractSLAList = memo(({ slaID, onChooseItems }: ISLAList) => {
   const [filterText, setFilterText] = useState<string>('')
   const [selectedFilter, setSelectedFilter] =
     useState<string>(filterFirstElement)
-  const filteredData = useFilteredData<DataList>(slaData, filterText, 'comment')
+  const filteredData = useFilteredData<DataList>(slaData, filterText, [
+    'comment',
+  ])
 
   const openSLAList = () => {
     setOpenSLA(!openSLA)

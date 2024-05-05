@@ -18,6 +18,7 @@ export interface Department {
   id_division?: string
   id_department?: string
   Users?: User[]
+  Division?: Division
 }
 
 export interface NewDivision {

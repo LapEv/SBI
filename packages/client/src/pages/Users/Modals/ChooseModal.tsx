@@ -11,6 +11,8 @@ import {
   DeleteUser,
   DeleteDepartment,
   ChangeRolesGroup,
+  ChangeNameRolesGroup,
+  ChangeNameRole,
 } from './'
 import { ModalTitles } from '../data'
 import { ChooseModalProps } from './interfaces'
@@ -98,8 +100,22 @@ export const ChooseModal = memo(
               title={ModalTitles.changeRolesGroup}
             />
           )}
+          {modalImage === 'ChangeNameRolesGroup' && (
+            <ChangeNameRolesGroup
+              ref={ref}
+              handleModal={handleModal}
+              title={ModalTitles.сhangeNameRolesGroup}
+            />
+          )}
+          {modalImage === 'ChangeNameRole' && (
+            <ChangeNameRole
+              ref={ref}
+              handleModal={handleModal}
+              title={ModalTitles.сhangeNameRole}
+            />
+          )}
         </>
       )
-    }
-  )
+    },
+  ),
 )

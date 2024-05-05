@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {
-  GetUser,
+  getUserInfo,
   updateProfile,
   ChangeAvatar,
   CheckUser,
@@ -9,12 +9,15 @@ import {
   updateUser,
   GetFieldEngineers,
   GetDispatchers,
+  deleteUser,
 } from 'api/user'
 import { signin, signup } from 'api/user'
 import { AuthState, ICheckUser, User, UserStatus } from './interfaces'
 
 const initialState: AuthState = {
   user: {},
+  userInfo: {},
+  activeUserInfo: '',
   userData: {},
   users: [],
   userStatus: [],
@@ -42,6 +45,9 @@ export const authSlise = createSlice({
       state.user = {}
       state.userData = {}
     },
+    setActiveUserInfo(state, action) {
+      state.activeUserInfo = action.payload
+    },
   },
   extraReducers: builder => {
     builder.addCase(signin.fulfilled, (state, { payload }) => {
@@ -52,10 +58,10 @@ export const authSlise = createSlice({
       state.userData = user
       localStorage.setItem('theme', user.theme ?? 'light')
       state.admin =
-        (user.rolesGroup?.includes('ADMIN') ||
-          user.rolesGroup?.includes('SUPERADMIN')) ??
+        (user.RolesGroup?.group.includes('ADMIN') ||
+          user.RolesGroup?.group.includes('SUPERADMIN')) ??
         false
-      state.superAdmin = user.rolesGroup?.includes('SUPERADMIN') ?? false
+      state.superAdmin = user.RolesGroup?.group.includes('SUPERADMIN') ?? false
     })
     builder.addCase(signin.pending, state => {
       state.isLoadingAuth = true
@@ -77,16 +83,15 @@ export const authSlise = createSlice({
       state.isLoadingAuth = false
       state.error = payload as string
     })
-    builder.addCase(GetUser.fulfilled, (state, { payload }) => {
+    builder.addCase(getUserInfo.fulfilled, (state, { payload }) => {
       state.isLoadingAuth = false
       state.error = ''
-      state.user = payload as User
-      localStorage.setItem('theme', payload?.theme ?? 'light')
+      state.userInfo = payload as User
     })
-    builder.addCase(GetUser.pending, state => {
+    builder.addCase(getUserInfo.pending, state => {
       state.isLoadingAuth = true
     })
-    builder.addCase(GetUser.rejected, (state, { payload }) => {
+    builder.addCase(getUserInfo.rejected, (state, { payload }) => {
       state.isLoadingAuth = false
       state.error = payload as string
     })
@@ -135,10 +140,11 @@ export const authSlise = createSlice({
         state.userData = user
         localStorage.setItem('theme', user.theme ?? 'light')
         state.admin =
-          (user.rolesGroup?.includes('ADMIN') ||
-            user.rolesGroup?.includes('SUPERADMIN')) ??
+          (user.RolesGroup?.group.includes('ADMIN') ||
+            user.RolesGroup?.group.includes('SUPERADMIN')) ??
           false
-        state.superAdmin = user.rolesGroup?.includes('SUPERADMIN') ?? false
+        state.superAdmin =
+          user.RolesGroup?.group.includes('SUPERADMIN') ?? false
       } else {
         localStorage.setItem('theme', 'light')
       }
@@ -189,7 +195,7 @@ export const authSlise = createSlice({
     builder.addCase(updateUser.fulfilled, (state, { payload }) => {
       state.isLoadingAuth = false
       state.error = ''
-      state.users = payload?.data as User[]
+      state.userInfo = payload?.data as User
     })
     builder.addCase(updateUser.pending, state => {
       state.isLoadingAuth = true
@@ -198,8 +204,22 @@ export const authSlise = createSlice({
       state.isLoadingAuth = false
       state.error = payload as string
     })
+    builder.addCase(deleteUser.fulfilled, state => {
+      state.isLoadingAuth = false
+      state.error = ''
+      state.userInfo = {}
+      state.userData = {}
+    })
+    builder.addCase(deleteUser.pending, state => {
+      state.isLoadingAuth = true
+    })
+    builder.addCase(deleteUser.rejected, (state, { payload }) => {
+      state.isLoadingAuth = false
+      state.error = payload as string
+    })
   },
 })
 
 export const authReducer = authSlise.reducer
-export const { updateUserData, clearUser, signout } = authSlise.actions
+export const { updateUserData, clearUser, signout, setActiveUserInfo } =
+  authSlise.actions

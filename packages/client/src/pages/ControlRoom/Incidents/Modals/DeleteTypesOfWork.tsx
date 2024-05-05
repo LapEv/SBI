@@ -19,14 +19,14 @@ export const DeleteTypesOfWork = memo(
       const [{ typesOfWork }, { deleteTypesOfWork, getTypesOfWork }] =
         useIncidents()
       const [selectedTypesOfWork, setSelectedTypesOfWork] = useState<string[]>(
-        []
+        [],
       )
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
       const [filterText, setFilterText] = useState<string>('')
       const filteredTypesOfWork = useFilteredData<TypesOfWork>(
         typesOfWork,
         filterText,
-        'typeOfWork'
+        ['typeOfWork'],
       )
       const theme = useTheme()
 
@@ -43,7 +43,7 @@ export const DeleteTypesOfWork = memo(
       const onChooseItems = (checked: boolean, id: string) => {
         if (!checked) {
           setSelectedTypesOfWork(
-            selectedTypesOfWork.filter(value => value !== id)
+            selectedTypesOfWork.filter(value => value !== id),
           )
           return
         }
@@ -107,6 +107,6 @@ export const DeleteTypesOfWork = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

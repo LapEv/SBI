@@ -17,6 +17,16 @@ const include = [
         required: false,
         where: { active: true },
         order: orderUsers,
+        attributes: [
+          'id',
+          'lastName',
+          'firstName',
+          'middleName',
+          'post',
+          'email',
+          'phone',
+          'username',
+        ],
       },
     ],
   },
@@ -44,7 +54,6 @@ export class divisionService {
       res.status(500).json({ error: ['db error', err as Error] })
     }
   }
-
   getDivisions = (_req: Request, res: Response) => {
     DivisionRepos.findAll({
       where: { active: true },
@@ -55,7 +64,19 @@ export class divisionService {
       .then(divisions => res.status(200).json(divisions))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
-
+  getDivisionsData = async () => {
+    try {
+      const divisions = await DivisionRepos.findAll({
+        where: { active: true },
+        order,
+        include,
+        attributes,
+      })
+      return divisions
+    } catch (err) {
+      return { error: ['db error', err as Error] }
+    }
+  }
   getAllDivisions = (_req: Request, res: Response) => {
     DivisionRepos.findAll({
       order,
@@ -65,7 +86,6 @@ export class divisionService {
       .then(divisions => res.status(200).json(divisions))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
-
   deleteDivision = async (_req: Request, res: Response) => {
     const { selectedDivisions } = _req.body
     try {
@@ -75,6 +95,22 @@ export class divisionService {
       const divisions = await DivisionRepos.findAll({
         where: { active: true },
         order,
+        include,
+        attributes,
+      })
+      res.status(200).json(divisions)
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
+    }
+  }
+  pullDivisionFromArchive = async (_req: Request, res: Response) => {
+    const { selectedDivisions } = _req.body
+    try {
+      await DivisionRepos.update(selectedDivisions, {
+        active: true,
+      })
+      const divisions = await DivisionRepos.findAll({
+        where: { active: true },
         include,
         attributes,
       })
@@ -99,7 +135,6 @@ export class divisionService {
       res.status(500).json({ error: ['db error', err as Error] })
     }
   }
-
   updateDivision = async (_req: Request, res: Response) => {
     const { selectedDivisions } = _req.body
     try {

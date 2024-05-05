@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 import {
-  GetUser,
+  getUserInfo,
   GetActiveUsers,
   GetFieldEngineers,
   updateProfile,
@@ -12,11 +12,12 @@ import {
   deleteUser,
   updateUser,
   GetDispatchers,
+  newUser,
 } from 'api/user'
 import { signin, signup } from 'api/user'
 import { RootState } from 'store'
 import { useAppDispatch } from 'store/hooks'
-import { signout, updateUserData } from 'store/slices/auth'
+import { setActiveUserInfo, signout, updateUserData } from 'store/slices/auth'
 import { AuthActions } from './authActions'
 import { AuthState } from 'storeAuth/interfaces'
 
@@ -33,6 +34,9 @@ export function useAuth(): [AuthState, AuthActions] {
       signup(signUpData) {
         dispatch(signup(signUpData))
       },
+      newUser(newUserData) {
+        dispatch(newUser(newUserData))
+      },
       signout() {
         dispatch(signout())
       },
@@ -48,8 +52,8 @@ export function useAuth(): [AuthState, AuthActions] {
       changeThemeOnServer(data) {
         dispatch(ChangeTheme(data))
       },
-      getUser(id) {
-        dispatch(GetUser(id))
+      getUserInfo(id) {
+        dispatch(getUserInfo(id))
       },
       getFieldEngineers() {
         dispatch(GetFieldEngineers())
@@ -77,6 +81,9 @@ export function useAuth(): [AuthState, AuthActions] {
       },
       updateUser(data) {
         dispatch(updateUser(data))
+      },
+      setActiveUserInfo(data) {
+        dispatch(setActiveUserInfo(data))
       },
     },
   ]

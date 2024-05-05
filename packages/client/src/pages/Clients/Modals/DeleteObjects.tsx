@@ -20,11 +20,9 @@ export const DeleteObjects = memo(
       const [selectedObjects, setSelectedObjects] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
       const [filterText, setFilterText] = useState<string>('')
-      const filteredObjects = useFilteredData<Objects>(
-        objects,
-        filterText,
-        'object'
-      )
+      const filteredObjects = useFilteredData<Objects>(objects, filterText, [
+        'object',
+      ])
       const theme = useTheme()
 
       const changeData = (event: SyntheticEvent<EventTarget>) => {
@@ -108,6 +106,6 @@ export const DeleteObjects = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

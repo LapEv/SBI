@@ -19,11 +19,9 @@ export const DeleteRegion = memo(
       const [selectedRegions, setSelectedRegions] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
       const [filterText, setFilterText] = useState<string>('')
-      const filteredRegions = useFilteredData<Regions>(
-        regions,
-        filterText,
-        'region'
-      )
+      const filteredRegions = useFilteredData<Regions>(regions, filterText, [
+        'region',
+      ])
       const theme = useTheme()
 
       const changeData = (event: SyntheticEvent<EventTarget>) => {
@@ -110,6 +108,6 @@ export const DeleteRegion = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

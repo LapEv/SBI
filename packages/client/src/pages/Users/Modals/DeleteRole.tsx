@@ -15,16 +15,13 @@ export const DeleteRole = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
       const [{ roles }, { getRoles, deleteRoles }] = useRoles()
-      const boxRef = React.createRef<HTMLDivElement>()
-      const [height, setHeight] = useState<string>('')
       const [selectedRoles, setSelectedRoles] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
       const [filterText, setFilterText] = useState<string>('')
-      const filteredRoles = useFilteredData<Roles>(
-        roles,
-        filterText,
-        'nameRole'
-      )
+      const filteredRoles = useFilteredData<Roles>(roles, filterText, [
+        'nameRole',
+        'role',
+      ])
       const theme = useTheme()
 
       const changeData = (event: SyntheticEvent<EventTarget>) => {
@@ -34,8 +31,8 @@ export const DeleteRole = memo(
           return
         }
 
-        handleModal(false)
         deleteRoles(selectedRoles)
+        handleModal(false)
       }
 
       const onChooseItems = (checked: boolean, id: string) => {
@@ -52,13 +49,6 @@ export const DeleteRole = memo(
         getRoles()
       }, [])
 
-      const setText = (text: string) => {
-        if (!height && boxRef.current) {
-          setHeight(boxRef.current.offsetHeight.toString())
-        }
-        setFilterText(text)
-      }
-
       return (
         <Box
           ref={ref}
@@ -73,17 +63,16 @@ export const DeleteRole = memo(
             label="Фильтр по ролям"
             margin="normal"
             value={filterText || ''}
-            onChange={e => setText(e.target.value ?? '')}
+            onChange={({ target }) => setFilterText(target.value ?? '')}
             InputProps={{
               endAdornment: <SearchIconElement />,
             }}
           />
-          <Box
-            ref={boxRef}
-            sx={{ ...boxDataModal, height: filterText ? height : 'auto' }}>
-            {filteredRoles.map(({ nameRole, id }) => (
+          <Box sx={{ ...boxDataModal }}>
+            {filteredRoles.map(({ role, nameRole, id }) => (
               <Item
                 name={nameRole}
+                comment={role}
                 id={`${id}`}
                 groupChecked={false}
                 onChooseItems={onChooseItems}
@@ -91,7 +80,7 @@ export const DeleteRole = memo(
               />
             ))}
           </Box>
-          <Box sx={{ color: theme.palette.error.main, height: 20 }}>
+          <Box sx={{ color: theme.palette.error.main, height: 20, mt: 1 }}>
             {errSelectedItems && 'Не выбрана ни одна роль!'}
           </Box>
           <ButtonsModalSection
@@ -100,6 +89,6 @@ export const DeleteRole = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

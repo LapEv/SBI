@@ -1,9 +1,9 @@
 import React, { memo } from 'react'
 import { ModalProps } from './interfaces'
-import { useState, SyntheticEvent } from 'react'
+import { useState } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
 import { modalStyle } from 'static/styles'
-import { ButtonsSection } from 'components/Buttons'
+import { ButtonsSectionNoSubmit } from 'components/Buttons'
 import { TextField } from 'components/TextFields'
 
 export const DeleteUserModal = memo(
@@ -13,8 +13,7 @@ export const DeleteUserModal = memo(
       const [errSelectedItems, setErrSelectedItems] = useState<string>('')
       const theme = useTheme()
 
-      const changeData = (event: SyntheticEvent<EventTarget>) => {
-        event.preventDefault()
+      const changeData = () => {
         if (!reasonOfDelete.length) {
           setErrSelectedItems('Не указана причина удаления!')
           return
@@ -28,8 +27,7 @@ export const DeleteUserModal = memo(
           ref={ref}
           tabIndex={-1}
           sx={{ ...modalStyle, paddingLeft: 5 }}
-          component="form"
-          onSubmit={changeData}>
+          component="form">
           <Typography variant={'h6'} sx={{ textAlign: 'center' }}>
             {title}
           </Typography>
@@ -52,8 +50,9 @@ export const DeleteUserModal = memo(
           <Box sx={{ color: theme.palette.error.main, height: 20 }}>
             {errSelectedItems}
           </Box>
-          <ButtonsSection
+          <ButtonsSectionNoSubmit
             btnSecondHandle={() => answerFromModal(false, reasonOfDelete)}
+            btnHandle={changeData}
             btnName="Удалить"
             btnSecondName="Отмена"
             btnDisabled={false}
@@ -61,6 +60,6 @@ export const DeleteUserModal = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

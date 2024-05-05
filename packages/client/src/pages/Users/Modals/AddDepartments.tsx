@@ -18,7 +18,7 @@ import { Options } from 'components/DropDown/interface'
 export const AddDepartments = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [{ divisions }, { addDepartments }] = useStructure()
+      const [{ divisions }, { newDepartment, getDivisions }] = useStructure()
       const [division, setDivision] = useState<Options>(emptyValue)
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
@@ -34,12 +34,13 @@ export const AddDepartments = memo(
 
       const changeData = ({ list }: AddValuesProps) => {
         if (!division.id) return
-        addDepartments({
+        newDepartment({
           department: list[1].value,
           departmentName: list[0].value,
           division: division.label,
           id_division: division.id,
         })
+        getDivisions()
         handleModal(false)
       }
 
@@ -95,6 +96,6 @@ export const AddDepartments = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

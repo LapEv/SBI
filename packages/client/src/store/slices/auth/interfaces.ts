@@ -1,3 +1,4 @@
+import { RolesGroup } from 'storeRoles/interfaces'
 import { FilterListData } from '../incidents/interfaces'
 
 export interface User {
@@ -17,8 +18,9 @@ export interface User {
   department?: string
   id_division?: string
   id_department?: string
-  rolesGroup?: string
+  id_rolesGroup?: string
   status?: string
+  RolesGroup?: RolesGroup
 }
 
 export interface ICheckUser {
@@ -45,7 +47,8 @@ export interface Users {
     department?: string
     id_division?: string
     id_department?: string
-    rolesGroup?: string[]
+    id_rolesGroup?: string
+    RolesGroup?: RolesGroup
   }[]
 }
 
@@ -56,6 +59,24 @@ export interface SignUp {
   phone: string
   email: string
   password: string
+}
+
+export interface NewUser {
+  username: string
+  firstName: string
+  lastName: string
+  middleName: string
+  phone: string
+  email: string
+  password: string
+  post: string
+  id_rolesGroup: string
+  chiefDivision: boolean
+  id_division: string
+  chiefDepartment: boolean
+  id_department: string
+  status: string
+  reasonOfDelete: string
 }
 
 export interface Login {
@@ -91,6 +112,8 @@ export interface AnswerUser {
 export type AuthState = {
   user: User
   userData: User
+  userInfo: User
+  activeUserInfo: string
   users: User[]
   userStatus: UserStatus[]
   fieldEngineers: User[]

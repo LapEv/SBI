@@ -13,33 +13,38 @@ export const departmentRouter = (apiRouter: Router) => {
 
   router.post(
     '/newDepartment',
-    roleMiddleware(['newDepartment', 'ADMIN', 'SUPERADMIN']),
-    service.newDepartment
+    roleMiddleware(['newDepartment', 'SUPERADMIN']),
+    service.newDepartment,
   )
   router.get(
     '/getDepartments',
-    roleMiddleware(['getDepartments', 'ADMIN', 'SUPERADMIN']),
-    service.getDepartments
+    roleMiddleware(['getDepartments', 'SUPERADMIN']),
+    service.getDepartments,
   )
   router.get(
     '/getAllDepartments',
-    roleMiddleware(['getAllDepartments', 'ADMIN', 'SUPERADMIN']),
-    service.getAllDepartments
+    roleMiddleware(['getAllDepartments', 'SUPERADMIN']),
+    service.getAllDepartments,
   )
   router.post(
     '/deleteDepartment',
     roleMiddleware(['deleteDepartment', 'SUPERADMIN', 'ADMIN']),
-    service.deleteDepartment
+    service.deleteDepartment,
+  )
+  router.post(
+    '/pullDepartmentFromArchive',
+    roleMiddleware(['pullDepartmentFromArchive', 'SUPERADMIN', 'ADMIN']),
+    service.pullDepartmentFromArchive,
   )
   router.delete(
     '/fullDeleteDepartment',
-    roleMiddleware(['fullDeleteDepartment', 'ADMIN', 'SUPERADMIN']),
-    service.fullDeleteDepartment
+    roleMiddleware(['fullDeleteDepartment', 'SUPERADMIN']),
+    service.fullDeleteDepartment,
   )
   router.post(
     '/updateDepartment',
     roleMiddleware(['updateDepartment', 'SUPERADMIN']),
-    service.updateDepartment
+    service.updateDepartment,
   )
 
   apiRouter.use('/structure', router)

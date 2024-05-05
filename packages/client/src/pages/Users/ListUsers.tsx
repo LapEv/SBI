@@ -1,4 +1,4 @@
-import { useState, memo } from 'react'
+import { useState, memo, useEffect } from 'react'
 import { Box, ListItemText, ListItemButton } from '@mui/material'
 import Collapse from '@mui/material/Collapse'
 import { User } from 'storeAuth/interfaces'
@@ -7,13 +7,23 @@ import { ProfileData } from './'
 import { useAuth } from 'hooks/auth/useAuth'
 
 export const ListUsers = memo((user: User) => {
-  const [, { getUser }] = useAuth()
+  const [{ activeUserInfo }, { getUserInfo, setActiveUserInfo }] = useAuth()
   const [open, setOpen] = useState(false)
 
   const handleClick = () => {
+    if (!open) {
+      setActiveUserInfo(user.id as string)
+    }
+
     setOpen(!open)
-    getUser(user.id as string)
+    getUserInfo(user.id as string)
   }
+
+  useEffect(() => {
+    if (activeUserInfo !== user.id) {
+      setOpen(false)
+    }
+  }, [activeUserInfo])
 
   return (
     <Box>

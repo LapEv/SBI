@@ -16,7 +16,7 @@ import { useStructure } from 'hooks/structure/useStructure'
 export const AddDivision = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [, { addDivision }] = useStructure()
+      const [, { newDivision }] = useStructure()
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
         defaultValues: {
@@ -30,7 +30,7 @@ export const AddDivision = memo(
       })
 
       function changeData({ list }: AddValuesProps) {
-        addDivision({ division: list[1].value, divisionName: list[0].value })
+        newDivision({ division: list[1].value, divisionName: list[0].value })
         handleModal(false)
       }
 
@@ -73,6 +73,6 @@ export const AddDivision = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

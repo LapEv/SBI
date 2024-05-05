@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {
+  changeNameRole,
+  changeNameRolesGroup,
   changeRolesGroup,
   deleteRoles,
   deleteRolesGroup,
@@ -21,6 +23,7 @@ import {
   signin,
   signup,
   updateUser,
+  newUser,
 } from 'api/user'
 import {
   changeAddress,
@@ -224,6 +227,32 @@ export const messageSlise = createSlice({
       state.type = 'error'
       state.text = payload as string
     })
+    builder.addCase(changeNameRolesGroup.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeNameRolesGroup.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeNameRolesGroup.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(changeNameRole.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeNameRole.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeNameRole.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
     builder.addCase(signin.fulfilled, (state, { payload }) => {
       state.isLoadingMessage = false
       state.text = payload?.message.text as string
@@ -250,6 +279,20 @@ export const messageSlise = createSlice({
       state.type = 'error'
       state.text = payload as string
     })
+    builder.addCase(newUser.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(newUser.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(newUser.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+
     builder.addCase(updateProfile.fulfilled, (state, { payload }) => {
       state.isLoadingMessage = false
       state.text = payload?.message.text as string

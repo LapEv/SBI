@@ -9,23 +9,23 @@ export const userStatusRouter = (apiRouter: Router) => {
 
   router.post(
     '/setNewUserStatus',
-    roleMiddleware(['setNewUserStatus', 'ADMIN', 'SUPERADMIN']),
-    service.setNewUserStatus
+    roleMiddleware(['setNewUserStatus', 'SUPERADMIN']),
+    service.setNewUserStatus,
   )
   router.get(
     '/getUserStatus',
-    roleMiddleware(['getUserStatus', 'ADMIN', 'SUPERADMIN']),
-    service.getUserStatus
+    roleMiddleware(['getUserStatus', 'SUPERADMIN']),
+    service.getUserStatus,
   )
   router.post(
     '/deleteUserStatus',
-    roleMiddleware(['deleteUserStatus', 'ADMIN', 'SUPERADMIN']),
-    service.deleteUserStatus
+    roleMiddleware(['deleteUserStatus', 'SUPERADMIN']),
+    service.deleteUserStatus,
   )
   router.delete(
     '/fullDeleteUserStatus',
-    roleMiddleware(['fullDeleteUserStatus', 'ADMIN', 'SUPERADMIN']),
-    service.fullDeleteUserStatus
+    roleMiddleware(['fullDeleteUserStatus', 'SUPERADMIN']),
+    service.fullDeleteUserStatus,
   )
 
   apiRouter.use('/user', router)

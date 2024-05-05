@@ -9,74 +9,74 @@ export const addressRouter = (apiRouter: Router) => {
 
   router.get(
     '/getAddresses',
-    roleMiddleware(['getAddresses', 'ADMIN', 'SUPERADMIN']),
-    service.getAddresses
+    roleMiddleware(['getAddresses', 'SUPERADMIN']),
+    service.getAddresses,
   )
   router.get(
     '/getAllAddresses',
-    roleMiddleware(['getAllAddresses', 'ADMIN', 'SUPERADMIN']),
-    service.getAllAddresses
+    roleMiddleware(['getAllAddresses', 'SUPERADMIN']),
+    service.getAllAddresses,
   )
   router.post(
     '/newAddress',
-    roleMiddleware(['newAddress', 'ADMIN', 'SUPERADMIN']),
-    service.newAddress
+    roleMiddleware(['newAddress', 'SUPERADMIN']),
+    service.newAddress,
   )
   router.post(
     '/deleteAddress',
-    roleMiddleware(['deleteAddress', 'ADMIN', 'SUPERADMIN']),
-    service.deleteAddress
+    roleMiddleware(['deleteAddress', 'SUPERADMIN']),
+    service.deleteAddress,
   )
   router.delete(
     '/fullDeleteAddress',
-    roleMiddleware(['fullDeleteAddress', 'ADMIN', 'SUPERADMIN']),
-    service.fullDeleteAddress
+    roleMiddleware(['fullDeleteAddress', 'SUPERADMIN']),
+    service.fullDeleteAddress,
   )
   router.post(
     '/pullAddressFromArchive',
-    roleMiddleware(['ADMIN', 'SUPERADMIN', 'pullAddressFromArchive']),
-    service.pullAddressFromArchive
+    roleMiddleware(['SUPERADMIN', 'pullAddressFromArchive']),
+    service.pullAddressFromArchive,
   )
   router.post(
     '/changeAddress',
-    roleMiddleware(['changeAddress', 'ADMIN', 'SUPERADMIN']),
-    service.changeAddress
+    roleMiddleware(['changeAddress', 'SUPERADMIN']),
+    service.changeAddress,
   )
   router.get(
     '/getRegions',
-    roleMiddleware(['getRegions', 'ADMIN', 'SUPERADMIN']),
-    service.getRegions
+    roleMiddleware(['getRegions', 'SUPERADMIN']),
+    service.getRegions,
   )
   router.get(
     '/getAllRegions',
-    roleMiddleware(['getAllRegions', 'ADMIN', 'SUPERADMIN']),
-    service.getAllRegions
+    roleMiddleware(['getAllRegions', 'SUPERADMIN']),
+    service.getAllRegions,
   )
 
   router.post(
     '/newRegion',
-    roleMiddleware(['newRegion', 'ADMIN', 'SUPERADMIN']),
-    service.newRegion
+    roleMiddleware(['newRegion', 'SUPERADMIN']),
+    service.newRegion,
   )
   router.post(
     '/deleteRegion',
-    roleMiddleware(['deleteRegion', 'ADMIN', 'SUPERADMIN']),
-    service.deleteRegion
+    roleMiddleware(['deleteRegion', 'SUPERADMIN']),
+    service.deleteRegion,
   )
   router.delete(
     '/fullDeleteRegion',
-    roleMiddleware(['fullDeleteRegion', 'ADMIN', 'SUPERADMIN']),
-    service.fullDeleteRegion
+    roleMiddleware(['fullDeleteRegion', 'SUPERADMIN']),
+    service.fullDeleteRegion,
   )
   router.post(
     '/pullRegionFromArchive',
-    roleMiddleware(['ADMIN', 'SUPERADMIN', 'pullRegionFromArchive']),
-    service.pullRegionFromArchive
+    roleMiddleware(['SUPERADMIN', 'pullRegionFromArchive']),
+    service.pullRegionFromArchive,
   )
   router.post(
     '/changeRegion',
-    roleMiddleware(['changeRegion', 'ADMIN', 'SUPERADMIN']),
-    service.changeRegion
+    roleMiddleware(['changeRegion', 'SUPERADMIN']),
+    service.changeRegion,
   )
 
   apiRouter.use('/addresses', router)

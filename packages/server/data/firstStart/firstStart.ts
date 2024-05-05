@@ -16,6 +16,7 @@ import {
   ObjectsRepos,
   RegionsRepos,
   SLARepos,
+  ThroughModelRolesGroupRepos,
   ThroughModelTypMalfunctionsRepos,
   TypesCompletedWorkRepos,
   TypesOfWorkRepos,
@@ -52,6 +53,7 @@ import {
 import { ITypesOfWork } from '/models/incidents'
 import { IAddresses, IRegions } from '/models/adresses'
 import { IDepartment } from '/models/departments'
+import { RolesGroup, IRoles } from '/models/roles'
 
 export const firstStart = async () => {
   try {
@@ -82,7 +84,7 @@ export const firstStart = async () => {
     const typesCompletedWork = await TypesCompletedWorkRepos.getAll()
     // const files = await FilesRepos.getAll()
 
-    console.log('End Check for tables!')
+    console.log('End Check for tables!!')
     const deleteClients = false
     if (deleteClients) {
       console.log('Delete Clients')
@@ -309,8 +311,31 @@ export const firstStart = async () => {
           'Первый запуск таблиц Roles, RolesGroup невозможен! Какая-то из таблиц уже существует!',
         )
       } else {
-        await roleRepos.bulkCreate(rolesStartData)
-        await roleGroupRepos.bulkCreate(rolesGroupStartData)
+        console.log('Start create Roles DB')
+        const newRolesGroup = (await roleGroupRepos.bulkCreate(
+          rolesGroupStartData,
+        )) as RolesGroup[]
+        const newRolesData = rolesStartData.map(({ role, nameRole }) => {
+          return { role, nameRole, active: true }
+        })
+        const newRoles = (await roleRepos.bulkCreate(newRolesData)) as IRoles[]
+
+        const newthroughRoles = rolesStartData
+          .map(({ group, role }) => {
+            return group?.map(item => {
+              const id_rolesGroup = newRolesGroup.find(
+                ({ group }) => group === item,
+              )?.id
+              const id_roles = newRoles.find(item => item.role === role)?.id
+              return {
+                id_rolesGroup,
+                id_roles,
+              }
+            })
+          })
+          .flat(1)
+          .filter(item => item) as []
+        await ThroughModelRolesGroupRepos.bulkCreate(newthroughRoles)
       }
     }
 
@@ -345,6 +370,7 @@ export const firstStart = async () => {
         newDepartmentData,
       )) as IDepartment[]
       await UserStatusRepos.bulkCreate(userStatusStartData)
+      const rolesGroup = (await roleGroupRepos.findAll({})) as RolesGroup[]
       const newuserStartData = userStartData.map(value => {
         const hashPassword = bcrypt.hashSync(value.password, 7)
         return {
@@ -358,11 +384,14 @@ export const firstStart = async () => {
           id_department: newDepartment.find(
             item => item.department === value.department,
           )?.id,
+          id_rolesGroup: rolesGroup.find(
+            item => item.group === value.rolesGroup,
+          )?.id,
         }
       })
       const userData = newuserStartData.map(
         /* eslint-disable @typescript-eslint/no-unused-vars */
-        ({ department, division, ...obj }) => obj,
+        ({ department, division, rolesGroup, ...obj }) => obj,
         /* eslint-enable @typescript-eslint/no-unused-vars */
       )
       await userRepos.bulkCreate(userData)

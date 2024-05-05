@@ -29,11 +29,9 @@ export const ContractObjectList = memo(
     const [objectsData, setObjectsData] = useState<DataList[]>([])
     const [openObject, setOpenObject] = useState(false)
     const [filterText, setFilterText] = useState<string>('')
-    const filteredData = useFilteredData<DataList>(
-      objectsData,
-      filterText,
-      'name'
-    )
+    const filteredData = useFilteredData<DataList>(objectsData, filterText, [
+      'name',
+    ])
 
     const openObjectList = () => {
       setOpenObject(!openObject)
@@ -137,5 +135,5 @@ export const ContractObjectList = memo(
         </Collapse>
       </Box>
     )
-  }
+  },
 )

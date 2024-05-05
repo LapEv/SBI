@@ -59,7 +59,6 @@ export class departmentService {
       .then(departments => res.status(200).json(departments))
       .catch(err => res.status(500).json({ error: ['db error', err.status] }))
   }
-
   deleteDepartment = async (_req: Request, res: Response) => {
     const { selectedDepartments } = _req.body
     try {
@@ -77,7 +76,23 @@ export class departmentService {
       res.status(500).json({ error: ['db error', err as Error] })
     }
   }
-
+  pullDepartmentFromArchive = async (_req: Request, res: Response) => {
+    const { selectedDepartments } = _req.body
+    try {
+      await DepartmentRepos.update(selectedDepartments, {
+        active: true,
+      })
+      const departments = await DepartmentRepos.findAll({
+        where: { active: true },
+        order,
+        include,
+        attributes,
+      })
+      res.status(200).json(departments)
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
+    }
+  }
   fullDeleteDepartment = async (_req: Request, res: Response) => {
     const { selectedDepartments } = _req.body
     try {

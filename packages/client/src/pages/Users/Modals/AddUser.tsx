@@ -24,18 +24,19 @@ import { Item } from 'components/CheckBoxGroup'
 import { useAuth } from 'hooks/auth/useAuth'
 import { DataList } from 'components/CheckBoxGroup/interface'
 import { Options } from 'components/DropDown/interface'
+import { Department } from 'store/slices/structure/interfaces'
 
 export const AddUser = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [{ userStatus }, { getUserStatus, signup }] = useAuth()
-      const [{ divisions, departaments }] = useStructure()
-      const [{ rolesGroup }, { getRolesGroup }] = useRoles()
+      const [{ userStatus }, { getUserStatus, newUser }] = useAuth()
+      const [{ divisions }] = useStructure()
+      const [{ rolesGroup }, { getRolesGroupNotRoles }] = useRoles()
       const [dataGroup, setDataGroup] = useState<DataList[]>([])
       const [division, setDivision] = useState<Options>(emptyValue)
       const [listDepartments, setDepartments] = useState<Options[]>([])
       const [department, setDepartment] = useState<Options>(emptyValue)
-      const [selectedGroup, setGroup] = useState<string>('')
+      const [id_rolesGroup, setGroup] = useState<string>('')
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
       const [chiefDivision, setCheckedCheifDivision] = useState<boolean>(false)
       const [chiefDepartment, setCheckedCheifDepartment] =
@@ -57,15 +58,13 @@ export const AddUser = memo(
       })
 
       function changeData({ list }: AddValuesProps) {
-        if (!selectedGroup.length) {
+        if (!id_rolesGroup.length) {
           setErrSelectedItems(true)
           return
         }
-        const status = userStatus.find(
-          item => item.id === statusName.id
-        )?.category
-        const group = rolesGroup.find(item => item.id === selectedGroup)?.group
-        const newUser = {
+        const status = userStatus.find(item => item.id === statusName.id)
+          ?.category as string
+        const newUserData = {
           username: list[3].value,
           firstName: list[1].value,
           lastName: list[0].value,
@@ -74,17 +73,15 @@ export const AddUser = memo(
           phone: list[6].value,
           password: list[7].value,
           post: list[4].value,
-          rolesGroup: group,
-          division: division.label,
+          id_rolesGroup,
           chiefDivision,
           id_division: division.id,
-          department: department.label,
           chiefDepartment,
           id_department: department.id,
           status,
           reasonOfDelete: '',
         }
-        signup(newUser)
+        newUser(newUserData)
         handleModal(false)
       }
 
@@ -94,49 +91,35 @@ export const AddUser = memo(
           setGroup('')
           return
         }
-        const data = rolesGroup.map(item => {
-          return {
-            name: item.groupName,
-            id: item.id,
-            initChecked: item.id === id ?? false,
-          }
-        })
-        setDataGroup(data)
         setGroup(id)
         setErrSelectedItems(false)
       }
 
       const changeDivision = (data: Options) => {
         setDivision(data)
-        if (!data) {
-          setDepartment({
-            label: '',
-            id: '',
-          })
-          setDepartments([])
-        }
-      }
+        setDepartment({
+          label: '',
+          id: '',
+        })
 
-      useEffect(() => {
-        const list = departaments.filter(
-          item => item.id_division === division.id
-        )
+        if (!data.id) {
+          setDepartments([])
+          return
+        }
+        const list = divisions.filter(({ id }) => data.id === id)[0]
+          .Departments as Department[]
         setDepartments(
           list.map(item => {
             return {
               ['label']: item.departmentName as string,
               ['id']: item.id as string,
             }
-          })
+          }),
         )
-        setDepartment({
-          label: '',
-          id: '',
-        })
-      }, [division])
+      }
 
       useEffect(() => {
-        getRolesGroup()
+        getRolesGroupNotRoles()
         getUserStatus()
       }, [])
 
@@ -149,10 +132,6 @@ export const AddUser = memo(
         })
         setDataGroup(data)
       }, [rolesGroup])
-
-      const closeModal = () => {
-        handleModal(false)
-      }
 
       return (
         <Box
@@ -170,7 +149,7 @@ export const AddUser = memo(
               }
             })}
             props={{ mt: 4 }}
-            onChange={data => setStatusName(data)}
+            onChange={setStatusName}
             value={statusName.label}
             label="Выберите статус пользователя"
             errorLabel="Не выбран статус пользователя!"
@@ -188,42 +167,40 @@ export const AddUser = memo(
             label="Выберите подразделение"
             errorLabel="Не выбрано подразделение!"
           />
-          <Box sx={{ width: '85%', mt: 1 }}>
-            <FormControlLabel
-              name={'Шеф подразделения'}
-              label={'Шеф подразделения'}
-              control={
-                <Checkbox
-                  checked={chiefDivision}
-                  onChange={event =>
-                    setCheckedCheifDivision(event.target.checked)
-                  }
-                />
-              }
-            />
-          </Box>
+          <FormControlLabel
+            sx={{ width: '85%', mt: 1 }}
+            name={'Шеф подразделения'}
+            label={'Шеф подразделения'}
+            control={
+              <Checkbox
+                checked={chiefDivision}
+                onChange={({ target }) =>
+                  setCheckedCheifDivision(target.checked)
+                }
+              />
+            }
+          />
           <DropDown
             data={listDepartments}
             props={{ mt: 1 }}
-            onChange={data => setDepartment(data)}
+            onChange={setDepartment}
             value={department.label}
             label="Выберите отдел"
             errorLabel="Не выбран отдел!"
           />
-          <Box sx={{ width: '85%', mt: 1 }}>
-            <FormControlLabel
-              name={'Шеф отдела'}
-              label={'Шеф отдела'}
-              control={
-                <Checkbox
-                  checked={chiefDepartment}
-                  onChange={event =>
-                    setCheckedCheifDepartment(event.target.checked)
-                  }
-                />
-              }
-            />
-          </Box>
+          <FormControlLabel
+            sx={{ width: '85%', mt: 1 }}
+            name={'Шеф отдела'}
+            label={'Шеф отдела'}
+            control={
+              <Checkbox
+                checked={chiefDepartment}
+                onChange={({ target }) =>
+                  setCheckedCheifDepartment(target.checked)
+                }
+              />
+            }
+          />
           {fields.map(({ id, label, validation, type, required }, index) => {
             return (
               <Controller
@@ -264,9 +241,12 @@ export const AddUser = memo(
           <Box sx={{ color: theme.palette.error.main, minHeight: 10, mt: 1 }}>
             {errSelectedItems && 'Не выбрана ни одна роль или группа ролей!'}
           </Box>
-          <ButtonsModalSection closeModal={closeModal} btnName="Сохранить" />
+          <ButtonsModalSection
+            closeModal={() => handleModal(false)}
+            btnName="Сохранить"
+          />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

@@ -31,8 +31,6 @@ export const UsersPage = memo(() => {
     getDivisions()
   }, [])
 
-  console.log('divisions = ', divisions)
-
   return (
     <Container component="main" maxWidth="md" sx={mainHeaderForPages}>
       <Modal

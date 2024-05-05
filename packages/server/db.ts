@@ -1,3 +1,4 @@
+import { throughModelRolesGroup } from './models/roles'
 import { ModelCtor, Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import { Repository } from './types/Repository'
 import {
@@ -62,6 +63,12 @@ export const sequelize = new Sequelize(sequelizeOptions)
 
 export const Roles = sequelize.define('Roles', roles, {})
 export const RolesGroup = sequelize.define('RolesGroup', rolesGroup, {})
+export const ThroughModelRolesGroup = sequelize.define(
+  'ThroughModelRolesGroup',
+  throughModelRolesGroup,
+  {},
+)
+
 export const Division = sequelize.define('Division', division, {})
 export const Department = sequelize.define('Department', department, {})
 export const Users = sequelize.define('Users', users, {})
@@ -139,14 +146,23 @@ export const IncidentLogs = sequelize.define('IncidentLogs', incidentLogs, {})
 
 export const Files = sequelize.define('Files', files, {})
 
-RolesGroup.belongsToMany(Roles, { through: 'ThroughRolesGroup' })
-Roles.belongsToMany(RolesGroup, { through: 'ThroughRolesGroup' })
+RolesGroup.belongsToMany(Roles, {
+  through: 'ThroughModelRolesGroup',
+  foreignKey: 'id_rolesGroup',
+})
+Roles.belongsToMany(RolesGroup, {
+  through: 'ThroughModelRolesGroup',
+  foreignKey: 'id_roles',
+})
 
-Users.belongsToMany(RolesGroup, { through: 'ThroughUserRoleGroup' })
-RolesGroup.belongsToMany(Users, { through: 'ThroughUserRoleGroup' })
+// RolesGroup.hasMany(Roles, { foreignKey: 'id_roles' })
+// Roles.belongsTo(RolesGroup, { foreignKey: 'id_roles', targetKey: 'id' })
 
-Users.belongsToMany(Roles, { through: 'ThroughUserRole' })
-Roles.belongsToMany(Users, { through: 'ThroughUserRole' })
+RolesGroup.hasMany(Users, { foreignKey: 'id_rolesGroup' })
+Users.belongsTo(RolesGroup, { foreignKey: 'id_rolesGroup', targetKey: 'id' })
+
+// Users.belongsToMany(Roles, { through: 'ThroughUserRole' })
+// Roles.belongsToMany(Users, { through: 'ThroughUserRole' })
 
 Division.hasMany(Users, { foreignKey: 'id_division' })
 Users.belongsTo(Division, { foreignKey: 'id_division', targetKey: 'id' })
@@ -390,6 +406,9 @@ IncidentLogs.belongsTo(Incidents, { foreignKey: 'id_incLog' })
 export const userRepos = new Repository(Users as ModelCtor)
 export const roleGroupRepos = new Repository(RolesGroup as ModelCtor)
 export const roleRepos = new Repository(Roles as ModelCtor)
+export const ThroughModelRolesGroupRepos = new Repository(
+  ThroughModelRolesGroup as ModelCtor,
+)
 export const DivisionRepos = new Repository(Division as ModelCtor)
 export const DepartmentRepos = new Repository(Department as ModelCtor)
 export const UserStatusRepos = new Repository(UserStatus as ModelCtor)

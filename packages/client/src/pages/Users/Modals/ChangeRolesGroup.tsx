@@ -9,6 +9,9 @@ import { DataList } from 'components/CheckBoxGroup/interface'
 import { Item } from 'components/CheckBoxGroup'
 import { DropDown, emptyValue } from 'components/DropDown'
 import { Options } from 'components/DropDown/interface'
+import { useFilteredData } from 'hooks/useFilteredData'
+import { TextField } from 'components/TextFields'
+import { SearchIconElement } from 'components/Icons'
 
 export const ChangeRolesGroup = memo(
   React.forwardRef<unknown, ChooseModalProps>(
@@ -23,6 +26,11 @@ export const ChangeRolesGroup = memo(
       const [selectedRoles, setSelectedRoles] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
       const theme = useTheme()
+      const [filterText, setFilterText] = useState<string>('')
+      const filteredRoles = useFilteredData<DataList>(data, filterText, [
+        'name',
+        'nameId',
+      ])
 
       const changeData = (event: SyntheticEvent<EventTarget>) => {
         event.preventDefault()
@@ -36,32 +44,32 @@ export const ChangeRolesGroup = memo(
 
       const onChooseItems = (checked: boolean, id: string) => {
         if (!checked) {
-          const delRole = roles.find(item => item.id === id)?.role as string
-          setSelectedRoles(selectedRoles.filter(value => value !== delRole))
+          setSelectedRoles(selectedRoles.filter(value => value !== id))
           return
         }
-        const newRole = roles.find(item => item.id === id)?.role as string
-        setSelectedRoles([...selectedRoles, newRole])
-        if ([...selectedRoles, newRole] && errSelectedItems)
+        setSelectedRoles([...selectedRoles, id])
+        if ([...selectedRoles, id] && errSelectedItems)
           setErrSelectedItems(false)
       }
 
       const changeGroup = (data: Options) => {
-        if (!data) return
-        const useRoles = rolesGroup.find(item => item.id === data.id)
-          ?.roles as string[]
+        if (!data.id) {
+          setData([])
+          return
+        }
+        const useRoles = rolesGroup
+          .find(({ id }) => id === data.id)
+          ?.Roles?.map(({ id }) => id) as string[]
         setData(
-          roles.map(item => {
+          roles.map(({ id, role, nameRole }) => {
             return {
-              name: item.nameRole,
-              id: item.id,
-              nameId: item.role,
+              name: nameRole,
+              id: id,
+              nameId: role,
               initChecked:
-                useRoles.findIndex(value => value === item.role) >= 0
-                  ? true
-                  : false,
+                useRoles.findIndex(value => value === id) >= 0 ? true : false,
             }
-          })
+          }),
         )
         setSelectedGroup(data)
         setSelectedRoles(useRoles)
@@ -82,7 +90,7 @@ export const ChangeRolesGroup = memo(
               }
             })
             .filter(item => item.label !== 'SUPERADMIN')
-            .filter(item => item.label !== 'ADMIN')
+            .filter(item => item.label !== 'ADMIN'),
         )
       }, [rolesGroup])
 
@@ -102,10 +110,26 @@ export const ChangeRolesGroup = memo(
             label="Выберите группу ролей"
             errorLabel="Не выбрана группа ролей!"
           />
+          {data && data.length ? (
+            <TextField
+              variant="outlined"
+              sx={{ width: '90%', mt: 3, height: 40 }}
+              label="Фильтр по ролям"
+              margin="normal"
+              value={filterText || ''}
+              onChange={({ target }) => setFilterText(target.value ?? '')}
+              InputProps={{
+                endAdornment: <SearchIconElement />,
+              }}
+            />
+          ) : (
+            <></>
+          )}
           <Box sx={boxDataModal}>
-            {data.map(({ name, id, initChecked }) => (
+            {filteredRoles.map(({ name, id, initChecked, nameId }) => (
               <Item
                 name={name}
+                comment={nameId}
                 id={`${id}`}
                 groupChecked={null}
                 onChooseItems={onChooseItems}
@@ -123,6 +147,6 @@ export const ChangeRolesGroup = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

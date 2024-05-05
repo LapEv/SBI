@@ -1,5 +1,5 @@
-import React, { memo } from 'react'
-import { Box, Typography } from '@mui/material'
+import React, { memo, useEffect, useState } from 'react'
+import { Box, Typography, useTheme } from '@mui/material'
 import {
   useForm,
   useFieldArray,
@@ -12,12 +12,21 @@ import { MapRoleInputFields } from '../data'
 import { modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useRoles } from 'hooks/roles/useRoles'
-import { Roles } from 'storeRoles/interfaces'
+import { NewRole } from 'storeRoles/interfaces'
+import { DataList } from 'components/CheckBoxGroup/interface'
+import { Item } from 'components/CheckBoxGroup'
 
 export const AddRole = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [, { newRole }] = useRoles()
+      const [{ rolesGroup }, { newRole, getRolesGroupNotRoles }] = useRoles()
+      const [dataGroup, setDataGroup] = useState<DataList[]>([])
+      const [selectedRolesGroups, setSelectedRolesGroups] = useState<string[]>(
+        [],
+      )
+      const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
+      const theme = useTheme()
+
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
         defaultValues: {
@@ -30,14 +39,47 @@ export const AddRole = memo(
         name: 'list',
       })
 
-      function changeData({ list }: AddValuesProps) {
+      const changeData = ({ list }: AddValuesProps) => {
+        if (!selectedRolesGroups.length) {
+          setErrSelectedItems(true)
+          return
+        }
+
         const data = {
           role: list[1].value,
           nameRole: list[0].value,
+          selectedRolesGroups,
         }
-        newRole(data as Roles)
+        newRole(data as NewRole)
         handleModal(false)
       }
+
+      const checkRolesGroup = (checked: boolean, id: string) => {
+        if (!checked) {
+          setSelectedRolesGroups(
+            selectedRolesGroups.filter(value => value !== id),
+          )
+          return
+        }
+        setSelectedRolesGroups([...selectedRolesGroups, id])
+        if ([...selectedRolesGroups, id] && errSelectedItems)
+          setErrSelectedItems(false)
+      }
+
+      useEffect(() => {
+        const data = rolesGroup.map(({ groupName, id }) => {
+          return {
+            name: groupName,
+            id: id,
+            initChecked: false,
+          }
+        })
+        setDataGroup(data)
+      }, [rolesGroup])
+
+      useEffect(() => {
+        getRolesGroupNotRoles()
+      }, [])
 
       return (
         <Box
@@ -72,12 +114,37 @@ export const AddRole = memo(
               />
             )
           })}
+          <Box
+            sx={{
+              width: '85%',
+              ml: 2,
+              mt: 1,
+              height: 'auto',
+              maxHeight: 300,
+              overflowY: 'auto',
+              overflowX: 'hidden',
+            }}>
+            {dataGroup.map(({ name, id, initChecked }) => (
+              <Item
+                name={name}
+                id={`${id}`}
+                groupChecked={null}
+                onChooseItems={checkRolesGroup}
+                initChecked={initChecked}
+                key={`${id}`}
+              />
+            ))}
+          </Box>
+          <Box sx={{ color: theme.palette.error.main, height: 20, mt: 2 }}>
+            {errSelectedItems && 'Не выбрана ни одна группа!'}
+          </Box>
+
           <ButtonsModalSection
             closeModal={() => handleModal(false)}
             btnName={'Сохранить'}
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

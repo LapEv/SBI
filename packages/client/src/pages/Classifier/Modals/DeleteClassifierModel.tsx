@@ -26,7 +26,7 @@ export const DeleteClassifierModel = memo(
       const filteredModels = useFilteredData<ClassifierModels>(
         models,
         filterText,
-        'model'
+        ['model'],
       )
       const theme = useTheme()
 
@@ -110,6 +110,6 @@ export const DeleteClassifierModel = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

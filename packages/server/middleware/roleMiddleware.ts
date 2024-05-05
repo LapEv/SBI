@@ -1,8 +1,16 @@
 import { Request, Response, NextFunction } from 'express'
 import jwt, { Secret, JwtPayload } from 'jsonwebtoken'
-import { roleGroupRepos } from '../db'
-import { IRolesGroup } from '/models/roles'
+import { Roles, roleGroupRepos } from '../db'
+import { IRolesGroup, IRoles } from '/models/roles'
 const { SECRET_KEY } = process.env
+
+const include = [
+  {
+    model: Roles,
+    required: true,
+    attributes: ['id', 'role', 'nameRole'],
+  },
+]
 
 module.exports = function (roles: []) {
   return async function (_req: Request, res: Response, next: NextFunction) {
@@ -20,14 +28,15 @@ module.exports = function (roles: []) {
 
       const groupRoles = (await roleGroupRepos.findAll({
         where: { group: rolesGroup },
+        include,
       })) as IRolesGroup[]
-      groupRoles[0].roles.forEach((item: string) => {
-        if (roles.includes(item as never)) {
+      groupRoles[0].Roles.forEach(({ role }: IRoles) => {
+        if (roles.includes(role as never)) {
           hasRole = true
         }
       })
       if (!hasRole) {
-        return res.status(403).json({ message: "You don't have access" })
+        return res.status(403).json({ message: "You don't have access!" })
       }
       next()
     } catch (e) {

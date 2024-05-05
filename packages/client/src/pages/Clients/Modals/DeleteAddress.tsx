@@ -24,7 +24,7 @@ export const DeleteAddress = memo(
       const filteredAddresses = useFilteredData<Addresses>(
         addresses,
         filterText,
-        'address'
+        ['address'],
       )
       const theme = useTheme()
 
@@ -113,6 +113,6 @@ export const DeleteAddress = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

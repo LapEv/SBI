@@ -1,6 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { authhost, ApiEndPoints } from './config'
 import {
+  ChangeNameRole,
+  ChangeNameRolesGroup,
+  NewRole,
+  NewRolesGroup,
   Roles,
   RolesGroup,
   СhangeRolesGroup,
@@ -54,9 +58,54 @@ export const getRolesGroup = createAsyncThunk(
   },
 )
 
+export const getRolesGroupNotRoles = createAsyncThunk(
+  'user/getRolesGroupNotRoles',
+  async (_, thunkAPI) => {
+    try {
+      const { data } = await authhost.get<RolesGroup[]>(
+        ApiEndPoints.Roles.getRolesGroupNotRoles,
+      )
+      return data
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось получить данные по группам ролей: \n${
+            error.response?.data.message ?? error.response?.data
+          }`,
+        )
+      } else {
+        console.error(error)
+      }
+    }
+  },
+)
+
+export const getRolesGroupByID = createAsyncThunk(
+  'user/getRolesGroupByID',
+  async (id: string, thunkAPI) => {
+    try {
+      const { data } = await authhost.post<RolesGroup>(
+        ApiEndPoints.Roles.getRolesGroupByID,
+        { id },
+      )
+      return data
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось получить данные по списку ролей: \n${
+            error.response?.data.message ?? error.response?.data
+          }`,
+        )
+      } else {
+        console.error(error)
+      }
+    }
+  },
+)
+
 export const newRole = createAsyncThunk(
   'role/newRole',
-  async (role: Roles, thunkAPI) => {
+  async (role: NewRole, thunkAPI) => {
     try {
       const { data } = await authhost.post(ApiEndPoints.Roles.newRole, role)
       return {
@@ -81,17 +130,17 @@ export const deleteRoles = createAsyncThunk(
   'role/deleteRoles',
   async (selectedRoles: string[], thunkAPI) => {
     try {
-      const { data } = await authhost.delete(ApiEndPoints.Roles.deleteRoles, {
-        data: selectedRoles,
+      const { data } = await authhost.post(ApiEndPoints.Roles.deleteRoles, {
+        selectedRoles,
       })
       return {
         data,
-        message: { text: 'Роли удалены', type: 'success' },
+        message: { text: 'Роли перемещены в архив!', type: 'success' },
       }
     } catch (error) {
       if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
         return thunkAPI.rejectWithValue(
-          `Не удалось удалить роли: \n${
+          `Не удалось переместить роли в архив: \n${
             error.response?.data.message ?? error.response?.data
           }`,
         )
@@ -104,7 +153,7 @@ export const deleteRoles = createAsyncThunk(
 
 export const newRolesGroup = createAsyncThunk(
   'role/newRolesGroup',
-  async (rolesGroup: RolesGroup, thunkAPI) => {
+  async (rolesGroup: NewRolesGroup, thunkAPI) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Roles.newRolesGroup,
@@ -130,11 +179,12 @@ export const newRolesGroup = createAsyncThunk(
 
 export const deleteRolesGroup = createAsyncThunk(
   'role/deleteRolesGroup',
-  async (selectedRoleGroup: string[], thunkAPI) => {
+  async (selectedRolesGroup: string[], thunkAPI) => {
     try {
-      const { data } = await authhost.delete(
+      console.log(' selectedRolesGroup = ', selectedRolesGroup)
+      const { data } = await authhost.post(
         ApiEndPoints.Roles.deleteRolesGroup,
-        { data: selectedRoleGroup },
+        { selectedRolesGroup },
       )
       return {
         data,
@@ -156,12 +206,12 @@ export const deleteRolesGroup = createAsyncThunk(
 
 export const changeRolesGroup = createAsyncThunk(
   'role/changeRolesGroup',
-  async ({ roles, activeRolesGroup }: СhangeRolesGroup, thunkAPI) => {
+  async ({ selectedRoles, activeRolesGroup }: СhangeRolesGroup, thunkAPI) => {
     try {
       const { data } = await authhost.post(
         ApiEndPoints.Roles.changeRolesGroup,
         {
-          roles,
+          selectedRoles,
           activeRolesGroup,
         },
       )
@@ -173,6 +223,63 @@ export const changeRolesGroup = createAsyncThunk(
       if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
         return thunkAPI.rejectWithValue(
           `Не удалось изменить группу ролей: \n${
+            error.response?.data.message ?? error.response?.data
+          }`,
+        )
+      } else {
+        console.error(error)
+      }
+    }
+  },
+)
+
+export const changeNameRolesGroup = createAsyncThunk(
+  'role/changeNameRolesGroup',
+  async ({ id, group, groupName }: ChangeNameRolesGroup, thunkAPI) => {
+    try {
+      const { data } = await authhost.post(
+        ApiEndPoints.Roles.changeNameRolesGroup,
+        {
+          id,
+          group,
+          groupName,
+        },
+      )
+      return {
+        data,
+        message: { text: 'Название группы ролей изменено!', type: 'success' },
+      }
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось изменить название группы ролей: \n${
+            error.response?.data.message ?? error.response?.data
+          }`,
+        )
+      } else {
+        console.error(error)
+      }
+    }
+  },
+)
+
+export const changeNameRole = createAsyncThunk(
+  'role/changeNameRole',
+  async ({ id, role, nameRole }: ChangeNameRole, thunkAPI) => {
+    try {
+      const { data } = await authhost.post(ApiEndPoints.Roles.changeNameRole, {
+        id,
+        role,
+        nameRole,
+      })
+      return {
+        data,
+        message: { text: 'Название роли изменено!', type: 'success' },
+      }
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось изменить название роли: \n${
             error.response?.data.message ?? error.response?.data
           }`,
         )

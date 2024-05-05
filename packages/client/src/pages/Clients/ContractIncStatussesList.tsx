@@ -32,7 +32,7 @@ export const ContractIncStatussesList = memo(
     const filteredData = useFilteredData<DataList>(
       incStatusesData,
       filterText,
-      'name'
+      ['name'],
     )
 
     const openIncStatussesList = () => {
@@ -137,5 +137,5 @@ export const ContractIncStatussesList = memo(
         </Collapse>
       </Box>
     )
-  }
+  },
 )

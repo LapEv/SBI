@@ -836,7 +836,6 @@ export class incidentService {
       where: { active: true },
       include: this.includes,
     })) as IIncindent[]
-    console.log('incs = ', incs)
     const statusList =
       [...new Set(incs.map(item => item.IncindentStatus.statusINC))] ?? []
     const contractList =
@@ -849,10 +848,8 @@ export class incidentService {
       [...new Set(incs.map(item => item.Object.Address.address))] ?? []
     const regionList =
       [...new Set(incs.map(item => item.Object.Region.region))] ?? []
-    console.log('regionList = ', regionList)
     const userAcceptedList =
       [...new Set(incs.map(item => item.User.shortName))] ?? []
-    console.log('userAcceptedList = ', userAcceptedList)
     const equipmentList =
       [...new Set(incs.map(item => item.ClassifierEquipment.equipment))] ?? []
     const modelList =

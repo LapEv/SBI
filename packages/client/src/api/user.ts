@@ -10,6 +10,7 @@ import {
   UserStatus,
   delData,
   ICheckUser,
+  NewUser,
 } from 'storeAuth/interfaces'
 import { authhost, host, ApiEndPoints } from './config'
 import axios from 'axios'
@@ -83,7 +84,33 @@ export const signup = createAsyncThunk(
   },
 )
 
-export const GetUser = createAsyncThunk(
+export const newUser = createAsyncThunk(
+  'user/newUser',
+  async (newUserData: NewUser, thunkAPI) => {
+    try {
+      const { data } = await host.post(ApiEndPoints.User.newUser, newUserData)
+      return {
+        data,
+        message: {
+          text: 'Пользователь зарегистрирован успешно!',
+          type: 'success',
+        },
+      }
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось зарегистрироваться: \n${
+            error.response?.data.message ?? error.response?.data
+          }`,
+        )
+      } else {
+        console.error(error)
+      }
+    }
+  },
+)
+
+export const getUserInfo = createAsyncThunk(
   'user/getUserInfo',
   async (id: string, thunkAPI) => {
     try {

@@ -19,6 +19,7 @@ export const ButtonsSection = memo(
           justifyContent: 'space-around',
           width: '85%',
           mt: 2,
+          mb: 2,
         }}>
         <Button
           type="submit"
@@ -35,5 +36,5 @@ export const ButtonsSection = memo(
         </Button>
       </Box>
     )
-  }
+  },
 )

@@ -1,5 +1,6 @@
 import type { ModelAttributes } from 'sequelize'
 import { DataType, Model } from 'sequelize-typescript'
+import { RolesGroup } from './roles'
 
 export interface IUser {
   id: string
@@ -11,7 +12,6 @@ export interface IUser {
   shortName: string
   email: string
   phone?: string
-  rolesGroup: string
   post?: string
   avatar?: string
   active: boolean
@@ -20,8 +20,10 @@ export interface IUser {
   chiefDepartment: boolean
   id_division: string
   id_department: string
+  id_rolesGroup: string
   status: string
   reasonOfDelete: string
+  RolesGroup: RolesGroup
 }
 
 export interface User {
@@ -34,7 +36,6 @@ export interface User {
   shortName: string
   email: string
   phone?: string
-  rolesGroup: string
   post?: string
   avatar?: string
   active: boolean
@@ -43,6 +44,7 @@ export interface User {
   chiefDepartment: boolean
   id_division: string
   id_department: string
+  id_rolesGroup: string
   status: string
   reasonOfDelete: string
 }
@@ -83,10 +85,6 @@ export const users: ModelAttributes<Model, User> = {
     type: DataType.STRING,
     allowNull: false,
   },
-  rolesGroup: {
-    type: DataType.STRING,
-    allowNull: false,
-  },
   password: {
     type: DataType.STRING,
     allowNull: false,
@@ -120,6 +118,10 @@ export const users: ModelAttributes<Model, User> = {
     allowNull: true,
   },
   id_department: {
+    type: DataType.STRING,
+    allowNull: false,
+  },
+  id_rolesGroup: {
     type: DataType.STRING,
     allowNull: false,
   },

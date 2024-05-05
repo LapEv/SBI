@@ -52,7 +52,7 @@ const ControlRoomListItem = memo(
         </ListItemButton>
       </ListItem>
     )
-  }
+  },
 )
 
 const NanListItem = memo(({ icon, text, to, isExpanded }: NanListItemProps) => {
@@ -135,7 +135,11 @@ const NanListItem = memo(({ icon, text, to, isExpanded }: NanListItemProps) => {
 })
 
 const DataItems = memo(({ user, open }: DataItemsProps) => {
-  if (user && user.status === 'employee' && user.rolesGroup === 'Dispatcher') {
+  if (
+    user &&
+    user.status === 'employee' &&
+    user.RolesGroup?.group === 'Dispatcher'
+  ) {
     return (
       <>
         {DispatcherData.map(value => (
@@ -147,7 +151,7 @@ const DataItems = memo(({ user, open }: DataItemsProps) => {
   if (
     user &&
     user.status === 'employee' &&
-    user.rolesGroup === 'FieldEngineers'
+    user.RolesGroup?.group === 'FieldEngineers'
   ) {
     return (
       <>
@@ -160,7 +164,8 @@ const DataItems = memo(({ user, open }: DataItemsProps) => {
   if (
     user &&
     user.status === 'employee' &&
-    (user.rolesGroup === 'ADMIN' || user.rolesGroup === 'SUPERADMIN')
+    (user.RolesGroup?.group === 'ADMIN' ||
+      user.RolesGroup?.group === 'SUPERADMIN')
   ) {
     return (
       <>

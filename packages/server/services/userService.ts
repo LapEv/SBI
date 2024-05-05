@@ -1,5 +1,12 @@
 import type { Request, Response } from 'express'
-import { Department, DepartmentRepos, Division, userRepos } from '../db'
+import {
+  Department,
+  DepartmentRepos,
+  Division,
+  Roles,
+  RolesGroup,
+  userRepos,
+} from '../db'
 import { Result, validationResult } from 'express-validator'
 import bcrypt from 'bcryptjs'
 import { auth } from '../data/auth'
@@ -8,6 +15,7 @@ import { Op } from 'sequelize'
 import { incidentService } from './incidentService'
 import { IUser } from '/models/users'
 import { IDepartment } from '/models/departments'
+import { divisionService } from './divisionService'
 
 const include = [
   {
@@ -19,6 +27,18 @@ const include = [
     model: Department,
     required: true,
     attributes: ['id', 'department', 'departmentName', 'active'],
+  },
+  {
+    model: RolesGroup,
+    required: true,
+    attributes: ['id', 'group', 'groupName', 'active'],
+    include: [
+      {
+        model: Roles,
+        required: false,
+        attributes: ['id', 'role', 'nameRole', 'active'],
+      },
+    ],
   },
 ]
 export class userService {
@@ -61,6 +81,49 @@ export class userService {
       res.status(500).json({ error: ['db error', err as Error] })
     }
   }
+  newUser = async (_req: Request, res: Response) => {
+    const errValidation: Result = validationResult(_req)
+    if (!errValidation.isEmpty()) {
+      const errors = errValidation.array()
+      return res.status(400).json({
+        message: `${auth.notification.errorRegistration}: ${errors[0].msg}`,
+        errValidation,
+      })
+    }
+    const id = _req.body.id ?? 0
+    const { password, firstName, lastName, middleName } = _req.body
+    const shortName = `${lastName} ${firstName.slice(0, 1)}.${middleName.slice(
+      0,
+      1,
+    )}.`
+    const hashPassword = bcrypt.hashSync(password, 7)
+    const newUser = {
+      ..._req.body,
+      shortName,
+      firstName,
+      lastName,
+      middleName,
+      password: hashPassword,
+      active: true,
+      theme: 'light',
+    }
+    try {
+      if (id === 0) {
+        await userRepos.create(newUser)
+        const service = new divisionService()
+        const newDivisionData = await service.getDivisionsData()
+        res.status(200).json(newDivisionData)
+      } else {
+        await userRepos.update(id, { ...newUser })
+        const service = new divisionService()
+        const newDivisionData = await service.getDivisionsData()
+        res.status(200).json(newDivisionData)
+      }
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
+    }
+  }
+
   login = async (_req: Request, res: Response) => {
     try {
       const { username, password } = _req.body
@@ -77,12 +140,16 @@ export class userService {
           .status(400)
           .json({ message: auth.notification.invalidPassword })
       }
-      const token = generateAccessToken(user.id, user.rolesGroup, user.username)
+      const token = generateAccessToken(
+        user.id,
+        user.RolesGroup.group,
+        user.username,
+      )
       if (
         user &&
-        (user.rolesGroup === 'ADMIN' ||
-          user.rolesGroup === 'SUPERADMIN' ||
-          user.rolesGroup === 'Dispatcher')
+        (user.RolesGroup.group === 'ADMIN' ||
+          user.RolesGroup.group === 'SUPERADMIN' ||
+          user.RolesGroup.group === 'Dispatcher')
       ) {
         const service = new incidentService()
         const filterData = await service.getFilterListFunc()
@@ -168,13 +235,12 @@ export class userService {
 
       if (
         user &&
-        (user.rolesGroup === 'ADMIN' ||
-          user.rolesGroup === 'SUPERADMIN' ||
-          user.rolesGroup === 'Dispatcher')
+        (user.RolesGroup.group === 'ADMIN' ||
+          user.RolesGroup.group === 'SUPERADMIN' ||
+          user.RolesGroup.group === 'Dispatcher')
       ) {
         const service = new incidentService()
         const filterData = await service.getFilterListFunc()
-        console.log('filterData = ', filterData)
         return res.json({
           token,
           user,
@@ -278,11 +344,9 @@ export class userService {
         active: false,
         reasonOfDelete,
       })
-      const users = await userRepos.findAll({
-        where: { active: true },
-        include,
-      })
-      res.status(200).json(users)
+      const service = new divisionService()
+      const newDivisionData = await service.getDivisionsData()
+      res.status(200).json(newDivisionData)
     } catch (err) {
       res.status(500).json({ error: ['db error', err as Error] })
     }
@@ -292,9 +356,10 @@ export class userService {
     try {
       await userRepos.update(selectedUsers, {
         active: true,
+        reasonOfDelete: '',
       })
       const users = await userRepos.findAll({
-        where: { active: true, reasonOfDelete: '' },
+        where: { active: true },
         include,
       })
       res.status(200).json(users)
@@ -333,10 +398,11 @@ export class userService {
     )}.${userData.middleName.slice(0, 1)}.`
     try {
       await userRepos.update(id, { ...userData, shortName })
-      const { id_division, id_department } = userData
-      const dataFind = { id_division, id_department, active: true }
-      const rolesGroup = await userRepos.findAll({ where: dataFind, include })
-      res.status(200).json(rolesGroup)
+      const newUserData = await userRepos.findAll({
+        where: { id },
+        include,
+      })
+      res.status(200).json(newUserData[0])
     } catch (err) {
       res.status(500).json({ error: ['db error', err as Error] })
     }

@@ -20,7 +20,7 @@ export const DeleteOLA = memo(
       const [selectedOLA, setSelectedOLA] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
       const [filterText, setFilterText] = useState<string>('')
-      const filteredOLA = useFilteredData<OLA>(ola, filterText, 'ola')
+      const filteredOLA = useFilteredData<OLA>(ola, filterText, ['ola'])
       const theme = useTheme()
 
       const changeData = (event: SyntheticEvent<EventTarget>) => {
@@ -98,6 +98,6 @@ export const DeleteOLA = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

@@ -2,11 +2,15 @@ import { useSelector } from 'react-redux'
 import {
   getRoles,
   getRolesGroup,
+  getRolesGroupNotRoles,
+  getRolesGroupByID,
   newRole,
   newRolesGroup,
   deleteRoles,
   deleteRolesGroup,
   changeRolesGroup,
+  changeNameRolesGroup,
+  changeNameRole,
 } from 'api/roles'
 import { RootState } from 'store'
 import { useAppDispatch } from 'store/hooks'
@@ -27,6 +31,12 @@ export function useRoles(): [RolesState, RolesActions] {
       getRolesGroup() {
         dispatch(getRolesGroup())
       },
+      getRolesGroupByID(id) {
+        dispatch(getRolesGroupByID(id))
+      },
+      getRolesGroupNotRoles() {
+        dispatch(getRolesGroupNotRoles())
+      },
       setActiveRolesGroup(data) {
         dispatch(setActiveRolesGroup(data))
       },
@@ -42,8 +52,14 @@ export function useRoles(): [RolesState, RolesActions] {
       deleteRolesGroup(data) {
         dispatch(deleteRolesGroup(data))
       },
-      changeRolesGroup(roles, activeRolesGroup) {
-        dispatch(changeRolesGroup({ roles, activeRolesGroup }))
+      changeRolesGroup(selectedRoles, activeRolesGroup) {
+        dispatch(changeRolesGroup({ selectedRoles, activeRolesGroup }))
+      },
+      changeNameRolesGroup(data) {
+        dispatch(changeNameRolesGroup(data))
+      },
+      changeNameRole(data) {
+        dispatch(changeNameRole(data))
       },
     },
   ]

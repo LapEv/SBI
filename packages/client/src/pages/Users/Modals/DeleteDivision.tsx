@@ -23,7 +23,7 @@ export const DeleteDivision = memo(
       const filteredDivisions = useFilteredData<Division>(
         divisions,
         filterText,
-        'divisionName'
+        ['divisionName'],
       )
       const theme = useTheme()
 
@@ -102,6 +102,6 @@ export const DeleteDivision = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

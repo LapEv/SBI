@@ -8,16 +8,21 @@ export interface Roles {
 
 export interface RolesGroup {
   group: string
-  roles: string[]
   id: string
   groupName: string
+  Roles?: Roles[]
 }
 
 export interface NewRolesGroup {
   group: string
-  roles: string[]
-  id?: string | undefined
   groupName: string
+  selectedRoles: string[]
+}
+
+export interface NewRole {
+  role: string
+  nameRole: string
+  selectedRolesGroups: string[]
 }
 
 export interface RolesGroupObject {
@@ -27,7 +32,7 @@ export interface RolesGroupObject {
 }
 
 export interface СhangeRolesGroup {
-  roles: string[]
+  selectedRoles: string[]
   activeRolesGroup: string
 }
 
@@ -47,4 +52,16 @@ export type RolesState = {
   activeRolesGroup: string
   isLoadingRoles: boolean
   error?: string
+}
+
+export interface ChangeNameRolesGroup {
+  id: string
+  group: string
+  groupName: string
+}
+
+export interface ChangeNameRole {
+  id: string
+  role: string
+  nameRole: string
 }

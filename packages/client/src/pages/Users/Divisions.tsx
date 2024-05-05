@@ -23,8 +23,6 @@ export const Divisions = memo(
       }
     }, [activeDivision])
 
-    console.log('Departments = ', Departments)
-
     return (
       <Box sx={classifier}>
         <ListItemButton

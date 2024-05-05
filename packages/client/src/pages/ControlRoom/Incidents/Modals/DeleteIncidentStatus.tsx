@@ -19,14 +19,14 @@ export const DeleteIncidentStatus = memo(
       const [{ incStatuses }, { deleteIncidentStatuses, getIncidentStatuses }] =
         useIncidents()
       const [selectedincStatuses, setSelectedincStatuses] = useState<string[]>(
-        []
+        [],
       )
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
       const [filterText, setFilterText] = useState<string>('')
       const filteredIncStatuses = useFilteredData<INCStatuses>(
         incStatuses,
         filterText,
-        'statusINC'
+        ['statusINC'],
       )
       const theme = useTheme()
 
@@ -43,7 +43,7 @@ export const DeleteIncidentStatus = memo(
       const onChooseItems = (checked: boolean, id: string) => {
         if (!checked) {
           setSelectedincStatuses(
-            selectedincStatuses.filter(value => value !== id)
+            selectedincStatuses.filter(value => value !== id),
           )
           return
         }
@@ -111,6 +111,6 @@ export const DeleteIncidentStatus = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

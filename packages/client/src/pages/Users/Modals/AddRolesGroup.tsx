@@ -12,7 +12,7 @@ import { MapRolesGroupInputFields } from '../data'
 import { boxDataModal, modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useRoles } from 'hooks/roles/useRoles'
-import { Roles, RolesGroup } from 'storeRoles/interfaces'
+import { NewRolesGroup } from 'storeRoles/interfaces'
 import { Item } from 'components/CheckBoxGroup'
 
 export const AddRolesGroup = memo(
@@ -20,7 +20,7 @@ export const AddRolesGroup = memo(
     ({ handleModal, title }: ChooseModalProps, ref) => {
       const [{ roles }, { newRolesGroup, getRolesGroup, getRoles }] = useRoles()
       const theme = useTheme()
-      const [selectedItems, setItems] = useState<Roles[]>([])
+      const [selectedRoles, setSelectedRoles] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
@@ -35,33 +35,27 @@ export const AddRolesGroup = memo(
       })
 
       function changeData({ list }: AddValuesProps) {
-        if (!selectedItems.length) {
+        if (!selectedRoles.length) {
           setErrSelectedItems(true)
           return
         }
         const data = {
           group: list[1].value,
           groupName: list[0].value,
-          roles: selectedItems.map(item => item.role),
+          selectedRoles,
         }
-        newRolesGroup(data as RolesGroup)
+        newRolesGroup(data as NewRolesGroup)
         handleModal(false)
       }
 
       const setRoles = (checked: boolean, id: string) => {
-        const itemId = roles.find(item => item.id === id) as Roles
-        /* eslint-disable @typescript-eslint/no-unused-vars */
-        const { createdAt, updatedAt, ...newItem } = itemId
-        /* eslint-enable @typescript-eslint/no-unused-vars */
         if (!checked) {
-          const newRoles = selectedItems.filter(item => item.id !== newItem.id)
-          setItems(newRoles)
-        } else {
-          const newRoles = selectedItems
-          newRoles.push(newItem)
-          setItems(newRoles)
-          if (errSelectedItems) setErrSelectedItems(false)
+          setSelectedRoles(selectedRoles.filter(value => value !== id))
+          return
         }
+        setSelectedRoles([...selectedRoles, id])
+        if ([...selectedRoles, id] && errSelectedItems)
+          setErrSelectedItems(false)
       }
 
       useEffect(() => {
@@ -121,6 +115,6 @@ export const AddRolesGroup = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

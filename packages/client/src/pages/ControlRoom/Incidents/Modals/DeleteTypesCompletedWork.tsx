@@ -27,7 +27,7 @@ export const DeleteTypesCompletedWork = memo(
       const filteredTypesCompletedWork = useFilteredData<TypesCompletedWork>(
         typesCompletedWork,
         filterText,
-        'typeOfWork'
+        ['typeOfWork'],
       )
       const theme = useTheme()
 
@@ -44,7 +44,7 @@ export const DeleteTypesCompletedWork = memo(
       const onChooseItems = (checked: boolean, id: string) => {
         if (!checked) {
           setSelectedTypeCompletedWork(
-            selectedTypeCompletedWork.filter(value => value !== id)
+            selectedTypeCompletedWork.filter(value => value !== id),
           )
           return
         }
@@ -108,6 +108,6 @@ export const DeleteTypesCompletedWork = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

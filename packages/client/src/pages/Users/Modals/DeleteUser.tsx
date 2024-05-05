@@ -21,7 +21,9 @@ export const DeleteUser = memo(
       const [reasonOfDelete, setReason] = useState<string>('')
       const [errSelectedItems, setErrSelectedItems] = useState<string>('')
       const [filterText, setFilterText] = useState<string>('')
-      const filteredusers = useFilteredData<User>(users, filterText, 'lastName')
+      const filteredusers = useFilteredData<User>(users, filterText, [
+        'lastName',
+      ])
       const theme = useTheme()
 
       const changeData = (event: SyntheticEvent<EventTarget>) => {
@@ -91,7 +93,7 @@ export const DeleteUser = memo(
                   oneChecked={selectedUser === id ? true : false}
                   key={id as string}
                 />
-              )
+              ),
             )}
             <TextField
               label="Причина удаления"
@@ -112,6 +114,6 @@ export const DeleteUser = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

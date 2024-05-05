@@ -8,6 +8,9 @@ import {
   newRole,
   newRolesGroup,
   changeRolesGroup,
+  getRolesGroupNotRoles,
+  changeNameRolesGroup,
+  changeNameRole,
 } from 'api/roles'
 
 const initialState: RolesState = {
@@ -48,6 +51,18 @@ export const rolesSlise = createSlice({
       state.isLoadingRoles = true
     })
     builder.addCase(getRolesGroup.rejected, (state, { payload }) => {
+      state.isLoadingRoles = false
+      state.error = payload as string
+    })
+    builder.addCase(getRolesGroupNotRoles.fulfilled, (state, { payload }) => {
+      state.isLoadingRoles = false
+      state.error = ''
+      state.rolesGroup = payload as RolesGroup[]
+    })
+    builder.addCase(getRolesGroupNotRoles.pending, state => {
+      state.isLoadingRoles = true
+    })
+    builder.addCase(getRolesGroupNotRoles.rejected, (state, { payload }) => {
       state.isLoadingRoles = false
       state.error = payload as string
     })
@@ -108,6 +123,30 @@ export const rolesSlise = createSlice({
       state.isLoadingRoles = true
     })
     builder.addCase(changeRolesGroup.rejected, (state, { payload }) => {
+      state.isLoadingRoles = false
+      state.error = payload as string
+    })
+    builder.addCase(changeNameRolesGroup.fulfilled, (state, { payload }) => {
+      state.isLoadingRoles = false
+      state.error = ''
+      state.rolesGroup = payload?.data as RolesGroup[]
+    })
+    builder.addCase(changeNameRolesGroup.pending, state => {
+      state.isLoadingRoles = true
+    })
+    builder.addCase(changeNameRolesGroup.rejected, (state, { payload }) => {
+      state.isLoadingRoles = false
+      state.error = payload as string
+    })
+    builder.addCase(changeNameRole.fulfilled, (state, { payload }) => {
+      state.isLoadingRoles = false
+      state.error = ''
+      state.roles = payload?.data as Roles[]
+    })
+    builder.addCase(changeNameRole.pending, state => {
+      state.isLoadingRoles = true
+    })
+    builder.addCase(changeNameRole.rejected, (state, { payload }) => {
       state.isLoadingRoles = false
       state.error = payload as string
     })

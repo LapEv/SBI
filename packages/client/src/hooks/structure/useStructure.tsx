@@ -26,10 +26,10 @@ export function useStructure(): [StructureState, StructureActions] {
       getDepartments() {
         dispatch(getDepartments())
       },
-      addDivision(data) {
+      newDivision(data) {
         dispatch(newDivision(data))
       },
-      addDepartments(data) {
+      newDepartment(data) {
         dispatch(newDepartment(data))
       },
       deleteDivision(divisions) {

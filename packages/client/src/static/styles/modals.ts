@@ -25,6 +25,7 @@ export const boxDataModal = {
   mt: 2,
   width: '100%',
   maxHeight: '65vH',
+  height: '65vH',
   overflowX: 'hidden',
   overflowY: 'auto',
   pl: 3,

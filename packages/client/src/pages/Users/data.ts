@@ -20,6 +20,8 @@ export const ModalTitles = {
   deleteRolesGroup: 'Удалить группу ролей',
   deleteUser: 'Удалить пользователя',
   changeRolesGroup: 'Изменить группу ролей',
+  сhangeNameRolesGroup: 'Изменить название группы ролей',
+  сhangeNameRole: 'Изменить название роли',
 }
 
 export const MapRoleInputFields = [
@@ -242,6 +244,40 @@ export const MapProfileInputFields = [
     label: 'Телефон',
     validation: phoneValidation,
     value: '',
+    required: true,
+  },
+]
+
+export const MapNewRolesGroupInputFields = [
+  {
+    name: 'newRolesGroup',
+    label: 'Введите новое название группы ролей',
+    validation: textValidation,
+    type: 'text',
+    required: true,
+  },
+  {
+    name: 'newRolesGroupID',
+    label: 'Введите новый идентификатор группы ролей',
+    validation: textValidationENGlowercase,
+    type: 'text',
+    required: true,
+  },
+]
+
+export const MapNewRolesInputFields = [
+  {
+    name: 'newRoles',
+    label: 'Введите новое название роли',
+    validation: textValidation,
+    type: 'text',
+    required: true,
+  },
+  {
+    name: 'newRolesID',
+    label: 'Введите новый идентификатор роли',
+    validation: textValidationENGlowercase,
+    type: 'text',
     required: true,
   },
 ]

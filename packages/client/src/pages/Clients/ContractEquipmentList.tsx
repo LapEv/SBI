@@ -41,7 +41,7 @@ export const ContractEquipmentList = memo(
     const filteredData = useFilteredData<ICheckBoxGroupData>(
       equipmentList,
       filterText,
-      'group'
+      ['group'],
     )
     const openEquipmentList = () => {
       setOpenEquipment(!openEquipment)
@@ -159,5 +159,5 @@ export const ContractEquipmentList = memo(
         </Collapse>
       </Box>
     )
-  }
+  },
 )

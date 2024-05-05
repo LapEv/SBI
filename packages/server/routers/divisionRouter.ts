@@ -9,33 +9,38 @@ export const divisionRouter = (apiRouter: Router) => {
 
   router.post(
     '/newDivision',
-    roleMiddleware(['newDivision', 'ADMIN', 'SUPERADMIN']),
-    service.newDivision
+    roleMiddleware(['newDivision', 'SUPERADMIN']),
+    service.newDivision,
   )
   router.get(
     '/getDivisions',
-    roleMiddleware(['getDivisions', 'ADMIN', 'SUPERADMIN']),
-    service.getDivisions
+    roleMiddleware(['getDivisions', 'SUPERADMIN']),
+    service.getDivisions,
   )
   router.get(
     '/getAllDivisions',
-    roleMiddleware(['getAllDivisions', 'ADMIN', 'SUPERADMIN']),
-    service.getAllDivisions
+    roleMiddleware(['getAllDivisions', 'SUPERADMIN']),
+    service.getAllDivisions,
   )
   router.post(
     '/deleteDivision',
     roleMiddleware(['deleteDivision', 'SUPERADMIN', 'ADMIN']),
-    service.deleteDivision
+    service.deleteDivision,
+  )
+  router.post(
+    '/pullDivisionFromArchive',
+    roleMiddleware(['pullDivisionFromArchive', 'SUPERADMIN', 'ADMIN']),
+    service.pullDivisionFromArchive,
   )
   router.delete(
     '/fullDeleteDivision',
-    roleMiddleware(['fullDeleteDivision', 'ADMIN', 'SUPERADMIN']),
-    service.fullDeleteDivision
+    roleMiddleware(['fullDeleteDivision', 'SUPERADMIN']),
+    service.fullDeleteDivision,
   )
   router.post(
     '/updateDivision',
     roleMiddleware(['updateDivision', 'SUPERADMIN']),
-    service.updateDivision
+    service.updateDivision,
   )
 
   apiRouter.use('/structure', router)

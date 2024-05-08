@@ -18,22 +18,26 @@ export interface DocumentElementWithFullScreen extends HTMLElement {
 export function useFullScreen(): [
   RefObject<DocumentElementWithFullScreen>,
   boolean,
-  () => void
+  () => void,
 ] {
-  const doc = document as DocumentWithFullScreen
   const elementRef = useRef<DocumentElementWithFullScreen>(null)
-  const [fullScreen, setFullScreen] = useState<boolean>(
-    Boolean(
-      doc.fullscreenElement ||
-        doc.mozFullScreenElement ||
-        doc.webkitFullscreenElement ||
-        doc.msFullscreenElement
+  const [fullScreen, setFullScreen] = useState<boolean>(false)
+
+  useEffect(() => {
+    const doc = document as DocumentWithFullScreen
+    setFullScreen(
+      Boolean(
+        doc.fullscreenElement ||
+          doc.mozFullScreenElement ||
+          doc.webkitFullscreenElement ||
+          doc.msFullscreenElement,
+      ),
     )
-  )
+  })
 
   const toggleFullScreen = () => {
     const element = elementRef.current
-
+    const doc = document as DocumentWithFullScreen
     if (element) {
       if (!fullScreen) {
         if (element.requestFullscreen) {

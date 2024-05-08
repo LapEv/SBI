@@ -12,7 +12,6 @@ import { Result, validationResult } from 'express-validator'
 import bcrypt from 'bcryptjs'
 import { auth } from '../data/auth'
 import { generateAccessToken } from '../utils/generateAccessToken'
-import { Op } from 'sequelize'
 import { incidentService } from './incidentService'
 import { IUser } from '/models/users'
 import { IDepartment } from '/models/departments'
@@ -298,12 +297,7 @@ export class userService {
     )?.id
     userRepos
       .findAll({
-        where: {
-          [Op.or]: [
-            { id_department, active: true },
-            { rolesGroup: 'SUPERADMIN' },
-          ],
-        },
+        where: { id_department, active: true },
         include,
       })
       .then(user => {

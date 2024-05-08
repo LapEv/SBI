@@ -129,6 +129,7 @@ export const ProfileData = memo((user: User) => {
   }, [userInfo])
 
   useEffect(() => {
+    if (avatar.length) return
     const file = userData?.Files as Files[]
     if (!file.length) return
     const pathfile = file[0].path

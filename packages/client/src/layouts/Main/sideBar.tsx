@@ -1,4 +1,4 @@
-import { memo, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   Box,
@@ -25,6 +25,9 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { LinkButton } from 'components/LinkButton'
 import { RotateButton } from 'components/Buttons'
 import { DataItemsProps, NanListItemProps, SideBarProps } from './interfaces'
+import { Files } from 'store/slices/files/interfaces'
+import { useFiles } from 'hooks/files/useFiles'
+import { AvatarBox } from 'components/AvatarBox'
 
 const ControlRoomListItem = memo(
   ({ icon, text, to, isExpanded }: NanListItemProps) => {
@@ -194,7 +197,8 @@ const DataItems = memo(({ user, open }: DataItemsProps) => {
 })
 
 export const SideBar = memo(({ open = false }: SideBarProps) => {
-  const [{ user }, { signout }] = useAuth()
+  const [{ user, avatar }, { signout }] = useAuth()
+  const [, { getAvatar }] = useFiles()
 
   const MUITypography = styled(Typography)(({ theme }) => ({
     fontWeight: 'bold',
@@ -202,6 +206,14 @@ export const SideBar = memo(({ open = false }: SideBarProps) => {
     zIndex: 1,
     backgroundColor: theme.palette.background.default,
   }))
+
+  useEffect(() => {
+    if (avatar.length) return
+    const file = user?.Files as Files[]
+    if (!file.length) return
+    const pathfile = file[0].path
+    getAvatar(pathfile)
+  }, [])
 
   return (
     <List>
@@ -228,10 +240,21 @@ export const SideBar = memo(({ open = false }: SideBarProps) => {
             alignItems: 'center',
             mt: open ? 0 : 2,
           }}>
-          <Avatar
-            sx={{ width: open ? 70 : 35, height: open ? 100 : 45 }}
-            open={open}
-          />
+          {avatar.length ? (
+            <AvatarBox
+              src={`${avatar.length ? JSON.parse(avatar).data : ''}` as string}
+              sx={{
+                width: open ? 100 : 50,
+                height: open ? 100 : 50,
+                borderRadius: 50,
+              }}
+            />
+          ) : (
+            <Avatar
+              sx={{ width: open ? 70 : 35, height: open ? 100 : 45 }}
+              open={open}
+            />
+          )}
         </Box>
         <Typography
           sx={{
@@ -239,7 +262,7 @@ export const SideBar = memo(({ open = false }: SideBarProps) => {
             height: 30,
             display: open ? 'flex' : 'none',
           }}>
-          {user ? user.firstName : ''}
+          {user ? user.shortName : ''}
         </Typography>
       </Box>
       <Box
@@ -261,7 +284,7 @@ export const SideBar = memo(({ open = false }: SideBarProps) => {
         }}>
         <LinkButton
           onClick={() => user && signout()}
-          sx={{ width: '90%', mt: 10, display: open ? 'flex' : 'none' }}
+          sx={{ width: '90%', mt: 5, display: open ? 'flex' : 'none' }}
           to={`/${Routes.Login}`}>
           {user ? 'Выйти' : 'Войти'}
         </LinkButton>

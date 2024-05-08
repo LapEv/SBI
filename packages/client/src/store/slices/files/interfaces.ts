@@ -7,7 +7,6 @@ export interface Files {
 }
 
 export interface UploadFiles {
-  type: string
   files: FileList
   incident?: string
   id_incFiles: string

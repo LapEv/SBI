@@ -1,4 +1,4 @@
-import { AppConst } from '../../const'
+import { AppConst } from '../const'
 
 export const incStatusesStartData = [
   {

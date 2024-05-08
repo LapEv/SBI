@@ -1,4 +1,4 @@
-import { mailConst } from '../../../const'
+import { mailConst } from '../../../data/const'
 import { MailDataChangeStatus } from '/Mailer/interface'
 
 export const htmlChangeStatus = ({
@@ -32,8 +32,8 @@ export const htmlChangeStatus = ({
       style="width: auto; height: auto; padding: 10px; font-size: 11px; font-weight: 100;font-family: 'Calibri', sans-serif;color: #000000;">
       <div style="display: flex; font-size: 14px; font-weight: 700;">
         ${mailConst.mailMessages.Incidents.changeStatus1} ${incident} ${
-    mailConst.mailMessages.Incidents.changeStatus2
-  } ${status}
+          mailConst.mailMessages.Incidents.changeStatus2
+        } ${status}
       </div>
       <div style="margin-top: 10px; font-size: 13px">
       <b>${mailConst.mailMessages.Incidents.client}</b> ${client}<br>

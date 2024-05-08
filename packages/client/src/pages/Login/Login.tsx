@@ -14,7 +14,7 @@ export const LoginPage = memo(() => {
     isLoadingAuth && isEmptyObjField(user) ? (
       <MainPage />
     ) : (
-      <Navigate to={state.from ?? Routes.Index} replace />
+      <Navigate to={state ? state.from : Routes.Index} replace />
     )
   ) : (
     <LoginPageData />

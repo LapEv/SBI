@@ -1,4 +1,4 @@
-import { mailConst } from '../../../const'
+import { mailConst } from '../../../data/const'
 import { MailDataRegInc } from '/Mailer/interface'
 
 export const htmlRegistration = ({

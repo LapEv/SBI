@@ -79,4 +79,8 @@ export const AppConst = {
     getFile: 'Файл получен!',
     getFileError: 'Ошибка при получении файла!',
   },
+  fileDirectories: {
+    Avatar: 'Avatar',
+    IncidentActs: 'IncidentActs',
+  },
 }

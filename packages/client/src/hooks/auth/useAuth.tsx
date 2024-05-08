@@ -13,11 +13,17 @@ import {
   updateUser,
   GetDispatchers,
   newUser,
+  deleteAvatar,
 } from 'api/user'
 import { signin, signup } from 'api/user'
 import { RootState } from 'store'
 import { useAppDispatch } from 'store/hooks'
-import { setActiveUserInfo, signout, updateUserData } from 'store/slices/auth'
+import {
+  setActiveUserInfo,
+  signout,
+  updateUserData,
+  setAvatar,
+} from 'store/slices/auth'
 import { AuthActions } from './authActions'
 import { AuthState } from 'storeAuth/interfaces'
 
@@ -84,6 +90,12 @@ export function useAuth(): [AuthState, AuthActions] {
       },
       setActiveUserInfo(data) {
         dispatch(setActiveUserInfo(data))
+      },
+      deleteAvatar(id) {
+        dispatch(deleteAvatar(id))
+      },
+      setAvatar(data) {
+        dispatch(setAvatar(data))
       },
     },
   ]

@@ -10,9 +10,11 @@ import {
   GetFieldEngineers,
   GetDispatchers,
   deleteUser,
+  deleteAvatar,
 } from 'api/user'
 import { signin, signup } from 'api/user'
 import { AuthState, ICheckUser, User, UserStatus } from './interfaces'
+import { getAvatar } from 'api/files'
 
 const initialState: AuthState = {
   user: {},
@@ -23,6 +25,7 @@ const initialState: AuthState = {
   userStatus: [],
   fieldEngineers: [],
   dispatchers: [],
+  avatar: '',
   userByDepartment: [],
   admin: false,
   superAdmin: false,
@@ -47,6 +50,9 @@ export const authSlise = createSlice({
     },
     setActiveUserInfo(state, action) {
       state.activeUserInfo = action.payload
+    },
+    setAvatar(state, action) {
+      state.avatar = action.payload
     },
   },
   extraReducers: builder => {
@@ -171,7 +177,7 @@ export const authSlise = createSlice({
     builder.addCase(ChangeAvatar.fulfilled, (state, { payload }) => {
       state.isLoadingAuth = false
       state.error = ''
-      state.user = payload as User
+      state.user = payload?.data as User
     })
     builder.addCase(ChangeAvatar.pending, state => {
       state.isLoadingAuth = true
@@ -180,6 +186,20 @@ export const authSlise = createSlice({
       state.isLoadingAuth = false
       state.error = payload as string
     })
+    builder.addCase(deleteAvatar.fulfilled, (state, { payload }) => {
+      state.isLoadingAuth = false
+      state.error = ''
+      state.user = payload?.data as User
+      state.avatar = ''
+    })
+    builder.addCase(deleteAvatar.pending, state => {
+      state.isLoadingAuth = true
+    })
+    builder.addCase(deleteAvatar.rejected, (state, { payload }) => {
+      state.isLoadingAuth = false
+      state.error = payload as string
+    })
+
     builder.addCase(getUserStatus.fulfilled, (state, { payload }) => {
       state.isLoadingAuth = false
       state.error = ''
@@ -217,9 +237,26 @@ export const authSlise = createSlice({
       state.isLoadingAuth = false
       state.error = payload as string
     })
+    builder.addCase(getAvatar.fulfilled, (state, { payload }) => {
+      state.isLoadingAuth = false
+      state.error = ''
+      state.avatar = payload as string
+    })
+    builder.addCase(getAvatar.pending, state => {
+      state.isLoadingAuth = true
+    })
+    builder.addCase(getAvatar.rejected, (state, { payload }) => {
+      state.isLoadingAuth = false
+      state.error = payload as string
+    })
   },
 })
 
 export const authReducer = authSlise.reducer
-export const { updateUserData, clearUser, signout, setActiveUserInfo } =
-  authSlise.actions
+export const {
+  updateUserData,
+  clearUser,
+  signout,
+  setActiveUserInfo,
+  setAvatar,
+} = authSlise.actions

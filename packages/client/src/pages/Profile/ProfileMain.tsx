@@ -11,23 +11,25 @@ import { ChangeEvent, memo, useEffect, useState } from 'react'
 import { TextField } from 'components/TextFields'
 import { Button, ButtonsSection } from 'components/Buttons'
 import { ProfileMainProps, ProfileValues } from './interfaces'
-import { deepEqual } from 'utils/deepEqual'
-import { ProfileHeader } from './ProfileHeader'
-import { FileProps } from 'storeAuth/interfaces'
-import { useMessage } from 'hooks/message/useMessage'
+import { pageProfile } from 'static/styles/pages/main'
+import { ProfileAvatar } from './ProfileAvatar'
+import { useFiles } from 'hooks/files/useFiles'
+import { Files } from 'store/slices/files/interfaces'
 
-export const ProfileMain = memo(({ setModal, data }: ProfileMainProps) => {
-  const [, { setMessage }] = useMessage()
-  const [{ userData }, { updateUserData, updateUser }] = useAuth()
-  const [btnDisabled, setbtnDisabled] = useState<boolean>(true)
-  const [file, setFile] = useState<FileProps>({ data: '', info: undefined })
+export const ProfileMain = memo(({ setModal, dataUser }: ProfileMainProps) => {
+  const [
+    { userData, avatar },
+    { updateUserData, deleteAvatar, changeAvatar, setAvatar },
+  ] = useAuth()
+  const [, { getAvatar }] = useFiles()
+  const [btnDisabled] = useState<boolean>(true)
 
-  const { handleSubmit, control, reset } = useForm<ProfileValues>({
+  const { handleSubmit, control } = useForm<ProfileValues>({
     mode: 'onBlur',
     defaultValues: {
       list: MapProfileInputFields.map(item => ({
         ...item,
-        value: data[item.name as keyof typeof data],
+        value: dataUser[item.name as keyof typeof dataUser],
       })),
     },
   })
@@ -38,71 +40,38 @@ export const ProfileMain = memo(({ setModal, data }: ProfileMainProps) => {
   })
 
   const changeData = () => {
-    if (file.info) {
-      setMessage({
-        text: 'В разработке',
-        type: 'info',
-      })
-      // changeAvatar(file)
-    }
-    if (
-      !deepEqual(userData as Record<never, never>, data as Record<never, never>)
-    ) {
-      updateUser(userData)
-    }
+    console.log('Change Data')
   }
 
   const clearChange = () => {
-    updateUserData(data)
-    reset({
-      list: MapProfileInputFields.map(item => ({
-        ...item,
-        value: data[item.name as keyof typeof data],
-      })),
-    })
-    setFile({ data: '', info: undefined } as FileProps)
-  }
-
-  const onChooseFile = (event: ChangeEvent<HTMLInputElement>) => {
-    const reader = new FileReader()
-    reader.onloadend = () => {
-      if (!event.target.files) return
-      setFile({ info: event.target?.files[0], data: reader.result })
-    }
-    event.target.files instanceof FileList
-      ? reader.readAsDataURL(event.target.files[0])
-      : console.log('handle exception')
+    console.log('clearChange')
   }
 
   useEffect(() => {
-    if (file.info) return
-    setbtnDisabled(
-      deepEqual(userData as Record<never, never>, data as Record<never, never>)
-    )
-  }, [userData])
-
-  useEffect(() => {
-    setbtnDisabled(file.info ? false : true)
-  }, [file])
+    const file = userData?.Files as Files[]
+    if (!file.length) return
+    const pathfile = file[0].path
+    getAvatar(pathfile)
+  }, [])
 
   return (
     <Box
       component="form"
       onSubmit={handleSubmit(changeData)}
-      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <ProfileHeader
-        component="header"
-        onChooseFile={onChooseFile}
-        fileData={file?.data}
-        avatar={(data.avatar as string) ?? ''}
+      sx={{ ...pageProfile, maxWidth: 1200 }}>
+      <ProfileAvatar
+        id={dataUser.id}
+        changeAvatar={changeAvatar}
+        deleteAvatar={deleteAvatar}
+        setAvatar={setAvatar}
+        avatar={avatar.length ? JSON.parse(avatar) : ''}
       />
-
       <Box
         sx={{
           display: 'flex',
           flexDirection: { xs: 'column', sm: 'row' },
           justifyContent: 'center',
-          p: 3,
+          mt: 3,
           width: '95%',
         }}>
         <Stack
@@ -127,7 +96,8 @@ export const ProfileMain = memo(({ setModal, data }: ProfileMainProps) => {
                       type={type}
                       required={required ?? true}
                       variant="outlined"
-                      sx={{ width: '48%', height: 80 }}
+                      disabled={true}
+                      sx={{ width: '48%', height: 40 }}
                       margin="normal"
                       onChange={(event: ChangeEvent<HTMLInputElement>) => (
                         field.onChange(event),
@@ -142,7 +112,7 @@ export const ProfileMain = memo(({ setModal, data }: ProfileMainProps) => {
                   )}
                 />
               )
-            }
+            },
           )}
         </Stack>
       </Box>
@@ -155,6 +125,7 @@ export const ProfileMain = memo(({ setModal, data }: ProfileMainProps) => {
         btnDisabled={btnDisabled}
         btnSecondDisabled={btnDisabled}
         btnSecondName="Отменить изменения"
+        sx={{ justifyContent: 'space-between' }}
       />
     </Box>
   )

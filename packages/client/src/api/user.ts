@@ -6,13 +6,13 @@ import {
   User,
   ChangePasswordProps,
   ChangeThemeProps,
-  FileProps,
+  AvatarProps,
   UserStatus,
   delData,
   ICheckUser,
   NewUser,
 } from 'storeAuth/interfaces'
-import { authhost, host, ApiEndPoints } from './config'
+import { authhost, host, ApiEndPoints, authFileHost } from './config'
 import axios from 'axios'
 
 interface ValidationError {
@@ -254,19 +254,16 @@ export const updateProfile = createAsyncThunk(
 
 export const ChangeAvatar = createAsyncThunk(
   'user/changeAvatar',
-  async (newAvatar: FileProps, thunkAPI) => {
+  async ({ id_avatarFiles, selectedFile, id }: AvatarProps, thunkAPI) => {
     try {
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }
       const formData = new FormData()
-      formData.append('avatar', newAvatar.info as Blob)
-      const { data } = await authhost.put<User[]>(
-        ApiEndPoints.User.UpdateProfileAvatar,
+      formData.append('file', selectedFile.info as File)
+      formData.append('id', id)
+      formData.append('fileName', selectedFile?.info?.name as string)
+      formData.append('id_avatarFiles', id_avatarFiles)
+      const { data } = await authFileHost.post(
+        ApiEndPoints.Files.uploadAvatars,
         formData,
-        config,
       )
       return {
         data,
@@ -406,6 +403,35 @@ export const updateUser = createAsyncThunk(
       if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
         return thunkAPI.rejectWithValue(
           `Не удалось обновить данные пользователя: \n${
+            error.response?.data.message ?? error.response?.data
+          }`,
+        )
+      } else {
+        console.error(error)
+      }
+    }
+  },
+)
+
+export const deleteAvatar = createAsyncThunk(
+  'user/deleteAvatar',
+  async (id: string, thunkAPI) => {
+    try {
+      const { data } = await authFileHost.post(
+        ApiEndPoints.Files.deleteAvatar,
+        { id },
+      )
+      return {
+        data,
+        message: {
+          text: 'Аватарка удалена!',
+          type: 'success',
+        },
+      }
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось обновить аватар пользователя: \n${
             error.response?.data.message ?? error.response?.data
           }`,
         )

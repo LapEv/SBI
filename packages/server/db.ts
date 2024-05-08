@@ -155,17 +155,14 @@ Roles.belongsToMany(RolesGroup, {
   foreignKey: 'id_roles',
 })
 
-// RolesGroup.hasMany(Roles, { foreignKey: 'id_roles' })
-// Roles.belongsTo(RolesGroup, { foreignKey: 'id_roles', targetKey: 'id' })
-
 RolesGroup.hasMany(Users, { foreignKey: 'id_rolesGroup' })
 Users.belongsTo(RolesGroup, { foreignKey: 'id_rolesGroup', targetKey: 'id' })
 
-// Users.belongsToMany(Roles, { through: 'ThroughUserRole' })
-// Roles.belongsToMany(Users, { through: 'ThroughUserRole' })
-
 Division.hasMany(Users, { foreignKey: 'id_division' })
 Users.belongsTo(Division, { foreignKey: 'id_division', targetKey: 'id' })
+
+Users.hasMany(Files, { foreignKey: 'id_avatarFiles' })
+Files.belongsTo(Users, { foreignKey: 'id_avatarFiles', targetKey: 'id' })
 
 Department.hasMany(Users, { foreignKey: 'id_department' })
 Users.belongsTo(Department, { foreignKey: 'id_department', targetKey: 'id' })

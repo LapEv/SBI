@@ -30,7 +30,7 @@ import {
   userRepos,
 } from './../db'
 import type { Request, Response } from 'express'
-import { AppConst } from '../const'
+import { AppConst } from '../data/const'
 import {
   convertDateToString,
   convertINCStringToDateTime,

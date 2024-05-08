@@ -22,14 +22,18 @@ import { DataList } from 'components/CheckBoxGroup/interface'
 import { deepEqual } from 'utils/deepEqual'
 import { DeleteUserModal } from './Modals/DeleteUserModal'
 import { User } from 'storeAuth/interfaces'
+import { AvatarBox } from 'components/AvatarBox'
+import { useFiles } from 'hooks/files/useFiles'
+import { Files } from 'store/slices/files/interfaces'
 
 export const ProfileData = memo((user: User) => {
   const modalRef = React.createRef()
   const theme = useTheme()
   const [
-    { admin, userData, userInfo },
+    { admin, userData, userInfo, avatar },
     { updateUserData, deleteUser, updateUser },
   ] = useAuth()
+  const [, { getAvatar }] = useFiles()
   const [{ rolesGroup }, { getRolesGroupNotRoles }] = useRoles()
   const [open, setOpen] = useState(false)
   const [dataGroup, setDataGroup] = useState<DataList[]>([])
@@ -57,7 +61,6 @@ export const ProfileData = memo((user: User) => {
   })
 
   function changeData() {
-    console.log('changeData')
     updateUser(userData)
   }
 
@@ -125,11 +128,33 @@ export const ProfileData = memo((user: User) => {
     }
   }, [userInfo])
 
+  useEffect(() => {
+    const file = userData?.Files as Files[]
+    if (!file.length) return
+    const pathfile = file[0].path
+    getAvatar(pathfile)
+  }, [])
+
   return (
     <Box
       component="form"
       onSubmit={handleSubmit(changeData)}
       sx={{ '& .MuiTextField-root': { m: 0.5, width: '55ch' } }}>
+      {userData?.Files?.length ? (
+        <AvatarBox
+          src={`${avatar.length ? JSON.parse(avatar).data : ''}` as string}
+          sx={{
+            width: '100px',
+            height: '100px',
+            bgcolor: '#1E515D',
+            cursor: 'pointer',
+            mb: 3,
+            mt: -1,
+          }}
+        />
+      ) : (
+        <></>
+      )}
       {fields.map(({ id, name, label, validation, type }, index) => {
         return (
           <Controller

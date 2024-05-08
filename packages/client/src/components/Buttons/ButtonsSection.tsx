@@ -3,6 +3,14 @@ import { Button } from 'components/Buttons'
 import { memo } from 'react'
 import { HandleSection } from './interfaces'
 
+const props = {
+  display: 'flex',
+  justifyContent: 'space-around',
+  width: '85%',
+  mt: 2,
+  mb: 2,
+}
+
 export const ButtonsSection = memo(
   ({
     btnSecondHandle,
@@ -11,16 +19,10 @@ export const ButtonsSection = memo(
     btnDisabled,
     btnSecondDisabled,
     onClick,
+    sx,
   }: HandleSection) => {
     return (
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-around',
-          width: '85%',
-          mt: 2,
-          mb: 2,
-        }}>
+      <Box sx={{ ...props, ...sx }}>
         <Button
           type="submit"
           onClick={onClick}

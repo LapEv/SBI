@@ -582,4 +582,19 @@ export const rolesStartData = [
     group: ['ADMIN', 'Dispatcher'],
     nameRole: 'Загрузка актов',
   },
+  {
+    role: 'uploadAvatars',
+    group: ['ADMIN', 'Dispatcher', 'FieldEngineers'],
+    nameRole: 'Загрузка аватаров',
+  },
+  {
+    role: 'getAvatar',
+    group: ['ADMIN', 'Dispatcher', 'FieldEngineers'],
+    nameRole: 'Получение аватара',
+  },
+  {
+    role: 'deleteAvatar',
+    group: ['ADMIN', 'Dispatcher', 'FieldEngineers'],
+    nameRole: 'Удаление аватара',
+  },
 ]

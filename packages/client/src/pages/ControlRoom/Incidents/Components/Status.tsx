@@ -112,7 +112,6 @@ export const Status = memo(
         })
         uploadFiles({
           id_incFiles: id,
-          type: 'IncidentActs',
           files: files as FileList,
           incident,
         })

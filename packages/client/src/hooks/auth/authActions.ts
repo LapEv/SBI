@@ -1,6 +1,6 @@
 import {
   SignUp,
-  FileProps,
+  AvatarProps,
   Login,
   User,
   ChangePasswordProps,
@@ -13,7 +13,7 @@ export interface AuthActions {
   newUser: (newUserData: NewUser) => void
   signout: () => void
   updateProfile: (data: User) => void
-  changeAvatar: (data: FileProps) => void
+  changeAvatar: (data: AvatarProps) => void
   changePassword: (data: ChangePasswordProps) => void
   changeThemeOnServer: (data: ChangeThemeProps) => void
   getUserInfo: (id: string) => void
@@ -26,4 +26,6 @@ export interface AuthActions {
   deleteUser: (id: string, reasonOfDelete: string) => void
   updateUser: (data: User) => void
   setActiveUserInfo: (id: string) => void
+  deleteAvatar: (id: string) => void
+  setAvatar: (data: string) => void
 }

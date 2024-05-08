@@ -1,5 +1,6 @@
 import { RolesGroup } from 'storeRoles/interfaces'
 import { FilterListData } from '../incidents/interfaces'
+import { Files } from '../files/interfaces'
 
 export interface User {
   id?: string
@@ -21,6 +22,7 @@ export interface User {
   id_rolesGroup?: string
   status?: string
   RolesGroup?: RolesGroup
+  Files?: Files[]
 }
 
 export interface ICheckUser {
@@ -93,9 +95,10 @@ export interface ChangeThemeProps {
   id: number | string | null | undefined
   theme: string
 }
-export interface FileProps {
-  data: string | ArrayBuffer | null
-  info: File | undefined
+export interface AvatarProps {
+  selectedFile: FileProps
+  id_avatarFiles: string
+  id: string
 }
 
 export interface UserStatus {
@@ -116,6 +119,7 @@ export type AuthState = {
   activeUserInfo: string
   users: User[]
   userStatus: UserStatus[]
+  avatar: string
   fieldEngineers: User[]
   dispatchers: User[]
   userByDepartment: User[]
@@ -138,4 +142,21 @@ export interface UserForINC {
 export interface delData {
   id: string
   reasonOfDelete: string
+}
+
+export interface UserProfile {
+  username: string
+  firstName: string
+  lastName: string
+  middleName: string
+  phone: string
+  email: string
+  post: string
+  avatar: string
+  id: string
+}
+
+export interface FileProps {
+  data: string | ArrayBuffer | null
+  info: File | undefined
 }

@@ -3,6 +3,7 @@ import {
   Department,
   DepartmentRepos,
   Division,
+  Files,
   Roles,
   RolesGroup,
   userRepos,
@@ -17,7 +18,7 @@ import { IUser } from '/models/users'
 import { IDepartment } from '/models/departments'
 import { divisionService } from './divisionService'
 
-const include = [
+export const include = [
   {
     model: Division,
     required: true,
@@ -39,6 +40,11 @@ const include = [
         attributes: ['id', 'role', 'nameRole', 'active'],
       },
     ],
+  },
+  {
+    model: Files,
+    required: false,
+    attributes: ['id', 'name', 'path', 'size', 'mimetype'],
   },
 ]
 export class userService {
@@ -197,28 +203,9 @@ export class userService {
     }
   }
   changeAvatar = async (_req: Request, res: Response) => {
-    const { oldPassword, newPassword, id } = _req.body
-    const user = (await userRepos.findAll({
-      where: { id },
-      include,
-    })) as IUser[]
-    const validPassword = bcrypt.compareSync(oldPassword, user[0].password)
-    if (!validPassword) {
-      return res
-        .status(400)
-        .json({ message: auth.notification.invalidOldPassword })
-    }
-    const errValidation: Result = validationResult(_req)
-    if (!errValidation.isEmpty()) {
-      const errors = errValidation.array()
-      return res.status(400).json({
-        message: `${auth.notification.errorValidation}: ${errors[0].msg}`,
-        errValidation,
-      })
-    }
-    const hashPassword = bcrypt.hashSync(newPassword, 7)
+    const { id_avatarFiles, id } = _req.body
     try {
-      await userRepos.update(id, { password: hashPassword })
+      await userRepos.update(id, { id_avatarFiles })
       res.status(200).json('Ok')
     } catch (err) {
       res.status(500).json({ error: ['db error', err as Error] })

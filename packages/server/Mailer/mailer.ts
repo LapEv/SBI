@@ -1,5 +1,5 @@
 import { MailDataRegInc, MailDataChangeStatus } from './interface'
-import { mailConst } from '../const'
+import { mailConst } from '../data/const'
 import { htmlRegistration, htmlChangeStatus } from '.'
 
 const nodemailer = require('nodemailer')

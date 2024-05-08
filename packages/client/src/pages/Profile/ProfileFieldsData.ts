@@ -76,4 +76,11 @@ export const MapProfileInputFields = [
     value: '',
     required: true,
   },
+  {
+    name: 'post',
+    label: 'Должность',
+    validation: textValidation,
+    value: '',
+    required: true,
+  },
 ]

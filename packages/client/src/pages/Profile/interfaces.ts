@@ -1,5 +1,5 @@
 import { ChangeEvent, FocusEvent } from 'react'
-import { User } from 'storeAuth/interfaces'
+import { AvatarProps, FileProps, User, UserProfile } from 'storeAuth/interfaces'
 
 type stringOrNull = string | null
 export interface ProfileValidateFieldsProps {
@@ -40,14 +40,15 @@ export interface ProfileChangePasswordValues {
   }[]
 }
 
-export interface ProfileHeaderProps {
-  component: string
-  onChooseFile: (event: ChangeEvent<HTMLInputElement>) => void
-  fileData: string | ArrayBuffer | undefined | null
-  avatar: string | null | undefined
+export interface ProfileAvatarProps {
+  id: string
+  changeAvatar: (data: AvatarProps) => void
+  deleteAvatar: (id: string) => void
+  setAvatar: (data: string) => void
+  avatar: FileProps
 }
 
 export interface ProfileMainProps {
   setModal: () => void
-  data: User
+  dataUser: UserProfile
 }

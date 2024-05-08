@@ -45,6 +45,7 @@ export interface User {
   id_division: string
   id_department: string
   id_rolesGroup: string
+  id_avatarFiles: string
   status: string
   reasonOfDelete: string
 }
@@ -124,6 +125,10 @@ export const users: ModelAttributes<Model, User> = {
   id_rolesGroup: {
     type: DataType.STRING,
     allowNull: false,
+  },
+  id_avatarFiles: {
+    type: DataType.STRING,
+    allowNull: true,
   },
   status: {
     type: DataType.STRING,

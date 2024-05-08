@@ -136,7 +136,11 @@ export const ApiEndPoints = {
   },
   Files: {
     getFiles: 'files/getFiles',
+    getFile: 'files/getFile',
+    getAvatar: 'files/getAvatar',
     uploadFiles: 'files/uploadFiles',
+    uploadAvatars: 'files/uploadAvatars',
+    deleteAvatar: 'files/deleteAvatar',
   },
 }
 

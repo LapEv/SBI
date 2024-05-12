@@ -14,6 +14,8 @@ import { ButtonsModalSection } from 'components/Buttons'
 import { useStructure } from 'hooks/structure/useStructure'
 import { DropDown, emptyValue } from 'components/DropDown'
 import { Options } from 'components/DropDown/interface'
+import { useTheme } from '@emotion/react'
+import { ITheme } from 'themes/themeConfig'
 
 export const AddDepartments = memo(
   React.forwardRef<unknown, ChooseModalProps>(
@@ -26,6 +28,8 @@ export const AddDepartments = memo(
           list: MapDepartmentInputFields,
         },
       })
+      const theme = useTheme() as ITheme
+
       const { errors } = useFormState({ control })
       const { fields } = useFieldArray({
         control,
@@ -80,7 +84,12 @@ export const AddDepartments = memo(
                     type={type}
                     variant="outlined"
                     required={required ?? true}
-                    sx={{ width: '90%', mt: 5, height: 40 }}
+                    sx={{
+                      width: '90%',
+                      height: theme.fontSize === 'small' ? 30 : 40,
+                      mt:
+                        index === 0 ? (theme.fontSize === 'small' ? 7 : 6) : 5,
+                    }}
                     margin="normal"
                     value={field.value || ''}
                     error={!!(errors?.list ?? [])[index]?.value?.message}

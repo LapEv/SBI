@@ -1,16 +1,18 @@
 import { memo, useEffect, useState } from 'react'
-import { Box, ListItemText, ListItemButton } from '@mui/material'
+import { Box, ListItemText, ListItemButton, useTheme } from '@mui/material'
 import Collapse from '@mui/material/Collapse'
 import { ListUsers } from './ListUsers'
 import { RotateButton } from 'components/Buttons'
 import { useStructure } from 'hooks/structure/useStructure'
 import { classifierChildComponent, flexColumn_FS_SA } from 'static/styles'
 import { Department } from 'store/slices/structure/interfaces'
+import { ITheme } from 'themes/themeConfig'
 
 export const DepartmentData = memo(
   ({ departmentName, id_department, Users }: Department) => {
     const [{ activeDepartment }, { setActiveDepartment }] = useStructure()
     const [open, setOpen] = useState(false)
+    const theme = useTheme() as ITheme
 
     const handleClick = () => {
       if (!open) {
@@ -31,15 +33,11 @@ export const DepartmentData = memo(
           divider={open}
           sx={classifierChildComponent}
           onClick={handleClick}>
-          <ListItemText
-            primary={departmentName}
-            sx={{ ml: 2 }}
-            primaryTypographyProps={{ fontSize: '1.175rem!important' }}
-          />
-          <RotateButton open={open} size={'2rem'} />
+          <ListItemText primary={departmentName} sx={{ ml: 2 }} />
+          <RotateButton open={open} />
         </ListItemButton>
         <Collapse
-          sx={{ width: '100%', height: 'auto' }}
+          sx={{ width: '100%', height: theme.fontSize === 'small' ? 40 : 50 }}
           in={open}
           timeout="auto"
           unmountOnExit>

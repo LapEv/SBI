@@ -5,6 +5,7 @@ import { User } from 'storeAuth/interfaces'
 import { RotateButton } from 'components/Buttons'
 import { ProfileData } from './'
 import { useAuth } from 'hooks/auth/useAuth'
+import { listItemButton } from 'static/styles/listItemButton'
 
 export const ListUsers = memo((user: User) => {
   const [{ activeUserInfo }, { getUserInfo, setActiveUserInfo }] = useAuth()
@@ -27,33 +28,18 @@ export const ListUsers = memo((user: User) => {
 
   return (
     <Box>
-      <ListItemButton
-        divider={open}
-        sx={{
-          fontWeight: 'bold',
-          fontSize: '1rem',
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'space-between',
-          justifyContent: 'space-between',
-        }}
-        onClick={handleClick}>
+      <ListItemButton divider={open} sx={listItemButton} onClick={handleClick}>
         <Box>
           <ListItemText
             primary={`${user.lastName} ${user.firstName} ${user.middleName}`}
-            sx={{ ml: 4 }}
+            sx={{ ml: 8 }}
           />
-          <ListItemText
-            primary={`${user.post}`}
-            sx={{ ml: 5 }}
-            primaryTypographyProps={{ fontSize: '0.875rem!important' }}
-          />
+          <ListItemText primary={`${user.post}`} sx={{ ml: 10 }} />
         </Box>
-        <RotateButton open={open} handleClick={handleClick} size={'2rem'} />
+        <RotateButton open={open} handleClick={handleClick} />
       </ListItemButton>
       <Collapse
-        sx={{ width: '100%', mt: 4, ml: 5, height: 'auto' }}
+        sx={{ width: '90%', mt: 4, ml: 10, height: 'auto' }}
         in={open}
         timeout="auto"
         unmountOnExit>

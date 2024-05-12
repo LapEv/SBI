@@ -85,7 +85,7 @@ export const NewOLA = memo(
                         label={label}
                         type={type}
                         variant="outlined"
-                        sx={{ width: '90%', m: 2, mt: 4, height: 40 }}
+                        sx={{ width: '90%', mt: 5 }}
                         margin="normal"
                         required={required ?? true}
                         value={field.value || ''}
@@ -95,7 +95,7 @@ export const NewOLA = memo(
                     ) : (
                       <DropDown
                         data={listTypes}
-                        props={{ mt: 2, width: '90%' }}
+                        props={{ mt: 5, width: '90%' }}
                         onChange={setSelectedType}
                         value={selectedType.label || ''}
                         label="Выберите тип работ"
@@ -105,7 +105,7 @@ export const NewOLA = memo(
                   }
                 />
               )
-            }
+            },
           )}
           <ButtonsModalSection
             closeModal={() => handleModal(false)}
@@ -113,6 +113,6 @@ export const NewOLA = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

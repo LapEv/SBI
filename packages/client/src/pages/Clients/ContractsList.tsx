@@ -4,7 +4,7 @@ import Collapse from '@mui/material/Collapse'
 import { EditButton, RotateButton } from 'components/Buttons'
 import { classifierChildComponent, flexColumn_FS_SA } from 'static/styles'
 import { ModalChangeName } from 'components/ModaQuestions'
-import { Contracts } from 'store/slices/contracts/interfaces'
+import { ContractsPage } from 'store/slices/contracts/interfaces'
 import { useContracts } from 'hooks/contracts/useContracts'
 import { ContractPage } from './'
 import { useAuth } from 'hooks/auth/useAuth'
@@ -22,7 +22,8 @@ export const ContractsList = memo(
     Objects,
     IncindentStatuses,
     id_client,
-  }: Contracts) => {
+    height,
+  }: ContractsPage) => {
     const [{ admin }] = useAuth()
     const [{ activeContract }, { setActiveContract }] = useContracts()
     const [, { newContractName }] = useContracts()
@@ -73,15 +74,11 @@ export const ContractsList = memo(
         </Modal>
         <ListItemButton
           divider={open}
-          sx={classifierChildComponent}
+          sx={{ ...classifierChildComponent, height }}
           onClick={handleClick}>
-          <ListItemText
-            primary={contract}
-            sx={{ ml: 2 }}
-            primaryTypographyProps={{ fontSize: '1.175rem!important' }}
-          />
-          {admin && <EditButton handleClick={editContract} size={'1.5rem'} />}
-          <RotateButton open={open} size={'2rem'} />
+          <ListItemText primary={contract} sx={{ ml: 2 }} />
+          {admin && <EditButton handleClick={editContract} />}
+          <RotateButton open={open} />
         </ListItemButton>
         <Collapse
           sx={{ width: '100%', p: 2, pl: 5, pr: 5, height: 'auto' }}
@@ -100,9 +97,10 @@ export const ContractsList = memo(
             Objects={Objects}
             IncindentStatuses={IncindentStatuses}
             id_client={id_client}
+            height={height}
           />
         </Collapse>
       </Box>
     )
-  }
+  },
 )

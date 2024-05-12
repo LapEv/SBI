@@ -8,6 +8,7 @@ import { DrawerHeader } from './drawerHeader'
 import { Outlet } from 'react-router-dom'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useApp } from 'hooks/app/useApp'
+import { ThemeMode } from 'themes/themeConfig'
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -26,9 +27,9 @@ const closedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.complex,
   }),
   overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
+  width: `calc(${theme.spacing(9)} + 5px)`,
   [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
+    width: `calc(${theme.spacing(10)} + 5px)`,
   },
 })
 
@@ -78,10 +79,7 @@ export const MainLayout = memo(() => {
       {user && user.status ? (
         <Box sx={{ display: 'flex', width: '100%' }}>
           <NavBar />
-          <Drawer
-            sx={{ display: { xs: 'flex', md: 'flex' } }}
-            variant="permanent"
-            open={open}>
+          <Drawer sx={{ display: 'flex' }} variant="permanent" open={open}>
             <DrawerHeader open={open} toggleDrawer={toggleDrawer} />
             <Divider />
             <SideBar open={open} />
@@ -89,6 +87,8 @@ export const MainLayout = memo(() => {
           <Box
             ref={boxRef}
             sx={{
+              backgroundColor:
+                theme.palette.mode === ThemeMode.dark ? '#1E515D' : '#C1EEE1',
               width,
               minHeight: '100vh',
               display: 'flex',

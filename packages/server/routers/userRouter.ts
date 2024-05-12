@@ -86,8 +86,11 @@ export const userRouter = (apiRouter: Router) => {
     roleMiddleware(['SUPERADMIN', 'updateUser']),
     service.updateUser,
   )
-
-  router.post('/theme', service.changeTheme)
+  router.post(
+    '/changeUserAppOptions',
+    roleMiddleware(['SUPERADMIN', 'changeUserAppOptions']),
+    service.changeUserAppOptions,
+  )
 
   apiRouter.use('/user', router)
 }

@@ -6,7 +6,7 @@ import {
   updateProfile,
   ChangeAvatar,
   changePassword,
-  ChangeTheme,
+  changeUserAppOptions,
   CheckUser,
   getUserStatus,
   deleteUser,
@@ -55,8 +55,8 @@ export function useAuth(): [AuthState, AuthActions] {
       changePassword(data) {
         dispatch(changePassword(data))
       },
-      changeThemeOnServer(data) {
-        dispatch(ChangeTheme(data))
+      changeUserAppOptions(options) {
+        dispatch(changeUserAppOptions(options))
       },
       getUserInfo(id) {
         dispatch(getUserInfo(id))

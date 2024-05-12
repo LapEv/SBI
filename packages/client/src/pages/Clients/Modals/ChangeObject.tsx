@@ -21,6 +21,7 @@ import { Objects } from 'store/slices/objects/interfaces'
 import { useClients } from 'hooks/clients/useClients'
 import { deepEqual } from 'utils/deepEqual'
 import { useMessage } from 'hooks/message/useMessage'
+import { ITheme } from 'themes/themeConfig'
 
 export const ChangeObject = memo(
   React.forwardRef<unknown, ChooseModalProps>(
@@ -43,7 +44,7 @@ export const ChangeObject = memo(
       const [selectedRegions, setSelectedRegions] =
         useState<Options>(emptyValue)
       const [errSelectedItems, setErrSelectedItems] = useState<string>('')
-      const theme = useTheme()
+      const theme = useTheme() as ITheme
 
       const { handleSubmit, control, reset } = useForm<AddValuesProps>({
         mode: 'onBlur',
@@ -169,7 +170,7 @@ export const ChangeObject = memo(
           setErrSelectedItems('')
         }
         const newAddress = addresses.find(
-          item => item.id === data.id
+          item => item.id === data.id,
         ) as Addresses
         setSelectedRegions({
           label: newAddress?.Region?.region as string,
@@ -233,7 +234,7 @@ export const ChangeObject = memo(
               ['label']: item.object as string,
               ['id']: item.id as string,
             }
-          })
+          }),
         )
       }, [objects])
 
@@ -244,7 +245,7 @@ export const ChangeObject = memo(
               ['label']: item.client as string,
               ['id']: item.id as string,
             }
-          })
+          }),
         )
       }, [clients])
 
@@ -255,7 +256,7 @@ export const ChangeObject = memo(
               ['label']: item.address as string,
               ['id']: item.id as string,
             }
-          })
+          }),
         )
       }, [addresses])
 
@@ -266,7 +267,7 @@ export const ChangeObject = memo(
               ['label']: item.region as string,
               ['id']: item.id as string,
             }
-          })
+          }),
         )
       }, [regions])
 
@@ -280,7 +281,7 @@ export const ChangeObject = memo(
           <Typography variant={'h6'}>{title}</Typography>
           <DropDown
             data={listObjects}
-            props={{ mt: 4 }}
+            props={{ mt: theme.fontSize === 'small' ? 6 : 4 }}
             onChange={data => changeSelectedObject(data)}
             value={selectedObjects.label || ''}
             label="Выберите объект"
@@ -289,7 +290,7 @@ export const ChangeObject = memo(
           />
           <DropDown
             data={listClients}
-            props={{ mt: 4 }}
+            props={{ mt: theme.fontSize === 'small' ? 6 : 4 }}
             onChange={data => changeSelectedClients(data)}
             value={selectedClients.label || ''}
             label="Выберите клиента"
@@ -298,7 +299,7 @@ export const ChangeObject = memo(
           />
           <DropDown
             data={listAddresses}
-            props={{ mt: 4 }}
+            props={{ mt: theme.fontSize === 'small' ? 6 : 4 }}
             onChange={data => changeSelectedAddresses(data)}
             value={selectedAddresses.label || ''}
             label="Выберите адрес"
@@ -307,40 +308,49 @@ export const ChangeObject = memo(
           />
           <DropDown
             data={listRegions}
-            props={{ mt: 4 }}
+            props={{ mt: theme.fontSize === 'small' ? 6 : 4 }}
             onChange={data => changeSelectedRegions(data)}
             value={selectedRegions.label || ''}
             label="Выберите регион"
             errorLabel="Не выбран регион!"
             onBlur={text => checkRegionValue(text)}
           />
-          <Box sx={{ mt: 2, width: '90%' }}>
-            {fields.map(({ id, label, validation, type, required }, index) => {
-              return (
-                <Controller
-                  key={id}
-                  control={control}
-                  name={`list.${index}.value`}
-                  rules={validation}
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      inputRef={field.ref}
-                      label={label}
-                      type={type}
-                      variant="outlined"
-                      required={required ?? true}
-                      sx={{ width: '100%', mt: 3, height: 40 }}
-                      margin="normal"
-                      value={field.value || ''}
-                      error={!!(errors?.list ?? [])[index]?.value?.message}
-                      helperText={(errors?.list ?? [])[index]?.value?.message}
-                    />
-                  )}
-                />
-              )
-            })}
-          </Box>
+          {fields.map(({ id, label, validation, type, required }, index) => {
+            return (
+              <Controller
+                key={id}
+                control={control}
+                name={`list.${index}.value`}
+                rules={validation}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    inputRef={field.ref}
+                    label={label}
+                    type={type}
+                    variant="outlined"
+                    required={required ?? true}
+                    sx={{
+                      width: '90%',
+                      height: theme.fontSize === 'small' ? 30 : 40,
+                      mt:
+                        index === 0
+                          ? theme.fontSize === 'small'
+                            ? 6
+                            : 4
+                          : theme.fontSize === 'small'
+                            ? 5
+                            : 3,
+                    }}
+                    margin="normal"
+                    value={field.value || ''}
+                    error={!!(errors?.list ?? [])[index]?.value?.message}
+                    helperText={(errors?.list ?? [])[index]?.value?.message}
+                  />
+                )}
+              />
+            )
+          })}
           <Box
             sx={{
               mt: 2,
@@ -356,6 +366,6 @@ export const ChangeObject = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

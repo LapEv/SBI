@@ -39,9 +39,7 @@ export const ServiceLevelPage = memo(() => {
         />
       </Modal>
       <Box component="div" sx={headerForPages}>
-        <Typography sx={{ fontWeight: 'bold', fontSize: '2.375rem' }}>
-          Уровни сервиса
-        </Typography>
+        <Typography variant="h6">Уровни сервиса</Typography>
         {admin && (
           <DropDownMenu
             popover={'Добавить/Удалить'}

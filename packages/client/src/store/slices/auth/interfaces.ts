@@ -23,6 +23,13 @@ export interface User {
   status?: string
   RolesGroup?: RolesGroup
   Files?: Files[]
+  appOptions?: AppOptions
+}
+
+export type ThemeMode = 'light' | 'dark'
+export interface AppOptions {
+  theme?: ThemeMode
+  font?: string
 }
 
 export interface ICheckUser {
@@ -91,9 +98,9 @@ export interface ChangePasswordProps {
   newPassword: string
   id: string
 }
-export interface ChangeThemeProps {
-  id: number | string | null | undefined
-  theme: string
+export interface ChangeAppProps {
+  id: string
+  appOptions: AppOptions
 }
 export interface AvatarProps {
   selectedFile: FileProps

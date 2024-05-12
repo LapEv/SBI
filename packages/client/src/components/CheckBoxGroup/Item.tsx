@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, useEffect, memo } from 'react'
-import { Checkbox, FormControlLabel, Box, useTheme } from '@mui/material'
+import { Checkbox, FormControlLabel, ListItemText } from '@mui/material'
 import { IItem } from './interface'
 
 export const Item = memo(
@@ -15,10 +15,8 @@ export const Item = memo(
     noEmpty,
   }: IItem) => {
     const [checked, setChecked] = useState<boolean>(
-      (initChecked as boolean) ?? false
+      (initChecked as boolean) ?? false,
     )
-    const theme = useTheme()
-
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
       if (oneChecked && noEmpty && checked) {
         if (!event.target.checked) {
@@ -56,12 +54,12 @@ export const Item = memo(
           }
         />
         {comment?.length && (
-          <Box
-            sx={{ fontSize: 12, color: theme.palette.text.secondary, ml: 5 }}>
-            {comment}
-          </Box>
+          <ListItemText
+            secondary={comment}
+            sx={{ ...props, ml: (props?.ml as number) + 5 }}
+          />
         )}
       </>
     )
-  }
+  },
 )

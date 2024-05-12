@@ -15,13 +15,14 @@ export const DeleteObjects = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
       const boxRef = React.createRef<HTMLDivElement>()
-      const [height, setHeight] = useState<string>('')
       const [{ objects }, { deleteObjects, getObjects }] = useObjects()
       const [selectedObjects, setSelectedObjects] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
+      const [data, setData] = useState<Objects[]>([])
       const [filterText, setFilterText] = useState<string>('')
-      const filteredObjects = useFilteredData<Objects>(objects, filterText, [
+      const filteredObjects = useFilteredData<Objects>(data, filterText, [
         'object',
+        'client',
       ])
       const theme = useTheme()
 
@@ -47,15 +48,16 @@ export const DeleteObjects = memo(
 
       useEffect(() => {
         getObjects()
-        if (boxRef.current) {
-          setHeight(boxRef.current.offsetHeight.toString())
-        }
       }, [])
 
+      useEffect(() => {
+        const newData = objects.map(item => {
+          return { ...item, client: item?.Client?.client }
+        })
+        setData(newData)
+      }, [objects])
+
       const setText = (text: string) => {
-        if (!height && boxRef.current) {
-          setHeight(boxRef.current.offsetHeight.toString())
-        }
         setFilterText(text)
       }
 
@@ -81,10 +83,9 @@ export const DeleteObjects = memo(
           <Box
             ref={boxRef}
             sx={{
-              mt: 2,
+              mt: 0,
               width: '100%',
               pl: 3,
-              height: filterText ? height : 'auto',
             }}>
             {filteredObjects.map(({ object, id, Client }) => (
               <Item
@@ -94,6 +95,7 @@ export const DeleteObjects = memo(
                 groupChecked={false}
                 onChooseItems={onChooseItems}
                 key={id as string}
+                props={{ ml: 1 }}
               />
             ))}
           </Box>

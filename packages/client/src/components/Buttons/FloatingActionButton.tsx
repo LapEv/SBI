@@ -1,8 +1,8 @@
 import { useState, MouseEvent, memo } from 'react'
 import MuiFab from '@mui/material/Fab'
 import Popover from '@mui/material/Popover'
-import Typography from '@mui/material/Typography'
 import { FabProps } from './interfaces'
+import { PopoverTypography } from 'components/Popover/PopoverTypography'
 
 export const Fab = memo(({ order = 0, title, active, ...props }: FabProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
@@ -50,9 +50,7 @@ export const Fab = memo(({ order = 0, title, active, ...props }: FabProps) => {
         onClose={handlePopoverClose}
         disableRestoreFocus
         container={anchorEl}>
-        <Typography sx={{ p: 1, fontSize: 12, color: 'text.primary' }}>
-          {title}
-        </Typography>
+        <PopoverTypography text={title} />
       </Popover>
     </>
   )

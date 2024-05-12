@@ -360,16 +360,20 @@ export class userService {
       res.status(500).json({ error: ['db error', err as Error] })
     }
   }
-  changeTheme = (_req: Request, res: Response) => {
-    const { id, theme } = _req.body
-    userRepos
-      .update(id, { theme: theme })
-      .then(user =>
-        res
-          .status(200)
-          .json(`Theme changed for user with id=${user} on ${theme}!`),
-      )
-      .catch(err => res.status(500).json({ error: ['db error', err] }))
+  changeUserAppOptions = async (_req: Request, res: Response) => {
+    const { id, appOptions } = _req.body
+    try {
+      await userRepos.update(id, {
+        appOptions,
+      })
+      const user = (await userRepos.findOne({
+        where: { id: id },
+        include,
+      })) as IUser
+      res.status(200).json(user)
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
+    }
   }
   updateUser = async (_req: Request, res: Response) => {
     const { id, userData } = _req.body

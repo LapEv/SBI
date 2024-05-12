@@ -15,17 +15,16 @@ export const DeleteAddress = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
       const boxRef = React.createRef<HTMLDivElement>()
-      const [height, setHeight] = useState<string>('')
       const [{ regions, addresses }, { deleteAddress, getAddresses }] =
         useAddresses()
       const [selectedAddresses, setSelectedAddresses] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
+      const [data, setData] = useState<Addresses[]>([])
       const [filterText, setFilterText] = useState<string>('')
-      const filteredAddresses = useFilteredData<Addresses>(
-        addresses,
-        filterText,
-        ['address'],
-      )
+      const filteredAddresses = useFilteredData<Addresses>(data, filterText, [
+        'address',
+        'region',
+      ])
       const theme = useTheme()
 
       const changeData = (event: SyntheticEvent<EventTarget>) => {
@@ -50,19 +49,20 @@ export const DeleteAddress = memo(
 
       useEffect(() => {
         getAddresses()
-        if (boxRef.current) {
-          setHeight(boxRef.current.offsetHeight.toString())
-        }
       }, [])
+
+      useEffect(() => {
+        const newData = addresses.map(item => {
+          return { ...item, region: item?.Region?.region }
+        })
+        setData(newData)
+      }, [addresses])
 
       const getRegionName = (id_region: string) => {
         return regions.find(item => item.id === id_region)?.region
       }
 
       const setText = (text: string) => {
-        if (!height && boxRef.current) {
-          setHeight(boxRef.current.offsetHeight.toString())
-        }
         setFilterText(text)
       }
 
@@ -88,10 +88,8 @@ export const DeleteAddress = memo(
           <Box
             ref={boxRef}
             sx={{
-              mt: 2,
               width: '100%',
               pl: 3,
-              height: filterText ? height : 'auto',
             }}>
             {filteredAddresses.map(({ address, id, id_region }) => (
               <Item
@@ -101,6 +99,7 @@ export const DeleteAddress = memo(
                 groupChecked={false}
                 onChooseItems={onChooseItems}
                 key={id as string}
+                props={{ ml: 1 }}
               />
             ))}
           </Box>

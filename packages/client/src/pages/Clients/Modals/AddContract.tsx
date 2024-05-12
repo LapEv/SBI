@@ -5,6 +5,7 @@ import {
   ListItemButton,
   ListItemText,
   Collapse,
+  useTheme,
 } from '@mui/material'
 import {
   useForm,
@@ -33,6 +34,7 @@ import {
   ICheckBoxGroupData,
 } from 'components/CheckBoxGroup/interface'
 import { CheckBoxGroups, Item } from 'components/CheckBoxGroup'
+import { ITheme } from 'themes/themeConfig'
 
 export const AddContract = memo(
   React.forwardRef<unknown, ChooseModalProps>(
@@ -56,6 +58,7 @@ export const AddContract = memo(
       const [selectedModels, setSelectedModels] = useState<string[]>([])
       const [errSLA, setErrSLA] = useState<boolean>(false)
       const [dateValue, setDateValue] = useState<Dayjs>(dayjs())
+      const theme = useTheme() as ITheme
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
         defaultValues: {
@@ -180,7 +183,12 @@ export const AddContract = memo(
                     type={type}
                     variant="outlined"
                     required={required ?? true}
-                    sx={{ width: '90%', mt: 3, height: 40 }}
+                    sx={{
+                      width: '90%',
+                      height: theme.fontSize === 'small' ? 30 : 40,
+                      mt:
+                        index === 0 ? (theme.fontSize === 'small' ? 7 : 6) : 5,
+                    }}
                     margin="normal"
                     value={field.value || ''}
                     error={!!(errors?.list ?? [])[index]?.value?.message}
@@ -193,6 +201,7 @@ export const AddContract = memo(
           <DateField
             dateValue={dateValue as Dayjs}
             setDateValue={setDateValue}
+            sx={{ mt: 5, width: '90%' }}
           />
           <DropDownMultiple
             data={sla.map(item => {
@@ -201,7 +210,7 @@ export const AddContract = memo(
                 ['id']: item.id as string,
               }
             })}
-            props={{ mt: 3 }}
+            props={{ mt: 6 }}
             onChange={setSLAList}
             value={slaList}
             label="Выберите уровни сервиса"
@@ -212,12 +221,8 @@ export const AddContract = memo(
             divider={openList}
             sx={{ ...classifierChild2Component, mt: 2 }}
             onClick={() => (setOpenList(!openList), setOpenListObjects(false))}>
-            <ListItemText
-              primary={'Выбор классификатора'}
-              sx={{ ml: 2 }}
-              primaryTypographyProps={{ fontSize: '1rem!important' }}
-            />
-            <RotateButton open={openList} size={'2rem'} />
+            <ListItemText primary={'Выбор классификатора'} sx={{ ml: 2 }} />
+            <RotateButton open={openList} />
           </ListItemButton>
           <Collapse
             sx={{ ...classifierChild2Component, width: '85%' }}
@@ -235,19 +240,12 @@ export const AddContract = memo(
 
           <ListItemButton
             divider={openListObjects}
-            sx={{ ...classifierChild2Component, mt: 2 }}
+            sx={{ ...classifierChild2Component, mt: 1 }}
             onClick={() => (
               setOpenListObjects(!openListObjects), setOpenList(false)
             )}>
-            <ListItemText
-              primary={'Выбор объектов'}
-              sx={{ ml: 2 }}
-              primaryTypographyProps={{
-                fontSize: '1rem!important',
-                fontWeight: 'bold',
-              }}
-            />
-            <RotateButton open={openListObjects} size={'2rem'} />
+            <ListItemText primary={'Выбор объектов'} sx={{ ml: 2 }} />
+            <RotateButton open={openListObjects} />
           </ListItemButton>
           <Collapse
             sx={{ ...classifierChild2Component, width: '85%' }}

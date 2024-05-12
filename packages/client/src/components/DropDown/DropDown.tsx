@@ -3,7 +3,8 @@ import { Box, useTheme } from '@mui/material'
 import { Autocomplete } from 'components/Autocomplete'
 import { DataDropDown, Options } from './interface'
 import { emptyValue } from '.'
-import { TextField } from 'components/TextFields'
+import { TextFieldDD } from 'components/TextFields'
+import { ITheme } from 'themes/themeConfig'
 
 export const DropDown = memo(
   ({
@@ -15,10 +16,9 @@ export const DropDown = memo(
     label,
     errorLabel,
     error,
-    textProps,
     tabIndex,
   }: DataDropDown) => {
-    const theme = useTheme()
+    const theme = useTheme() as ITheme
     const [errors, setErrors] = useState<boolean>(error as boolean)
 
     useEffect(() => {
@@ -30,7 +30,11 @@ export const DropDown = memo(
         forcePopupIcon={true}
         clearOnEscape
         autoSelect={false}
-        sx={{ width: '90%', height: 40, ...props }}
+        sx={{
+          width: '90%',
+          ...props,
+          height: theme.fontSize === 'small' ? 30 : 40,
+        }}
         options={data}
         noOptionsText={'Нет данных'}
         filterOptions={(option, { inputValue }): unknown[] => {
@@ -111,8 +115,8 @@ export const DropDown = memo(
             borderWidth: 1,
             minHeight: 40,
             maxHeight: 225,
-            fontSize: 13,
             '& li': {
+              color: theme.palette.mode === 'dark' ? '#1E515D' : '#C1EEE1',
               borderColor:
                 theme.palette.mode === 'dark' ? '#1E515D' : '#C1EEE1',
             },
@@ -122,14 +126,15 @@ export const DropDown = memo(
             },
           },
         }}
+        size={'small'}
         renderInput={params => (
-          <TextField
+          <TextFieldDD
             onBlur={event => (
               !event.target.value ? setErrors(true) : setErrors(false),
               onBlur?.(event.target.value)
             )}
             {...params}
-            sx={textProps}
+            sx={{ height: theme.fontSize === 'small' ? 30 : 40 }}
             required
             variant="outlined"
             label={label}
@@ -144,5 +149,5 @@ export const DropDown = memo(
         )}
       />
     )
-  }
+  },
 )

@@ -10,7 +10,7 @@ import { TextField } from 'components/TextFields'
 import { ButtonsSection } from 'components/Buttons'
 import { deepEqual } from 'utils/deepEqual'
 import {
-  IServiceListData,
+  IServiceListDataPage,
   SLAList,
   SLAValues,
 } from 'store/slices/sla/interfaces'
@@ -32,7 +32,7 @@ export const SLAPage = memo(
     id,
     id_typeOfWork,
     TypesOfWork,
-  }: IServiceListData) => {
+  }: IServiceListDataPage) => {
     const [, { changeSLA, changeOLA }] = useSLA()
     const [{ typesOfWork }, { getTypesOfWork }] = useIncidents()
     const [{ admin }] = useAuth()
@@ -60,7 +60,7 @@ export const SLAPage = memo(
             id,
             id_typeOfWork,
             TypesOfWork,
-          }
+          },
     )
 
     const fieldsData = sla ? MapSLAViewInputFields : MapOLAViewInputFields
@@ -200,7 +200,6 @@ export const SLAPage = memo(
             direction={{ xs: 'column', sm: 'row' }}
             justifyContent="space-between"
             alignItems="center"
-            spacing={0}
             sx={{ flexWrap: 'wrap', width: '100%' }}>
             {fields.map(
               ({ id, name, label, validation, type, required }, index) => {
@@ -219,13 +218,13 @@ export const SLAPage = memo(
                           type={type}
                           required={required ?? true}
                           variant="outlined"
-                          sx={{ width: '48%', height: 60 }}
+                          sx={{ width: '48%' }}
                           margin="normal"
                           onChange={(event: ChangeEvent<HTMLInputElement>) => (
                             field.onChange(
                               name !== 'days'
                                 ? event.target.value
-                                : event.target.valueAsNumber
+                                : event.target.valueAsNumber,
                             ),
                             checkForChange({
                               ...slaData,
@@ -246,7 +245,7 @@ export const SLAPage = memo(
                       ) : (
                         <DropDown
                           data={listTypes}
-                          props={{ width: '48%', height: 55 }}
+                          props={{ width: '48%', mt: 1 }}
                           onChange={data => changeSelectedTypes(data)}
                           value={selectedType.label || ''}
                           label="Выберите тип работ"
@@ -256,7 +255,7 @@ export const SLAPage = memo(
                     }
                   />
                 )
-              }
+              },
             )}
           </Stack>
         </Box>
@@ -269,5 +268,5 @@ export const SLAPage = memo(
         />
       </Box>
     )
-  }
+  },
 )

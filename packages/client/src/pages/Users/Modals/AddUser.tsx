@@ -25,6 +25,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { DataList } from 'components/CheckBoxGroup/interface'
 import { Options } from 'components/DropDown/interface'
 import { Department } from 'store/slices/structure/interfaces'
+import { ITheme } from 'themes/themeConfig'
 
 export const AddUser = memo(
   React.forwardRef<unknown, ChooseModalProps>(
@@ -43,7 +44,7 @@ export const AddUser = memo(
         useState<boolean>(false)
       const [statusName, setStatusName] = useState<Options>(emptyValue)
 
-      const theme = useTheme()
+      const theme = useTheme() as ITheme
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
         defaultValues: {
@@ -148,7 +149,7 @@ export const AddUser = memo(
                 ['id']: item.id as string,
               }
             })}
-            props={{ mt: 4 }}
+            props={{ mt: theme.fontSize === 'small' ? 6 : 4 }}
             onChange={setStatusName}
             value={statusName.label}
             label="Выберите статус пользователя"
@@ -161,7 +162,7 @@ export const AddUser = memo(
                 ['id']: item.id as string,
               }
             })}
-            props={{ mt: 4 }}
+            props={{ mt: theme.fontSize === 'small' ? 6 : 4 }}
             onChange={changeDivision}
             value={division.label}
             label="Выберите подразделение"
@@ -182,7 +183,7 @@ export const AddUser = memo(
           />
           <DropDown
             data={listDepartments}
-            props={{ mt: 1 }}
+            // props={{ mt: 1 }}
             onChange={setDepartment}
             value={department.label}
             label="Выберите отдел"
@@ -217,7 +218,18 @@ export const AddUser = memo(
                     type={type}
                     required={required ?? true}
                     variant="outlined"
-                    sx={{ width: '90%', m: 2, mt: 1.5, height: 40 }}
+                    sx={{
+                      width: '90%',
+                      height: theme.fontSize === 'small' ? 30 : 40,
+                      mt:
+                        index === 0
+                          ? theme.fontSize === 'small'
+                            ? 1
+                            : 1
+                          : theme.fontSize === 'small'
+                            ? 5
+                            : 3,
+                    }}
                     margin="normal"
                     value={field.value || ''}
                     error={!!(errors?.list ?? [])[index]?.value?.message}
@@ -227,6 +239,10 @@ export const AddUser = memo(
               />
             )
           })}
+          <Typography variant={'body1'} sx={{ mt: 1 }}>
+            Выберите роль
+          </Typography>
+
           {dataGroup.map(({ name, id, initChecked }) => (
             <Item
               name={name}
@@ -235,7 +251,7 @@ export const AddUser = memo(
               onChooseItems={setRolesGroup}
               initChecked={initChecked}
               key={id}
-              props={{ ml: 7 }}
+              props={{ ml: theme.fontSize === 'small' ? 15 : 7 }}
             />
           ))}
           <Box sx={{ color: theme.palette.error.main, minHeight: 10, mt: 1 }}>

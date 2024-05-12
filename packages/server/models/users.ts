@@ -24,6 +24,7 @@ export interface IUser {
   status: string
   reasonOfDelete: string
   RolesGroup: RolesGroup
+  appOptions: object
 }
 
 export interface User {
@@ -48,6 +49,7 @@ export interface User {
   id_avatarFiles: string
   status: string
   reasonOfDelete: string
+  appOptions: object
 }
 
 export const users: ModelAttributes<Model, User> = {
@@ -136,6 +138,10 @@ export const users: ModelAttributes<Model, User> = {
   },
   reasonOfDelete: {
     type: DataType.STRING,
+    allowNull: true,
+  },
+  appOptions: {
+    type: DataType.JSONB,
     allowNull: true,
   },
 }

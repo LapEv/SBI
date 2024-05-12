@@ -16,6 +16,7 @@ import {
 } from 'react-hook-form'
 import { TextField } from 'components/TextFields'
 import { MapNewAddressInputFields } from './data'
+import { ITheme } from 'themes/themeConfig'
 
 export const ChangeAddress = memo(
   React.forwardRef<unknown, ChooseModalProps>(
@@ -31,7 +32,7 @@ export const ChangeAddress = memo(
       const [selectedRegions, setSelectedRegions] =
         useState<Options>(emptyValue)
       const [errSelectedItems, setErrSelectedItems] = useState<string>('')
-      const theme = useTheme()
+      const theme = useTheme() as ITheme
 
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
@@ -62,7 +63,7 @@ export const ChangeAddress = memo(
             id_region: selectedRegions.id,
             active: true,
           },
-          selectedAddresses.id
+          selectedAddresses.id,
         )
         handleModal(false)
       }
@@ -74,7 +75,7 @@ export const ChangeAddress = memo(
           setErrSelectedItems('')
         }
         const newAddress = addresses.find(
-          item => item.id === data.id
+          item => item.id === data.id,
         ) as Addresses
         setSelectedRegions({
           label: newAddress?.Region?.region as string,
@@ -116,7 +117,7 @@ export const ChangeAddress = memo(
               ['label']: item.address as string,
               ['id']: item.id as string,
             }
-          })
+          }),
         )
       }, [addresses])
 
@@ -127,7 +128,7 @@ export const ChangeAddress = memo(
               ['label']: item.region as string,
               ['id']: item.id as string,
             }
-          })
+          }),
         )
       }, [regions])
 
@@ -141,7 +142,7 @@ export const ChangeAddress = memo(
           <Typography variant={'h6'}>{title}</Typography>
           <DropDown
             data={listAddresses}
-            props={{ mt: 4 }}
+            props={{ mt: theme.fontSize === 'small' ? 6 : 4 }}
             onChange={data => changeSelectedAddresses(data)}
             value={selectedAddresses.label || ''}
             label="Выберите адрес"
@@ -150,40 +151,49 @@ export const ChangeAddress = memo(
           />
           <DropDown
             data={listRegions}
-            props={{ mt: 4 }}
+            props={{ mt: theme.fontSize === 'small' ? 6 : 4 }}
             onChange={data => changeSelectedRegions(data)}
             value={selectedRegions.label || ''}
             label="Выберите регион"
             errorLabel="Не выбран регион!"
             onBlur={text => checkRegionValue(text)}
           />
-          <Box sx={{ mt: 2, width: '90%' }}>
-            {fields.map(({ id, label, validation, type, required }, index) => {
-              return (
-                <Controller
-                  key={id}
-                  control={control}
-                  name={`list.${index}.value`}
-                  rules={validation}
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      inputRef={field.ref}
-                      label={label}
-                      type={type}
-                      variant="outlined"
-                      required={required ?? true}
-                      sx={{ width: '100%', mt: 2, height: 40 }}
-                      margin="normal"
-                      value={field.value || ''}
-                      error={!!(errors?.list ?? [])[index]?.value?.message}
-                      helperText={(errors?.list ?? [])[index]?.value?.message}
-                    />
-                  )}
-                />
-              )
-            })}
-          </Box>
+          {fields.map(({ id, label, validation, type, required }, index) => {
+            return (
+              <Controller
+                key={id}
+                control={control}
+                name={`list.${index}.value`}
+                rules={validation}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    inputRef={field.ref}
+                    label={label}
+                    type={type}
+                    variant="outlined"
+                    required={required ?? true}
+                    sx={{
+                      width: '90%',
+                      height: theme.fontSize === 'small' ? 30 : 40,
+                      mt:
+                        index === 0
+                          ? theme.fontSize === 'small'
+                            ? 6
+                            : 4
+                          : theme.fontSize === 'small'
+                            ? 5
+                            : 3,
+                    }}
+                    margin="normal"
+                    value={field.value || ''}
+                    error={!!(errors?.list ?? [])[index]?.value?.message}
+                    helperText={(errors?.list ?? [])[index]?.value?.message}
+                  />
+                )}
+              />
+            )
+          })}
           <Box
             sx={{
               mt: 2,
@@ -199,6 +209,6 @@ export const ChangeAddress = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

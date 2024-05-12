@@ -20,6 +20,7 @@ export const SLAList = memo(
     id,
     id_typeOfWork,
     TypesOfWork,
+    height,
   }: IServiceListData) => {
     const [{ admin }] = useAuth()
     const [{ activeSLA }, { setActiveSLA, changeSLA, changeOLA }] = useSLA()
@@ -88,15 +89,14 @@ export const SLAList = memo(
         </Modal>
         <ListItemButton
           divider={open}
-          sx={classifierComponent}
+          sx={{ ...classifierComponent, height }}
           onClick={handleClick}>
           <ListItemText
             primary={sla ?? ola}
             secondary={TypesOfWork.typeOfWork}
-            primaryTypographyProps={{ fontSize: '1.375rem!important' }}
           />
-          {admin ? <EditButton handleClick={editSLA} size={'1.7rem'} /> : <></>}
-          <RotateButton open={open} handleClick={handleClick} size={'2rem'} />
+          {admin ? <EditButton handleClick={editSLA} /> : <></>}
+          <RotateButton open={open} handleClick={handleClick} />
         </ListItemButton>
         <Collapse
           sx={{ width: '100%', height: 'auto' }}

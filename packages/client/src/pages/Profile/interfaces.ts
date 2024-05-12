@@ -48,6 +48,10 @@ export interface ProfileAvatarProps {
   avatar: FileProps
 }
 
+export interface ProfileAppProps {
+  user: User
+}
+
 export interface ProfileMainProps {
   setModal: () => void
   dataUser: UserProfile

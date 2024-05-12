@@ -18,7 +18,7 @@ export const ApiEndPoints = {
     UpdateProfile: 'user/updateProfile',
     UpdateProfileAvatar: 'user/profile/changeAvatar',
     Search: 'user/search',
-    ChangeTheme: 'user/theme',
+    ChangeUserAppOptions: 'user/changeUserAppOptions',
     GetUserTheme: 'user/theme/?id=',
     GetUserStatus: 'user/getUserStatus',
     DeleteUser: 'user/deleteUser',

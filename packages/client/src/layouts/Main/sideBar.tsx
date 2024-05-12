@@ -8,8 +8,8 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
-  styled,
   Collapse,
+  useTheme,
 } from '@mui/material'
 import {
   DispatcherData,
@@ -28,6 +28,7 @@ import { DataItemsProps, NanListItemProps, SideBarProps } from './interfaces'
 import { Files } from 'store/slices/files/interfaces'
 import { useFiles } from 'hooks/files/useFiles'
 import { AvatarBox } from 'components/AvatarBox'
+import { ITheme } from 'themes/themeConfig'
 
 const ControlRoomListItem = memo(
   ({ icon, text, to, isExpanded }: NanListItemProps) => {
@@ -60,21 +61,23 @@ const ControlRoomListItem = memo(
 
 const NanListItem = memo(({ icon, text, to, isExpanded }: NanListItemProps) => {
   const [openControl, setOpenControl] = useState<boolean>(false)
+  const theme = useTheme() as ITheme
 
   return (
     <>
       {text === 'Диспетчерская' ? (
-        <Box sx={{ display: 'block', mt: 0.5, ml: 0.5 }}>
+        <Box sx={{ display: 'block' }}>
           <ListItemButton
             sx={{
-              minHeight: 48,
-              justifyContent: isExpanded ? 'initial' : 'center',
+              height: theme.fontSize === 'small' ? 30 : 40,
+              justifyContent: isExpanded ? 'spacebetween' : 'center',
             }}
             onClick={() => setOpenControl(!openControl)}>
             <ListItemIcon
               sx={{
                 minWidth: 0,
-                mr: isExpanded ? 3 : 'auto',
+                mr: isExpanded ? 3 : -2,
+                ml: isExpanded ? 0 : 2,
                 justifyContent: 'center',
               }}>
               {icon}
@@ -86,7 +89,6 @@ const NanListItem = memo(({ icon, text, to, isExpanded }: NanListItemProps) => {
             <RotateButton
               open={openControl}
               handleClick={() => setOpenControl(!openControl)}
-              size={'1.5rem'}
             />
           </ListItemButton>
           <Collapse
@@ -112,9 +114,7 @@ const NanListItem = memo(({ icon, text, to, isExpanded }: NanListItemProps) => {
         <ListItem disablePadding sx={{ display: 'block', mt: 0.5 }}>
           <ListItemButton
             sx={{
-              minHeight: 48,
               justifyContent: isExpanded ? 'initial' : 'center',
-              px: 2.5,
             }}
             component={Link}
             to={to}>
@@ -200,13 +200,6 @@ export const SideBar = memo(({ open = false }: SideBarProps) => {
   const [{ user, avatar }, { signout }] = useAuth()
   const [, { getAvatar }] = useFiles()
 
-  const MUITypography = styled(Typography)(({ theme }) => ({
-    fontWeight: 'bold',
-    fontSize: '1.975rem',
-    zIndex: 1,
-    backgroundColor: theme.palette.background.default,
-  }))
-
   useEffect(() => {
     if (avatar.length) return
     const file = user?.Files as Files[]
@@ -227,7 +220,7 @@ export const SideBar = memo(({ open = false }: SideBarProps) => {
           alignItems: 'center',
           mt: 2,
         }}>
-        {!open ? <MUITypography>SBI</MUITypography> : <></>}
+        {!open ? <Typography variant="h6">SBI</Typography> : <></>}
 
         <Box
           sx={{
@@ -244,8 +237,8 @@ export const SideBar = memo(({ open = false }: SideBarProps) => {
             <AvatarBox
               src={`${avatar.length ? JSON.parse(avatar).data : ''}` as string}
               sx={{
-                width: open ? 100 : 50,
-                height: open ? 100 : 50,
+                width: open ? 100 : 45,
+                height: open ? 100 : 45,
                 borderRadius: 50,
               }}
             />

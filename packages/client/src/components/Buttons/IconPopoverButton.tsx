@@ -1,6 +1,7 @@
 import { useState, MouseEvent, memo } from 'react'
-import { Typography, useTheme, Popover, IconButton } from '@mui/material'
+import { useTheme, Popover, IconButton } from '@mui/material'
 import { IconButtonProps } from './interfaces'
+import { PopoverTypography } from 'components/Popover/PopoverTypography'
 
 export const IconPopoverButton = memo(
   ({
@@ -26,6 +27,7 @@ export const IconPopoverButton = memo(
     }
 
     const open = Boolean(anchorEl)
+
     return (
       <>
         <IconButton
@@ -34,7 +36,7 @@ export const IconPopoverButton = memo(
           }
           onMouseLeave={() => setAnchorEl(null)}
           onClick={onClick}
-          size={size ?? 'medium'}
+          size={size ?? 'small'}
           sx={{ ...sxDefault, ...sx }}
           aria-controls={open ? 'account-menu' : undefined}
           aria-haspopup="true"
@@ -63,12 +65,10 @@ export const IconPopoverButton = memo(
             }
             disableRestoreFocus
             container={anchorEl}>
-            <Typography sx={{ p: 1, fontSize: 12, color: 'text.primary' }}>
-              {popover}
-            </Typography>
+            <PopoverTypography text={popover} />
           </Popover>
         )}
       </>
     )
-  }
+  },
 )

@@ -9,7 +9,7 @@ export const ButtonsModalSection = memo(({ closeModal, btnName }: Handle) => {
       sx={{
         display: 'flex',
         justifyContent: 'space-around',
-        mt: 3,
+        mt: 5,
         width: '100%',
       }}>
       <Button type="submit" sx={{ width: '40%', fontWeight: 'bold' }}>

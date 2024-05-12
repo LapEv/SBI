@@ -84,7 +84,7 @@ export interface IServiceList {
   name: string
   label: string
 }
-export interface IServiceListData {
+export interface IServiceListDataPage {
   sla?: string
   ola?: string
   id?: string
@@ -94,6 +94,10 @@ export interface IServiceListData {
   timeEnd: string
   id_typeOfWork: string
   TypesOfWork: TypesOfWork
+}
+
+export interface IServiceListData extends IServiceListDataPage {
+  height: number
 }
 
 export interface SLAList {

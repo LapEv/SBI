@@ -1,5 +1,11 @@
 import React, { memo, useEffect, useState, SyntheticEvent } from 'react'
-import { Box, ListItemText, ListItemButton, Modal } from '@mui/material'
+import {
+  Box,
+  ListItemText,
+  ListItemButton,
+  Modal,
+  useTheme,
+} from '@mui/material'
 import Collapse from '@mui/material/Collapse'
 import { RotateButton, EditButton, IconPopoverButton } from 'components/Buttons'
 import { classifier, classifierComponent } from 'static/styles'
@@ -13,6 +19,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import { AddContract } from './Modals'
 import { ModalTitles } from './data'
 import { popoverIcon } from 'static/styles'
+import { ITheme } from 'themes/themeConfig'
 
 export const ClientsList = memo(({ client, legalName, id }: Clients) => {
   const [{ activeClient }, { setActiveClient, changeClient }] = useClients()
@@ -20,6 +27,7 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
   const [{ admin }] = useAuth()
   const modalRef = React.createRef()
   const [open, setOpen] = useState(false)
+  const theme = useTheme() as ITheme
 
   const [modal, setModal] = useState<boolean>(false)
   const [modalImage, setModalImage] = useState<string>('')
@@ -85,15 +93,14 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
       </Modal>
       <ListItemButton
         divider={open}
-        sx={classifierComponent}
+        sx={{
+          ...classifierComponent,
+          height: theme.fontSize === 'small' ? 40 : 50,
+        }}
         onClick={handleClick}>
-        <ListItemText
-          primary={client}
-          secondary={legalName}
-          primaryTypographyProps={{ fontSize: '1.375rem!important' }}
-        />
-        {admin && <EditButton handleClick={editClient} size={'1.7rem'} />}
-        <RotateButton open={open} handleClick={handleClick} size={'2rem'} />
+        <ListItemText primary={client} secondary={legalName} />
+        {admin && <EditButton handleClick={editClient} />}
+        <RotateButton open={open} handleClick={handleClick} />
       </ListItemButton>
       <Collapse
         sx={{ width: '100%', height: 'auto' }}
@@ -126,6 +133,7 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
               IncindentStatuses={IncindentStatuses}
               id_client={id as string}
               key={id}
+              height={theme.fontSize === 'small' ? 40 : 50}
             />
           ),
         )}
@@ -135,7 +143,12 @@ export const ClientsList = memo(({ client, legalName, id }: Clients) => {
             onClick={AddNewContract}
             icon={<AddCircleOutlineIcon />}
             propsPopover={{ ml: -1 }}
-            sx={{ ...popoverIcon, mt: 1 }}
+            sx={{
+              ...popoverIcon,
+              mt: 1,
+              width: theme.fontSize === 'small' ? 30 : 40,
+              height: theme.fontSize === 'small' ? 30 : 40,
+            }}
           />
         )}
       </Collapse>

@@ -125,7 +125,7 @@ export const ContractPage = memo(
         const newSLAs = [...slaID]
         newSLAs.push(id)
         setSLADisabled(
-          isEqualArr(newSLAs as [], SLAs?.map(({ id }) => id) as [])
+          isEqualArr(newSLAs as [], SLAs?.map(({ id }) => id) as []),
         )
         setSLAID(newSLAs)
         return
@@ -137,14 +137,14 @@ export const ContractPage = memo(
 
     const onChooseEquipments = (data: string[]) => {
       setEquipmentDisabled(
-        isEqualArr(data as [], ClassifierEquipments?.map(({ id }) => id) as [])
+        isEqualArr(data as [], ClassifierEquipments?.map(({ id }) => id) as []),
       )
       setSelectedEquipments(data)
     }
 
     const onChooseModels = (data: string[]) => {
       setModelDisabled(
-        isEqualArr(data as [], ClassifierModels?.map(({ id }) => id) as [])
+        isEqualArr(data as [], ClassifierModels?.map(({ id }) => id) as []),
       )
       setSelectedModels(data)
     }
@@ -154,14 +154,14 @@ export const ContractPage = memo(
         const newObjects = [...objectID]
         newObjects.push(id)
         setObjectDisabled(
-          isEqualArr(newObjects as [], Objects?.map(({ id }) => id) as [])
+          isEqualArr(newObjects as [], Objects?.map(({ id }) => id) as []),
         )
         setObjectID(newObjects)
         return
       }
       const newObjects = objectID.filter(item => item !== id)
       setObjectDisabled(
-        isEqualArr(newObjects as [], Objects?.map(({ id }) => id) as [])
+        isEqualArr(newObjects as [], Objects?.map(({ id }) => id) as []),
       )
       setObjectID(newObjects)
     }
@@ -173,8 +173,8 @@ export const ContractPage = memo(
         setIncStatussesDisabled(
           isEqualArr(
             newIncStatusses as [],
-            IncindentStatuses?.map(({ id }) => id) as []
-          )
+            IncindentStatuses?.map(({ id }) => id) as [],
+          ),
         )
         setIncStatussesID(newIncStatusses)
         return
@@ -183,8 +183,8 @@ export const ContractPage = memo(
       setIncStatussesDisabled(
         isEqualArr(
           newIncStatusses as [],
-          IncindentStatuses?.map(({ id }) => id) as []
-        )
+          IncindentStatuses?.map(({ id }) => id) as [],
+        ),
       )
       setIncStatussesID(newIncStatusses)
     }
@@ -207,7 +207,7 @@ export const ContractPage = memo(
       })
       setSLAID(SLAs?.map(({ id }) => id) as string[])
       setSelectedEquipments(
-        ClassifierEquipments?.map(({ id }) => id) as string[]
+        ClassifierEquipments?.map(({ id }) => id) as string[],
       )
       setSelectedModels(ClassifierModels?.map(({ id }) => id) as string[])
       setObjectID(Objects?.map(({ id }) => id) as string[])
@@ -225,7 +225,7 @@ export const ContractPage = memo(
     useEffect(() => {
       setSLAID(SLAs?.map(({ id }) => id) as string[])
       setSelectedEquipments(
-        ClassifierEquipments?.map(({ id }) => id) as string[]
+        ClassifierEquipments?.map(({ id }) => id) as string[],
       )
       const models = ClassifierEquipments?.map(item => [
         ...(item.ClassifierModels?.map(({ id }) => id) as string[]),
@@ -264,7 +264,6 @@ export const ContractPage = memo(
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          p: 3,
         }}>
         <Box
           sx={{
@@ -295,7 +294,7 @@ export const ContractPage = memo(
                         type={type}
                         required={required}
                         variant="outlined"
-                        sx={{ width: '48%', height: 60 }}
+                        sx={{ width: '48%' }}
                         margin="normal"
                         onChange={(event: ChangeEvent<HTMLInputElement>) => (
                           field.onChange(event),
@@ -317,7 +316,7 @@ export const ContractPage = memo(
                     )}
                   />
                 )
-              }
+              },
             )}
           </Stack>
         </Box>
@@ -348,5 +347,5 @@ export const ContractPage = memo(
         />
       </Box>
     )
-  }
+  },
 )

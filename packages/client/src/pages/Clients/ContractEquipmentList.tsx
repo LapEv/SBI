@@ -5,6 +5,7 @@ import {
   ListItemButton,
   ListItemText,
   Modal,
+  useTheme,
 } from '@mui/material'
 import { IconPopoverButton, RotateButton } from 'components/Buttons'
 import { CheckBoxGroups } from 'components/CheckBoxGroup'
@@ -18,6 +19,7 @@ import { useClassifier } from 'hooks/classifier/useClassifier'
 import { useFilteredData } from 'hooks/useFilteredData'
 import { SwitchToClassifierPage } from './'
 import { IEquipmentList } from './interfaces'
+import { ITheme } from 'themes/themeConfig'
 
 export const ContractEquipmentList = memo(
   ({
@@ -43,6 +45,8 @@ export const ContractEquipmentList = memo(
       filterText,
       ['group'],
     )
+    const theme = useTheme() as ITheme
+
     const openEquipmentList = () => {
       setOpenEquipment(!openEquipment)
       getClassifierEquipments()
@@ -85,7 +89,7 @@ export const ContractEquipmentList = memo(
     }
 
     return (
-      <Box sx={{ width: '95%' }}>
+      <Box sx={{ width: '95%', mt: 1 }}>
         <Modal
           open={modal}
           onClose={() => setModal(false)}
@@ -101,14 +105,13 @@ export const ContractEquipmentList = memo(
         </Modal>
         <ListItemButton
           divider={openEquipment}
-          sx={classifierChild2Component}
+          sx={{
+            ...classifierChild2Component,
+            height: theme.fontSize === 'small' ? 30 : 40,
+          }}
           onClick={openEquipmentList}>
-          <ListItemText
-            primary={'Классификатор оборудования'}
-            sx={{ ml: 2 }}
-            primaryTypographyProps={{ fontSize: '1rem!important' }}
-          />
-          <RotateButton open={openEquipment} size={'2rem'} />
+          <ListItemText primary={'Классификатор оборудования'} sx={{ ml: 2 }} />
+          <RotateButton open={openEquipment} />
         </ListItemButton>
         <Collapse
           sx={{ width: '100%', p: 2, pl: 5, pr: 5 }}
@@ -120,10 +123,12 @@ export const ContractEquipmentList = memo(
               display: 'flex',
               justifyContent: 'flex-start',
               alignItems: 'center',
+              height: theme.fontSize === 'small' ? 30 : 40,
+              mt: 1,
             }}>
             <SelectMUI
               data={filterList}
-              props={{ height: 40 }}
+              props={{ height: theme.fontSize === 'small' ? 30 : 40 }}
               onChange={changeFilter}
               value={selectedFilter || filterFirstElement}
               label="Выберите фильтр"
@@ -135,16 +140,21 @@ export const ContractEquipmentList = memo(
                 onClick={AddNewEquipment}
                 icon={<AddCircleOutlineIcon />}
                 propsPopover={{ ml: -1 }}
-                sx={{ ...popoverIcon, mb: 0 }}
+                sx={{
+                  ...popoverIcon,
+                  width: theme.fontSize === 'small' ? 30 : 40,
+                  height: theme.fontSize === 'small' ? 30 : 40,
+                }}
               />
             )}
           </Box>
           <Box
             sx={{
-              maxHeight: '33vH',
+              maxHeight: '35vH',
               overflowX: 'hidden',
               overflowY: 'auto',
               height: 'auto',
+              mt: 2,
             }}>
             <CheckBoxGroups
               data={filteredData}

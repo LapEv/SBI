@@ -4,7 +4,7 @@ import {
   Login,
   User,
   ChangePasswordProps,
-  ChangeThemeProps,
+  ChangeAppProps,
   NewUser,
 } from 'storeAuth/interfaces'
 export interface AuthActions {
@@ -15,7 +15,7 @@ export interface AuthActions {
   updateProfile: (data: User) => void
   changeAvatar: (data: AvatarProps) => void
   changePassword: (data: ChangePasswordProps) => void
-  changeThemeOnServer: (data: ChangeThemeProps) => void
+  changeUserAppOptions: (options: ChangeAppProps) => void
   getUserInfo: (id: string) => void
   getFieldEngineers: () => void
   getDispatchers: () => void

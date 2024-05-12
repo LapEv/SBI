@@ -15,6 +15,7 @@ import { useRoles } from 'hooks/roles/useRoles'
 import { NewRole } from 'storeRoles/interfaces'
 import { DataList } from 'components/CheckBoxGroup/interface'
 import { Item } from 'components/CheckBoxGroup'
+import { ITheme } from 'themes/themeConfig'
 
 export const AddRole = memo(
   React.forwardRef<unknown, ChooseModalProps>(
@@ -25,7 +26,7 @@ export const AddRole = memo(
         [],
       )
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
-      const theme = useTheme()
+      const theme = useTheme() as ITheme
 
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
@@ -103,7 +104,12 @@ export const AddRole = memo(
                     label={label}
                     type={type}
                     variant="outlined"
-                    sx={{ width: '90%', m: 2, mt: 4, height: 40 }}
+                    sx={{
+                      width: '90%',
+                      m: 2,
+                      mt: 4,
+                      height: theme.fontSize === 'small' ? 30 : 40,
+                    }}
                     margin="normal"
                     required={required ?? true}
                     value={field.value || ''}
@@ -114,6 +120,10 @@ export const AddRole = memo(
               />
             )
           })}
+          <Typography variant={'body1'} sx={{ m: 2 }}>
+            Выберите группу для этой роли
+          </Typography>
+
           <Box
             sx={{
               width: '85%',

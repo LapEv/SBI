@@ -5,6 +5,7 @@ import {
   ListItemButton,
   ListItemText,
   Modal,
+  useTheme,
 } from '@mui/material'
 import { IconPopoverButton, RotateButton } from 'components/Buttons'
 import { Item } from 'components/CheckBoxGroup'
@@ -19,6 +20,7 @@ import { ModalTitles } from '../ControlRoom/Incidents/data'
 import { useIncidents } from 'hooks/incidents/useINC'
 import { NewIncidentStatus } from 'pages/ControlRoom/Incidents/Modals'
 import { IIncStatussesList } from './interfaces'
+import { ITheme } from 'themes/themeConfig'
 
 export const ContractIncStatussesList = memo(
   ({ incStatussesID, onChooseItems }: IIncStatussesList) => {
@@ -34,6 +36,7 @@ export const ContractIncStatussesList = memo(
       filterText,
       ['name'],
     )
+    const theme = useTheme() as ITheme
 
     const openIncStatussesList = () => {
       setOpenIncStatus(!openIncStatus)
@@ -60,7 +63,7 @@ export const ContractIncStatussesList = memo(
     }
 
     return (
-      <Box sx={{ width: '95%' }}>
+      <Box sx={{ width: '95%', mt: 1 }}>
         <Modal
           open={modal}
           onClose={() => setModal(false)}
@@ -74,14 +77,13 @@ export const ContractIncStatussesList = memo(
         </Modal>
         <ListItemButton
           divider={openIncStatus}
-          sx={classifierChild2Component}
+          sx={{
+            ...classifierChild2Component,
+            height: theme.fontSize === 'small' ? 30 : 40,
+          }}
           onClick={openIncStatussesList}>
-          <ListItemText
-            primary={'Уведолмения по статусам'}
-            sx={{ ml: 2 }}
-            primaryTypographyProps={{ fontSize: '1rem!important' }}
-          />
-          <RotateButton open={openIncStatus} size={'2rem'} />
+          <ListItemText primary={'Уведолмения по статусам'} sx={{ ml: 2 }} />
+          <RotateButton open={openIncStatus} />
         </ListItemButton>
         <Collapse
           sx={{ width: '100%', p: 2, pl: 5, pr: 5 }}
@@ -93,10 +95,16 @@ export const ContractIncStatussesList = memo(
               display: 'flex',
               justifyContent: 'flex-start',
               alignItems: 'center',
+              height: theme.fontSize === 'small' ? 30 : 40,
+              mt: 1,
             }}>
             <TextField
               variant="outlined"
-              sx={{ width: '90%', mt: 2, height: 40 }}
+              sx={{
+                width: '90%',
+                mt: 2,
+                height: theme.fontSize === 'small' ? 30 : 40,
+              }}
               label="Введите фильтр"
               margin="normal"
               value={filterText || ''}
@@ -111,21 +119,27 @@ export const ContractIncStatussesList = memo(
                 onClick={AddNewIncStatus}
                 icon={<AddCircleOutlineIcon />}
                 propsPopover={{ ml: -1 }}
-                sx={{ ...popoverIcon, mb: -1 }}
+                sx={{
+                  ...popoverIcon,
+                  width: theme.fontSize === 'small' ? 30 : 40,
+                  height: theme.fontSize === 'small' ? 30 : 40,
+                }}
               />
             )}
           </Box>
           <Box
             sx={{
-              maxHeight: '33vH',
+              maxHeight: '35vH',
               overflowX: 'hidden',
               overflowY: 'auto',
               height: 'auto',
+              mt: 2,
             }}>
             {filteredData?.map(({ name, id, initChecked, comment }) => (
               <Item
                 name={name}
                 id={`${id}`}
+                props={{ ml: 2 }}
                 comment={comment}
                 groupChecked={null}
                 onChooseItems={onChooseItems}

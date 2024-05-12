@@ -597,4 +597,9 @@ export const rolesStartData = [
     group: ['ADMIN', 'Dispatcher', 'FieldEngineers'],
     nameRole: 'Удаление аватара',
   },
+  {
+    role: 'changeUserAppOptions',
+    group: ['ADMIN', 'Dispatcher', 'FieldEngineers', 'Client'],
+    nameRole: 'Изменение настроек приложения',
+  },
 ]

@@ -1,7 +1,7 @@
 import React, { SyntheticEvent, memo } from 'react'
 import { ChooseModalProps } from './interfaces'
 import { useState, useEffect } from 'react'
-import { Box, TextField, Typography, useTheme } from '@mui/material'
+import { Box, Typography, useTheme } from '@mui/material'
 import { Item } from 'components/CheckBoxGroup'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useAddresses } from 'hooks/addresses/useAddresses'
@@ -9,6 +9,7 @@ import { useFilteredData } from 'hooks/useFilteredData'
 import { Regions } from 'store/slices/addresses/interfaces'
 import { modalStyle } from 'static/styles/modals'
 import { SearchIconElement } from 'components/Icons'
+import { TextField } from 'components/TextFields'
 
 export const DeleteRegion = memo(
   React.forwardRef<unknown, ChooseModalProps>(
@@ -84,7 +85,6 @@ export const DeleteRegion = memo(
           <Box
             ref={boxRef}
             sx={{
-              mt: 2,
               width: '100%',
               pl: 3,
               height: filterText ? height : 'auto',
@@ -96,6 +96,7 @@ export const DeleteRegion = memo(
                 groupChecked={false}
                 onChooseItems={onChooseItems}
                 key={id as string}
+                props={{ ml: 1 }}
               />
             ))}
           </Box>

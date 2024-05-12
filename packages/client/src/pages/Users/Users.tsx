@@ -45,9 +45,7 @@ export const UsersPage = memo(() => {
         />
       </Modal>
       <Box component="div" sx={headerForPages}>
-        <Typography sx={{ fontWeight: 'bold', fontSize: '2.375rem' }}>
-          Пользователи
-        </Typography>
+        <Typography variant="h6">Пользователи</Typography>
         {admin && (
           <DropDownMenu
             popover={'Добавить/Удалить'}

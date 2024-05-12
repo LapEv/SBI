@@ -24,7 +24,7 @@ export interface IItem extends DataList {
   onChooseItems: (checked: boolean, id: string) => void
   initChecked?: boolean
   oneChecked?: boolean
-  props?: object
+  props?: Record<string, unknown>
 }
 
 export interface ICheckBoxGroupData {

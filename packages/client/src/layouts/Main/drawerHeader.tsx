@@ -1,8 +1,9 @@
 import { FC, memo } from 'react'
 import { styled } from '@mui/material/styles'
-import { IconButton, Typography, Box } from '@mui/material'
+import { IconButton, Typography, Box, useTheme } from '@mui/material'
 import { LeftArrow, RightArrow } from 'layouts/Main/icons'
 import { DrawerHeaderProps } from './interfaces'
+import { ThemeMode } from 'themes/themeConfig'
 
 export const DrawerHeader: FC<DrawerHeaderProps> = memo(
   ({ open, toggleDrawer }) => {
@@ -18,26 +19,20 @@ export const DrawerHeader: FC<DrawerHeaderProps> = memo(
       padding: theme.spacing(0, 1),
       ...theme.mixins.toolbar,
     }))
-
-    const MUITypography = styled(Typography)(({ theme }) => ({
-      fontWeight: 'bold',
-      fontSize: '1.975rem',
-      zIndex: 1,
-      backgroundColor: theme.palette.background.default,
-    }))
+    const theme = useTheme()
 
     return (
       <DrawerHeader
         sx={{
           minWidth: '100%',
           mt: 0,
-          minHeight: '59.5px!important',
+          minHeight: '0px!important',
           zIndex: 1,
           boxShadow: 5,
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          pl: open ? 2 : 1,
+          pl: open ? 3 : 0,
           pr: 2,
         }}>
         <Box
@@ -47,7 +42,19 @@ export const DrawerHeader: FC<DrawerHeaderProps> = memo(
             justifyContent: 'space-around',
             alignItems: 'center',
           }}>
-          {open ? <MUITypography>SBI</MUITypography> : <></>}
+          {open ? (
+            <Typography variant="h6">SBI</Typography>
+          ) : (
+            <Typography
+              variant="h6"
+              sx={{
+                zIndex: -1,
+                color:
+                  theme.palette.mode === ThemeMode.dark ? '#1E515D' : '#C1EEE1',
+              }}>
+              .
+            </Typography>
+          )}
         </Box>
 
         <IconButton onClick={() => toggleDrawer(!open)}>
@@ -55,5 +62,5 @@ export const DrawerHeader: FC<DrawerHeaderProps> = memo(
         </IconButton>
       </DrawerHeader>
     )
-  }
+  },
 )

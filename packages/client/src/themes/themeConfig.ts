@@ -1,4 +1,4 @@
-import { ThemeOptions } from '@mui/material/styles'
+import { Theme, ThemeOptions } from '@mui/material/styles'
 import { red } from '@mui/material/colors'
 import { PaletteMode } from '@mui/material'
 
@@ -7,14 +7,59 @@ export const ThemeMode = {
   dark: 'dark',
 }
 
-export const ThemeConfig = (mode: PaletteMode) =>
+interface ThemeModeProps {
+  mode: PaletteMode
+  fontSize: string
+}
+
+export interface ITheme extends Theme {
+  fontSize: string
+}
+
+export const ThemeConfig = ({ mode, fontSize }: ThemeModeProps) =>
   ({
+    fontSize,
     typography: {
       fontFamily: 'Raleway',
+      fontSize: fontSize === 'small' ? 12 : 16,
+      color: mode === ThemeMode.light ? '#1E515D' : '#FFFFFF',
       button: {
         textTransform: 'none',
+        fontSize: fontSize === 'small' ? 11 : 15,
+        fontWeight: 'bold',
       },
+      body1: {
+        fontSize: fontSize === 'small' ? 12 : 16,
+        fontWeight: 'bold',
+        color: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+      },
+      body2: {
+        fontSize: fontSize === 'small' ? 11 : 15,
+        fontWeight: 'bold',
+        color: mode === ThemeMode.light ? '#000000' : '#FFFFFF',
+      },
+      h6: {
+        fontSize: fontSize === 'small' ? 24 : 32,
+        fontWeight: 'bold',
+        color: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+      },
+      // body2: {
+      //   fontSize,
+      //   fontWeight: 'bold',
+      //   color: mode === ThemeMode.light ? '#1E515D' : '#FFFFFF',
+      // },
+      // subtitle1: {
+      //   fontSize,
+      //   fontWeight: 'bold',
+      //   color: mode === ThemeMode.light ? '#1E515D' : '#FFFFFF',
+      // },
+      // subtitle2: {
+      //   fontSize,
+      //   fontWeight: 'bold',
+      //   color: mode === ThemeMode.light ? '#1E515D' : '#FFFFFF',
+      // },
     },
+    spacing: fontSize === 'large' ? 8 : 4,
     palette: {
       mode,
       ...(mode === ThemeMode.light
@@ -53,6 +98,9 @@ export const ThemeConfig = (mode: PaletteMode) =>
             border: {
               default: '#000000',
             },
+            info: {
+              main: 'rgba(193,238,225,0.2)',
+            },
           }
         : {
             text: {
@@ -89,16 +137,27 @@ export const ThemeConfig = (mode: PaletteMode) =>
             border: {
               default: '#FFFFFF',
             },
+            info: {
+              main: 'rgba(30,81,93,0.2)',
+            },
           }),
     },
     components: {
-      MuiTypography: {
-        defaultProps: {
-          fontWeight: 'bold',
-          fontSize: '0.975rem',
-          color: mode === ThemeMode.light ? '#1E515D' : '#FFFFFF',
+      MuiInputBase: {
+        styleOverrides: {
+          root: {
+            height: fontSize === 'small' ? 30 : 40,
+          },
         },
       },
+      MuiListItem: {
+        styleOverrides: {
+          root: {
+            height: fontSize === 'small' ? 40 : 50,
+          },
+        },
+      },
+
       MuiContainer: {
         styleOverrides: {
           root: {

@@ -25,9 +25,7 @@ export const ProfilePage = memo(() => {
         </>
       </Modal>
       <Box component="div" sx={headerForPages}>
-        <Typography sx={{ fontWeight: 'bold', fontSize: '2.375rem' }}>
-          Пользователи
-        </Typography>
+        <Typography variant="h6">Профиль</Typography>
       </Box>
       <ProfileMain
         setModal={() => setModal(prev => !prev)}

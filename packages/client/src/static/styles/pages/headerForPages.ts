@@ -6,7 +6,6 @@ export const mainHeaderForPages = {
   justifyContent: 'flex-start',
   alignItems: 'center',
   overflowX: 'hidden',
-  fontSize: 14,
 }
 
 export const mainHeaderForINCPage = {
@@ -24,7 +23,6 @@ export const headerForPages = {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  height: 60,
   pl: 5,
   pr: 2,
   boxShadow: 5,

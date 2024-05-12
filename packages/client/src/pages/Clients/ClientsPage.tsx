@@ -32,7 +32,6 @@ export const ClientsPage = memo(() => {
     getClients()
   }, [])
 
-  console.log('clients = ', clients)
   return (
     <Container component="main" maxWidth="md" sx={mainHeaderForPages}>
       <Modal
@@ -48,9 +47,7 @@ export const ClientsPage = memo(() => {
         />
       </Modal>
       <Box component="div" sx={headerForPages}>
-        <Typography sx={{ fontWeight: 'bold', fontSize: '2.375rem' }}>
-          Клиенты
-        </Typography>
+        <Typography variant="h6">Клиенты</Typography>
         {admin && (
           <DropDownMenu
             popover={'Добавить/Удалить'}

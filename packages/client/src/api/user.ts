@@ -5,12 +5,12 @@ import {
   SignUp,
   User,
   ChangePasswordProps,
-  ChangeThemeProps,
   AvatarProps,
   UserStatus,
   delData,
   ICheckUser,
   NewUser,
+  ChangeAppProps,
 } from 'storeAuth/interfaces'
 import { authhost, host, ApiEndPoints, authFileHost } from './config'
 import axios from 'axios'
@@ -315,19 +315,25 @@ export const changePassword = createAsyncThunk(
   },
 )
 
-export const ChangeTheme = createAsyncThunk(
-  'user/changeTheme',
-  async (value: ChangeThemeProps, thunkAPI) => {
+export const changeUserAppOptions = createAsyncThunk(
+  'user/changeUserAppOptions',
+  async (appOptions: ChangeAppProps, thunkAPI) => {
     try {
-      const { data } = await authhost.post<ChangeThemeProps>(
-        ApiEndPoints.User.ChangeTheme,
-        value,
+      const { data } = await authhost.post<User>(
+        ApiEndPoints.User.ChangeUserAppOptions,
+        appOptions,
       )
-      return data
+      return {
+        data,
+        message: {
+          text: 'Настройки изменены!',
+          type: 'success',
+        },
+      }
     } catch (error) {
       if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
         return thunkAPI.rejectWithValue(
-          `Не удалось обновить данные темы: \n${
+          `Не удалось обновить настройки приложения: \n${
             error.response?.data.message ?? error.response?.data
           }`,
         )

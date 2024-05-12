@@ -14,12 +14,13 @@ import { ButtonsModalSection } from 'components/Buttons'
 import { useRoles } from 'hooks/roles/useRoles'
 import { NewRolesGroup } from 'storeRoles/interfaces'
 import { Item } from 'components/CheckBoxGroup'
+import { ITheme } from 'themes/themeConfig'
 
 export const AddRolesGroup = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
       const [{ roles }, { newRolesGroup, getRolesGroup, getRoles }] = useRoles()
-      const theme = useTheme()
+      const theme = useTheme() as ITheme
       const [selectedRoles, setSelectedRoles] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
       const { handleSubmit, control } = useForm<AddValuesProps>({
@@ -85,7 +86,12 @@ export const AddRolesGroup = memo(
                     label={label}
                     type={type}
                     variant="outlined"
-                    sx={{ width: '90%', m: 2, mt: 4, height: 40 }}
+                    sx={{
+                      width: '90%',
+                      m: 2,
+                      mt: 4,
+                      height: theme.fontSize === 'small' ? 30 : 40,
+                    }}
                     margin="normal"
                     required={required ?? true}
                     value={field.value || ''}
@@ -96,6 +102,10 @@ export const AddRolesGroup = memo(
               />
             )
           })}
+          <Typography variant={'body1'} sx={{ m: 2 }}>
+            Выберите роли
+          </Typography>
+
           <Box sx={boxDataModal}>
             {roles.map(item => (
               <Item
@@ -103,6 +113,7 @@ export const AddRolesGroup = memo(
                 id={`${item.id}`}
                 onChooseItems={setRoles}
                 key={item.id}
+                props={{ ml: theme.fontSize === 'small' ? 7 : 0 }}
               />
             ))}
           </Box>

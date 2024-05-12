@@ -11,7 +11,6 @@ const CustomSelect = styled(Select)(({ theme }) => ({
   padding: '0!important',
   paddingLeft: '7px!important',
   paddingRight: '7px!important',
-  fontSize: 16,
   borderWidth: 2,
   color: theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
   borderColor: theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
@@ -58,11 +57,14 @@ const CustomFormControl = styled(FormControl)(({ theme }) => ({
 }))
 
 const CustomMenuItem = styled(MenuItem)(({ theme }) => ({
+  color: theme.palette.mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
+
   '&.Mui-selected': {
     backgroundColor:
-      theme.palette.mode === ThemeMode.light
+      theme.palette.mode === ThemeMode.dark
         ? 'rgba(222, 240, 235, 0.08)'
         : 'rgba(0, 0, 0, 0.08)',
+    color: theme.palette.mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
   },
   '&.Mui-focusVisible': {
     backgroundColor:
@@ -108,5 +110,5 @@ export const SelectMUI = memo(
         </CustomSelect>
       </CustomFormControl>
     )
-  }
+  },
 )

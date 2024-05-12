@@ -25,6 +25,7 @@ import {
   updateUser,
   newUser,
   deleteAvatar,
+  changeUserAppOptions,
 } from 'api/user'
 import {
   changeAddress,
@@ -329,6 +330,19 @@ export const messageSlise = createSlice({
       state.isLoadingMessage = true
     })
     builder.addCase(deleteAvatar.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(changeUserAppOptions.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeUserAppOptions.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeUserAppOptions.rejected, (state, { payload }) => {
       state.isLoadingMessage = false
       state.type = 'error'
       state.text = payload as string

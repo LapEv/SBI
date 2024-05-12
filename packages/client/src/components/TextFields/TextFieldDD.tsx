@@ -1,9 +1,9 @@
 import { TextField as MuiTextField, styled } from '@mui/material'
-import { ThemeMode, ITheme } from 'themes/themeConfig'
+import { ITheme, ThemeMode } from 'themes/themeConfig'
 
-export const TextField = styled(MuiTextField)(({ theme }) => ({
+export const TextFieldDD = styled(MuiTextField)(({ theme }) => ({
   '.MuiInputLabel-root': {
-    top: -7,
+    top: 0,
     marginTop: 0,
     color: theme.palette.mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
     '&.Mui-focused': {

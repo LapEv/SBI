@@ -10,18 +10,22 @@ import { SearchIconElement } from 'components/Icons'
 import { TextField } from 'components/TextFields'
 import { useSLA } from 'hooks/sla/useSLA'
 import { SLA } from 'store/slices/sla/interfaces'
+import { ITheme } from 'themes/themeConfig'
 
 export const DeleteSLA = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
       const boxRef = React.createRef<HTMLDivElement>()
-      const [height, setHeight] = useState<string>('')
       const [{ sla }, { deleteSLA, getSLA }] = useSLA()
       const [selectedSLA, setSelectedSLA] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
       const [filterText, setFilterText] = useState<string>('')
-      const filteredSLA = useFilteredData<SLA>(sla, filterText, ['sla'])
-      const theme = useTheme()
+      const [data, setData] = useState<SLA[]>([])
+      const filteredSLA = useFilteredData<SLA>(data, filterText, [
+        'sla',
+        'types',
+      ])
+      const theme = useTheme() as ITheme
 
       const changeData = (event: SyntheticEvent<EventTarget>) => {
         event.preventDefault()
@@ -44,15 +48,16 @@ export const DeleteSLA = memo(
 
       useEffect(() => {
         getSLA()
-        if (boxRef.current) {
-          setHeight(boxRef.current.offsetHeight.toString())
-        }
       }, [])
 
+      useEffect(() => {
+        const newData = sla.map(item => {
+          return { ...item, types: item.TypesOfWork.typeOfWork }
+        })
+        setData(newData)
+      }, [sla])
+
       const setText = (text: string) => {
-        if (!height && boxRef.current) {
-          setHeight(boxRef.current.offsetHeight.toString())
-        }
         setFilterText(text)
       }
 
@@ -66,7 +71,7 @@ export const DeleteSLA = memo(
           <Typography variant={'h6'}>{title}</Typography>
           <TextField
             variant="outlined"
-            sx={{ width: '90%', mt: 2, height: 40 }}
+            sx={{ width: '90%', mt: 2 }}
             label="Введите фильтр"
             margin="normal"
             value={filterText || ''}
@@ -75,9 +80,7 @@ export const DeleteSLA = memo(
               endAdornment: <SearchIconElement />,
             }}
           />
-          <Box
-            ref={boxRef}
-            sx={{ ...boxDataModal, height: filterText ? height : 'auto' }}>
+          <Box ref={boxRef} sx={boxDataModal}>
             {filteredSLA.map(({ sla, id, TypesOfWork }) => (
               <Item
                 name={sla}
@@ -86,6 +89,7 @@ export const DeleteSLA = memo(
                 groupChecked={false}
                 onChooseItems={onChooseItems}
                 key={id as string}
+                props={{ ml: theme.fontSize === 'small' ? 3 : 0 }}
               />
             ))}
           </Box>

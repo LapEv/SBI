@@ -25,10 +25,11 @@ import { User } from 'storeAuth/interfaces'
 import { AvatarBox } from 'components/AvatarBox'
 import { useFiles } from 'hooks/files/useFiles'
 import { Files } from 'store/slices/files/interfaces'
+import { ITheme } from 'themes/themeConfig'
 
 export const ProfileData = memo((user: User) => {
   const modalRef = React.createRef()
-  const theme = useTheme()
+  const theme = useTheme() as ITheme
   const [
     { admin, userData, userInfo, avatar },
     { updateUserData, deleteUser, updateUser },
@@ -137,10 +138,7 @@ export const ProfileData = memo((user: User) => {
   }, [])
 
   return (
-    <Box
-      component="form"
-      onSubmit={handleSubmit(changeData)}
-      sx={{ '& .MuiTextField-root': { m: 0.5, width: '55ch' } }}>
+    <Box component="form" onSubmit={handleSubmit(changeData)}>
       {userData?.Files?.length ? (
         <AvatarBox
           src={`${avatar.length ? JSON.parse(avatar).data : ''}` as string}
@@ -172,7 +170,11 @@ export const ProfileData = memo((user: User) => {
                 required
                 disabled={!admin}
                 variant="outlined"
-                sx={{ width: '88%', m: 2, mt: 2.5, height: 60 }}
+                sx={{
+                  width: '88%',
+                  mt: 2,
+                  height: theme.fontSize === 'small' ? 40 : 50,
+                }}
                 margin="normal"
                 onChange={(event: ChangeEvent<HTMLInputElement>) => (
                   field.onChange(event),
@@ -204,16 +206,20 @@ export const ProfileData = memo((user: User) => {
           </Modal>
           <ListItemButton
             sx={{
-              fontSize: 12,
               color: theme.palette.text.secondary,
-              width: '91%',
+              width: '88%',
+              height: theme.fontSize === 'small' ? 40 : 50,
             }}
             onClick={handleClick}>
-            <RotateButton open={open} handleClick={handleClick} size={'2rem'} />
+            <RotateButton open={open} handleClick={handleClick} />
             Дополнительно
           </ListItemButton>
           <Collapse
-            sx={{ width: '90%', ml: 5, height: 'auto' }}
+            sx={{
+              width: '90%',
+              ml: 5,
+              height: theme.fontSize === 'small' ? 40 : 50,
+            }}
             in={open}
             timeout="auto"
             unmountOnExit>

@@ -22,6 +22,8 @@ import { Options } from 'components/DropDown/interface'
 import { useObjects } from 'hooks/objects/useObjects'
 import { useClients } from 'hooks/clients/useClients'
 import { ModalAddAddressInObject } from './'
+import { useTheme } from '@emotion/react'
+import { ITheme } from 'themes/themeConfig'
 
 export const AddObject = memo(
   React.forwardRef<unknown, ChooseModalProps>(
@@ -39,6 +41,7 @@ export const AddObject = memo(
       const [newAddressName, setNewAddress] = useState<string>('')
       const [modal, setModal] = useState<boolean>(false)
       const modalAddRef = React.createRef()
+      const theme = useTheme() as ITheme
 
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
@@ -54,7 +57,7 @@ export const AddObject = memo(
 
       const changeData = ({ list }: AddValuesProps) => {
         const isExistObject = objects.find(
-          item => item.object === list[0].value
+          item => item.object === list[0].value,
         )
         if (isExistObject) {
           setMessage({
@@ -64,7 +67,7 @@ export const AddObject = memo(
           return
         }
         const isExistIntNumber = objects.find(
-          item => item.internalClientID === list[1].value
+          item => item.internalClientID === list[1].value,
         )
         if (isExistIntNumber) {
           setMessage({
@@ -74,7 +77,7 @@ export const AddObject = memo(
           return
         }
         const isExistInt = objects.find(
-          item => item.internalClientName === list[2].value
+          item => item.internalClientName === list[2].value,
         )
         if (isExistInt) {
           setMessage({
@@ -134,7 +137,7 @@ export const AddObject = memo(
       useEffect(() => {
         if (!address.id && address.label) {
           const isAddress = addresses.find(
-            item => item.address === address.label
+            item => item.address === address.label,
           )
           if (isAddress) {
             setAddress({
@@ -177,38 +180,40 @@ export const AddObject = memo(
               label="Выберите клиента"
               errorLabel="Не выбран клиент!"
             />
-            <Box sx={{ mt: 1, width: '90%' }}>
-              {fields.map(
-                ({ id, label, validation, type, required }, index) => {
-                  return (
-                    <Controller
-                      key={id}
-                      control={control}
-                      name={`list.${index}.value`}
-                      // {...register(`list.${index}.value`)}
-                      rules={validation}
-                      render={({ field }) => (
-                        <TextField
-                          {...field}
-                          inputRef={field.ref}
-                          label={label}
-                          type={type}
-                          variant="outlined"
-                          required={required ?? true}
-                          sx={{ width: '100%', mt: 3, height: 40 }}
-                          margin="normal"
-                          value={field.value || ''}
-                          error={!!(errors?.list ?? [])[index]?.value?.message}
-                          helperText={
-                            (errors?.list ?? [])[index]?.value?.message
-                          }
-                        />
-                      )}
+            {fields.map(({ id, label, validation, type, required }, index) => {
+              return (
+                <Controller
+                  key={id}
+                  control={control}
+                  name={`list.${index}.value`}
+                  rules={validation}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      inputRef={field.ref}
+                      label={label}
+                      type={type}
+                      variant="outlined"
+                      required={required ?? true}
+                      sx={{
+                        width: '90%',
+                        height: theme.fontSize === 'small' ? 30 : 40,
+                        mt:
+                          index === 0
+                            ? theme.fontSize === 'small'
+                              ? 7
+                              : 6
+                            : 5,
+                      }}
+                      margin="normal"
+                      value={field.value || ''}
+                      error={!!(errors?.list ?? [])[index]?.value?.message}
+                      helperText={(errors?.list ?? [])[index]?.value?.message}
                     />
-                  )
-                }
-              )}
-            </Box>
+                  )}
+                />
+              )
+            })}
             <DropDown
               data={addresses.map(item => {
                 return {
@@ -216,7 +221,7 @@ export const AddObject = memo(
                   ['id']: item.id as string,
                 }
               })}
-              props={{ mt: 3 }}
+              props={{ mt: 5 }}
               onBlur={checkAddress}
               onChange={setAddress}
               value={address.label}
@@ -231,7 +236,7 @@ export const AddObject = memo(
                   ['id']: item.id as string,
                 }
               })}
-              props={{ mt: 4 }}
+              props={{ mt: 6 }}
               onChange={setRegion}
               value={region.label}
               label="Выберите регион"
@@ -245,6 +250,6 @@ export const AddObject = memo(
           </Box>
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

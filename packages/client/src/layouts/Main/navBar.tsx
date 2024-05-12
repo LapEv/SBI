@@ -26,7 +26,7 @@ export const NavBar = memo(() => {
   const AppBar = styled(MuiAppBar)(({ theme }) => ({
     zIndex: theme.zIndex.drawer + 1,
     backgroundColor: theme.palette.background.default,
-    height: 60,
+    // height: 60,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.complex,
@@ -36,14 +36,7 @@ export const NavBar = memo(() => {
   return (
     <AppBar position="fixed" sx={{ zIndex: 1, display: 'none' }}>
       <Toolbar>
-        <Typography
-          variant="h6"
-          component="div"
-          sx={{
-            flexGrow: 1,
-            fontWeight: 'bold',
-            fontSize: '2.375rem',
-          }}>
+        <Typography variant="h6" component="div">
           SBI
         </Typography>
         {menuData.map(value => (

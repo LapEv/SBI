@@ -1,53 +1,31 @@
-import { createContext, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
 import { ThemeConfig } from './themeConfig'
 import App from '../App'
 import { useAuth } from 'hooks/auth/useAuth'
 
-export const ColorModeContext = createContext({
-  toggleColorMode: (id: string | undefined) => {
-    id
-  },
-})
-
 export default function ToggleColorMode() {
   const [mode, setMode] = useState<'light' | 'dark'>('light')
-  const [, { changeThemeOnServer }] = useAuth()
+  const [fontSize, setFontSize] = useState<string>('large')
+  const [{ user }] = useAuth()
 
   useEffect(() => {
-    const localStorageTheme =
-      typeof window !== 'undefined'
-        ? (localStorage.getItem('theme') as 'light' | 'dark')
-        : 'light'
-    setMode(localStorageTheme ?? 'light')
-  }, [])
+    setMode(user.appOptions?.theme ?? 'light')
+  }, [user.appOptions?.theme])
 
-  const colorMode = useMemo(
-    () => ({
-      toggleColorMode: (id: string | undefined) => {
-        setMode(prevMode => {
-          const theme = prevMode === 'light' ? 'dark' : 'light'
-          localStorage.setItem('theme', theme)
-          if (id) {
-            changeThemeOnServer({
-              id: id,
-              theme: prevMode === 'light' ? 'dark' : 'light',
-            })
-          }
-          return theme
-        })
-      },
-    }),
-    [],
+  useEffect(() => {
+    setFontSize(user.appOptions?.font ?? 'large')
+  }, [user.appOptions?.font])
+
+  const theme = useMemo(
+    () => createTheme(ThemeConfig({ mode, fontSize })),
+    [mode, fontSize],
   )
-  const theme = useMemo(() => createTheme(ThemeConfig(mode)), [mode])
 
   return (
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <App />
-      </ThemeProvider>
-    </ColorModeContext.Provider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <App />
+    </ThemeProvider>
   )
 }

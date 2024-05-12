@@ -26,7 +26,7 @@ export type HandleNoSubmit = {
 
 export interface IEditButton {
   handleClick?: (event: SyntheticEvent<EventTarget>) => void
-  size: string
+  size?: string
 }
 
 export type FabProps = PropsWithChildren<{
@@ -57,5 +57,5 @@ export interface IconButtonTooltipProps {
 export interface IRotateButton {
   open: boolean
   handleClick?: () => void
-  size: string
+  size?: string
 }

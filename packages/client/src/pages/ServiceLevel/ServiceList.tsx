@@ -2,15 +2,18 @@ import { memo, useEffect, useState } from 'react'
 import { Box, ListItemText, ListItemButton } from '@mui/material'
 import Collapse from '@mui/material/Collapse'
 import { RotateButton } from 'components/Buttons'
-import { IServiceList, IServiceListData } from 'store/slices/sla/interfaces'
+import { IServiceList, IServiceListDataPage } from 'store/slices/sla/interfaces'
 import { useSLA } from 'hooks/sla/useSLA'
 import { classifier, classifierComponent } from 'static/styles'
 import { SLAList } from '.'
+import { useTheme } from '@emotion/react'
+import { ITheme } from 'themes/themeConfig'
 
 export const ServiceList = memo(({ name, label }: IServiceList) => {
   const [{ sla, ola, activeList }, { setActiveList, getSLA, getOLA }] = useSLA()
   const [open, setOpen] = useState<boolean>(false)
-  const [data, setData] = useState<IServiceListData[]>([])
+  const [data, setData] = useState<IServiceListDataPage[]>([])
+  const theme = useTheme() as ITheme
 
   const handleClick = () => {
     setOpen(!open)
@@ -88,12 +91,12 @@ export const ServiceList = memo(({ name, label }: IServiceList) => {
     <Box sx={classifier}>
       <ListItemButton
         divider={open}
-        sx={classifierComponent}
+        sx={{
+          ...classifierComponent,
+          height: theme.fontSize === 'small' ? 40 : 50,
+        }}
         onClick={handleClick}>
-        <ListItemText
-          primary={label}
-          primaryTypographyProps={{ fontSize: '1.375rem!important' }}
-        />
+        <ListItemText primary={label} />
         <RotateButton open={open} handleClick={handleClick} size={'2rem'} />
       </ListItemButton>
       <Collapse
@@ -124,6 +127,7 @@ export const ServiceList = memo(({ name, label }: IServiceList) => {
               TypesOfWork={TypesOfWork}
               id={id as string}
               key={`${id}`}
+              height={theme.fontSize === 'small' ? 40 : 50}
             />
           ),
         )}

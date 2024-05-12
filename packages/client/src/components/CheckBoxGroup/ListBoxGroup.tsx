@@ -40,7 +40,6 @@ export const ListBoxGroup = memo(
           divider={open}
           sx={{
             fontWeight: 'bold',
-            fontSize: '1rem',
             width: '100%',
             display: 'flex',
             flexDirection: 'row',
@@ -50,15 +49,8 @@ export const ListBoxGroup = memo(
           }}
           onClick={handleClick}>
           <>
-            <ListItemText
-              primary={groupName}
-              primaryTypographyProps={{ fontSize: '1rem!important' }}
-            />
-            <RotateButton
-              open={open}
-              handleClick={handleClick}
-              size={'1.5rem'}
-            />
+            <ListItemText primary={groupName} />
+            <RotateButton open={open} handleClick={handleClick} />
           </>
         </ListItemButton>
         <Collapse
@@ -79,5 +71,5 @@ export const ListBoxGroup = memo(
         </Collapse>
       </Box>
     )
-  }
+  },
 )

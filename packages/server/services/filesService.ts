@@ -85,7 +85,7 @@ export class filesService {
       await FilesRepos.bulkCreate(uploadedFiles)
       res.status(200).json(uploadedFiles)
     } catch (err) {
-      res.status(500).json({ error: ['db error', err as Error] })
+      res.status(500).json({ error: ['db error:', err as Error] })
     }
   }
   uploadAvatars = async (_req: Request, res: Response) => {

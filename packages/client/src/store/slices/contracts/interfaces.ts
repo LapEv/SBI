@@ -24,6 +24,10 @@ export interface Contracts {
   IncindentStatuses?: INCStatuses[] | []
 }
 
+export interface ContractsPage extends Contracts {
+  height: number
+}
+
 export interface IContractData {
   id?: string
   contract: string

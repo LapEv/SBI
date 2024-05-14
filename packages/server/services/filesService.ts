@@ -7,7 +7,7 @@ import { FileArray, UploadedFile } from 'express-fileupload'
 import { IUser } from '/models/users'
 import { include } from './userService'
 import { AppConst } from '../data/const'
-dotenv.config()
+dotenv.config({ path: '../../../.env' })
 
 const isEmptyDir = async (dir: string, id: string) => {
   if (!fs.existsSync(dir)) {

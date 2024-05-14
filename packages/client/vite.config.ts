@@ -3,8 +3,9 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 import dotenv from 'dotenv'
 
-dotenv.config()
+dotenv.config({ path: '../../.env' })
 export default defineConfig(({ mode }) => {
+  console.log('mode = ', mode)
   return {
     server: {
       port: Number(process.env.CLIENT_PORT) || 3000,

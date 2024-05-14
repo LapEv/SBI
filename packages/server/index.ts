@@ -11,7 +11,7 @@ import fileUpload from 'express-fileupload'
 
 async function init() {
   await dbConnect()
-  dotenv.config()
+  dotenv.config({ path: '../../.env' })
   const app = express()
   app.use(
     fileUpload({

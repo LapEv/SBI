@@ -39,7 +39,7 @@ import { files } from './models/files'
 import dotenv from 'dotenv'
 import { isDev } from './data/app'
 
-dotenv.config()
+dotenv.config({ path: '../../.env' })
 
 const {
   POSTGRES_USER,

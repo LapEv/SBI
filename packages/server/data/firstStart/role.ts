@@ -132,14 +132,9 @@ export const rolesStartData = [
     nameRole: 'Добавление нового дивизиона',
   },
   {
-    role: 'deleteDivision',
-    group: ['ADMIN'],
-    nameRole: 'Удаление дивизиона',
-  },
-  {
     role: 'updateDivision',
     group: ['ADMIN'],
-    nameRole: 'Перемещение дивизиона в архив',
+    nameRole: 'Изменение данных дивизиона',
   },
   {
     role: 'newDepartment',
@@ -147,14 +142,9 @@ export const rolesStartData = [
     nameRole: 'Добавление нового отдела',
   },
   {
-    role: 'deleteDepartment',
-    group: ['ADMIN'],
-    nameRole: 'Удаление отдела',
-  },
-  {
     role: 'updateDepartment',
     group: ['ADMIN'],
-    nameRole: 'Перемещение отдела в архив',
+    nameRole: 'Изменение данных отдела',
   },
   {
     role: 'updateUser',

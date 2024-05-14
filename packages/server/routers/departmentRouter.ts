@@ -46,6 +46,11 @@ export const departmentRouter = (apiRouter: Router) => {
     roleMiddleware(['updateDepartment', 'SUPERADMIN']),
     service.updateDepartment,
   )
+  router.post(
+    '/changeNameDepartment',
+    roleMiddleware(['changeNameDepartment', 'SUPERADMIN']),
+    service.changeNameDepartment,
+  )
 
   apiRouter.use('/structure', router)
 }

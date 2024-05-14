@@ -152,4 +152,22 @@ export class divisionService {
       res.status(500).json({ error: ['db error', err as Error] })
     }
   }
+  changeNameDivision = async (_req: Request, res: Response) => {
+    const { id, division, divisionName } = _req.body
+    try {
+      await DivisionRepos.update(id, {
+        division,
+        divisionName,
+      })
+      const divisions = await DivisionRepos.findAll({
+        where: { active: true },
+        order,
+        include,
+        attributes,
+      })
+      res.status(200).json(divisions)
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
+    }
+  }
 }

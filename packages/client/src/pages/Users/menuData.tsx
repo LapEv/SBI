@@ -76,4 +76,14 @@ export const menuData = [
     title: 'Изменить название роли',
     icon: <DisplaySettings fontSize="medium" />,
   },
+  {
+    name: 'ChangeNameDivision',
+    title: 'Изменить название дивизиона',
+    icon: <DisplaySettings fontSize="medium" />,
+  },
+  {
+    name: 'ChangeNameDepartment',
+    title: 'Изменить название отдела',
+    icon: <DisplaySettings fontSize="medium" />,
+  },
 ]

@@ -6,7 +6,7 @@ export const divisionStartData = [
   },
   {
     division: 'ServiceDepartment',
-    divisionName: 'Отдел cервисного обслуживания',
+    divisionName: 'Отдел сервисного обслуживания',
     active: true,
   },
   {

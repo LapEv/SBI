@@ -10,6 +10,7 @@ import { TextField } from 'components/TextFields'
 import { useFilteredData } from 'hooks/useFilteredData'
 import { SearchIconElement } from 'components/Icons'
 import { RolesGroup } from 'storeRoles/interfaces'
+import { ITheme } from 'themes/themeConfig'
 
 export const DeleteRolesGroup = memo(
   React.forwardRef<unknown, ChooseModalProps>(
@@ -24,7 +25,7 @@ export const DeleteRolesGroup = memo(
         filterText,
         ['groupName', 'group'],
       )
-      const theme = useTheme()
+      const theme = useTheme() as ITheme
 
       const changeData = (event: SyntheticEvent<EventTarget>) => {
         event.preventDefault()

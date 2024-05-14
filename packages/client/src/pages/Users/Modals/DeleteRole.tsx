@@ -10,6 +10,7 @@ import { SearchIconElement } from 'components/Icons'
 import { TextField } from 'components/TextFields'
 import { useFilteredData } from 'hooks/useFilteredData'
 import { Roles } from 'storeRoles/interfaces'
+import { ITheme } from 'themes/themeConfig'
 
 export const DeleteRole = memo(
   React.forwardRef<unknown, ChooseModalProps>(
@@ -22,7 +23,7 @@ export const DeleteRole = memo(
         'nameRole',
         'role',
       ])
-      const theme = useTheme()
+      const theme = useTheme() as ITheme
 
       const changeData = (event: SyntheticEvent<EventTarget>) => {
         event.preventDefault()

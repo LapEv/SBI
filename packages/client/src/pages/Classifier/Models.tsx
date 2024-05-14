@@ -17,12 +17,13 @@ import { Item } from 'components/CheckBoxGroup'
 import { DataList } from 'components/CheckBoxGroup/interface'
 import { ModalChangeName } from 'components/ModaQuestions'
 import { isEqualArrObjects } from 'utils/isEqualArrObjects'
+import { ITheme } from 'themes/themeConfig'
 
 export const Models = memo(
   ({ model, id, typicalModels, TypicalMalfunctions }: ClassifierModels) => {
     const [{ activeModel }, { setActiveModel, changeClassifierModel }] =
       useClassifier()
-    const theme = useTheme()
+    const theme = useTheme() as ITheme
     const modalRef = React.createRef()
     const [open, setOpen] = useState(false)
     const [data, setData] = useState<DataList[]>([])
@@ -45,7 +46,7 @@ export const Models = memo(
         model,
         id: id as string,
         selectedTypicalMalfunctions: selectedTypicalMalfunction.map(
-          ({ id }) => id
+          ({ id }) => id,
         ) as string[],
       })
       setDisabled(true)
@@ -70,13 +71,13 @@ export const Models = memo(
       if (checked) {
         const modelList = [...selectedTypicalMalfunction]
         const newModel = TypicalMalfunctions?.find(
-          item => item.id === id
+          item => item.id === id,
         ) as TypicalMalfunctions
         modelList.push(newModel)
         const isEq = isEqualArrObjects(
           typicalModels as [],
           modelList as [],
-          'id'
+          'id',
         )
         const listData = data.map(item => {
           if (item.id === id) {
@@ -91,12 +92,12 @@ export const Models = memo(
         return
       }
       const newModelList = selectedTypicalMalfunction?.filter(
-        item => item.id !== id
+        item => item.id !== id,
       )
       const isEq = isEqualArrObjects(
         typicalModels as [],
         newModelList as [],
-        'id'
+        'id',
       )
       const listData = data.map(item => {
         if (item.id === id) {
@@ -158,22 +159,25 @@ export const Models = memo(
             handleModal={setModal}
             ref={modalRef}
             question="Введите новое наименование модели"
+            variant="h3"
           />
         </Modal>
         <ListItemButton
           divider={open}
           sx={classifierChildComponent}
           onClick={handleClick}>
-          <ListItemText
-            primary={model}
-            sx={{ ml: 2 }}
-            primaryTypographyProps={{ fontSize: '1.175rem!important' }}
-          />
-          <EditButton handleClick={editModel} size={'1.5rem'} />
-          <RotateButton open={open} size={'2rem'} />
+          <ListItemText primary={model} sx={{ ml: 2 }} />
+          <EditButton handleClick={editModel} />
+          <RotateButton open={open} />
         </ListItemButton>
         <Collapse
-          sx={{ width: '100%', p: 2, pl: 5, pr: 5, height: 'auto' }}
+          sx={{
+            width: '100%',
+            p: 2,
+            pl: 5,
+            pr: 5,
+            height: theme.fontSize === 'small' ? 40 : 50,
+          }}
           in={open}
           timeout="auto"
           unmountOnExit>
@@ -202,5 +206,5 @@ export const Models = memo(
         </Collapse>
       </Box>
     )
-  }
+  },
 )

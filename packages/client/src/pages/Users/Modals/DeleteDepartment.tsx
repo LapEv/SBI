@@ -10,6 +10,7 @@ import { TextField } from 'components/TextFields'
 import { useFilteredData } from 'hooks/useFilteredData'
 import { modalStyle, boxDataModal } from 'static/styles'
 import { SearchIconElement } from 'components/Icons'
+import { ITheme } from 'themes/themeConfig'
 
 export const DeleteDepartment = memo(
   React.forwardRef<unknown, ChooseModalProps>(
@@ -20,13 +21,14 @@ export const DeleteDepartment = memo(
         [],
       )
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
+      const [data, setData] = useState<Department[]>([])
       const [filterText, setFilterText] = useState<string>('')
       const filteredDepartments = useFilteredData<Department>(
-        departaments,
+        data,
         filterText,
-        ['departmentName'],
+        ['departmentName', 'department', 'division'],
       )
-      const theme = useTheme()
+      const theme = useTheme() as ITheme
 
       const changeData = (event: SyntheticEvent<EventTarget>) => {
         event.preventDefault()
@@ -54,6 +56,13 @@ export const DeleteDepartment = memo(
         getDepartments()
       }, [])
 
+      useEffect(() => {
+        const newData = departaments.map(item => {
+          return { ...item, division: item?.Division?.divisionName }
+        })
+        setData(newData)
+      }, [departaments])
+
       return (
         <Box
           ref={ref}
@@ -74,16 +83,19 @@ export const DeleteDepartment = memo(
             }}
           />
           <Box sx={boxDataModal}>
-            {filteredDepartments.map(({ departmentName, id, Division }) => (
-              <Item
-                name={departmentName}
-                comment={Division?.divisionName}
-                id={`${id}`}
-                groupChecked={false}
-                onChooseItems={onChooseItems}
-                key={id as string}
-              />
-            ))}
+            {filteredDepartments.map(
+              ({ departmentName, id, division, department }) => (
+                <Item
+                  name={departmentName}
+                  comment={department}
+                  comment2={`Дивизион: ${division}`}
+                  id={`${id}`}
+                  groupChecked={false}
+                  onChooseItems={onChooseItems}
+                  key={id as string}
+                />
+              ),
+            )}
           </Box>
           <Box sx={{ color: theme.palette.error.main, height: 20 }}>
             {errSelectedItems && 'Не выбран ни один отдел!'}

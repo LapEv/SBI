@@ -10,11 +10,11 @@ import { TextField } from 'components/TextFields'
 import { Addresses } from 'store/slices/addresses/interfaces'
 import { modalStyle } from 'static/styles/modals'
 import { SearchIconElement } from 'components/Icons'
+import { ITheme } from 'themes/themeConfig'
 
 export const DeleteAddress = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const boxRef = React.createRef<HTMLDivElement>()
       const [{ regions, addresses }, { deleteAddress, getAddresses }] =
         useAddresses()
       const [selectedAddresses, setSelectedAddresses] = useState<string[]>([])
@@ -25,7 +25,7 @@ export const DeleteAddress = memo(
         'address',
         'region',
       ])
-      const theme = useTheme()
+      const theme = useTheme() as ITheme
 
       const changeData = (event: SyntheticEvent<EventTarget>) => {
         event.preventDefault()
@@ -86,7 +86,6 @@ export const DeleteAddress = memo(
             }}
           />
           <Box
-            ref={boxRef}
             sx={{
               width: '100%',
               pl: 3,
@@ -99,7 +98,6 @@ export const DeleteAddress = memo(
                 groupChecked={false}
                 onChooseItems={onChooseItems}
                 key={id as string}
-                props={{ ml: 1 }}
               />
             ))}
           </Box>

@@ -15,7 +15,6 @@ import { ITheme } from 'themes/themeConfig'
 export const DeleteOLA = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const boxRef = React.createRef<HTMLDivElement>()
       const [{ ola }, { deleteOLA, getOLA }] = useSLA()
       const [selectedOLA, setSelectedOLA] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
@@ -80,7 +79,7 @@ export const DeleteOLA = memo(
               endAdornment: <SearchIconElement />,
             }}
           />
-          <Box ref={boxRef} sx={boxDataModal}>
+          <Box sx={boxDataModal}>
             {filteredOLA.map(({ ola, id, TypesOfWork }) => (
               <Item
                 name={ola}
@@ -89,7 +88,6 @@ export const DeleteOLA = memo(
                 groupChecked={false}
                 onChooseItems={onChooseItems}
                 key={id as string}
-                props={{ ml: theme.fontSize === 'small' ? 3 : 0 }}
               />
             ))}
           </Box>

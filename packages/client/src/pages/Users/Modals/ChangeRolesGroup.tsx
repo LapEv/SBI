@@ -12,6 +12,7 @@ import { Options } from 'components/DropDown/interface'
 import { useFilteredData } from 'hooks/useFilteredData'
 import { TextField } from 'components/TextFields'
 import { SearchIconElement } from 'components/Icons'
+import { ITheme } from 'themes/themeConfig'
 
 export const ChangeRolesGroup = memo(
   React.forwardRef<unknown, ChooseModalProps>(
@@ -25,7 +26,7 @@ export const ChangeRolesGroup = memo(
       const [group, setGroup] = useState<Options[]>([])
       const [selectedRoles, setSelectedRoles] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
-      const theme = useTheme()
+      const theme = useTheme() as ITheme
       const [filterText, setFilterText] = useState<string>('')
       const filteredRoles = useFilteredData<DataList>(data, filterText, [
         'name',
@@ -104,7 +105,7 @@ export const ChangeRolesGroup = memo(
           <Typography variant={'h6'}>{title}</Typography>
           <DropDown
             data={group}
-            props={{ mt: 4 }}
+            props={{ mt: theme.fontSize === 'small' ? 6 : 4 }}
             onChange={data => changeGroup(data)}
             value={selectedGroup.label}
             label="Выберите группу ролей"

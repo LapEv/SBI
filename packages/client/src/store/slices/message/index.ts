@@ -9,6 +9,8 @@ import {
   newRolesGroup,
 } from 'api/roles'
 import {
+  changeNameDepartment,
+  changeNameDivision,
   deleteDepartment,
   deleteDivision,
   newDepartment,
@@ -160,6 +162,33 @@ export const messageSlise = createSlice({
       state.isLoadingMessage = true
     })
     builder.addCase(deleteDepartment.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+    builder.addCase(changeNameDivision.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeNameDivision.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeNameDivision.rejected, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.type = 'error'
+      state.text = payload as string
+    })
+
+    builder.addCase(changeNameDepartment.fulfilled, (state, { payload }) => {
+      state.isLoadingMessage = false
+      state.text = payload?.message.text as string
+      state.type = payload?.message.type as string
+    })
+    builder.addCase(changeNameDepartment.pending, state => {
+      state.isLoadingMessage = true
+    })
+    builder.addCase(changeNameDepartment.rejected, (state, { payload }) => {
       state.isLoadingMessage = false
       state.type = 'error'
       state.text = payload as string

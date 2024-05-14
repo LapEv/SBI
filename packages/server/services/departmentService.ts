@@ -127,4 +127,22 @@ export class departmentService {
       res.status(500).json({ error: ['db error', err as Error] })
     }
   }
+  changeNameDepartment = async (_req: Request, res: Response) => {
+    const { id, department, departmentName } = _req.body
+    try {
+      await DepartmentRepos.update(id, {
+        department,
+        departmentName,
+      })
+      const departaments = await DepartmentRepos.findAll({
+        where: { active: true },
+        order,
+        include,
+        attributes,
+      })
+      res.status(200).json(departaments)
+    } catch (err) {
+      res.status(500).json({ error: ['db error', err as Error] })
+    }
+  }
 }

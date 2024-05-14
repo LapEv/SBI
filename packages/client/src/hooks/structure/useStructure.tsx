@@ -8,6 +8,8 @@ import {
   getDivisions,
   newDepartment,
   newDivision,
+  changeNameDivision,
+  changeNameDepartment,
 } from 'api/structure'
 import { setActiveDepartment, setActiveDivision } from 'store/slices/structure'
 import { RootState } from 'store'
@@ -43,6 +45,12 @@ export function useStructure(): [StructureState, StructureActions] {
       },
       setActiveDepartment(department) {
         dispatch(setActiveDepartment(department))
+      },
+      changeNameDivision(data) {
+        dispatch(changeNameDivision(data))
+      },
+      changeNameDepartment(data) {
+        dispatch(changeNameDepartment(data))
       },
     },
   ]

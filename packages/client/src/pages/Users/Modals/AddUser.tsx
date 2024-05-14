@@ -141,7 +141,7 @@ export const AddUser = memo(
           sx={modalStyle}
           component="form"
           onSubmit={handleSubmit(changeData)}>
-          <Typography>{title}</Typography>
+          <Typography variant={'h6'}>{title}</Typography>
           <DropDown
             data={userStatus.map(item => {
               return {
@@ -251,7 +251,7 @@ export const AddUser = memo(
               onChooseItems={setRolesGroup}
               initChecked={initChecked}
               key={id}
-              props={{ ml: theme.fontSize === 'small' ? 15 : 7 }}
+              props={{ ml: theme.fontSize === 'small' ? 23 : 7, p: 1 }}
             />
           ))}
           <Box sx={{ color: theme.palette.error.main, minHeight: 10, mt: 1 }}>

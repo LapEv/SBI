@@ -89,7 +89,7 @@ export const AddRole = memo(
           sx={modalStyle}
           component="form"
           onSubmit={handleSubmit(changeData)}>
-          <Typography>{title}</Typography>
+          <Typography variant={'h6'}>{title}</Typography>
           {fields.map(({ id, label, validation, type, required }, index) => {
             return (
               <Controller
@@ -127,8 +127,8 @@ export const AddRole = memo(
           <Box
             sx={{
               width: '85%',
-              ml: 2,
-              mt: 1,
+              pl: 2,
+              pt: 1,
               height: 'auto',
               maxHeight: 300,
               overflowY: 'auto',

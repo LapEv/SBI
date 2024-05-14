@@ -22,6 +22,8 @@ export const ModalTitles = {
   changeRolesGroup: 'Изменить группу ролей',
   сhangeNameRolesGroup: 'Изменить название группы ролей',
   сhangeNameRole: 'Изменить название роли',
+  changeNameDivision: 'Изменить название дивизиона',
+  changeNameDepartment: 'Изменить название отдела',
 }
 
 export const MapRoleInputFields = [
@@ -276,6 +278,40 @@ export const MapNewRolesInputFields = [
   {
     name: 'newRolesID',
     label: 'Введите новый идентификатор роли',
+    validation: textValidationENGlowercase,
+    type: 'text',
+    required: true,
+  },
+]
+
+export const MapNewDivisionNameInputFields = [
+  {
+    name: 'newDivision',
+    label: 'Введите новое название дивизиона',
+    validation: textValidation,
+    type: 'text',
+    required: true,
+  },
+  {
+    name: 'newDivisionID',
+    label: 'Введите новый идентификатор дивизиона',
+    validation: textValidationENGlowercase,
+    type: 'text',
+    required: true,
+  },
+]
+
+export const MapNewDepartmentNameInputFields = [
+  {
+    name: 'newDepartment',
+    label: 'Введите новое название отдела',
+    validation: textValidation,
+    type: 'text',
+    required: true,
+  },
+  {
+    name: 'newDepartmentID',
+    label: 'Введите новый идентификатор отдела',
     validation: textValidationENGlowercase,
     type: 'text',
     required: true,

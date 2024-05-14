@@ -51,3 +51,15 @@ export interface AnswerDepartment {
   data: Department[]
   type: string
 }
+
+export interface ChangeNameDivision {
+  id: string
+  division: string
+  divisionName: string
+}
+
+export interface ChangeNameDepartment {
+  id: string
+  department: string
+  departmentName: string
+}

@@ -1,5 +1,6 @@
 import { Order } from 'sequelize'
 import {
+  ClassifierEquipment,
   // ClassifierEquipment,
   ClassifierEquipmentRepos,
   ClassifierModels,
@@ -40,6 +41,27 @@ const includesModel = [
     where: { active: true },
     required: false,
   },
+  {
+    model: ClassifierEquipment,
+    attributes: ['id', 'equipment'],
+    where: { active: true },
+    required: true,
+  },
+]
+
+const includesTypMalnuction = [
+  {
+    model: ClassifierModels,
+    attributes: ['id', 'model'],
+    where: { active: true },
+    required: false,
+  },
+  {
+    model: ClassifierEquipment,
+    attributes: ['id', 'equipment'],
+    where: { active: true },
+    required: true,
+  },
 ]
 
 const includesAllEquipment = [
@@ -67,6 +89,12 @@ const includesAllModel = [
     model: TypicalMalfunctions,
     attributes: ['id', 'typicalMalfunction', 'id_equipment', 'active'],
     required: false,
+  },
+  {
+    model: ClassifierEquipment,
+    attributes: ['id', 'equipment'],
+    where: { active: true },
+    required: true,
   },
 ]
 
@@ -197,7 +225,7 @@ export class classifierService {
             }
           })
         await ThroughModelTypMalfunctionsRepos.bulkCreate(
-          newThroughModelTypicalMalfunction
+          newThroughModelTypicalMalfunction,
         )
       }
       const classifierEquipment = await ClassifierEquipmentRepos.findAll({
@@ -306,7 +334,7 @@ export class classifierService {
             }
           })
         await ThroughModelTypMalfunctionsRepos.bulkCreate(
-          newThroughModelTypicalMalfunction
+          newThroughModelTypicalMalfunction,
         )
       }
       const classifierEquipment = await ClassifierEquipmentRepos.findAll({
@@ -334,10 +362,10 @@ export class classifierService {
               id_typicalMalfunction: typMalfunction.id,
               id_model: item,
             }
-          }
+          },
         )
         await ThroughModelTypMalfunctionsRepos.bulkCreate(
-          newThroughModelTypMalfunctions
+          newThroughModelTypMalfunctions,
         )
       }
       const equipments = await ClassifierEquipmentRepos.findAll({
@@ -358,6 +386,7 @@ export class classifierService {
   getTypicalMalfunctions = (_req: Request, res: Response) => {
     TypicalMalfunctionsRepos.findAll({
       where: { active: true },
+      include: includesTypMalnuction,
       order: orderTypicalMalfunction,
     })
       .then(typicalMalfunctions => {

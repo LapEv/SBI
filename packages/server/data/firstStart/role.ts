@@ -137,6 +137,12 @@ export const rolesStartData = [
     nameRole: 'Изменение данных дивизиона',
   },
   {
+    role: 'changeNameDivision',
+    group: ['ADMIN'],
+    nameRole: 'Изменение названия дивизиона',
+  },
+
+  {
     role: 'newDepartment',
     group: ['ADMIN'],
     nameRole: 'Добавление нового отдела',
@@ -146,6 +152,12 @@ export const rolesStartData = [
     group: ['ADMIN'],
     nameRole: 'Изменение данных отдела',
   },
+  {
+    role: 'changeNameDepartment',
+    group: ['ADMIN'],
+    nameRole: 'Изменение названия отдела',
+  },
+
   {
     role: 'updateUser',
     group: ['ADMIN'],

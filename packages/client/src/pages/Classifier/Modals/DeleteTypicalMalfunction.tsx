@@ -14,8 +14,6 @@ import { TypicalMalfunctions } from 'store/slices/classifier/interfaces'
 export const DeleteTypicalMalfunction = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const boxRef = React.createRef<HTMLDivElement>()
-      const [height, setHeight] = useState<string>('')
       const [
         { typicalMalfunctions, equipments },
         { deleteTypicalMalfunction, getTypicalMalfunctions },
@@ -23,11 +21,12 @@ export const DeleteTypicalMalfunction = memo(
       const [selectedTypicalMalfunctions, setSelectedTypicalMalfunctions] =
         useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
+      const [data, setData] = useState<TypicalMalfunctions[]>([])
       const [filterText, setFilterText] = useState<string>('')
       const filteredTypicalMalfunctions = useFilteredData<TypicalMalfunctions>(
-        typicalMalfunctions,
+        data,
         filterText,
-        ['typicalMalfunction'],
+        ['typicalMalfunction', 'equipment'],
       )
       const theme = useTheme()
 
@@ -55,19 +54,20 @@ export const DeleteTypicalMalfunction = memo(
 
       useEffect(() => {
         getTypicalMalfunctions()
-        if (boxRef.current) {
-          setHeight(boxRef.current.offsetHeight.toString())
-        }
       }, [])
 
       const getEquipmentName = (id_equipment: string) => {
         return equipments.find(item => item.id === id_equipment)?.equipment
       }
 
+      useEffect(() => {
+        const newData = typicalMalfunctions.map(item => {
+          return { ...item, equipment: item?.ClassifierEquipment?.equipment }
+        })
+        setData(newData)
+      }, [typicalMalfunctions])
+
       const setText = (text: string) => {
-        if (!height && boxRef.current) {
-          setHeight(boxRef.current.offsetHeight.toString())
-        }
         setFilterText(text)
       }
 
@@ -89,9 +89,7 @@ export const DeleteTypicalMalfunction = memo(
               endAdornment: <SearchIconElement />,
             }}
           />
-          <Box
-            ref={boxRef}
-            sx={{ ...boxDataModal, height: filterText ? height : 'auto' }}>
+          <Box sx={boxDataModal}>
             {filteredTypicalMalfunctions.map(
               ({ typicalMalfunction, id, id_equipment }) => (
                 <Item

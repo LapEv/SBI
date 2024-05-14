@@ -7,7 +7,7 @@ import { IModalChangeName } from './interface'
 
 export const ModalChangeName = memo(
   React.forwardRef<unknown, IModalChangeName>(
-    ({ handleModal, question, answer }: IModalChangeName, ref) => {
+    ({ handleModal, question, answer, variant }: IModalChangeName, ref) => {
       const [text, setText] = useState<string>('')
       const theme = useTheme()
 
@@ -17,6 +17,7 @@ export const ModalChangeName = memo(
         answer(true, text)
       }
 
+      console.log('variant = ', variant)
       return (
         <Box
           ref={ref}
@@ -24,7 +25,7 @@ export const ModalChangeName = memo(
           sx={{ ...modalStyle, paddingLeft: 5 }}
           component="form"
           onSubmit={changeData}>
-          <Typography variant={'h6'} sx={{ textAlign: 'center' }}>
+          <Typography variant={variant ?? 'h6'} sx={{ textAlign: 'center' }}>
             {question}
           </Typography>
           <Box
@@ -53,6 +54,6 @@ export const ModalChangeName = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

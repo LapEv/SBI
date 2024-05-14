@@ -14,8 +14,6 @@ import { TypesCompletedWork } from 'store/slices/incidents/interfaces'
 export const DeleteTypesCompletedWork = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const boxRef = React.createRef<HTMLDivElement>()
-      const [height, setHeight] = useState<string>('')
       const [
         { typesCompletedWork },
         { deleteTypesCompletedWork, getTypesCompletedWork },
@@ -55,15 +53,9 @@ export const DeleteTypesCompletedWork = memo(
 
       useEffect(() => {
         getTypesCompletedWork()
-        if (boxRef.current) {
-          setHeight(boxRef.current.offsetHeight.toString())
-        }
       }, [])
 
       const setText = (text: string) => {
-        if (!height && boxRef.current) {
-          setHeight(boxRef.current.offsetHeight.toString())
-        }
         setFilterText(text)
       }
 
@@ -86,9 +78,7 @@ export const DeleteTypesCompletedWork = memo(
               endAdornment: <SearchIconElement />,
             }}
           />
-          <Box
-            ref={boxRef}
-            sx={{ ...boxDataModal, height: filterText ? height : 'auto' }}>
+          <Box sx={boxDataModal}>
             {filteredTypesCompletedWork.map(({ typeCompletedWork, id }) => (
               <Item
                 name={typeCompletedWork}

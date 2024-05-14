@@ -10,12 +10,11 @@ import { Regions } from 'store/slices/addresses/interfaces'
 import { modalStyle } from 'static/styles/modals'
 import { SearchIconElement } from 'components/Icons'
 import { TextField } from 'components/TextFields'
+import { ITheme } from 'themes/themeConfig'
 
 export const DeleteRegion = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const boxRef = React.createRef<HTMLDivElement>()
-      const [height, setHeight] = useState<string>('')
       const [{ regions }, { deleteRegion, getRegions }] = useAddresses()
       const [selectedRegions, setSelectedRegions] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
@@ -23,7 +22,7 @@ export const DeleteRegion = memo(
       const filteredRegions = useFilteredData<Regions>(regions, filterText, [
         'region',
       ])
-      const theme = useTheme()
+      const theme = useTheme() as ITheme
 
       const changeData = (event: SyntheticEvent<EventTarget>) => {
         event.preventDefault()
@@ -51,15 +50,9 @@ export const DeleteRegion = memo(
 
       useEffect(() => {
         getRegions()
-        if (boxRef.current) {
-          setHeight(boxRef.current.offsetHeight.toString())
-        }
       }, [])
 
       const setText = (text: string) => {
-        if (!height && boxRef.current) {
-          setHeight(boxRef.current.offsetHeight.toString())
-        }
         setFilterText(text)
       }
 
@@ -83,11 +76,9 @@ export const DeleteRegion = memo(
             }}
           />
           <Box
-            ref={boxRef}
             sx={{
               width: '100%',
               pl: 3,
-              height: filterText ? height : 'auto',
             }}>
             {filteredRegions.map(({ region, id }) => (
               <Item
@@ -96,7 +87,6 @@ export const DeleteRegion = memo(
                 groupChecked={false}
                 onChooseItems={onChooseItems}
                 key={id as string}
-                props={{ ml: 1 }}
               />
             ))}
           </Box>

@@ -14,8 +14,6 @@ import { ClassifierEquipment } from 'store/slices/classifier/interfaces'
 export const DeleteClassifierEquipment = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const boxRef = React.createRef<HTMLDivElement>()
-      const [height, setHeight] = useState<string>('')
       const [
         { equipments },
         { deleteClassifierEquipment, getClassifierEquipments },
@@ -52,15 +50,9 @@ export const DeleteClassifierEquipment = memo(
 
       useEffect(() => {
         getClassifierEquipments()
-        if (boxRef.current) {
-          setHeight(boxRef.current.offsetHeight.toString())
-        }
       }, [])
 
       const setText = (text: string) => {
-        if (!height && boxRef.current) {
-          setHeight(boxRef.current.offsetHeight.toString())
-        }
         setFilterText(text)
       }
 
@@ -83,9 +75,7 @@ export const DeleteClassifierEquipment = memo(
               endAdornment: <SearchIconElement />,
             }}
           />
-          <Box
-            ref={boxRef}
-            sx={{ ...boxDataModal, height: filterText ? height : 'auto' }}>
+          <Box sx={boxDataModal}>
             {filteredEquipments.map(({ equipment, id }) => (
               <Item
                 name={equipment}

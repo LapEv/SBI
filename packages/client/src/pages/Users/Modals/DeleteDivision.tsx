@@ -10,12 +10,11 @@ import { useFilteredData } from 'hooks/useFilteredData'
 import { SearchIconElement } from 'components/Icons'
 import { Division } from 'store/slices/structure/interfaces'
 import { TextField } from 'components/TextFields'
+import { ITheme } from 'themes/themeConfig'
 
 export const DeleteDivision = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const boxRef = React.createRef<HTMLDivElement>()
-      const [height, setHeight] = useState<string>('')
       const [{ divisions }, { deleteDivision, getDivisions }] = useStructure()
       const [selectedDivisions, setSelectedDivisions] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
@@ -23,9 +22,9 @@ export const DeleteDivision = memo(
       const filteredDivisions = useFilteredData<Division>(
         divisions,
         filterText,
-        ['divisionName'],
+        ['divisionName', 'division'],
       )
-      const theme = useTheme()
+      const theme = useTheme() as ITheme
 
       const changeData = (event: SyntheticEvent<EventTarget>) => {
         event.preventDefault()
@@ -49,15 +48,9 @@ export const DeleteDivision = memo(
 
       useEffect(() => {
         getDivisions()
-        if (boxRef.current) {
-          setHeight(boxRef.current.offsetHeight.toString())
-        }
       }, [])
 
       const setText = (text: string) => {
-        if (!height && boxRef.current) {
-          setHeight(boxRef.current.offsetHeight.toString())
-        }
         setFilterText(text)
       }
 
@@ -71,7 +64,7 @@ export const DeleteDivision = memo(
           <Typography variant={'h6'}>{title}</Typography>
           <TextField
             variant="outlined"
-            sx={{ width: '90%', mt: 2, height: 40 }}
+            sx={{ width: '90%', mt: 2 }}
             label="Введите фильтр"
             margin="normal"
             value={filterText || ''}
@@ -80,12 +73,11 @@ export const DeleteDivision = memo(
               endAdornment: <SearchIconElement />,
             }}
           />
-          <Box
-            ref={boxRef}
-            sx={{ ...boxDataModal, height: filterText ? height : 'auto' }}>
-            {filteredDivisions.map(({ divisionName, id }) => (
+          <Box sx={boxDataModal}>
+            {filteredDivisions.map(({ divisionName, division, id }) => (
               <Item
                 name={divisionName}
+                comment={division}
                 id={`${id}`}
                 groupChecked={false}
                 onChooseItems={onChooseItems}

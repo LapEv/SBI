@@ -14,19 +14,18 @@ import { ClassifierModels } from 'store/slices/classifier/interfaces'
 export const DeleteClassifierModel = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const boxRef = React.createRef<HTMLDivElement>()
-      const [height, setHeight] = useState<string>('')
       const [
         { models, equipments },
         { deleteClassifierModel, getClassifierModels },
       ] = useClassifier()
       const [selectedModels, setSelectedModels] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
+      const [data, setData] = useState<ClassifierModels[]>([])
       const [filterText, setFilterText] = useState<string>('')
       const filteredModels = useFilteredData<ClassifierModels>(
-        models,
+        data,
         filterText,
-        ['model'],
+        ['model', 'equipment'],
       )
       const theme = useTheme()
 
@@ -52,9 +51,6 @@ export const DeleteClassifierModel = memo(
 
       useEffect(() => {
         getClassifierModels()
-        if (boxRef.current) {
-          setHeight(boxRef.current.offsetHeight.toString())
-        }
       }, [])
 
       const getEquipmentName = (id_equipment: string) => {
@@ -62,11 +58,15 @@ export const DeleteClassifierModel = memo(
       }
 
       const setText = (text: string) => {
-        if (!height && boxRef.current) {
-          setHeight(boxRef.current.offsetHeight.toString())
-        }
         setFilterText(text)
       }
+
+      useEffect(() => {
+        const newData = models.map(item => {
+          return { ...item, equipment: item?.ClassifierEquipment?.equipment }
+        })
+        setData(newData)
+      }, [models])
 
       return (
         <Box
@@ -87,9 +87,7 @@ export const DeleteClassifierModel = memo(
               endAdornment: <SearchIconElement />,
             }}
           />
-          <Box
-            ref={boxRef}
-            sx={{ ...boxDataModal, height: filterText ? height : 'auto' }}>
+          <Box sx={boxDataModal}>
             {filteredModels.map(({ model, id, id_equipment }) => (
               <Item
                 name={model}

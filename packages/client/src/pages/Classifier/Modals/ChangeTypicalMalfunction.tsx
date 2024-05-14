@@ -15,6 +15,7 @@ import {
 import { TextField } from 'components/TextFields'
 import { MapNewTypicalMalfunctionsInputFields } from '../data'
 import { useClassifier } from 'hooks/classifier/useClassifier'
+import { ITheme } from 'themes/themeConfig'
 
 export const ChangeTypicalMalfunction = memo(
   React.forwardRef<unknown, ChooseModalProps>(
@@ -29,7 +30,7 @@ export const ChangeTypicalMalfunction = memo(
       const [selectedTypicalMalfunctions, setSelectedTypicalMalfunctions] =
         useState<Options>(emptyValue)
       const [errSelectedItems, setErrSelectedItems] = useState<string>('')
-      const theme = useTheme()
+      const theme = useTheme() as ITheme
 
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
@@ -66,7 +67,7 @@ export const ChangeTypicalMalfunction = memo(
 
       const checkTypicalMalfunction = (value: string) => {
         const isNew = typicalMalfunctions.findIndex(
-          item => item.typicalMalfunction === value
+          item => item.typicalMalfunction === value,
         )
         if (isNew < 0) {
           setSelectedTypicalMalfunctions(emptyValue)
@@ -84,7 +85,7 @@ export const ChangeTypicalMalfunction = memo(
               ['label']: item.typicalMalfunction as string,
               ['id']: item.id as string,
             }
-          })
+          }),
         )
       }, [typicalMalfunctions])
 
@@ -121,7 +122,16 @@ export const ChangeTypicalMalfunction = memo(
                       type={type}
                       variant="outlined"
                       required={required ?? true}
-                      sx={{ width: '100%', mt: 2, height: 40 }}
+                      sx={{
+                        width: '100%',
+                        height: theme.fontSize === 'small' ? 30 : 40,
+                        mt:
+                          index === 0
+                            ? theme.fontSize === 'small'
+                              ? 7
+                              : 6
+                            : 5,
+                      }}
                       margin="normal"
                       value={field.value || ''}
                       error={!!(errors?.list ?? [])[index]?.value?.message}
@@ -147,6 +157,6 @@ export const ChangeTypicalMalfunction = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

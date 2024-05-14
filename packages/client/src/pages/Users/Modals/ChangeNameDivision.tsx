@@ -2,7 +2,6 @@ import React, { memo } from 'react'
 import { AddValuesProps, ChooseModalProps } from './interfaces'
 import { useState, useEffect } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
-import { useRoles } from 'hooks/roles/useRoles'
 import { modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { DropDown, emptyValue } from 'components/DropDown'
@@ -14,22 +13,22 @@ import {
   Controller,
   useFormState,
 } from 'react-hook-form'
-import { MapNewRolesGroupInputFields } from '../data'
+import { MapNewDivisionNameInputFields } from '../data'
+import { useStructure } from 'hooks/structure/useStructure'
 import { ITheme } from 'themes/themeConfig'
 
-export const ChangeNameRolesGroup = memo(
+export const ChangeNameDivision = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [{ rolesGroup }, { getRolesGroupNotRoles, changeNameRolesGroup }] =
-        useRoles()
+      const [{ divisions }, { getDivisions, changeNameDivision }] =
+        useStructure()
       const [group, setGroup] = useState<Options[]>([])
       const [selectedGroup, setSelectedGroup] = useState<Options>(emptyValue)
       const theme = useTheme() as ITheme
-
       const { handleSubmit, control, reset } = useForm<AddValuesProps>({
         mode: 'onBlur',
         defaultValues: {
-          list: MapNewRolesGroupInputFields,
+          list: MapNewDivisionNameInputFields,
         },
       })
       const { errors } = useFormState({ control })
@@ -39,10 +38,10 @@ export const ChangeNameRolesGroup = memo(
       })
 
       const changeData = ({ list }: AddValuesProps) => {
-        changeNameRolesGroup({
+        changeNameDivision({
           id: selectedGroup.id,
-          groupName: list[0].value,
-          group: list[1].value,
+          divisionName: list[0].value,
+          division: list[1].value,
         })
         handleModal(false)
       }
@@ -50,32 +49,29 @@ export const ChangeNameRolesGroup = memo(
       const changeGroup = (data: Options) => {
         setSelectedGroup(data)
         reset({
-          list: MapNewRolesGroupInputFields.map(item => ({
+          list: MapNewDivisionNameInputFields.map(item => ({
             ...item,
             value:
-              item.name === 'newRolesGroup' ? data.label : data.descriptionID,
+              item.name === 'newDivision' ? data.label : data.descriptionID,
           })),
         })
       }
 
       useEffect(() => {
-        getRolesGroupNotRoles()
+        getDivisions()
       }, [])
 
       useEffect(() => {
         setGroup(
-          rolesGroup
-            .map(({ id, group, groupName }) => {
-              return {
-                ['label']: groupName,
-                ['id']: id,
-                ['descriptionID']: group,
-              }
-            })
-            .filter(item => item.label !== 'SUPERADMIN')
-            .filter(item => item.label !== 'ADMIN'),
+          divisions.map(({ id, division, divisionName }) => {
+            return {
+              ['label']: divisionName,
+              ['id']: id as string,
+              ['descriptionID']: division,
+            }
+          }),
         )
-      }, [rolesGroup])
+      }, [divisions])
 
       return (
         <Box
@@ -84,14 +80,14 @@ export const ChangeNameRolesGroup = memo(
           sx={{ ...modalStyle, paddingLeft: 5 }}
           component="form"
           onSubmit={handleSubmit(changeData)}>
-          <Typography variant={'h3'}>{title}</Typography>
+          <Typography variant={'h5'}>{title}</Typography>
           <DropDown
             data={group}
             props={{ mt: theme.fontSize === 'small' ? 6 : 4 }}
             onChange={data => changeGroup(data)}
             value={selectedGroup.label}
-            label="Выберите группу ролей"
-            errorLabel="Не выбрана группа ролей!"
+            label="Выберите дивизион"
+            errorLabel="Не выбран дивизион!"
           />
           {fields.map(({ id, label, validation, type, required }, index) => {
             return (

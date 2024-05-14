@@ -46,6 +46,8 @@ export const ApiEndPoints = {
     deleteDepartment: 'structure/deleteDepartment',
     updateDivision: 'structure/updateDivision',
     updateDepartment: 'structure/updateDepartment',
+    changeNameDivision: 'structure/changeNameDivision',
+    changeNameDepartment: 'structure/changeNameDepartment',
   },
   Addresses: {
     getAddresses: 'addresses/getAddresses',

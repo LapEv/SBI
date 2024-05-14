@@ -7,6 +7,8 @@ import {
   newDivision,
   deleteDivision,
   deleteDepartment,
+  changeNameDivision,
+  changeNameDepartment,
 } from 'api/structure'
 import { deleteUser, newUser } from 'api/user'
 
@@ -124,6 +126,30 @@ export const structureSlise = createSlice({
       state.isLoadingStructure = true
     })
     builder.addCase(newUser.rejected, (state, { payload }) => {
+      state.isLoadingStructure = false
+      state.error = payload as string
+    })
+    builder.addCase(changeNameDivision.fulfilled, (state, { payload }) => {
+      state.isLoadingStructure = false
+      state.error = ''
+      state.divisions = payload?.data as Division[]
+    })
+    builder.addCase(changeNameDivision.pending, state => {
+      state.isLoadingStructure = true
+    })
+    builder.addCase(changeNameDivision.rejected, (state, { payload }) => {
+      state.isLoadingStructure = false
+      state.error = payload as string
+    })
+    builder.addCase(changeNameDepartment.fulfilled, (state, { payload }) => {
+      state.isLoadingStructure = false
+      state.error = ''
+      state.departaments = payload?.data as Department[]
+    })
+    builder.addCase(changeNameDepartment.pending, state => {
+      state.isLoadingStructure = true
+    })
+    builder.addCase(changeNameDepartment.rejected, (state, { payload }) => {
       state.isLoadingStructure = false
       state.error = payload as string
     })

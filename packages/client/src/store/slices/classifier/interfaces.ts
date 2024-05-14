@@ -11,6 +11,7 @@ export interface ClassifierModels {
   id_equipment: string
   active?: boolean
   TypicalMalfunctions?: TypicalMalfunctions[]
+  ClassifierEquipment?: ClassifierEquipment
   typicalModels?: TypicalMalfunctions[]
 }
 
@@ -19,6 +20,7 @@ export interface TypicalMalfunctions {
   typicalMalfunction: string
   id_equipment: string
   active?: boolean
+  ClassifierEquipment?: ClassifierEquipment
 }
 
 export interface AddClassifierModels {

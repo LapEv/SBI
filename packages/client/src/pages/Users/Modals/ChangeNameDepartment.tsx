@@ -2,7 +2,6 @@ import React, { memo } from 'react'
 import { AddValuesProps, ChooseModalProps } from './interfaces'
 import { useState, useEffect } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
-import { useRoles } from 'hooks/roles/useRoles'
 import { modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { DropDown, emptyValue } from 'components/DropDown'
@@ -14,14 +13,15 @@ import {
   Controller,
   useFormState,
 } from 'react-hook-form'
-import { MapNewRolesGroupInputFields } from '../data'
+import { MapNewDepartmentNameInputFields } from '../data'
+import { useStructure } from 'hooks/structure/useStructure'
 import { ITheme } from 'themes/themeConfig'
 
-export const ChangeNameRolesGroup = memo(
+export const ChangeNameDepartment = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const [{ rolesGroup }, { getRolesGroupNotRoles, changeNameRolesGroup }] =
-        useRoles()
+      const [{ departaments }, { getDepartments, changeNameDepartment }] =
+        useStructure()
       const [group, setGroup] = useState<Options[]>([])
       const [selectedGroup, setSelectedGroup] = useState<Options>(emptyValue)
       const theme = useTheme() as ITheme
@@ -29,7 +29,7 @@ export const ChangeNameRolesGroup = memo(
       const { handleSubmit, control, reset } = useForm<AddValuesProps>({
         mode: 'onBlur',
         defaultValues: {
-          list: MapNewRolesGroupInputFields,
+          list: MapNewDepartmentNameInputFields,
         },
       })
       const { errors } = useFormState({ control })
@@ -39,10 +39,10 @@ export const ChangeNameRolesGroup = memo(
       })
 
       const changeData = ({ list }: AddValuesProps) => {
-        changeNameRolesGroup({
+        changeNameDepartment({
           id: selectedGroup.id,
-          groupName: list[0].value,
-          group: list[1].value,
+          departmentName: list[0].value,
+          department: list[1].value,
         })
         handleModal(false)
       }
@@ -50,32 +50,29 @@ export const ChangeNameRolesGroup = memo(
       const changeGroup = (data: Options) => {
         setSelectedGroup(data)
         reset({
-          list: MapNewRolesGroupInputFields.map(item => ({
+          list: MapNewDepartmentNameInputFields.map(item => ({
             ...item,
             value:
-              item.name === 'newRolesGroup' ? data.label : data.descriptionID,
+              item.name === 'newDepartment' ? data.label : data.descriptionID,
           })),
         })
       }
 
       useEffect(() => {
-        getRolesGroupNotRoles()
+        getDepartments()
       }, [])
 
       useEffect(() => {
         setGroup(
-          rolesGroup
-            .map(({ id, group, groupName }) => {
-              return {
-                ['label']: groupName,
-                ['id']: id,
-                ['descriptionID']: group,
-              }
-            })
-            .filter(item => item.label !== 'SUPERADMIN')
-            .filter(item => item.label !== 'ADMIN'),
+          departaments.map(({ id, department, departmentName }) => {
+            return {
+              ['label']: departmentName,
+              ['id']: id as string,
+              ['descriptionID']: department,
+            }
+          }),
         )
-      }, [rolesGroup])
+      }, [departaments])
 
       return (
         <Box
@@ -84,14 +81,14 @@ export const ChangeNameRolesGroup = memo(
           sx={{ ...modalStyle, paddingLeft: 5 }}
           component="form"
           onSubmit={handleSubmit(changeData)}>
-          <Typography variant={'h3'}>{title}</Typography>
+          <Typography variant={'h6'}>{title}</Typography>
           <DropDown
             data={group}
             props={{ mt: theme.fontSize === 'small' ? 6 : 4 }}
             onChange={data => changeGroup(data)}
             value={selectedGroup.label}
-            label="Выберите группу ролей"
-            errorLabel="Не выбрана группа ролей!"
+            label="Выберите отдел"
+            errorLabel="Не выбран отдел!"
           />
           {fields.map(({ id, label, validation, type, required }, index) => {
             return (

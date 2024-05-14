@@ -1,5 +1,5 @@
 import React, { useState, useEffect, memo } from 'react'
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, useTheme } from '@mui/material'
 import {
   useForm,
   useFieldArray,
@@ -16,13 +16,13 @@ import { DropDown, emptyValue } from 'components/DropDown'
 import { Options } from 'components/DropDown/interface'
 import { Item } from 'components/CheckBoxGroup'
 import { TypicalMalfunctions } from 'store/slices/classifier/interfaces'
+import { ITheme } from 'themes/themeConfig'
 
 export const NewClassifierModel = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
       const [{ equipments }, { newClassifierModel, resetTypicalMalfunction }] =
         useClassifier()
-      const boxRef = React.createRef<HTMLDivElement>()
       const [equipment, setEquipment] = useState<Options>(emptyValue)
       const [typicalMalfunctions, setTypicalMalfunctions] = useState<
         TypicalMalfunctions[]
@@ -30,6 +30,7 @@ export const NewClassifierModel = memo(
       const [selectedTypicalMalfunctions, setGroup] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
       const [noTypical, setNoTypical] = useState<boolean>(false)
+      const theme = useTheme() as ITheme
 
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
@@ -119,7 +120,12 @@ export const NewClassifierModel = memo(
                     label={label}
                     type={type}
                     variant="outlined"
-                    sx={{ width: '90%', m: 2, mt: 4, height: 40 }}
+                    sx={{
+                      width: '90%',
+                      height: theme.fontSize === 'small' ? 30 : 40,
+                      mt:
+                        index === 0 ? (theme.fontSize === 'small' ? 7 : 6) : 5,
+                    }}
                     margin="normal"
                     required={required ?? true}
                     value={field.value || ''}
@@ -130,28 +136,26 @@ export const NewClassifierModel = memo(
               />
             )
           })}
-          <Typography sx={{ fontSize: 14, mt: 2 }}>
+          <Typography variant={'h1'} sx={{ mt: 2, width: '90%' }}>
             Выберите типовые неисправности для этой модели:
           </Typography>
           {noTypical ? (
-            <Typography sx={{ fontSize: 14, mt: 2, width: '85%', height: 40 }}>
+            <Typography variant={'h1'} sx={{ mt: 2, width: '85%', height: 40 }}>
               Для этого классификатора нет типовых неисправностей. Необходимо
               сначала их внести!
             </Typography>
           ) : (
             <Typography
+              variant={'h3'}
               sx={{
-                fontSize: 14,
                 mt: 2,
                 width: '85%',
                 height: 10,
               }}></Typography>
           )}
           <Box
-            ref={boxRef}
             sx={{
               ...boxDataModal,
-              height: 200,
               mt: 0,
             }}>
             {typicalMalfunctions.map(({ typicalMalfunction, id }) => (
@@ -171,6 +175,6 @@ export const NewClassifierModel = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

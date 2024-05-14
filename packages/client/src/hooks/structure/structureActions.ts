@@ -1,4 +1,9 @@
-import { NewDepartment, NewDivision } from 'store/slices/structure/interfaces'
+import {
+  ChangeNameDepartment,
+  ChangeNameDivision,
+  NewDepartment,
+  NewDivision,
+} from 'store/slices/structure/interfaces'
 
 export interface StructureActions {
   getDivisions: () => void
@@ -9,4 +14,6 @@ export interface StructureActions {
   deleteDepartment: (departaments: string[]) => void
   setActiveDivision: (division: string) => void
   setActiveDepartment: (departament: string) => void
+  changeNameDivision: (data: ChangeNameDivision) => void
+  changeNameDepartment: (data: ChangeNameDepartment) => void
 }

@@ -13,6 +13,7 @@ export interface DataList {
   key?: string
   groupChecked?: boolean | null
   comment?: string
+  comment2?: string
   initChecked?: boolean
   oneChecked?: boolean
   noEmpty?: boolean

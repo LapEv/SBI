@@ -10,11 +10,11 @@ import { modalStyle } from 'static/styles/modals'
 import { SearchIconElement } from 'components/Icons'
 import { useObjects } from 'hooks/objects/useObjects'
 import { Objects } from 'store/slices/objects/interfaces'
+import { ITheme } from 'themes/themeConfig'
 
 export const DeleteObjects = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const boxRef = React.createRef<HTMLDivElement>()
       const [{ objects }, { deleteObjects, getObjects }] = useObjects()
       const [selectedObjects, setSelectedObjects] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
@@ -24,7 +24,7 @@ export const DeleteObjects = memo(
         'object',
         'client',
       ])
-      const theme = useTheme()
+      const theme = useTheme() as ITheme
 
       const changeData = (event: SyntheticEvent<EventTarget>) => {
         event.preventDefault()
@@ -81,7 +81,6 @@ export const DeleteObjects = memo(
             }}
           />
           <Box
-            ref={boxRef}
             sx={{
               mt: 0,
               width: '100%',
@@ -95,7 +94,6 @@ export const DeleteObjects = memo(
                 groupChecked={false}
                 onChooseItems={onChooseItems}
                 key={id as string}
-                props={{ ml: 1 }}
               />
             ))}
           </Box>

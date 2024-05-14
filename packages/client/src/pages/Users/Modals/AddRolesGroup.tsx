@@ -12,9 +12,11 @@ import { MapRolesGroupInputFields } from '../data'
 import { boxDataModal, modalStyle } from 'static/styles'
 import { ButtonsModalSection } from 'components/Buttons'
 import { useRoles } from 'hooks/roles/useRoles'
-import { NewRolesGroup } from 'storeRoles/interfaces'
+import { NewRolesGroup, Roles } from 'storeRoles/interfaces'
 import { Item } from 'components/CheckBoxGroup'
 import { ITheme } from 'themes/themeConfig'
+import { SearchIconElement } from 'components/Icons'
+import { useFilteredData } from 'hooks/useFilteredData'
 
 export const AddRolesGroup = memo(
   React.forwardRef<unknown, ChooseModalProps>(
@@ -23,6 +25,10 @@ export const AddRolesGroup = memo(
       const theme = useTheme() as ITheme
       const [selectedRoles, setSelectedRoles] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
+      const [filterText, setFilterText] = useState<string>('')
+      const filteredObjects = useFilteredData<Roles>(roles, filterText, [
+        'nameRole',
+      ])
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
         defaultValues: {
@@ -63,6 +69,10 @@ export const AddRolesGroup = memo(
         getRolesGroup()
         getRoles()
       }, [])
+
+      const setText = (text: string) => {
+        setFilterText(text)
+      }
 
       return (
         <Box
@@ -105,15 +115,25 @@ export const AddRolesGroup = memo(
           <Typography variant={'body1'} sx={{ m: 2 }}>
             Выберите роли
           </Typography>
+          <TextField
+            variant="outlined"
+            sx={{ width: '90%', mt: 2, height: 40 }}
+            label="Введите фильтр"
+            margin="normal"
+            value={filterText || ''}
+            onChange={e => setText(e.target.value ?? '')}
+            InputProps={{
+              endAdornment: <SearchIconElement />,
+            }}
+          />
 
           <Box sx={boxDataModal}>
-            {roles.map(item => (
+            {filteredObjects.map(item => (
               <Item
                 name={item.nameRole}
                 id={`${item.id}`}
                 onChooseItems={setRoles}
                 key={item.id}
-                props={{ ml: theme.fontSize === 'small' ? 7 : 0 }}
               />
             ))}
           </Box>

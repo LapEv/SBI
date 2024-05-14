@@ -10,21 +10,21 @@ import { TextField } from 'components/TextFields'
 import { User } from 'storeAuth/interfaces'
 import { useFilteredData } from 'hooks/useFilteredData'
 import { SearchIconElement } from 'components/Icons'
+import { ITheme } from 'themes/themeConfig'
 
 export const DeleteUser = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
       const [{ users }, { deleteUser, getActiveUsers }] = useAuth()
-      const boxRef = React.createRef<HTMLDivElement>()
-      const [height, setHeight] = useState<string>('')
       const [selectedUser, setSelectedUser] = useState<string>('')
       const [reasonOfDelete, setReason] = useState<string>('')
       const [errSelectedItems, setErrSelectedItems] = useState<string>('')
       const [filterText, setFilterText] = useState<string>('')
       const filteredusers = useFilteredData<User>(users, filterText, [
         'lastName',
+        'post',
       ])
-      const theme = useTheme()
+      const theme = useTheme() as ITheme
 
       const changeData = (event: SyntheticEvent<EventTarget>) => {
         event.preventDefault()
@@ -54,9 +54,6 @@ export const DeleteUser = memo(
       }, [])
 
       const setText = (text: string) => {
-        if (!height && boxRef.current) {
-          setHeight(boxRef.current.offsetHeight.toString())
-        }
         setFilterText(text)
       }
 
@@ -79,9 +76,7 @@ export const DeleteUser = memo(
               endAdornment: <SearchIconElement />,
             }}
           />
-          <Box
-            ref={boxRef}
-            sx={{ ...boxDataModal, height: filterText ? height : 'auto' }}>
+          <Box sx={{ ...boxDataModal }}>
             {filteredusers.map(
               ({ lastName, firstName, middleName, post, id }) => (
                 <Item
@@ -95,16 +90,17 @@ export const DeleteUser = memo(
                 />
               ),
             )}
-            <TextField
-              label="Причина удаления"
-              variant="outlined"
-              required
-              sx={{ width: '100%', mt: 3, height: 40 }}
-              margin="normal"
-              value={reasonOfDelete || ''}
-              onChange={e => setReason(e.target.value ?? '')}
-            />
           </Box>
+          <TextField
+            label="Причина удаления"
+            variant="outlined"
+            required
+            sx={{ width: '100%', mt: 3, height: 40 }}
+            margin="normal"
+            value={reasonOfDelete || ''}
+            onChange={e => setReason(e.target.value ?? '')}
+          />
+
           <Box sx={{ color: theme.palette.error.main, height: 20 }}>
             {errSelectedItems && 'Не выбрано ниодного пользователя!'}
           </Box>

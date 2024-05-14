@@ -1,6 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { authhost, ApiEndPoints } from './config'
 import {
+  ChangeNameDepartment,
+  ChangeNameDivision,
   Department,
   Division,
   NewDepartment,
@@ -113,7 +115,7 @@ export const newDepartment = createAsyncThunk(
 )
 
 export const deleteDivision = createAsyncThunk(
-  'role/deleteDivision',
+  'structure/deleteDivision',
   async (selectedDivisions: string[], thunkAPI) => {
     try {
       const { data } = await authhost.post(
@@ -139,7 +141,7 @@ export const deleteDivision = createAsyncThunk(
 )
 
 export const deleteDepartment = createAsyncThunk(
-  'role/deleteDepartment',
+  'structure/deleteDepartment',
   async (selectedDepartments: string[], thunkAPI) => {
     try {
       const { data } = await authhost.post(
@@ -154,6 +156,69 @@ export const deleteDepartment = createAsyncThunk(
       if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
         return thunkAPI.rejectWithValue(
           `Не удалось удалить отдел: \n${
+            error.response?.data.message ?? error.response?.data
+          }`,
+        )
+      } else {
+        console.error(error)
+      }
+    }
+  },
+)
+
+export const changeNameDivision = createAsyncThunk(
+  'structure/changeNameDivision',
+  async ({ id, division, divisionName }: ChangeNameDivision, thunkAPI) => {
+    try {
+      const { data } = await authhost.post(
+        ApiEndPoints.Structure.changeNameDivision,
+        {
+          id,
+          division,
+          divisionName,
+        },
+      )
+      return {
+        data,
+        message: { text: 'Название дивизиона изменено!', type: 'success' },
+      }
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось изменить название дивизиона: \n${
+            error.response?.data.message ?? error.response?.data
+          }`,
+        )
+      } else {
+        console.error(error)
+      }
+    }
+  },
+)
+
+export const changeNameDepartment = createAsyncThunk(
+  'structure/changeNameDepartment',
+  async (
+    { id, department, departmentName }: ChangeNameDepartment,
+    thunkAPI,
+  ) => {
+    try {
+      const { data } = await authhost.post(
+        ApiEndPoints.Structure.changeNameDepartment,
+        {
+          id,
+          department,
+          departmentName,
+        },
+      )
+      return {
+        data,
+        message: { text: 'Название отдела изменено!', type: 'success' },
+      }
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+        return thunkAPI.rejectWithValue(
+          `Не удалось изменить название отдела: \n${
             error.response?.data.message ?? error.response?.data
           }`,
         )

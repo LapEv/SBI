@@ -38,9 +38,9 @@ export const divisionRouter = (apiRouter: Router) => {
     service.fullDeleteDivision,
   )
   router.post(
-    '/updateDivision',
-    roleMiddleware(['updateDivision', 'SUPERADMIN']),
-    service.updateDivision,
+    '/changeNameDivision',
+    roleMiddleware(['changeNameDivision', 'SUPERADMIN']),
+    service.changeNameDivision,
   )
 
   apiRouter.use('/structure', router)

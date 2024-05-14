@@ -14,8 +14,6 @@ import { TypesOfWork } from 'store/slices/incidents/interfaces'
 export const DeleteTypesOfWork = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
-      const boxRef = React.createRef<HTMLDivElement>()
-      const [height, setHeight] = useState<string>('')
       const [{ typesOfWork }, { deleteTypesOfWork, getTypesOfWork }] =
         useIncidents()
       const [selectedTypesOfWork, setSelectedTypesOfWork] = useState<string[]>(
@@ -54,15 +52,9 @@ export const DeleteTypesOfWork = memo(
 
       useEffect(() => {
         getTypesOfWork()
-        if (boxRef.current) {
-          setHeight(boxRef.current.offsetHeight.toString())
-        }
       }, [])
 
       const setText = (text: string) => {
-        if (!height && boxRef.current) {
-          setHeight(boxRef.current.offsetHeight.toString())
-        }
         setFilterText(text)
       }
 
@@ -85,9 +77,7 @@ export const DeleteTypesOfWork = memo(
               endAdornment: <SearchIconElement />,
             }}
           />
-          <Box
-            ref={boxRef}
-            sx={{ ...boxDataModal, height: filterText ? height : 'auto' }}>
+          <Box sx={boxDataModal}>
             {filteredTypesOfWork.map(({ typeOfWork, id }) => (
               <Item
                 name={typeOfWork}

@@ -6,6 +6,7 @@ import { menuData, Equipments } from './'
 import { ChooseModal } from './Modals/ChooseModal'
 import { useClassifier } from 'hooks/classifier/useClassifier'
 import { headerForPages, mainHeaderForPages } from 'static/styles'
+import { page } from 'static/styles/pages/main'
 
 export const ClassifierPage = memo(() => {
   const modalClientRef = React.createRef()
@@ -31,6 +32,8 @@ export const ClassifierPage = memo(() => {
     getClassifierEquipments()
   }, [])
 
+  console.log('equipments = ', equipments)
+
   return (
     <Container component="main" maxWidth="md" sx={mainHeaderForPages}>
       <Modal
@@ -45,9 +48,7 @@ export const ClassifierPage = memo(() => {
         />
       </Modal>
       <Box component="div" sx={headerForPages}>
-        <Typography sx={{ fontWeight: 'bold', fontSize: '2.375rem' }}>
-          Классификатор
-        </Typography>
+        <Typography variant="h6">Классификатор</Typography>
         {admin && (
           <DropDownMenu
             popover={'Добавить/Удалить'}
@@ -57,7 +58,7 @@ export const ClassifierPage = memo(() => {
           />
         )}
       </Box>
-      <List sx={{ width: '100%', p: 3, borderColor: 'border.default' }}>
+      <List sx={{ ...page, maxWidth: 1200 }}>
         {equipments.map(
           ({ equipment, id, ClassifierModels, TypicalMalfunctions }) => (
             <Equipments

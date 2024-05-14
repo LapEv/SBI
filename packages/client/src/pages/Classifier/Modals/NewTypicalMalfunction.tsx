@@ -1,5 +1,5 @@
 import React, { useState, useEffect, memo } from 'react'
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, useTheme } from '@mui/material'
 import {
   useForm,
   useFieldArray,
@@ -16,17 +16,18 @@ import { Options } from 'components/DropDown/interface'
 import { useClassifier } from 'hooks/classifier/useClassifier'
 import { Item } from 'components/CheckBoxGroup'
 import { ClassifierModels } from 'store/slices/classifier/interfaces'
+import { ITheme } from 'themes/themeConfig'
 
 export const NewTypicalMalfunction = memo(
   React.forwardRef<unknown, ChooseModalProps>(
     ({ handleModal, title }: ChooseModalProps, ref) => {
       const [{ equipments }, { newTypicalMalfunction, resetModels }] =
         useClassifier()
-      const boxRef = React.createRef<HTMLDivElement>()
       const [equipment, setEquipment] = useState<Options>(emptyValue)
       const [selectedModels, setSelectedModels] = useState<string[]>([])
       const [errSelectedItems, setErrSelectedItems] = useState<boolean>(false)
       const [models, setModels] = useState<ClassifierModels[]>([])
+      const theme = useTheme() as ITheme
 
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
@@ -81,7 +82,7 @@ export const NewTypicalMalfunction = memo(
           sx={modalStyle}
           component="form"
           onSubmit={handleSubmit(changeData)}>
-          <Typography variant={'h6'}>{title}</Typography>
+          <Typography variant={'h4'}>{title}</Typography>
           <DropDown
             data={equipments.map(item => {
               return {
@@ -109,7 +110,12 @@ export const NewTypicalMalfunction = memo(
                     label={label}
                     type={type}
                     variant="outlined"
-                    sx={{ width: '90%', m: 2, mt: 4, height: 40 }}
+                    sx={{
+                      width: '90%',
+                      height: theme.fontSize === 'small' ? 30 : 40,
+                      mt:
+                        index === 0 ? (theme.fontSize === 'small' ? 7 : 6) : 5,
+                    }}
                     margin="normal"
                     required={required ?? true}
                     value={field.value || ''}
@@ -120,15 +126,13 @@ export const NewTypicalMalfunction = memo(
               />
             )
           })}
-          <Typography sx={{ fontSize: 14 }}>
+          <Typography variant={'h1'} sx={{ mt: 2, width: '90%' }}>
             Выберите модели для этой типовой неисправности:
           </Typography>
           <Box
-            ref={boxRef}
             sx={{
               ...boxDataModal,
-              height: 200,
-              mt: 0,
+              mt: 2,
             }}>
             {models.map(({ model, id }) => (
               <Item
@@ -148,6 +152,6 @@ export const NewTypicalMalfunction = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

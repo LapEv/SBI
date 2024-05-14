@@ -47,7 +47,6 @@ export const DropDownMenu = memo(
       onClick(name)
     }
 
-    console.log('theme.fontSize = ', theme.fontSize)
     return (
       <>
         <Box
@@ -61,7 +60,6 @@ export const DropDownMenu = memo(
           <IconButton
             onClick={handleClick}
             sx={{
-              m: 0.5,
               width: theme.fontSize === 'small' ? 30 : 40,
               height: theme.fontSize === 'small' ? 30 : 40,
               borderRadius: '20%',

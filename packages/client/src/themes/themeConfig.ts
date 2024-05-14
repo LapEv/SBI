@@ -43,6 +43,32 @@ export const ThemeConfig = ({ mode, fontSize }: ThemeModeProps) =>
         fontWeight: 'bold',
         color: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
       },
+      h5: {
+        fontSize: fontSize === 'small' ? 22 : 30,
+        fontWeight: 'bold',
+        color: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+      },
+      h4: {
+        fontSize: fontSize === 'small' ? 20 : 28,
+        fontWeight: 'bold',
+        color: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+      },
+      h3: {
+        fontSize: fontSize === 'small' ? 18 : 26,
+        fontWeight: 'bold',
+        color: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+      },
+      h2: {
+        fontSize: fontSize === 'small' ? 16 : 24,
+        fontWeight: 'bold',
+        color: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+      },
+      h1: {
+        fontSize: fontSize === 'small' ? 14 : 22,
+        fontWeight: 'bold',
+        color: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+      },
+
       // body2: {
       //   fontSize,
       //   fontWeight: 'bold',

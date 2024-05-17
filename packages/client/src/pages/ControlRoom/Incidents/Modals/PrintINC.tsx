@@ -42,11 +42,11 @@ export const PrintINC = memo(
         <Box
           ref={ref}
           tabIndex={-1}
-          sx={{ ...modalStyle, paddingLeft: 5 }}
+          sx={{ ...modalStyle, pl: 5, height: 'auto', width: 'auto' }}
           component="form"
           onSubmit={changeData}>
-          <Typography variant={'h6'}>{title}</Typography>
-          <Box sx={{ ...boxDataModal }}>
+          <Typography variant={'h4'}>{title}</Typography>
+          <Box sx={{ ...boxDataModal, pl: 15, mt: 5, height: 'auto' }}>
             {printType.map(({ label, value }, index) => (
               <Item
                 name={label}

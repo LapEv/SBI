@@ -18,7 +18,7 @@ export const IncidentsPage = memo(() => {
 
   return (
     <Container component="main" maxWidth="md" sx={mainHeaderForINCPage}>
-      <Box sx={{ width: '100%', padding: 1 }}>
+      <Box sx={{ width: '100%', p: 1 }}>
         <TableIncidents />
       </Box>
     </Container>

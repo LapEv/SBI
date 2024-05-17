@@ -27,16 +27,11 @@ export const AdditionalMenu = memo(
         <IconToolTipButton
           title={'Создать инцидент'}
           onClick={() => checkClickMenu('newIncident')}
-          sx={{ width: 33, height: 33 }}
           icon={<AddCircleOutlineIcon />}
         />
         <IconToolTipButton
           title={'Создать запрос'}
           onClick={() => checkClickMenu('newRequest')}
-          sx={{
-            width: 33,
-            height: 33,
-          }}
           icon={<ControlPointDuplicateIcon />}
         />
         {dragTable && (
@@ -48,10 +43,9 @@ export const AdditionalMenu = memo(
             data={menuData}
             divider={[3, 6, 9]}
             onClick={checkClickMenu}
-            sx={{ width: 33, height: 33 }}
           />
         )}
       </>
     )
-  }
+  },
 )

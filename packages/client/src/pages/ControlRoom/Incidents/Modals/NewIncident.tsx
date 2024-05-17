@@ -1,5 +1,5 @@
 import React, { useEffect, useState, memo } from 'react'
-import { Box, Stack, Typography } from '@mui/material'
+import { Box, Stack, Typography, useTheme } from '@mui/material'
 import {
   useForm,
   useFieldArray,
@@ -24,6 +24,7 @@ import { getSLATime } from 'utils/getSLATime'
 import { useAuth } from 'hooks/auth/useAuth'
 import { convertDateToStringDDMMYYYYHHMMSS } from 'utils/convertDate'
 import { FilterOptions } from '../Utils/FilterOptions'
+import { ITheme } from 'themes/themeConfig'
 
 export const NewIncident = memo(
   React.forwardRef<unknown, ChooseModalProps>(
@@ -60,6 +61,7 @@ export const NewIncident = memo(
       >([])
       const [selectedTypicalMalfunction, setSelectedTypicalMalfunction] =
         useState<Options>(emptyValue)
+      const theme = useTheme() as ITheme
 
       const { handleSubmit, control } = useForm<AddValuesProps>({
         mode: 'onBlur',
@@ -281,6 +283,12 @@ export const NewIncident = memo(
         }
       }
 
+      const cellProps = {
+        width: '45%',
+        m: 2,
+        mt: theme.fontSize === 'small' ? 4 : 2,
+      }
+
       return (
         <Box
           ref={ref}
@@ -295,7 +303,7 @@ export const NewIncident = memo(
             alignItems="flex-start"
             sx={{
               flexWrap: 'wrap',
-              height: 570,
+              height: theme.fontSize === 'small' ? 450 : 570,
               flexDirection: 'column!important',
               width: '100%',
               ml: 2,
@@ -316,7 +324,7 @@ export const NewIncident = memo(
                         return (
                           <DropDown
                             data={clientsList}
-                            props={{ width: '45%', m: 2 }}
+                            props={cellProps}
                             onChange={setClient}
                             value={selectedClient.label || ''}
                             label={label}
@@ -329,7 +337,7 @@ export const NewIncident = memo(
                         return (
                           <DropDown
                             data={contractList}
-                            props={{ width: '45%', m: 2 }}
+                            props={cellProps}
                             onChange={setContract}
                             value={selectedContract.label || ''}
                             label={label}
@@ -342,7 +350,7 @@ export const NewIncident = memo(
                         return (
                           <DropDown
                             data={objectList}
-                            props={{ width: '45%', m: 2 }}
+                            props={cellProps}
                             onChange={setSelectedObject}
                             value={selectedObject.label || ''}
                             label={label}
@@ -355,7 +363,7 @@ export const NewIncident = memo(
                         return (
                           <DropDown
                             data={slaList}
-                            props={{ width: '45%', m: 2 }}
+                            props={cellProps}
                             onChange={setSLA}
                             value={selectedSLA.label || ''}
                             label={label}
@@ -368,7 +376,7 @@ export const NewIncident = memo(
                         return (
                           <DropDown
                             data={typeOfWorkList}
-                            props={{ width: '45%', m: 2 }}
+                            props={cellProps}
                             onChange={setSelectedTypeOfWork}
                             value={selectedTypeOfWork.label || ''}
                             label={label}
@@ -381,7 +389,7 @@ export const NewIncident = memo(
                         return (
                           <DropDown
                             data={equipmentList}
-                            props={{ width: '45%', m: 2 }}
+                            props={cellProps}
                             onChange={setEquimpent}
                             value={selectedEquipment.label || ''}
                             label={label}
@@ -394,7 +402,7 @@ export const NewIncident = memo(
                         return (
                           <DropDown
                             data={modelList}
-                            props={{ width: '45%', m: 2 }}
+                            props={cellProps}
                             onChange={setModel}
                             value={selectedModel.label || ''}
                             label={label}
@@ -407,7 +415,7 @@ export const NewIncident = memo(
                         return (
                           <DropDown
                             data={typicalMalfunctionList}
-                            props={{ width: '45%', m: 2 }}
+                            props={cellProps}
                             onChange={setSelectedTypicalMalfunction}
                             value={selectedTypicalMalfunction.label || ''}
                             label={label}
@@ -421,7 +429,7 @@ export const NewIncident = memo(
                           <DateTimeField
                             dateValue={dateValue as Dayjs}
                             setDateValue={setDateValue}
-                            sx={{ width: '45%', m: 2 }}
+                            sx={cellProps}
                           />
                         )
                       }
@@ -434,7 +442,7 @@ export const NewIncident = memo(
                             type={type}
                             required={required ?? true}
                             variant="outlined"
-                            sx={{ width: '45%', m: 2 }}
+                            sx={cellProps}
                             margin="normal"
                             multiline
                             maxRows={3}
@@ -457,7 +465,7 @@ export const NewIncident = memo(
                           type={type}
                           required={required ?? true}
                           variant="outlined"
-                          sx={{ width: '45%', m: 2 }}
+                          sx={cellProps}
                           margin="normal"
                           value={field.value || ''}
                           error={!!(errors?.list ?? [])[index]?.value?.message}

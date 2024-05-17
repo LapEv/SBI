@@ -74,6 +74,7 @@ export const DeleteTypicalMalfunction = memo(
       return (
         <Box
           ref={ref}
+          tabIndex={-1}
           sx={{ ...modalStyle, paddingLeft: 5 }}
           component="form"
           onSubmit={changeData}>

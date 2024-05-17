@@ -3,7 +3,7 @@ import MUIDataTable from 'mui-datatables'
 import { createTheme, Theme, ThemeProvider } from '@mui/material/styles'
 import { IDataTable } from './interface'
 import { memo } from 'react'
-import { ThemeMode } from 'themes/themeConfig'
+import { ITheme, ThemeMode } from 'themes/themeConfig'
 
 const StyledDataTable = styled(MUIDataTable)(({ theme }) => ({
   '.MuiSwitch-track': {
@@ -113,7 +113,7 @@ export const DataTable = memo(
                     borderLeftColor:
                       theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
                     borderLeftStyle: 'solid',
-                    fontSize: '0.935rem',
+                    // fontSize: '0.935rem',
                     fontWeight: 'bold',
                     color:
                       theme.palette.mode === ThemeMode.light
@@ -121,7 +121,7 @@ export const DataTable = memo(
                         : '#FFFFFF',
                   },
                   data: {
-                    fontSize: '0.935rem',
+                    // fontSize: '0.935rem',
                     fontWeight: 'bold',
                     color:
                       theme.palette.mode === ThemeMode.light
@@ -132,7 +132,7 @@ export const DataTable = memo(
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    fontSize: 15,
+                    // fontSize: 15,
                   },
                   sortActive: {
                     color:
@@ -233,15 +233,16 @@ export const DataTable = memo(
                       theme.palette.mode === ThemeMode.dark
                         ? '#1E515D'
                         : '#C1EEE1',
-                    height: 39,
-                    minHeight: 39,
-                    maxHeight: 39,
+                    height: (theme as ITheme).fontSize === 'small' ? 29 : 39,
+                    minHeight: (theme as ITheme).fontSize === 'small' ? 29 : 39,
+                    maxHeight: (theme as ITheme).fontSize === 'small' ? 29 : 39,
                   },
                   titleText: {
                     color:
                       theme.palette.mode === ThemeMode.light
                         ? '#000000'
                         : '#FFFFFF',
+                    fontSize: (theme as ITheme).fontSize === 'small' ? 20 : 28,
                   },
                   icon: {
                     color:
@@ -536,5 +537,5 @@ export const DataTable = memo(
         />
       </ThemeProvider>
     )
-  }
+  },
 )

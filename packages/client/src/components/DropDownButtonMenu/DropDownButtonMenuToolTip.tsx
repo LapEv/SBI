@@ -7,10 +7,11 @@ import { Box, Tooltip, useTheme } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import { DropDownMenuTooltipProps } from './interfaces'
+import { ITheme } from 'themes/themeConfig'
 
 export const DropDownMenuToolTip = memo(
   ({ title, data, divider, onClick, icon, sx }: DropDownMenuTooltipProps) => {
-    const theme = useTheme()
+    const theme = useTheme() as ITheme
     const [anchorMenuEl, setAnchorMenuEl] = useState<null | HTMLElement>(null)
     const openMenu = Boolean(anchorMenuEl)
 
@@ -34,11 +35,11 @@ export const DropDownMenuToolTip = memo(
           }}>
           <IconButton
             onClick={handleClick}
-            size="large"
             sx={{
               m: 1,
-              width: 40,
-              height: 40,
+              mt: 1.5,
+              width: theme.fontSize === 'small' ? 30 : 35,
+              height: theme.fontSize === 'small' ? 30 : 35,
               borderRadius: '20%',
               color: theme.palette.primary.contrastText,
               backgroundColor: theme.palette.primary.main,
@@ -54,30 +55,32 @@ export const DropDownMenuToolTip = memo(
           open={openMenu}
           onClose={() => handleClose(null)}
           onClick={() => handleClose(null)}
-          PaperProps={{
-            elevation: 0,
-            sx: {
-              overflow: 'visible',
-              filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-              bgcolor: theme.palette.background.paper,
-              mt: 1.5,
-              '& .MuiAvatar-root': {
-                width: 32,
-                height: 32,
-                ml: -0.5,
-                mr: 1,
-              },
-              '&:before': {
-                content: '""',
-                display: 'block',
-                position: 'absolute',
-                top: 0,
-                right: 14,
-                width: 10,
-                height: 10,
-                bgcolor: 'background.secondary',
-                transform: 'translateY(-50%) rotate(45deg)',
-                zIndex: 0,
+          slotProps={{
+            paper: {
+              elevation: 0,
+              sx: {
+                overflow: 'visible',
+                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                bgcolor: theme.palette.background.paper,
+                mt: theme.fontSize === 'small' ? 8 : 5,
+                '& .MuiAvatar-root': {
+                  width: 32,
+                  height: 32,
+                  ml: -0.5,
+                  mr: 1,
+                },
+                '&:before': {
+                  content: '""',
+                  display: 'block',
+                  position: 'absolute',
+                  top: 0,
+                  right: 14,
+                  width: 10,
+                  height: 10,
+                  bgcolor: theme.palette.background.paper,
+                  transform: 'translateY(-50%) rotate(45deg)',
+                  zIndex: 0,
+                },
               },
             },
           }}
@@ -85,7 +88,14 @@ export const DropDownMenuToolTip = memo(
           anchorOrigin={{ horizontal: 'right', vertical: 'top' }}>
           {data.map(({ name, title, icon }, index) => (
             <Box key={`${name}${index}`}>
-              <MenuItem onClick={() => handleClose(name)}>
+              <MenuItem
+                onClick={() => handleClose(name)}
+                sx={{
+                  color: theme.palette.background.default,
+                  '&:hover': {
+                    bgcolor: theme.palette.info.main,
+                  },
+                }}>
                 <ListItemIcon sx={{ color: theme.palette.background.default }}>
                   {icon}
                 </ListItemIcon>
@@ -97,5 +107,5 @@ export const DropDownMenuToolTip = memo(
         </Menu>
       </>
     )
-  }
+  },
 )

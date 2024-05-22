@@ -1,10 +1,18 @@
-import { Box, Collapse, ListItemButton, ListItemText } from '@mui/material'
+import {
+  Box,
+  Collapse,
+  ListItemButton,
+  ListItemText,
+  Typography,
+} from '@mui/material'
 import { RotateButton } from 'components/Buttons'
 import { memo, useState } from 'react'
 import { listItemButton } from 'static/styles/listItemButton'
 import { SwitchMUI } from 'components/Switch'
 import { useAuth } from 'hooks/auth/useAuth'
 import { ThemeMode } from 'storeAuth/interfaces'
+import ColorPicker from 'mui-color-picker'
+import { ThemeColor } from 'themes/themeConfig'
 
 export const ProfileAppOptions = memo(() => {
   const [{ user }, { changeUserAppOptions }] = useAuth()
@@ -16,8 +24,10 @@ export const ProfileAppOptions = memo(() => {
     user.appOptions?.font === 'large' ? false : true,
   )
 
+  const [colorLight, setColorLight] = useState<string>(ThemeColor.light)
+  const [colorDark, setColorDark] = useState<string>(ThemeColor.dark)
+
   const handleClick = () => {
-    console.log('handleClick')
     setOpen(!open)
   }
 
@@ -36,12 +46,25 @@ export const ProfileAppOptions = memo(() => {
     changeUserAppOptions({ id: user.id as string, appOptions })
   }
 
+  const handleChangeColorLight = (color_Light: string) => {
+    setColorLight(color_Light)
+    const appOptions = { ...user.appOptions, color_Light }
+    changeUserAppOptions({ id: user.id as string, appOptions })
+  }
+
+  const handleChangeColorDark = (color_Dark: string) => {
+    setColorDark(color_Dark)
+    const appOptions = { ...user.appOptions, color_Dark }
+    changeUserAppOptions({ id: user.id as string, appOptions })
+  }
+
   return (
     <Box
       sx={{
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
+        height: 'auto',
         mt: 2,
       }}>
       <ListItemButton divider={open} sx={listItemButton} onClick={handleClick}>
@@ -70,6 +93,36 @@ export const ProfileAppOptions = memo(() => {
           checked={font}
           value={font}
         />
+        <Box
+          sx={{
+            ml: 4,
+            mt: 2,
+            justifyContent: 'space-between',
+            width: '85%',
+          }}>
+          <Typography variant="body1">Цвет светлой темы</Typography>
+          <ColorPicker
+            sx={{ mt: 1 }}
+            name="color"
+            defaultValue={colorLight}
+            onChange={handleChangeColorLight}
+          />
+        </Box>
+        <Box
+          sx={{
+            ml: 4,
+            mt: 2,
+            justifyContent: 'space-between',
+            width: '85%',
+          }}>
+          <Typography variant="body1">Цвет темной темы</Typography>
+          <ColorPicker
+            sx={{ mt: 1 }}
+            name="color"
+            defaultValue={colorDark}
+            onChange={handleChangeColorDark}
+          />
+        </Box>
       </Collapse>
     </Box>
   )

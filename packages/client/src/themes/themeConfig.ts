@@ -7,22 +7,34 @@ export const ThemeMode = {
   dark: 'dark',
 }
 
+export const ThemeColor = {
+  light: '#1E515D',
+  dark: '#C1EEE1',
+}
+
 interface ThemeModeProps {
   mode: PaletteMode
   fontSize: string
+  colorLight?: string
+  colorDark?: string
 }
 
 export interface ITheme extends Theme {
   fontSize: string
 }
 
-export const ThemeConfig = ({ mode, fontSize }: ThemeModeProps) =>
+export const ThemeConfig = ({
+  mode,
+  fontSize,
+  colorLight,
+  colorDark,
+}: ThemeModeProps) =>
   ({
     fontSize,
     typography: {
       fontFamily: 'Raleway',
       fontSize: fontSize === 'small' ? 12 : 16,
-      color: mode === ThemeMode.light ? '#1E515D' : '#FFFFFF',
+      color: mode === ThemeMode.light ? colorLight : '#FFFFFF',
       button: {
         textTransform: 'none',
         fontSize: fontSize === 'small' ? 11 : 15,
@@ -31,7 +43,7 @@ export const ThemeConfig = ({ mode, fontSize }: ThemeModeProps) =>
       body1: {
         fontSize: fontSize === 'small' ? 12 : 16,
         fontWeight: 'bold',
-        color: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+        color: mode === ThemeMode.light ? colorLight : colorDark,
       },
       body2: {
         fontSize: fontSize === 'small' ? 11 : 15,
@@ -41,48 +53,48 @@ export const ThemeConfig = ({ mode, fontSize }: ThemeModeProps) =>
       h6: {
         fontSize: fontSize === 'small' ? 24 : 32,
         fontWeight: 'bold',
-        color: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+        color: mode === ThemeMode.light ? colorLight : colorDark,
       },
       h5: {
         fontSize: fontSize === 'small' ? 22 : 30,
         fontWeight: 'bold',
-        color: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+        color: mode === ThemeMode.light ? colorLight : colorDark,
       },
       h4: {
         fontSize: fontSize === 'small' ? 20 : 28,
         fontWeight: 'bold',
-        color: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+        color: mode === ThemeMode.light ? colorLight : colorDark,
       },
       h3: {
         fontSize: fontSize === 'small' ? 18 : 26,
         fontWeight: 'bold',
-        color: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+        color: mode === ThemeMode.light ? colorLight : colorDark,
       },
       h2: {
         fontSize: fontSize === 'small' ? 16 : 24,
         fontWeight: 'bold',
-        color: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+        color: mode === ThemeMode.light ? colorLight : colorDark,
       },
       h1: {
         fontSize: fontSize === 'small' ? 14 : 22,
         fontWeight: 'bold',
-        color: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+        color: mode === ThemeMode.light ? colorLight : colorDark,
       },
 
       // body2: {
       //   fontSize,
       //   fontWeight: 'bold',
-      //   color: mode === ThemeMode.light ? '#1E515D' : '#FFFFFF',
+      //   color: mode === ThemeMode.light ? colorLight : '#FFFFFF',
       // },
       // subtitle1: {
       //   fontSize,
       //   fontWeight: 'bold',
-      //   color: mode === ThemeMode.light ? '#1E515D' : '#FFFFFF',
+      //   color: mode === ThemeMode.light ? colorLight : '#FFFFFF',
       // },
       // subtitle2: {
       //   fontSize,
       //   fontWeight: 'bold',
-      //   color: mode === ThemeMode.light ? '#1E515D' : '#FFFFFF',
+      //   color: mode === ThemeMode.light ? colorLight : '#FFFFFF',
       // },
     },
     spacing: fontSize === 'large' ? 8 : 4,
@@ -95,31 +107,31 @@ export const ThemeConfig = ({ mode, fontSize }: ThemeModeProps) =>
               secondary: '#000000',
             },
             green: {
-              [64]: '#1E515D',
+              [64]: colorLight,
               dark: '#7AB3A2',
             },
             icon: {
-              default: '#1E515D',
+              default: colorLight,
               secondary: '#def0eb',
             },
             background: {
-              default: '#C1EEE1',
-              paper: '#1E515D',
+              default: colorDark,
+              paper: colorLight,
               btn: '#7AB3A2',
             },
             primary: {
               main: '#def0eb',
-              contrastText: '#1E515D',
+              contrastText: colorLight,
             },
             secondary: {
-              main: '#1E515D',
+              main: colorLight,
             },
             error: {
               main: red[400],
               height: 20,
             },
             input: {
-              main: '#1E515D',
+              main: colorLight,
             },
             border: {
               default: '#000000',
@@ -134,31 +146,31 @@ export const ThemeConfig = ({ mode, fontSize }: ThemeModeProps) =>
               secondary: '#FFFFFF',
             },
             green: {
-              [64]: '#C1EEE1',
+              [64]: colorDark,
               dark: '#7AB3A2',
             },
             icon: {
-              default: '#C1EEE1',
+              default: colorDark,
               secondary: '#def0eb',
             },
             background: {
-              default: '#1E515D',
-              paper: '#C1EEE1',
+              default: colorLight,
+              paper: colorDark,
               btn: '#7AB3A2',
             },
             primary: {
               main: '#def0eb',
-              contrastText: '#1E515D',
+              contrastText: colorLight,
             },
             secondary: {
-              main: '#C1EEE1',
+              main: colorDark,
             },
             error: {
               main: red[400],
               height: 20,
             },
             input: {
-              main: '#C1EEE1',
+              main: colorDark,
             },
             border: {
               default: '#FFFFFF',
@@ -197,7 +209,7 @@ export const ThemeConfig = ({ mode, fontSize }: ThemeModeProps) =>
         styleOverrides: {
           root: {
             '.MuiSvgIcon-root': {
-              color: mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+              color: mode === ThemeMode.light ? colorLight : colorDark,
             },
           },
         },
@@ -215,7 +227,8 @@ export const ThemeConfig = ({ mode, fontSize }: ThemeModeProps) =>
               fontWeight: 'bold',
             },
             '& .MuiAlert-standard': {
-              backgroundColor: mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
+              backgroundColor:
+                mode === ThemeMode.light ? colorDark : colorLight,
             },
           },
         },

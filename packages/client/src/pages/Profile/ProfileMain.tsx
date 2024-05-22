@@ -46,7 +46,9 @@ export const ProfileMain = memo(({ setModal, dataUser }: ProfileMainProps) => {
   }, [])
 
   return (
-    <Box component="form" sx={{ ...pageProfile, maxWidth: 1200 }}>
+    <Box
+      component="form"
+      sx={{ ...pageProfile, maxWidth: 1200, height: '100%' }}>
       <ProfileAvatar
         id={dataUser.id}
         changeAvatar={changeAvatar}

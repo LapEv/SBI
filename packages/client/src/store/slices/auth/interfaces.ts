@@ -30,6 +30,8 @@ export type ThemeMode = 'light' | 'dark'
 export interface AppOptions {
   theme?: ThemeMode
   font?: string
+  color_Light?: string
+  color_Dark?: string
 }
 
 export interface ICheckUser {

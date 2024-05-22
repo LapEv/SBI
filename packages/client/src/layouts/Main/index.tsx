@@ -8,10 +8,11 @@ import { DrawerHeader } from './drawerHeader'
 import { Outlet } from 'react-router-dom'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useApp } from 'hooks/app/useApp'
-import { ThemeMode } from 'themes/themeConfig'
+import { ITheme, ThemeMode } from 'themes/themeConfig'
 
 const openedMixin = (theme: Theme): CSSObject => ({
-  width: drawerWidth,
+  width:
+    (theme as ITheme).fontSize === 'small' ? drawerWidth - 80 : drawerWidth,
   backgroundColor: theme.palette.background.default,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
@@ -27,16 +28,17 @@ const closedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.complex,
   }),
   overflowX: 'hidden',
-  width: `calc(${theme.spacing(9)} + 5px)`,
+  width: `calc(${theme.spacing(9)}${(theme as ITheme).fontSize !== 'small' ? ' - 10' : ' + 5'}px)`,
   [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(10)} + 5px)`,
+    width: `calc(${theme.spacing(10)}${(theme as ITheme).fontSize !== 'small' ? ' - 10' : ' + 5'}px)`,
   },
 })
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: prop => prop !== 'open',
 })(({ theme, open }) => ({
-  width: drawerWidth,
+  width:
+    (theme as ITheme).fontSize === 'small' ? drawerWidth - 80 : drawerWidth,
   flexShrink: 0,
   whiteSpace: 'nowrap',
   boxSizing: 'border-box',
@@ -55,12 +57,16 @@ export const MainLayout = memo(() => {
   const [, { setDataWidth }] = useApp()
   const theme = useTheme()
   const [open, setOpen] = useState<boolean>(true)
-  const [width, setWidth] = useState<string>(`calc(100% - ${drawerWidth}px)`)
+  const adaptiveDrawerWidth =
+    (theme as ITheme).fontSize === 'small' ? drawerWidth - 80 : drawerWidth
+  const [width, setWidth] = useState<string>(
+    `calc(100% - ${adaptiveDrawerWidth}px)`,
+  )
   const toggleDrawer = (check: boolean) => {
     setOpen(prev => !prev)
     const widthCheck = check
-      ? `calc(100% - ${drawerWidth}px)`
-      : `calc(100% - ${theme.spacing(8)} - 1px)`
+      ? `calc(100% - ${adaptiveDrawerWidth}px)`
+      : `calc(100% - ${theme.spacing(9)} - 1px)`
     setWidth(widthCheck)
     setTimeout(() => {
       setDataWidth(boxRef?.current?.clientWidth as number)

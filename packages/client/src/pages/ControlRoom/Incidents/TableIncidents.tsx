@@ -4,7 +4,7 @@ import {
   MUIDataTableOptions,
   MUIDataTableState,
 } from 'mui-datatables'
-import { textLabels } from './data'
+import { emptyModalImage, textLabels } from './data'
 import { DataTable } from 'components/DataTable'
 import { TableCell, TableRow, useTheme, Modal } from '@mui/material'
 import { INC_Column, ITableMeta } from './interfaces'
@@ -23,11 +23,12 @@ import { useIncidents } from 'hooks/incidents/useINC'
 import { setFilter } from './Utils/FilterOptions'
 import { ChooseModal } from './Modals'
 import { LinearProgressWithLabel } from 'components/LinearProgress/LinearProgress'
+import { ModalImageProps } from './Modals/interfaces'
 
 export const TableIncidents = memo(() => {
   const modalClientRef = React.createRef()
   const [modal, setModal] = useState<boolean>(false)
-  const [modalImage, setModalImage] = useState<string>('')
+  const [modalImage, setModalImage] = useState<ModalImageProps>(emptyModalImage)
   const [
     { incidents, countIncidents, filterListData },
     { getINCs, changeComment },
@@ -877,7 +878,12 @@ export const TableIncidents = memo(() => {
   }
 
   const onPrint = () => {
-    setModalImage('printINC')
+    setModalImage({ image: 'printINC', id: '', incident: '' })
+    setModal(true)
+  }
+
+  const newTask = ({ id, incident }: ModalImageProps) => {
+    setModalImage({ image: 'newRequest', id, incident })
     setModal(true)
   }
 
@@ -920,6 +926,7 @@ export const TableIncidents = memo(() => {
               values={incidents[dataIndex]}
               setHeight={setHeightINCData}
               onSaveComments={changeComment}
+              newTask={newTask}
             />
           </TableCell>
         </TableRow>
@@ -989,10 +996,10 @@ export const TableIncidents = memo(() => {
     // console.log('incs = ', incidents)
   }, [])
 
-  const checkClickMenu = (name: string | null) => {
-    if (name) {
+  const checkClickMenu = (image: string | null) => {
+    if (image) {
       setModal(true)
-      setModalImage(name)
+      setModalImage({ image, id: '', incident: '' })
     }
   }
 
@@ -1010,8 +1017,10 @@ export const TableIncidents = memo(() => {
         disableScrollLock={true}>
         <ChooseModal
           ref={modalClientRef}
-          modalImage={modalImage}
+          modalImage={modalImage.image}
           handleModal={handleModal}
+          id={modalImage.id}
+          incident={modalImage.incident}
         />
       </Modal>
       <DataTable

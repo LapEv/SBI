@@ -14,6 +14,8 @@ export const Executor = memo(
     const [executor, setExecutor] = useState<Options>({ label: value, id: '' })
 
     const setData = (data: Options) => {
+      if (data.label === executor.label) return
+
       setExecutor(data)
       const { nameSort, direction, limit, page, filterOptions } =
         FilterOptions()
@@ -66,5 +68,5 @@ export const Executor = memo(
         disableClearable={false}
       />
     )
-  }
+  },
 )

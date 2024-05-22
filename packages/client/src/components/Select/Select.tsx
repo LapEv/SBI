@@ -60,6 +60,7 @@ const CustomMenuItem = styled(MenuItem)(({ theme }) => ({
   color: theme.palette.mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
 
   '&.Mui-selected': {
+    fontWeight: 'normal',
     backgroundColor:
       theme.palette.mode === ThemeMode.dark
         ? 'rgba(222, 240, 235, 0.08)'
@@ -77,6 +78,12 @@ const CustomMenuItem = styled(MenuItem)(({ theme }) => ({
       theme.palette.mode === ThemeMode.light
         ? 'rgba(222, 240, 235, 0.08)'
         : 'rgba(0, 0, 0, 0.08)',
+  },
+  '&.MuiButtonBase-root': {
+    fontWeight: 'normal',
+    '&:hover': {
+      fontWeight: 'bold',
+    },
   },
 }))
 

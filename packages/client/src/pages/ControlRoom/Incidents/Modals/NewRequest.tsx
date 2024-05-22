@@ -9,7 +9,9 @@ import { ButtonsModalSection } from 'components/Buttons'
 
 export const NewRequest = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    ({ handleModal, title }: ChooseModalProps, ref) => {
+    ({ handleModal, title, id, incident }: ChooseModalProps, ref) => {
+      console.log('id = ', id)
+      console.log('incident = ', incident)
       // const { handleSubmit, control } = useForm<AddValuesProps>({
       //   mode: 'onBlur',
       //   defaultValues: {
@@ -67,6 +69,6 @@ export const NewRequest = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

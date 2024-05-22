@@ -147,6 +147,10 @@ export const DataTable = memo(
                         ? '#000000'
                         : '#FFFFFF',
                   },
+                  toolButton: {
+                    padding: 0,
+                    paddingLeft: 10,
+                  },
                 },
               },
               MuiTableCell: {
@@ -223,6 +227,7 @@ export const DataTable = memo(
                       theme.palette.mode === ThemeMode.light
                         ? '#000000'
                         : '#FFFFFF',
+                    fontWeight: 'normal',
                   },
                 },
               },

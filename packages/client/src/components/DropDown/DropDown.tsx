@@ -82,37 +82,43 @@ export const DropDown = memo(
             : (onChange?.(emptyValue as Options), setErrors(true))
         }
         value={value ?? ''}
-        renderOption={(props, option) => (
-          <li {...props}>
-            <Box
-              component="span"
-              sx={{
-                width: 14,
-                height: 14,
-                flexShrink: 0,
-                borderRadius: '3px',
-                mr: 1,
-                mt: '2px',
-              }}
-            />
-            <Box sx={{ flexGrow: 1 }}>
-              {(option as Options).label}
-              {(option as Options).description && (
-                <div>
-                  <span>{(option as Options).description}</span>
-                </div>
-              )}
-              {(option as Options).descriptionID && (
-                <div>
-                  <span>{(option as Options).descriptionID}</span>
-                </div>
-              )}
-            </Box>
-          </li>
-        )}
+        renderOption={(props, option) => {
+          if (!value) {
+            props['aria-selected'] = 'false'
+          }
+          return (
+            <li {...props}>
+              <Box
+                component="span"
+                sx={{
+                  width: 14,
+                  height: 14,
+                  flexShrink: 0,
+                  borderRadius: '3px',
+                  mr: 1,
+                  mt: '2px',
+                }}
+              />
+              <Box sx={{ flexGrow: 1 }}>
+                {(option as Options).label}
+                {(option as Options).description && (
+                  <div>
+                    <span>{(option as Options).description}</span>
+                  </div>
+                )}
+                {(option as Options).descriptionID && (
+                  <div>
+                    <span>{(option as Options).descriptionID}</span>
+                  </div>
+                )}
+              </Box>
+            </li>
+          )
+        }}
         ListboxProps={{
           sx: {
             borderWidth: 1,
+            fontWeight: 'normal',
             minHeight: 40,
             maxHeight: 225,
             '& li': {

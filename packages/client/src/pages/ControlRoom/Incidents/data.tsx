@@ -96,6 +96,12 @@ export const printType = [
   { label: 'Очень сжатый', value: 'xcompressed' },
 ]
 
+export const emptyModalImage = {
+  image: '',
+  id: '',
+  incident: '',
+}
+
 export const statusSLATitles = {
   yes: 'Просрочен',
   no: 'В срок',

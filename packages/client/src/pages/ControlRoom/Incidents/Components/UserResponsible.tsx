@@ -16,6 +16,8 @@ export const UserResponsible = memo(({ value, id, incident }: IExecutor) => {
   })
 
   const setData = (data: Options) => {
+    if (data.label === responsible.label) return
+
     setResposible(data)
     const { nameSort, direction, limit, page, filterOptions } = FilterOptions()
     changeResponsible({
@@ -45,7 +47,7 @@ export const UserResponsible = memo(({ value, id, incident }: IExecutor) => {
         return {
           ['label']: `${lastName} ${firstName?.slice(0, 1)}.${middleName?.slice(
             0,
-            1
+            1,
           )}.` as string,
           ['id']: id as string,
         }

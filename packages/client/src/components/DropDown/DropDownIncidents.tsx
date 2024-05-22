@@ -79,34 +79,39 @@ export const DropDownIncidents = memo(
             : (onChange?.(emptyValue as Options), setErrors(true))
         }
         value={value ?? ''}
-        renderOption={(props, option) => (
-          <li {...props}>
-            <Box
-              component="span"
-              sx={{
-                width: 14,
-                height: 14,
-                flexShrink: 0,
-                borderRadius: '3px',
-                mr: 1,
-                mt: '2px',
-              }}
-            />
-            <Box sx={{ flexGrow: 1 }}>
-              {(option as Options).label}
-              {(option as Options).description && (
-                <div>
-                  <span>{(option as Options).description}</span>
-                </div>
-              )}
-              {(option as Options).descriptionID && (
-                <div>
-                  <span>{(option as Options).descriptionID}</span>
-                </div>
-              )}
-            </Box>
-          </li>
-        )}
+        renderOption={(props, option) => {
+          if (!value) {
+            props['aria-selected'] = 'false'
+          }
+          return (
+            <li aria-selected="false" {...props}>
+              <Box
+                component="span"
+                sx={{
+                  width: 14,
+                  height: 14,
+                  flexShrink: 0,
+                  borderRadius: '3px',
+                  mr: 1,
+                  mt: '2px',
+                }}
+              />
+              <Box sx={{ flexGrow: 1 }}>
+                {(option as Options).label}
+                {(option as Options).description && (
+                  <div>
+                    <span>{(option as Options).description}</span>
+                  </div>
+                )}
+                {(option as Options).descriptionID && (
+                  <div>
+                    <span>{(option as Options).descriptionID}</span>
+                  </div>
+                )}
+              </Box>
+            </li>
+          )
+        }}
         PopperComponent={({ style, ...props }) => (
           <Popper {...props} style={{ ...style, zIndex: 1 }} />
         )}
@@ -120,10 +125,10 @@ export const DropDownIncidents = memo(
         }}
         ListboxProps={{
           sx: {
+            fontWeight: 'normal',
             borderWidth: 1,
             minHeight: 30,
             maxHeight: 225,
-            fontSize: 14,
             color:
               theme.palette.mode === 'light'
                 ? '#000000!important'
@@ -140,11 +145,11 @@ export const DropDownIncidents = memo(
             },
             '& [aria-selected="true"]': {
               color: theme.palette.mode === 'light' ? '#000000' : '#FFFFFF',
+              fontWeight: 'bold',
               backgroundColor:
                 theme.palette.mode === 'light'
                   ? '#a8dfcf!important'
                   : '#1E515D',
-              fontWeight: 'bold',
             },
           },
         }}
@@ -171,5 +176,5 @@ export const DropDownIncidents = memo(
         )}
       />
     )
-  }
+  },
 )

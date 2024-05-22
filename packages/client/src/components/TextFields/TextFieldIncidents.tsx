@@ -6,21 +6,26 @@ export const TextFieldIncidents = styled(MuiTextField)(({ theme }) => ({
     top: -7,
     marginTop: 0,
     color: theme.palette.mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
+    fontWeight: 'normal',
     fontSize: 12,
   },
   '.MuiInputLabel-root.MuiInputLabel-focused': {
     color: theme.palette.mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+    fontWeight: 'normal',
+    fontSize: 12,
   },
   '.MuiInputLabel-root.Mui-error': {
     color: '#ef5350!important',
     marginTop: -1,
     zIndex: 999,
+    fontWeight: 'normal',
     fontSize: 12,
   },
   '.MuiInputLabel-root.MuiInputLabel-shrink': {
     color: theme.palette.mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
   },
   '.MuiInputBase-root': {
+    fontWeight: 'normal',
     height: 30,
     borderRadius: 5,
     borderWidth: 1,

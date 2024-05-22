@@ -18,7 +18,7 @@ import { PrintINC } from './PrintINC'
 
 export const ChooseModal = memo(
   React.forwardRef<unknown, ChooseModalProps>(
-    ({ modalImage, handleModal }: ChooseModalProps, ref) => {
+    ({ modalImage, handleModal, id, incident }: ChooseModalProps, ref) => {
       return (
         <>
           {modalImage === 'newIncident' && (
@@ -33,6 +33,8 @@ export const ChooseModal = memo(
               ref={ref}
               handleModal={handleModal}
               title={ModalTitles.newRequest}
+              id={id}
+              incident={incident}
             />
           )}
           {modalImage === 'newIncidentStatus' && (
@@ -109,6 +111,6 @@ export const ChooseModal = memo(
           )}
         </>
       )
-    }
-  )
+    },
+  ),
 )

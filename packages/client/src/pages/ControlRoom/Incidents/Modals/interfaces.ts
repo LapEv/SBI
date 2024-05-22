@@ -4,6 +4,14 @@ export interface ChooseModalProps {
   modalImage?: string
   handleModal: (state: boolean) => void
   title?: string
+  id?: string
+  incident?: string
+}
+
+export interface ModalImageProps {
+  image?: string
+  id: string
+  incident: string
 }
 
 export interface DataCloseINC {

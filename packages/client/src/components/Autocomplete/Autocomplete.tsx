@@ -6,11 +6,7 @@ export const Autocomplete = styled(MuiAutocomplete)(({ theme }) => ({
     padding: '0!important',
     paddingLeft: '7px!important',
     paddingRight: '7px!important',
-    // fontSize: 12,
   },
-  // '.MuiAutocomplete-endAdornment': {
-  //   top: -2,
-  // },
   '.MuiAutocomplete-clearIndicator': {
     color: theme.palette.mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
     '& .MuiSvgIcon-root': {
@@ -30,13 +26,11 @@ export const Autocomplete = styled(MuiAutocomplete)(({ theme }) => ({
 export const AutocompleteIncidents = styled(MuiAutocomplete)(({ theme }) => ({
   '& input': {
     padding: '0!important',
-    fontSize: 14,
   },
   '.MuiAutocomplete-input': {
     width: '100%',
   },
   '.MuiAutocomplete-endAdornment': {
-    top: -2,
     right: '0!important',
   },
   '.MuiAutocomplete-clearIndicator': {

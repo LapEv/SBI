@@ -19,9 +19,7 @@ const Cell = ({ label, value }: CellProps) => {
         width: '100%',
         margin: '3px',
       }}>
-      <Box sx={{ fontSize: '0.875rem', width: 120, minWidth: 120 }}>
-        {label}
-      </Box>
+      <Box sx={{ width: 120, minWidth: 120 }}>{label}</Box>
       <Tooltip
         slotProps={{
           popper: {
@@ -53,9 +51,7 @@ const DescriptionCell = ({ label, value }: CellProps) => {
         width: '100%',
         margin: '3px',
       }}>
-      <Box sx={{ fontSize: '0.875rem', width: 120, minWidth: 120 }}>
-        {label}
-      </Box>
+      <Box sx={{ width: 120, minWidth: 120 }}>{label}</Box>
       <StyledDescription
         sx={{
           overflowY: 'auto',
@@ -114,7 +110,6 @@ const DescriptionCellComment = ({
       }}>
       <Box
         sx={{
-          fontSize: '0.875rem',
           width: 120,
           minWidth: 120,
           display: 'flex',
@@ -122,7 +117,7 @@ const DescriptionCellComment = ({
         }}>
         <Box>{label}</Box>
         <Button
-          sx={{ width: '70%', mt: 1, fontSize: '0.825rem' }}
+          sx={{ width: '70%', mt: 1 }}
           disabled={disabledSaveComment}
           onClick={() => onSaveComments(comment)}>
           Сохранить
@@ -144,8 +139,7 @@ const DescriptionCellComment = ({
 
 const StyledBox = styled(Box)(() => ({
   '&.MuiBox-root': {
-    fontSize: '0.925rem',
-    fontWeight: 'bold',
+    fontWeight: 'normal',
     width: '100%',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -166,8 +160,7 @@ const StyledBox = styled(Box)(() => ({
 
 const StyledDescription = styled(Box)(() => ({
   '&.MuiBox-root': {
-    fontSize: '0.775rem',
-    fontWeight: 'bold',
+    fontWeight: 'normal',
     width: '100%',
     '&::-webkit-scrollbar': {
       backgroundColor: '#2b2b2b',
@@ -184,7 +177,7 @@ const StyledDescription = styled(Box)(() => ({
 }))
 
 export const IncidentData = memo(
-  ({ values, setHeight, onSaveComments }: IncidentDataProps) => {
+  ({ values, setHeight, onSaveComments, newTask }: IncidentDataProps) => {
     const boxRef = React.createRef<HTMLDivElement>()
     const [{ dataWidth }] = useApp()
 
@@ -274,7 +267,13 @@ export const IncidentData = memo(
             />
           </Box>
         </Box>
+        <Divider sx={{ width: dataWidth, mt: 1 }} />
+        <Button
+          onClick={() => newTask({ id: values.id, incident: values.incident })}
+          sx={{ width: 210, minWidth: 210, mt: 2 }}>
+          Создать запрос
+        </Button>
       </Box>
     )
-  }
+  },
 )

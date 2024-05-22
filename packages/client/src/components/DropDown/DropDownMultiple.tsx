@@ -46,6 +46,7 @@ export const DropDownMultiple = memo(
         value={value ?? emptyValue}
         ListboxProps={{
           sx: {
+            fontWeight: 'normal',
             borderWidth: 1,
             minHeight: 40,
             maxHeight: 225,

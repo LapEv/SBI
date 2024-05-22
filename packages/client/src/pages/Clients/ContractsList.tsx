@@ -97,7 +97,6 @@ export const ContractsList = memo(
             Objects={Objects}
             IncindentStatuses={IncindentStatuses}
             id_client={id_client}
-            height={height}
           />
         </Collapse>
       </Box>

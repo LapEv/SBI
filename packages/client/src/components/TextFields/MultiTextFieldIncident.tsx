@@ -5,6 +5,7 @@ export const MultiTextFieldIncident = styled(MuiTextField)(({ theme }) => ({
   '.MuiInputLabel-root': {
     top: -7,
     marginTop: 0,
+    fontWeight: 'normal',
     color: theme.palette.mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
   },
   '.MuiInputLabel-root.MuiInputLabel-focused': {
@@ -22,6 +23,7 @@ export const MultiTextFieldIncident = styled(MuiTextField)(({ theme }) => ({
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
+    fontWeight: 'normal',
     borderRadius: 5,
     backgroundColor:
       theme.palette.mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',

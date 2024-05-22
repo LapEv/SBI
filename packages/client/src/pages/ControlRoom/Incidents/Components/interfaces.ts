@@ -51,6 +51,7 @@ export interface IncidentDataProps {
   values: INC
   setHeight: (height: number) => void
   onSaveComments: (data: ChangeComment) => void
+  newTask: (inc: INewTask) => void
 }
 
 export interface PrintData {
@@ -81,4 +82,9 @@ export interface IStatusTemp {
   typeCompletedWork: Options
   commentCloseCheck: string
   spaceParts: string[]
+}
+
+export interface INewTask {
+  id: string
+  incident: string
 }

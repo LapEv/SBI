@@ -5,6 +5,7 @@ export const TextFieldDD = styled(MuiTextField)(({ theme }) => ({
   '.MuiInputLabel-root': {
     top: 0,
     marginTop: 0,
+    fontWeight: 'normal',
     color: theme.palette.mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
     '&.Mui-focused': {
       top: (theme as ITheme).fontSize === 'small' ? -2 : -7,
@@ -23,6 +24,7 @@ export const TextFieldDD = styled(MuiTextField)(({ theme }) => ({
     top: (theme as ITheme).fontSize === 'small' ? -2 : -7,
   },
   '.MuiInputBase-root': {
+    fontWeight: 'normal',
     borderRadius: 5,
     backgroundColor:
       theme.palette.mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',

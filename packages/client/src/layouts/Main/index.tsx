@@ -13,7 +13,7 @@ import { ITheme, ThemeMode } from 'themes/themeConfig'
 const openedMixin = (theme: Theme): CSSObject => ({
   width:
     (theme as ITheme).fontSize === 'small' ? drawerWidth - 80 : drawerWidth,
-  backgroundColor: theme.palette.background.default,
+  backgroundColor: theme.palette.background.paper,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.complex,
@@ -22,7 +22,7 @@ const openedMixin = (theme: Theme): CSSObject => ({
 })
 
 const closedMixin = (theme: Theme): CSSObject => ({
-  backgroundColor: theme.palette.background.default,
+  backgroundColor: theme.palette.background.paper,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.complex,

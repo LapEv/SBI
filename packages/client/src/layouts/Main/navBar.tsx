@@ -25,7 +25,7 @@ const NavItem = memo(({ text, ...rest }: { text: string; to: string }) => {
 export const NavBar = memo(() => {
   const AppBar = styled(MuiAppBar)(({ theme }) => ({
     zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.paper,
     // height: 60,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,

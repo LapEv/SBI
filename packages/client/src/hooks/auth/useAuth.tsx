@@ -23,6 +23,7 @@ import {
   signout,
   updateUserData,
   setAvatar,
+  changeColorTheme,
 } from 'store/slices/auth'
 import { AuthActions } from './authActions'
 import { AuthState } from 'storeAuth/interfaces'
@@ -96,6 +97,9 @@ export function useAuth(): [AuthState, AuthActions] {
       },
       setAvatar(data) {
         dispatch(setAvatar(data))
+      },
+      changeColorTheme(data) {
+        dispatch(changeColorTheme(data))
       },
     },
   ]

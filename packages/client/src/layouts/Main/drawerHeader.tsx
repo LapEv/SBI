@@ -3,22 +3,27 @@ import { styled } from '@mui/material/styles'
 import { IconButton, Typography, Box, useTheme } from '@mui/material'
 import { LeftArrow, RightArrow } from 'layouts/Main/icons'
 import { DrawerHeaderProps } from './interfaces'
-import { ThemeMode } from 'themes/themeConfig'
+import { ITheme, ThemeMode } from 'themes/themeConfig'
 
 export const DrawerHeader: FC<DrawerHeaderProps> = memo(
   ({ open, toggleDrawer }) => {
-    const DrawerHeader = styled('div')(({ theme }) => ({
-      display: 'flex',
-      alignItems: 'flex-start',
-      justifyContent: 'flex-end',
-      backgroundColor: theme.palette.background.default,
-      transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      padding: theme.spacing(0, 1),
-      ...theme.mixins.toolbar,
-    }))
+    const DrawerHeader = styled('div')(
+      ({ theme }) => (
+        console.log('theme = ', theme.palette),
+        {
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'flex-end',
+          backgroundColor: theme.palette.background.paper,
+          transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+          }),
+          padding: theme.spacing(0, 1),
+          ...theme.mixins.toolbar,
+        }
+      ),
+    )
     const theme = useTheme()
 
     return (
@@ -50,7 +55,9 @@ export const DrawerHeader: FC<DrawerHeaderProps> = memo(
               sx={{
                 zIndex: -1,
                 color:
-                  theme.palette.mode === ThemeMode.dark ? '#1E515D' : '#C1EEE1',
+                  theme.palette.mode === ThemeMode.dark
+                    ? (theme as ITheme).colorTheme.colorLight
+                    : (theme as ITheme).colorTheme.colorDark,
               }}>
               .
             </Typography>

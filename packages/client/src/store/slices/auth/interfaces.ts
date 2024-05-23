@@ -30,8 +30,12 @@ export type ThemeMode = 'light' | 'dark'
 export interface AppOptions {
   theme?: ThemeMode
   font?: string
-  color_Light?: string
-  color_Dark?: string
+  colorTheme?: IColorTheme
+}
+
+export interface IColorTheme {
+  colorLight: string
+  colorDark: string
 }
 
 export interface ICheckUser {
@@ -136,6 +140,7 @@ export type AuthState = {
   superAdmin: boolean
   isLoadingAuth: boolean
   error?: string
+  colorTheme: IColorTheme
 }
 
 export interface UserForINC {

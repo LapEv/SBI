@@ -6,6 +6,7 @@ import {
   ChangePasswordProps,
   ChangeAppProps,
   NewUser,
+  IColorTheme,
 } from 'storeAuth/interfaces'
 export interface AuthActions {
   signin: (authData: Login) => void
@@ -28,4 +29,5 @@ export interface AuthActions {
   setActiveUserInfo: (id: string) => void
   deleteAvatar: (id: string) => void
   setAvatar: (data: string) => void
+  changeColorTheme: (data: IColorTheme) => void
 }

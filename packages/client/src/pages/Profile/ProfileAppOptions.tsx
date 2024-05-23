@@ -12,10 +12,10 @@ import { SwitchMUI } from 'components/Switch'
 import { useAuth } from 'hooks/auth/useAuth'
 import { ThemeMode } from 'storeAuth/interfaces'
 import ColorPicker from 'mui-color-picker'
-import { ThemeColor } from 'themes/themeConfig'
 
 export const ProfileAppOptions = memo(() => {
-  const [{ user }, { changeUserAppOptions }] = useAuth()
+  const [{ user, colorTheme }, { changeUserAppOptions, changeColorTheme }] =
+    useAuth()
   const [open, setOpen] = useState<boolean>(false)
   const [theme, setTheme] = useState<boolean>(
     user.appOptions?.theme === 'light' ? false : true,
@@ -24,8 +24,8 @@ export const ProfileAppOptions = memo(() => {
     user.appOptions?.font === 'large' ? false : true,
   )
 
-  const [colorLight, setColorLight] = useState<string>(ThemeColor.light)
-  const [colorDark, setColorDark] = useState<string>(ThemeColor.dark)
+  // const [colorLight, setColorLight] = useState<string>(ThemeColor.light)
+  // const [colorDark, setColorDark] = useState<string>(ThemeColor.dark)
 
   const handleClick = () => {
     setOpen(!open)
@@ -46,16 +46,18 @@ export const ProfileAppOptions = memo(() => {
     changeUserAppOptions({ id: user.id as string, appOptions })
   }
 
-  const handleChangeColorLight = (color_Light: string) => {
-    setColorLight(color_Light)
-    const appOptions = { ...user.appOptions, color_Light }
-    changeUserAppOptions({ id: user.id as string, appOptions })
+  const handleChangeColorLight = (colorLight: string) => {
+    if (!colorLight) return
+    changeColorTheme({ ...colorTheme, colorLight })
+    // const appOptions = { ...user.appOptions, color_Light }
+    // changeUserAppOptions({ id: user.id as string, appOptions })
   }
 
-  const handleChangeColorDark = (color_Dark: string) => {
-    setColorDark(color_Dark)
-    const appOptions = { ...user.appOptions, color_Dark }
-    changeUserAppOptions({ id: user.id as string, appOptions })
+  const handleChangeColorDark = (colorDark: string) => {
+    if (!colorDark) return
+    changeColorTheme({ ...colorTheme, colorDark })
+    // const appOptions = { ...user.appOptions, color_Dark }
+    // changeUserAppOptions({ id: user.id as string, appOptions })
   }
 
   return (
@@ -104,7 +106,7 @@ export const ProfileAppOptions = memo(() => {
           <ColorPicker
             sx={{ mt: 1 }}
             name="color"
-            defaultValue={colorLight}
+            defaultValue={colorTheme.colorLight}
             onChange={handleChangeColorLight}
           />
         </Box>
@@ -119,7 +121,7 @@ export const ProfileAppOptions = memo(() => {
           <ColorPicker
             sx={{ mt: 1 }}
             name="color"
-            defaultValue={colorDark}
+            defaultValue={colorTheme.colorDark}
             onChange={handleChangeColorDark}
           />
         </Box>

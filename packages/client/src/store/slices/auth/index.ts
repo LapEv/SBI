@@ -16,6 +16,7 @@ import {
 import { signin, signup } from 'api/user'
 import { AuthState, ICheckUser, User, UserStatus } from './interfaces'
 import { getAvatar } from 'api/files'
+import { ThemeColor } from 'themes/themeConfig'
 
 const initialState: AuthState = {
   user: {},
@@ -28,6 +29,10 @@ const initialState: AuthState = {
   dispatchers: [],
   avatar: '',
   userByDepartment: [],
+  colorTheme: {
+    colorLight: ThemeColor.light,
+    colorDark: ThemeColor.dark,
+  },
   admin: false,
   superAdmin: false,
   isLoadingAuth: true,
@@ -54,6 +59,9 @@ export const authSlise = createSlice({
     },
     setAvatar(state, action) {
       state.avatar = action.payload
+    },
+    changeColorTheme(state, action) {
+      state.colorTheme = action.payload
     },
   },
   extraReducers: builder => {
@@ -271,4 +279,5 @@ export const {
   signout,
   setActiveUserInfo,
   setAvatar,
+  changeColorTheme,
 } = authSlise.actions

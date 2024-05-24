@@ -103,7 +103,7 @@ export const ProfileMain = memo(({ setModal, dataUser }: ProfileMainProps) => {
           })}
         </Stack>
       </Box>
-      <Button onClick={setModal} sx={{ width: '40%' }}>
+      <Button onClick={setModal} sx={{ width: '30%' }}>
         Изменить пароль
       </Button>
       <ProfileAppOptions />

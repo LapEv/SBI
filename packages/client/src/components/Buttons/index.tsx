@@ -19,13 +19,14 @@ type TButtonProps = Omit<ButtonProps, 'component'> & {
 }
 
 export const Button = memo((props: TButtonProps) => {
-  return (
-    <MuiButton
-      variant="contained"
-      sx={{ fontWeight: 700, minWidth: 270 }}
-      {...props}
-    />
-  )
+  const { sx, ...otherprops } = props
+
+  const sxprops = {
+    fontWeight: 700,
+    color: '#000000',
+    ...sx,
+  }
+  return <MuiButton variant="contained" sx={sxprops} {...otherprops} />
 })
 
 export { ButtonsSection } from './ButtonsSection'

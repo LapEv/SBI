@@ -36,6 +36,7 @@ export const Fab = memo(({ order = 0, title, active, ...props }: FabProps) => {
           width: theme.fontSize === 'small' ? 30 : 40,
           height: theme.fontSize === 'small' ? 30 : 40,
           minHeight: theme.fontSize === 'small' ? 30 : 40,
+          color: '#000000',
         }}
         {...props}
       />

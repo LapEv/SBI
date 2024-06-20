@@ -1,16 +1,22 @@
 import { TextField as MuiTextField, styled } from '@mui/material'
-import { ThemeMode } from 'themes/themeConfig'
+import { ThemeMode, ITheme } from 'themes/themeConfig'
 
 export const TextFieldIncidents = styled(MuiTextField)(({ theme }) => ({
   '.MuiInputLabel-root': {
     top: -7,
     marginTop: 0,
-    color: theme.palette.mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
+    color:
+      theme.palette.mode === ThemeMode.light
+        ? (theme as ITheme).colorTheme.colorLight
+        : (theme as ITheme).colorTheme.colorDark,
     fontWeight: 'normal',
     fontSize: 12,
   },
   '.MuiInputLabel-root.MuiInputLabel-focused': {
-    color: theme.palette.mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+    color:
+      theme.palette.mode === ThemeMode.light
+        ? (theme as ITheme).colorTheme.colorDark
+        : (theme as ITheme).colorTheme.colorLight,
     fontWeight: 'normal',
     fontSize: 12,
   },
@@ -22,7 +28,10 @@ export const TextFieldIncidents = styled(MuiTextField)(({ theme }) => ({
     fontSize: 12,
   },
   '.MuiInputLabel-root.MuiInputLabel-shrink': {
-    color: theme.palette.mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+    color:
+      theme.palette.mode === ThemeMode.light
+        ? (theme as ITheme).colorTheme.colorDark
+        : (theme as ITheme).colorTheme.colorLight,
   },
   '.MuiInputBase-root': {
     fontWeight: 'normal',
@@ -30,7 +39,10 @@ export const TextFieldIncidents = styled(MuiTextField)(({ theme }) => ({
     borderRadius: 5,
     borderWidth: 1,
     borderStyle: 'solid',
-    borderColor: theme.palette.mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+    borderColor:
+      theme.palette.mode === ThemeMode.light
+        ? (theme as ITheme).colorTheme.colorDark
+        : (theme as ITheme).colorTheme.colorLight,
     color: theme.palette.mode === ThemeMode.light ? '#000000' : '#FFFFFF',
     display: 'flex',
     alignContent: 'center',
@@ -52,7 +64,9 @@ export const TextFieldIncidents = styled(MuiTextField)(({ theme }) => ({
   },
   '& .MuiOutlinedInput-input.Mui-disabled': {
     backgroundColor:
-      theme.palette.mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
+      theme.palette.mode === ThemeMode.light
+        ? (theme as ITheme).colorTheme.colorLight
+        : (theme as ITheme).colorTheme.colorDark,
     WebkitTextFillColor:
       theme.palette.mode === ThemeMode.light
         ? 'rgba(0,0,0,1)'
@@ -63,7 +77,7 @@ export const TextFieldIncidents = styled(MuiTextField)(({ theme }) => ({
   '& .MuiOutlinedInput-notchedOutline': {
     borderColor:
       theme.palette.mode === ThemeMode.light
-        ? 'rgba(30, 81, 93, 0.86)!important'
+        ? 'rgba(0, 0, 0, 0.86)!important'
         : 'rgba(255, 255, 255, 0.86)!important',
     borderWidth: 2,
   },
@@ -71,10 +85,12 @@ export const TextFieldIncidents = styled(MuiTextField)(({ theme }) => ({
     borderRadius: 0,
     backgroundColor:
       theme.palette.mode === ThemeMode.light
-        ? '#1E515D!important'
-        : '#C1EEE1!important',
+        ? `${(theme as ITheme).colorTheme.colorDark}!important`
+        : `${(theme as ITheme).colorTheme.colorLight}!important`,
     WebkitBoxShadow: `0 0 0 100px ${
-      theme.palette.mode === ThemeMode.light ? '#1E515D' : '#C1EEE1'
+      theme.palette.mode === ThemeMode.light
+        ? (theme as ITheme).colorTheme.colorDark
+        : (theme as ITheme).colorTheme.colorLight
     } inset`,
     WebkitTextFillColor:
       theme.palette.mode === ThemeMode.light ? '#FFFFFF' : '#000000',

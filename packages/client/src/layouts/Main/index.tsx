@@ -8,7 +8,7 @@ import { DrawerHeader } from './drawerHeader'
 import { Outlet } from 'react-router-dom'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useApp } from 'hooks/app/useApp'
-import { ITheme, ThemeMode } from 'themes/themeConfig'
+import { ITheme } from 'themes/themeConfig'
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width:
@@ -93,8 +93,7 @@ export const MainLayout = memo(() => {
           <Box
             ref={boxRef}
             sx={{
-              backgroundColor:
-                theme.palette.mode === ThemeMode.dark ? '#1E515D' : '#C1EEE1',
+              backgroundColor: theme.palette.background.paper,
               width,
               minHeight: '100vh',
               display: 'flex',

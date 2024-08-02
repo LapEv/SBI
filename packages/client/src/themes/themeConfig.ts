@@ -25,8 +25,7 @@ export interface ITheme extends Theme {
 }
 
 export const ThemeConfig = ({ mode, fontSize, colorTheme }: ThemeModeProps) =>
-  (console.log('colorTheme = ', colorTheme),
-  {
+  ({
     fontSize,
     colorTheme,
     typography: {
@@ -105,7 +104,7 @@ export const ThemeConfig = ({ mode, fontSize, colorTheme }: ThemeModeProps) =>
               secondary: '#000000',
             },
             green: {
-              [64]: colorTheme.colorLight,
+              [64]: colorTheme.colorDark,
               dark: '#7AB3A2',
             },
             icon: {
@@ -113,7 +112,7 @@ export const ThemeConfig = ({ mode, fontSize, colorTheme }: ThemeModeProps) =>
               secondary: '#def0eb',
             },
             background: {
-              default: colorTheme.colorDark,
+              default: colorTheme.colorLight,
               paper: colorTheme.colorLight,
               btn: '#7AB3A2',
             },
@@ -144,7 +143,7 @@ export const ThemeConfig = ({ mode, fontSize, colorTheme }: ThemeModeProps) =>
               secondary: '#FFFFFF',
             },
             green: {
-              [64]: colorTheme.colorDark,
+              [64]: colorTheme.colorLight,
               dark: '#7AB3A2',
             },
             icon: {
@@ -152,7 +151,7 @@ export const ThemeConfig = ({ mode, fontSize, colorTheme }: ThemeModeProps) =>
               secondary: '#def0eb',
             },
             background: {
-              default: colorTheme.colorLight,
+              default: colorTheme.colorDark,
               paper: colorTheme.colorDark,
               btn: '#7AB3A2',
             },

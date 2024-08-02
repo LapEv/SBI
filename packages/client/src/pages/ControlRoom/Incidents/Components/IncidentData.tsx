@@ -186,6 +186,8 @@ export const IncidentData = memo(
       setHeight(height + 10 ?? 0)
     }, [])
 
+    // console.log('dataWidth2 = ', dataWidth)
+
     return (
       <Box
         ref={boxRef}

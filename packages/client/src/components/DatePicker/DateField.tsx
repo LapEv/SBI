@@ -7,7 +7,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { CalendarIcon, ClearIconElement } from 'components/Icons'
 import { IDateField } from './interface'
 import { memo } from 'react'
-import { ThemeMode } from 'themes/themeConfig'
+import { ITheme, ThemeMode } from 'themes/themeConfig'
 import { Dayjs } from 'dayjs'
 
 const StyledDatePickers = styled(PickersLayout)(({ theme }) => ({
@@ -18,10 +18,15 @@ const StyledDatePickers = styled(PickersLayout)(({ theme }) => ({
     borderColor: theme.palette.mode === ThemeMode.dark ? '#FFF' : '#000',
     border: '2px solid',
     backgroundColor:
-      theme.palette.mode === ThemeMode.dark ? '#1E515D' : '#C1EEE1',
+      theme.palette.mode === ThemeMode.dark
+        ? (theme as ITheme).colorTheme.colorDark
+        : (theme as ITheme).colorTheme.colorLight,
   },
   '.MuiPickersDay-root': {
-    color: theme.palette.mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+    color:
+      theme.palette.mode === ThemeMode.light
+        ? (theme as ITheme).colorTheme.colorDark
+        : (theme as ITheme).colorTheme.colorLight,
   },
 }))
 

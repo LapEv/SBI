@@ -3,6 +3,10 @@ import { AppState } from './interfaces'
 
 const initialState: AppState = {
   dataWidth: 0,
+  appOptions: {
+    font: 'large',
+    theme: 'light',
+  },
 }
 
 export const appSlise = createSlice({

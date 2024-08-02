@@ -3,7 +3,7 @@ import { styled, Theme, CSSObject } from '@mui/material/styles'
 import { Box, Divider, Drawer as MuiDrawer, useTheme } from '@mui/material'
 import { NavBar } from './navBar'
 import { SideBar } from './sideBar'
-import { drawerWidth } from './drawerBarData'
+import { drawerWidth, compressedWidth } from './drawerBarData'
 import { DrawerHeader } from './drawerHeader'
 import { Outlet } from 'react-router-dom'
 import { useAuth } from 'hooks/auth/useAuth'
@@ -11,8 +11,7 @@ import { useApp } from 'hooks/app/useApp'
 import { ITheme } from 'themes/themeConfig'
 
 const openedMixin = (theme: Theme): CSSObject => ({
-  width:
-    (theme as ITheme).fontSize === 'small' ? drawerWidth - 80 : drawerWidth,
+  width: (theme as ITheme).fontSize === 'small' ? compressedWidth : drawerWidth,
   backgroundColor: theme.palette.background.paper,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
@@ -28,17 +27,16 @@ const closedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.complex,
   }),
   overflowX: 'hidden',
-  width: `calc(${theme.spacing(9)}${(theme as ITheme).fontSize !== 'small' ? ' - 10' : ' + 5'}px)`,
+  width: `calc(${theme.spacing(9)}${(theme as ITheme).fontSize !== 'small' ? ' - 10' : ' + 10'}px)`,
   [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(10)}${(theme as ITheme).fontSize !== 'small' ? ' - 10' : ' + 5'}px)`,
+    width: `calc(${theme.spacing(10)}${(theme as ITheme).fontSize !== 'small' ? ' - 10' : ' + 10'}px)`,
   },
 })
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: prop => prop !== 'open',
 })(({ theme, open }) => ({
-  width:
-    (theme as ITheme).fontSize === 'small' ? drawerWidth - 80 : drawerWidth,
+  width: (theme as ITheme).fontSize === 'small' ? compressedWidth : drawerWidth,
   flexShrink: 0,
   whiteSpace: 'nowrap',
   boxSizing: 'border-box',
@@ -58,7 +56,7 @@ export const MainLayout = memo(() => {
   const theme = useTheme()
   const [open, setOpen] = useState<boolean>(true)
   const adaptiveDrawerWidth =
-    (theme as ITheme).fontSize === 'small' ? drawerWidth - 80 : drawerWidth
+    (theme as ITheme).fontSize === 'small' ? compressedWidth : drawerWidth
   const [width, setWidth] = useState<string>(
     `calc(100% - ${adaptiveDrawerWidth}px)`,
   )
@@ -66,19 +64,25 @@ export const MainLayout = memo(() => {
     setOpen(prev => !prev)
     const widthCheck = check
       ? `calc(100% - ${adaptiveDrawerWidth}px)`
-      : `calc(100% - ${theme.spacing(9)} - 1px)`
+      : `calc(100% - ${theme.spacing(9)} - ${(theme as ITheme).fontSize === 'large' ? '6px' : '14px'})`
     setWidth(widthCheck)
     setTimeout(() => {
+      console.log('clientWidth toogle = ', boxRef?.current?.clientWidth)
       setDataWidth(boxRef?.current?.clientWidth as number)
-    }, 100)
+    }, 1000)
   }
   const [{ user }] = useAuth()
 
   useEffect(() => {
+    setWidth(`calc(100% - ${adaptiveDrawerWidth}px)`)
     setTimeout(() => {
+      console.log('clientWidth = ', boxRef?.current?.clientWidth)
       setDataWidth(boxRef?.current?.offsetWidth as number)
-    }, 100)
-  }, [])
+    }, 1000)
+  }, [(theme as ITheme).fontSize])
+
+  console.log('adaptiveDrawerWidth = ', adaptiveDrawerWidth)
+  console.log('fontSize = ', (theme as ITheme).fontSize)
 
   return (
     <>

@@ -7,23 +7,18 @@ import { ITheme, ThemeMode } from 'themes/themeConfig'
 
 export const DrawerHeader: FC<DrawerHeaderProps> = memo(
   ({ open, toggleDrawer }) => {
-    const DrawerHeader = styled('div')(
-      ({ theme }) => (
-        console.log('theme = ', theme.palette),
-        {
-          display: 'flex',
-          alignItems: 'flex-start',
-          justifyContent: 'flex-end',
-          backgroundColor: theme.palette.background.paper,
-          transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-          }),
-          padding: theme.spacing(0, 1),
-          ...theme.mixins.toolbar,
-        }
-      ),
-    )
+    const DrawerHeader = styled('div')(({ theme }) => ({
+      display: 'flex',
+      alignItems: 'flex-start',
+      justifyContent: 'flex-end',
+      backgroundColor: theme.palette.background.paper,
+      transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      padding: theme.spacing(0, 1),
+      ...theme.mixins.toolbar,
+    }))
     const theme = useTheme()
 
     return (

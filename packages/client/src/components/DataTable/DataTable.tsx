@@ -41,9 +41,9 @@ export const DataTable = memo(
                 styleOverrides: {
                   paper: {
                     backgroundColor:
-                      theme.palette.mode === ThemeMode.dark
-                        ? '#1E515D'
-                        : '#C1EEE1',
+                      theme.palette.mode === ThemeMode.light
+                        ? (theme as ITheme).colorTheme.colorLight
+                        : (theme as ITheme).colorTheme.colorDark,
                     color:
                       theme.palette.mode === ThemeMode.light
                         ? '#000000'
@@ -191,24 +191,28 @@ export const DataTable = memo(
                         : '#9ed3c4',
                     borderTopWidth: 2,
                     borderTopColor:
-                      theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
+                      theme.palette.mode === ThemeMode.light
+                        ? (theme as ITheme).colorTheme.colorDark
+                        : (theme as ITheme).colorTheme.colorLight,
                     borderTopStyle: 'solid',
                     borderBottomWidth: 2,
                     borderBottomColor:
-                      theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
+                      theme.palette.mode === ThemeMode.light
+                        ? (theme as ITheme).colorTheme.colorDark
+                        : (theme as ITheme).colorTheme.colorLight,
                     borderBottomStyle: 'solid',
                   },
                   checkboxRoot: {
                     color:
                       theme.palette.mode === ThemeMode.light
-                        ? '#1E515D!important'
-                        : '#C1EEE1!important',
+                        ? `${(theme as ITheme).colorTheme.colorDark}!important`
+                        : `${(theme as ITheme).colorTheme.colorLight}!important`,
                   },
                   checked: {
                     color:
                       theme.palette.mode === ThemeMode.light
-                        ? '#1E515D!important'
-                        : '#C1EEE1!important',
+                        ? `${(theme as ITheme).colorTheme.colorDark}!important`
+                        : `${(theme as ITheme).colorTheme.colorLight}!important`,
                   },
                 },
               },
@@ -235,9 +239,9 @@ export const DataTable = memo(
                 styleOverrides: {
                   root: {
                     backgroundColor:
-                      theme.palette.mode === ThemeMode.dark
-                        ? '#1E515D'
-                        : '#C1EEE1',
+                      theme.palette.mode === ThemeMode.light
+                        ? (theme as ITheme).colorTheme.colorLight
+                        : (theme as ITheme).colorTheme.colorDark,
                     height: (theme as ITheme).fontSize === 'small' ? 29 : 39,
                     minHeight: (theme as ITheme).fontSize === 'small' ? 29 : 39,
                     maxHeight: (theme as ITheme).fontSize === 'small' ? 29 : 39,
@@ -252,14 +256,14 @@ export const DataTable = memo(
                   icon: {
                     color:
                       theme.palette.mode === ThemeMode.light
-                        ? '#1E515D'
-                        : '#C1EEE1',
+                        ? (theme as ITheme).colorTheme.colorDark
+                        : (theme as ITheme).colorTheme.colorLight,
                   },
                   iconActive: {
                     color:
                       theme.palette.mode === ThemeMode.light
-                        ? '#C1EEE1'
-                        : '#1E515D',
+                        ? (theme as ITheme).colorTheme.colorLight
+                        : (theme as ITheme).colorTheme.colorDark,
                   },
                   actions: {
                     display: 'flex',
@@ -272,9 +276,9 @@ export const DataTable = memo(
                 styleOverrides: {
                   root: {
                     backgroundColor:
-                      theme.palette.mode === ThemeMode.dark
-                        ? '#1E515D'
-                        : '#C1EEE1',
+                      theme.palette.mode === ThemeMode.light
+                        ? (theme as ITheme).colorTheme.colorLight
+                        : (theme as ITheme).colorTheme.colorDark,
                     color:
                       theme.palette.mode === ThemeMode.light
                         ? '#000000'
@@ -299,9 +303,9 @@ export const DataTable = memo(
                         ? '#000000'
                         : '#FFFFFF',
                     backgroundColor:
-                      theme.palette.mode === ThemeMode.dark
-                        ? '#1E515D'
-                        : '#C1EEE1',
+                      theme.palette.mode === ThemeMode.light
+                        ? (theme as ITheme).colorTheme.colorLight
+                        : (theme as ITheme).colorTheme.colorDark,
                   },
                   toolbar: {
                     minHeight: 38,
@@ -309,14 +313,14 @@ export const DataTable = memo(
                     overflow: 'hidden',
                     color:
                       theme.palette.mode === ThemeMode.light
-                        ? '#1E515D'
-                        : '#C1EEE1',
+                        ? (theme as ITheme).colorTheme.colorDark
+                        : (theme as ITheme).colorTheme.colorLight,
                     '& div': {
                       '& svg': {
                         color:
                           theme.palette.mode === ThemeMode.light
-                            ? '#1E515D'
-                            : '#C1EEE1',
+                            ? (theme as ITheme).colorTheme.colorDark
+                            : (theme as ITheme).colorTheme.colorLight,
                       },
                     },
                   },
@@ -327,8 +331,8 @@ export const DataTable = memo(
                   resizer: {
                     borderColor:
                       theme.palette.mode === ThemeMode.light
-                        ? '#1E515D'
-                        : '#C1EEE1',
+                        ? (theme as ITheme).colorTheme.colorDark
+                        : (theme as ITheme).colorTheme.colorLight,
                     borderWidth: 0,
                   },
                 },
@@ -341,16 +345,18 @@ export const DataTable = memo(
                         ? '#000000'
                         : '#FFFFFF',
                     backgroundColor:
-                      theme.palette.mode === ThemeMode.dark
-                        ? '#1E515D'
-                        : '#C1EEE1',
+                      theme.palette.mode === ThemeMode.light
+                        ? (theme as ITheme).colorTheme.colorLight
+                        : (theme as ITheme).colorTheme.colorDark,
                     boxShadow:
-                      theme.palette.mode === 'light'
-                        ? '1px 2px 16px 3px #1E515D'
-                        : '0px 0px 6px 0px #C1EEE1',
+                      theme.palette.mode === ThemeMode.light
+                        ? `1px 2px 16px 3px ${(theme as ITheme).colorTheme.colorDark}`
+                        : `0px 0px 6px 0px ${(theme as ITheme).colorTheme.colorLight}`,
                     borderWidth: 2,
                     borderColor:
-                      theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
+                      theme.palette.mode === ThemeMode.light
+                        ? (theme as ITheme).colorTheme.colorDark
+                        : (theme as ITheme).colorTheme.colorLight,
                     borderStyle: 'solid',
                     borderRadius: 5,
                   },
@@ -365,20 +371,20 @@ export const DataTable = memo(
                   checked: {
                     color:
                       theme.palette.mode === ThemeMode.light
-                        ? '#1E515D!important'
-                        : '#C1EEE1!important',
+                        ? `${(theme as ITheme).colorTheme.colorDark}!important`
+                        : `${(theme as ITheme).colorTheme.colorLight}!important`,
                   },
                   checkbox: {
                     color:
                       theme.palette.mode === ThemeMode.light
-                        ? '#1E515D!important'
-                        : '#C1EEE1!important',
+                        ? `${(theme as ITheme).colorTheme.colorDark}!important`
+                        : `${(theme as ITheme).colorTheme.colorLight}!important`,
                   },
                   label: {
                     color:
                       theme.palette.mode === ThemeMode.light
-                        ? '#1E515D!important'
-                        : '#C1EEE1!important',
+                        ? `${(theme as ITheme).colorTheme.colorDark}!important`
+                        : `${(theme as ITheme).colorTheme.colorLight}!important`,
                   },
                 },
               },
@@ -387,14 +393,14 @@ export const DataTable = memo(
                   clearIcon: {
                     color:
                       theme.palette.mode === ThemeMode.light
-                        ? '#1E515D!important'
-                        : '#C1EEE1!important',
+                        ? `${(theme as ITheme).colorTheme.colorDark}!important`
+                        : `${(theme as ITheme).colorTheme.colorLight}!important`,
                   },
                   searchIcon: {
                     color:
                       theme.palette.mode === ThemeMode.light
-                        ? '#1E515D!important'
-                        : '#C1EEE1!important',
+                        ? `${(theme as ITheme).colorTheme.colorDark}!important`
+                        : `${(theme as ITheme).colorTheme.colorLight}!important`,
                   },
                   searchText: {
                     '& div': {
@@ -405,14 +411,14 @@ export const DataTable = memo(
                       '&:before': {
                         borderBottom:
                           theme.palette.mode === ThemeMode.light
-                            ? '2px solid #1E515D'
-                            : '2px solid #C1EEE1',
+                            ? `2px solid ${(theme as ITheme).colorTheme.colorDark}`
+                            : `2px solid ${(theme as ITheme).colorTheme.colorLight}`,
                       },
                       '&:after': {
                         borderBottom:
                           theme.palette.mode === ThemeMode.light
-                            ? '2px solid #1E515D'
-                            : '2px solid #C1EEE1',
+                            ? `2px solid ${(theme as ITheme).colorTheme.colorDark}`
+                            : `2px solid ${(theme as ITheme).colorTheme.colorLight}`,
                       },
                     },
                   },
@@ -426,9 +432,9 @@ export const DataTable = memo(
                         ? '#000000'
                         : '#FFFFFF',
                     backgroundColor:
-                      theme.palette.mode === ThemeMode.dark
-                        ? '#1E515D'
-                        : '#C1EEE1',
+                      theme.palette.mode === ThemeMode.light
+                        ? (theme as ITheme).colorTheme.colorLight
+                        : (theme as ITheme).colorTheme.colorDark,
                   },
                   title: {
                     color:
@@ -441,63 +447,63 @@ export const DataTable = memo(
                   checkbox: {
                     color:
                       theme.palette.mode === ThemeMode.light
-                        ? '#1E515D'
-                        : '#C1EEE1',
+                        ? (theme as ITheme).colorTheme.colorDark
+                        : (theme as ITheme).colorTheme.colorLight,
                   },
                   checked: {
                     color:
                       theme.palette.mode === ThemeMode.light
-                        ? '#1E515D'
-                        : '#C1EEE1',
+                        ? (theme as ITheme).colorTheme.colorDark
+                        : (theme as ITheme).colorTheme.colorLight,
                   },
                   resetLink: {
                     color:
                       theme.palette.mode === ThemeMode.light
-                        ? '#1E515D!important'
-                        : '#C1EEE1!important',
+                        ? `${(theme as ITheme).colorTheme.colorDark}!important`
+                        : `${(theme as ITheme).colorTheme.colorLight}!important`,
                   },
                   checkboxIcon: {
                     color:
                       theme.palette.mode === ThemeMode.light
-                        ? '#1E515D!important'
-                        : '#C1EEE1!important',
+                        ? `${(theme as ITheme).colorTheme.colorDark}!important`
+                        : `${(theme as ITheme).colorTheme.colorLight}!important`,
                   },
                   gridListTile: {
                     '& div': {
                       color:
                         theme.palette.mode === ThemeMode.light
-                          ? '#1E515D'
-                          : '#C1EEE1',
+                          ? (theme as ITheme).colorTheme.colorDark
+                          : (theme as ITheme).colorTheme.colorLight,
                       '& label': {
                         color:
                           theme.palette.mode === ThemeMode.light
-                            ? '#1E515D'
-                            : '#C1EEE1',
+                            ? (theme as ITheme).colorTheme.colorDark
+                            : (theme as ITheme).colorTheme.colorLight,
                         '&.Mui-focused': {
                           color:
                             theme.palette.mode === ThemeMode.light
-                              ? '#1E515D'
-                              : '#C1EEE1',
+                              ? (theme as ITheme).colorTheme.colorDark
+                              : (theme as ITheme).colorTheme.colorLight,
                         },
                       },
                       '&.MuiInputBase-root': {
                         '&:before': {
                           borderBottom:
                             theme.palette.mode === ThemeMode.light
-                              ? '2px solid #1E515D'
-                              : '2px solid #C1EEE1',
+                              ? `2px solid ${(theme as ITheme).colorTheme.colorDark}`
+                              : `2px solid ${(theme as ITheme).colorTheme.colorLight}`,
                         },
                         '&:after': {
                           borderBottom:
                             theme.palette.mode === ThemeMode.light
-                              ? '2px solid #1E515D'
-                              : '2px solid #C1EEE1',
+                              ? `2px solid ${(theme as ITheme).colorTheme.colorDark}`
+                              : `2px solid ${(theme as ITheme).colorTheme.colorLight}`,
                         },
                         '& svg': {
                           color:
                             theme.palette.mode === ThemeMode.light
-                              ? '#1E515D'
-                              : '#C1EEE1',
+                              ? (theme as ITheme).colorTheme.colorDark
+                              : (theme as ITheme).colorTheme.colorLight,
                         },
                       },
                     },
@@ -509,8 +515,8 @@ export const DataTable = memo(
                   chip: {
                     color:
                       theme.palette.mode === ThemeMode.light
-                        ? '#1E515D'
-                        : '#C1EEE1',
+                        ? (theme as ITheme).colorTheme.colorDark
+                        : (theme as ITheme).colorTheme.colorLight,
                     backgroundColor:
                       theme.palette.mode === ThemeMode.dark
                         ? '#1d4751'

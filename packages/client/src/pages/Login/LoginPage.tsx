@@ -14,6 +14,7 @@ import { memo } from 'react'
 
 export const LoginPageData = memo(() => {
   const [, { signin }] = useAuth()
+
   const { handleSubmit, control } = useForm<LoginValues>({
     mode: 'onBlur',
     defaultValues: {
@@ -45,7 +46,7 @@ export const LoginPageData = memo(() => {
         <Box
           component="form"
           onSubmit={handleSubmit(submitForm)}
-          bgcolor="background.default"
+          bgcolor="background.paper"
           sx={{
             borderRadius: 2,
             borderWidth: 2,

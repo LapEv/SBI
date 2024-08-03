@@ -6,7 +6,7 @@ import { MultiTextFieldIncident } from 'components/TextFields'
 import { Button } from 'components/Buttons'
 import { CellProps, CellPropsComments, IncidentDataProps } from './interfaces'
 import { checkCommentINCValidation } from 'utils/validatorRules'
-import { ThemeMode } from 'themes/themeConfig'
+import { ITheme, ThemeMode } from 'themes/themeConfig'
 
 const Cell = ({ label, value }: CellProps) => {
   const theme = useTheme()
@@ -15,7 +15,10 @@ const Cell = ({ label, value }: CellProps) => {
       sx={{
         display: 'flex',
         flexDirection: 'row',
-        color: theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
+        color:
+          theme.palette.mode === ThemeMode.dark
+            ? (theme as ITheme).colorTheme.colorLight
+            : (theme as ITheme).colorTheme.colorDark,
         width: '100%',
         margin: '3px',
       }}>
@@ -47,7 +50,10 @@ const DescriptionCell = ({ label, value }: CellProps) => {
       sx={{
         display: 'flex',
         flexDirection: 'row',
-        color: theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
+        color:
+          theme.palette.mode === ThemeMode.dark
+            ? (theme as ITheme).colorTheme.colorLight
+            : (theme as ITheme).colorTheme.colorDark,
         width: '100%',
         margin: '3px',
       }}>
@@ -104,7 +110,10 @@ const DescriptionCellComment = ({
       sx={{
         display: 'flex',
         flexDirection: 'row',
-        color: theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
+        color:
+          theme.palette.mode === ThemeMode.dark
+            ? (theme as ITheme).colorTheme.colorLight
+            : (theme as ITheme).colorTheme.colorDark,
         width: 'auto',
         margin: '3px',
       }}>

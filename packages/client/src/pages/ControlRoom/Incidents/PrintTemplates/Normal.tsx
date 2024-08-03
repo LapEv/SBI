@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material'
 import { useIncidents } from 'hooks/incidents/useINC'
 import { memo } from 'react'
+import { ThemeColor } from 'themes/themeConfig'
 
 export const Normal = memo(() => {
   const [{ incidents }] = useIncidents()
@@ -126,11 +127,15 @@ export const Normal = memo(() => {
             description,
             comment,
           },
-          index
+          index,
         ) => {
           return (
             <Box
-              sx={{ p: 0.5, color: '#1E515D', pt: index % 4 === 0 ? 2 : 0 }}
+              sx={{
+                p: 0.5,
+                color: ThemeColor.dark,
+                pt: index % 4 === 0 ? 2 : 0,
+              }}
               key={`normal${incident}`}>
               <Box sx={container}>
                 <Box sx={containerData}>
@@ -204,7 +209,7 @@ export const Normal = memo(() => {
               </Box>
             </Box>
           )
-        }
+        },
       )}
     </Box>
   )

@@ -8,20 +8,28 @@ import { CalendarIcon, ClearIconElement } from 'components/Icons'
 import { IDateTimeField } from './interface'
 import { Dayjs } from 'dayjs'
 import { memo } from 'react'
-import { ThemeMode } from 'themes/themeConfig'
+import { ThemeMode, ITheme } from 'themes/themeConfig'
 
 const StyledDatePickers = styled(PickersLayout)(({ theme }) => ({
   '.MuiDateCalendar-root': {
-    color: theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
+    color:
+      theme.palette.mode === ThemeMode.light
+        ? (theme as ITheme).colorTheme.colorDark
+        : (theme as ITheme).colorTheme.colorLight,
     borderRadius: 5,
     borderWidth: 2,
     borderColor: theme.palette.mode === ThemeMode.dark ? '#FFF' : '#000',
     border: '2px solid',
     backgroundColor:
-      theme.palette.mode === ThemeMode.dark ? '#1E515D' : '#C1EEE1',
+      theme.palette.mode === ThemeMode.light
+        ? (theme as ITheme).colorTheme.colorLight
+        : (theme as ITheme).colorTheme.colorDark,
   },
   '.MuiPickersDay-root': {
-    color: theme.palette.mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
+    color:
+      theme.palette.mode === ThemeMode.light
+        ? (theme as ITheme).colorTheme.colorDark
+        : (theme as ITheme).colorTheme.colorLight,
   },
 }))
 

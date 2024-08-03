@@ -6,7 +6,6 @@ export const TextField = styled(MuiTextField)(({ theme }) => ({
     top: -7,
     marginTop: 0,
     fontWeight: 'normal',
-    // color: theme.palette.mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
     color:
       theme.palette.mode === ThemeMode.light
         ? (theme as ITheme).colorTheme.colorLight
@@ -24,7 +23,6 @@ export const TextField = styled(MuiTextField)(({ theme }) => ({
     },
   },
   '.MuiInputLabel-root.MuiInputLabel-shrink': {
-    // color: theme.palette.mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
     color:
       theme.palette.mode === ThemeMode.light
         ? (theme as ITheme).colorTheme.colorDark
@@ -34,8 +32,6 @@ export const TextField = styled(MuiTextField)(({ theme }) => ({
   '.MuiInputBase-root': {
     borderRadius: 5,
     fontWeight: 'normal',
-    // backgroundColor:
-    //   theme.palette.mode === ThemeMode.light ? '#1E515D' : '#C1EEE1',
     backgroundColor:
       theme.palette.mode === ThemeMode.light
         ? (theme as ITheme).colorTheme.colorDark
@@ -56,8 +52,6 @@ export const TextField = styled(MuiTextField)(({ theme }) => ({
     },
   },
   '& .MuiOutlinedInput-input.Mui-disabled': {
-    // backgroundColor:
-    //   theme.palette.mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
     backgroundColor:
       theme.palette.mode === ThemeMode.light
         ? (theme as ITheme).colorTheme.colorLight
@@ -79,10 +73,6 @@ export const TextField = styled(MuiTextField)(({ theme }) => ({
   '.MuiOutlinedInput-input:-webkit-autofill': {
     padding: '0px 14px',
     borderRadius: 0,
-    // backgroundColor:
-    //   theme.palette.mode === ThemeMode.light
-    //     ? '#1E515D!important'
-    //     : '#C1EEE1!important',
     backgroundColor:
       theme.palette.mode === ThemeMode.light
         ? `${(theme as ITheme).colorTheme.colorDark}!important`

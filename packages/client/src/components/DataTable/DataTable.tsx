@@ -58,16 +58,18 @@ export const DataTable = memo(
                     borderRadius: 5,
                     borderWidth: 2,
                     borderColor:
-                      theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
+                      theme.palette.mode === ThemeMode.light
+                        ? (theme as ITheme).colorTheme.colorDark
+                        : (theme as ITheme).colorTheme.colorLight,
                     borderStyle: 'solid',
                     backgroundColor:
-                      theme.palette.mode === ThemeMode.dark
-                        ? '#1E515D!important'
-                        : '#C1EEE1!important',
+                      theme.palette.mode === ThemeMode.light
+                        ? `${(theme as ITheme).colorTheme.colorLight}!important`
+                        : `${(theme as ITheme).colorTheme.colorDark}!important`,
                     boxShadow:
-                      theme.palette.mode === 'light'
-                        ? '1px 2px 16px 3px #1E515D'
-                        : '0px 0px 6px 0px #C1EEE1',
+                      theme.palette.mode === ThemeMode.light
+                        ? `1px 2px 16px 3px ${(theme as ITheme).colorTheme.colorDark}`
+                        : `0px 0px 6px 0px ${(theme as ITheme).colorTheme.colorLight}`,
                   },
                 },
               },
@@ -76,9 +78,9 @@ export const DataTable = memo(
                   main: {
                     width: '100%',
                     backgroundColor:
-                      theme.palette.mode === ThemeMode.dark
-                        ? '#1E515D'
-                        : '#C1EEE1',
+                      theme.palette.mode === ThemeMode.light
+                        ? (theme as ITheme).colorTheme.colorLight
+                        : (theme as ITheme).colorTheme.colorDark,
                     height: 10,
                     minHeight: 10,
                   },
@@ -103,15 +105,21 @@ export const DataTable = memo(
                         : '#9ed3c4',
                     borderTopWidth: 2,
                     borderTopColor:
-                      theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
+                      theme.palette.mode === ThemeMode.light
+                        ? (theme as ITheme).colorTheme.colorDark
+                        : (theme as ITheme).colorTheme.colorLight,
                     borderTopStyle: 'solid',
                     borderBottomWidth: 2,
                     borderBottomColor:
-                      theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
+                      theme.palette.mode === ThemeMode.light
+                        ? (theme as ITheme).colorTheme.colorDark
+                        : (theme as ITheme).colorTheme.colorLight,
                     borderBottomStyle: 'solid',
                     borderLeftWidth: 1,
                     borderLeftColor:
-                      theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
+                      theme.palette.mode === ThemeMode.light
+                        ? (theme as ITheme).colorTheme.colorDark
+                        : (theme as ITheme).colorTheme.colorLight,
                     borderLeftStyle: 'solid',
                     // fontSize: '0.935rem',
                     fontWeight: 'bold',
@@ -169,15 +177,21 @@ export const DataTable = memo(
                     textOverflow: 'ellipsis',
                     borderLeftWidth: 1,
                     borderLeftColor:
-                      theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
+                      theme.palette.mode === ThemeMode.light
+                        ? (theme as ITheme).colorTheme.colorDark
+                        : (theme as ITheme).colorTheme.colorLight,
                     borderLeftStyle: 'solid',
                     borderBottomWidth: 1,
                     borderBottomColor:
-                      theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
+                      theme.palette.mode === ThemeMode.light
+                        ? (theme as ITheme).colorTheme.colorDark
+                        : (theme as ITheme).colorTheme.colorLight,
                     borderBottomStyle: 'solid',
                     borderTopWidth: 1,
                     borderTopColor:
-                      theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
+                      theme.palette.mode === ThemeMode.light
+                        ? (theme as ITheme).colorTheme.colorDark
+                        : (theme as ITheme).colorTheme.colorLight,
                     borderTopStyle: 'solid',
                   },
                 },
@@ -258,12 +272,18 @@ export const DataTable = memo(
                       theme.palette.mode === ThemeMode.light
                         ? (theme as ITheme).colorTheme.colorDark
                         : (theme as ITheme).colorTheme.colorLight,
+                    '&:hover': {
+                      color: theme.palette.secondary.light,
+                    },
                   },
                   iconActive: {
                     color:
                       theme.palette.mode === ThemeMode.light
-                        ? (theme as ITheme).colorTheme.colorLight
-                        : (theme as ITheme).colorTheme.colorDark,
+                        ? '#000000'
+                        : '#FFFFFF',
+                    backgroundColor: theme.palette.secondary.light,
+                    width: (theme as ITheme).fontSize === 'small' ? 28 : 38,
+                    height: (theme as ITheme).fontSize === 'small' ? 28 : 38,
                   },
                   actions: {
                     display: 'flex',

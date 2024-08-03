@@ -4,6 +4,7 @@ import { TextFieldIncidents } from 'components/TextFields'
 import { AutocompleteIncidents } from 'components/Autocomplete'
 import { DataDropDown, Options } from './interface'
 import { emptyValue } from '.'
+import { ITheme, ThemeColor, ThemeMode } from 'themes/themeConfig'
 
 export const DropDownIncidents = memo(
   ({
@@ -119,7 +120,9 @@ export const DropDownIncidents = memo(
           paper: {
             style: {
               backgroundColor:
-                theme.palette.mode === 'light' ? '#C1EEE1' : '#1E515D',
+                theme.palette.mode === ThemeMode.light
+                  ? (theme as ITheme).colorTheme.colorLight
+                  : (theme as ITheme).colorTheme.colorDark,
             },
           },
         }}
@@ -149,7 +152,7 @@ export const DropDownIncidents = memo(
               backgroundColor:
                 theme.palette.mode === 'light'
                   ? '#a8dfcf!important'
-                  : '#1E515D',
+                  : ThemeColor.dark,
             },
           },
         }}

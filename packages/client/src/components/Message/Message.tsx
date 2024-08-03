@@ -8,6 +8,7 @@ import {
 } from '@mui/material'
 import Slide, { SlideProps } from '@mui/material/Slide'
 import { useMessage } from 'hooks/message/useMessage'
+import { ITheme, ThemeMode } from 'themes/themeConfig'
 
 const TransitionLeft = memo((props: SlideProps) => {
   return <Slide {...props} direction="up" />
@@ -43,7 +44,10 @@ export const Message = memo(() => {
         sx={{
           borderWidth: 2,
           borderStyle: 'solid',
-          borderColor: theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
+          borderColor:
+            theme.palette.mode === ThemeMode.light
+              ? (theme as ITheme).colorTheme.colorDark
+              : (theme as ITheme).colorTheme.colorLight,
           borderRadius: 2,
           boxShadow: 20,
         }}>
@@ -51,12 +55,12 @@ export const Message = memo(() => {
           {type === 'error'
             ? 'Ошибка'
             : type === 'warning'
-            ? 'Предупреждение'
-            : type === 'info'
-            ? 'Информация'
-            : type === 'success'
-            ? 'Успешно'
-            : ''}
+              ? 'Предупреждение'
+              : type === 'info'
+                ? 'Информация'
+                : type === 'success'
+                  ? 'Успешно'
+                  : ''}
         </AlertTitle>
         {text}
       </Alert>

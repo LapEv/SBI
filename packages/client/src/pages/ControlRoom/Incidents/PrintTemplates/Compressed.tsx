@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material'
 import { useIncidents } from 'hooks/incidents/useINC'
 import { memo } from 'react'
+import { ThemeColor } from 'themes/themeConfig'
 
 export const Compressed = memo(() => {
   const [{ incidents }] = useIncidents()
@@ -134,7 +135,7 @@ export const Compressed = memo(() => {
             description,
             comment,
           },
-          index
+          index,
         ) => {
           return (
             <Box
@@ -146,7 +147,7 @@ export const Compressed = memo(() => {
                     : 0,
                 pl: index % 2 === 0 ? 1 : 0.5,
                 pr: index % 2 === 0 ? 0.5 : 1,
-                color: '#1E515D',
+                color: ThemeColor.dark,
                 width: '50%',
                 display: 'flex',
               }}
@@ -223,7 +224,7 @@ export const Compressed = memo(() => {
               </Box>
             </Box>
           )
-        }
+        },
       )}
     </Box>
   )

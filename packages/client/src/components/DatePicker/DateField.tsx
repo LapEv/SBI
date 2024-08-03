@@ -12,7 +12,10 @@ import { Dayjs } from 'dayjs'
 
 const StyledDatePickers = styled(PickersLayout)(({ theme }) => ({
   '.MuiDateCalendar-root': {
-    color: theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
+    color:
+      theme.palette.mode === ThemeMode.light
+        ? (theme as ITheme).colorTheme.colorDark
+        : (theme as ITheme).colorTheme.colorLight,
     borderRadius: 5,
     borderWidth: 2,
     borderColor: theme.palette.mode === ThemeMode.dark ? '#FFF' : '#000',

@@ -30,6 +30,7 @@ import { useIncidents } from 'hooks/incidents/useINC'
 import AttachFileIcon from '@mui/icons-material/AttachFile'
 import { fileValidation } from 'utils/validatorRules'
 import { useMessage } from 'hooks/message/useMessage'
+import { ITheme, ThemeMode } from 'themes/themeConfig'
 
 export const ChangeStatus = memo(
   React.forwardRef<unknown, CloseINCProps>(
@@ -59,7 +60,7 @@ export const ChangeStatus = memo(
           event.preventDefault()
           setDragOver(false)
         },
-        []
+        [],
       )
 
       const handleDrop = useCallback((event: DragEvent<HTMLDivElement>) => {
@@ -226,9 +227,11 @@ export const ChangeStatus = memo(
                                   <AttachFileIcon
                                     sx={{
                                       color:
-                                        theme.palette.mode === 'dark'
-                                          ? '#1E515D'
-                                          : '#C1EEE1',
+                                        theme.palette.mode === ThemeMode.light
+                                          ? (theme as ITheme).colorTheme
+                                              .colorLight
+                                          : (theme as ITheme).colorTheme
+                                              .colorDark,
                                     }}
                                   />
                                   <input
@@ -270,7 +273,7 @@ export const ChangeStatus = memo(
                     }}
                   />
                 )
-              }
+              },
             )}
           </Box>
           <ButtonsModalSection
@@ -279,6 +282,6 @@ export const ChangeStatus = memo(
           />
         </Box>
       )
-    }
-  )
+    },
+  ),
 )

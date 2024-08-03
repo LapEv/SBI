@@ -24,6 +24,7 @@ import { setFilter } from './Utils/FilterOptions'
 import { ChooseModal } from './Modals'
 import { LinearProgressWithLabel } from 'components/LinearProgress/LinearProgress'
 import { ModalImageProps } from './Modals/interfaces'
+import { ITheme, ThemeMode } from 'themes/themeConfig'
 
 export const TableIncidents = memo(() => {
   const modalClientRef = React.createRef()
@@ -977,9 +978,9 @@ export const TableIncidents = memo(() => {
               ? theme.palette.mode === 'dark'
                 ? '#1d4751'
                 : '#9ed3c4'
-              : theme.palette.mode === 'dark'
-                ? '#1E515D'
-                : '#C1EEE1',
+              : theme.palette.mode === ThemeMode.light
+                ? (theme as ITheme).colorTheme.colorLight
+                : (theme as ITheme).colorTheme.colorDark,
         },
       }
     },

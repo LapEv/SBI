@@ -10,7 +10,12 @@ export const PrintBar = memo(({ onPrint }: PrintData) => {
     <Tooltip title={'Печать'}>
       <IconButton
         onClick={onPrint}
-        sx={{ color: theme.palette.background.paper }}>
+        sx={{
+          color: theme.palette.primary.contrastText,
+          '&:hover': {
+            color: theme.palette.secondary.light,
+          },
+        }}>
         <PrintIcon />
       </IconButton>
     </Tooltip>

@@ -100,8 +100,8 @@ export const ThemeConfig = ({ mode, fontSize, colorTheme }: ThemeModeProps) =>
       ...(mode === ThemeMode.light
         ? {
             text: {
-              primary: '#FFFFFF',
-              secondary: '#000000',
+              primary: '#000000',
+              secondary: '#FFFFFF',
             },
             green: {
               [64]: colorTheme.colorDark,
@@ -117,11 +117,12 @@ export const ThemeConfig = ({ mode, fontSize, colorTheme }: ThemeModeProps) =>
               btn: '#7AB3A2',
             },
             primary: {
-              main: '#def0eb',
-              contrastText: colorTheme.colorLight,
+              main: colorTheme.colorLight,
+              contrastText: colorTheme.colorDark,
             },
             secondary: {
               main: colorTheme.colorLight,
+              light: 'rgba(33,127,100,0.5)',
             },
             error: {
               main: red[400],
@@ -134,13 +135,13 @@ export const ThemeConfig = ({ mode, fontSize, colorTheme }: ThemeModeProps) =>
               default: '#000000',
             },
             info: {
-              main: 'rgba(193,238,225,0.2)',
+              main: 'rgba(30,81,93,0.2)',
             },
           }
         : {
             text: {
-              primary: '#000000',
-              secondary: '#FFFFFF',
+              primary: '#FFFFFF',
+              secondary: '#000000',
             },
             green: {
               [64]: colorTheme.colorLight,
@@ -156,11 +157,12 @@ export const ThemeConfig = ({ mode, fontSize, colorTheme }: ThemeModeProps) =>
               btn: '#7AB3A2',
             },
             primary: {
-              main: '#def0eb',
+              main: colorTheme.colorDark,
               contrastText: colorTheme.colorLight,
             },
             secondary: {
               main: colorTheme.colorDark,
+              light: 'rgba(33,127,100,0.5)',
             },
             error: {
               main: red[400],
@@ -173,7 +175,7 @@ export const ThemeConfig = ({ mode, fontSize, colorTheme }: ThemeModeProps) =>
               default: '#FFFFFF',
             },
             info: {
-              main: 'rgba(30,81,93,0.2)',
+              main: 'rgba(193,238,225,0.2)',
             },
           }),
     },

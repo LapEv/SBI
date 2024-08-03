@@ -4,7 +4,7 @@ import { TextField } from 'components/TextFields'
 import { Autocomplete } from 'components/Autocomplete'
 import { DataDropDownMultiple, Options } from './interface'
 import { emptyValue } from '.'
-import { ITheme } from 'themes/themeConfig'
+import { ITheme, ThemeMode } from 'themes/themeConfig'
 
 export const DropDownMultiple = memo(
   ({
@@ -51,12 +51,20 @@ export const DropDownMultiple = memo(
             minHeight: 40,
             maxHeight: 225,
             '& li': {
-              color: theme.palette.mode === 'dark' ? '#1E515D' : '#C1EEE1',
+              color:
+                theme.palette.mode === ThemeMode.light
+                  ? (theme as ITheme).colorTheme.colorLight
+                  : (theme as ITheme).colorTheme.colorDark,
               borderColor:
-                theme.palette.mode === 'dark' ? '#1E515D' : '#C1EEE1',
+                theme.palette.mode === ThemeMode.light
+                  ? (theme as ITheme).colorTheme.colorLight
+                  : (theme as ITheme).colorTheme.colorDark,
             },
             '& :hover': {
-              color: theme.palette.mode === 'dark' ? '#1E515D' : '#C1EEE1',
+              color:
+                theme.palette.mode === ThemeMode.light
+                  ? (theme as ITheme).colorTheme.colorLight
+                  : (theme as ITheme).colorTheme.colorDark,
             },
           },
         }}

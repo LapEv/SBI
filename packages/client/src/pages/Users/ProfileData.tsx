@@ -25,7 +25,7 @@ import { User } from 'storeAuth/interfaces'
 import { AvatarBox } from 'components/AvatarBox'
 import { useFiles } from 'hooks/files/useFiles'
 import { Files } from 'store/slices/files/interfaces'
-import { ITheme } from 'themes/themeConfig'
+import { ITheme, ThemeMode } from 'themes/themeConfig'
 
 export const ProfileData = memo((user: User) => {
   const modalRef = React.createRef()
@@ -145,7 +145,10 @@ export const ProfileData = memo((user: User) => {
           sx={{
             width: '100px',
             height: '100px',
-            bgcolor: '#1E515D',
+            bgcolor:
+              theme.palette.mode === ThemeMode.light
+                ? (theme as ITheme).colorTheme.colorDark
+                : (theme as ITheme).colorTheme.colorLight,
             cursor: 'pointer',
             mb: 3,
             mt: -1,

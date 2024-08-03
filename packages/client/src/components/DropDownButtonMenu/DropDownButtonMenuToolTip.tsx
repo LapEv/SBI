@@ -91,12 +91,13 @@ export const DropDownMenuToolTip = memo(
               <MenuItem
                 onClick={() => handleClose(name)}
                 sx={{
-                  color: theme.palette.background.default,
+                  color: theme.palette.primary.contrastText,
                   '&:hover': {
                     bgcolor: theme.palette.info.main,
                   },
                 }}>
-                <ListItemIcon sx={{ color: theme.palette.background.default }}>
+                <ListItemIcon
+                  sx={{ color: theme.palette.primary.contrastText }}>
                   {icon}
                 </ListItemIcon>
                 {title}

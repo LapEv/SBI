@@ -13,6 +13,7 @@ import {
 import { FileProps } from 'storeAuth/interfaces'
 import { fileValidation } from 'utils/validatorRules'
 import { useMessage } from 'hooks/message/useMessage'
+import { ITheme, ThemeMode } from 'themes/themeConfig'
 
 export const ProfileAvatar = memo(
   ({
@@ -30,7 +31,7 @@ export const ProfileAvatar = memo(
     const [btnDisabled, setBtnDisabled] = useState<boolean>(true)
     const [, setDragOver] = useState<boolean>(false)
     const [, { setMessage }] = useMessage()
-    const theme = useTheme()
+    const theme = useTheme() as ITheme
 
     const handleDragOver = useCallback((event: DragEvent<HTMLDivElement>) => {
       event.preventDefault()
@@ -145,7 +146,10 @@ export const ProfileAvatar = memo(
                   sx={{
                     width: '100px',
                     height: '100px',
-                    bgcolor: '#1E515D',
+                    bgcolor:
+                      theme.palette.mode === ThemeMode.light
+                        ? (theme as ITheme).colorTheme.colorDark
+                        : (theme as ITheme).colorTheme.colorLight,
                     cursor: 'pointer',
                   }}
                 />
@@ -169,7 +173,10 @@ export const ProfileAvatar = memo(
             type={'text'}
             sx={{
               width: 'auto',
-              color: theme.palette.mode === 'dark' ? '#1E515D' : '#C1EEE1',
+              color:
+                theme.palette.mode === ThemeMode.light
+                  ? (theme as ITheme).colorTheme.colorLight
+                  : (theme as ITheme).colorTheme.colorDark,
             }}
             margin="normal"
             value={selectedFile.info?.name || ''}
@@ -177,7 +184,10 @@ export const ProfileAvatar = memo(
               sx: {
                 height: 30,
                 mt: 1,
-                color: theme.palette.mode === 'light' ? '#1E515D' : '#C1EEE1',
+                color:
+                  theme.palette.mode === ThemeMode.light
+                    ? (theme as ITheme).colorTheme.colorDark
+                    : (theme as ITheme).colorTheme.colorLight,
               },
             }}
           />

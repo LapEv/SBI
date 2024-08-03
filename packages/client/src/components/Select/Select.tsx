@@ -5,59 +5,95 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { ISelect } from './interfaces'
 import { styled } from '@mui/material'
 import { memo } from 'react'
-import { ThemeMode } from 'themes/themeConfig'
+import { ITheme, ThemeMode } from 'themes/themeConfig'
 
 const CustomSelect = styled(Select)(({ theme }) => ({
   padding: '0!important',
   paddingLeft: '7px!important',
   paddingRight: '7px!important',
   borderWidth: 2,
-  color: theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
-  borderColor: theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
+  color:
+    theme.palette.mode === ThemeMode.dark
+      ? (theme as ITheme).colorTheme.colorLight
+      : (theme as ITheme).colorTheme.colorDark,
+  borderColor:
+    theme.palette.mode === ThemeMode.dark
+      ? (theme as ITheme).colorTheme.colorLight
+      : (theme as ITheme).colorTheme.colorDark,
   '&.MuiOutlinedInput-root': {
     '& fieldset': {
-      color: theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
+      color:
+        theme.palette.mode === ThemeMode.dark
+          ? (theme as ITheme).colorTheme.colorLight
+          : (theme as ITheme).colorTheme.colorDark,
       borderColor:
-        theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
+        theme.palette.mode === ThemeMode.dark
+          ? (theme as ITheme).colorTheme.colorLight
+          : (theme as ITheme).colorTheme.colorDark,
     },
     '&:hover fieldset': {
       borderColor:
-        theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
+        theme.palette.mode === ThemeMode.dark
+          ? (theme as ITheme).colorTheme.colorLight
+          : (theme as ITheme).colorTheme.colorDark,
       borderWidth: 2,
     },
     '&.Mui-focused fieldset': {
       borderColor:
-        theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
+        theme.palette.mode === ThemeMode.dark
+          ? (theme as ITheme).colorTheme.colorLight
+          : (theme as ITheme).colorTheme.colorDark,
     },
   },
 }))
 
 const CustomFormControl = styled(FormControl)(({ theme }) => ({
   '.MuiFormLabel-root': {
-    color: theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
+    color:
+      theme.palette.mode === ThemeMode.dark
+        ? (theme as ITheme).colorTheme.colorLight
+        : (theme as ITheme).colorTheme.colorDark,
   },
   '&:hover .MuiFormLabel-root': {
-    color: theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
+    color:
+      theme.palette.mode === ThemeMode.dark
+        ? (theme as ITheme).colorTheme.colorLight
+        : (theme as ITheme).colorTheme.colorDark,
     fontWeight: 'bold',
   },
   '&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-    color: theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
+    color:
+      theme.palette.mode === ThemeMode.dark
+        ? (theme as ITheme).colorTheme.colorLight
+        : (theme as ITheme).colorTheme.colorDark,
   },
   '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input': {
-    color: theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
+    color:
+      theme.palette.mode === ThemeMode.dark
+        ? (theme as ITheme).colorTheme.colorLight
+        : (theme as ITheme).colorTheme.colorDark,
     fontWeight: 'bold',
   },
   '& .MuiFormLabel-root.Mui-focused': {
-    color: theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
+    color:
+      theme.palette.mode === ThemeMode.dark
+        ? (theme as ITheme).colorTheme.colorLight
+        : (theme as ITheme).colorTheme.colorDark,
     fontWeight: 'bold',
   },
   '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-    borderColor: theme.palette.mode === ThemeMode.dark ? '#C1EEE1' : '#1E515D',
+    borderColor:
+      theme.palette.mode === ThemeMode.dark
+        ? (theme as ITheme).colorTheme.colorLight
+        : (theme as ITheme).colorTheme.colorDark,
   },
 }))
 
 const CustomMenuItem = styled(MenuItem)(({ theme }) => ({
-  color: theme.palette.mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
+  color:
+    theme.palette.mode === ThemeMode.light
+      ? (theme as ITheme).colorTheme.colorLight
+      : (theme as ITheme).colorTheme.colorDark,
 
   '&.Mui-selected': {
     fontWeight: 'normal',
@@ -65,7 +101,10 @@ const CustomMenuItem = styled(MenuItem)(({ theme }) => ({
       theme.palette.mode === ThemeMode.dark
         ? 'rgba(222, 240, 235, 0.08)'
         : 'rgba(0, 0, 0, 0.08)',
-    color: theme.palette.mode === ThemeMode.light ? '#C1EEE1' : '#1E515D',
+    color:
+      theme.palette.mode === ThemeMode.light
+        ? (theme as ITheme).colorTheme.colorLight
+        : (theme as ITheme).colorTheme.colorDark,
   },
   '&.Mui-focusVisible': {
     backgroundColor:

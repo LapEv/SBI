@@ -1,4 +1,5 @@
 import MuiButton, { type ButtonProps } from '@mui/material/Button'
+import { useTheme } from '@mui/styles'
 import {
   ElementType,
   ForwardRefExoticComponent,
@@ -6,6 +7,7 @@ import {
   memo,
 } from 'react'
 import { LinkProps } from 'react-router-dom'
+import { ITheme, ThemeMode } from 'themes/themeConfig'
 
 type TButtonProps = Omit<ButtonProps, 'component'> & {
   component?:
@@ -19,11 +21,16 @@ type TButtonProps = Omit<ButtonProps, 'component'> & {
 }
 
 export const Button = memo((props: TButtonProps) => {
+  const theme = useTheme() as ITheme
   const { sx, ...otherprops } = props
 
   const sxprops = {
     fontWeight: 700,
-    color: '#000000',
+    color: theme.palette.mode === ThemeMode.light ? '#000000' : '#FFFFFF',
+    boxShadow:
+      theme.palette.mode === ThemeMode.light
+        ? `0px 0px 7px 4px rgba(0, 0, 0, 0.2)`
+        : `0px 0px 7px 4px rgba(0, 0, 0, 0.2)`,
     ...sx,
   }
   return <MuiButton variant="contained" sx={sxprops} {...otherprops} />

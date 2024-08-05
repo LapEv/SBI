@@ -81,9 +81,6 @@ export const MainLayout = memo(() => {
     }, 1000)
   }, [(theme as ITheme).fontSize])
 
-  console.log('adaptiveDrawerWidth = ', adaptiveDrawerWidth)
-  console.log('fontSize = ', (theme as ITheme).fontSize)
-
   return (
     <>
       {user && user.status ? (

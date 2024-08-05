@@ -25,7 +25,7 @@ export const LinearProgressWithLabel = memo(
       value: number
       percent: number
       sx?: Record<string, unknown>
-    }
+    },
   ) => {
     return (
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -37,11 +37,11 @@ export const LinearProgressWithLabel = memo(
           />
         </Box>
         <Box sx={{ minWidth: 35 }}>
-          <Typography variant="body2" color="text.secondary">{`${Math.floor(
-            props.percent
+          <Typography variant="body2" color="text.primary">{`${Math.floor(
+            props.percent,
           )}%`}</Typography>
         </Box>
       </Box>
     )
-  }
+  },
 )

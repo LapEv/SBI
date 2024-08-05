@@ -101,7 +101,7 @@ export const ThemeConfig = ({ mode, fontSize, colorTheme }: ThemeModeProps) =>
         ? {
             text: {
               primary: '#000000',
-              secondary: '#FFFFFF',
+              secondary: colorTheme.colorDark,
             },
             green: {
               [64]: colorTheme.colorDark,
@@ -141,7 +141,7 @@ export const ThemeConfig = ({ mode, fontSize, colorTheme }: ThemeModeProps) =>
         : {
             text: {
               primary: '#FFFFFF',
-              secondary: '#000000',
+              secondary: colorTheme.colorLight,
             },
             green: {
               [64]: colorTheme.colorLight,
@@ -210,8 +210,8 @@ export const ThemeConfig = ({ mode, fontSize, colorTheme }: ThemeModeProps) =>
             '.MuiSvgIcon-root': {
               color:
                 mode === ThemeMode.light
-                  ? colorTheme.colorLight
-                  : colorTheme.colorDark,
+                  ? colorTheme.colorDark
+                  : colorTheme.colorLight,
             },
           },
         },

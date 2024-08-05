@@ -64,7 +64,10 @@ export const Item = memo(
           }}
           control={
             <Checkbox
-              sx={{ p: 0, pr: 1 }}
+              sx={{
+                p: 0,
+                pr: 1,
+              }}
               checked={checked || false}
               onChange={handleChange}
             />

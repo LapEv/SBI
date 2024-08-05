@@ -121,6 +121,10 @@ export const DropDown = memo(
             fontWeight: 'normal',
             minHeight: 40,
             maxHeight: 225,
+            backgroundColor:
+              theme.palette.mode === ThemeMode.light
+                ? (theme as ITheme).colorTheme.colorDark
+                : (theme as ITheme).colorTheme.colorLight,
             '& li': {
               color:
                 theme.palette.mode === ThemeMode.light

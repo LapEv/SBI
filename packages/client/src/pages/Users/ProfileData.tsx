@@ -209,7 +209,7 @@ export const ProfileData = memo((user: User) => {
           </Modal>
           <ListItemButton
             sx={{
-              color: theme.palette.text.secondary,
+              color: theme.palette.text.primary,
               width: '88%',
               height: theme.fontSize === 'small' ? 40 : 50,
             }}

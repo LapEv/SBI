@@ -5,6 +5,7 @@ import { useTheme } from '@mui/styles'
 
 export function AvatarBox(props: AvatarProps) {
   const theme = useTheme() as ITheme
+
   return (
     <Avatar
       variant="rounded"

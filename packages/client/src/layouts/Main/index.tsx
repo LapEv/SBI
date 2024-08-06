@@ -67,7 +67,6 @@ export const MainLayout = memo(() => {
       : `calc(100% - ${theme.spacing(9)} - ${(theme as ITheme).fontSize === 'large' ? '6px' : '14px'})`
     setWidth(widthCheck)
     setTimeout(() => {
-      console.log('clientWidth toogle = ', boxRef?.current?.clientWidth)
       setDataWidth(boxRef?.current?.clientWidth as number)
     }, 1000)
   }
@@ -76,7 +75,6 @@ export const MainLayout = memo(() => {
   useEffect(() => {
     setWidth(`calc(100% - ${adaptiveDrawerWidth}px)`)
     setTimeout(() => {
-      console.log('clientWidth = ', boxRef?.current?.clientWidth)
       setDataWidth(boxRef?.current?.offsetWidth as number)
     }, 1000)
   }, [(theme as ITheme).fontSize])

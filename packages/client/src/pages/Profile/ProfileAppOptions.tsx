@@ -3,7 +3,7 @@ import {
   Collapse,
   ListItemButton,
   ListItemText,
-  Typography,
+  Modal,
 } from '@mui/material'
 import { RotateButton } from 'components/Buttons'
 import { memo, useState } from 'react'
@@ -11,11 +11,15 @@ import { listItemButton } from 'static/styles/listItemButton'
 import { SwitchMUI } from 'components/Switch'
 import { useAuth } from 'hooks/auth/useAuth'
 import { ThemeMode } from 'storeAuth/interfaces'
-import ColorPicker from 'mui-color-picker'
+import { Button } from 'components/Buttons'
+import { ProfileChangeTheme } from './ProfileChangeTheme'
 
 export const ProfileAppOptions = memo(() => {
-  const [{ user, colorTheme }, { changeUserAppOptions, changeColorTheme }] =
-    useAuth()
+  const [modal, setModal] = useState<boolean>(false)
+  const [
+    { user /*colorTheme*/ },
+    { changeUserAppOptions /*changeColorTheme*/ },
+  ] = useAuth()
   const [open, setOpen] = useState<boolean>(false)
   const [theme, setTheme] = useState<boolean>(
     user.appOptions?.theme === 'light' ? false : true,
@@ -46,20 +50,6 @@ export const ProfileAppOptions = memo(() => {
     changeUserAppOptions({ id: user.id as string, appOptions })
   }
 
-  const handleChangeColorLight = (colorLight: string) => {
-    if (!colorLight) return
-    changeColorTheme({ ...colorTheme, colorLight })
-    // const appOptions = { ...user.appOptions, color_Light }
-    // changeUserAppOptions({ id: user.id as string, appOptions })
-  }
-
-  const handleChangeColorDark = (colorDark: string) => {
-    if (!colorDark) return
-    changeColorTheme({ ...colorTheme, colorDark })
-    // const appOptions = { ...user.appOptions, color_Dark }
-    // changeUserAppOptions({ id: user.id as string, appOptions })
-  }
-
   return (
     <Box
       sx={{
@@ -69,6 +59,15 @@ export const ProfileAppOptions = memo(() => {
         height: 'auto',
         mt: 2,
       }}>
+      <Modal
+        open={modal}
+        onClose={() => setModal(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description">
+        <>
+          <ProfileChangeTheme handleModal={setModal} />
+        </>
+      </Modal>
       <ListItemButton divider={open} sx={listItemButton} onClick={handleClick}>
         <>
           <ListItemText
@@ -95,36 +94,11 @@ export const ProfileAppOptions = memo(() => {
           checked={font}
           value={font}
         />
-        <Box
-          sx={{
-            ml: 4,
-            mt: 2,
-            justifyContent: 'space-between',
-            width: '85%',
-          }}>
-          <Typography variant="body1">Цвет светлой темы</Typography>
-          <ColorPicker
-            sx={{ mt: 1 }}
-            name="color"
-            defaultValue={colorTheme.colorLight}
-            onChange={handleChangeColorLight}
-          />
-        </Box>
-        <Box
-          sx={{
-            ml: 4,
-            mt: 2,
-            justifyContent: 'space-between',
-            width: '85%',
-          }}>
-          <Typography variant="body1">Цвет темной темы</Typography>
-          <ColorPicker
-            sx={{ mt: 1 }}
-            name="color"
-            defaultValue={colorTheme.colorDark}
-            onChange={handleChangeColorDark}
-          />
-        </Box>
+        <Button
+          onClick={() => setModal(prev => !prev)}
+          sx={{ width: '30%', mt: 2 }}>
+          Сменить цвет темы
+        </Button>
       </Collapse>
     </Box>
   )

@@ -77,22 +77,15 @@ export const ThemeConfig = ({ mode, fontSize, colorTheme }: ThemeModeProps) =>
         fontWeight: 'bold',
         color: mode === ThemeMode.light ? '#000000' : '#FFFFFF',
       },
-
-      // body2: {
-      //   fontSize,
-      //   fontWeight: 'bold',
-      //   color: mode === ThemeMode.light ? colorTheme.colorLight : '#FFFFFF',
-      // },
       // subtitle1: {
       //   fontSize,
       //   fontWeight: 'bold',
       //   color: mode === ThemeMode.light ? colorTheme.colorLight : '#FFFFFF',
       // },
-      // subtitle2: {
-      //   fontSize,
-      //   fontWeight: 'bold',
-      //   color: mode === ThemeMode.light ? colorTheme.colorLight : '#FFFFFF',
-      // },
+      subtitle2: {
+        fontSize: fontSize === 'small' ? 11 : 15,
+        color: mode === ThemeMode.light ? '#000000' : '#FFFFFF',
+      },
     },
     spacing: fontSize === 'large' ? 8 : 4,
     palette: {
